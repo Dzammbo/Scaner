@@ -341,49 +341,53 @@ def tennis_evaluate(ev, st, detail):
         return None
     matching_dir = (((detail or {}).get("stats") or {}).get("matching_dir") or 1)
 
-    for row in rows:
-        prices = normalize_tennis_prices(row, matching_dir)
-        if not prices:
-            continue
-        sets = game_sets(row.get("ss"))
-        if not sets:
-            continue
-        cur = sets[-1]
+    # Manual Scanner evaluates NOW, not any historical trigger from earlier in the match.
+    row = rows[0]
+    add_time = as_int(row.get("add_time"))
+    if add_time is not None and int(time.time()) - add_time > 180:
+        return None
+    prices = normalize_tennis_prices(row, matching_dir)
+    if not prices:
+        return None
+    sets = game_sets(row.get("ss"))
+    if not sets:
+        return None
+    cur = sets[-1]
 
-        if st["id"] == "S10":
-            if len(sets) == 1 and not done_set(*cur) and cur[0] == cur[1] and cur[0] in (2, 3, 4, 5, 6):
-                fav = "home" if prices["home"] < prices["away"] else ("away" if prices["away"] < prices["home"] else None)
-                if fav and 1.50 <= prices[fav] < 1.80:
-                    side = "away" if fav == "home" else "home"
-                    return {
-                        "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
-                        "market": "match_winner", "bet": ev[side], "bet_side": side,
-                        "current_odds": prices[side],
-                        "features": {"set_score": row.get("ss"), "live_favorite": ev[fav], "favorite_odds": prices[fav]},
-                    }
+    if st["id"] == "S10":
+        if len(sets) == 1 and not done_set(*cur) and cur[0] == cur[1] and cur[0] in (2, 3, 4, 5, 6):
+            fav = "home" if prices["home"] < prices["away"] else ("away" if prices["away"] < prices["home"] else None)
+            if fav and 1.50 <= prices[fav] < 1.80:
+                side = "away" if fav == "home" else "home"
+                return {
+                    "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+                    "market": "match_winner", "bet": ev[side], "bet_side": side,
+                    "current_odds": prices[side],
+                    "features": {"set_score": row.get("ss"), "live_favorite": ev[fav], "favorite_odds": prices[fav]},
+                }
 
-        rel = previous_set_role(sets)
-        if not rel:
-            continue
-        wg, lg = rel["winner_games"], rel["loser_games"]
+    rel = previous_set_role(sets)
+    if not rel:
+        return None
+    wg, lg = rel["winner_games"], rel["loser_games"]
 
-        if st["id"] == "S09" and wg == 6 and lg in (0, 1, 2, 3):
-            side = rel["winner"]
-            return {
-                "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
-                "market": "match_winner", "bet": ev[side], "bet_side": side,
-                "current_odds": prices[side],
-                "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
-            }
+    if st["id"] == "S09" and wg == 6 and lg in (0, 1, 2, 3):
+        side = rel["winner"]
+        return {
+            "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+            "market": "match_winner", "bet": ev[side], "bet_side": side,
+            "current_odds": prices[side],
+            "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
+        }
 
-        if st["id"] == "S11" and (wg, lg) in ((6, 4), (7, 5), (7, 6)):
-            side = rel["winner"]
-            return {
-                "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
-                "market": "match_winner", "bet": ev[side], "bet_side": side,
-                "current_odds": prices[side],
-                "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
-            }
+    if st["id"] == "S11" and (wg, lg) in ((6, 4), (7, 5), (7, 6)):
+        side = rel["winner"]
+        return {
+            "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+            "market": "match_winner", "bet": ev[side], "bet_side": side,
+            "current_odds": prices[side],
+            "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
+        }
     return None
 
 registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
