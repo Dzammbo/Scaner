@@ -1,0 +1,23 @@
+name: Scaner hot path
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scanner.py"
+      - ".github/workflows/scaner-hot-path.yml"
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run scanner probe
+        run: python3 scanner.py
+      - name: Show result
+        run: cat result.json
