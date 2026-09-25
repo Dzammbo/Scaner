@@ -173,6 +173,14 @@ def handicap_value(x):
             vals.append(v)
     return None if not vals else sum(vals) / len(vals)
 
+def fmt_line(v):
+    if v is None:
+        return None
+    v = float(v)
+    if abs(v - round(v)) < 1e-9:
+        return f"{v:.1f}"
+    return f"{v:.2f}".rstrip("0").rstrip(".")
+
 def latest_rows(rows):
     if not isinstance(rows, list):
         return []
@@ -191,7 +199,9 @@ def total_features(ev, detail):
         "main_handicap": None,
         "next_goal_over_odds": None,
         "next_goal_under_odds": None,
+        "next_goal_handicap": None,
         "plus_one_over_odds": None,
+        "plus_one_handicap": None,
         "last_goal_minute": None,
         "drought_min": None,
     }
@@ -221,8 +231,10 @@ def total_features(ev, detail):
         if best05:
             out["next_goal_over_odds"] = as_float(best05.get("over_od"))
             out["next_goal_under_odds"] = as_float(best05.get("under_od"))
+            out["next_goal_handicap"] = handicap_value(best05.get("handicap"))
         if best10:
             out["plus_one_over_odds"] = as_float(best10.get("over_od"))
+            out["plus_one_handicap"] = handicap_value(best10.get("handicap"))
 
     # Estimate the latest score-change minute from provider odds-history rows.
     asc = list(reversed(rows))
@@ -253,16 +265,24 @@ def football_evaluate(ev, st, detail):
     market = r.get("market")
     current_odds = None
     bet = None
+    bet_line = None
 
     if market == "next_goal_over":
         current_odds = tf["next_goal_over_odds"]
-        bet = "Следующий гол / ТБ +0.5 от текущего счёта"
+        bet_line = tf["next_goal_handicap"]
+        bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "next_goal_under":
         current_odds = tf["next_goal_under_odds"]
-        bet = "Без следующего гола / ТМ +0.5 от текущего счёта"
+        bet_line = tf["next_goal_handicap"]
+        bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market in ("main_over", "over"):
-        current_odds = tf["plus_one_over_odds"] or tf["main_over_odds"]
-        bet = "Тотал больше"
+        if tf["plus_one_over_odds"] is not None:
+            current_odds = tf["plus_one_over_odds"]
+            bet_line = tf["plus_one_handicap"]
+        else:
+            current_odds = tf["main_over_odds"]
+            bet_line = tf["main_handicap"]
+        bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "draw":
         # draw price lives in 1_1
         rows = latest_rows(((detail or {}).get("odds") or {}).get("1_1"))
@@ -276,7 +296,8 @@ def football_evaluate(ev, st, detail):
         bet = "Победа хозяев"
     elif market == "plus_0_5":
         current_odds = tf["next_goal_over_odds"]
-        bet = "ТБ 0.5"
+        bet_line = tf["next_goal_handicap"]
+        bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else "ТБ 0.5"
 
     if "drought_min" in r:
         if tf["drought_min"] is None or tf["drought_min"] < r["drought_min"]:
@@ -300,10 +321,12 @@ def football_evaluate(ev, st, detail):
         "market": market,
         "bet": bet,
         "current_odds": current_odds,
+        "bet_line": bet_line,
         "features": {
             "drought_min": tf["drought_min"],
             "last_goal_minute": tf["last_goal_minute"],
             "main_total": tf["main_handicap"],
+            "selected_total": bet_line,
         },
     }
 
