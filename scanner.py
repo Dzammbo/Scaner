@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, math, os, re, time, urllib.parse, urllib.request
+import json, math, os, re, time, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,18 +17,33 @@ def get_json(path, params):
     q["token"] = TOKEN
     req = urllib.request.Request(
         BASE + path + "?" + urllib.parse.urlencode(q),
-        headers={"User-Agent": "dzam-scaner/1.1"},
+        headers={"User-Agent": "dzam-scaner/1.2"},
     )
     t0 = time.perf_counter()
-    with urllib.request.urlopen(req, timeout=15) as r:
-        payload = json.loads(r.read().decode("utf-8"))
-        meta = {
-            "http_status": r.status,
-            "latency_ms": round((time.perf_counter() - t0) * 1000),
-            "limit": r.headers.get("X-RateLimit-Limit"),
-            "remaining": r.headers.get("X-RateLimit-Remaining"),
-        }
-    return payload, meta
+    last = None
+    for attempt, delay in enumerate((0, 0.35, 0.8), start=1):
+        if delay:
+            time.sleep(delay)
+        try:
+            with urllib.request.urlopen(req, timeout=12) as r:
+                payload = json.loads(r.read().decode("utf-8"))
+                meta = {
+                    "http_status": r.status,
+                    "latency_ms": round((time.perf_counter() - t0) * 1000),
+                    "attempts": attempt,
+                    "limit": r.headers.get("X-RateLimit-Limit"),
+                    "remaining": r.headers.get("X-RateLimit-Remaining"),
+                }
+            return payload, meta
+        except urllib.error.HTTPError as ex:
+            last = ex
+            if ex.code not in (429, 500, 502, 503, 504) or attempt == 3:
+                raise
+        except (urllib.error.URLError, TimeoutError) as ex:
+            last = ex
+            if attempt == 3:
+                raise
+    raise last
 
 def obj_name(x):
     return x.get("name") if isinstance(x, dict) else x
