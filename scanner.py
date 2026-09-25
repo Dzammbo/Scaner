@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import json, os, time, urllib.parse, urllib.request\nfrom concurrent.futures import ThreadPoolExecutor, as_completed
+import json, os, time, urllib.parse, urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
