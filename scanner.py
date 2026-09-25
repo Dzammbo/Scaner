@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, os, time, urllib.parse, urllib.request
+import json, os, time, urllib.parse, urllib.request\nfrom concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -121,9 +121,15 @@ for ev,st in candidates:
     by_event[(ev["sport"],ev["event_id"])]["strategies"].append(st)
 detail_queue=sorted(by_event.values(),key=lambda x:(min(rank.get(s["tier"],9) for s in x["strategies"]),-len(x["strategies"])))[:MAX_DETAIL]
 details={}
-for row in detail_queue:
-    d=detail_fetch(row["event"]); api_calls+=1
-    details[row["event"]["event_id"]]=d
+if detail_queue:
+    with ThreadPoolExecutor(max_workers=min(8,len(detail_queue))) as pool:
+        futs={pool.submit(detail_fetch,row["event"]):row for row in detail_queue}
+        for fut in as_completed(futs):
+            row=futs[fut]
+            try:d=fut.result()
+            except Exception as ex:d={"ok":False,"error":type(ex).__name__+":"+str(ex)[:160]}
+            details[row["event"]["event_id"]]=d
+            api_calls+=1
 
 # V1 does not fabricate strategy hits from unverified provider market semantics.
 # Details are collected and attached for the next evaluator layer.
