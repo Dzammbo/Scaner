@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "name": "SCANNER_ACTIVE_STRATEGIES_V1",
+  "frozen_at": "2026-09-25",
+  "policy": {
+    "command_aliases": [
+      "сканер",
+      "запусти сканер"
+    ],
+    "event_deduplication": true,
+    "shared_market_fetch": true,
+    "show_one_event_with_all_matching_rules": true,
+    "tiers": [
+      "ACTIVE",
+      "SECONDARY",
+      "WATCHLIST"
+    ],
+    "note": "Not a real-money execution list. Rules are shadow/research candidates."
+  },
+  "strategies": [
+    {
+      "id": "S01",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Гол после 60-й при счёте 0:1",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute": [
+          60,
+          69
+        ],
+        "score": "0-1",
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S02",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Гол после 70-й при счёте 0:2",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute": [
+          70,
+          79
+        ],
+        "score": "0-2",
+        "odds": [
+          1.8,
+          1.99
+        ],
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S03",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Гол на 80-84 минуте - Румыния Liga III",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute": [
+          80,
+          84
+        ],
+        "league_contains": "Romania Liga III",
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S04",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Гол на 80-84 минуте - Норвегия U19",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute": [
+          80,
+          84
+        ],
+        "league_contains": "Norway Interkretsserie U19",
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S05",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Гол после 85-й - Норвегия U19",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute_min": 85,
+        "league_contains": "Norway Interkretsserie U19",
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S06",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Основной тотал больше - Бразилия",
+      "source": "historical_confirmed",
+      "rule": {
+        "country": "br",
+        "market": "main_over"
+      }
+    },
+    {
+      "id": "S07",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Поздняя ничья после 85-й - Бразилия",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute_min": 85,
+        "score_state": "draw",
+        "country": "br",
+        "market": "draw"
+      }
+    },
+    {
+      "id": "S08",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Тотал больше после 50+ минут без гола",
+      "source": "historical_confirmed",
+      "rule": {
+        "drought_min": 50,
+        "odds": [
+          1.8,
+          1.99
+        ],
+        "market": "over"
+      }
+    },
+    {
+      "id": "S09",
+      "tier": "ACTIVE",
+      "sport": "tennis",
+      "name_ru": "UTR - против игрока после разгромного сета",
+      "source": "forward_candidate",
+      "rule": {
+        "tour_contains": "UTR",
+        "state": "heavy_set_loss",
+        "side": "previous_set_winner"
+      }
+    },
+    {
+      "id": "S10",
+      "tier": "ACTIVE",
+      "sport": "tennis",
+      "name_ru": "Против live-фаворита при равном первом сете",
+      "source": "inverse_forward",
+      "rule": {
+        "state": "first_set_tied",
+        "original_side": "live_favorite",
+        "odds": [
+          1.5,
+          1.79
+        ],
+        "side": "opposite"
+      }
+    },
+    {
+      "id": "S11",
+      "tier": "SECONDARY",
+      "sport": "tennis",
+      "name_ru": "За победителя предыдущего плотного сета",
+      "source": "inverse_forward",
+      "rule": {
+        "state": "tight_set_loss",
+        "side": "previous_set_winner"
+      }
+    },
+    {
+      "id": "S12",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "ТБ 0.5 первого тайма после 30-й при ударе в створ",
+      "source": "forward_stats",
+      "rule": {
+        "period": "FH",
+        "minute_min": 30,
+        "on_target10_min": 1,
+        "market": "plus_0_5"
+      }
+    },
+    {
+      "id": "S13",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Поздняя победа хозяев при преимуществе давления",
+      "source": "forward_stats",
+      "rule": {
+        "minute_min": 85,
+        "score_state": "draw",
+        "pressure_home_gt_away": true,
+        "market": "home"
+      }
+    },
+    {
+      "id": "S14",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Поздняя победа хозяев при ударе в створ",
+      "source": "forward_stats",
+      "rule": {
+        "minute_min": 85,
+        "score_state": "draw",
+        "home_sot10_min": 1,
+        "market": "home"
+      }
+    },
+    {
+      "id": "S15",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Гол на 80-84 минуте при кэфе 2.50-2.99",
+      "source": "forward_strong",
+      "rule": {
+        "minute": [
+          80,
+          84
+        ],
+        "odds": [
+          2.5,
+          2.99
+        ],
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S16",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Гол после 85-й при кэфе 4.00+",
+      "source": "forward_strong",
+      "rule": {
+        "minute_min": 85,
+        "odds_min": 4,
+        "market": "next_goal_over"
+      }
+    },
+    {
+      "id": "S17",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Основной тотал больше - England EFL Trophy",
+      "source": "historical_confirmed",
+      "rule": {
+        "league_contains": "England EFL Trophy",
+        "market": "main_over"
+      }
+    },
+    {
+      "id": "S18",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Тотал больше после 15 минут без гола - EFL Trophy",
+      "source": "historical_confirmed",
+      "rule": {
+        "league_contains": "England EFL Trophy",
+        "drought_min": 15,
+        "market": "over"
+      }
+    },
+    {
+      "id": "S19",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Тотал больше после 25 минут без гола - EFL Trophy",
+      "source": "historical_confirmed",
+      "rule": {
+        "league_contains": "England EFL Trophy",
+        "drought_min": 25,
+        "market": "over"
+      }
+    },
+    {
+      "id": "S20",
+      "tier": "SECONDARY",
+      "sport": "football",
+      "name_ru": "Основной тотал больше при счёте 1:1",
+      "source": "historical_confirmed",
+      "rule": {
+        "score": "1-1",
+        "market": "main_over"
+      }
+    },
+    {
+      "id": "S21",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше после 85-й при счёте 3:2",
+      "source": "historical_confirmed",
+      "rule": {
+        "minute_min": 85,
+        "score": "3-2",
+        "market": "next_goal_under"
+      }
+    },
+    {
+      "id": "S22",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше сразу после гола",
+      "source": "historical_candidate",
+      "rule": {
+        "minutes_since_goal_max": 5,
+        "odds": [
+          1.5,
+          1.79
+        ],
+        "market": "next_goal_under"
+      }
+    },
+    {
+      "id": "S23",
+      "tier": "WATCHLIST",
+      "sport": "multi",
+      "name_ru": "Следовать за сильным прогрузом линии",
+      "source": "prematch_line_movement_v1",
+      "rule": {
+        "movement_pp_min": 5,
+        "direction": "FOLLOW"
+      }
+    },
+    {
+      "id": "S24",
+      "tier": "WATCHLIST",
+      "sport": "multi",
+      "name_ru": "Играть против сильного прогруза линии",
+      "source": "prematch_line_movement_v1",
+      "rule": {
+        "movement_pp_min": 5,
+        "direction": "FADE"
+      }
+    }
+  ]
+}
