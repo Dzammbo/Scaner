@@ -95,6 +95,8 @@ jobs:
                           "score": score,
                           "exact_bet_line": exact_line,
                           "current_odds": hit.get("current_odds"),
+                          "reverse_bet": hit.get("reverse_bet"),
+                          "reverse_odds": hit.get("reverse_odds"),
                           "strategy_id": hit.get("strategy_id"),
                           "tier": hit.get("tier"),
                       }
