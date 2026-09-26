@@ -2,22 +2,132 @@ name: Scaner hot path
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "11 * * * *"
   push:
     branches: [main]
     paths:
       - "scanner.py"
       - ".github/workflows/scaner-hot-path.yml"
 
+permissions:
+  contents: write
+
+concurrency:
+  group: scaner-forward-log
+  cancel-in-progress: false
+
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Run scanner probe
+        with:
+          fetch-depth: 0
+
+      - name: Run scanner
         run: python3 scanner.py
+
+      - name: Append independent forward log
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path("result.json").read_text(encoding="utf-8"))
+          ts = result.get("generated_at_utc")
+          events = result.get("events") or []
+
+          log_dir = Path("forward_log")
+          log_dir.mkdir(exist_ok=True)
+          signals_path = log_dir / "scanner_signals.jsonl"
+          runs_path = log_dir / "scanner_runs.jsonl"
+
+          existing = set()
+          if signals_path.exists():
+              for line in signals_path.read_text(encoding="utf-8").splitlines():
+                  if not line.strip():
+                      continue
+                  try:
+                      row = json.loads(line)
+                  except Exception:
+                      continue
+                  existing.add((
+                      str(row.get("event_id")),
+                      str(row.get("exact_bet_line")),
+                  ))
+
+          appended = 0
+          with signals_path.open("a", encoding="utf-8") as f:
+              for ev in events:
+                  sport = ev.get("sport")
+                  tournament = ev.get("league")
+                  event_id = str(ev.get("event_id"))
+                  match = f'{ev.get("home")} - {ev.get("away")}'
+                  minute = ev.get("minute")
+                  score = ev.get("score")
+                  minute_score = f'{minute}\' / \'{score}' if minute is not None else str(score or "")
+
+                  for hit in ev.get("matches") or []:
+                      exact_line = hit.get("bet")
+                      if not exact_line:
+                          market = hit.get("market")
+                          line = hit.get("bet_line")
+                          exact_line = f"{market}:{line}" if line is not None else str(market or "")
+
+                      key = (event_id, str(exact_line))
+                      if key in existing:
+                          continue
+
+                      row = {
+                          "timestamp": ts,
+                          "sport": sport,
+                          "tournament": tournament,
+                          "event_id": event_id,
+                          "match": match,
+                          "minute_score": minute_score,
+                          "minute": minute,
+                          "score": score,
+                          "exact_bet_line": exact_line,
+                          "current_odds": hit.get("current_odds"),
+                          "strategy_id": hit.get("strategy_id"),
+                          "tier": hit.get("tier"),
+                      }
+                      f.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+                      existing.add(key)
+                      appended += 1
+
+          run_row = {
+              "timestamp": ts,
+              "scanner": result.get("scanner"),
+              "event_count": result.get("event_count", 0),
+              "signals_seen": sum(len(ev.get("matches") or []) for ev in events),
+              "new_signals_appended": appended,
+              "empty_pass": len(events) == 0,
+              "api_calls": result.get("api_calls"),
+              "total_script_ms": result.get("total_script_ms"),
+          }
+          with runs_path.open("a", encoding="utf-8") as f:
+              f.write(json.dumps(run_row, ensure_ascii=False, separators=(",", ":")) + "\n")
+          PY
+
+      - name: Persist forward log
+        shell: bash
+        run: |
+          if git diff --quiet -- forward_log/; then
+            echo "No forward-log changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add forward_log/
+          git commit -m "Append scanner forward log"
+          git push
+
       - name: Show result
         run: cat result.json
