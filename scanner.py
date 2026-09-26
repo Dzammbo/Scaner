@@ -426,6 +426,36 @@ def tennis_evaluate(ev, st, detail):
             "current_odds": prices[side],
             "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
         }
+
+    if st["id"] == "T13" and wg == 6 and lg in (0, 1, 2, 3):
+        side = rel["loser"]
+        return {
+            "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+            "market": "match_winner", "bet": ev[side], "bet_side": side,
+            "current_odds": prices[side],
+            "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}", "mirror_of": "S09"},
+        }
+
+    if st["id"] == "T14" and (wg, lg) in ((6, 4), (7, 5), (7, 6)):
+        side = rel["loser"]
+        return {
+            "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+            "market": "match_winner", "bet": ev[side], "bet_side": side,
+            "current_odds": prices[side],
+            "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}", "mirror_of": "S11"},
+        }
+
+    if st["id"] in ("T16", "T17") and len(sets) >= 3 and not done_set(*sets[-1]) and done_set(*sets[-2]):
+        s2h, s2a = sets[-2]
+        second_winner = "home" if s2h > s2a else "away"
+        second_loser = "away" if second_winner == "home" else "home"
+        side = second_winner if st["id"] == "T16" else second_loser
+        return {
+            "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+            "market": "match_winner", "bet": ev[side], "bet_side": side,
+            "current_odds": prices[side],
+            "features": {"set_score": row.get("ss"), "second_set": f"{s2h}-{s2a}", "deciding_set": True},
+        }
     return None
 
 registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
