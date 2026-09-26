@@ -335,6 +335,50 @@
         "movement_pp_min": 5,
         "direction": "FADE"
       }
+    },
+    {
+      "id": "T13",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Зеркало разгромного сета - за проигравшего предыдущего сета",
+      "source": "scanner_forward_candidate",
+      "rule": {
+        "state": "heavy_set_loss",
+        "side": "previous_set_loser"
+      }
+    },
+    {
+      "id": "T14",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Зеркало плотного сета - за проигравшего предыдущего сета",
+      "source": "scanner_forward_candidate",
+      "rule": {
+        "state": "tight_set_loss",
+        "side": "previous_set_loser"
+      }
+    },
+    {
+      "id": "T16",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Решающий сет - за победителя второго сета",
+      "source": "scanner_forward_candidate",
+      "rule": {
+        "state": "deciding_set",
+        "side": "second_set_winner"
+      }
+    },
+    {
+      "id": "T17",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Решающий сет - за проигравшего второго сета",
+      "source": "scanner_forward_candidate",
+      "rule": {
+        "state": "deciding_set",
+        "side": "second_set_loser"
+      }
     }
   ]
 }
