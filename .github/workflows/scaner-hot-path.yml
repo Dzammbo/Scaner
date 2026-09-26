@@ -3,7 +3,7 @@ name: Scaner hot path
 on:
   workflow_dispatch:
   schedule:
-    - cron: "11 * * * *"
+    - cron: "*/5 * * * *"
   push:
     branches: [main]
     paths:
@@ -29,8 +29,77 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Calculate rolling Scanner budget
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+
+          cap = 600
+          per_pass = 50
+          board_calls = 2
+          now = datetime.now(timezone.utc)
+          used = 0
+          path = Path("forward_log/scanner_runs.jsonl")
+          if path.exists():
+              for line in path.read_text(encoding="utf-8").splitlines():
+                  if not line.strip():
+                      continue
+                  try:
+                      row = json.loads(line)
+                      ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z","+00:00"))
+                  except Exception:
+                      continue
+                  if now - timedelta(hours=1) <= ts <= now:
+                      used += int(row.get("api_calls") or 0)
+          remaining = max(0, cap-used)
+          run_budget = min(per_pass, remaining)
+          skip = run_budget < board_calls
+          detail_budget = max(0, run_budget-board_calls)
+          with open(Path.home()/".scaner-budget", "w", encoding="utf-8") as f:
+              json.dump({"used":used,"remaining":remaining,"run_budget":run_budget,"detail_budget":detail_budget,"skip":skip},f)
+          with open(Path(__import__("os").environ["GITHUB_ENV"]), "a", encoding="utf-8") as f:
+              f.write(f"SCANER_SKIP={'1' if skip else '0'}\n")
+              f.write(f"SCANER_DETAIL_BUDGET={detail_budget}\n")
+              f.write(f"SCANER_ROLLING_USED={used}\n")
+              f.write(f"SCANER_ROLLING_REMAINING={remaining}\n")
+          print(json.dumps({"used_last_hour":used,"remaining":remaining,"run_budget":run_budget,"detail_budget":detail_budget,"skip":skip}))
+          PY
+
       - name: Run scanner
+        if: env.SCANER_SKIP != '1'
         run: python3 scanner.py
+
+      - name: Record budget-skipped pass
+        if: env.SCANER_SKIP == '1'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          now=datetime.now(timezone.utc).isoformat()
+          result={
+            "schema_version":2,
+            "scanner":"SCANER_V1",
+            "generated_at_utc":now,
+            "started_at_utc":now,
+            "strategy_counts":{},
+            "boards":{"football":0,"tennis":0},
+            "api_calls":0,
+            "detail_candidates":{"football":0,"tennis":0},
+            "details_fetched":{"football":0,"tennis":0},
+            "event_count":0,
+            "events":[],
+            "pending_history_rules":[],
+            "detail_probe_summary":{},
+            "total_script_ms":0,
+            "note":"Skipped: rolling Scanner BetsAPI budget 600/hour exhausted."
+          }
+          Path("result.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          PY
 
       - name: Append independent forward log
         shell: bash
