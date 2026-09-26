@@ -7,9 +7,63 @@ from pathlib import Path
 BASE = "https://api.b365api.com"
 TOKEN = os.environ["BETSAPI_KEY"]
 DETAIL_CALL_BUDGET = max(0, int(os.environ.get("SCANER_DETAIL_BUDGET", "48")))
+STATE_PATH = Path("forward_log/scanner_state.json")
 
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
+
+def load_scanner_state():
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {"events": {}}
+
+def save_scanner_state(boards):
+    STATE_PATH.parent.mkdir(exist_ok=True)
+    now=int(time.time())
+    events={}
+    for sport in ("football","tennis"):
+        for ev in boards.get(sport,{}).get("events",[]):
+            events[f"{sport}:{ev['event_id']}"]={
+                "sport":sport,
+                "score":ev.get("score"),
+                "minute":ev.get("minute"),
+                "seen_at":now,
+            }
+    STATE_PATH.write_text(json.dumps({"updated_at":now_iso(),"events":events},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+def cheap_core_prefilter(ev, st, previous):
+    if not rule_prefilter(ev, st):
+        return False
+    sid=st["id"]
+    prev=(previous or {}).get("events",{}).get(f"{ev['sport']}:{ev['event_id']}") or {}
+
+    # First-goal 0:1 AH: only spend detail when 0:1 is newly observed or still
+    # within one five-minute scanner interval after the transition.
+    if sid=="S25":
+        if ev.get("score")!="0-1":
+            return False
+        prev_score=prev.get("score")
+        if prev_score in (None,"0-0"):
+            return True
+        prev_min=as_int(prev.get("minute")); cur_min=as_int(ev.get("minute"))
+        return prev_score=="0-1" and prev_min is not None and cur_min is not None and cur_min-prev_min<=5
+
+    # Football Core rules already expose their decisive score/minute state on board.
+    if sid in ("S01","S02","S15","S20"):
+        return True
+
+    # Tennis: only query when board score shape can possibly match the rule.
+    if ev.get("sport")=="tennis":
+        sets=game_sets(ev.get("score"))
+        if sid=="S10":
+            return len(sets)==1 and not done_set(*sets[-1]) and sets[-1][0]==sets[-1][1] and sets[-1][0] in (2,3,4,5,6)
+        if sid=="S11":
+            rel=previous_set_role(sets)
+            return bool(rel and (rel["winner_games"],rel["loser_games"]) in ((6,4),(7,5),(7,6)))
+        if sid=="T16":
+            return len(sets)>=3 and not done_set(*sets[-1]) and done_set(*sets[-2])
+    return True
 
 def get_json(path, params):
     q = dict(params)
@@ -585,11 +639,12 @@ for sport, sid in (("football", 1), ("tennis", 13)):
     events = [base_event(x, sport) for x in rows]
     boards[sport] = {"count": len(events), "latency_ms": meta["latency_ms"], "events": events}
 
-# Pre-filter candidates. Details are split by sport so tennis cannot be starved by football.
+# Stateful cheap pre-filter: use board-visible state before spending an odds-detail call.
+previous_state = load_scanner_state()
 queues = {"football": {}, "tennis": {}}
 for sport in ("football", "tennis"):
     for ev in boards[sport]["events"]:
-        sts = [st for st in strategies if st["sport"] == sport and rule_prefilter(ev, st)]
+        sts = [st for st in strategies if st["sport"] == sport and cheap_core_prefilter(ev, st, previous_state)]
         if sts:
             queues[sport][ev["event_id"]] = {"event": ev, "strategies": sts}
 
@@ -701,5 +756,6 @@ result = {
     "note": "Manual scanner. No background polling. Only signals with current provider evidence are emitted.",
 }
 
+save_scanner_state(boards)
 Path("result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps(result, ensure_ascii=False))
