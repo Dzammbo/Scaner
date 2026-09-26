@@ -1,0 +1,121 @@
+name: Settle forward log
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/settle-forward-log.yml"
+
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Settle current forward log
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, math, os, urllib.parse, urllib.request
+          from pathlib import Path
+
+          BASE="https://api.b365api.com"
+          TOKEN=os.environ["BETSAPI_KEY"]
+          rows=[json.loads(x) for x in Path("forward_log/scanner_signals.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
+
+          def get(path, params):
+              q=dict(params); q["token"]=TOKEN
+              req=urllib.request.Request(BASE+path+"?"+urllib.parse.urlencode(q),headers={"User-Agent":"dzam-scaner-settle/2.0"})
+              with urllib.request.urlopen(req,timeout=20) as r:
+                  return json.loads(r.read().decode("utf-8"))
+
+          ids=sorted(set(r["event_id"] for r in rows))
+          final={}
+          for i in range(0,len(ids),10):
+              p=get("/v1/event/view",{"event_id":",".join(ids[i:i+10])})
+              rs=p.get("results") or []
+              if isinstance(rs,dict): rs=[rs]
+              for e in rs:
+                  if isinstance(e,dict): final[str(e.get("id"))]=e
+
+          def total_score(s):
+              try:
+                  a,b=map(int,str(s).split("-",1)); return a+b
+              except: return None
+
+          def component(total,line,over,odds):
+              if over:
+                  return odds-1 if total>line else 0 if total==line else -1
+              return odds-1 if total<line else 0 if total==line else -1
+
+          def asian(total,line,over,odds):
+              frac=round((line-math.floor(line))*100)
+              if frac==25:
+                  a=math.floor(line); b=a+0.5
+                  return (component(total,a,over,odds)+component(total,b,over,odds))/2
+              if frac==75:
+                  a=math.floor(line)+0.5; b=math.floor(line)+1.0
+                  return (component(total,a,over,odds)+component(total,b,over,odds))/2
+              return component(total,line,over,odds)
+
+          def tennis_winner(ss):
+              sets=[]
+              for tok in str(ss or "").split(","):
+                  try:
+                      a,b=map(int,tok.strip().split("-",1)); sets.append((a,b))
+                  except: pass
+              hw=sum(a>b for a,b in sets)
+              aw=sum(b>a for a,b in sets)
+              return "home" if hw>aw else "away" if aw>hw else None
+
+          settled=[]
+          for r in rows:
+              e=final.get(r["event_id"])
+              if not e or str(e.get("time_status"))!="3":
+                  continue
+              fs=str(e.get("ss") or "").replace(":","-")
+              p=None
+              if r["sport"]=="football":
+                  if r["exact_bet_line"].startswith("ТБ "):
+                      try: line=float(r["exact_bet_line"].split()[1])
+                      except: line=None
+                      tot=total_score(fs)
+                      if line is not None and tot is not None:
+                          p=asian(tot,line,True,float(r["current_odds"]))
+              else:
+                  home=(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home")
+                  away=(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away")
+                  w=tennis_winner(fs)
+                  sel="home" if r["exact_bet_line"]==home else "away" if r["exact_bet_line"]==away else None
+                  if w and sel:
+                      p=float(r["current_odds"])-1 if w==sel else -1
+              if p is not None:
+                  z=dict(r); z["profit"]=p; z["final_score"]=fs; settled.append(z)
+
+          def agg(items):
+              n=len(items); profit=sum(x["profit"] for x in items)
+              w=sum(x["profit"]>1e-9 for x in items)
+              l=sum(x["profit"]<-1e-9 for x in items)
+              push=n-w-l
+              return {"n":n,"W":w,"L":l,"P":push,"profit":round(profit,3),"roi_pct":round(profit/n*100,2) if n else None}
+
+          by_strategy={}
+          for sid in sorted(set(x["strategy_id"] for x in settled)):
+              by_strategy[sid]=agg([x for x in settled if x["strategy_id"]==sid])
+          by_sport={}
+          for sp in sorted(set(x["sport"] for x in settled)):
+              by_sport[sp]=agg([x for x in settled if x["sport"]==sp])
+          band=[x for x in settled if 1.39 <= float(x["current_odds"]) <= 6.0]
+          out={
+              "raw_signals":len(rows),
+              "unique_events":len(set(x["event_id"] for x in rows)),
+              "settled":agg(settled),
+              "user_band_settled":agg(band),
+              "by_sport":by_sport,
+              "by_strategy":by_strategy
+          }
+          print("FORWARD_SETTLEMENT="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
+          PY
