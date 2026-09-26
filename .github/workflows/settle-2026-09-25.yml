@@ -6,40 +6,176 @@ on:
 jobs:
   settle:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 4
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
-      - name: Query final event states
+      - name: Reconstruct and settle scanner bets
         shell: bash
         run: |
           cat > /tmp/settle.py <<'PY'
-          import json, os, urllib.parse, urllib.request
+          import json, os, math, urllib.parse, urllib.request
+          from datetime import datetime
+          
           BASE="https://api.b365api.com"
           TOKEN=os.environ["BETSAPI_KEY"]
-          IDS=["13170369","13172113","10525217","13172729","13188492","13192427","13192741","12323524","11354733","13186449","13187461","13188804","12181953","13144162","13144166","13152089","13152091","12192287","13152093","13189133","12140268","12159852","13121544","13173815","13187835","13188199","12182859","13144164","12155697","12159805","13144163","11287477","13188252","13152088","13189134","13172188","13188430","13188705","13137900","11437512","11518141","13097908","13173662","13187836"]
-          all_rows=[]
-          for i in range(0,len(IDS),10):
-              batch=IDS[i:i+10]
-              q=urllib.parse.urlencode({"token":TOKEN,"event_id":",".join(batch)})
-              req=urllib.request.Request(BASE+"/v1/event/view?"+q,headers={"User-Agent":"dzam-scaner-settle/1.0"})
+          SIGNALS=json.loads(r'''[{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13170369","sport":"tennis","league":"UTR Pro Norfolk","home":"Piet Steveker","away":"James Weber","minute":null,"score":"6-2,5-5","strategy_id":"S09","market":"match_winner","bet":"Piet Steveker","bet_side":"home","odds":1.03,"main_total":null},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13172113","sport":"tennis","league":"UTR Pro College Station","home":"James Quattro","away":"Filip Paroulek","minute":null,"score":"6-2,2-1","strategy_id":"S09","market":"match_winner","bet":"James Quattro","bet_side":"home","odds":1.004,"main_total":null},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"10525217","sport":"football","league":"European U21 Championship Qual","home":"Netherlands U21","away":"Norway U21","minute":92,"score":"0-0","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":8.75,"main_total":0.5},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13172729","sport":"tennis","league":"UTR Pro Norfolk","home":"Ilan Hediger","away":"Noble Renfrow","minute":null,"score":"4-6,2-1","strategy_id":"S11","market":"match_winner","bet":"Noble Renfrow","bet_side":"away","odds":1.5,"main_total":null},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13188492","sport":"football","league":"Mexico Liga TDP","home":"Correcaminos III","away":"Fut-Car","minute":90,"score":"1-0","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":7.8,"main_total":1.5},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13192427","sport":"tennis","league":"M15 Curitiba","home":"Mateus Alves","away":"Joao Victor Couto Loureiro","minute":null,"score":"7-6,1-1","strategy_id":"S11","market":"match_winner","bet":"Mateus Alves","bet_side":"home","odds":1.02,"main_total":null},{"attempt":3,"ts":"2026-09-25T18:18:01.593349+00:00","event_id":"13192741","sport":"tennis","league":"UTR Pro College Station","home":"Tomas Pinho","away":"Michael Chan","minute":null,"score":"1-6,7-5,2-5","strategy_id":"S11","market":"match_winner","bet":"Tomas Pinho","bet_side":"home","odds":4.333,"main_total":null},{"attempt":4,"ts":"2026-09-25T18:24:32.616504+00:00","event_id":"12323524","sport":"football","league":"Brazil Campeonato Carioca B","home":"Carapebus/Campos","away":"Sao Cristovao RJ","minute":31,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.975,"main_total":1.5},{"attempt":4,"ts":"2026-09-25T18:24:32.616504+00:00","event_id":"11354733","sport":"football","league":"Sweden 1.div Norra","home":"Hammarby TFF","away":"IFK Stocksund","minute":67,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.95,"main_total":3},{"attempt":4,"ts":"2026-09-25T18:24:32.616504+00:00","event_id":"13186449","sport":"football","league":"Czechia 4. Liga","home":"Chomutov","away":"Slavia Karlovy Vary","minute":92,"score":"1-0","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":7.4,"main_total":1.5},{"attempt":4,"ts":"2026-09-25T18:24:32.616504+00:00","event_id":"13187461","sport":"football","league":"Austria Landesliga","home":"SV Rohrbach","away":"USV Gnas","minute":93,"score":"1-0","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":5.75,"main_total":1.5},{"attempt":4,"ts":"2026-09-25T18:24:32.616504+00:00","event_id":"13188804","sport":"football","league":"Mexico Liga TDP","home":"Valle de Xico FC","away":"Halcones Zuñiga SC","minute":62,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":3.5},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"12181953","sport":"football","league":"Brazil Campeonato Carioca U20","home":"Marica RJ U20","away":"Volta Redonda U20","minute":30,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.95,"main_total":2},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"13144162","sport":"football","league":"Brazil Campeonato Paulista U20","home":"EC Agua Santa U20","away":"Capivariano U20","minute":30,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.875,"main_total":1.5},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"13144166","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Guarani SP U20","away":"Uniao Suzano AC U20","minute":30,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.875,"main_total":2},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"13152089","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Sao Paulo U20","away":"EC Sao Bernardo U20","minute":30,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.825,"main_total":2},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"13152091","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Santos U20","away":"Jabaquara AC SP U20","minute":30,"score":"1-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.9,"main_total":4.25},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"12192287","sport":"football","league":"Germany 3. Liga","home":"TSV Havelse","away":"SC Fortuna Köln","minute":71,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":2.75},{"attempt":5,"ts":"2026-09-25T18:29:50.534650+00:00","event_id":"13170369","sport":"tennis","league":"UTR Pro Norfolk","home":"Piet Steveker","away":"James Weber","minute":null,"score":"6-2,5-7,0-0","strategy_id":"S11","market":"match_winner","bet":"James Weber","bet_side":"away","odds":4,"main_total":null},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13152093","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Corinthians U20","away":"XV de Jau U20","minute":45,"score":"2-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.725,"main_total":3.75},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13189133","sport":"football","league":"Brazil Copa Sul U20","home":"Gremio U20","away":"Sao Jose EC U20","minute":43,"score":"1-3","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":5.75},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"12140268","sport":"football","league":"Denmark Division 2","home":"Hellerup IK","away":"FC Roskilde","minute":91,"score":"1-1","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":4.4,"main_total":2.5},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"12140268","sport":"football","league":"Denmark Division 2","home":"Hellerup IK","away":"FC Roskilde","minute":91,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.8,"main_total":2.5},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"12159852","sport":"football","league":"Austria Landesliga","home":"UFC Fehring","away":"SV Pachern","minute":85,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.05,"main_total":2.5},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13121544","sport":"football","league":"Iceland Premier League Women","home":"Valur Reykjavik (W)","away":"Vikingur Reykjavik (W)","minute":45,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":3.75},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13173815","sport":"football","league":"Argentina Championship Women","home":"CA Independiente Women","away":"Ferro Carril Oeste (W)","minute":84,"score":"3-2","strategy_id":"S15","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":2.6,"main_total":5.5},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13187835","sport":"football","league":"Europe Friendlies","home":"Penafiel","away":"Deportivo A Coruna","minute":43,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.85,"main_total":3.5},{"attempt":6,"ts":"2026-09-25T18:46:31.212320+00:00","event_id":"13188199","sport":"football","league":"Poland IV Liga","home":"Unia Tarnow","away":"Limanovia Limanowa","minute":89,"score":"0-1","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":4.4,"main_total":1.5},{"attempt":7,"ts":"2026-09-25T18:49:47.712142+00:00","event_id":"12182859","sport":"football","league":"Brazil Campeonato Mineiro 3","home":"Inter De Minas","away":"Nacional de Muriae","minute":45,"score":"0-1","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.9,"main_total":2.25},{"attempt":7,"ts":"2026-09-25T18:49:47.712142+00:00","event_id":"13144164","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Santo Andre U20","away":"Sertaozinho FC U20","minute":45,"score":"1-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.975,"main_total":2.25},{"attempt":7,"ts":"2026-09-25T18:49:47.712142+00:00","event_id":"12155697","sport":"football","league":"Austria Regionalliga South","home":"Atus Velden","away":"VST Volkermarkt","minute":89,"score":"0-0","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":4.5,"main_total":0.5},{"attempt":7,"ts":"2026-09-25T18:49:47.712142+00:00","event_id":"12159805","sport":"football","league":"Austria Landesliga","home":"St. Anna am Aigen","away":"TUS Bad Waltersdorf","minute":90,"score":"2-2","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":6.25,"main_total":4.5},{"attempt":8,"ts":"2026-09-25T18:54:57.639131+00:00","event_id":"13144163","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Desportivo Brasil U20","away":"Osasco Sporting U20","minute":45,"score":"0-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.775,"main_total":1.25},{"attempt":8,"ts":"2026-09-25T18:54:57.639131+00:00","event_id":"11287477","sport":"football","league":"Norway Division 3 Group 4","home":"Varhaug","away":"Staal Jørpeland","minute":97,"score":"3-2","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":7,"main_total":5.5},{"attempt":8,"ts":"2026-09-25T18:54:57.639131+00:00","event_id":"12159852","sport":"football","league":"Austria Landesliga","home":"UFC Fehring","away":"SV Pachern","minute":93,"score":"1-1","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":7,"main_total":2.5},{"attempt":8,"ts":"2026-09-25T18:54:57.639131+00:00","event_id":"13173815","sport":"football","league":"Argentina Championship Women","home":"CA Independiente Women","away":"Ferro Carril Oeste (W)","minute":92,"score":"3-2","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":6.8,"main_total":5.5},{"attempt":8,"ts":"2026-09-25T18:54:57.639131+00:00","event_id":"13188252","sport":"football","league":"UAE Second Division","home":"Modern Sport Club Dubai","away":"Masfut","minute":92,"score":"2-2","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":4.5,"main_total":4.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"12323524","sport":"football","league":"Brazil Campeonato Carioca B","home":"Carapebus/Campos","away":"Sao Cristovao RJ","minute":82,"score":"0-1","strategy_id":"S15","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":2.85,"main_total":1.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13144162","sport":"football","league":"Brazil Campeonato Paulista U20","home":"EC Agua Santa U20","away":"Capivariano U20","minute":81,"score":"0-1","strategy_id":"S15","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":2.75,"main_total":1.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13152088","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Palmeiras U20","away":"Ituano U20","minute":42,"score":"1-1","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":4.25},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13152088","sport":"football","league":"Brazil Campeonato Paulista U20","home":"Palmeiras U20","away":"Ituano U20","minute":42,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.025,"main_total":4.25},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13189134","sport":"football","league":"Brazil Copa Sul U20","home":"Internacional U20","away":"City London FC U20","minute":82,"score":"5-0","strategy_id":"S06","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.75,"main_total":5.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13189134","sport":"football","league":"Brazil Copa Sul U20","home":"Internacional U20","away":"City London FC U20","minute":82,"score":"5-0","strategy_id":"S15","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":2.75,"main_total":5.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13172188","sport":"tennis","league":"UTR Pro College Station Women","home":"Rachael Smith","away":"Ruby Cooling","minute":null,"score":"6-2,0-1","strategy_id":"S09","market":"match_winner","bet":"Rachael Smith","bet_side":"home","odds":1.7,"main_total":null},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13188430","sport":"football","league":"Luxembourg Promotion D’Honneur","home":"Koeppchen Wormeldange","away":"FC Berdenia Berbourg","minute":82,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.8,"main_total":2.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13188430","sport":"football","league":"Luxembourg Promotion D’Honneur","home":"Koeppchen Wormeldange","away":"FC Berdenia Berbourg","minute":82,"score":"1-1","strategy_id":"S22","market":"next_goal_under","bet":"Без следующего гола / ТМ +0.5 от текущего счёта","bet_side":null,"odds":1.625,"main_total":2.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13188705","sport":"football","league":"Switzerland 2. Liga Interregional","home":"FC Concordia Lausanne","away":"Stade Lausanne-Ouchy II","minute":83,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.35,"main_total":2.5},{"attempt":9,"ts":"2026-09-25T19:41:53.150601+00:00","event_id":"13188705","sport":"football","league":"Switzerland 2. Liga Interregional","home":"FC Concordia Lausanne","away":"Stade Lausanne-Ouchy II","minute":83,"score":"1-1","strategy_id":"S22","market":"next_goal_under","bet":"Без следующего гола / ТМ +0.5 от текущего счёта","bet_side":null,"odds":1.575,"main_total":2.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"13137900","sport":"football","league":"Republic of Ireland Premier Division","home":"Galway United","away":"Shelbourne","minute":83,"score":"1-1","strategy_id":"S15","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":2.6,"main_total":2.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"13137900","sport":"football","league":"Republic of Ireland Premier Division","home":"Galway United","away":"Shelbourne","minute":83,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.075,"main_total":2.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"11437512","sport":"football","league":"UEFA Nations League C","home":"Montenegro","away":"Cyprus","minute":85,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.85,"main_total":2.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"11518141","sport":"football","league":"Republic of Ireland First Division","home":"Cobh Ramblers","away":"Athlone Town","minute":89,"score":"3-3","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":5.5,"main_total":6.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"13097908","sport":"football","league":"Northern Ireland Premier League Women","home":"Linfield (W)","away":"Cliftonville (W)","minute":86,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":2.1,"main_total":2.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"13173662","sport":"football","league":"Venezuela Segunda Division","home":"Academia Puerto Cabello II","away":"Atletico El Vigia","minute":45,"score":"1-1","strategy_id":"S20","market":"main_over","bet":"Тотал больше","bet_side":null,"odds":1.925,"main_total":3.5},{"attempt":10,"ts":"2026-09-25T20:31:03.424439+00:00","event_id":"13187836","sport":"football","league":"Europe Friendlies","home":"Chaves","away":"Guimaraes","minute":90,"score":"0-1","strategy_id":"S16","market":"next_goal_over","bet":"Следующий гол / ТБ +0.5 от текущего счёта","bet_side":null,"odds":6.6,"main_total":1.5}]''')
+          
+          def get(path, params):
+              q=dict(params); q["token"]=TOKEN
+              req=urllib.request.Request(BASE+path+"?"+urllib.parse.urlencode(q),headers={"User-Agent":"dzam-scaner-settle/1.1"})
               with urllib.request.urlopen(req,timeout=20) as r:
-                  p=json.loads(r.read().decode("utf-8"))
+                  return json.loads(r.read().decode("utf-8"))
+          
+          def f(x):
+              try: return float(x)
+              except: return None
+          
+          def hv(x):
+              if x is None: return None
+              vals=[]
+              for p in str(x).replace("/",",").split(","):
+                  try: vals.append(float(p.strip()))
+                  except: pass
+              return sum(vals)/len(vals) if vals else None
+          
+          def stotal(s):
+              try:
+                  a,b=map(int,str(s).split("-",1)); return a+b
+              except: return None
+          
+          ids=sorted(set(s["event_id"] for s in SIGNALS))
+          final={}
+          for i in range(0,len(ids),10):
+              p=get("/v1/event/view",{"event_id":",".join(ids[i:i+10])})
               rows=p.get("results") or []
               if isinstance(rows,dict): rows=[rows]
               for e in rows:
-                  if isinstance(e,dict):
-                      all_rows.append({
-                          "id":str(e.get("id")),
-                          "sport_id":e.get("sport_id"),
-                          "time_status":e.get("time_status"),
-                          "ss":e.get("ss"),
-                          "home":(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home"),
-                          "away":(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away"),
-                          "scores":e.get("scores"),
-                          "extra":e.get("extra"),
-                      })
-          print("SETTLEMENT_DATA="+json.dumps(all_rows,ensure_ascii=False,separators=(",",":")))
+                  if isinstance(e,dict): final[str(e.get("id"))]=e
+          
+          football_ids=sorted(set(s["event_id"] for s in SIGNALS if s["sport"]=="football"))
+          odds_cache={}
+          for eid in football_ids:
+              try:
+                  p=get("/v2/event/odds",{"event_id":eid,"source":"bet365","odds_market":"3"})
+                  rr=p.get("results") or {}
+                  odds_cache[eid]=(rr.get("odds") or {}).get("1_3") or []
+              except Exception:
+                  odds_cache[eid]=[]
+          
+          def reconstruct_line(s):
+              if s["sport"]!="football": return None
+              goals=stotal(s.get("score"))
+              if goals is None: return s.get("main_total")
+              if s["market"] in ("next_goal_over","next_goal_under","plus_0_5"):
+                  return goals+0.5
+              if s["market"] not in ("main_over","over"):
+                  return None
+              ts=int(datetime.fromisoformat(s["ts"].replace("Z","+00:00")).timestamp())+10
+              rows=[]
+              for r in odds_cache.get(s["event_id"],[]):
+                  if not isinstance(r,dict): continue
+                  at=int(f(r.get("add_time")) or 0)
+                  if at and at>ts: continue
+                  rs=str(r.get("ss") or "").replace(":","-")
+                  if rs and rs!=s.get("score"): continue
+                  od=f(r.get("over_od"))
+                  if od is None: continue
+                  rows.append((at,r,abs(od-s["odds"])))
+              # Best evidence: exact displayed price at the scan state.
+              exact=[x for x in rows if x[2] <= 0.011]
+              if exact:
+                  exact.sort(key=lambda x:x[0], reverse=True)
+                  return hv(exact[0][1].get("handicap"))
+              # Fallback: reproduce the old scanner selection as of the scan timestamp.
+              rows.sort(key=lambda x:x[0], reverse=True)
+              if rows:
+                  target=goals+1.0
+                  for _,r,_ in rows:
+                      h=hv(r.get("handicap"))
+                      if h is not None and abs(h-target)<0.01:
+                          return h
+                  return hv(rows[0][1].get("handicap"))
+              return s.get("main_total")
+          
+          def winner_tennis(ss):
+              sets=[]
+              for tok in str(ss or "").split(","):
+                  try:
+                      a,b=map(int,tok.split("-",1)); sets.append((a,b))
+                  except: pass
+              hw=sum(a>b for a,b in sets); aw=sum(b>a for a,b in sets)
+              return "home" if hw>aw else "away" if aw>hw else None
+          
+          def component_profit(total,line,over,odds):
+              if over:
+                  if total>line: return odds-1
+                  if total==line: return 0
+                  return -1
+              else:
+                  if total<line: return odds-1
+                  if total==line: return 0
+                  return -1
+          
+          def asian_profit(total,line,over,odds):
+              q=round((line-math.floor(line))*100)
+              if q==25:
+                  a=math.floor(line); b=a+0.5
+                  return (component_profit(total,a,over,odds)+component_profit(total,b,over,odds))/2
+              if q==75:
+                  a=math.floor(line)+0.5; b=math.floor(line)+1.0
+                  return (component_profit(total,a,over,odds)+component_profit(total,b,over,odds))/2
+              return component_profit(total,line,over,odds)
+          
+          prepared=[]
+          for s in SIGNALS:
+              e=final.get(s["event_id"]) or {}
+              fs=str(e.get("ss") or "")
+              r=dict(s); r["final_score"]=fs
+              if s["sport"]=="tennis":
+                  r["line"]=None
+                  w=winner_tennis(fs)
+                  r["profit"]=(s["odds"]-1) if w==s.get("bet_side") else -1
+                  r["selection"]="P1" if s.get("bet_side")=="home" else "P2"
+              else:
+                  line=reconstruct_line(s); r["line"]=line
+                  total=stotal(fs)
+                  if s["market"] in ("next_goal_over","main_over","over","plus_0_5"):
+                      r["profit"]=asian_profit(total,line,True,s["odds"]) if total is not None and line is not None else None
+                      r["selection"]="TB "+str(line)
+                  elif s["market"]=="next_goal_under":
+                      r["profit"]=asian_profit(total,line,False,s["odds"]) if total is not None and line is not None else None
+                      r["selection"]="TM "+str(line)
+                  else:
+                      r["profit"]=None; r["selection"]=s["bet"]
+              prepared.append(r)
+          
+          # Remove repeated/duplicate actual bets. Same event + same side/total is one bet, first appearance wins.
+          uniq={}
+          for r in prepared:
+              key=(r["event_id"],r["selection"])
+              if key not in uniq: uniq[key]=r
+          bets=list(uniq.values())
+          for r in bets:
+              p=r.get("profit")
+              r["result"]="W" if p is not None and p>1e-9 else "L" if p is not None and p<-1e-9 else "PUSH" if p is not None else "UNRESOLVED"
+          wins=sum(r["result"]=="W" for r in bets)
+          losses=sum(r["result"]=="L" for r in bets)
+          pushes=sum(r["result"]=="PUSH" for r in bets)
+          unresolved=sum(r["result"]=="UNRESOLVED" for r in bets)
+          profit=sum(r["profit"] for r in bets if r["profit"] is not None)
+          settled=sum(r["profit"] is not None for r in bets)
+          roi=(profit/settled*100) if settled else None
+          out={
+            "raw_visible_signals":92,
+            "unique_event_strategy":55,
+            "unique_matches":len(set(r["event_id"] for r in bets)),
+            "unique_bets":len(bets),
+            "wins":wins,"losses":losses,"pushes":pushes,"unresolved":unresolved,
+            "profit_units":round(profit,4),"roi_pct":round(roi,2) if roi is not None else None,
+            "bets":bets
+          }
+          print("SETTLEMENT_RESULT="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
           
           PY
           python3 /tmp/settle.py
