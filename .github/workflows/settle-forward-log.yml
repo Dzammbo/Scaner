@@ -182,6 +182,14 @@ jobs:
           for sp in sorted(set(x["sport"] for x in settled)):
               by_sport[sp]=agg([x for x in settled if x["sport"]==sp])
           band=[x for x in settled if 1.39 <= float(x["current_odds"]) <= 6.0]
+          clean_start="2026-09-26T15:19:55+00:00"
+          clean=[x for x in settled if str(x.get("timestamp","")) >= clean_start]
+          today=[x for x in settled if str(x.get("timestamp",""))[:10]=="2026-09-26"]
+          def grouped(items):
+              by={}
+              for sid in sorted(set(x["strategy_id"] for x in items)):
+                  by[sid]=agg([x for x in items if x["strategy_id"]==sid])
+              return {"total":agg(items),"by_strategy":by}
           out={
               "raw_signals":len(rows),
               "unique_events":len(set(x["event_id"] for x in rows)),
@@ -189,7 +197,12 @@ jobs:
               "user_band_settled":agg(band),
               "by_sport":by_sport,
               "by_strategy":by_strategy,
-              "reverse_by_strategy":reverse_by_strategy
+              "reverse_by_strategy":reverse_by_strategy,
+              "by_era":{
+                  "today_all_recorded":grouped(today),
+                  "clean_core8":grouped(clean),
+                  "clean_start":clean_start
+              }
           }
           print("FORWARD_SETTLEMENT="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
           PY
