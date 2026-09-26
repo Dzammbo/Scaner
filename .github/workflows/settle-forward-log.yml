@@ -61,6 +61,25 @@ jobs:
                   return (component(total,a,over,odds)+component(total,b,over,odds))/2
               return component(total,line,over,odds)
 
+          def ah_component(selected_goals,opponent_goals,line,odds):
+              diff=selected_goals+line-opponent_goals
+              return odds-1 if diff>1e-9 else 0 if abs(diff)<=1e-9 else -1
+
+          def ah_profit(selected_goals,opponent_goals,line,odds):
+              # Quarter handicaps split into the adjacent half-lines.
+              q=round(line*4)/4
+              frac=abs(q*4)%2
+              if abs(q*2-round(q*2))>1e-9:
+                  lo=math.floor(q*2)/2
+                  hi=lo+0.5
+                  return (ah_component(selected_goals,opponent_goals,lo,odds)+ah_component(selected_goals,opponent_goals,hi,odds))/2
+              return ah_component(selected_goals,opponent_goals,q,odds)
+
+          def parse_football_score(s):
+              try:
+                  a,b=map(int,str(s).split("-",1)); return a,b
+              except: return None
+
           def tennis_winner(ss):
               sets=[]
               for tok in str(ss or "").split(","):
@@ -85,6 +104,12 @@ jobs:
                       tot=total_score(fs)
                       if line is not None and tot is not None:
                           p=asian(tot,line,True,float(r["current_odds"]))
+                  elif r["exact_bet_line"].startswith("Фора гостей "):
+                      try: line=float(r["exact_bet_line"].split()[-1])
+                      except: line=None
+                      sc=parse_football_score(fs)
+                      if line is not None and sc is not None:
+                          p=ah_profit(sc[1],sc[0],line,float(r["current_odds"]))
               else:
                   home=(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home")
                   away=(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away")
@@ -105,6 +130,12 @@ jobs:
                           tot=total_score(fs)
                           if rline is not None and tot is not None:
                               rp=asian(tot,rline,False,ro)
+                      elif r["sport"]=="football" and rb.startswith("Фора хозяев "):
+                          try: rline=float(rb.split()[-1])
+                          except: rline=None
+                          sc=parse_football_score(fs)
+                          if rline is not None and sc is not None:
+                              rp=ah_profit(sc[0],sc[1],rline,ro)
                       elif r["sport"]=="football" and rb.startswith("ТБ "):
                           try: rline=float(rb.split()[1])
                           except: rline=None
