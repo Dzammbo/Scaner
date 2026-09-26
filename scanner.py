@@ -44,10 +44,9 @@ def cheap_core_prefilter(ev, st, previous):
         if ev.get("score")!="0-1":
             return False
         prev_score=prev.get("score")
-        if prev_score in (None,"0-0"):
-            return True
-        prev_min=as_int(prev.get("minute")); cur_min=as_int(ev.get("minute"))
-        return prev_score=="0-1" and prev_min is not None and cur_min is not None and cur_min-prev_min<=5
+        # Require an observed first-goal transition. If this event is first seen
+        # already at 0:1, do not guess goal recency and do not spend a detail call.
+        return prev_score=="0-0"
 
     # Football Core rules already expose their decisive score/minute state on board.
     if sid in ("S01","S02","S15","S20"):
@@ -55,7 +54,12 @@ def cheap_core_prefilter(ev, st, previous):
 
     # Tennis: only query when board score shape can possibly match the rule.
     if ev.get("sport")=="tennis":
-        sets=game_sets(ev.get("score"))
+        raw_score=ev.get("score")
+        sets=game_sets(raw_score)
+        # Provider board can occasionally omit or lag set detail. In that case
+        # preserve recall and let the odds-detail evaluator make the final decision.
+        if not sets:
+            return True
         if sid=="S10":
             return len(sets)==1 and not done_set(*sets[-1]) and sets[-1][0]==sets[-1][1] and sets[-1][0] in (2,3,4,5,6)
         if sid=="S11":
