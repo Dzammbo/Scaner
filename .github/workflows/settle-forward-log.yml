@@ -27,10 +27,22 @@ jobs:
           rows=[json.loads(x) for x in Path("forward_log/scanner_signals.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
 
           def get(path, params):
+              import time, urllib.error
               q=dict(params); q["token"]=TOKEN
-              req=urllib.request.Request(BASE+path+"?"+urllib.parse.urlencode(q),headers={"User-Agent":"dzam-scaner-settle/2.0"})
-              with urllib.request.urlopen(req,timeout=20) as r:
-                  return json.loads(r.read().decode("utf-8"))
+              req=urllib.request.Request(BASE+path+"?"+urllib.parse.urlencode(q),headers={"User-Agent":"dzam-scaner-settle/2.1"})
+              last=None
+              for delay in (0,0.5,1.5):
+                  if delay: time.sleep(delay)
+                  try:
+                      with urllib.request.urlopen(req,timeout=20) as r:
+                          return json.loads(r.read().decode("utf-8"))
+                  except urllib.error.HTTPError as ex:
+                      last=ex
+                      if ex.code not in (429,500,502,503,504):
+                          raise
+                  except Exception as ex:
+                      last=ex
+              raise last
 
           ids=sorted(set(r["event_id"] for r in rows))
           final={}
