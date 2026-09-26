@@ -1,0 +1,45 @@
+name: Settle scanner 2026-09-25
+on:
+  push:
+    paths:
+      - '.github/workflows/settle-2026-09-25.yml'
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - name: Query final event states
+        shell: bash
+        run: |
+          cat > /tmp/settle.py <<'PY'
+          import json, os, urllib.parse, urllib.request
+          BASE="https://api.b365api.com"
+          TOKEN=os.environ["BETSAPI_KEY"]
+          IDS=["13170369","13172113","10525217","13172729","13188492","13192427","13192741","12323524","11354733","13186449","13187461","13188804","12181953","13144162","13144166","13152089","13152091","12192287","13152093","13189133","12140268","12159852","13121544","13173815","13187835","13188199","12182859","13144164","12155697","12159805","13144163","11287477","13188252","13152088","13189134","13172188","13188430","13188705","13137900","11437512","11518141","13097908","13173662","13187836"]
+          all_rows=[]
+          for i in range(0,len(IDS),10):
+              batch=IDS[i:i+10]
+              q=urllib.parse.urlencode({"token":TOKEN,"event_id":",".join(batch)})
+              req=urllib.request.Request(BASE+"/v1/event/view?"+q,headers={"User-Agent":"dzam-scaner-settle/1.0"})
+              with urllib.request.urlopen(req,timeout=20) as r:
+                  p=json.loads(r.read().decode("utf-8"))
+              rows=p.get("results") or []
+              if isinstance(rows,dict): rows=[rows]
+              for e in rows:
+                  if isinstance(e,dict):
+                      all_rows.append({
+                          "id":str(e.get("id")),
+                          "sport_id":e.get("sport_id"),
+                          "time_status":e.get("time_status"),
+                          "ss":e.get("ss"),
+                          "home":(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home"),
+                          "away":(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away"),
+                          "scores":e.get("scores"),
+                          "extra":e.get("extra"),
+                      })
+          print("SETTLEMENT_DATA="+json.dumps(all_rows,ensure_ascii=False,separators=(",",":")))
+          
+          PY
+          python3 /tmp/settle.py
