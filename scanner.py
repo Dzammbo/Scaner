@@ -6,8 +6,7 @@ from pathlib import Path
 
 BASE = "https://api.b365api.com"
 TOKEN = os.environ["BETSAPI_KEY"]
-FOOTBALL_DETAIL_CAP = 12
-TENNIS_DETAIL_CAP = 10
+DETAIL_CALL_BUDGET = max(0, int(os.environ.get("SCANER_DETAIL_BUDGET", "48")))
 
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
@@ -542,10 +541,20 @@ for sport in ("football", "tennis"):
 def priority(row):
     return (min(rank.get(s["tier"], 9) for s in row["strategies"]), -len(row["strategies"]))
 
-selected = (
-    sorted(queues["football"].values(), key=priority)[:FOOTBALL_DETAIL_CAP]
-    + sorted(queues["tennis"].values(), key=priority)[:TENNIS_DETAIL_CAP]
-)
+football_ranked = sorted(queues["football"].values(), key=priority)
+tennis_ranked = sorted(queues["tennis"].values(), key=priority)
+
+# Split the detail budget fairly, then give unused capacity to the other sport.
+half = DETAIL_CALL_BUDGET // 2
+selected_football = football_ranked[:half]
+selected_tennis = tennis_ranked[:half]
+remaining = DETAIL_CALL_BUDGET - len(selected_football) - len(selected_tennis)
+if remaining > 0:
+    selected_football += football_ranked[len(selected_football):len(selected_football)+remaining]
+    remaining = DETAIL_CALL_BUDGET - len(selected_football) - len(selected_tennis)
+if remaining > 0:
+    selected_tennis += tennis_ranked[len(selected_tennis):len(selected_tennis)+remaining]
+selected = selected_football + selected_tennis
 
 details = {}
 if selected:
