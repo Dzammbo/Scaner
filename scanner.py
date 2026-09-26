@@ -351,6 +351,36 @@ def game_sets(ss):
             break
     return out
 
+def tennis_terminal_against_side(ss, side):
+    """
+    Reject clearly terminal match states for the selected player.
+    Conservative rule: the opponent has already won at least one completed set
+    and is leading the current unfinished set by 5+ games to <=2 with a 3+ game gap.
+    Examples rejected for the trailing selection: 0-5, 1-5, 2-5 in a match-closing set.
+    """
+    sets = game_sets(ss)
+    if not sets or done_set(*sets[-1]) or side not in ("home", "away"):
+        return False
+
+    completed = sets[:-1]
+    home_sets = sum(a > b for a, b in completed if done_set(a, b))
+    away_sets = sum(b > a for a, b in completed if done_set(a, b))
+    cur_home, cur_away = sets[-1]
+
+    if side == "home":
+        opponent_sets = away_sets
+        selected_games, opponent_games = cur_home, cur_away
+    else:
+        opponent_sets = home_sets
+        selected_games, opponent_games = cur_away, cur_home
+
+    return (
+        opponent_sets >= 1
+        and opponent_games >= 5
+        and selected_games <= 2
+        and opponent_games - selected_games >= 3
+    )
+
 def normalize_tennis_prices(row, matching_dir):
     h = as_float(row.get("home_od"))
     a = as_float(row.get("away_od"))
@@ -513,6 +543,11 @@ for sport in ("football", "tennis"):
         for st in row["strategies"]:
             h = football_evaluate(ev, st, detail) if sport == "football" else tennis_evaluate(ev, st, detail)
             if h:
+                if sport == "tennis" and tennis_terminal_against_side(
+                    (h.get("features") or {}).get("set_score"),
+                    h.get("bet_side"),
+                ):
+                    continue
                 hits.append((ev, h))
 
 group = {}
