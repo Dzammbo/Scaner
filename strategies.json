@@ -379,6 +379,27 @@
         "state": "deciding_set",
         "side": "second_set_loser"
       }
+    },
+    {
+      "id": "S25",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Фора гостей после первого гола при 0:1",
+      "source": "mining_forward_strong",
+      "evidence": {
+        "n": 18,
+        "wins": 17,
+        "losses": 1,
+        "roi_pct": 81.1,
+        "avg_odds": 1.915,
+        "as_of": "2026-09-26"
+      },
+      "rule": {
+        "score": "0-1",
+        "minutes_since_goal_max": 5,
+        "first_goal_only": true,
+        "market": "main_ah_away"
+      }
     }
   ]
 }
