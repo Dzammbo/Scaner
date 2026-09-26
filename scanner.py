@@ -180,6 +180,50 @@ def fmt_line(v):
         return f"{v:.1f}"
     return f"{v:.2f}".rstrip("0").rstrip(".")
 
+def fmt_signed_line(v):
+    if v is None:
+        return None
+    v=float(v)
+    s=fmt_line(abs(v))
+    return ("+" if v > 0 else "-" if v < 0 else "") + s
+
+def main_ah_features(ev, detail):
+    odds=(detail or {}).get("odds") or {}
+    rows=latest_rows(odds.get("1_2"))
+    if not rows:
+        return None
+    matching_dir=as_int(((detail or {}).get("stats") or {}).get("matching_dir")) or 1
+    cur_score=ev.get("score")
+    latest_by_line={}
+    now=int(time.time())
+    for r in rows:
+        if not isinstance(r,dict):
+            continue
+        rs=str(r.get("ss") or "").replace(":","-")
+        if rs and rs != cur_score:
+            continue
+        h=as_float(r.get("home_od")); a=as_float(r.get("away_od"))
+        line=handicap_value(r.get("handicap"))
+        add=as_int(r.get("add_time"))
+        if None in (h,a,line) or h <= 1 or a <= 1:
+            continue
+        if add is not None and now-add > 180:
+            continue
+        if matching_dir == -1:
+            h,a=a,h
+            line=-line
+        key=round(float(line),4)
+        if key not in latest_by_line or (add or 0) > (latest_by_line[key]["add"] or 0):
+            latest_by_line[key]={"home_od":h,"away_od":a,"home_line":line,"add":add}
+    if not latest_by_line:
+        return None
+    q=min(
+        latest_by_line.values(),
+        key=lambda x:(abs(math.log(x["home_od"]/x["away_od"])),-(x["add"] or 0),abs(x["home_line"]))
+    )
+    q["away_line"]=-q["home_line"]
+    return q
+
 def latest_rows(rows):
     if not isinstance(rows, list):
         return []
@@ -310,6 +354,14 @@ def football_evaluate(ev, st, detail):
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else "ТБ 0.5"
         reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else "ТМ 0.5"
         reverse_odds = tf["next_goal_under_odds"]
+    elif market == "main_ah_away":
+        ah = main_ah_features(ev, detail or {})
+        if ah:
+            current_odds = ah["away_od"]
+            bet_line = ah["away_line"]
+            bet = f"Фора гостей {fmt_signed_line(bet_line)}"
+            reverse_bet = f"Фора хозяев {fmt_signed_line(ah['home_line'])}"
+            reverse_odds = ah["home_od"]
 
     if "drought_min" in r:
         if tf["drought_min"] is None or tf["drought_min"] < r["drought_min"]:
@@ -317,13 +369,15 @@ def football_evaluate(ev, st, detail):
     if "minutes_since_goal_max" in r:
         if tf["drought_min"] is None or tf["drought_min"] > r["minutes_since_goal_max"]:
             return None
+    if r.get("first_goal_only") and score_total(ev.get("score")) != 1:
+        return None
     if "odds" in r and not in_range(current_odds, r["odds"]):
         return None
     if "odds_min" in r and (current_odds is None or current_odds < r["odds_min"]):
         return None
 
     # Rules with a price-dependent market are emitted only when that price is available.
-    if market in ("next_goal_over", "next_goal_under", "main_over", "over", "draw", "home", "plus_0_5") and current_odds is None:
+    if market in ("next_goal_over", "next_goal_under", "main_over", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
         return None
 
     return {
@@ -341,6 +395,7 @@ def football_evaluate(ev, st, detail):
             "last_goal_minute": tf["last_goal_minute"],
             "main_total": tf["main_handicap"],
             "selected_total": bet_line,
+            "main_ah_line": bet_line if market == "main_ah_away" else None,
         },
     }
 
