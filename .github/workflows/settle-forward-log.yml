@@ -93,7 +93,33 @@ jobs:
                   if w and sel:
                       p=float(r["current_odds"])-1 if w==sel else -1
               if p is not None:
-                  z=dict(r); z["profit"]=p; z["final_score"]=fs; settled.append(z)
+                  z=dict(r); z["profit"]=p; z["final_score"]=fs
+                  rp=None
+                  ro=r.get("reverse_odds")
+                  rb=r.get("reverse_bet")
+                  if ro is not None and rb:
+                      ro=float(ro)
+                      if r["sport"]=="football" and rb.startswith("ТМ "):
+                          try: rline=float(rb.split()[1])
+                          except: rline=None
+                          tot=total_score(fs)
+                          if rline is not None and tot is not None:
+                              rp=asian(tot,rline,False,ro)
+                      elif r["sport"]=="football" and rb.startswith("ТБ "):
+                          try: rline=float(rb.split()[1])
+                          except: rline=None
+                          tot=total_score(fs)
+                          if rline is not None and tot is not None:
+                              rp=asian(tot,rline,True,ro)
+                      elif r["sport"]=="tennis":
+                          home=(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home")
+                          away=(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away")
+                          w=tennis_winner(fs)
+                          rsel="home" if rb==home else "away" if rb==away else None
+                          if w and rsel:
+                              rp=ro-1 if w==rsel else -1
+                  z["reverse_profit"]=rp
+                  settled.append(z)
 
           def agg(items):
               n=len(items); profit=sum(x["profit"] for x in items)
@@ -103,8 +129,12 @@ jobs:
               return {"n":n,"W":w,"L":l,"P":push,"profit":round(profit,3),"roi_pct":round(profit/n*100,2) if n else None}
 
           by_strategy={}
+          reverse_by_strategy={}
           for sid in sorted(set(x["strategy_id"] for x in settled)):
-              by_strategy[sid]=agg([x for x in settled if x["strategy_id"]==sid])
+              xs=[x for x in settled if x["strategy_id"]==sid]
+              by_strategy[sid]=agg(xs)
+              rxs=[dict(x,profit=x["reverse_profit"]) for x in xs if x.get("reverse_profit") is not None]
+              reverse_by_strategy[sid]=agg(rxs)
           by_sport={}
           for sp in sorted(set(x["sport"] for x in settled)):
               by_sport[sp]=agg([x for x in settled if x["sport"]==sp])
@@ -115,7 +145,8 @@ jobs:
               "settled":agg(settled),
               "user_band_settled":agg(band),
               "by_sport":by_sport,
-              "by_strategy":by_strategy
+              "by_strategy":by_strategy,
+              "reverse_by_strategy":reverse_by_strategy
           }
           print("FORWARD_SETTLEMENT="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
           PY
