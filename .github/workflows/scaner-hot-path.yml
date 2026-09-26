@@ -2,8 +2,8 @@ name: Scaner hot path
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
+  # Automatic cadence runs on Selectel cron every 5 minutes.
+  # GitHub Actions remains manual/push only to avoid duplicate automatic scans.
   push:
     branches: [main]
     paths:
