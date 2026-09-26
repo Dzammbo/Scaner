@@ -570,7 +570,7 @@ def tennis_evaluate(ev, st, detail):
     return None
 
 registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
-strategies = registry["strategies"]
+strategies = [s for s in registry["strategies"] if s.get("scanner_enabled", True)]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}
 
 started = time.perf_counter()
