@@ -31,7 +31,8 @@
         ],
         "score": "0-1",
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S02",
@@ -50,7 +51,8 @@
           1.99
         ],
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S03",
@@ -65,7 +67,8 @@
         ],
         "league_contains": "Romania Liga III",
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S04",
@@ -80,7 +83,8 @@
         ],
         "league_contains": "Norway Interkretsserie U19",
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S05",
@@ -92,7 +96,8 @@
         "minute_min": 85,
         "league_contains": "Norway Interkretsserie U19",
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S06",
@@ -103,7 +108,8 @@
       "rule": {
         "country": "br",
         "market": "main_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S07",
@@ -116,7 +122,8 @@
         "score_state": "draw",
         "country": "br",
         "market": "draw"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S08",
@@ -131,7 +138,8 @@
           1.99
         ],
         "market": "over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S09",
@@ -143,7 +151,8 @@
         "tour_contains": "UTR",
         "state": "heavy_set_loss",
         "side": "previous_set_winner"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S10",
@@ -159,7 +168,8 @@
           1.79
         ],
         "side": "opposite"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S11",
@@ -170,7 +180,8 @@
       "rule": {
         "state": "tight_set_loss",
         "side": "previous_set_winner"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S12",
@@ -183,7 +194,8 @@
         "minute_min": 30,
         "on_target10_min": 1,
         "market": "plus_0_5"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S13",
@@ -196,7 +208,8 @@
         "score_state": "draw",
         "pressure_home_gt_away": true,
         "market": "home"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S14",
@@ -209,7 +222,8 @@
         "score_state": "draw",
         "home_sot10_min": 1,
         "market": "home"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S15",
@@ -227,7 +241,8 @@
           2.99
         ],
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S16",
@@ -239,7 +254,8 @@
         "minute_min": 85,
         "odds_min": 4,
         "market": "next_goal_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S17",
@@ -250,7 +266,8 @@
       "rule": {
         "league_contains": "England EFL Trophy",
         "market": "main_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S18",
@@ -262,7 +279,8 @@
         "league_contains": "England EFL Trophy",
         "drought_min": 15,
         "market": "over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S19",
@@ -274,7 +292,8 @@
         "league_contains": "England EFL Trophy",
         "drought_min": 25,
         "market": "over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S20",
@@ -285,7 +304,8 @@
       "rule": {
         "score": "1-1",
         "market": "main_over"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S21",
@@ -297,7 +317,8 @@
         "minute_min": 85,
         "score": "3-2",
         "market": "next_goal_under"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S22",
@@ -312,7 +333,8 @@
           1.79
         ],
         "market": "next_goal_under"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S23",
@@ -323,7 +345,8 @@
       "rule": {
         "movement_pp_min": 5,
         "direction": "FOLLOW"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "S24",
@@ -334,7 +357,8 @@
       "rule": {
         "movement_pp_min": 5,
         "direction": "FADE"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "T13",
@@ -345,7 +369,9 @@
       "rule": {
         "state": "heavy_set_loss",
         "side": "previous_set_loser"
-      }
+      },
+      "user_output": false,
+      "research_role": "reverse_or_mirror_only"
     },
     {
       "id": "T14",
@@ -356,7 +382,9 @@
       "rule": {
         "state": "tight_set_loss",
         "side": "previous_set_loser"
-      }
+      },
+      "user_output": false,
+      "research_role": "reverse_or_mirror_only"
     },
     {
       "id": "T16",
@@ -367,7 +395,8 @@
       "rule": {
         "state": "deciding_set",
         "side": "second_set_winner"
-      }
+      },
+      "user_output": true
     },
     {
       "id": "T17",
@@ -378,7 +407,9 @@
       "rule": {
         "state": "deciding_set",
         "side": "second_set_loser"
-      }
+      },
+      "user_output": false,
+      "research_role": "reverse_or_mirror_only"
     },
     {
       "id": "S25",
@@ -399,7 +430,8 @@
         "minutes_since_goal_max": 5,
         "first_goal_only": true,
         "market": "main_ah_away"
-      }
+      },
+      "user_output": true
     }
   ]
 }
