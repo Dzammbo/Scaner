@@ -119,7 +119,7 @@ jobs:
       - name: Persist forward log
         shell: bash
         run: |
-          if git diff --quiet -- forward_log/; then
+          if [ -z "$(git status --porcelain -- forward_log/)" ]; then
             echo "No forward-log changes"
             exit 0
           fi
