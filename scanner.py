@@ -201,6 +201,7 @@ def total_features(ev, detail):
         "next_goal_under_odds": None,
         "next_goal_handicap": None,
         "plus_one_over_odds": None,
+        "plus_one_under_odds": None,
         "plus_one_handicap": None,
         "last_goal_minute": None,
         "drought_min": None,
@@ -234,6 +235,7 @@ def total_features(ev, detail):
             out["next_goal_handicap"] = handicap_value(best05.get("handicap"))
         if best10:
             out["plus_one_over_odds"] = as_float(best10.get("over_od"))
+            out["plus_one_under_odds"] = as_float(best10.get("under_od"))
             out["plus_one_handicap"] = handicap_value(best10.get("handicap"))
 
     # Estimate the latest score-change minute from provider odds-history rows.
@@ -266,23 +268,32 @@ def football_evaluate(ev, st, detail):
     current_odds = None
     bet = None
     bet_line = None
+    reverse_bet = None
+    reverse_odds = None
 
     if market == "next_goal_over":
         current_odds = tf["next_goal_over_odds"]
         bet_line = tf["next_goal_handicap"]
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_odds = tf["next_goal_under_odds"]
     elif market == "next_goal_under":
         current_odds = tf["next_goal_under_odds"]
         bet_line = tf["next_goal_handicap"]
         bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_odds = tf["next_goal_over_odds"]
     elif market in ("main_over", "over"):
         if tf["plus_one_over_odds"] is not None:
             current_odds = tf["plus_one_over_odds"]
+            reverse_odds = tf["plus_one_under_odds"]
             bet_line = tf["plus_one_handicap"]
         else:
             current_odds = tf["main_over_odds"]
+            reverse_odds = tf["main_under_odds"]
             bet_line = tf["main_handicap"]
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "draw":
         # draw price lives in 1_1
         rows = latest_rows(((detail or {}).get("odds") or {}).get("1_1"))
@@ -298,6 +309,8 @@ def football_evaluate(ev, st, detail):
         current_odds = tf["next_goal_over_odds"]
         bet_line = tf["next_goal_handicap"]
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else "ТБ 0.5"
+        reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else "ТМ 0.5"
+        reverse_odds = tf["next_goal_under_odds"]
 
     if "drought_min" in r:
         if tf["drought_min"] is None or tf["drought_min"] < r["drought_min"]:
@@ -322,6 +335,8 @@ def football_evaluate(ev, st, detail):
         "bet": bet,
         "current_odds": current_odds,
         "bet_line": bet_line,
+        "reverse_bet": reverse_bet,
+        "reverse_odds": reverse_odds,
         "features": {
             "drought_min": tf["drought_min"],
             "last_goal_minute": tf["last_goal_minute"],
@@ -431,6 +446,8 @@ def tennis_evaluate(ev, st, detail):
                     "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
                     "market": "match_winner", "bet": ev[side], "bet_side": side,
                     "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
                     "features": {"set_score": row.get("ss"), "live_favorite": ev[fav], "favorite_odds": prices[fav]},
                 }
 
@@ -445,6 +462,8 @@ def tennis_evaluate(ev, st, detail):
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,
             "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
             "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
         }
 
@@ -454,6 +473,8 @@ def tennis_evaluate(ev, st, detail):
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,
             "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
             "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}"},
         }
 
@@ -463,6 +484,8 @@ def tennis_evaluate(ev, st, detail):
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,
             "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
             "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}", "mirror_of": "S09"},
         }
 
@@ -472,6 +495,8 @@ def tennis_evaluate(ev, st, detail):
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,
             "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
             "features": {"set_score": row.get("ss"), "previous_set": f"{wg}-{lg}", "mirror_of": "S11"},
         }
 
@@ -484,6 +509,8 @@ def tennis_evaluate(ev, st, detail):
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,
             "current_odds": prices[side],
+                    "reverse_bet": ev["away" if side == "home" else "home"],
+                    "reverse_odds": prices["away" if side == "home" else "home"],
             "features": {"set_score": row.get("ss"), "second_set": f"{s2h}-{s2a}", "deciding_set": True},
         }
     return None
