@@ -744,6 +744,13 @@ result = {
     "board_latency_ms": {"football": boards["football"]["latency_ms"], "tennis": boards["tennis"]["latency_ms"]},
     "api_calls": api_calls,
     "detail_candidates": {"football": len(queues["football"]), "tennis": len(queues["tennis"])},
+    "candidate_counts_by_strategy": {
+        st["id"]: sum(
+            1 for sport in ("football","tennis") for row in queues[sport].values()
+            if any(x["id"] == st["id"] for x in row["strategies"])
+        )
+        for st in strategies
+    },
     "details_fetched": {"football": sum(k[0] == "football" for k in details), "tennis": sum(k[0] == "tennis" for k in details)},
     "event_count": len(group),
     "events": sorted(
