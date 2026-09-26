@@ -15,7 +15,9 @@
       "SECONDARY",
       "WATCHLIST"
     ],
-    "note": "Not a real-money execution list. Rules are shadow/research candidates."
+    "note": "Not a real-money execution list. Rules are shadow/research candidates.",
+    "operational_scanner": "CORE_8",
+    "operational_scanner_count": 8
   },
   "strategies": [
     {
@@ -33,7 +35,8 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S02",
@@ -54,7 +57,8 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S03",
@@ -71,7 +75,11 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S04",
@@ -88,7 +96,11 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S05",
@@ -102,7 +114,11 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S06",
@@ -115,7 +131,11 @@
         "market": "main_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S07",
@@ -130,7 +150,11 @@
         "market": "draw"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S08",
@@ -147,7 +171,11 @@
         "market": "over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S09",
@@ -161,7 +189,11 @@
         "side": "previous_set_winner"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S10",
@@ -179,7 +211,8 @@
         "side": "opposite"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S11",
@@ -192,7 +225,8 @@
         "side": "previous_set_winner"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S12",
@@ -207,7 +241,11 @@
         "market": "plus_0_5"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S13",
@@ -222,7 +260,11 @@
         "market": "home"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S14",
@@ -237,7 +279,11 @@
         "market": "home"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S15",
@@ -257,7 +303,8 @@
         "market": "next_goal_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S16",
@@ -274,7 +321,8 @@
       "scanner_enabled": false,
       "research_destination": "mining",
       "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Forward Scanner sample materially negative; continue research and reverse in Mining."
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
+      "scanner_core8": false
     },
     {
       "id": "S17",
@@ -287,7 +335,11 @@
         "market": "main_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S18",
@@ -301,7 +353,11 @@
         "market": "over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S19",
@@ -315,7 +371,11 @@
         "market": "over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S20",
@@ -328,7 +388,8 @@
         "market": "main_over"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "S21",
@@ -342,7 +403,11 @@
         "market": "next_goal_under"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S22",
@@ -359,7 +424,11 @@
         "market": "next_goal_under"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S23",
@@ -372,7 +441,11 @@
         "direction": "FOLLOW"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S24",
@@ -385,7 +458,11 @@
         "direction": "FADE"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "T13",
@@ -402,7 +479,8 @@
       "scanner_enabled": false,
       "research_destination": "mining",
       "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Mirror branch materially negative in Scanner; continue research and reverse in Mining."
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
+      "scanner_core8": false
     },
     {
       "id": "T14",
@@ -419,7 +497,8 @@
       "scanner_enabled": false,
       "research_destination": "mining",
       "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Mirror branch materially negative in Scanner; continue research and reverse in Mining."
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
+      "scanner_core8": false
     },
     {
       "id": "T16",
@@ -432,7 +511,8 @@
         "side": "second_set_winner"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     },
     {
       "id": "T17",
@@ -446,7 +526,11 @@
       },
       "user_output": false,
       "research_role": "reverse_or_mirror_only",
-      "scanner_enabled": true
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-09-26",
+      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
       "id": "S25",
@@ -469,7 +553,8 @@
         "market": "main_ah_away"
       },
       "user_output": true,
-      "scanner_enabled": true
+      "scanner_enabled": true,
+      "scanner_core8": true
     }
   ]
 }
