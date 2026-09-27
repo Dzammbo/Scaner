@@ -25,18 +25,32 @@
       "tier": "ACTIVE",
       "sport": "football",
       "name_ru": "Гол после 60-й при счёте 0:1",
-      "source": "historical_confirmed",
+      "source": "mining_P1_robust_positive",
       "rule": {
         "minute": [
           60,
           69
         ],
         "score": "0-1",
-        "market": "next_goal_over"
+        "market": "next_goal_over",
+        "entry_policy": "first_available_point_in_window",
+        "one_entry_per_match": true,
+        "odds_filter": null,
+        "first_goal_time_filter": null
       },
       "user_output": true,
       "scanner_enabled": true,
-      "scanner_core8": true
+      "scanner_core8": true,
+      "evidence": {
+        "n": 333,
+        "wins": 216,
+        "losses": 117,
+        "roi_pct": 12.61,
+        "roi_without_top10_pct": 10.49,
+        "verdict": "ROBUST POSITIVE",
+        "source": "football_pockets_robustness_v1"
+      },
+      "clean_epoch_start": "2026-09-27T19:48:49Z"
     },
     {
       "id": "S02",
@@ -302,9 +316,12 @@
         ],
         "market": "next_goal_over"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "status": "MINING_ONLY",
+      "removed_from_scanner_at": "2026-09-27T19:48:49Z",
+      "removal_reason": "Слабый clean-forward результат; продолжать original/reverse в Mining."
     },
     {
       "id": "S16",
@@ -554,9 +571,12 @@
         "first_goal_only": true,
         "market": "main_ah_away"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "status": "MINING_ONLY",
+      "removed_from_scanner_at": "2026-09-27T19:48:49Z",
+      "removal_reason": "После исправления live-AH settlement clean-forward отрицательный; продолжать исследование в Mining."
     }
   ]
 }
