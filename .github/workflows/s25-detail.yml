@@ -2,7 +2,7 @@ name: S25 detailed analysis
 on:
   push:
     branches: [main]
-    paths: ["s25_detail.py"]
+    paths: ["s25_detail.py", "s20_detail.py"]
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -12,3 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 s25_detail.py
+      - run: python3 s20_detail.py
