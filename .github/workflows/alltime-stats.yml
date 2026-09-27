@@ -1,0 +1,17 @@
+name: Scanner all-time stats
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "alltime_stats.py"
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 alltime_stats.py
+      - run: cat scanner_alltime_stats.json
