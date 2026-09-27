@@ -1,0 +1,14 @@
+name: S25 detailed analysis
+on:
+  push:
+    branches: [main]
+    paths: ["s25_detail.py"]
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 s25_detail.py
