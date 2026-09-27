@@ -381,7 +381,7 @@
       "id": "S20",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Основной тотал больше при счёте 1:1",
+      "name_ru": "Рыночный основной тотал больше при счёте 1:1",
       "source": "historical_confirmed",
       "rule": {
         "score": "1-1",
@@ -389,7 +389,9 @@
       },
       "user_output": true,
       "scanner_enabled": true,
-      "scanner_core8": true
+      "scanner_core8": true,
+      "clean_epoch_start": "2026-09-27T19:42:00Z",
+      "history_note": "До clean_epoch_start историческая выборка смешивала current_goals+1.0 и fallback main Goal Line; считать exploratory и не объединять с новым однородным forward."
     },
     {
       "id": "S21",
