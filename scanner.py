@@ -106,6 +106,15 @@ def cheap_core_prefilter(ev, st, previous):
     sid=st["id"]
     prev=(previous or {}).get("events",{}).get(f"{ev['sport']}:{ev['event_id']}") or {}
 
+    # Mining P1: first available observation inside 60-69 at score 0-1.
+    # Once the event was already observed in this window, do not create a later entry.
+    if sid=="S01":
+        if ev.get("score")!="0-1" or ev.get("minute") is None or not (60 <= ev["minute"] <= 69):
+            return False
+        prev_min=prev.get("minute")
+        prev_score=prev.get("score")
+        return not (prev_score=="0-1" and prev_min is not None and 60 <= prev_min <= 69)
+
     # First-goal 0:1 AH: only spend detail when 0:1 is newly observed or still
     # within one five-minute scanner interval after the transition.
     if sid=="S25":
