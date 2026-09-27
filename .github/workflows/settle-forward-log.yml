@@ -121,7 +121,13 @@ jobs:
                       except: line=None
                       sc=parse_football_score(fs)
                       if line is not None and sc is not None:
-                          p=ah_profit(sc[1],sc[0],line,float(r["current_odds"]))
+                          # Bet365 in-play Asian Handicap ignores goals scored before the bet.
+                          try:
+                              entry=parse_football_score(str(r.get("score") or ""))
+                          except Exception:
+                              entry=None
+                          if entry is not None:
+                              p=ah_profit(sc[1]-entry[1],sc[0]-entry[0],line,float(r["current_odds"]))
               else:
                   home=(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home")
                   away=(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away")
@@ -147,7 +153,9 @@ jobs:
                           except: rline=None
                           sc=parse_football_score(fs)
                           if rline is not None and sc is not None:
-                              rp=ah_profit(sc[0],sc[1],rline,ro)
+                              entry=parse_football_score(str(r.get("score") or ""))
+                              if entry is not None:
+                                  rp=ah_profit(sc[0]-entry[0],sc[1]-entry[1],rline,ro)
                       elif r["sport"]=="football" and rb.startswith("ТБ "):
                           try: rline=float(rb.split()[1])
                           except: rline=None
