@@ -2,7 +2,7 @@ name: S25 detailed analysis
 on:
   push:
     branches: [main]
-    paths: ["s25_detail.py", "s20_detail.py"]
+    paths: ["s25_detail.py", "s20_detail.py", ".github/workflows/s25-detail.yml"]
 jobs:
   analyze:
     runs-on: ubuntu-latest
