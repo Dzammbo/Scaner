@@ -16,3 +16,5 @@ def read_local():
     with urllib.request.urlopen(url,timeout=30) as r: txt=r.read().decode()
     return [json.loads(x) for x in txt.splitlines() if x.strip()]
 
+
+# trigger: 2026-09-27T18:52:00Z
