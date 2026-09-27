@@ -145,3 +145,13 @@
    - эпоху: exploratory или clean forward.
 
 6. Исключённые из Core 8 стратегии не считать окончательно опровергнутыми только по старой неполной Scanner-выборке. Их дальнейшая полная проверка ведётся в Mining.
+
+
+### Аудит settlement 2026-09-27
+
+- Live Asian Handicap: settlement считается по голам после момента ставки; старый расчёт по полному финальному счёту признан ошибочным и не используется.
+- Live Goal Line: settlement считается по полному финальному тоталу матча, включая голы до ставки.
+- Теннис Match Winner: settlement только для завершённых матчей; retirement/abandoned не превращаются автоматически в W/L.
+- S20 до 2026-09-27T19:42:00Z считать exploratory mixed sample: evaluator смешивал current_goals+1.0 и fallback main Goal Line.
+- С 2026-09-27T19:42:00Z S20 = только фактический рыночный main Goal Line при счёте 1:1, отдельная clean-forward эпоха.
+- Forward-log дедуплицирует реальную ставку по event_id + exact_bet_line, но обязан хранить все strategy_ids, которым эта ставка соответствует.
