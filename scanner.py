@@ -12,6 +12,53 @@ STATE_PATH = Path("forward_log/scanner_state.json")
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
+
+def append_forward_log(result):
+    log_dir=Path("forward_log")
+    log_dir.mkdir(exist_ok=True)
+    signals_path=log_dir/"scanner_signals.jsonl"
+    runs_path=log_dir/"scanner_runs.jsonl"
+    existing=set()
+    if signals_path.exists():
+        for line in signals_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip(): continue
+            try: row=json.loads(line)
+            except Exception: continue
+            existing.add((str(row.get("event_id")),str(row.get("exact_bet_line"))))
+    appended=0
+    with signals_path.open("a",encoding="utf-8") as f:
+        for ev in result.get("events") or []:
+            eid=str(ev.get("event_id"))
+            for hit in ev.get("matches") or []:
+                exact=hit.get("bet")
+                if not exact:
+                    line=hit.get("bet_line"); market=hit.get("market")
+                    exact=f"{market}:{line}" if line is not None else str(market or "")
+                key=(eid,str(exact))
+                if key in existing: continue
+                row={
+                    "timestamp":result.get("generated_at_utc"),"sport":ev.get("sport"),
+                    "tournament":ev.get("league"),"event_id":eid,
+                    "match":f"{ev.get('home')} - {ev.get('away')}",
+                    "minute_score":f"{ev.get('minute')}' / '{ev.get('score')}" if ev.get("minute") is not None else str(ev.get("score") or ""),
+                    "minute":ev.get("minute"),"score":ev.get("score"),
+                    "exact_bet_line":exact,"current_odds":hit.get("current_odds"),
+                    "reverse_bet":hit.get("reverse_bet"),"reverse_odds":hit.get("reverse_odds"),
+                    "strategy_id":hit.get("strategy_id"),"tier":hit.get("tier"),
+                }
+                f.write(json.dumps(row,ensure_ascii=False,separators=(",",":"))+"\n")
+                existing.add(key);appended+=1
+    run_row={
+        "timestamp":result.get("generated_at_utc"),"scanner":result.get("scanner"),
+        "event_count":result.get("event_count",0),
+        "signals_seen":sum(len(ev.get("matches") or []) for ev in result.get("events") or []),
+        "new_signals_appended":appended,"empty_pass":not bool(result.get("events")),
+        "api_calls":result.get("api_calls"),"total_script_ms":result.get("total_script_ms"),
+    }
+    with runs_path.open("a",encoding="utf-8") as f:
+        f.write(json.dumps(run_row,ensure_ascii=False,separators=(",",":"))+"\n")
+    return appended
+
 def load_scanner_state():
     try:
         return json.loads(STATE_PATH.read_text(encoding="utf-8"))
@@ -768,5 +815,6 @@ result = {
 }
 
 save_scanner_state(boards)
+result["new_signals_appended"]=append_forward_log(result)
 Path("result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps(result, ensure_ascii=False))
