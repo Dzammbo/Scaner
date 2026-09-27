@@ -12,9 +12,8 @@ def read_github():
     return [json.loads(x) for x in txt.splitlines() if x.strip()]
 
 def read_local():
-    url="https://raw.githubusercontent.com/Dzammbo/tennis-research/main/ops/selectel/results/recover-scanner-signals-20260927T184200Z/artifacts/ops/selectel/recovered_scanner_signals.jsonl"
-    with urllib.request.urlopen(url,timeout=30) as r: txt=r.read().decode()
-    return [json.loads(x) for x in txt.splitlines() if x.strip()]
+    p=Path("recovery/selectel_scanner_signals_20260927.jsonl")
+    return [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
 
 g=read_github(); l=read_local()
 allrows=sorted(g+l,key=lambda x:str(x.get("timestamp") or ""))
@@ -138,3 +137,5 @@ Path("scanner_alltime_stats.json").write_text(json.dumps(out,ensure_ascii=False,
 print(json.dumps(out,ensure_ascii=False))
 
 # trigger2 2026-09-27T18:54Z
+
+# trigger3
