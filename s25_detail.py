@@ -36,7 +36,10 @@ for r in uniq:
  if not e or str(e.get("time_status"))!="3":continue
  try:h,a=map(int,str(e.get("ss") or "").replace(":","-").split("-",1));od=float(r["current_odds"]);line=float(str(r["exact_bet_line"]).split()[-1])
  except:continue
- p=ah(a,h,line,od)
+ # Bet365 in-play Asian Handicap settles only goals scored after the bet.
+ post_home=h-int(str(r.get("score") or "0-1").split("-",1)[0])
+ post_away=a-int(str(r.get("score") or "0-1").split("-",1)[1])
+ p=ah(post_away,post_home,line,od)
  z=dict(r);z.update({"profit":p,"final_score":f"{h}-{a}","line":line,"odds":od});sett.append(z)
 def agg(xs):
  n=len(xs);pr=sum(x["profit"] for x in xs);w=sum(x["profit"]>1e-9 for x in xs);l=sum(x["profit"]<-1e-9 for x in xs);pu=n-w-l
@@ -53,7 +56,9 @@ def mb(x):
  m=x.get("minute")
  if m is None:return "NA"
  return "0-15" if m<=15 else "16-30" if m<=30 else "31-45" if m<=45 else "46-60" if m<=60 else "61-75" if m<=75 else "76+"
-out={"raw_unique":len(uniq),"settled":agg(sett),"odds":{"min":min(x["odds"] for x in sett),"median":statistics.median(x["odds"] for x in sett),"max":max(x["odds"] for x in sett)},"by_line":groups(lambda x:x["line"]),"by_odds_band":groups(ob),"by_minute":groups(mb),"losses":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if x["profit"]<0],"pushes":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if abs(x["profit"])<1e-9]}
+out={"raw_unique":len(uniq),"settled":agg(sett),"odds":{"min":min(x["odds"] for x in sett),"median":statistics.median(x["odds"] for x in sett),"max":max(x["odds"] for x in sett)},"by_line":groups(lambda x:x["line"]),"by_odds_band":groups(ob),"by_minute":groups(mb),"by_league":groups(lambda x:x.get("tournament") or "UNKNOWN"),"losses":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if x["profit"]<0],"pushes":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if abs(x["profit"])<1e-9]}
 print("S25_DETAIL="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
 
 # run 2026-09-27T19:09Z
+
+# corrected live-AH settlement 2026-09-27T19:22Z
