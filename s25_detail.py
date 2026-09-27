@@ -55,3 +55,5 @@ def mb(x):
  return "0-15" if m<=15 else "16-30" if m<=30 else "31-45" if m<=45 else "46-60" if m<=60 else "61-75" if m<=75 else "76+"
 out={"raw_unique":len(uniq),"settled":agg(sett),"odds":{"min":min(x["odds"] for x in sett),"median":statistics.median(x["odds"] for x in sett),"max":max(x["odds"] for x in sett)},"by_line":groups(lambda x:x["line"]),"by_odds_band":groups(ob),"by_minute":groups(mb),"losses":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if x["profit"]<0],"pushes":[{k:x.get(k) for k in ("timestamp","tournament","match","minute","score","exact_bet_line","current_odds","final_score","profit")} for x in sett if abs(x["profit"])<1e-9]}
 print("S25_DETAIL="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
+
+# run 2026-09-27T19:09Z
