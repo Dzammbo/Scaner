@@ -18,41 +18,62 @@ def append_forward_log(result):
     log_dir.mkdir(exist_ok=True)
     signals_path=log_dir/"scanner_signals.jsonl"
     runs_path=log_dir/"scanner_runs.jsonl"
-    existing=set()
+    rows=[]
+    order=[]
+    by_key={}
     if signals_path.exists():
         for line in signals_path.read_text(encoding="utf-8").splitlines():
             if not line.strip(): continue
             try: row=json.loads(line)
             except Exception: continue
-            existing.add((str(row.get("event_id")),str(row.get("exact_bet_line"))))
+            key=(str(row.get("event_id")),str(row.get("exact_bet_line")))
+            if key not in by_key:
+                by_key[key]=row;order.append(key)
     appended=0
-    with signals_path.open("a",encoding="utf-8") as f:
-        for ev in result.get("events") or []:
-            eid=str(ev.get("event_id"))
-            for hit in ev.get("matches") or []:
-                exact=hit.get("bet")
-                if not exact:
-                    line=hit.get("bet_line"); market=hit.get("market")
-                    exact=f"{market}:{line}" if line is not None else str(market or "")
-                key=(eid,str(exact))
-                if key in existing: continue
-                row={
-                    "timestamp":result.get("generated_at_utc"),"sport":ev.get("sport"),
-                    "tournament":ev.get("league"),"event_id":eid,
-                    "match":f"{ev.get('home')} - {ev.get('away')}",
-                    "minute_score":f"{ev.get('minute')}' / '{ev.get('score')}" if ev.get("minute") is not None else str(ev.get("score") or ""),
-                    "minute":ev.get("minute"),"score":ev.get("score"),
-                    "exact_bet_line":exact,"current_odds":hit.get("current_odds"),
-                    "reverse_bet":hit.get("reverse_bet"),"reverse_odds":hit.get("reverse_odds"),
-                    "strategy_id":hit.get("strategy_id"),"tier":hit.get("tier"),
-                }
-                f.write(json.dumps(row,ensure_ascii=False,separators=(",",":"))+"\n")
-                existing.add(key);appended+=1
+    updated=0
+    for ev in result.get("events") or []:
+        eid=str(ev.get("event_id"))
+        for hit in ev.get("matches") or []:
+            exact=hit.get("bet")
+            if not exact:
+                line=hit.get("bet_line"); market=hit.get("market")
+                exact=f"{market}:{line}" if line is not None else str(market or "")
+            key=(eid,str(exact))
+            sid=hit.get("strategy_id")
+            sname=hit.get("strategy")
+            if key in by_key:
+                row=by_key[key]
+                ids=list(row.get("strategy_ids") or ([row.get("strategy_id")] if row.get("strategy_id") else []))
+                names=list(row.get("strategy_names") or [])
+                if sid and sid not in ids:
+                    ids.append(sid);updated+=1
+                if sname and sname not in names:names.append(sname)
+                row["strategy_ids"]=ids
+                row["strategy_names"]=names
+                continue
+            row={
+                "timestamp":result.get("generated_at_utc"),"sport":ev.get("sport"),
+                "tournament":ev.get("league"),"event_id":eid,
+                "match":f"{ev.get('home')} - {ev.get('away')}",
+                "minute_score":f"{ev.get('minute')}' / '{ev.get('score')}" if ev.get("minute") is not None else str(ev.get("score") or ""),
+                "minute":ev.get("minute"),"score":ev.get("score"),
+                "exact_bet_line":exact,"current_odds":hit.get("current_odds"),
+                "reverse_bet":hit.get("reverse_bet"),"reverse_odds":hit.get("reverse_odds"),
+                "strategy_id":sid,"strategy_ids":[sid] if sid else [],
+                "strategy_names":[sname] if sname else [],
+                "tier":hit.get("tier"),
+            }
+            by_key[key]=row;order.append(key);appended+=1
+    tmp=signals_path.with_suffix(".tmp")
+    with tmp.open("w",encoding="utf-8") as f:
+        for key in order:f.write(json.dumps(by_key[key],ensure_ascii=False,separators=(",",":"))+"\n")
+    tmp.replace(signals_path)
     run_row={
         "timestamp":result.get("generated_at_utc"),"scanner":result.get("scanner"),
         "event_count":result.get("event_count",0),
         "signals_seen":sum(len(ev.get("matches") or []) for ev in result.get("events") or []),
-        "new_signals_appended":appended,"empty_pass":not bool(result.get("events")),
+        "new_signals_appended":appended,"existing_signals_strategy_updated":updated,
+        "empty_pass":not bool(result.get("events")),
         "api_calls":result.get("api_calls"),"total_script_ms":result.get("total_script_ms"),
     }
     with runs_path.open("a",encoding="utf-8") as f:
@@ -432,14 +453,9 @@ def football_evaluate(ev, st, detail):
         reverse_bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
         reverse_odds = tf["next_goal_over_odds"]
     elif market in ("main_over", "over"):
-        if tf["plus_one_over_odds"] is not None:
-            current_odds = tf["plus_one_over_odds"]
-            reverse_odds = tf["plus_one_under_odds"]
-            bet_line = tf["plus_one_handicap"]
-        else:
-            current_odds = tf["main_over_odds"]
-            reverse_odds = tf["main_under_odds"]
-            bet_line = tf["main_handicap"]
+        current_odds = tf["main_over_odds"]
+        reverse_odds = tf["main_under_odds"]
+        bet_line = tf["main_handicap"]
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
         reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "draw":
