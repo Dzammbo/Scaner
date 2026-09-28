@@ -1,0 +1,14 @@
+name: Current Core 6 status
+on:
+  push:
+    branches: [main]
+    paths: ["current_status.py","recovery/selectel_scanner_signals_current.jsonl"]
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 current_status.py
