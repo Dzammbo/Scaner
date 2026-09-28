@@ -87,3 +87,5 @@ for sid in starts:
  raw=[x for x in merged if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  out[sid]={"name":names[sid],"start":starts[sid],"recorded":len(raw),"original":agg(xs),"reverse":agg(xs,"reverse_profit")}
 print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"strategies":out},ensure_ascii=False,separators=(",",":")))
+
+# status 2026-09-28
