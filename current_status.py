@@ -89,3 +89,5 @@ for sid in starts:
 print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"strategies":out},ensure_ascii=False,separators=(",",":")))
 
 # status 2026-09-28
+
+# status 2026-09-29T14:02Z
