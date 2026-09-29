@@ -108,3 +108,5 @@ print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"pe
 # pending export run
 
 # web settlement override 2026-09-29
+
+# mass web settle run
