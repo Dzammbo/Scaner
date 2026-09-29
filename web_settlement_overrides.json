@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-29T14:35:00Z",
+  "events": {
+    "12421006": {
+      "status": "ended",
+      "sport": "football",
+      "match": "Australia - Brazil",
+      "final_score": "2-4",
+      "verified_sources": [
+        "Reuters 2026-09-29",
+        "The Guardian 2026-09-29"
+      ],
+      "note": "Externally verified; do not depend on BetsAPI settlement."
+    },
+    "13109697": {
+      "status": "void",
+      "sport": "football",
+      "match": "Santa Clara U23 - Felgueiras 1932 U23",
+      "verified_sources": [
+        "Sofascore 2026-09-29"
+      ],
+      "note": "External source marks match cancelled; scanner had in-play signals, treat unsettled bets as void rather than W/L."
+    }
+  }
+}
