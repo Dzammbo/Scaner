@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 import json,os,subprocess,zipfile,urllib.request,urllib.parse,time,re,unicodedata
 from pathlib import Path
-ARTIFACT_ID="11040656014"
-token=os.environ["GITHUB_TOKEN"]
-req=urllib.request.Request(f"https://api.github.com/repos/Dzammbo/Scaner/actions/artifacts/{ARTIFACT_ID}/zip",headers={"Authorization":f"Bearer {token}","Accept":"application/vnd.github+json","User-Agent":"scanner-web-settle"})
-with urllib.request.urlopen(req,timeout=30) as r: data=r.read()
-Path("/tmp/p.zip").write_bytes(data)
-with zipfile.ZipFile("/tmp/p.zip") as z:z.extractall("/tmp/p")
-pending=json.loads(Path("/tmp/p/pending_current.json").read_text())
+if Path("pending_current.json").exists():
+ pending=json.loads(Path("pending_current.json").read_text())
+else:
+ raise SystemExit("pending_current.json missing")
 def norm(s):
  s=unicodedata.normalize("NFKD",str(s)).encode("ascii","ignore").decode().lower()
  return re.sub(r"[^a-z0-9]+"," ",s).strip()
