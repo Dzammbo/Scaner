@@ -86,7 +86,10 @@ for sid in starts:
  xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  raw=[x for x in merged if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  out[sid]={"name":names[sid],"start":starts[sid],"recorded":len(raw),"original":agg(xs),"reverse":agg(xs,"reverse_profit")}
-print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"strategies":out},ensure_ascii=False,separators=(",",":")))
+settled_keys=set((str(x.get("event_id")),str(x.get("exact_bet_line"))) for x in sett)
+pending=[r for r in merged if (str(r.get("event_id")),str(r.get("exact_bet_line"))) not in settled_keys]
+Path("pending_current.json").write_text(json.dumps(pending,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"pending":len(pending),"strategies":out},ensure_ascii=False,separators=(",",":")))
 
 # status 2026-09-28
 
