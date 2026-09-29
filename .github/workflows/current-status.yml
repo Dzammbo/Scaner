@@ -6,7 +6,7 @@ on:
 jobs:
   status:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 20
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
