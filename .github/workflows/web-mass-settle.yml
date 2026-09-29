@@ -1,0 +1,21 @@
+name: Mass web settle pending
+on:
+  push:
+    branches: [main]
+    paths: ["web_mass_settle.py"]
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 web_mass_settle.py
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-mass-settlement
+          path: web_mass_settlement.json
