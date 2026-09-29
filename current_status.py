@@ -51,10 +51,20 @@ def twinner(ss):
  hw=sum(a>b for a,b in sets);aw=sum(b>a for a,b in sets)
  return "home" if hw>aw else "away" if aw>hw else None
 sett=[]
+overrides={}
+op=Path("web_settlement_overrides.json")
+if op.exists(): overrides=(json.loads(op.read_text(encoding="utf-8")).get("events") or {})
 for r in merged:
+ ov=overrides.get(str(r["event_id"]))
+ if ov and ov.get("status")=="void":
+  continue
  e=final.get(str(r["event_id"]))
- if not e or str(e.get("time_status"))!="3":continue
- fs=str(e.get("ss") or "").replace(":","-")
+ if ov and ov.get("status")=="ended":
+  fs=str(ov.get("final_score") or "").replace(":","-")
+ elif e and str(e.get("time_status"))=="3":
+  fs=str(e.get("ss") or "").replace(":","-")
+ else:
+  continue
  try:o=float(r["current_odds"])
  except:continue
  p=None;rp=None
@@ -96,3 +106,5 @@ print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"pe
 # status 2026-09-29T14:02Z
 
 # pending export run
+
+# web settlement override 2026-09-29
