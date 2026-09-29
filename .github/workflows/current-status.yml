@@ -12,3 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 current_status.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pending-current
+          path: pending_current.json
