@@ -47,3 +47,5 @@ Path("web_mass_settlement.json").write_text(json.dumps({"pending_bets":len(pendi
 print(json.dumps({"pending_bets":len(pending),"unique_events":len(events),"settled_events":len(out),"unresolved_events":len(fails),"sample_settled":out[:10],"sample_unresolved":fails[:10]},ensure_ascii=False))
 
 # run 2026-09-29T14:45Z
+
+# direct web run 2
