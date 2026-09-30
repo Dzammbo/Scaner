@@ -2,8 +2,9 @@ name: Scaner hot path
 
 on:
   workflow_dispatch:
-  # Automatic cadence runs on Selectel cron every 5 minutes.
-  # GitHub migration smoke trigger 2026-09-30. Automatic schedule is enabled only after verification.
+  schedule:
+    - cron: "*/5 * * * *"
+  # Automatic cadence moved from Selectel to GitHub Actions on 2026-09-30.
   push:
     branches: [main]
     paths:
