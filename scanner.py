@@ -6,18 +6,24 @@ from pathlib import Path
 
 BASE = "https://api.b365api.com"
 TOKEN = os.environ["BETSAPI_KEY"]
+MODE = os.environ.get("SCANER_MODE", "scanner").strip().lower()
+if MODE not in ("scanner", "mining"):
+    raise RuntimeError("unsupported SCANER_MODE")
 DETAIL_CALL_BUDGET = max(0, int(os.environ.get("SCANER_DETAIL_BUDGET", "48")))
-STATE_PATH = Path("forward_log/scanner_state.json")
+LOG_DIR = Path("forward_log" if MODE == "scanner" else "mining_log")
+LOG_PREFIX = "scanner" if MODE == "scanner" else "mining"
+STATE_PATH = LOG_DIR / f"{LOG_PREFIX}_state.json"
+RUN_LABEL = "SCANER_V1" if MODE == "scanner" else "MINING_GITHUB_V1"
 
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
 
 def append_forward_log(result):
-    log_dir=Path("forward_log")
+    log_dir=LOG_DIR
     log_dir.mkdir(exist_ok=True)
-    signals_path=log_dir/"scanner_signals.jsonl"
-    runs_path=log_dir/"scanner_runs.jsonl"
+    signals_path=log_dir/f"{LOG_PREFIX}_signals.jsonl"
+    runs_path=log_dir/f"{LOG_PREFIX}_runs.jsonl"
     rows=[]
     order=[]
     by_key={}
@@ -700,7 +706,10 @@ def tennis_evaluate(ev, st, detail):
     return None
 
 registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
-strategies = [s for s in registry["strategies"] if s.get("scanner_enabled", True)]
+if MODE == "scanner":
+    strategies = [s for s in registry["strategies"] if s.get("scanner_enabled", True)]
+else:
+    strategies = [s for s in registry["strategies"] if s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY"]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}
 
 started = time.perf_counter()
@@ -807,7 +816,7 @@ for (sport, eid), d in details.items():
 
 result = {
     "schema_version": 2,
-    "scanner": "SCANER_V1",
+    "scanner": RUN_LABEL,
     "generated_at_utc": now_iso(),
     "started_at_utc": started_at,
     "strategy_counts": {
