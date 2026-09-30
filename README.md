@@ -176,7 +176,7 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 - `scaner-hot-path.yml` - Scanner, every 5 minutes.
 - `mining-hot-path.yml` - general Mining strategies, every 5 minutes.
 - `stateful-goal-mining.yml` - 10-minute pressure and next-goal state, every 5 minutes.
-- `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, one scheduled slot per minute.
+- `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, five one-minute polls per five-minute GitHub run.
 - `prematch-line-movement.yml` - prematch probability movement, twice per hour.
 
 All Mining collectors share the 1,150 requests/hour envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
