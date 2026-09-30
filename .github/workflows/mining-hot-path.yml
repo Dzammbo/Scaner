@@ -2,6 +2,8 @@ name: Mining GitHub hot path
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
   push:
     branches: [main]
     paths:
@@ -52,7 +54,7 @@ jobs:
           print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"detail_budget":max(0,run_budget-board_calls),"skip":skip}))
           PY
         env:
-          MINING_PASS_CAP: 12
+          MINING_PASS_CAP: 95
 
       - name: Run Mining collector
         if: env.SCANER_SKIP != '1'
@@ -74,10 +76,8 @@ jobs:
             sleep $((attempt*3))
           done
 
-      - name: Show compact result
+      - name: Verify result
         if: env.SCANER_SKIP != '1'
-        run: python3 - <<'PY'
-          import json
-          x=json.load(open("result.json"))
-          print(json.dumps({k:x.get(k) for k in ("scanner","generated_at_utc","boards","api_calls","detail_candidates","details_fetched","event_count","new_signals_appended")},ensure_ascii=False,indent=2))
-          PY
+        run: |
+          test -s result.json
+          grep -q '"MINING_GITHUB_V1"' result.json
