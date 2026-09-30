@@ -41,8 +41,7 @@ jobs:
           per_pass=int(os.environ.get("MINING_PASS_CAP","12"))
           board_calls=2
           now=datetime.now(timezone.utc);used=0
-          p=Path("mining_log/mining_runs.jsonl")
-          if p.exists():
+          for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
               try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
@@ -54,7 +53,7 @@ jobs:
           print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"detail_budget":max(0,run_budget-board_calls),"skip":skip}))
           PY
         env:
-          MINING_PASS_CAP: 95
+          MINING_PASS_CAP: 65
 
       - name: Run Mining collector
         if: env.SCANER_SKIP != '1'
