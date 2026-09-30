@@ -168,3 +168,15 @@
 Historical Mining evidence: N=333, 216W/117L, ROI +12,61%; ROI без 10 самых прибыльных ставок +10,49%. Source: football_pockets_robustness_v1, P1. Historical выборка causal first-entry, duplicates_removed=0. Отдельный clean-forward Scanner начинается 2026-09-27T19:48:49Z.
 
 S15 «Гол 80-84 при 2,50-2,99» и S25 «Фора гостей после первого гола при 0:1» исключены из оперативного Scanner и продолжают накапливаться/исследоваться в Mining; исторические данные не удаляются.
+
+## GitHub runtime after Selectel cutover
+
+Production collection runs on GitHub-hosted Actions. Selectel is no longer part of the hot path.
+
+- `scaner-hot-path.yml` - Scanner, every 5 minutes.
+- `mining-hot-path.yml` - general Mining strategies, every 5 minutes.
+- `stateful-goal-mining.yml` - 10-minute pressure and next-goal state, every 5 minutes.
+- `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, one scheduled slot per minute.
+- `prematch-line-movement.yml` - prematch probability movement, twice per hour.
+
+All Mining collectors share the 1,150 requests/hour envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
