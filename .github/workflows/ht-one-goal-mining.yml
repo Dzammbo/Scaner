@@ -4,10 +4,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
-    - cron: "1-59/5 * * * *"
-    - cron: "2-59/5 * * * *"
-    - cron: "3-59/5 * * * *"
-    - cron: "4-59/5 * * * *"
   push:
     branches: [main]
     paths:
@@ -24,7 +20,7 @@ concurrency:
 jobs:
   mine:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 8
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
@@ -47,17 +43,24 @@ jobs:
                 row=json.loads(line);ts=datetime.fromisoformat(str(row["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
               if now-timedelta(hours=1)<=ts<=now:used+=int(row.get("api_calls") or 0)
-          run_budget=min(10,max(0,1150-used));skip=run_budget<4
+          run_budget=min(50,max(0,1150-used));skip=run_budget<20
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"HT_SKIP={'1' if skip else '0'}\n")
-            f.write(f"HT_ONE_GOAL_CALL_BUDGET={max(4,run_budget)}\n")
-            f.write(f"HT_ONE_GOAL_DETAIL_BUDGET={max(1,run_budget-1)}\n")
+            per_pass=max(4,run_budget//5)
+            f.write(f"HT_ONE_GOAL_CALL_BUDGET={per_pass}\n")
+            f.write(f"HT_ONE_GOAL_DETAIL_BUDGET={max(1,per_pass-1)}\n")
           print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"skip":skip}))
           PY
 
-      - name: Collect and settle signals
+      - name: Collect and settle signals every minute
         if: env.HT_SKIP != '1'
-        run: python3 ht_one_goal_mining.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          for pass in 1 2 3 4 5; do
+            python3 ht_one_goal_mining.py
+            [ "$pass" -eq 5 ] || sleep 55
+          done
 
       - name: Validate output
         if: env.HT_SKIP != '1'
