@@ -1,0 +1,68 @@
+name: Stateful goal Mining
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "stateful_goal_mining.py"
+      - ".github/workflows/stateful-goal-mining.yml"
+
+permissions:
+  contents: write
+concurrency:
+  group: mining-forward-log
+  cancel-in-progress: false
+jobs:
+  mine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Calculate shared Mining budget
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from datetime import datetime,timezone,timedelta
+          from pathlib import Path
+          now=datetime.now(timezone.utc);used=0
+          for p in Path("mining_log").glob("**/*runs*.jsonl"):
+            for line in p.read_text(encoding="utf-8").splitlines():
+              try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))
+              except Exception:continue
+              if now-timedelta(hours=1)<=ts<=now:used+=int(r.get("api_calls") or 0)
+          budget=min(10,max(0,1150-used));skip=budget<3
+          with open(os.environ["GITHUB_ENV"],"a") as f:
+            f.write(f"GOAL_SKIP={'1' if skip else '0'}\n");f.write(f"STATEFUL_GOAL_CALL_BUDGET={max(3,budget)}\n")
+          print(json.dumps({"used_last_hour":used,"run_budget":budget,"skip":skip}))
+          PY
+      - name: Collect and settle stateful goal signals
+        if: env.GOAL_SKIP != '1'
+        run: python3 stateful_goal_mining.py
+      - name: Validate output
+        if: env.GOAL_SKIP != '1'
+        run: |
+          python3 -m py_compile stateful_goal_mining.py
+          grep -q 'STATEFUL_GOAL_MINING' mining_log/stateful_goal/status.json
+      - name: Persist Mining evidence
+        if: env.GOAL_SKIP != '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mining_log/stateful_goal/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Append stateful goal Mining evidence"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            [ "$attempt" -eq 5 ] && exit 1
+            sleep $((attempt*3))
+          done
