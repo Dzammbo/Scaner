@@ -53,7 +53,7 @@ jobs:
           print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"detail_budget":max(0,run_budget-board_calls),"skip":skip}))
           PY
         env:
-          MINING_PASS_CAP: 65
+          MINING_PASS_CAP: 40
 
       - name: Run Mining collector
         if: env.SCANER_SKIP != '1'
