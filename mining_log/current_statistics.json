@@ -1,0 +1,438 @@
+{
+  "generated_at_utc": "2026-10-01T07:31:27Z",
+  "scope": "Mining only",
+  "source_commits": {
+    "scanner_repo": "afb070159a6847bdbb32e1d49a459121bb900bd0",
+    "selectel_canonical_snapshot": "db851153490de2c6ee96e9c7e0325940e87f9738"
+  },
+  "settlement_refresh": {
+    "input_unique_events": 161,
+    "final_events": 136,
+    "not_final_events": 25,
+    "newly_settled_selectel_signals": 115
+  },
+  "selectel_updated": [
+    {
+      "strategy": "FT_DROUGHT25_OVER",
+      "N": 801,
+      "W": 321,
+      "L": 480,
+      "P": 0,
+      "profit": -37.125,
+      "roi_pct": -4.63,
+      "pending": 5
+    },
+    {
+      "strategy": "FT_MAIN_OVER_GE160",
+      "N": 1837,
+      "W": 830,
+      "L": 1007,
+      "P": 0,
+      "profit": -113.15,
+      "roi_pct": -6.16,
+      "pending": 8
+    },
+    {
+      "strategy": "FT_W60_69_NEXT_GOAL_OVER",
+      "N": 277,
+      "W": 152,
+      "L": 125,
+      "P": 0,
+      "profit": -4.6,
+      "roi_pct": -1.66,
+      "pending": 0
+    },
+    {
+      "strategy": "FT_W70_79_NEXT_GOAL_OVER",
+      "N": 1257,
+      "W": 611,
+      "L": 646,
+      "P": 0,
+      "profit": -90.475,
+      "roi_pct": -7.2,
+      "pending": 3
+    },
+    {
+      "strategy": "HIGH_PRESSURE_O05_FH",
+      "N": 183,
+      "W": 77,
+      "L": 106,
+      "P": 0,
+      "profit": 8.825,
+      "roi_pct": 4.82,
+      "pending": 25
+    },
+    {
+      "strategy": "HIGH_PRESSURE_O05_FT",
+      "N": 219,
+      "W": 101,
+      "L": 118,
+      "P": 0,
+      "profit": 28.9,
+      "roi_pct": 13.2,
+      "pending": 1
+    },
+    {
+      "strategy": "LOW_PRESSURE_O05_FH",
+      "N": 236,
+      "W": 98,
+      "L": 138,
+      "P": 0,
+      "profit": -22.925,
+      "roi_pct": -9.71,
+      "pending": 22
+    },
+    {
+      "strategy": "LOW_PRESSURE_O05_FT",
+      "N": 246,
+      "W": 94,
+      "L": 152,
+      "P": 0,
+      "profit": -6.975,
+      "roi_pct": -2.84,
+      "pending": 2
+    },
+    {
+      "strategy": "TIED_FIRST_SET_LIVE_FAV_150_179",
+      "N": 228,
+      "W": 136,
+      "L": 92,
+      "P": 0,
+      "profit": -13.567,
+      "roi_pct": -5.95,
+      "pending": 6
+    },
+    {
+      "strategy": "TIGHT_SET_LOSS_RECOVERY",
+      "N": 277,
+      "W": 71,
+      "L": 206,
+      "P": 0,
+      "profit": -20.22,
+      "roi_pct": -7.3,
+      "pending": 7
+    },
+    {
+      "strategy": "UTR",
+      "N": 10,
+      "W": 7,
+      "L": 1,
+      "P": 2,
+      "profit": 3.462,
+      "roi_pct": 34.62,
+      "pending": 0
+    }
+  ],
+  "github_general": [
+    {
+      "strategy": "S06",
+      "direct": {
+        "N": 1,
+        "W": 0,
+        "L": 1,
+        "profit": -1,
+        "roi_pct": -100
+      },
+      "reverse": {
+        "N": 1,
+        "W": 1,
+        "L": 0,
+        "profit": 0.95,
+        "roi_pct": 95
+      }
+    },
+    {
+      "strategy": "S09",
+      "direct": {
+        "N": 1,
+        "W": 0,
+        "L": 1,
+        "profit": -1,
+        "roi_pct": -100
+      },
+      "reverse": {
+        "N": 1,
+        "W": 1,
+        "L": 0,
+        "profit": 14,
+        "roi_pct": 1400
+      }
+    },
+    {
+      "strategy": "S16",
+      "direct": {
+        "N": 2,
+        "W": 0,
+        "L": 2,
+        "profit": -2,
+        "roi_pct": -100
+      },
+      "reverse": {
+        "N": 2,
+        "W": 2,
+        "L": 0,
+        "profit": 0.255,
+        "roi_pct": 12.75
+      }
+    },
+    {
+      "strategy": "S21",
+      "direct": {
+        "N": 1,
+        "W": 1,
+        "L": 0,
+        "profit": 0.115,
+        "roi_pct": 11.5
+      },
+      "reverse": {
+        "N": 1,
+        "W": 0,
+        "L": 1,
+        "profit": -1,
+        "roi_pct": -100
+      }
+    },
+    {
+      "strategy": "S25",
+      "direct": {
+        "N": 1,
+        "W": 1,
+        "L": 0,
+        "profit": 0.95,
+        "roi_pct": 95
+      },
+      "reverse": {
+        "N": 1,
+        "W": 0,
+        "L": 1,
+        "profit": -1,
+        "roi_pct": -100
+      }
+    },
+    {
+      "strategy": "T13",
+      "direct": {
+        "N": 39,
+        "W": 6,
+        "L": 33,
+        "profit": -13.623,
+        "roi_pct": -34.93
+      },
+      "reverse": {
+        "N": 39,
+        "W": 33,
+        "L": 6,
+        "profit": 3.078,
+        "roi_pct": 7.89
+      }
+    },
+    {
+      "strategy": "T14",
+      "direct": {
+        "N": 36,
+        "W": 16,
+        "L": 20,
+        "profit": 10.535,
+        "roi_pct": 29.26
+      },
+      "reverse": {
+        "N": 36,
+        "W": 20,
+        "L": 16,
+        "profit": -5.051,
+        "roi_pct": -14.03
+      }
+    },
+    {
+      "strategy": "T17",
+      "direct": {
+        "N": 23,
+        "W": 13,
+        "L": 10,
+        "profit": -0.388,
+        "roi_pct": -1.69
+      },
+      "reverse": {
+        "N": 23,
+        "W": 10,
+        "L": 13,
+        "profit": -3.747,
+        "roi_pct": -16.29
+      }
+    }
+  ],
+  "github_general_total": {
+    "direct": {
+      "N": 81,
+      "W": 24,
+      "L": 57,
+      "profit": -6.023,
+      "roi_pct": -7.44
+    },
+    "reverse": {
+      "N": 81,
+      "W": 57,
+      "L": 24,
+      "profit": 11.232,
+      "roi_pct": 13.87
+    }
+  },
+  "stateful_goal": {
+    "direct": {
+      "N": 22,
+      "W": 9,
+      "L": 13,
+      "profit": -3.55,
+      "roi_pct": -16.14
+    },
+    "reverse": {
+      "N": 22,
+      "W": 13,
+      "L": 9,
+      "profit": -2.095,
+      "roi_pct": -9.52
+    },
+    "note": "Includes two rows already settled in the journal plus 20 rows settled from refreshed period scores."
+  },
+  "positive_pockets": [
+    {
+      "id": "P1",
+      "rule": "FT_W60_69_NEXT_GOAL_OVER, score 0-1",
+      "N": 333,
+      "W": 216,
+      "L": 117,
+      "profit": 42,
+      "roi_pct": 12.61,
+      "robustness": "ROBUST POSITIVE"
+    },
+    {
+      "id": "P2A/P2B",
+      "rule": "DROUGHT15/25 OVER, drought 50+, odds 1.80-1.99",
+      "N": 177,
+      "W": 105,
+      "L": 72,
+      "profit": 14.175,
+      "roi_pct": 8.01,
+      "robustness": "ROBUST POSITIVE; same underlying sample"
+    },
+    {
+      "id": "P3",
+      "rule": "FT_MAIN_OVER_GE160, Brazil",
+      "N": 430,
+      "W": 213,
+      "L": 152,
+      "P": 65,
+      "profit": 27.025,
+      "roi_pct": 6.28,
+      "robustness": "ROBUST POSITIVE; includes one new GitHub loss"
+    },
+    {
+      "id": "P4",
+      "rule": "FT_W80_84_NEXT_GOAL_OVER, Romania",
+      "N": 127,
+      "W": 63,
+      "L": 64,
+      "profit": 9.675,
+      "roi_pct": 7.62,
+      "robustness": "PROMISING; top-10 removal negative"
+    },
+    {
+      "id": "P5",
+      "rule": "Late draw 85+ DRAW, Brazil",
+      "N": 151,
+      "W": 120,
+      "L": 31,
+      "profit": 8.691,
+      "roi_pct": 5.76,
+      "robustness": "ROBUST POSITIVE"
+    },
+    {
+      "id": "P6",
+      "rule": "FT_W85PLUS_NEXT_GOAL_UNDER, score 3-2",
+      "N": 190,
+      "W": 135,
+      "L": 55,
+      "profit": 7.76,
+      "roi_pct": 4.08,
+      "robustness": "PROMISING; includes one new GitHub win"
+    },
+    {
+      "id": "P7",
+      "rule": "FT_W80_84_NEXT_GOAL_UNDER, Argentina, odds 1.50-1.79",
+      "N": 172,
+      "W": 112,
+      "L": 60,
+      "profit": 6.375,
+      "roi_pct": 3.71,
+      "robustness": "PROMISING; top-10 removal negative"
+    },
+    {
+      "id": "P8",
+      "rule": "FT_W70_79_NEXT_GOAL_OVER, score 0-2, odds 1.80-1.99",
+      "N": 108,
+      "W": 64,
+      "L": 44,
+      "profit": 10.8,
+      "roi_pct": 10,
+      "robustness": "UNSTABLE"
+    },
+    {
+      "id": "CUR_PRESSURE_FT",
+      "rule": "HIGH_PRESSURE_O05_FT",
+      "N": 219,
+      "W": 101,
+      "L": 118,
+      "profit": 28.9,
+      "roi_pct": 13.2,
+      "robustness": "Current full strategy positive"
+    },
+    {
+      "id": "CUR_PRESSURE_FH",
+      "rule": "HIGH_PRESSURE_O05_FH",
+      "N": 183,
+      "W": 77,
+      "L": 106,
+      "profit": 8.825,
+      "roi_pct": 4.82,
+      "robustness": "Current full strategy positive; 25 pending"
+    },
+    {
+      "id": "CUR_UTR",
+      "rule": "UTR heavy-set-loss primary",
+      "N": 10,
+      "W": 7,
+      "L": 1,
+      "P": 2,
+      "profit": 3.462,
+      "roi_pct": 34.62,
+      "robustness": "Very small N"
+    },
+    {
+      "id": "CUR_T14",
+      "rule": "T14 tight-set loser",
+      "N": 36,
+      "W": 16,
+      "L": 20,
+      "profit": 10.535,
+      "roi_pct": 29.26,
+      "robustness": "New GitHub sample; short period"
+    },
+    {
+      "id": "CUR_T13_REVERSE",
+      "rule": "Reverse T13 heavy-set loser",
+      "N": 39,
+      "W": 33,
+      "L": 6,
+      "profit": 3.078,
+      "roi_pct": 7.89,
+      "robustness": "New GitHub sample; short period"
+    }
+  ],
+  "cautions": [
+    "Historical fixed-pocket validation is a diagnostic historical replay, not sealed OOS.",
+    "P4, P6 and P7 lose profitability after removing the ten best results in the original robustness audit.",
+    "P8 was explicitly classified unstable.",
+    "Current GitHub T14 and T13 reverse are short-period samples and must not be promoted yet.",
+    "Retired tennis time_status 9 events are not auto-settled because bookmaker treatment can be void or market-specific."
+  ]
+}
