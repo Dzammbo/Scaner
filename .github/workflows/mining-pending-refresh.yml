@@ -1,0 +1,58 @@
+name: Mining pending refresh
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "mining_pending_refresh.py"
+      - ".github/workflows/mining-pending-refresh.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mining-pending-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Refresh pending events from BetsAPI
+        run: python3 mining_pending_refresh.py
+
+      - name: Validate output
+        run: |
+          test -s mining_log/pending_refresh/status.json
+          test -s mining_log/pending_refresh/results.jsonl
+
+      - name: Commit refreshed results
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mining_log/pending_refresh/
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Refresh Mining pending results"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 5 ]; then
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
