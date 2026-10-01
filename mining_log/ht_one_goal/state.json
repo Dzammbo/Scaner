@@ -1690,8 +1690,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13087795": {
       "event_id": "13087795",
@@ -1708,8 +1709,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "10565765": {
       "event_id": "10565765",
@@ -1726,8 +1728,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13082990": {
       "event_id": "13082990",
@@ -2727,8 +2730,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13070315": {
       "event_id": "13070315",
@@ -2782,8 +2786,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13205914": {
       "event_id": "13205914",
@@ -2821,8 +2826,26 @@
       "status": "MISSED_BEFORE_QUOTE",
       "last_error": "HTTPError",
       "miss_reason": "SCORE_CHANGED"
+    },
+    "12385216": {
+      "event_id": "12385216",
+      "bet365_id": "202130391",
+      "kickoff": 1790893800,
+      "candidate_at": 1790896936,
+      "country": "bo",
+      "league": "Bolivia Copa Division Profesional",
+      "home": "Bolivar",
+      "away": "GV San Jose",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T23:13:29Z",
-  "api_calls_last_run": 5
+  "updated_at": "2026-10-01T23:26:10Z",
+  "api_calls_last_run": 4
 }
