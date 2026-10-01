@@ -145,7 +145,7 @@ def cheap_core_prefilter(ev, st, previous):
             return True
         if sid=="S10":
             return len(sets)==1 and not done_set(*sets[-1]) and sets[-1][0]==sets[-1][1] and sets[-1][0] in (2,3,4,5,6)
-        if sid=="S11":
+        if sid in ("S11", "T14"):
             rel=previous_set_role(sets)
             return bool(rel and (rel["winner_games"],rel["loser_games"]) in ((6,4),(7,5),(7,6)))
         if sid=="T16":
@@ -707,7 +707,10 @@ def tennis_evaluate(ev, st, detail):
 
 registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
 if MODE == "scanner":
-    strategies = [s for s in registry["strategies"] if s.get("scanner_enabled", True)]
+    strategies = [
+        s for s in registry["strategies"]
+        if s.get("scanner_enabled", True) and s.get("collection_engine", "scanner.py") == "scanner.py"
+    ]
 else:
     strategies = [s for s in registry["strategies"] if s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY"]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}
