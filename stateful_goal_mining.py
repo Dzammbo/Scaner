@@ -6,6 +6,8 @@ from pathlib import Path
 
 BASE="https://api.b365api.com";TOKEN=os.environ["BETSAPI_KEY"]
 ROOT=Path("mining_log/stateful_goal");STATE=ROOT/"state.json";SIGNALS=ROOT/"signals.jsonl";OBS=ROOT/"observations.jsonl";RUNS=ROOT/"runs.jsonl";STATUS=ROOT/"status.json"
+SCANNER_SIGNALS=Path("forward_log/stateful_pressure_signals.jsonl")
+SCANNER_STATUS=Path("forward_log/stateful_pressure_status.json")
 MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
@@ -31,6 +33,20 @@ def load_rows(path):
    except Exception:pass
  return out
 def save_rows(path,rows):path.write_text("".join(json.dumps(x,ensure_ascii=False,separators=(",",":"))+"\n" for x in rows),encoding="utf-8")
+def fmtline(v):
+ return str(int(v)) if float(v).is_integer() else str(float(v)).rstrip("0").rstrip(".")
+def sync_scanner_pressure(rows):
+ SCANNER_SIGNALS.parent.mkdir(parents=True,exist_ok=True)
+ current=load_rows(SCANNER_SIGNALS);by_key={(str(x.get("event_id")),str(x.get("exact_bet_line")),str(x.get("strategy_id"))):x for x in current}
+ for x in rows:
+  arm=str(x.get("arm") or "")
+  if x.get("strategy")!="FOOTBALL_PRESSURE_TOTAL_O05_V1" or not arm.startswith("HIGH_PRESSURE_O05_"):continue
+  sid="S27" if arm.endswith("_FH") else "S26";name="High Pressure ТБ 0.5 первого тайма" if sid=="S27" else "High Pressure ТБ 0.5 матча";line=fmtline(x["selected_line"]);key=(str(x["event_id"]),f"ТБ {line}",sid)
+  if key in by_key:continue
+  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":f"ТБ {line}","current_odds":x.get("selected_odds"),"reverse_bet":f"ТМ {line}","reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[name],"tier":"ACTIVE" if sid=="S26" else "WATCHLIST","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
+ save_rows(SCANNER_SIGNALS,sorted(by_key.values(),key=lambda x:str(x.get("timestamp") or "")))
+ active=[x for x in by_key.values() if int(time.time())-int(datetime.fromisoformat(str(x["timestamp"]).replace("Z","+00:00")).timestamp())<=600]
+ SCANNER_STATUS.write_text(json.dumps({"scanner":"STATEFUL_HIGH_PRESSURE","updated_at":iso(),"signals":len(by_key),"active_last_10m":active},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 def pair(stats,key):
  v=(stats or {}).get(key)
  if isinstance(v,list) and len(v)>=2:
@@ -126,6 +142,7 @@ def main():
    arm=("HIGH_PRESSURE_O05_" if features["pressure10"]>=PRESSURE_CUTOFF else "LOW_PRESSURE_O05_")+period;key=(eid,"FOOTBALL_PRESSURE_TOTAL_O05_V1",arm)
    if key not in sigkeys:signals.append({**observation,"strategy":"FOOTBALL_PRESSURE_TOTAL_O05_V1","arm":arm,"entry_at":now,"selected_line":q05["line"],"selected_odds":q05["over"],"reverse_odds":q05["under"],"outcome":None});sigkeys.add(key)
  settle(signals,live_ids);save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
+ sync_scanner_pressure(signals)
  arms={}
  for x in signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
  status={"strategy":"STATEFUL_GOAL_MINING","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(signals),"arms":{k:{"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
