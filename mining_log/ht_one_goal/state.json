@@ -556,8 +556,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226674": {
       "event_id": "13226674",
@@ -610,8 +611,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12328309": {
       "event_id": "12328309",
@@ -628,8 +630,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12328209": {
       "event_id": "12328209",
@@ -682,9 +685,80 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226096": {
+      "event_id": "13226096",
+      "bet365_id": "202173575",
+      "kickoff": 1790859600,
+      "candidate_at": 1790862994,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Dunajska Streda",
+      "away": "Puskas Academy",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224433": {
+      "event_id": "13224433",
+      "bet365_id": "202033377",
+      "kickoff": 1790859600,
+      "candidate_at": 1790862994,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca U20 Women",
+      "home": "Fluminense U20 (W)",
+      "away": "Botafogo U20 (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224105": {
+      "event_id": "13224105",
+      "bet365_id": "202086799",
+      "kickoff": 1790859600,
+      "candidate_at": 1790862994,
+      "country": "ar",
+      "league": "Argentina Nacional Reserve League",
+      "home": "CA San Miguel Reserves",
+      "away": "Temperley Reserves",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13220940": {
+      "event_id": "13220940",
+      "bet365_id": "202114957",
+      "kickoff": 1790859600,
+      "candidate_at": 1790862994,
+      "country": "zm",
+      "league": "Zambia League Women",
+      "home": "ZISD (W)",
+      "away": "Green Eagles (W)",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T13:45:32Z",
+  "updated_at": "2026-10-01T14:00:54Z",
   "api_calls_last_run": 9
 }
