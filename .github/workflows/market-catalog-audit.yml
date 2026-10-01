@@ -1,0 +1,41 @@
+name: BetsAPI market catalog audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "market_catalog_audit.py"
+      - ".github/workflows/market-catalog-audit.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: betsapi-market-catalog-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Audit market catalogue
+        run: python3 market_catalog_audit.py
+      - name: Persist audit evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add market_audit/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record BetsAPI market catalog audit"
+          git pull --rebase origin main
+          git push origin HEAD:main
