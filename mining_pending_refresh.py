@@ -55,7 +55,7 @@ for eid in ordered:
   continue
  ts=str(e.get("time_status") or "")
  state="FINAL" if ts=="3" else "NOT_FINAL_"+ts
- out.append({"event_id":eid,"state":state,"time_status":ts,"sport_id":e.get("sport_id"),"home":(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home"),"away":(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away"),"ss":e.get("ss"),"time":e.get("time")})
+ out.append({"event_id":eid,"state":state,"time_status":ts,"sport_id":e.get("sport_id"),"home":(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home"),"away":(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away"),"ss":e.get("ss"),"scores":e.get("scores"),"time":e.get("time")})
 root=Path("mining_log/pending_refresh");root.mkdir(parents=True,exist_ok=True)
 (root/"results.jsonl").write_text("".join(json.dumps(x,ensure_ascii=False,separators=(",",":"))+"\n" for x in out),encoding="utf-8")
 counts={}
