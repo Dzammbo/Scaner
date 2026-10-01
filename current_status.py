@@ -89,13 +89,16 @@ def ids_of(r):return r.get("strategy_ids") or ([r.get("strategy_id")] if r.get("
 def agg(xs,key="profit"):
  ys=[x for x in xs if x.get(key) is not None];n=len(ys);pr=sum(x[key] for x in ys)
  return {"N":n,"W":sum(x[key]>1e-9 for x in ys),"L":sum(x[key]<-1e-9 for x in ys),"P":sum(abs(x[key])<=1e-9 for x in ys),"profit":round(pr,3),"ROI":round(pr/n*100,2) if n else None}
+def agg_without_top(xs,key="profit",top=3):
+ ys=sorted((x for x in xs if x.get(key) is not None),key=lambda x:x[key],reverse=True)[top:]
+ return agg(ys,key)
 starts={"S01":"2026-09-27T19:48:49+00:00","S02":"2026-09-26T15:19:55+00:00","S06":"1970-01-01T00:00:00+00:00","S08":"1970-01-01T00:00:00+00:00","S11":"2026-09-26T15:19:55+00:00","S20":"2026-09-27T19:42:00+00:00","T14":"1970-01-01T00:00:00+00:00","T16":"2026-09-26T15:19:55+00:00"}
 names={"S01":"Гол после 60-й при счёте 0:1","S02":"Гол после 70-й при счёте 0:2","S06":"Основной тотал больше - Бразилия","S08":"Тотал больше после 50+ минут без гола","S11":"За победителя предыдущего плотного сета","S20":"Рыночный основной тотал больше при счёте 1:1","T14":"Зеркало плотного сета - за проигравшего предыдущего сета","T16":"Решающий сет - за победителя второго сета"}
 out={}
 for sid in starts:
  xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  raw=[x for x in merged if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
- out[sid]={"name":names[sid],"start":starts[sid],"recorded":len(raw),"original":agg(xs),"reverse":agg(xs,"reverse_profit")}
+ out[sid]={"name":names[sid],"start":starts[sid],"recorded":len(raw),"original":agg(xs),"original_without_top3":agg_without_top(xs),"reverse":agg(xs,"reverse_profit"),"reverse_without_top3":agg_without_top(xs,"reverse_profit")}
 
 def odds_band(v):
  try:
@@ -127,7 +130,7 @@ def positive_groups(xs,key,odds_key,bet_key):
   for val,rs in groups.items():
    a=agg(rs,key)
    if a["N"]>=10 and a["ROI"] is not None and a["ROI"]>0:
-    out.append({"dimension":dim,"value":val,**a})
+    out.append({"dimension":dim,"value":val,**a,"without_top3":agg_without_top(rs,key)})
  return sorted(out,key=lambda z:(-z["N"],-z["ROI"],z["dimension"],z["value"]))
 
 pockets={}
