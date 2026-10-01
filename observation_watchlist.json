@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V1",
+  "created_at": "2026-10-01",
+  "status": "OBSERVATION_ONLY",
+  "policy": {
+    "filters_frozen": true,
+    "changes_operational_scanner": false,
+    "user_output": false,
+    "real_money_signal": false,
+    "minimum_new_settled_before_review": 50,
+    "minimum_observation_days_before_review": 10,
+    "note": "Карманы выделены после exploratory-анализа. До отдельного решения они только накапливают clean-forward статистику и не меняют пользовательский вывод Scanner."
+  },
+  "items": [
+    {
+      "id": "OW01",
+      "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
+      "strategy_id": "S20",
+      "direction": "direct",
+      "filters": {
+        "score": "1-1",
+        "total_line_min": 2.5,
+        "total_line_max": 2.75
+      },
+      "focus": {
+        "minute_min": 65,
+        "minute_max": 74
+      },
+      "baseline": {
+        "settled": 89,
+        "profit_units": 12.963,
+        "roi_pct": 14.57
+      }
+    },
+    {
+      "id": "OW02",
+      "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
+      "strategy_id": "S20",
+      "direction": "reverse",
+      "filters": {
+        "score": "1-1",
+        "total_line_min": 3.5,
+        "total_line_max": 4.0
+      },
+      "focus": {
+        "minute_min": 45,
+        "minute_max": 49
+      },
+      "baseline": {
+        "settled": 66,
+        "profit_units": 15.1,
+        "roi_pct": 22.88
+      }
+    },
+    {
+      "id": "OW03",
+      "name_ru": "Reverse ТМ 2,5 после 70-й при счёте 0:2",
+      "strategy_id": "S02",
+      "direction": "reverse",
+      "filters": {
+        "score": "0-2",
+        "total_line": 2.5,
+        "reverse_odds_min": 1.75,
+        "reverse_odds_max": 1.99
+      },
+      "baseline": {
+        "settled": 21,
+        "profit_units": 1.8,
+        "roi_pct": 8.57
+      }
+    },
+    {
+      "id": "OW04",
+      "name_ru": "Победитель предыдущего плотного сета - коэффициент 2,25-2,49",
+      "strategy_id": "S11",
+      "direction": "direct",
+      "filters": {
+        "odds_min": 2.25,
+        "odds_max": 2.49
+      },
+      "baseline": {
+        "settled": 20,
+        "profit_units": 5.75,
+        "roi_pct": 28.75
+      }
+    }
+  ]
+}
