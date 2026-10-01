@@ -114,12 +114,14 @@ def total_line(v):
  s=str(v or "")
  if not (s.startswith("ТБ ") or s.startswith("ТМ ")):return None
  return s.split(" ",1)[1]
-def positive_groups(xs,key,odds_key,bet_key):
- dims={"коэффициент":lambda r:odds_band(r.get(odds_key)),
+def group_dimensions(odds_key,bet_key):
+ return {"коэффициент":lambda r:odds_band(r.get(odds_key)),
        "минута":lambda r:minute_band(r.get("minute")),
        "линия":lambda r:total_line(r.get(bet_key)),
        "турнир":lambda r:str(r.get("tournament") or "") or None,
        "коэффициент + минута":lambda r:(odds_band(r.get(odds_key))+" | "+minute_band(r.get("minute"))) if odds_band(r.get(odds_key)) and minute_band(r.get("minute")) else None}
+def positive_groups(xs,key,odds_key,bet_key):
+ dims=group_dimensions(odds_key,bet_key)
  out=[]
  for dim,fn in dims.items():
   groups={}
@@ -138,7 +140,20 @@ for sid in starts:
  xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  pockets[sid]={"name":names[sid],
   "direct":positive_groups(xs,"profit","current_odds","exact_bet_line"),
-  "reverse":positive_groups(xs,"reverse_profit","reverse_odds","reverse_bet")}
+ "reverse":positive_groups(xs,"reverse_profit","reverse_odds","reverse_bet")}
+priority_config=json.loads(Path("priority_pockets.json").read_text(encoding="utf-8"))
+priority=[]
+for item in sorted(priority_config["items"],key=lambda x:x["rank"]):
+ sid=item["strategy_id"];reverse=item["direction"]=="reverse"
+ key="reverse_profit" if reverse else "profit"
+ odds_key="reverse_odds" if reverse else "current_odds"
+ bet_key="reverse_bet" if reverse else "exact_bet_line"
+ dimension=group_dimensions(odds_key,bet_key)[item["dimension"]]
+ xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid] and dimension(x)==item["value"]]
+ raw=[x for x in merged if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid] and dimension(x)==item["value"]]
+ priority.append({**item,"recorded":len(raw),"result":agg(xs,key),"without_top3":agg_without_top(xs,key)})
+Path("priority_pockets_current.json").write_text(json.dumps(priority,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+print("PRIORITY_POCKETS="+json.dumps(priority,ensure_ascii=False,separators=(",",":")))
 Path("pockets_current.json").write_text(json.dumps(pockets,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print("POSITIVE_POCKETS="+json.dumps(pockets,ensure_ascii=False,separators=(",",":")))
 settled_keys=set((str(x.get("event_id")),str(x.get("exact_bet_line"))) for x in sett)
