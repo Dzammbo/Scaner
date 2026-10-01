@@ -1016,8 +1016,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13214987": {
       "event_id": "13214987",
@@ -2568,10 +2569,83 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13070271": {
+      "event_id": "13070271",
+      "bet365_id": "202032988",
+      "kickoff": 1790884800,
+      "candidate_at": 1790887758,
+      "country": "ar",
+      "league": "Argentina Liga Profesional Reserves",
+      "home": "CA Talleres de Córdoba Reserves",
+      "away": "Godoy Cruz Reserves",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13108453": {
+      "event_id": "13108453",
+      "bet365_id": "202034325",
+      "kickoff": 1790884800,
+      "candidate_at": 1790887758,
+      "country": "pe",
+      "league": "Peru Copa de la Liga",
+      "home": "Sporting Cristal",
+      "away": "AD Tarma",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315878": {
+      "event_id": "12315878",
+      "bet365_id": "202031928",
+      "kickoff": 1790884800,
+      "candidate_at": 1790887758,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "British Virgin Islands",
+      "away": "Montserrat",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315866": {
+      "event_id": "12315866",
+      "bet365_id": "202031931",
+      "kickoff": 1790884800,
+      "candidate_at": 1790887814,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "US Virgin Islands",
+      "away": "Saint Martin",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T20:39:06Z",
-  "api_calls_last_run": 3
+  "updated_at": "2026-10-01T20:53:14Z",
+  "api_calls_last_run": 5
 }
