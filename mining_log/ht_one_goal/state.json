@@ -2607,8 +2607,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315878": {
       "event_id": "12315878",
@@ -2646,8 +2647,26 @@
       "status": "MISSED_BEFORE_QUOTE",
       "last_error": "HTTPError",
       "miss_reason": "SCORE_CHANGED"
+    },
+    "12438233": {
+      "event_id": "12438233",
+      "bet365_id": "201935830",
+      "kickoff": 1790886600,
+      "candidate_at": 1790890158,
+      "country": "co",
+      "league": "Colombia Primera B",
+      "home": "Envigado FC",
+      "away": "Orsomarso",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T21:17:17Z",
+  "updated_at": "2026-10-01T21:33:04Z",
   "api_calls_last_run": 3
 }
