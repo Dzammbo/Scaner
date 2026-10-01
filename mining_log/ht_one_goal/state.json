@@ -367,8 +367,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13212142": {
       "event_id": "13212142",
@@ -385,8 +386,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13216586": {
       "event_id": "13216586",
@@ -403,10 +405,29 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13220515": {
+      "event_id": "13220515",
+      "bet365_id": "202096301",
+      "kickoff": 1790854200,
+      "candidate_at": 1790857641,
+      "country": "in",
+      "league": "India Shillong Premier League",
+      "home": "Langsning SC",
+      "away": "Shillong Lajong Reserves",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T12:07:12Z",
-  "api_calls_last_run": 7
+  "updated_at": "2026-10-01T12:31:04Z",
+  "api_calls_last_run": 2
 }
