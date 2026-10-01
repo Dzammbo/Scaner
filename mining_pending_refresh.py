@@ -64,3 +64,4 @@ for x in out: counts[x["state"]]=counts.get(x["state"],0)+1
 status={"updated_at":datetime.now(timezone.utc).isoformat(),"input_unique_events":len(ordered),"provider_rows":len(found),"states":counts,"final":sum(x["state"]=="FINAL" for x in out),"pending":sum(x["state"]!="FINAL" for x in out),"provider_queries":(len(ordered)+9)//10,"errors":errors}
 (root/"status.json").write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print(json.dumps(status,ensure_ascii=False))
+# refresh trigger: 2026-10-01T11:31:33Z
