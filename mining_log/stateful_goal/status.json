@@ -1,9 +1,9 @@
 {
   "strategy": "STATEFUL_GOAL_MINING",
   "runtime": "github-actions",
-  "updated_at": "2026-09-30T12:58:31Z",
+  "updated_at": "2026-10-01T04:10:15Z",
   "api_calls": 10,
-  "board_n": 24,
+  "board_n": 1,
   "observations": 15,
   "signals": 18,
   "arms": {
@@ -39,23 +39,23 @@
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:LOW_PRESSURE_O05_FT": {
       "signals": 1,
-      "pending": 1,
-      "N": 0,
-      "W": 0,
+      "pending": 0,
+      "N": 1,
+      "W": 1,
       "L": 0,
       "PUSH": 0,
-      "profit": 0,
-      "ROI": null
+      "profit": 0.775,
+      "ROI": 0.775
     },
     "LIVE_GOAL_SELECTION_V3:PLUS_0_5": {
       "signals": 9,
-      "pending": 9,
-      "N": 0,
-      "W": 0,
+      "pending": 8,
+      "N": 1,
+      "W": 1,
       "L": 0,
       "PUSH": 0,
-      "profit": 0,
-      "ROI": null
+      "profit": 0.775,
+      "ROI": 0.775
     }
   }
 }
