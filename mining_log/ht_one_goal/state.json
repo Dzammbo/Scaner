@@ -688,8 +688,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226096": {
       "event_id": "13226096",
@@ -706,8 +707,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224433": {
       "event_id": "13224433",
@@ -724,8 +726,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224105": {
       "event_id": "13224105",
@@ -742,8 +745,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220940": {
       "event_id": "13220940",
@@ -796,7 +800,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224103": {
       "event_id": "13224103",
@@ -813,9 +819,65 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13087927": {
+      "event_id": "13087927",
+      "bet365_id": "202091592",
+      "kickoff": 1790861400,
+      "candidate_at": 1790865098,
+      "country": "il",
+      "league": "Israel Liga Alef North",
+      "home": "Hapoel Bnei Jat United",
+      "away": "Maccabi Nujeidat Ahmed",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13220390": {
+      "event_id": "13220390",
+      "bet365_id": "202040715",
+      "kickoff": 1790861400,
+      "candidate_at": 1790865098,
+      "country": "om",
+      "league": "Oman Federation Cup",
+      "home": "Al-Nasr Salalah",
+      "away": "Samail",
+      "halftime_score": [
+        3,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13218694": {
+      "event_id": "13218694",
+      "bet365_id": "202085933",
+      "kickoff": 1790861400,
+      "candidate_at": 1790865098,
+      "country": "eg",
+      "league": "Egypt Second Division B",
+      "home": "Sila",
+      "away": "Asyut Cement",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T14:16:03Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-01T14:35:44Z",
+  "api_calls_last_run": 6
 }
