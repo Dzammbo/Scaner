@@ -1,0 +1,507 @@
+{
+  "schema": "BETSAPI_MARKET_CATALOG_AUDIT_V1",
+  "generated_at_utc": "2026-10-01T11:37:58.574667Z",
+  "scope": "Nine research candidates. Read-only market availability audit; no signals, no forward-log writes.",
+  "candidates": [
+    "MLB: extra innings",
+    "MLB: winning margin exactly one run",
+    "Basketball: draw after regulation",
+    "Ice hockey: draw after regulation",
+    "Ice hockey: draw after first period",
+    "Tennis: first-set tiebreak",
+    "Tennis: three sets in BO3, excluding Grand Slams",
+    "Football: draw and both teams score",
+    "Football: total goals 2-3"
+  ],
+  "sports": {
+    "football": {
+      "sport_id": 1,
+      "upcoming_seen": 50,
+      "events_probed": 8,
+      "errors": [],
+      "markets": {},
+      "events": [
+        {
+          "event_id": "13226756",
+          "match": "Man Utd (Delpiero) - RB Leipzig (Voodoo)",
+          "league": "Esoccer GT Leagues – 12 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227289",
+          "match": "Celta Vigo (Baba) - Besiktas (Fred)",
+          "league": "Esoccer GT Leagues – 12 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227501",
+          "match": "Celta Vigo (Baba) - Lyon (Habibi)",
+          "league": "Esoccer GT Leagues – 12 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13221944",
+          "match": "Spain (Nathan) Esports - Portugal (PHANTOM) Esports",
+          "league": "Esoccer Adriatic League - 10 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227446",
+          "match": "Germany (Cezar) - England (VanGogh) Esports",
+          "league": "Esoccer Adriatic League - 10 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227496",
+          "match": "PSG (Noah) Esports - Barcelona (Oliver) Esports",
+          "league": "Esoccer Adriatic League - 10 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227624",
+          "match": "Olympiakos (Thunder) - Bayer 04 (Punk)",
+          "league": "Esoccer GT Leagues – 12 mins play",
+          "market_keys": []
+        },
+        {
+          "event_id": "13227633",
+          "match": "PSG (Noah) Esports - Real Madrid (Leonardo) Esports",
+          "league": "Esoccer Adriatic League - 10 mins play",
+          "market_keys": []
+        }
+      ]
+    },
+    "tennis": {
+      "sport_id": 13,
+      "upcoming_seen": 50,
+      "events_probed": 8,
+      "errors": [],
+      "markets": {
+        "13_1": {
+          "events_with_market": 7,
+          "coverage_pct": 87.5,
+          "mean_rows": 1.4,
+          "sample_labels": []
+        },
+        "13_4": {
+          "events_with_market": 7,
+          "coverage_pct": 87.5,
+          "mean_rows": 0.0,
+          "sample_labels": []
+        }
+      },
+      "events": [
+        {
+          "event_id": "13221181",
+          "match": "Andre Ilagan - Marat Sharipov",
+          "league": "Challenger Jingshan",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13210873",
+          "match": "Xinyu Gao - Panna Udvardy",
+          "league": "WTA Beijing",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13222829",
+          "match": "Lisa Pigato - Adrienn Nagy",
+          "league": "W75 Quinta Do Lago",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13224159",
+          "match": "Pierre Delage - Ryan Nijboer",
+          "league": "M25 Zaragoza",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13221662",
+          "match": "Doumbia/Reboul - Gonzalez/Molteni",
+          "league": "ATP Beijing MD",
+          "market_keys": []
+        },
+        {
+          "event_id": "13223082",
+          "match": "Nefve/Schachter - Lock/Lock",
+          "league": "M25 Kigali MD",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13223634",
+          "match": "Bangargi/Chaurasia - Beckley/Sahtali",
+          "league": "M25 Kigali MD",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        },
+        {
+          "event_id": "13217225",
+          "match": "Biletic/Kajin - Behr/Curavic",
+          "league": "M15 Sibenik MD",
+          "market_keys": [
+            "13_1",
+            "13_4"
+          ]
+        }
+      ]
+    },
+    "baseball": {
+      "sport_id": 16,
+      "upcoming_seen": 50,
+      "events_probed": 8,
+      "errors": [],
+      "markets": {
+        "16_1": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 18.0,
+          "sample_labels": []
+        },
+        "16_2": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 29.0,
+          "sample_labels": []
+        },
+        "16_3": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 28.5,
+          "sample_labels": []
+        }
+      },
+      "events": [
+        {
+          "event_id": "13223241",
+          "match": "Rakuten Monkeys - TSG Hawks",
+          "league": "CPBL",
+          "market_keys": [
+            "16_1",
+            "16_2",
+            "16_3"
+          ]
+        },
+        {
+          "event_id": "13198312",
+          "match": "Granada - Esteli",
+          "league": "Nicaragua CNBS",
+          "market_keys": []
+        },
+        {
+          "event_id": "13198313",
+          "match": "Rivas - Boer",
+          "league": "Nicaragua CNBS",
+          "market_keys": []
+        },
+        {
+          "event_id": "13210513",
+          "match": "PHI Phillies - ATL Braves",
+          "league": "MLB",
+          "market_keys": [
+            "16_1",
+            "16_2",
+            "16_3"
+          ]
+        },
+        {
+          "event_id": "12465358",
+          "match": "Yakult Swallows - Yomiuri Giants",
+          "league": "Japan NPB",
+          "market_keys": []
+        },
+        {
+          "event_id": "12479013",
+          "match": "Lotte Marines - Softbank Hawks",
+          "league": "Japan NPB",
+          "market_keys": []
+        },
+        {
+          "event_id": "13133752",
+          "match": "Fubon Guardians - Wei-Chuan Dragons",
+          "league": "CPBL",
+          "market_keys": []
+        },
+        {
+          "event_id": "13225158",
+          "match": "TSG Hawks - Rakuten Monkeys",
+          "league": "CPBL",
+          "market_keys": []
+        }
+      ]
+    },
+    "ice_hockey": {
+      "sport_id": 17,
+      "upcoming_seen": 50,
+      "events_probed": 8,
+      "errors": [],
+      "markets": {
+        "17_1": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 1.0,
+          "sample_labels": []
+        },
+        "17_2": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 1.0,
+          "sample_labels": []
+        },
+        "17_3": {
+          "events_with_market": 2,
+          "coverage_pct": 25.0,
+          "mean_rows": 1.0,
+          "sample_labels": []
+        }
+      },
+      "events": [
+        {
+          "event_id": "12421612",
+          "match": "HC 19 Humenne - Slovakia U18",
+          "league": "Slovakia 1 Liga",
+          "market_keys": []
+        },
+        {
+          "event_id": "13225978",
+          "match": "Munaishy U20 - HK Astana U20",
+          "league": "Kazakhstan MHL",
+          "market_keys": [
+            "17_1",
+            "17_2",
+            "17_3"
+          ]
+        },
+        {
+          "event_id": "12422424",
+          "match": "HC Omskie Krylya - HC Yugra",
+          "league": "Russia VHL",
+          "market_keys": []
+        },
+        {
+          "event_id": "13225965",
+          "match": "France (W) - Japan (W)",
+          "league": "International Friendlies Women (Regulation Only)",
+          "market_keys": [
+            "17_1",
+            "17_2",
+            "17_3"
+          ]
+        },
+        {
+          "event_id": "12412572",
+          "match": "Avto U20 - Omskie Yastreby U20",
+          "league": "Russia MHL",
+          "market_keys": []
+        },
+        {
+          "event_id": "12422455",
+          "match": "Zauralie Kurgan - Rubin Tyumen",
+          "league": "Russia VHL",
+          "market_keys": []
+        },
+        {
+          "event_id": "12412646",
+          "match": "Snezhnye Barsy Astana U20 - Molot U20",
+          "league": "Russia MHL",
+          "market_keys": []
+        },
+        {
+          "event_id": "12422193",
+          "match": "Toros Neftekamsk - HC Ryazan",
+          "league": "Russia VHL",
+          "market_keys": []
+        }
+      ]
+    },
+    "basketball": {
+      "sport_id": 18,
+      "upcoming_seen": 50,
+      "events_probed": 8,
+      "errors": [],
+      "markets": {
+        "18_1": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 2.0,
+          "sample_labels": []
+        },
+        "18_2": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 1.2,
+          "sample_labels": []
+        },
+        "18_3": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 2.0,
+          "sample_labels": []
+        },
+        "18_4": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 3.8,
+          "sample_labels": []
+        },
+        "18_5": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 3.8,
+          "sample_labels": []
+        },
+        "18_6": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 7.0,
+          "sample_labels": []
+        },
+        "18_7": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 3.3,
+          "sample_labels": []
+        },
+        "18_8": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 3.2,
+          "sample_labels": []
+        },
+        "18_9": {
+          "events_with_market": 6,
+          "coverage_pct": 75.0,
+          "mean_rows": 4.8,
+          "sample_labels": []
+        }
+      },
+      "events": [
+        {
+          "event_id": "13227174",
+          "match": "DAL Mavericks (DIMES) - DEN Nuggets (JD)",
+          "league": "Ebasketball H2H GG League - 4x5mins",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        },
+        {
+          "event_id": "13227677",
+          "match": "DAL Mavericks (RAMZ) - CHA Hornets (SAINT JR)",
+          "league": "Ebasketball H2H GG League - 4x5mins",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        },
+        {
+          "event_id": "13227311",
+          "match": "TOR Raptors (GODFATHER) - CHI Bulls (UNFORGIVEN)",
+          "league": "Ebasketball H2H GG League - 4x5mins",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        },
+        {
+          "event_id": "13227339",
+          "match": "CLE Cavaliers (DIAMOND) - PHX Suns (MACHINE)",
+          "league": "Ebasketball H2H GG League - 4x5mins",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        },
+        {
+          "event_id": "13109319",
+          "match": "Temp-Sumz Revda - Novosibirsk",
+          "league": "Russia Superleague",
+          "market_keys": []
+        },
+        {
+          "event_id": "13221000",
+          "match": "Achilleas Kaimakliou - EN Paralimni",
+          "league": "Club Friendlies",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        },
+        {
+          "event_id": "13109318",
+          "match": "Dynamo UFA - Barnaul Altai",
+          "league": "Russia Superleague",
+          "market_keys": []
+        },
+        {
+          "event_id": "13181050",
+          "match": "Shahrdari Gorgan - Al Ula",
+          "league": "West Asia Super League",
+          "market_keys": [
+            "18_1",
+            "18_2",
+            "18_3",
+            "18_4",
+            "18_5",
+            "18_6",
+            "18_7",
+            "18_8",
+            "18_9"
+          ]
+        }
+      ]
+    }
+  },
+  "api_calls": 45
+}
