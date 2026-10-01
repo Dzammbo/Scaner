@@ -96,6 +96,48 @@ for sid in starts:
  xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  raw=[x for x in merged if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
  out[sid]={"name":names[sid],"start":starts[sid],"recorded":len(raw),"original":agg(xs),"reverse":agg(xs,"reverse_profit")}
+
+def odds_band(v):
+ try:
+  lo=math.floor(float(v)*4+1e-9)/4
+  return f"{lo:.2f}-{lo+.24:.2f}"
+ except:return None
+def minute_band(v):
+ try:
+  lo=(int(float(v))//5)*5
+  return f"{lo}-{lo+4}"
+ except:return None
+def total_line(v):
+ s=str(v or "")
+ if not (s.startswith("ТБ ") or s.startswith("ТМ ")):return None
+ return s.split(" ",1)[1]
+def positive_groups(xs,key,odds_key,bet_key):
+ dims={"коэффициент":lambda r:odds_band(r.get(odds_key)),
+       "минута":lambda r:minute_band(r.get("minute")),
+       "линия":lambda r:total_line(r.get(bet_key)),
+       "турнир":lambda r:str(r.get("tournament") or "") or None,
+       "коэффициент + минута":lambda r:(odds_band(r.get(odds_key))+" | "+minute_band(r.get("minute"))) if odds_band(r.get(odds_key)) and minute_band(r.get("minute")) else None}
+ out=[]
+ for dim,fn in dims.items():
+  groups={}
+  for r in xs:
+   if r.get(key) is None:continue
+   val=fn(r)
+   if val is not None:groups.setdefault(val,[]).append(r)
+  for val,rs in groups.items():
+   a=agg(rs,key)
+   if a["N"]>=10 and a["ROI"] is not None and a["ROI"]>0:
+    out.append({"dimension":dim,"value":val,**a})
+ return sorted(out,key=lambda z:(-z["N"],-z["ROI"],z["dimension"],z["value"]))
+
+pockets={}
+for sid in starts:
+ xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]
+ pockets[sid]={"name":names[sid],
+  "direct":positive_groups(xs,"profit","current_odds","exact_bet_line"),
+  "reverse":positive_groups(xs,"reverse_profit","reverse_odds","reverse_bet")}
+Path("pockets_current.json").write_text(json.dumps(pockets,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+print("POSITIVE_POCKETS="+json.dumps(pockets,ensure_ascii=False,separators=(",",":")))
 settled_keys=set((str(x.get("event_id")),str(x.get("exact_bet_line"))) for x in sett)
 pending=[r for r in merged if (str(r.get("event_id")),str(r.get("exact_bet_line"))) not in settled_keys]
 Path("pending_current.json").write_text(json.dumps(pending,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
