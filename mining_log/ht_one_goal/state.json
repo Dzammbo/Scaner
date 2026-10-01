@@ -519,8 +519,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219752": {
       "event_id": "13219752",
@@ -645,9 +646,45 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "12328118": {
+      "event_id": "12328118",
+      "bet365_id": "202031944",
+      "kickoff": 1790857800,
+      "candidate_at": 1790862081,
+      "country": "eg",
+      "league": "Egypt Division 2",
+      "home": "El Seka El Hadid",
+      "away": "El Entag El Harby",
+      "halftime_score": [
+        3,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227119": {
+      "event_id": "13227119",
+      "bet365_id": "202130937",
+      "kickoff": 1790857800,
+      "candidate_at": 1790862081,
+      "country": "eg",
+      "league": "Egypt Premier League Women",
+      "home": "SAK Football (W)",
+      "away": "Pyramids FC (W)",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T13:29:10Z",
+  "updated_at": "2026-10-01T13:45:32Z",
   "api_calls_last_run": 9
 }
