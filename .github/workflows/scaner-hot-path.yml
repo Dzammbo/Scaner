@@ -38,11 +38,13 @@ jobs:
           import json
           from datetime import datetime, timezone, timedelta
           from pathlib import Path
+          from zoneinfo import ZoneInfo
 
-          cap = 1200
-          per_pass = 50
-          board_calls = 2
           now = datetime.now(timezone.utc)
+          morning = 7 <= now.astimezone(ZoneInfo("Europe/Moscow")).hour < 12
+          cap = 600 if morning else 1200
+          per_pass = 25 if morning else 50
+          board_calls = 2
           used = 0
           path = Path("forward_log/scanner_runs.jsonl")
           if path.exists():
@@ -67,7 +69,7 @@ jobs:
               f.write(f"SCANER_DETAIL_BUDGET={detail_budget}\n")
               f.write(f"SCANER_ROLLING_USED={used}\n")
               f.write(f"SCANER_ROLLING_REMAINING={remaining}\n")
-          print(json.dumps({"used_last_hour":used,"remaining":remaining,"run_budget":run_budget,"detail_budget":detail_budget,"skip":skip}))
+          print(json.dumps({"morning_msk":morning,"hourly_cap":cap,"per_pass_cap":per_pass,"used_last_hour":used,"remaining":remaining,"run_budget":run_budget,"detail_budget":detail_budget,"skip":skip}))
           PY
 
       - name: Run scanner
@@ -98,7 +100,7 @@ jobs:
             "pending_history_rules":[],
             "detail_probe_summary":{},
             "total_script_ms":0,
-            "note":"Skipped: rolling Scanner BetsAPI budget 1200/hour exhausted."
+            "note":"Skipped: rolling Scanner BetsAPI budget exhausted."
           }
           Path("result.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           PY
