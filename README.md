@@ -180,3 +180,21 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 - `prematch-line-movement.yml` - prematch probability movement, twice per hour.
 
 All Mining collectors share the 1,150 requests/hour envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
+
+## Фиксированный список наблюдения Scanner, 2026-10-01
+
+После exploratory-разреза clean-forward данных отдельно зафиксированы четыре кармана:
+
+1. Основной ТБ при счёте 1:1, рыночная линия 2,5-2,75; фокус 65-74-я минута.
+2. Reverse ТМ при счёте 1:1, рыночная линия 3,5-4,0; фокус 45-49-я минута.
+3. Reverse ТМ 2,5 после 70-й минуты при счёте 0:2 и фактическом reverse-коэффициенте 1,75-1,99.
+4. За победителя предыдущего плотного сета при коэффициенте 2,25-2,49.
+
+Канонические фильтры и стартовые результаты хранятся в `observation_watchlist.json`.
+
+Правила:
+- список является observation-only и не меняет оперативные сигналы Scanner;
+- фильтры заморожены до следующего формального пересмотра;
+- результаты после даты фиксации считать отдельно от стартовой exploratory-выборки;
+- первый пересмотр проводить не ранее 10 полных дней и 50 новых рассчитанных ставок по карману;
+- включение в пользовательский вывод или реальные ставки возможно только отдельным решением.
