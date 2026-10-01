@@ -145,11 +145,10 @@
         "market": "main_over"
       },
       "user_output": true,
-      "scanner_enabled": false,
-      "scanner_core8": false,
-      "research_destination": "mining",
-      "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
+      "scanner_enabled": true,
+      "scanner_core8": true,
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01"
     },
     {
       "id": "S07",
@@ -177,6 +176,7 @@
       "name_ru": "Тотал больше после 50+ минут без гола",
       "source": "historical_confirmed",
       "rule": {
+        "minute_min": 50,
         "drought_min": 50,
         "odds": [
           1.8,
@@ -185,11 +185,10 @@
         "market": "over"
       },
       "user_output": true,
-      "scanner_enabled": false,
-      "scanner_core8": false,
-      "research_destination": "mining",
-      "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
+      "scanner_enabled": true,
+      "scanner_core8": true,
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01"
     },
     {
       "id": "S09",
@@ -513,11 +512,10 @@
       },
       "user_output": false,
       "research_role": "reverse_or_mirror_only",
-      "scanner_enabled": false,
-      "research_destination": "mining",
-      "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "scanner_core8": false
+      "scanner_enabled": true,
+      "research_destination": "scanner",
+      "scanner_core8": true,
+      "scanner_activated_at": "2026-10-01"
     },
     {
       "id": "T16",
@@ -550,6 +548,58 @@
       "research_destination": "mining",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
+    },
+    {
+      "id": "S26",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "High Pressure ТБ 0.5 матча",
+      "source": "mining_forward_positive",
+      "evidence": {
+        "n": 219,
+        "wins": 101,
+        "losses": 118,
+        "profit": 28.9,
+        "roi_pct": 13.2,
+        "as_of": "2026-10-01"
+      },
+      "rule": {
+        "period": "FT",
+        "pressure10_min": 28,
+        "market": "plus_0_5"
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": true,
+      "research_destination": "scanner",
+      "collection_engine": "stateful_goal_mining.py",
+      "scanner_activated_at": "2026-10-01"
+    },
+    {
+      "id": "S27",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "High Pressure ТБ 0.5 первого тайма",
+      "source": "mining_forward_positive",
+      "evidence": {
+        "n": 183,
+        "wins": 77,
+        "losses": 106,
+        "profit": 8.825,
+        "roi_pct": 4.82,
+        "as_of": "2026-10-01"
+      },
+      "rule": {
+        "period": "FH",
+        "pressure10_min": 28,
+        "market": "plus_0_5"
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": true,
+      "research_destination": "scanner",
+      "collection_engine": "stateful_goal_mining.py",
+      "scanner_activated_at": "2026-10-01"
     },
     {
       "id": "S25",
