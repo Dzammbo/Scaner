@@ -575,8 +575,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13112289": {
       "event_id": "13112289",
@@ -593,8 +594,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13112288": {
       "event_id": "13112288",
@@ -667,8 +669,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227119": {
       "event_id": "13227119",
@@ -739,7 +742,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13220940": {
       "event_id": "13220940",
@@ -756,9 +760,62 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13117546": {
+      "event_id": "13117546",
+      "bet365_id": "202039129",
+      "kickoff": 1790860500,
+      "candidate_at": 1790863887,
+      "country": "ae",
+      "league": "UAE Cup",
+      "home": "Dubai United",
+      "away": "Hatta Dubai",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13117663": {
+      "event_id": "13117663",
+      "bet365_id": "202039127",
+      "kickoff": 1790860500,
+      "candidate_at": 1790863887,
+      "country": "ae",
+      "league": "UAE Cup",
+      "home": "Sharjah SCC",
+      "away": "Al Dhafra SCC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13224103": {
+      "event_id": "13224103",
+      "bet365_id": "202033030",
+      "kickoff": 1790860555,
+      "candidate_at": 1790863887,
+      "country": "ar",
+      "league": "Argentina Nacional Reserve League",
+      "home": "Club Atletico Mitre Reserves",
+      "away": "Talleres Remedios Reserves",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T14:00:54Z",
+  "updated_at": "2026-10-01T14:16:03Z",
   "api_calls_last_run": 9
 }
