@@ -40,7 +40,7 @@ jobs:
               try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
               if now-timedelta(hours=1)<=ts<=now:used+=int(r.get("api_calls") or 0)
-          budget=min(28,max(0,1150-used));skip=budget<6
+          budget=min(28,max(0,2300-used));skip=budget<6
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"LM_SKIP={'1' if skip else '0'}\n");f.write(f"LINE_MOVEMENT_CALL_BUDGET={max(6,budget)}\n")
           print(json.dumps({"used_last_hour":used,"run_budget":budget,"skip":skip}))
