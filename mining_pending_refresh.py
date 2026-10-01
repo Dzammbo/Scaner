@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# manual refresh trigger: 2026-10-01T08:31Z
 import json, os, time, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
