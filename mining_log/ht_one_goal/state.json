@@ -333,8 +333,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13220511": {
       "event_id": "13220511",
@@ -1310,8 +1311,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13071082": {
       "event_id": "13071082",
@@ -1328,8 +1330,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12086767": {
       "event_id": "12086767",
@@ -1346,8 +1349,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11437534": {
       "event_id": "11437534",
@@ -1364,7 +1368,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11614641": {
       "event_id": "11614641",
@@ -1381,7 +1386,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12086576": {
       "event_id": "12086576",
@@ -1398,7 +1404,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12086608": {
       "event_id": "12086608",
@@ -1637,8 +1644,59 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13087923": {
+      "event_id": "13087923",
+      "bet365_id": "202091608",
+      "kickoff": 1790872200,
+      "candidate_at": 1790875103,
+      "country": "il",
+      "league": "Israel Liga Alef North",
+      "home": "Hapoel Umm al-Fahm",
+      "away": "Hapoel Ironi Karmiel",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13087795": {
+      "event_id": "13087795",
+      "bet365_id": "202040713",
+      "kickoff": 1790872200,
+      "candidate_at": 1790875103,
+      "country": "il",
+      "league": "Israel Liga Alef South",
+      "home": "Kfar Saba 1928",
+      "away": "Hapoel Marmorek",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "10565765": {
+      "event_id": "10565765",
+      "bet365_id": "202032776",
+      "kickoff": 1790872200,
+      "candidate_at": 1790875103,
+      "country": "eu",
+      "league": "European U21 Championship Qual",
+      "home": "Armenia U21",
+      "away": "Italy U21",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T17:05:34Z",
+  "updated_at": "2026-10-01T17:23:04Z",
   "api_calls_last_run": 9
 }
