@@ -36,20 +36,24 @@ jobs:
           import json,os
           from datetime import datetime,timezone,timedelta
           from pathlib import Path
+          from zoneinfo import ZoneInfo
           now=datetime.now(timezone.utc);used=0
+          morning=7<=now.astimezone(ZoneInfo("Europe/Moscow")).hour<12
+          cap=1150 if morning else 2300
+          per_run=25 if morning else 50
           for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
               try:
                 row=json.loads(line);ts=datetime.fromisoformat(str(row["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
               if now-timedelta(hours=1)<=ts<=now:used+=int(row.get("api_calls") or 0)
-          run_budget=min(50,max(0,2300-used));skip=run_budget<20
+          run_budget=min(per_run,max(0,cap-used));skip=run_budget<20
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"HT_SKIP={'1' if skip else '0'}\n")
             per_pass=max(4,run_budget//5)
             f.write(f"HT_ONE_GOAL_CALL_BUDGET={per_pass}\n")
             f.write(f"HT_ONE_GOAL_DETAIL_BUDGET={max(1,per_pass-1)}\n")
-          print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"skip":skip}))
+          print(json.dumps({"morning_msk":morning,"hourly_cap":cap,"per_run_cap":per_run,"used_last_hour":used,"run_budget":run_budget,"skip":skip}))
           PY
 
       - name: Collect and settle signals every minute
