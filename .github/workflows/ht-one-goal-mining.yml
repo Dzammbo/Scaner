@@ -43,7 +43,7 @@ jobs:
                 row=json.loads(line);ts=datetime.fromisoformat(str(row["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
               if now-timedelta(hours=1)<=ts<=now:used+=int(row.get("api_calls") or 0)
-          run_budget=min(50,max(0,1150-used));skip=run_budget<20
+          run_budget=min(50,max(0,2300-used));skip=run_budget<20
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"HT_SKIP={'1' if skip else '0'}\n")
             per_pass=max(4,run_budget//5)
