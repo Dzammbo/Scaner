@@ -237,10 +237,47 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13180884": {
+      "event_id": "13180884",
+      "bet365_id": "202033402",
+      "kickoff": 1790847000,
+      "candidate_at": 1790850334,
+      "country": "",
+      "league": "U19 International",
+      "home": "Slovakia U19",
+      "away": "Switzerland U19",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13219448": {
+      "event_id": "13219448",
+      "bet365_id": "202033404",
+      "kickoff": 1790847000,
+      "candidate_at": 1790850334,
+      "country": "",
+      "league": "U19 International",
+      "home": "Poland U19",
+      "away": "Kazakhstan U19",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T10:11:01Z",
-  "api_calls_last_run": 2
+  "updated_at": "2026-10-01T10:29:23Z",
+  "api_calls_last_run": 3
 }
