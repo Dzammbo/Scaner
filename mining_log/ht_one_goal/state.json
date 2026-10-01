@@ -2308,8 +2308,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11437352": {
       "event_id": "11437352",
@@ -2344,8 +2345,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11679549": {
       "event_id": "11679549",
@@ -2362,8 +2364,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11437477": {
       "event_id": "11437477",
@@ -2416,7 +2419,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13226869": {
       "event_id": "13226869",
@@ -2433,7 +2437,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11437378": {
       "event_id": "11437378",
@@ -2450,7 +2455,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11437358": {
       "event_id": "11437358",
@@ -2468,8 +2474,93 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13224315": {
+      "event_id": "13224315",
+      "bet365_id": "202027631",
+      "kickoff": 1790881200,
+      "candidate_at": 1790884318,
+      "country": "br",
+      "league": "Brazil Campeonato Paraibano 2",
+      "home": "Spartax",
+      "away": "Sport Lucena",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13083423": {
+      "event_id": "13083423",
+      "bet365_id": "201750151",
+      "kickoff": 1790881200,
+      "candidate_at": 1790884318,
+      "country": "",
+      "league": "UEFA Women's Champions League",
+      "home": "PSG (W)",
+      "away": "OH Leuven (W)",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13220393": {
+      "event_id": "13220393",
+      "bet365_id": "202086521",
+      "kickoff": 1790881200,
+      "candidate_at": 1790884318,
+      "country": "is",
+      "league": "Iceland U19 League",
+      "home": "FH/IH U19",
+      "away": "Keflavik/Reynir/Hafnir U19",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13082750": {
+      "event_id": "13082750",
+      "bet365_id": "201750145",
+      "kickoff": 1790881200,
+      "candidate_at": 1790884318,
+      "country": "",
+      "league": "UEFA Women's Champions League",
+      "home": "Man City (W)",
+      "away": "Real Madrid (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13070272": {
+      "event_id": "13070272",
+      "bet365_id": "202032980",
+      "kickoff": 1790881375,
+      "candidate_at": 1790884318,
+      "country": "ar",
+      "league": "Argentina Liga Profesional Reserves",
+      "home": "San Martin de San Juan Reserves",
+      "away": "Lanus Reserves",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T19:44:22Z",
+  "updated_at": "2026-10-01T19:56:24Z",
   "api_calls_last_run": 9
 }
