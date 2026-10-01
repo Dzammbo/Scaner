@@ -38,10 +38,12 @@ jobs:
           import json,os
           from datetime import datetime,timezone,timedelta
           from pathlib import Path
-          cap=2300
-          per_pass=int(os.environ.get("MINING_PASS_CAP","12"))
-          board_calls=2
+          from zoneinfo import ZoneInfo
           now=datetime.now(timezone.utc);used=0
+          morning=7<=now.astimezone(ZoneInfo("Europe/Moscow")).hour<12
+          cap=1150 if morning else 2300
+          per_pass=int(os.environ.get("MINING_PASS_CAP","12"))//(2 if morning else 1)
+          board_calls=2
           for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
               try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))
@@ -51,7 +53,7 @@ jobs:
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"SCANER_SKIP={'1' if skip else '0'}\n")
             f.write(f"SCANER_DETAIL_BUDGET={max(0,run_budget-board_calls)}\n")
-          print(json.dumps({"used_last_hour":used,"run_budget":run_budget,"detail_budget":max(0,run_budget-board_calls),"skip":skip}))
+          print(json.dumps({"morning_msk":morning,"hourly_cap":cap,"per_pass_cap":per_pass,"used_last_hour":used,"run_budget":run_budget,"detail_budget":max(0,run_budget-board_calls),"skip":skip}))
           PY
         env:
           MINING_PASS_CAP: 40
