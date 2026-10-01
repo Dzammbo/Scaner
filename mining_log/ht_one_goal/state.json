@@ -764,8 +764,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13117546": {
       "event_id": "13117546",
@@ -839,8 +840,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220390": {
       "event_id": "13220390",
@@ -984,7 +986,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13219433": {
       "event_id": "13219433",
@@ -1001,7 +1004,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13214987": {
       "event_id": "13214987",
@@ -1019,8 +1023,25 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13223621": {
+      "event_id": "13223621",
+      "bet365_id": "202073889",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866815,
+      "country": "ar",
+      "league": "Argentina Reserve League",
+      "home": "Deportivo Camioneros Reserves",
+      "away": "Arsenal de Sarandi Reserves",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T14:53:49Z",
+  "updated_at": "2026-10-01T15:04:23Z",
   "api_calls_last_run": 9
 }
