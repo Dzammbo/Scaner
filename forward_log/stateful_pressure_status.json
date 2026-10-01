@@ -1,31 +1,56 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-01T14:04:01Z",
-  "signals": 50,
+  "updated_at": "2026-10-01T14:24:11Z",
+  "signals": 52,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-01T14:03:44Z",
+      "timestamp": "2026-10-01T14:23:45Z",
       "sport": "football",
-      "tournament": "Egypt Division 2",
-      "event_id": "12328208",
-      "match": "Pharco FC - Tersana SC",
-      "minute_score": "65' / '0-1'",
-      "minute": 65,
-      "score": "0-1",
-      "exact_bet_line": "ТБ 1.5",
+      "tournament": "U19 International",
+      "event_id": "13219560",
+      "match": "Qatar U19 - Rep of Ireland U19",
+      "minute_score": "24' / '0-0'",
+      "minute": 24,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
       "current_odds": 1.975,
-      "reverse_bet": "ТМ 1.5",
+      "reverse_bet": "ТМ 0.5",
       "reverse_odds": 1.825,
-      "strategy_id": "S26",
+      "strategy_id": "S27",
       "strategy_ids": [
-        "S26"
+        "S27"
       ],
       "strategy_names": [
-        "High Pressure ТБ 0.5 матча"
+        "High Pressure ТБ 0.5 первого тайма"
       ],
-      "tier": "ACTIVE",
-      "pressure10": 31.0,
-      "period": "FT",
+      "tier": "WATCHLIST",
+      "pressure10": 37.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-01T14:23:45Z",
+      "sport": "football",
+      "tournament": "International Match",
+      "event_id": "13219611",
+      "match": "Uzbekistan - Syria",
+      "minute_score": "23' / '0-0'",
+      "minute": 23,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 2.025,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.775,
+      "strategy_id": "S27",
+      "strategy_ids": [
+        "S27"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 первого тайма"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 43.0,
+      "period": "FH",
       "source": "stateful_goal_mining"
     }
   ]
