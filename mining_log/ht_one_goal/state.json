@@ -1105,8 +1105,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13132446": {
       "event_id": "13132446",
@@ -1123,8 +1124,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224098": {
       "event_id": "13224098",
@@ -1143,8 +1145,44 @@
       "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13215878": {
+      "event_id": "13215878",
+      "bet365_id": "201981892",
+      "kickoff": 1790868600,
+      "candidate_at": 1790871568,
+      "country": "il",
+      "league": "Israel Liga Alef South",
+      "home": "Maccabi Yavne",
+      "away": "Ironi Beit Shemesh",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13216656": {
+      "event_id": "13216656",
+      "bet365_id": "202036224",
+      "kickoff": 1790868600,
+      "candidate_at": 1790871568,
+      "country": "",
+      "league": "Elite Club Friendlies",
+      "home": "VfB Stuttgart",
+      "away": "Greuther Furth",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T16:05:32Z",
+  "updated_at": "2026-10-01T16:23:20Z",
   "api_calls_last_run": 4
 }
