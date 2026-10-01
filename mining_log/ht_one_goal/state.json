@@ -294,8 +294,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220988": {
       "event_id": "13220988",
@@ -332,8 +333,26 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13220511": {
+      "event_id": "13220511",
+      "bet365_id": "202086691",
+      "kickoff": 1790850600,
+      "candidate_at": 1790853816,
+      "country": "in",
+      "league": "India Bangalore Super Division",
+      "home": "Parikrma FC",
+      "away": "ASC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T11:10:15Z",
+  "updated_at": "2026-10-01T11:27:21Z",
   "api_calls_last_run": 4
 }
