@@ -34,16 +34,20 @@ jobs:
           import json,os
           from datetime import datetime,timezone,timedelta
           from pathlib import Path
+          from zoneinfo import ZoneInfo
           now=datetime.now(timezone.utc);used=0
+          morning=7<=now.astimezone(ZoneInfo("Europe/Moscow")).hour<12
+          cap=1150 if morning else 2300
+          per_run=14 if morning else 28
           for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
               try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))
               except Exception:continue
               if now-timedelta(hours=1)<=ts<=now:used+=int(r.get("api_calls") or 0)
-          budget=min(28,max(0,2300-used));skip=budget<6
+          budget=min(per_run,max(0,cap-used));skip=budget<6
           with open(os.environ["GITHUB_ENV"],"a") as f:
             f.write(f"LM_SKIP={'1' if skip else '0'}\n");f.write(f"LINE_MOVEMENT_CALL_BUDGET={max(6,budget)}\n")
-          print(json.dumps({"used_last_hour":used,"run_budget":budget,"skip":skip}))
+          print(json.dumps({"morning_msk":morning,"hourly_cap":cap,"per_run_cap":per_run,"used_last_hour":used,"run_budget":budget,"skip":skip}))
           PY
       - name: Collect movement
         if: env.LM_SKIP != '1'
