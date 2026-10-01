@@ -314,8 +314,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13140069": {
       "event_id": "13140069",
@@ -1181,8 +1182,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13117662": {
       "event_id": "13117662",
@@ -1217,8 +1219,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220973": {
       "event_id": "13220973",
@@ -1325,7 +1328,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12086767": {
       "event_id": "12086767",
@@ -1342,7 +1346,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11437534": {
       "event_id": "11437534",
@@ -1598,8 +1603,42 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13083917": {
+      "event_id": "13083917",
+      "bet365_id": "201641096",
+      "kickoff": 1790870400,
+      "candidate_at": 1790874070,
+      "country": "",
+      "league": "Africa Cup of Nations Qualification",
+      "home": "Guinea",
+      "away": "Kenya",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13226722": {
+      "event_id": "13226722",
+      "bet365_id": "202169520",
+      "kickoff": 1790870400,
+      "candidate_at": 1790874070,
+      "country": "",
+      "league": "U23 International",
+      "home": "Morocco U23",
+      "away": "Mali U23",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T16:52:59Z",
+  "updated_at": "2026-10-01T17:05:34Z",
   "api_calls_last_run": 9
 }
