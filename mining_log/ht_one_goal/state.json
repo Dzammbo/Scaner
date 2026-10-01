@@ -1971,8 +1971,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13210678": {
       "event_id": "13210678",
@@ -2079,8 +2080,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12318232": {
       "event_id": "12318232",
@@ -2097,7 +2099,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13222256": {
       "event_id": "13222256",
@@ -2114,7 +2117,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13222383": {
       "event_id": "13222383",
@@ -2183,8 +2187,59 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13219912": {
+      "event_id": "13219912",
+      "bet365_id": "202097273",
+      "kickoff": 1790878500,
+      "candidate_at": 1790881806,
+      "country": "no",
+      "league": "Norway Interkretsserie U19",
+      "home": "Gjelleraasen U19",
+      "away": "Grorud U19",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13219913": {
+      "event_id": "13219913",
+      "bet365_id": "202097277",
+      "kickoff": 1790878500,
+      "candidate_at": 1790881806,
+      "country": "no",
+      "league": "Norway Interkretsserie U19",
+      "home": "Sarpsborg FK U19",
+      "away": "Klofta U19",
+      "halftime_score": [
+        4,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13219909": {
+      "event_id": "13219909",
+      "bet365_id": "202082014",
+      "kickoff": 1790878500,
+      "candidate_at": 1790881806,
+      "country": "no",
+      "league": "Norway Interkretsserie U19",
+      "home": "Ullensaker/Kisa U19",
+      "away": "Haslum U19",
+      "halftime_score": [
+        1,
+        5
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T19:01:38Z",
+  "updated_at": "2026-10-01T19:14:35Z",
   "api_calls_last_run": 9
 }
