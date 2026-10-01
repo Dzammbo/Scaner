@@ -38,7 +38,7 @@ jobs:
           import json,os
           from datetime import datetime,timezone,timedelta
           from pathlib import Path
-          cap=1150
+          cap=2300
           per_pass=int(os.environ.get("MINING_PASS_CAP","12"))
           board_calls=2
           now=datetime.now(timezone.utc);used=0
