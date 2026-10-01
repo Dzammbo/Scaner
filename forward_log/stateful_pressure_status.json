@@ -1,6 +1,57 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-01T17:00:10Z",
-  "signals": 76,
-  "active_last_10m": []
+  "updated_at": "2026-10-01T17:15:04Z",
+  "signals": 78,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-01T17:14:48Z",
+      "sport": "football",
+      "tournament": "UEFA Women's Champions League",
+      "event_id": "13082990",
+      "match": "HB Koge (W) - Servette FC Chenois (W)",
+      "minute_score": "29' / '2-0'",
+      "minute": 29,
+      "score": "2-0",
+      "exact_bet_line": "ТБ 2.5",
+      "current_odds": 1.925,
+      "reverse_bet": "ТМ 2.5",
+      "reverse_odds": 1.875,
+      "strategy_id": "S27",
+      "strategy_ids": [
+        "S27"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 первого тайма"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 55.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-01T17:14:48Z",
+      "sport": "football",
+      "tournament": "Elite Club Friendlies",
+      "event_id": "13216656",
+      "match": "VfB Stuttgart - Greuther Furth",
+      "minute_score": "88' / '5-0'",
+      "minute": 88,
+      "score": "5-0",
+      "exact_bet_line": "ТБ 5.5",
+      "current_odds": 5.25,
+      "reverse_bet": "ТМ 5.5",
+      "reverse_odds": 1.16,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 47.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
