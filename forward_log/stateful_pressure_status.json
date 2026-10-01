@@ -1,7 +1,7 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-01T23:44:51Z",
-  "signals": 133,
+  "updated_at": "2026-10-01T23:54:24Z",
+  "signals": 135,
   "active_last_10m": [
     {
       "timestamp": "2026-10-01T23:44:45Z",
@@ -50,6 +50,56 @@
       ],
       "tier": "ACTIVE",
       "pressure10": 35.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-01T23:54:14Z",
+      "sport": "football",
+      "tournament": "Brazil Serie B",
+      "event_id": "11633641",
+      "match": "Athletic Club MG - Sport Recife",
+      "minute_score": "23' / '1-1'",
+      "minute": 23,
+      "score": "1-1",
+      "exact_bet_line": "ТБ 2.5",
+      "current_odds": 1.975,
+      "reverse_bet": "ТМ 2.5",
+      "reverse_odds": 1.825,
+      "strategy_id": "S27",
+      "strategy_ids": [
+        "S27"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 первого тайма"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 90.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-01T23:54:14Z",
+      "sport": "football",
+      "tournament": "Paraguay Cup",
+      "event_id": "13115441",
+      "match": "Olimpia Asuncion - Sportivo Luqueno",
+      "minute_score": "96' / '1-1'",
+      "minute": 96,
+      "score": "1-1",
+      "exact_bet_line": "ТБ 2.5",
+      "current_odds": 10.0,
+      "reverse_bet": "ТМ 2.5",
+      "reverse_odds": 1.06,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 62.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
