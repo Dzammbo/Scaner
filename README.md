@@ -185,6 +185,18 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 
 All Mining collectors share the 1,150 requests/hour envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
 
+## Приоритет статистики Scanner, 2026-10-01
+
+Пять карманов показываются первыми в отчёте `current_status.py` (`PRIORITY_POCKETS`, по порядку ниже). Для каждого при обновлении считаются число записанных и рассчитанных ставок, прибыль, ROI и ROI без трёх самых прибыльных ставок. Точные разрезы хранятся в `priority_pockets.json`:
+
+1. ТБ 2,5 при счёте 1:1.
+2. ТМ при счёте 1:1 на 45-49-й минуте, по коэффициенту противоположного исхода.
+3. Победа победителя предыдущего плотного сета при коэффициенте 2,25-2,49.
+4. ТБ при счёте 1:1 на 65-69-й минуте при коэффициенте 1,75-1,99.
+5. ТМ при счёте 1:1 в Honduras Reserve League, по коэффициенту противоположного исхода.
+
+Это ранжирование разрезов данных, а не новые условия входа. Пункты могут пересекаться, поэтому их прибыли не складываются. Остальные стратегии остаются в Scanner и в полном отчёте. Приоритет не меняет сигналы и реальные ставки.
+
 ## Фиксированный список наблюдения Scanner, 2026-10-01
 
 После exploratory-разреза clean-forward данных отдельно зафиксированы четыре кармана:
