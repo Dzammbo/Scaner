@@ -896,8 +896,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13222367": {
       "event_id": "13222367",
@@ -932,8 +933,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220141": {
       "event_id": "13220141",
@@ -968,8 +970,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219560": {
       "event_id": "13219560",
@@ -986,8 +989,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219433": {
       "event_id": "13219433",
@@ -1022,7 +1026,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13223621": {
       "event_id": "13223621",
@@ -1039,9 +1044,46 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13220392": {
+      "event_id": "13220392",
+      "bet365_id": "202093411",
+      "kickoff": 1790864700,
+      "candidate_at": 1790867894,
+      "country": "om",
+      "league": "Oman Federation Cup",
+      "home": "Bahla",
+      "away": "Fanja",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13220391": {
+      "event_id": "13220391",
+      "bet365_id": "202040717",
+      "kickoff": 1790864700,
+      "candidate_at": 1790867957,
+      "country": "om",
+      "league": "Oman Federation Cup",
+      "home": "Al Musannah",
+      "away": "Ibri Club",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T15:04:23Z",
+  "updated_at": "2026-10-01T15:22:26Z",
   "api_calls_last_run": 9
 }
