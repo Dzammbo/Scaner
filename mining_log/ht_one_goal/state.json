@@ -425,8 +425,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13218704": {
       "event_id": "13218704",
@@ -462,8 +463,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219706": {
       "event_id": "13219706",
@@ -480,10 +482,172 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13220914": {
+      "event_id": "13220914",
+      "bet365_id": "202082007",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "my",
+      "league": "Malaysia President Cup",
+      "home": "Touchtronics FC U20",
+      "away": "Terengganu U20",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13219753": {
+      "event_id": "13219753",
+      "bet365_id": "202082005",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "mw",
+      "league": "Malawi League Women",
+      "home": "Mighty Wanderers (W)",
+      "away": "Ascent Academy (W)",
+      "halftime_score": [
+        3,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13219752": {
+      "event_id": "13219752",
+      "bet365_id": "202081983",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "mw",
+      "league": "Malawi League Women",
+      "home": "Rumphi Sisters (W)",
+      "away": "Kukoma Ntopwa (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12328208": {
+      "event_id": "12328208",
+      "bet365_id": "202031948",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "eg",
+      "league": "Egypt Division 2",
+      "home": "Pharco FC",
+      "away": "Tersana SC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226674": {
+      "event_id": "13226674",
+      "bet365_id": "202116242",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "il",
+      "league": "Israel Liga Bet North",
+      "home": "Hapoel Bnei Sumei",
+      "away": "Hapoel Bnei Jadeidi",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13112289": {
+      "event_id": "13112289",
+      "bet365_id": "202002522",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "",
+      "league": "FIFA ASEAN Cup",
+      "home": "Indonesia",
+      "away": "Bangladesh",
+      "halftime_score": [
+        6,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13112288": {
+      "event_id": "13112288",
+      "bet365_id": "202002524",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "",
+      "league": "FIFA ASEAN Cup",
+      "home": "Malaysia",
+      "away": "Singapore",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12328309": {
+      "event_id": "12328309",
+      "bet365_id": "202031937",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "eg",
+      "league": "Egypt Division 2",
+      "home": "El Mansoura",
+      "away": "FC Masar",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12328209": {
+      "event_id": "12328209",
+      "bet365_id": "202031940",
+      "kickoff": 1790857800,
+      "candidate_at": 1790861104,
+      "country": "eg",
+      "league": "Egypt Division 2",
+      "home": "La Viena FC",
+      "away": "Al Nasr Cairo",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T13:07:22Z",
-  "api_calls_last_run": 4
+  "updated_at": "2026-10-01T13:29:10Z",
+  "api_calls_last_run": 9
 }
