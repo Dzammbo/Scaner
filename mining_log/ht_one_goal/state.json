@@ -256,8 +256,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219448": {
       "event_id": "13219448",
@@ -313,8 +314,26 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13140069": {
+      "event_id": "13140069",
+      "bet365_id": "201815758",
+      "kickoff": 1790849400,
+      "candidate_at": 1790852776,
+      "country": "",
+      "league": "International Match",
+      "home": "Japan",
+      "away": "Ecuador",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-01T10:58:40Z",
+  "updated_at": "2026-10-01T11:10:15Z",
   "api_calls_last_run": 4
 }
