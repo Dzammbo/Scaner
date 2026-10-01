@@ -782,8 +782,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13117663": {
       "event_id": "13117663",
@@ -856,8 +857,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13218694": {
       "event_id": "13218694",
@@ -876,8 +878,149 @@
       "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13222754": {
+      "event_id": "13222754",
+      "bet365_id": "202082030",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "pl",
+      "league": "Poland IV Liga",
+      "home": "Przemsza Siewierz",
+      "away": "Rozwoj Katowice",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13222367": {
+      "event_id": "13222367",
+      "bet365_id": "202091586",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "pa",
+      "league": "Panama First Division Women",
+      "home": "Plaza Amador (W)",
+      "away": "UMECIT (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13221876": {
+      "event_id": "13221876",
+      "bet365_id": "202110666",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "",
+      "league": "International Match",
+      "home": "Maldives",
+      "away": "Lebanon",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13220141": {
+      "event_id": "13220141",
+      "bet365_id": "202086008",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Wolfsburg",
+      "away": "TSV Havelse",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13219611": {
+      "event_id": "13219611",
+      "bet365_id": "202036220",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "",
+      "league": "International Match",
+      "home": "Uzbekistan",
+      "away": "Syria",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13219560": {
+      "event_id": "13219560",
+      "bet365_id": "202086465",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "",
+      "league": "U19 International",
+      "home": "Qatar U19",
+      "away": "Rep of Ireland U19",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13219433": {
+      "event_id": "13219433",
+      "bet365_id": "202130870",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "pa",
+      "league": "Panama Liga Prom",
+      "home": "San Francisco Reserves",
+      "away": "CD Universitario Reserves",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13214987": {
+      "event_id": "13214987",
+      "bet365_id": "202036228",
+      "kickoff": 1790863200,
+      "candidate_at": 1790866172,
+      "country": "",
+      "league": "U19 International",
+      "home": "Slovenia U19",
+      "away": "Faroe Islands U19",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-01T14:35:44Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-01T14:53:49Z",
+  "api_calls_last_run": 9
 }
