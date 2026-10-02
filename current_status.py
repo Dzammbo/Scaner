@@ -192,3 +192,4 @@ print("CURRENT_STATUS="+json.dumps(current_status,ensure_ascii=False,separators=
 # all-current-strategies refresh 2026-10-01T11:37:58Z
 # full strategy stats refresh 2026-10-02T20:23:51.389Z
 # persisted full stats refresh 2026-10-02T20:25:17.907Z
+# publishable full stats refresh 2026-10-02T20:29:43.188Z
