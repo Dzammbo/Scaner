@@ -4274,8 +4274,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12328308": {
       "event_id": "12328308",
@@ -4365,8 +4366,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12181973": {
       "event_id": "12181973",
@@ -4401,7 +4403,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232291": {
       "event_id": "13232291",
@@ -4418,7 +4422,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13227917": {
       "event_id": "13227917",
@@ -4435,7 +4440,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232467": {
       "event_id": "13232467",
@@ -4452,7 +4458,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13177305": {
       "event_id": "13177305",
@@ -4504,8 +4511,42 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13117660": {
+      "event_id": "13117660",
+      "bet365_id": "202034616",
+      "kickoff": 1790946900,
+      "candidate_at": 1790949799,
+      "country": "ae",
+      "league": "UAE President’s Cup",
+      "home": "Al Wasl SC",
+      "away": "Al Ittihad Kalba",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13117661": {
+      "event_id": "13117661",
+      "bet365_id": "202034597",
+      "kickoff": 1790946900,
+      "candidate_at": 1790950001,
+      "country": "ae",
+      "league": "UAE President’s Cup",
+      "home": "Al Ain SCC",
+      "away": "Ajman SCC",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T13:56:11Z",
+  "updated_at": "2026-10-02T14:06:46Z",
   "api_calls_last_run": 9
 }
