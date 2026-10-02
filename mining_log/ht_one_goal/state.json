@@ -4645,8 +4645,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13225657": {
       "event_id": "13225657",
@@ -7002,8 +7003,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13167343": {
       "event_id": "13167343",
@@ -7038,7 +7040,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12315901": {
       "event_id": "12315901",
@@ -7107,8 +7110,59 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13232518": {
+      "event_id": "13232518",
+      "bet365_id": "202232015",
+      "kickoff": 1790969400,
+      "candidate_at": 1790973009,
+      "country": "cr",
+      "league": "Costa Rica U20 League",
+      "home": "Deportivo Saprissa U20",
+      "away": "Sporting San Jose U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13228203": {
+      "event_id": "13228203",
+      "bet365_id": "202084051",
+      "kickoff": 1790969400,
+      "candidate_at": 1790973009,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Alebrijes de Oaxaca III",
+      "away": "Aragon FC",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13228204": {
+      "event_id": "13228204",
+      "bet365_id": "202084053",
+      "kickoff": 1790969657,
+      "candidate_at": 1790973009,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Ciervos FC II",
+      "away": "Club Union Magdalena Contreras",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T20:19:43Z",
+  "updated_at": "2026-10-02T20:34:33Z",
   "api_calls_last_run": 9
 }
