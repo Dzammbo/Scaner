@@ -3546,8 +3546,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11600973": {
       "event_id": "11600973",
@@ -3711,10 +3712,11 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     }
   },
-  "updated_at": "2026-10-02T11:28:24Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-02T11:42:15Z",
+  "api_calls_last_run": 6
 }
