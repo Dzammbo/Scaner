@@ -4494,8 +4494,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232468": {
       "event_id": "13232468",
@@ -6472,8 +6473,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228208": {
       "event_id": "13228208",
@@ -6508,8 +6510,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227374": {
       "event_id": "13227374",
@@ -6544,8 +6547,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12153351": {
       "event_id": "12153351",
@@ -6580,7 +6584,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226957": {
       "event_id": "13226957",
@@ -6597,7 +6602,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12130553": {
       "event_id": "12130553",
@@ -6614,7 +6620,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226065": {
       "event_id": "13226065",
@@ -6631,7 +6638,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13225535": {
       "event_id": "13225535",
@@ -6648,7 +6656,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13228234": {
       "event_id": "13228234",
@@ -6665,7 +6674,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "10571461": {
       "event_id": "10571461",
@@ -6682,7 +6692,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13169908": {
       "event_id": "13169908",
@@ -6699,7 +6710,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11437486": {
       "event_id": "11437486",
@@ -6955,8 +6967,93 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "12031958": {
+      "event_id": "12031958",
+      "bet365_id": "201316757",
+      "kickoff": 1790967600,
+      "candidate_at": 1790971208,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "Helmond Sport",
+      "away": "Heracles",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13167343": {
+      "event_id": "13167343",
+      "bet365_id": "202078251",
+      "kickoff": 1790967600,
+      "candidate_at": 1790971208,
+      "country": "py",
+      "league": "Paraguay Division Intermedia",
+      "home": "Encarnacion FC",
+      "away": "Resistencia FC",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12385262": {
+      "event_id": "12385262",
+      "bet365_id": "202029929",
+      "kickoff": 1790967600,
+      "candidate_at": 1790971208,
+      "country": "bo",
+      "league": "Bolivia Copa Division Profesional",
+      "home": "San Antonio Bulo Bulo",
+      "away": "Academia de Balompie Boliviano",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12315901": {
+      "event_id": "12315901",
+      "bet365_id": "202036622",
+      "kickoff": 1790967600,
+      "candidate_at": 1790971208,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "Saint Lucia",
+      "away": "Guadeloupe",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11553008": {
+      "event_id": "11553008",
+      "bet365_id": "201984978",
+      "kickoff": 1790968547,
+      "candidate_at": 1790971347,
+      "country": "ie",
+      "league": "Republic of Ireland First Division",
+      "home": "Treaty United FC",
+      "away": "UCD",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T19:41:17Z",
+  "updated_at": "2026-10-02T20:04:50Z",
   "api_calls_last_run": 9
 }
