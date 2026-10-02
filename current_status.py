@@ -171,7 +171,9 @@ print("POSITIVE_POCKETS="+json.dumps(pockets,ensure_ascii=False,separators=(",",
 settled_keys=set((str(x.get("event_id")),str(x.get("exact_bet_line"))) for x in sett)
 pending=[r for r in merged if (str(r.get("event_id")),str(r.get("exact_bet_line"))) not in settled_keys]
 Path("pending_current.json").write_text(json.dumps(pending,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"pending":len(pending),"strategies":out},ensure_ascii=False,separators=(",",":")))
+current_status={"merged":len(merged),"settled":len(sett),"pending":len(pending),"strategies":out}
+Path("current_status_current.json").write_text(json.dumps(current_status,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+print("CURRENT_STATUS="+json.dumps(current_status,ensure_ascii=False,separators=(",",":")))
 
 # status 2026-09-28
 
@@ -189,3 +191,4 @@ print("CURRENT_STATUS="+json.dumps({"merged":len(merged),"settled":len(sett),"pe
 # status refresh 2026-10-01T11:22:50Z
 # all-current-strategies refresh 2026-10-01T11:37:58Z
 # full strategy stats refresh 2026-10-02T20:23:51.389Z
+# persisted full stats refresh 2026-10-02T20:25:17.907Z
