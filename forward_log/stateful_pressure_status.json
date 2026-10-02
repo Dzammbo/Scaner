@@ -1,21 +1,46 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-02T11:05:19Z",
-  "signals": 168,
+  "updated_at": "2026-10-02T11:21:32Z",
+  "signals": 170,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-02T10:55:27Z",
+      "timestamp": "2026-10-02T11:21:15Z",
       "sport": "football",
-      "tournament": "Europe Friendlies",
-      "event_id": "13227783",
-      "match": "Mlada Boleslav - FK Pribram",
-      "minute_score": "81' / '2-1'",
-      "minute": 81,
-      "score": "2-1",
-      "exact_bet_line": "ТБ 3.5",
-      "current_odds": 2.15,
-      "reverse_bet": "ТМ 3.5",
-      "reverse_odds": 1.675,
+      "tournament": "International Match",
+      "event_id": "13140125",
+      "match": "South Korea - Venezuela",
+      "minute_score": "20' / '0-0'",
+      "minute": 20,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 1.95,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.85,
+      "strategy_id": "S27",
+      "strategy_ids": [
+        "S27"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 первого тайма"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 35.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-02T11:21:15Z",
+      "sport": "football",
+      "tournament": "India Mizoram Premier League",
+      "event_id": "13204908",
+      "match": "Chanmari FC - Dinthar FC",
+      "minute_score": "91' / '1-0'",
+      "minute": 91,
+      "score": "1-0",
+      "exact_bet_line": "ТБ 1.5",
+      "current_odds": 8.75,
+      "reverse_bet": "ТМ 1.5",
+      "reverse_odds": 1.075,
       "strategy_id": "S26",
       "strategy_ids": [
         "S26"
@@ -24,7 +49,7 @@
         "High Pressure ТБ 0.5 матча"
       ],
       "tier": "ACTIVE",
-      "pressure10": 37.0,
+      "pressure10": 42.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
