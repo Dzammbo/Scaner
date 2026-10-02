@@ -7407,8 +7407,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11181153": {
       "event_id": "11181153",
@@ -7551,7 +7552,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13227429": {
       "event_id": "13227429",
@@ -7569,8 +7571,42 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13125105": {
+      "event_id": "13125105",
+      "bet365_id": "201200323",
+      "kickoff": 1790979300,
+      "candidate_at": 1790982435,
+      "country": "ar",
+      "league": "Argentina Liga Profesional",
+      "home": "CA Independiente",
+      "away": "Instituto AC Cordoba",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13228130": {
+      "event_id": "13228130",
+      "bet365_id": "202180540",
+      "kickoff": 1790979664,
+      "candidate_at": 1790982616,
+      "country": "cl",
+      "league": "Chile Tercera",
+      "home": "Puente Alto",
+      "away": "Quintero Unido",
+      "halftime_score": [
+        3,
+        4
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T23:01:03Z",
+  "updated_at": "2026-10-02T23:11:18Z",
   "api_calls_last_run": 9
 }
