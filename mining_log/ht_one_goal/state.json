@@ -3326,8 +3326,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13184544": {
       "event_id": "13184544",
@@ -4914,10 +4915,137 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13019618": {
+      "event_id": "13019618",
+      "bet365_id": "202089214",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "FC Inter Sibiu",
+      "away": "CSO Teleajenul Valeni de Munte",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224341": {
+      "event_id": "13224341",
+      "bet365_id": "202075204",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "gh",
+      "league": "Ghana Division 1",
+      "home": "7th Wave FC",
+      "away": "Home Stars FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224344": {
+      "event_id": "13224344",
+      "bet365_id": "202083103",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "gh",
+      "league": "Ghana Division 1",
+      "home": "Yapei United",
+      "away": "Techiman Liberty Youth",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12474112": {
+      "event_id": "12474112",
+      "bet365_id": "202075949",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "ee",
+      "league": "Estonia Cup",
+      "home": "JK Tammeka Tartu",
+      "away": "Viimsi JK",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224342": {
+      "event_id": "13224342",
+      "bet365_id": "202075222",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "gh",
+      "league": "Ghana Division 1",
+      "home": "Accra Lions FC",
+      "away": "Inter Allies",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224343": {
+      "event_id": "13224343",
+      "bet365_id": "202075226",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "gh",
+      "league": "Ghana Division 1",
+      "home": "Nsuopun Fidelity FC",
+      "away": "New Edubiase FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13168493": {
+      "event_id": "13168493",
+      "bet365_id": "202084045",
+      "kickoff": 1790953200,
+      "candidate_at": 1790956575,
+      "country": "fi",
+      "league": "Finland Kakkonen Play Offs",
+      "home": "JBK",
+      "away": "FC Honka",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T15:46:26Z",
-  "api_calls_last_run": 3
+  "updated_at": "2026-10-02T16:00:38Z",
+  "api_calls_last_run": 9
 }
