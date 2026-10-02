@@ -2978,8 +2978,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12385196": {
       "event_id": "12385196",
@@ -3036,6 +3037,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T01:52:44Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-02T02:04:04Z",
+  "api_calls_last_run": 4
 }
