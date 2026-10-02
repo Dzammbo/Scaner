@@ -7306,8 +7306,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232519": {
       "event_id": "13232519",
@@ -7362,8 +7363,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13036653": {
       "event_id": "13036653",
@@ -7380,8 +7382,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13167342": {
       "event_id": "13167342",
@@ -7418,8 +7421,62 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "12294396": {
+      "event_id": "12294396",
+      "bet365_id": "202076747",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981193,
+      "country": "br",
+      "league": "Brazil Copa Parana",
+      "home": "Athletico Paranaense B",
+      "away": "Sao Joseense",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12177627": {
+      "event_id": "12177627",
+      "bet365_id": "202040030",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981248,
+      "country": "co",
+      "league": "Colombia Primera B",
+      "home": "Atletico Cali FC",
+      "away": "Real Soacha Cundinamarca",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315921": {
+      "event_id": "12315921",
+      "bet365_id": "202036631",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981304,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "Suriname",
+      "away": "Guatemala",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T22:36:29Z",
+  "updated_at": "2026-10-02T22:50:24Z",
   "api_calls_last_run": 6
 }
