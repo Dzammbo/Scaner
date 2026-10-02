@@ -6660,8 +6660,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228234": {
       "event_id": "13228234",
@@ -7022,8 +7023,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12385262": {
       "event_id": "12385262",
@@ -7040,8 +7042,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315901": {
       "event_id": "12315901",
@@ -7058,7 +7061,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11553008": {
       "event_id": "11553008",
@@ -7075,7 +7079,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12281088": {
       "event_id": "12281088",
@@ -7092,7 +7097,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228218": {
       "event_id": "13228218",
@@ -7109,7 +7115,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232518": {
       "event_id": "13232518",
@@ -7126,7 +7133,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13228203": {
       "event_id": "13228203",
@@ -7143,7 +7151,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13228204": {
       "event_id": "13228204",
@@ -7160,9 +7169,82 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "12395626": {
+      "event_id": "12395626",
+      "bet365_id": "202082816",
+      "kickoff": 1790971200,
+      "candidate_at": 1790974007,
+      "country": "es",
+      "league": "Spain Tercera Group 12",
+      "home": "Real Union de Tenerife",
+      "away": "CD Laguna",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13156810": {
+      "event_id": "13156810",
+      "bet365_id": "201750090",
+      "kickoff": 1790971200,
+      "candidate_at": 1790974124,
+      "country": "ma",
+      "league": "Morocco GNF 1",
+      "home": "Ittihad Tanger",
+      "away": "MAT Tetouan",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227455": {
+      "event_id": "13227455",
+      "bet365_id": "202139320",
+      "kickoff": 1790971200,
+      "candidate_at": 1790974124,
+      "country": "es",
+      "league": "Spain Youth League",
+      "home": "Las Palmas U19",
+      "away": "Arucas CF U19",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12332342": {
+      "event_id": "12332342",
+      "bet365_id": "202180544",
+      "kickoff": 1790971200,
+      "candidate_at": 1790974124,
+      "country": "cr",
+      "league": "Costa Rica Segunda",
+      "home": "FC Moravia",
+      "away": "AD Carmelita",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T20:34:33Z",
+  "updated_at": "2026-10-02T20:49:50Z",
   "api_calls_last_run": 9
 }
