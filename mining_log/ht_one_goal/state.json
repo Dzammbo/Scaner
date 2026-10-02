@@ -2400,8 +2400,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11437402": {
       "event_id": "11437402",
@@ -2921,8 +2922,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13216102": {
       "event_id": "13216102",
@@ -2996,8 +2998,44 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13219453": {
+      "event_id": "13219453",
+      "bet365_id": "202179848",
+      "kickoff": 1790902800,
+      "candidate_at": 1790905724,
+      "country": "pa",
+      "league": "Panama Liga Prom",
+      "home": "CD Arabe Unido Reserves",
+      "away": "San Martin FC",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13220200": {
+      "event_id": "13220200",
+      "bet365_id": "202033400",
+      "kickoff": 1790902800,
+      "candidate_at": 1790905839,
+      "country": "cr",
+      "league": "Costa Rica Segunda",
+      "home": "Cariari Pococi",
+      "away": "Santa Ana",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T01:39:06Z",
-  "api_calls_last_run": 5
+  "updated_at": "2026-10-02T01:52:44Z",
+  "api_calls_last_run": 6
 }
