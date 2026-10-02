@@ -3752,8 +3752,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226095": {
       "event_id": "13226095",
@@ -3770,8 +3771,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228209": {
       "event_id": "13228209",
@@ -3788,8 +3790,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232014": {
       "event_id": "13232014",
@@ -3828,6 +3831,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T12:05:26Z",
-  "api_calls_last_run": 7
+  "updated_at": "2026-10-02T12:27:36Z",
+  "api_calls_last_run": 4
 }
