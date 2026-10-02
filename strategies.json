@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are shadow/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 14,
-    "last_operational_change_at": "2026-10-01T19:15:00Z",
-    "last_operational_change": "Activated the robust Mining Top 6 as exact clean-forward Scanner rules; existing Scanner rules remain active."
+    "operational_scanner_count": 15,
+    "last_operational_change_at": "2026-10-02T20:38:06Z",
+    "last_operational_change": "Added S30 broad 85-minute next-goal Under forward hypothesis with no score or odds filter."
   },
   "strategies": [
     {
@@ -39,7 +39,7 @@
         "one_entry_per_match": true,
         "odds": [
           1.7,
-          2.0
+          2
         ],
         "first_goal_time_filter": null
       },
@@ -226,7 +226,7 @@
         "state": "first_set_tied",
         "original_side": "live_favorite",
         "odds": [
-          2.0,
+          2,
           2.1
         ],
         "odds_apply_to": "selected_opponent",
@@ -769,6 +769,35 @@
       "status": "MINING_ONLY",
       "removed_from_scanner_at": "2026-09-27T19:48:49Z",
       "removal_reason": "После исправления live-AH settlement clean-forward отрицательный; продолжать исследование в Mining."
+    },
+    {
+      "id": "S30",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
+      "source": "forward_hypothesis_20261002",
+      "rule": {
+        "minute": [
+          85,
+          89
+        ],
+        "market": "next_goal_under",
+        "entry_policy": "first_available_point_in_window",
+        "one_entry_per_match": true,
+        "score_filter": null,
+        "odds_filter": null
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-02T20:38:06Z",
+      "clean_epoch_start": "2026-10-02T20:38:06Z",
+      "evidence": {
+        "status": "NO_PRIOR_FILTERED_EVIDENCE",
+        "note": "Prospective broad 85-minute Under hypothesis; no score or odds filter. Do not merge with score=2-0 S29."
+      }
     }
   ]
 }
