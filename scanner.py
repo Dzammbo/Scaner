@@ -121,6 +121,14 @@ def cheap_core_prefilter(ev, st, previous):
         prev_score=prev.get("score")
         return not (prev_score=="0-1" and prev_min is not None and 60 <= prev_min <= 69)
 
+    # Broad 85-minute Under: first available observation in 85-89, any score.
+    # Do not create a second entry later in the same 85-89 window.
+    if sid=="S30":
+        if ev.get("minute") is None or not (85 <= ev["minute"] <= 89):
+            return False
+        prev_min=prev.get("minute")
+        return not (prev_min is not None and 85 <= prev_min <= 89)
+
     # First-goal 0:1 AH: only spend detail when 0:1 is newly observed or still
     # within one five-minute scanner interval after the transition.
     if sid=="S25":
@@ -132,7 +140,7 @@ def cheap_core_prefilter(ev, st, previous):
         return prev_score=="0-0"
 
     # Football Core rules already expose their decisive score/minute state on board.
-    if sid in ("S01","S02","S15","S20","S28","S29"):
+    if sid in ("S01","S02","S15","S20","S28","S29","S30"):
         return True
 
     # Tennis: only query when board score shape can possibly match the rule.
