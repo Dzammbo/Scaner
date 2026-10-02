@@ -3809,8 +3809,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228182": {
       "event_id": "13228182",
@@ -3827,10 +3828,188 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13224758": {
+      "event_id": "13224758",
+      "bet365_id": "202088435",
+      "kickoff": 1790940900,
+      "candidate_at": 1790945048,
+      "country": "",
+      "league": "International Match",
+      "home": "China PR",
+      "away": "Palestine",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13019091": {
+      "event_id": "13019091",
+      "bet365_id": "202082388",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945105,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "SSU Politehnica Timisoara II",
+      "away": "CS Metalurgistul Cugir",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13019090": {
+      "event_id": "13019090",
+      "bet365_id": "202126110",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945162,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "CSU Alba Iulia",
+      "away": "CS Unirea Santana",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13018973": {
+      "event_id": "13018973",
+      "bet365_id": "202141471",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945218,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "Unirea Dej",
+      "away": "AFC Unirea Tasnad",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13019738": {
+      "event_id": "13019738",
+      "bet365_id": "202141467",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945218,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "Odorheiu Secuiesc",
+      "away": "ACS KSE Targu Secuiesc",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226094": {
+      "event_id": "13226094",
+      "bet365_id": "202077809",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945218,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Sigma Olomouc",
+      "away": "MSK Zilina",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13019388": {
+      "event_id": "13019388",
+      "bet365_id": "202089218",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945218,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "Otelul Galati II",
+      "away": "CS Portul Constanta",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13019283": {
+      "event_id": "13019283",
+      "bet365_id": "202082383",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945218,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "FC Voluntari II",
+      "away": "CSM Alexandria",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13019186": {
+      "event_id": "13019186",
+      "bet365_id": "202077954",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945280,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "Unirea Bascov",
+      "away": "Jiul Petrosani",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13019279": {
+      "event_id": "13019279",
+      "bet365_id": "202089224",
+      "kickoff": 1790942400,
+      "candidate_at": 1790945280,
+      "country": "ro",
+      "league": "Romania Liga III",
+      "home": "Dinamo Bucharest II",
+      "away": "Oxigen Bucuresti",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T12:27:36Z",
-  "api_calls_last_run": 4
+  "updated_at": "2026-10-02T12:48:07Z",
+  "api_calls_last_run": 9
 }
