@@ -3174,8 +3174,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13230196": {
       "event_id": "13230196",
@@ -4576,8 +4577,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219941": {
       "event_id": "13219941",
@@ -4594,8 +4596,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13219939": {
       "event_id": "13219939",
@@ -4612,8 +4615,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13225656": {
       "event_id": "13225656",
@@ -4648,8 +4652,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226053": {
       "event_id": "13226053",
@@ -4702,8 +4707,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227463": {
       "event_id": "13227463",
@@ -4720,7 +4726,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226991": {
       "event_id": "13226991",
@@ -4737,7 +4744,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13226990": {
       "event_id": "13226990",
@@ -4754,7 +4762,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228213": {
       "event_id": "13228213",
@@ -4771,9 +4780,83 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13232771": {
+      "event_id": "13232771",
+      "bet365_id": "202082134",
+      "kickoff": 1790949600,
+      "candidate_at": 1790953634,
+      "country": "br",
+      "league": "Brazil Copa Sul U20",
+      "home": "Internacional U20",
+      "away": "Gremio U20",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13199046": {
+      "event_id": "13199046",
+      "bet365_id": "202092259",
+      "kickoff": 1790949600,
+      "candidate_at": 1790953634,
+      "country": "dz",
+      "league": "Algeria Division 2",
+      "home": "NRB Teleghma",
+      "away": "NC Magra",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13199043": {
+      "event_id": "13199043",
+      "bet365_id": "202092286",
+      "kickoff": 1790949600,
+      "candidate_at": 1790953634,
+      "country": "dz",
+      "league": "Algeria Division 2",
+      "home": "CA Batna",
+      "away": "MSP Batna",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13199041": {
+      "event_id": "13199041",
+      "bet365_id": "202092257",
+      "kickoff": 1790949600,
+      "candidate_at": 1790953634,
+      "country": "dz",
+      "league": "Algeria Division 2",
+      "home": "MO Constantine",
+      "away": "CR Beni Thour",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T14:43:29Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-02T15:11:28Z",
+  "api_calls_last_run": 7
 }
