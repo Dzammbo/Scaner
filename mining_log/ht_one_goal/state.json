@@ -4671,8 +4671,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226779": {
       "event_id": "13226779",
@@ -4744,8 +4745,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226990": {
       "event_id": "13226990",
@@ -4798,8 +4800,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13199046": {
       "event_id": "13199046",
@@ -4816,8 +4819,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13199043": {
       "event_id": "13199043",
@@ -4853,10 +4857,65 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13226052": {
+      "event_id": "13226052",
+      "bet365_id": "202078586",
+      "kickoff": 1790951100,
+      "candidate_at": 1790954772,
+      "country": "om",
+      "league": "Oman Professional League Cup",
+      "home": "Al Shabab Seeb",
+      "away": "Saham",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13175927": {
+      "event_id": "13175927",
+      "bet365_id": "202081844",
+      "kickoff": 1790951400,
+      "candidate_at": 1790954772,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Aarau",
+      "away": "Young Boys",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226051": {
+      "event_id": "13226051",
+      "bet365_id": "202078584",
+      "kickoff": 1790951400,
+      "candidate_at": 1790954772,
+      "country": "om",
+      "league": "Oman Federation Cup",
+      "home": "Al-Nahda",
+      "away": "Sohar Club",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T15:11:28Z",
-  "api_calls_last_run": 7
+  "updated_at": "2026-10-02T15:30:24Z",
+  "api_calls_last_run": 4
 }
