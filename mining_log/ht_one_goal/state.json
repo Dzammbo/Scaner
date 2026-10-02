@@ -3449,8 +3449,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226021": {
       "event_id": "13226021",
@@ -3488,8 +3489,113 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13221171": {
+      "event_id": "13221171",
+      "bet365_id": "202092292",
+      "kickoff": 1790935200,
+      "candidate_at": 1790937923,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Nurnberg",
+      "away": "FC Ingolstadt",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227654": {
+      "event_id": "13227654",
+      "bet365_id": "202086897",
+      "kickoff": 1790935200,
+      "candidate_at": 1790938044,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "AGF Aarhus",
+      "away": "Vendsyssel FF",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227649": {
+      "event_id": "13227649",
+      "bet365_id": "202182938",
+      "kickoff": 1790935200,
+      "candidate_at": 1790938044,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Wieczysta Krakow",
+      "away": "Puszcza Niepolomice",
+      "halftime_score": [
+        2,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "11600973": {
+      "event_id": "11600973",
+      "bet365_id": "202077682",
+      "kickoff": 1790935200,
+      "candidate_at": 1790938044,
+      "country": "kr",
+      "league": "South Korea Women K League",
+      "home": "Incheon Red Angels (W)",
+      "away": "Hwacheon KSPO (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13219942": {
+      "event_id": "13219942",
+      "bet365_id": "202082403",
+      "kickoff": 1790935200,
+      "candidate_at": 1790938108,
+      "country": "",
+      "league": "U19 International",
+      "home": "Wales U19",
+      "away": "Norway U19",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13193149": {
+      "event_id": "13193149",
+      "bet365_id": "202075147",
+      "kickoff": 1790935200,
+      "candidate_at": 1790938108,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Sparta Prague",
+      "away": "Vysocina Jihlava",
+      "halftime_score": [
+        3,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T10:33:33Z",
-  "api_calls_last_run": 8
+  "updated_at": "2026-10-02T10:48:29Z",
+  "api_calls_last_run": 9
 }
