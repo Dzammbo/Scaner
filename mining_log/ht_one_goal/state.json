@@ -7152,8 +7152,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228204": {
       "event_id": "13228204",
@@ -7188,8 +7189,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13156810": {
       "event_id": "13156810",
@@ -7206,8 +7208,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227455": {
       "event_id": "13227455",
@@ -7245,8 +7248,44 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13002364": {
+      "event_id": "13002364",
+      "bet365_id": "202034828",
+      "kickoff": 1790973000,
+      "candidate_at": 1790976430,
+      "country": "ec",
+      "league": "Ecuador LigaPro Serie B",
+      "home": "San Antonio FC Cotacachi",
+      "away": "Vinotinto Ecuador",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13143452": {
+      "event_id": "13143452",
+      "bet365_id": "202040080",
+      "kickoff": 1790973000,
+      "candidate_at": 1790976430,
+      "country": "ec",
+      "league": "Ecuador LigaPro Serie B",
+      "home": "CD Cuenca Jrs",
+      "away": "Independiente Juniors",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T21:15:22Z",
-  "api_calls_last_run": 7
+  "updated_at": "2026-10-02T21:31:10Z",
+  "api_calls_last_run": 5
 }
