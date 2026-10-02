@@ -5561,8 +5561,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13200539": {
       "event_id": "13200539",
@@ -5579,8 +5580,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12181514": {
       "event_id": "12181514",
@@ -5633,8 +5635,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11287376": {
       "event_id": "11287376",
@@ -5651,8 +5654,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11338832": {
       "event_id": "11338832",
@@ -5687,7 +5691,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11344418": {
       "event_id": "11344418",
@@ -5704,7 +5709,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11351715": {
       "event_id": "11351715",
@@ -5721,7 +5727,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11351717": {
       "event_id": "11351717",
@@ -5738,7 +5745,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11352581": {
       "event_id": "11352581",
@@ -5755,7 +5763,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11352746": {
       "event_id": "11352746",
@@ -5772,7 +5781,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11354570": {
       "event_id": "11354570",
@@ -6181,8 +6191,127 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13226940": {
+      "event_id": "13226940",
+      "bet365_id": "202154025",
+      "kickoff": 1790961300,
+      "candidate_at": 1790965142,
+      "country": "sa",
+      "league": "Saudi Arabia Premier League Women",
+      "home": "Al Ahli Jeddah (W)",
+      "away": "Al-Nassr Riyadh (W)",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13224922": {
+      "event_id": "13224922",
+      "bet365_id": "202086584",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965142,
+      "country": "ar",
+      "league": "Argentina Championship Women",
+      "home": "Racing Club (W)",
+      "away": "Belgrano (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13224921": {
+      "event_id": "13224921",
+      "bet365_id": "202086580",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965142,
+      "country": "ar",
+      "league": "Argentina Championship Women",
+      "home": "Ferro Carril Oeste (W)",
+      "away": "Union Santa Fe (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "10571462": {
+      "event_id": "10571462",
+      "bet365_id": "202040227",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965142,
+      "country": "eu",
+      "league": "European U21 Championship Qual",
+      "home": "Andorra U21",
+      "away": "Moldova U21",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11351712": {
+      "event_id": "11351712",
+      "bet365_id": "202106821",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965142,
+      "country": "se",
+      "league": "Sweden 2.div Västra Götaland",
+      "home": "Qviding FIF",
+      "away": "Landvetter IS",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12152847": {
+      "event_id": "12152847",
+      "bet365_id": "202075145",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965142,
+      "country": "at",
+      "league": "Austria Regionalliga Ost",
+      "home": "Oberwart",
+      "away": "SV Horn",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12152642": {
+      "event_id": "12152642",
+      "bet365_id": "202075141",
+      "kickoff": 1790962200,
+      "candidate_at": 1790965206,
+      "country": "at",
+      "league": "Austria Regionalliga Ost",
+      "home": "Kremser SC",
+      "away": "Wiener Sportclub",
+      "halftime_score": [
+        3,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T18:04:09Z",
+  "updated_at": "2026-10-02T18:23:32Z",
   "api_calls_last_run": 9
 }
