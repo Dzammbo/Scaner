@@ -3155,8 +3155,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13221871": {
       "event_id": "13221871",
@@ -4016,8 +4017,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13019282": {
       "event_id": "13019282",
@@ -4034,8 +4036,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228121": {
       "event_id": "13228121",
@@ -4088,8 +4091,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13019512": {
       "event_id": "13019512",
@@ -4106,8 +4110,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13019511": {
       "event_id": "13019511",
@@ -4124,8 +4129,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13018974": {
       "event_id": "13018974",
@@ -4142,7 +4148,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12480453": {
       "event_id": "12480453",
@@ -4159,7 +4166,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12411173": {
       "event_id": "12411173",
@@ -4176,7 +4184,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12159249": {
       "event_id": "12159249",
@@ -4193,7 +4202,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13021027": {
       "event_id": "13021027",
@@ -4210,7 +4220,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227254": {
       "event_id": "13227254",
@@ -4227,7 +4238,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232296": {
       "event_id": "13232296",
@@ -4244,7 +4256,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13225470": {
       "event_id": "13225470",
@@ -4261,7 +4274,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12328308": {
       "event_id": "12328308",
@@ -4278,7 +4292,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12328341": {
       "event_id": "12328341",
@@ -4295,9 +4310,202 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "12336679": {
+      "event_id": "12336679",
+      "bet365_id": "202138599",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "pl",
+      "league": "Poland Youth League",
+      "home": "Zaglebie Lubin U19",
+      "away": "Wisla Krakow U19",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13228210": {
+      "event_id": "13228210",
+      "bet365_id": "202134445",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Partizani Tirana",
+      "away": "KF Drenica Skenderaj",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13228211": {
+      "event_id": "13228211",
+      "bet365_id": "202141588",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "SV Ried",
+      "away": "SKU Amstetten",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12181973": {
+      "event_id": "12181973",
+      "bet365_id": "202084845",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca U20",
+      "home": "Bangu U20",
+      "away": "Nova Iguacu U20",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13228392": {
+      "event_id": "13228392",
+      "bet365_id": "202133267",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "HNK Gorica",
+      "away": "NK Bravo",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13232291": {
+      "event_id": "13232291",
+      "bet365_id": "202235391",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Auxerre",
+      "away": "Clermont Foot",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13227917": {
+      "event_id": "13227917",
+      "bet365_id": "202198328",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "FC Silon Taborsko",
+      "away": "FC Sellier & Bellot Vlasim",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232467": {
+      "event_id": "13232467",
+      "bet365_id": "202235385",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "zw",
+      "league": "Zanzibar Premier League",
+      "home": "Mafunzo FC",
+      "away": "Raskazone FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13177305": {
+      "event_id": "13177305",
+      "bet365_id": "202081825",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949105,
+      "country": "br",
+      "league": "Brazil Campeonato Mineiro U20",
+      "home": "Boston City FC U20",
+      "away": "Nacional de Muriae U20",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13232468": {
+      "event_id": "13232468",
+      "bet365_id": "202235387",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949235,
+      "country": "zw",
+      "league": "Zanzibar Premier League",
+      "home": "Mwembe Makumbi City FC",
+      "away": "Kipanga FC",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13228212": {
+      "event_id": "13228212",
+      "bet365_id": "202144555",
+      "kickoff": 1790946000,
+      "candidate_at": 1790949302,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Frosinone",
+      "away": "Benevento",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T13:21:33Z",
+  "updated_at": "2026-10-02T13:56:11Z",
   "api_calls_last_run": 9
 }
