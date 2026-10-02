@@ -3246,8 +3246,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226062": {
       "event_id": "13226062",
@@ -3264,8 +3265,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13225543": {
       "event_id": "13225543",
@@ -3282,8 +3284,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226061": {
       "event_id": "13226061",
@@ -3300,8 +3303,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13184545": {
       "event_id": "13184545",
@@ -3354,8 +3358,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13112283": {
       "event_id": "13112283",
@@ -3372,7 +3377,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227782": {
       "event_id": "13227782",
@@ -3389,7 +3395,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13225011": {
       "event_id": "13225011",
@@ -3406,9 +3413,83 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225296": {
+      "event_id": "13225296",
+      "bet365_id": "202130330",
+      "kickoff": 1790933400,
+      "candidate_at": 1790936937,
+      "country": "in",
+      "league": "India Shillong Premier League",
+      "home": "Mawlai SC",
+      "away": "Sawmer SC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13204908": {
+      "event_id": "13204908",
+      "bet365_id": "202031883",
+      "kickoff": 1790933400,
+      "candidate_at": 1790936937,
+      "country": "in",
+      "league": "India Mizoram Premier League",
+      "home": "Chanmari FC",
+      "away": "Dinthar FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226021": {
+      "event_id": "13226021",
+      "bet365_id": "202137162",
+      "kickoff": 1790933400,
+      "candidate_at": 1790936937,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Lugano",
+      "away": "Verona",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "TimeoutError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13112280": {
+      "event_id": "13112280",
+      "bet365_id": "202039978",
+      "kickoff": 1790933980,
+      "candidate_at": 1790936937,
+      "country": "",
+      "league": "FIFA ASEAN Cup",
+      "home": "Thailand",
+      "away": "Philippines",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T10:02:41Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-02T10:33:33Z",
+  "api_calls_last_run": 8
 }
