@@ -3,6 +3,9 @@ on:
   push:
     branches: [main]
     paths: ["current_status.py","recovery/selectel_scanner_signals_current.jsonl"]
+permissions:
+  contents: write
+
 jobs:
   status:
     runs-on: ubuntu-latest
@@ -22,3 +25,16 @@ jobs:
             priority_pockets_current.json
             pending_current.json
             web_mass_settlement.json
+      - name: Persist current statistics
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add current_status_current.json priority_pockets_current.json pockets_current.json
+          if git diff --cached --quiet; then
+            echo "No statistics changes"
+            exit 0
+          fi
+          git commit -m "Refresh current Scanner statistics"
+          git pull --rebase origin main
+          git push origin HEAD:main
