@@ -6379,8 +6379,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224920": {
       "event_id": "13224920",
@@ -6397,8 +6398,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13156811": {
       "event_id": "13156811",
@@ -6542,7 +6544,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12153351": {
       "event_id": "12153351",
@@ -6559,7 +6562,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12153289": {
       "event_id": "12153289",
@@ -6628,8 +6632,331 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13225535": {
+      "event_id": "13225535",
+      "bet365_id": "202088427",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland Munster Senior League",
+      "home": "Douglas Hall",
+      "away": "Castleview FC",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13228234": {
+      "event_id": "13228234",
+      "bet365_id": "202137171",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "gb",
+      "league": "Northern Ireland Conference Premier",
+      "home": "Dollingstown",
+      "away": "Ballymacash Rangers",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "10571461": {
+      "event_id": "10571461",
+      "bet365_id": "201908988",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "eu",
+      "league": "European U21 Championship Qual",
+      "home": "England U21",
+      "away": "Slovakia U21",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13169908": {
+      "event_id": "13169908",
+      "bet365_id": "200562909",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland Premier Division",
+      "home": "Dundalk",
+      "away": "Bohemians Dublin",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11437486": {
+      "event_id": "11437486",
+      "bet365_id": "201150565",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League B",
+      "home": "Poland",
+      "away": "Romania",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11437469": {
+      "event_id": "11437469",
+      "bet365_id": "201150563",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League B",
+      "home": "Hungary",
+      "away": "Georgia",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11437388": {
+      "event_id": "11437388",
+      "bet365_id": "201150559",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League A",
+      "home": "France",
+      "away": "Italy",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12156271": {
+      "event_id": "12156271",
+      "bet365_id": "202069488",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "gb",
+      "league": "Wales Championship North",
+      "home": "Denbigh Town",
+      "away": "Holyhead Hotspur",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12153442": {
+      "event_id": "12153442",
+      "bet365_id": "202069532",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "gb",
+      "league": "Wales Championship South",
+      "home": "Caerau Ely",
+      "away": "Afan Lido",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12108172": {
+      "event_id": "12108172",
+      "bet365_id": "202070149",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "gb",
+      "league": "Northern Ireland Championship",
+      "home": "Strabane Athletic",
+      "away": "Armagh City",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11437389": {
+      "event_id": "11437389",
+      "bet365_id": "201150561",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League A",
+      "home": "Belgium",
+      "away": "Türkiye",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11553009": {
+      "event_id": "11553009",
+      "bet365_id": "201984979",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland First Division",
+      "home": "Finn Harps",
+      "away": "Kerry FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11553007": {
+      "event_id": "11553007",
+      "bet365_id": "201984984",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland First Division",
+      "home": "Wexford FC",
+      "away": "Longford Town",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11552830": {
+      "event_id": "11552830",
+      "bet365_id": "201984980",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland First Division",
+      "home": "Bray Wanderers",
+      "away": "Cobh Ramblers",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11552824": {
+      "event_id": "11552824",
+      "bet365_id": "201984985",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "ie",
+      "league": "Republic of Ireland First Division",
+      "home": "Athlone Town",
+      "away": "Cork City",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11437518": {
+      "event_id": "11437518",
+      "bet365_id": "201150573",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League C",
+      "home": "Faroe Islands",
+      "away": "Slovakia",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11437487": {
+      "event_id": "11437487",
+      "bet365_id": "201150568",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League B",
+      "home": "Bosnia-Herzegovina",
+      "away": "Sweden",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11437468": {
+      "event_id": "11437468",
+      "bet365_id": "201150557",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969795,
+      "country": "",
+      "league": "UEFA Nations League B",
+      "home": "Ukraine",
+      "away": "Northern Ireland",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13231609": {
+      "event_id": "13231609",
+      "bet365_id": "202204465",
+      "kickoff": 1790966700,
+      "candidate_at": 1790969930,
+      "country": "ie",
+      "league": "Republic of Ireland Leinster Senior League",
+      "home": "St Mochtas",
+      "away": "Killester Donnycarney FC",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T19:26:26Z",
+  "updated_at": "2026-10-02T19:41:17Z",
   "api_calls_last_run": 9
 }
