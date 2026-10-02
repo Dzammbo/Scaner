@@ -4267,8 +4267,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13225470": {
       "event_id": "13225470",
@@ -6268,8 +6269,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "10571462": {
       "event_id": "10571462",
@@ -6322,8 +6324,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12152642": {
       "event_id": "12152642",
@@ -6448,10 +6451,185 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13009528": {
+      "event_id": "13009528",
+      "bet365_id": "202076716",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "be",
+      "league": "Belgium Reserve League",
+      "home": "Hasselt Reserves",
+      "away": "KV Kortrijk Reserves",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13228208": {
+      "event_id": "13228208",
+      "bet365_id": "202081806",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "br",
+      "league": "Brazil Copa Goias U20",
+      "home": "Anapolis U20",
+      "away": "Royal U20",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226109": {
+      "event_id": "13226109",
+      "bet365_id": "202078609",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "",
+      "league": "Elite Club Friendlies",
+      "home": "Sevilla",
+      "away": "Aston Villa",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227374": {
+      "event_id": "13227374",
+      "bet365_id": "202082826",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "ch",
+      "league": "Switzerland 2. Liga Interregional",
+      "home": "FC Collex Bossy",
+      "away": "Veyrier Sports",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225777": {
+      "event_id": "13225777",
+      "bet365_id": "202088431",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "mt",
+      "league": "Malta League Women",
+      "home": "Birkirkara (W)",
+      "away": "Hibernians FC (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12153351": {
+      "event_id": "12153351",
+      "bet365_id": "202069529",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "gb",
+      "league": "Wales Championship South",
+      "home": "Llanelli Town",
+      "away": "Baglan Dragons",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12153289": {
+      "event_id": "12153289",
+      "bet365_id": "202069527",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "gb",
+      "league": "Wales Championship South",
+      "home": "Carmarthen",
+      "away": "Llantwit Major",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13226957": {
+      "event_id": "13226957",
+      "bet365_id": "202082398",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "gb",
+      "league": "Scotland FA Cup",
+      "home": "Cumnock Juniors",
+      "away": "Auchinleck Talbot",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12130553": {
+      "event_id": "12130553",
+      "bet365_id": "201317381",
+      "kickoff": 1790965800,
+      "candidate_at": 1790968910,
+      "country": "es",
+      "league": "Spain Segunda",
+      "home": "Eldense",
+      "away": "Oviedo",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13226065": {
+      "event_id": "13226065",
+      "bet365_id": "202172286",
+      "kickoff": 1790965800,
+      "candidate_at": 1790969109,
+      "country": "ie",
+      "league": "Republic of Ireland Leinster Senior League",
+      "home": "Montpelier FC",
+      "away": "Crumlin United",
+      "halftime_score": [
+        2,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T19:09:04Z",
+  "updated_at": "2026-10-02T19:26:26Z",
   "api_calls_last_run": 9
 }
