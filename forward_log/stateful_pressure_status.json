@@ -1,6 +1,57 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-02T18:03:52Z",
-  "signals": 207,
-  "active_last_10m": []
+  "updated_at": "2026-10-02T18:25:00Z",
+  "signals": 209,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-02T18:24:44Z",
+      "sport": "football",
+      "tournament": "Austria Regionalliga South",
+      "event_id": "12155632",
+      "match": "FC Gleisdorf 09 - SV Tillmitsch",
+      "minute_score": "71' / '0-0'",
+      "minute": 71,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 1.9,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.9,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 70.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-02T18:24:44Z",
+      "sport": "football",
+      "tournament": "Austria Landesliga",
+      "event_id": "12157745",
+      "match": "Admira Wacker Modling II - Wiener Neustadt",
+      "minute_score": "24' / '0-0'",
+      "minute": 24,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 1.875,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.925,
+      "strategy_id": "S27",
+      "strategy_ids": [
+        "S27"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 первого тайма"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 46.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
