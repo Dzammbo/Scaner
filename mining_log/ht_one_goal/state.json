@@ -3621,8 +3621,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12147903": {
       "event_id": "12147903",
@@ -3639,8 +3640,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12050651": {
       "event_id": "12050651",
@@ -3694,8 +3696,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13217108": {
       "event_id": "13217108",
@@ -3715,8 +3718,98 @@
       "status": "MISSED_BEFORE_QUOTE",
       "last_error": "HTTPError",
       "miss_reason": "SCORE_CHANGED"
+    },
+    "13140125": {
+      "event_id": "13140125",
+      "bet365_id": "202075479",
+      "kickoff": 1790938800,
+      "candidate_at": 1790941928,
+      "country": "",
+      "league": "International Match",
+      "home": "South Korea",
+      "away": "Venezuela",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225771": {
+      "event_id": "13225771",
+      "bet365_id": "202143932",
+      "kickoff": 1790938800,
+      "candidate_at": 1790941928,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Heidenheim",
+      "away": "Wurzburger Kickers",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13226095": {
+      "event_id": "13226095",
+      "bet365_id": "202231100",
+      "kickoff": 1790938800,
+      "candidate_at": 1790941928,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Nyiregyhaza Spartacus",
+      "away": "MFK Zemplin Michalovce",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13228209": {
+      "event_id": "13228209",
+      "bet365_id": "202082113",
+      "kickoff": 1790938800,
+      "candidate_at": 1790941928,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Kolding IF",
+      "away": "Odense BK",
+      "halftime_score": [
+        2,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13232014": {
+      "event_id": "13232014",
+      "bet365_id": "202235389",
+      "kickoff": 1790938800,
+      "candidate_at": 1790941993,
+      "country": "",
+      "league": "Elite Club Friendlies",
+      "home": "FC Twente",
+      "away": "Werder Bremen",
+      "halftime_score": [
+        6,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T11:42:15Z",
+  "updated_at": "2026-10-02T11:56:19Z",
   "api_calls_last_run": 6
 }
