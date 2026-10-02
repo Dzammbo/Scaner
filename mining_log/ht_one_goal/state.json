@@ -3508,8 +3508,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227654": {
       "event_id": "13227654",
@@ -3600,8 +3601,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11451549": {
       "event_id": "11451549",
@@ -3672,9 +3674,47 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13225267": {
+      "event_id": "13225267",
+      "bet365_id": "202132779",
+      "kickoff": 1790937000,
+      "candidate_at": 1790940235,
+      "country": "in",
+      "league": "India Bangalore Super Division",
+      "home": "SC Bengaluru",
+      "away": "Kickstart FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13217108": {
+      "event_id": "13217108",
+      "bet365_id": "202111420",
+      "kickoff": 1790937000,
+      "candidate_at": 1790940235,
+      "country": "",
+      "league": "Asian Games Women",
+      "home": "North Korea (W)",
+      "away": "Japan (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T11:12:26Z",
+  "updated_at": "2026-10-02T11:28:24Z",
   "api_calls_last_run": 9
 }
