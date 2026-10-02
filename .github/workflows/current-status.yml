@@ -14,17 +14,11 @@ jobs:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - run: python3 current_status.py
-      - run: python3 web_mass_settle.py
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-artifact@v4
         with:
-          name: pending-current
-          path: |
-            priority_pockets_current.json
-            pending_current.json
-            web_mass_settlement.json
+          fetch-depth: 0
+          ref: main
+      - name: Calculate fresh Scanner status
+        run: python3 current_status.py
       - name: Persist current statistics
         shell: bash
         run: |
@@ -36,5 +30,25 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh current Scanner statistics"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          exit 1
+      - name: Supplement pending with web settlement
+        continue-on-error: true
+        run: python3 web_mass_settle.py
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pending-current
+          path: |
+            priority_pockets_current.json
+            pockets_current.json
+            current_status_current.json
+            pending_current.json
+            web_mass_settlement.json
