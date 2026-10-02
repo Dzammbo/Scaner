@@ -2,6 +2,8 @@ name: Mining pending refresh
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "2 */2 * * *"
   push:
     branches: [main]
     paths:
@@ -21,6 +23,8 @@ jobs:
     timeout-minutes: 10
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      MINING_SETTLEMENT_QUERY_BUDGET: "80"
+      MINING_SETTLEMENT_RETRY_SECONDS: "7200"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,6 +38,14 @@ jobs:
         run: |
           test -s mining_log/pending_refresh/status.json
           test -s mining_log/pending_refresh/results.jsonl
+          test -s mining_log/settlement_statistics.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          status=json.loads(Path("mining_log/pending_refresh/status.json").read_text())
+          assert status["provider_queries"] <= 80
+          assert not status["errors"], status["errors"]
+          PY
 
       - name: Commit refreshed results
         shell: bash
@@ -41,7 +53,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add mining_log/pending_refresh/
+          git add mining_log/pending_refresh/ mining_log/settlement_statistics.json
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
