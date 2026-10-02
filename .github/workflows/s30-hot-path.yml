@@ -1,0 +1,102 @@
+name: S30 minute hot path
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scanner.py"
+      - "strategies.json"
+      - ".github/workflows/s30-hot-path.yml"
+  schedule:
+    - cron: "0-59/5 * * * *"
+    - cron: "1-59/5 * * * *"
+    - cron: "2-59/5 * * * *"
+    - cron: "3-59/5 * * * *"
+    - cron: "4-59/5 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scaner-forward-log
+  cancel-in-progress: false
+
+jobs:
+  scan-s30:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      SCANER_ONLY_STRATEGIES: S30
+      SCANER_SPORTS: football
+      S30_CAPTURE: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Calculate shared Scanner budget
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          now = datetime.now(timezone.utc)
+          morning = 7 <= now.astimezone(ZoneInfo("Europe/Moscow")).hour < 12
+          cap = 600 if morning else 1200
+          used = 0
+          path = Path("forward_log/scanner_runs.jsonl")
+          if path.exists():
+              for line in path.read_text(encoding="utf-8").splitlines():
+                  try:
+                      row = json.loads(line)
+                      ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z", "+00:00"))
+                  except Exception:
+                      continue
+                  if now - timedelta(hours=1) <= ts <= now:
+                      used += int(row.get("api_calls") or 0)
+          remaining = max(0, cap - used)
+          run_budget = min(20, remaining)
+          skip = run_budget < 1
+          with open(Path(os.environ["GITHUB_ENV"]), "a", encoding="utf-8") as f:
+              f.write(f"SCANER_SKIP={'1' if skip else '0'}\n")
+              f.write(f"SCANER_DETAIL_BUDGET={max(0, run_budget - 1)}\n")
+          print(json.dumps({"morning_msk": morning, "hourly_cap": cap, "used_last_hour": used,
+                            "remaining": remaining, "run_budget": run_budget, "skip": skip}))
+          PY
+
+      - name: Capture S30 window
+        if: env.SCANER_SKIP != '1'
+        run: python3 scanner.py
+
+      - name: Persist S30 observations
+        if: env.SCANER_SKIP != '1'
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- forward_log/)" ]; then
+            echo "No S30 log changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add forward_log/
+          git commit -m "Append S30 minute observations"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          echo "Unable to persist S30 observations after 5 retries" >&2
+          exit 1
+
+      - name: Show result
+        if: env.SCANER_SKIP != '1'
+        run: cat result.json

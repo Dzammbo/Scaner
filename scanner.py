@@ -10,6 +10,13 @@ MODE = os.environ.get("SCANER_MODE", "scanner").strip().lower()
 if MODE not in ("scanner", "mining"):
     raise RuntimeError("unsupported SCANER_MODE")
 DETAIL_CALL_BUDGET = max(0, int(os.environ.get("SCANER_DETAIL_BUDGET", "48")))
+ONLY_STRATEGY_IDS = {
+    x.strip() for x in os.environ.get("SCANER_ONLY_STRATEGIES", "").split(",") if x.strip()
+}
+ENABLED_SPORTS = {
+    x.strip() for x in os.environ.get("SCANER_SPORTS", "football,tennis").split(",") if x.strip()
+}
+S30_CAPTURE = os.environ.get("S30_CAPTURE", "0") == "1"
 LOG_DIR = Path("forward_log" if MODE == "scanner" else "mining_log")
 LOG_PREFIX = "scanner" if MODE == "scanner" else "mining"
 STATE_PATH = LOG_DIR / f"{LOG_PREFIX}_state.json"
@@ -86,6 +93,48 @@ def append_forward_log(result):
         f.write(json.dumps(run_row,ensure_ascii=False,separators=(",",":"))+"\n")
     return appended
 
+def append_s30_quote_snapshots(queues, details, timestamp):
+    if not S30_CAPTURE:
+        return 0
+    path = LOG_DIR / "s30_quotes.jsonl"
+    path.parent.mkdir(exist_ok=True)
+    existing = set()
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            try:
+                row = json.loads(line)
+                existing.add((str(row.get("event_id")), as_int(row.get("minute"))))
+            except Exception:
+                continue
+    added = 0
+    with path.open("a", encoding="utf-8") as f:
+        for event_id, item in queues.get("football", {}).items():
+            ev = item["event"]
+            m = as_int(ev.get("minute"))
+            if m is None or not 83 <= m <= 90 or (str(event_id), m) in existing:
+                continue
+            detail = details.get(("football", event_id))
+            if not detail or not detail.get("ok"):
+                continue
+            tf = total_features(ev, detail)
+            row = {
+                "timestamp": timestamp,
+                "strategy_id": "S30",
+                "event_id": str(event_id),
+                "tournament": ev.get("league"),
+                "home": ev.get("home"),
+                "away": ev.get("away"),
+                "minute": m,
+                "score": ev.get("score"),
+                "total_line": tf.get("next_goal_handicap"),
+                "under_odds": tf.get("next_goal_under_odds"),
+                "over_odds": tf.get("next_goal_over_odds"),
+            }
+            f.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+            existing.add((str(event_id), m))
+            added += 1
+    return added
+
 def load_scanner_state():
     try:
         return json.loads(STATE_PATH.read_text(encoding="utf-8"))
@@ -105,6 +154,20 @@ def save_scanner_state(boards):
                 "seen_at":now,
             }
     STATE_PATH.write_text(json.dumps({"updated_at":now_iso(),"events":events},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+def s30_already_signaled(event_id):
+    path = LOG_DIR / f"{LOG_PREFIX}_signals.jsonl"
+    if not path.exists():
+        return False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            row = json.loads(line)
+        except Exception:
+            continue
+        ids = row.get("strategy_ids") or [row.get("strategy_id")]
+        if str(row.get("event_id")) == str(event_id) and "S30" in ids:
+            return True
+    return False
 
 def cheap_core_prefilter(ev, st, previous):
     if not rule_prefilter(ev, st):
@@ -126,8 +189,8 @@ def cheap_core_prefilter(ev, st, previous):
     if sid=="S30":
         if ev.get("minute") is None or not (85 <= ev["minute"] <= 89):
             return False
-        prev_min=prev.get("minute")
-        return not (prev_min is not None and 85 <= prev_min <= 89)
+        # Keep retrying until a real quote is saved, then stop for this match.
+        return not s30_already_signaled(ev.get("event_id"))
 
     # First-goal 0:1 AH: only spend detail when 0:1 is newly observed or still
     # within one five-minute scanner interval after the transition.
@@ -727,6 +790,8 @@ if MODE == "scanner":
     ]
 else:
     strategies = [s for s in registry["strategies"] if s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY"]
+if ONLY_STRATEGY_IDS:
+    strategies = [s for s in strategies if s.get("id") in ONLY_STRATEGY_IDS]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}
 
 started = time.perf_counter()
@@ -735,6 +800,9 @@ boards = {}
 api_calls = 0
 
 for sport, sid in (("football", 1), ("tennis", 13)):
+    if sport not in ENABLED_SPORTS:
+        boards[sport] = {"count": 0, "latency_ms": None, "events": []}
+        continue
     p, meta = get_json("/v3/events/inplay", {"sport_id": sid})
     api_calls += 1
     rows = [x for x in (p.get("results") or []) if isinstance(x, dict) and not virtual(x)]
@@ -747,6 +815,10 @@ queues = {"football": {}, "tennis": {}}
 for sport in ("football", "tennis"):
     for ev in boards[sport]["events"]:
         sts = [st for st in strategies if st["sport"] == sport and cheap_core_prefilter(ev, st, previous_state)]
+        if S30_CAPTURE and sport == "football" and ev.get("minute") is not None and 83 <= ev["minute"] <= 90:
+            s30 = next((st for st in strategies if st.get("id") == "S30"), None)
+            if s30 and s30 not in sts:
+                sts.append(s30)
         if sts:
             queues[sport][ev["event_id"]] = {"event": ev, "strategies": sts}
 
@@ -782,6 +854,7 @@ if selected:
             api_calls += 1
 
 hits = []
+s30_snapshots_added = append_s30_quote_snapshots(queues, details, started_at)
 for sport in ("football", "tennis"):
     for row in queues[sport].values():
         ev = row["event"]
@@ -862,6 +935,7 @@ result = {
     "pending_history_rules": pending,
     "detail_probe_summary": detail_summary,
     "total_script_ms": round((time.perf_counter() - started) * 1000),
+    "s30_snapshots_added": s30_snapshots_added,
     "note": "Manual scanner. No background polling. Only signals with current provider evidence are emitted.",
 }
 

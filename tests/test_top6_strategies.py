@@ -72,6 +72,31 @@ class TopSixRegistryTest(unittest.TestCase):
 
 
 class FootballTopSixTest(unittest.TestCase):
+    def test_s30_selects_current_total_under_at_any_score(self):
+        now = int(time.time())
+        detail = totals_detail([
+            {"add_time": now, "ss": "1-1", "time_str": "85", "handicap": "2.5", "over_od": "3.40", "under_od": "1.36"},
+        ])
+        hit = scanner.football_evaluate(football_event("1-1", 85), strategy("S30"), detail)
+        self.assertEqual(hit["bet"], "ТМ 2.5")
+        self.assertEqual(hit["current_odds"], 1.36)
+
+    def test_s30_retries_until_signal_is_persisted(self):
+        ev = football_event("0-0", 85)
+        st = strategy("S30")
+        with tempfile.TemporaryDirectory() as tmp:
+            old_log_dir = scanner.LOG_DIR
+            scanner.LOG_DIR = Path(tmp)
+            try:
+                self.assertTrue(scanner.cheap_core_prefilter(ev, st, {"events": {}}))
+                (Path(tmp) / "scanner_signals.jsonl").write_text(
+                    json.dumps({"event_id": "1001", "strategy_ids": ["S30"]}) + "\n",
+                    encoding="utf-8",
+                )
+                self.assertFalse(scanner.cheap_core_prefilter(ev, st, {"events": {}}))
+            finally:
+                scanner.LOG_DIR = old_log_dir
+
     def test_post_goal_under_selects_under_2_5(self):
         now = int(time.time())
         detail = totals_detail([
