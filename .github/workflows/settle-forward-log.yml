@@ -110,12 +110,12 @@ jobs:
               fs=str(e.get("ss") or "").replace(":","-")
               p=None
               if r["sport"]=="football":
-                  if r["exact_bet_line"].startswith("ТБ "):
+                  if r["exact_bet_line"].startswith("ТБ ") or r["exact_bet_line"].startswith("ТМ "):
                       try: line=float(r["exact_bet_line"].split()[1])
                       except: line=None
                       tot=total_score(fs)
                       if line is not None and tot is not None:
-                          p=asian(tot,line,True,float(r["current_odds"]))
+                          p=asian(tot,line,r["exact_bet_line"].startswith("ТБ "),float(r["current_odds"]))
                   elif r["exact_bet_line"].startswith("Фора гостей "):
                       try: line=float(r["exact_bet_line"].split()[-1])
                       except: line=None

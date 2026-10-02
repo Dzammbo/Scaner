@@ -132,7 +132,7 @@ def cheap_core_prefilter(ev, st, previous):
         return prev_score=="0-0"
 
     # Football Core rules already expose their decisive score/minute state on board.
-    if sid in ("S01","S02","S15","S20"):
+    if sid in ("S01","S02","S15","S20","S28","S29"):
         return True
 
     # Tennis: only query when board score shape can possibly match the rule.
@@ -145,6 +145,9 @@ def cheap_core_prefilter(ev, st, previous):
             return True
         if sid=="S10":
             return len(sets)==1 and not done_set(*sets[-1]) and sets[-1][0]==sets[-1][1] and sets[-1][0] in (2,3,4,5,6)
+        if sid in ("S09", "T18"):
+            rel=previous_set_role(sets)
+            return bool(rel and rel["winner_games"]==6 and rel["loser_games"] in (0,1,2,3))
         if sid in ("S11", "T14"):
             rel=previous_set_role(sets)
             return bool(rel and (rel["winner_games"],rel["loser_games"]) in ((6,4),(7,5),(7,6)))
@@ -630,24 +633,27 @@ def tennis_evaluate(ev, st, detail):
     if st["id"] == "S10":
         if len(sets) == 1 and not done_set(*cur) and cur[0] == cur[1] and cur[0] in (2, 3, 4, 5, 6):
             fav = "home" if prices["home"] < prices["away"] else ("away" if prices["away"] < prices["home"] else None)
-            if fav and 1.50 <= prices[fav] < 1.80:
+            if fav:
                 side = "away" if fav == "home" else "home"
-                return {
-                    "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
-                    "market": "match_winner", "bet": ev[side], "bet_side": side,
-                    "current_odds": prices[side],
-                    "reverse_bet": ev["away" if side == "home" else "home"],
-                    "reverse_odds": prices["away" if side == "home" else "home"],
-                    "features": {"set_score": row.get("ss"), "live_favorite": ev[fav], "favorite_odds": prices[fav]},
-                }
+                if in_range(prices[side], st["rule"]["odds"]):
+                    return {
+                        "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
+                        "market": "match_winner", "bet": ev[side], "bet_side": side,
+                        "current_odds": prices[side],
+                        "reverse_bet": ev["away" if side == "home" else "home"],
+                        "reverse_odds": prices["away" if side == "home" else "home"],
+                        "features": {"set_score": row.get("ss"), "live_favorite": ev[fav], "favorite_odds": prices[fav]},
+                    }
 
     rel = previous_set_role(sets)
     if not rel:
         return None
     wg, lg = rel["winner_games"], rel["loser_games"]
 
-    if st["id"] == "S09" and wg == 6 and lg in (0, 1, 2, 3):
+    if st["id"] in ("S09", "T18") and wg == 6 and lg in (0, 1, 2, 3):
         side = rel["winner"]
+        if "odds" in st["rule"] and not in_range(prices[side], st["rule"]["odds"]):
+            return None
         return {
             "strategy_id": st["id"], "strategy": st["name_ru"], "tier": st["tier"],
             "market": "match_winner", "bet": ev[side], "bet_side": side,

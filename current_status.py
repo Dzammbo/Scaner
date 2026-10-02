@@ -3,8 +3,9 @@ from pathlib import Path
 import json,math,urllib.request,urllib.parse,time,os
 BASE="https://api.b365api.com";TOKEN=os.environ["BETSAPI_KEY"]
 def load(p):
- return [json.loads(x) for x in Path(p).read_text(encoding="utf-8").splitlines() if x.strip()]
-rows=load("forward_log/scanner_signals.jsonl")+load("recovery/selectel_scanner_signals_20260927.jsonl")+load("recovery/selectel_scanner_signals_current.jsonl")
+ path=Path(p)
+ return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()] if path.exists() else []
+rows=load("forward_log/scanner_signals.jsonl")+load("forward_log/stateful_pressure_signals.jsonl")+load("recovery/selectel_scanner_signals_20260927.jsonl")+load("recovery/selectel_scanner_signals_current.jsonl")
 rows.sort(key=lambda r:str(r.get("timestamp") or ""))
 bykey={};order=[]
 for r in rows:
@@ -37,6 +38,14 @@ def score(s):
  except:return None
 def total(s):
  x=score(s);return sum(x) if x else None
+def settlement_total(e,r,fs):
+ if r.get("period")!="FH":return total(fs)
+ scores=(e or {}).get("scores") or {}
+ if isinstance(scores,dict):
+  for key in ("1","1st","1st Half"):
+   value=total(scores.get(key))
+   if value is not None:return value
+ return None
 def c(t,l,over,o):return o-1 if (t>l if over else t<l) else (0 if t==l else -1)
 def asian(t,l,over,o):
  frac=round((l-math.floor(l))*100)
@@ -68,12 +77,15 @@ for r in merged:
  try:o=float(r["current_odds"])
  except:continue
  p=None;rp=None
- if r["sport"]=="football" and str(r["exact_bet_line"]).startswith("ТБ "):
-  try:l=float(str(r["exact_bet_line"]).split()[1]);t=total(fs)
+ if r["sport"]=="football" and (str(r["exact_bet_line"]).startswith("ТБ ") or str(r["exact_bet_line"]).startswith("ТМ ")):
+  try:l=float(str(r["exact_bet_line"]).split()[1]);t=settlement_total(e,r,fs)
   except:l=t=None
-  if l is not None and t is not None:p=asian(t,l,True,o)
-  if r.get("reverse_odds") is not None and str(r.get("reverse_bet") or "").startswith("ТМ "):
-   rp=asian(t,l,False,float(r["reverse_odds"]))
+  over=str(r["exact_bet_line"]).startswith("ТБ ")
+  if l is not None and t is not None:p=asian(t,l,over,o)
+  if l is not None and t is not None and r.get("reverse_odds") is not None:
+   reverse=str(r.get("reverse_bet") or "")
+   if reverse.startswith("ТБ ") or reverse.startswith("ТМ "):
+    rp=asian(t,l,reverse.startswith("ТБ "),float(r["reverse_odds"]))
  elif r["sport"]=="tennis":
   home=(e.get("home") or {}).get("name") if isinstance(e.get("home"),dict) else e.get("home")
   away=(e.get("away") or {}).get("name") if isinstance(e.get("away"),dict) else e.get("away")
@@ -92,8 +104,8 @@ def agg(xs,key="profit"):
 def agg_without_top(xs,key="profit",top=3):
  ys=sorted((x for x in xs if x.get(key) is not None),key=lambda x:x[key],reverse=True)[top:]
  return agg(ys,key)
-starts={"S01":"2026-09-27T19:48:49+00:00","S02":"2026-09-26T15:19:55+00:00","S06":"1970-01-01T00:00:00+00:00","S08":"1970-01-01T00:00:00+00:00","S11":"2026-09-26T15:19:55+00:00","S20":"2026-09-27T19:42:00+00:00","T14":"1970-01-01T00:00:00+00:00","T16":"2026-09-26T15:19:55+00:00"}
-names={"S01":"Гол после 60-й при счёте 0:1","S02":"Гол после 70-й при счёте 0:2","S06":"Основной тотал больше - Бразилия","S08":"Тотал больше после 50+ минут без гола","S11":"За победителя предыдущего плотного сета","S20":"Рыночный основной тотал больше при счёте 1:1","T14":"Зеркало плотного сета - за проигравшего предыдущего сета","T16":"Решающий сет - за победителя второго сета"}
+starts={"S01":"2026-10-01T19:15:00+00:00","S02":"2026-09-26T15:19:55+00:00","S06":"1970-01-01T00:00:00+00:00","S08":"1970-01-01T00:00:00+00:00","S10":"2026-10-01T19:15:00+00:00","S11":"2026-09-26T15:19:55+00:00","S20":"2026-09-27T19:42:00+00:00","S27":"2026-10-01T19:15:00+00:00","S28":"2026-10-01T19:15:00+00:00","S29":"2026-10-01T19:15:00+00:00","T14":"1970-01-01T00:00:00+00:00","T16":"2026-09-26T15:19:55+00:00","T18":"2026-10-01T19:15:00+00:00"}
+names={"S01":"ТБ 1.5 при счёте 0:1 на 60-69-й минуте","S02":"Гол после 70-й при счёте 0:2","S06":"Основной тотал больше - Бразилия","S08":"Тотал больше после 50+ минут без гола","S10":"Против live-фаворита при равном первом сете","S11":"За победителя предыдущего плотного сета","S20":"Рыночный основной тотал больше при счёте 1:1","S27":"High Pressure ТБ 0.5 первого тайма","S28":"ТМ 2.5 после гола при счёте 0:2 с 60-й минуты","S29":"ТМ 2.5 при счёте 2:0 на 85+ минуте","T14":"Зеркало плотного сета - за проигравшего предыдущего сета","T16":"Решающий сет - за победителя второго сета","T18":"Победитель предыдущего разгромного сета"}
 out={}
 for sid in starts:
  xs=[x for x in sett if sid in ids_of(x) and str(x.get("timestamp",""))>=starts[sid]]

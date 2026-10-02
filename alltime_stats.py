@@ -82,10 +82,10 @@ for r in merged:
     try:od=float(r["current_odds"])
     except:continue
     if r["sport"]=="football":
-        if str(r["exact_bet_line"]).startswith("ТБ "):
+        if str(r["exact_bet_line"]).startswith("ТБ ") or str(r["exact_bet_line"]).startswith("ТМ "):
             try:line=float(str(r["exact_bet_line"]).split()[1]);t=total_score(fs)
             except:line=t=None
-            if line is not None and t is not None:p=asian(t,line,True,od)
+            if line is not None and t is not None:p=asian(t,line,str(r["exact_bet_line"]).startswith("ТБ "),od)
         elif str(r["exact_bet_line"]).startswith("Фора гостей "):
             try:line=float(str(r["exact_bet_line"]).split()[-1]);sc=score(fs)
             except:line=sc=None

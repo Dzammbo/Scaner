@@ -16,18 +16,18 @@
       "WATCHLIST"
     ],
     "note": "Not a real-money execution list. Rules are shadow/research candidates.",
-    "operational_scanner": "CORE_8",
-    "operational_scanner_count": 8,
-    "last_operational_change_at": "2026-10-01T09:40:00Z",
-    "last_operational_change": "Retired S10 from Scanner; retained in Mining/shadow."
+    "operational_scanner": "TOP_6_PLUS_EXISTING",
+    "operational_scanner_count": 14,
+    "last_operational_change_at": "2026-10-01T19:15:00Z",
+    "last_operational_change": "Activated the robust Mining Top 6 as exact clean-forward Scanner rules; existing Scanner rules remain active."
   },
   "strategies": [
     {
       "id": "S01",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол после 60-й при счёте 0:1",
-      "source": "mining_P1_robust_positive",
+      "name_ru": "ТБ 1.5 при счёте 0:1 на 60-69-й минуте",
+      "source": "unified_robust_top6_20261001",
       "rule": {
         "minute": [
           60,
@@ -37,22 +37,28 @@
         "market": "next_goal_over",
         "entry_policy": "first_available_point_in_window",
         "one_entry_per_match": true,
-        "odds_filter": null,
+        "odds": [
+          1.7,
+          2.0
+        ],
         "first_goal_time_filter": null
       },
       "user_output": true,
       "scanner_enabled": true,
       "scanner_core8": true,
       "evidence": {
-        "n": 333,
-        "wins": 216,
-        "losses": 117,
-        "roi_pct": 12.61,
-        "roi_without_top10_pct": 10.49,
+        "n": 41,
+        "wins": 28,
+        "losses": 13,
+        "profit": 9.275,
+        "roi_pct": 22.62,
+        "roi_without_top3_pct": 17.04,
+        "roi_without_top5_pct": 12.99,
         "verdict": "ROBUST POSITIVE",
-        "source": "football_pockets_robustness_v1"
+        "source": "unified_robust_top6_20261001"
       },
-      "clean_epoch_start": "2026-09-27T19:48:49Z"
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "history_note": "Before this epoch S01 had no odds filter; do not merge the old operational sample into the exact 1.70-2.00 rule."
     },
     {
       "id": "S02",
@@ -215,23 +221,34 @@
       "tier": "ACTIVE",
       "sport": "tennis",
       "name_ru": "Против live-фаворита при равном первом сете",
-      "source": "inverse_forward",
+      "source": "unified_robust_top6_20261001",
       "rule": {
         "state": "first_set_tied",
         "original_side": "live_favorite",
         "odds": [
-          1.5,
-          1.79
+          2.0,
+          2.1
         ],
+        "odds_apply_to": "selected_opponent",
         "side": "opposite"
       },
-      "user_output": false,
-      "scanner_enabled": false,
+      "user_output": true,
+      "scanner_enabled": true,
       "scanner_core8": false,
-      "status": "MINING_ONLY",
-      "research_destination": "mining",
-      "scanner_retired_at": "2026-10-01",
-      "scanner_retired_reason": "Clean-forward N=94: direct ROI -13.51%, reverse ROI -1.24%; no positive pockets with N>=10 in the fixed odds/tournament cuts."
+      "status": "ACTIVE_TOP6",
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "evidence": {
+        "n": 75,
+        "wins": 40,
+        "losses": 35,
+        "profit": 6.85,
+        "roi_pct": 9.13,
+        "roi_without_top3_pct": 4.93,
+        "roi_without_top5_pct": 1.93,
+        "source": "unified_robust_top6_20261001"
+      }
     },
     {
       "id": "S11",
@@ -583,21 +600,27 @@
     },
     {
       "id": "S27",
-      "tier": "WATCHLIST",
+      "tier": "ACTIVE",
       "sport": "football",
       "name_ru": "High Pressure ТБ 0.5 первого тайма",
-      "source": "mining_forward_positive",
+      "source": "unified_robust_top6_20261001",
       "evidence": {
-        "n": 183,
-        "wins": 77,
-        "losses": 106,
-        "profit": 8.825,
-        "roi_pct": 4.82,
+        "n": 114,
+        "wins": 64,
+        "losses": 50,
+        "profit": 9.6,
+        "roi_pct": 8.42,
+        "roi_without_top3_pct": 5.59,
+        "roi_without_top5_pct": 3.69,
         "as_of": "2026-10-01"
       },
       "rule": {
         "period": "FH",
         "pressure10_min": 28,
+        "odds": [
+          1.8,
+          2.15
+        ],
         "market": "plus_0_5"
       },
       "user_output": true,
@@ -605,7 +628,120 @@
       "scanner_core8": true,
       "research_destination": "scanner",
       "collection_engine": "stateful_goal_mining.py",
-      "scanner_activated_at": "2026-10-01"
+      "scanner_activated_at": "2026-10-01",
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "history_note": "Before this epoch S27 accepted every available price; exact Top-6 rule uses 1.80-2.15."
+    },
+    {
+      "id": "S28",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "ТМ 2.5 после гола при счёте 0:2 с 60-й минуты",
+      "source": "unified_robust_top6_20261001",
+      "rule": {
+        "minute_min": 60,
+        "score": "0-2",
+        "minutes_since_goal_max": 5,
+        "odds": [
+          1.3,
+          2.075
+        ],
+        "market": "next_goal_under",
+        "entry_policy": "first_available_quote_within_5_minutes_after_goal",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "status": "ACTIVE_TOP6",
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "evidence": {
+        "n": 44,
+        "wins": 35,
+        "losses": 9,
+        "profit": 16.775,
+        "roi_pct": 38.12,
+        "roi_without_top3_pct": 33.11,
+        "roi_without_top5_pct": 29.49,
+        "source": "unified_robust_top6_20261001"
+      }
+    },
+    {
+      "id": "T18",
+      "tier": "ACTIVE",
+      "sport": "tennis",
+      "name_ru": "Победитель предыдущего разгромного сета",
+      "source": "unified_robust_top6_20261001",
+      "rule": {
+        "state": "heavy_set_loss",
+        "heavy_set_scores": [
+          "6-0",
+          "6-1",
+          "6-2",
+          "6-3"
+        ],
+        "side": "previous_set_winner",
+        "odds": [
+          1.5,
+          1.75
+        ],
+        "entry_policy": "first_fresh_quote_after_next_set_starts",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "status": "ACTIVE_TOP6",
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "evidence": {
+        "n": 38,
+        "wins": 27,
+        "losses": 11,
+        "profit": 4.787,
+        "roi_pct": 12.6,
+        "roi_without_top3_pct": 7.38,
+        "roi_without_top5_pct": 3.69,
+        "source": "unified_robust_top6_20261001"
+      }
+    },
+    {
+      "id": "S29",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "ТМ 2.5 при счёте 2:0 на 85+ минуте",
+      "source": "unified_robust_top6_20261001",
+      "rule": {
+        "minute_min": 85,
+        "score": "2-0",
+        "odds": [
+          1.3,
+          1.95
+        ],
+        "market": "next_goal_under",
+        "entry_policy": "first_available_quote_from_minute_85",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "status": "ACTIVE_TOP6",
+      "research_destination": "scanner",
+      "scanner_activated_at": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "evidence": {
+        "n": 75,
+        "wins": 62,
+        "losses": 13,
+        "profit": 12.05,
+        "roi_pct": 16.07,
+        "roi_without_top3_pct": 13.61,
+        "roi_without_top5_pct": 12.25,
+        "source": "under_2_5_score_2_0_85plus_odds_breakdown_20261001"
+      }
     },
     {
       "id": "S25",

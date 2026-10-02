@@ -42,8 +42,9 @@ def sync_scanner_pressure(rows):
   arm=str(x.get("arm") or "")
   if x.get("strategy")!="FOOTBALL_PRESSURE_TOTAL_O05_V1" or not arm.startswith("HIGH_PRESSURE_O05_"):continue
   sid="S27" if arm.endswith("_FH") else "S26";name="High Pressure ТБ 0.5 первого тайма" if sid=="S27" else "High Pressure ТБ 0.5 матча";line=fmtline(x["selected_line"]);key=(str(x["event_id"]),f"ТБ {line}",sid)
+  if sid=="S27" and not 1.80<=float(x.get("selected_odds") or 0)<=2.15:continue
   if key in by_key:continue
-  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":f"ТБ {line}","current_odds":x.get("selected_odds"),"reverse_bet":f"ТМ {line}","reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[name],"tier":"ACTIVE" if sid=="S26" else "WATCHLIST","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
+  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":f"ТБ {line}","current_odds":x.get("selected_odds"),"reverse_bet":f"ТМ {line}","reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[name],"tier":"ACTIVE","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
  save_rows(SCANNER_SIGNALS,sorted(by_key.values(),key=lambda x:str(x.get("timestamp") or "")))
  active=[x for x in by_key.values() if int(time.time())-int(datetime.fromisoformat(str(x["timestamp"]).replace("Z","+00:00")).timestamp())<=600]
  SCANNER_STATUS.write_text(json.dumps({"scanner":"STATEFUL_HIGH_PRESSURE","updated_at":iso(),"signals":len(by_key),"active_last_10m":active},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
