@@ -3419,8 +3419,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13225296": {
       "event_id": "13225296",
@@ -4878,8 +4879,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13175927": {
       "event_id": "13175927",
@@ -4988,8 +4990,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224342": {
       "event_id": "13224342",
@@ -5006,8 +5009,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224343": {
       "event_id": "13224343",
@@ -5044,8 +5048,62 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "12141489": {
+      "event_id": "12141489",
+      "bet365_id": "202042007",
+      "kickoff": 1790955000,
+      "candidate_at": 1790958296,
+      "country": "pl",
+      "league": "Poland III Liga",
+      "home": "Wisloka Debica",
+      "away": "Pogon Sokol Lubaczow",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225607": {
+      "event_id": "13225607",
+      "bet365_id": "202141131",
+      "kickoff": 1790955000,
+      "candidate_at": 1790958296,
+      "country": "bf",
+      "league": "Burkina Faso League",
+      "home": "Salitas FC",
+      "away": "Real du Faso",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13168492": {
+      "event_id": "13168492",
+      "bet365_id": "202075951",
+      "kickoff": 1790955000,
+      "candidate_at": 1790958296,
+      "country": "fi",
+      "league": "Finland Kakkonen Play Offs",
+      "home": "Tampereen Ilves 2",
+      "away": "Huima/Urho",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T16:00:38Z",
+  "updated_at": "2026-10-02T16:29:23Z",
   "api_calls_last_run": 9
 }
