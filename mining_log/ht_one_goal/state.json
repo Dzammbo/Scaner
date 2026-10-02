@@ -2946,8 +2946,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12315626": {
       "event_id": "12315626",
@@ -3096,10 +3097,29 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "13217107": {
+      "event_id": "13217107",
+      "bet365_id": "202096298",
+      "kickoff": 1790920800,
+      "candidate_at": 1790924204,
+      "country": "",
+      "league": "Asian Games Women",
+      "home": "China PR (W)",
+      "away": "South Korea (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T06:43:42Z",
+  "updated_at": "2026-10-02T07:00:25Z",
   "api_calls_last_run": 2
 }
