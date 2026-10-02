@@ -5192,8 +5192,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232413": {
       "event_id": "13232413",
@@ -5265,8 +5266,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13156812": {
       "event_id": "13156812",
@@ -5319,8 +5321,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11679555": {
       "event_id": "11679555",
@@ -5499,8 +5502,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11437510": {
       "event_id": "11437510",
@@ -5517,8 +5521,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13049254": {
       "event_id": "13049254",
@@ -5535,8 +5540,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13225658": {
       "event_id": "13225658",
@@ -7475,8 +7481,96 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13227331": {
+      "event_id": "13227331",
+      "bet365_id": "202088400",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981820,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Lechuzas UPGCH",
+      "away": "Tapachula Soconusco FC II",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13231617": {
+      "event_id": "13231617",
+      "bet365_id": "202196830",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981820,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Guerreros de Puebla",
+      "away": "Liga de Fútbol de Tehuacán",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "11490217": {
+      "event_id": "11490217",
+      "bet365_id": "201316985",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981820,
+      "country": "ar",
+      "league": "Argentina Nacional B",
+      "home": "Ferro Carril Oeste",
+      "away": "Deportivo Madryn",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13227334": {
+      "event_id": "13227334",
+      "bet365_id": "202133106",
+      "kickoff": 1790978400,
+      "candidate_at": 1790981820,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Alamos",
+      "away": "CD Muxes",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13227429": {
+      "event_id": "13227429",
+      "bet365_id": "202088394",
+      "kickoff": 1790979165,
+      "candidate_at": 1790981937,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Artesanos Metepec FC II",
+      "away": "Grupo Sherwood",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T22:50:24Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-02T23:01:03Z",
+  "api_calls_last_run": 9
 }
