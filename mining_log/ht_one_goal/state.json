@@ -3015,8 +3015,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13220200": {
       "event_id": "13220200",
@@ -3037,6 +3038,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T02:04:04Z",
-  "api_calls_last_run": 4
+  "updated_at": "2026-10-02T02:19:12Z",
+  "api_calls_last_run": 3
 }
