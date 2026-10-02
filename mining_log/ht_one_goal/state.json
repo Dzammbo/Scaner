@@ -4330,8 +4330,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228210": {
       "event_id": "13228210",
@@ -4385,8 +4386,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228392": {
       "event_id": "13228392",
@@ -4422,8 +4424,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227917": {
       "event_id": "13227917",
@@ -4476,7 +4479,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232468": {
       "event_id": "13232468",
@@ -4493,7 +4497,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13228212": {
       "event_id": "13228212",
@@ -4510,7 +4515,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13117660": {
       "event_id": "13117660",
@@ -4527,7 +4533,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13117661": {
       "event_id": "13117661",
@@ -4544,9 +4552,214 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13204907": {
+      "event_id": "13204907",
+      "bet365_id": "202031880",
+      "kickoff": 1790947500,
+      "candidate_at": 1790950913,
+      "country": "in",
+      "league": "India Mizoram Premier League",
+      "home": "Ramthar Veng FC",
+      "away": "Aizawl FC XI",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13219941": {
+      "event_id": "13219941",
+      "bet365_id": "202076829",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "",
+      "league": "U19 International",
+      "home": "Belgium U19",
+      "away": "Northern Ireland U19",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13219939": {
+      "event_id": "13219939",
+      "bet365_id": "202075151",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "",
+      "league": "U19 International",
+      "home": "Albania U19",
+      "away": "Lithuania U19",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13225656": {
+      "event_id": "13225656",
+      "bet365_id": "202081834",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "hr",
+      "league": "Croatia 3.NL",
+      "home": "NK HV Posedarje",
+      "away": "NK GOSK Dubrovnik",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13225657": {
+      "event_id": "13225657",
+      "bet365_id": "202081836",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "hr",
+      "league": "Croatia 3.NL",
+      "home": "NK Junak",
+      "away": "HNK Val Kastel Stari",
+      "halftime_score": [
+        2,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13226053": {
+      "event_id": "13226053",
+      "bet365_id": "202078593",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "om",
+      "league": "Oman Federation Cup",
+      "home": "Dhofar",
+      "away": "Oman FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13226779": {
+      "event_id": "13226779",
+      "bet365_id": "202083097",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Wolfsberger AC",
+      "away": "ASK Voitsberg",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12479474": {
+      "event_id": "12479474",
+      "bet365_id": "202075962",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "id",
+      "league": "Indonesia Championship",
+      "home": "Persiraja Aceh",
+      "away": "Sumsel United",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13227463": {
+      "event_id": "13227463",
+      "bet365_id": "202076113",
+      "kickoff": 1790947800,
+      "candidate_at": 1790950913,
+      "country": "it",
+      "league": "Italy Campionato Primavera 3",
+      "home": "Vis Pesaro U19",
+      "away": "Torres U19",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13226991": {
+      "event_id": "13226991",
+      "bet365_id": "202137290",
+      "kickoff": 1790948100,
+      "candidate_at": 1790950913,
+      "country": "qa",
+      "league": "Qatar U20 League",
+      "home": "Al-Rayyan SC U20",
+      "away": "Al-Wakrah SC U20",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13226990": {
+      "event_id": "13226990",
+      "bet365_id": "202137280",
+      "kickoff": 1790948100,
+      "candidate_at": 1790951108,
+      "country": "qa",
+      "league": "Qatar U20 League",
+      "home": "Al Duhail U20",
+      "away": "Al Markhiya U20",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13228213": {
+      "event_id": "13228213",
+      "bet365_id": "202182594",
+      "kickoff": 1790948276,
+      "candidate_at": 1790951108,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Rabotnicki Skopje",
+      "away": "Tikves Kavadarci",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T14:06:46Z",
+  "updated_at": "2026-10-02T14:26:34Z",
   "api_calls_last_run": 9
 }
