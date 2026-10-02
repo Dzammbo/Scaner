@@ -2025,8 +2025,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13070299": {
       "event_id": "13070299",
@@ -2157,8 +2158,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13224102": {
       "event_id": "13224102",
@@ -2956,8 +2958,26 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13148619": {
+      "event_id": "13148619",
+      "bet365_id": "201860379",
+      "kickoff": 1790900100,
+      "candidate_at": 1790903031,
+      "country": "ar",
+      "league": "Argentina Cup",
+      "home": "Platense",
+      "away": "Estudiantes LP",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T00:56:35Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-02T01:07:52Z",
+  "api_calls_last_run": 7
 }
