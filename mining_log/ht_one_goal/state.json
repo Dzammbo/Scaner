@@ -3003,8 +3003,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13219453": {
       "event_id": "13219453",
@@ -3118,8 +3119,26 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13231419": {
+      "event_id": "13231419",
+      "bet365_id": "202224329",
+      "kickoff": 1790922600,
+      "candidate_at": 1790926159,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Hapoel Tel Aviv",
+      "away": "Hapoel Haifa",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T07:14:12Z",
-  "api_calls_last_run": 2
+  "updated_at": "2026-10-02T07:33:06Z",
+  "api_calls_last_run": 3
 }
