@@ -3875,8 +3875,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13019090": {
       "event_id": "13019090",
@@ -3893,8 +3894,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13018973": {
       "event_id": "13018973",
@@ -3911,8 +3913,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13019738": {
       "event_id": "13019738",
@@ -6041,7 +6044,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11720676": {
       "event_id": "11720676",
@@ -6228,7 +6232,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224922": {
       "event_id": "13224922",
@@ -6245,7 +6250,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13224921": {
       "event_id": "13224921",
@@ -6262,7 +6268,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "10571462": {
       "event_id": "10571462",
@@ -6279,7 +6286,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11351712": {
       "event_id": "11351712",
@@ -6296,7 +6304,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12152847": {
       "event_id": "12152847",
@@ -6313,7 +6322,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12152642": {
       "event_id": "12152642",
@@ -6330,7 +6340,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13226716": {
       "event_id": "13226716",
@@ -6347,9 +6358,100 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "12181909": {
+      "event_id": "12181909",
+      "bet365_id": "202081822",
+      "kickoff": 1790964000,
+      "candidate_at": 1790967875,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca U20",
+      "home": "Flamengo U20",
+      "away": "Sampaio Correa RJ U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13224920": {
+      "event_id": "13224920",
+      "bet365_id": "202086576",
+      "kickoff": 1790964000,
+      "candidate_at": 1790967875,
+      "country": "ar",
+      "league": "Argentina Championship Women",
+      "home": "San Lorenzo (W)",
+      "away": "Huracan (W)",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13156811": {
+      "event_id": "13156811",
+      "bet365_id": "201750087",
+      "kickoff": 1790964000,
+      "candidate_at": 1790967875,
+      "country": "ma",
+      "league": "Morocco GNF 1",
+      "home": "Widad Temara",
+      "away": "Union de Touarga",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13232773": {
+      "event_id": "13232773",
+      "bet365_id": "202137168",
+      "kickoff": 1790964000,
+      "candidate_at": 1790967875,
+      "country": "br",
+      "league": "Brazil Copa Sul U20",
+      "home": "Sao Jose EC U20",
+      "away": "Patriotas U20",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13234342": {
+      "event_id": "13234342",
+      "bet365_id": "202261946",
+      "kickoff": 1790964645,
+      "candidate_at": 1790967875,
+      "country": "pl",
+      "league": "Poland Regional League",
+      "home": "Naprzod Zielonki",
+      "away": "GKS Gladiator Sloszewo",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T18:43:42Z",
+  "updated_at": "2026-10-02T19:09:04Z",
   "api_calls_last_run": 9
 }
