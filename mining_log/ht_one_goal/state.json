@@ -2642,8 +2642,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12315866": {
       "event_id": "12315866",
@@ -3053,8 +3054,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315932": {
       "event_id": "12315932",
@@ -3075,6 +3077,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T02:47:51Z",
-  "api_calls_last_run": 3
+  "updated_at": "2026-10-02T02:59:48Z",
+  "api_calls_last_run": 2
 }
