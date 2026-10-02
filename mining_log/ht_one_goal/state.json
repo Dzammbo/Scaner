@@ -7498,8 +7498,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13231617": {
       "event_id": "13231617",
@@ -7516,8 +7517,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11490217": {
       "event_id": "11490217",
@@ -7552,8 +7554,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13227429": {
       "event_id": "13227429",
@@ -7570,7 +7573,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13125105": {
       "event_id": "13125105",
@@ -7587,7 +7591,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13228130": {
       "event_id": "13228130",
@@ -7604,9 +7609,44 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "11737750": {
+      "event_id": "11737750",
+      "bet365_id": "201254079",
+      "kickoff": 1790980200,
+      "candidate_at": 1790983193,
+      "country": "br",
+      "league": "Brazil Serie B",
+      "home": "Sao Bernardo SP",
+      "away": "CRB",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13235429": {
+      "event_id": "13235429",
+      "bet365_id": "202236771",
+      "kickoff": 1790980231,
+      "candidate_at": 1790983193,
+      "country": "cl",
+      "league": "Chile Tercera",
+      "home": "CD Constitucion Unido",
+      "away": "Lautaro de Buin",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-02T23:11:18Z",
+  "updated_at": "2026-10-02T23:24:15Z",
   "api_calls_last_run": 9
 }
