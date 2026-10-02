@@ -1,7 +1,7 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-02T22:48:14Z",
-  "signals": 237,
+  "updated_at": "2026-10-02T22:57:50Z",
+  "signals": 238,
   "active_last_10m": [
     {
       "timestamp": "2026-10-02T22:48:03Z",
@@ -25,6 +25,31 @@
       ],
       "tier": "ACTIVE",
       "pressure10": 29.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-02T22:57:47Z",
+      "sport": "football",
+      "tournament": "Mexico Liga TDP",
+      "event_id": "13231824",
+      "match": "Corsarios de Campeche - Ejidatarios de Bonfil",
+      "minute_score": "87' / '1-1'",
+      "minute": 87,
+      "score": "1-1",
+      "exact_bet_line": "ТБ 2.5",
+      "current_odds": 3.1,
+      "reverse_bet": "ТМ 2.5",
+      "reverse_odds": 1.35,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 35.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
