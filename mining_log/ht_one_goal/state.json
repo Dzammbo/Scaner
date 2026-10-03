@@ -8250,8 +8250,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12222291": {
       "event_id": "12222291",
@@ -8728,8 +8729,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12050655": {
       "event_id": "12050655",
@@ -8764,8 +8766,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12050003": {
       "event_id": "12050003",
@@ -8836,8 +8839,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232243": {
       "event_id": "13232243",
@@ -8872,7 +8876,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12183205": {
       "event_id": "12183205",
@@ -8889,7 +8894,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12183198": {
       "event_id": "12183198",
@@ -8906,7 +8912,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12136333": {
       "event_id": "12136333",
@@ -8923,7 +8930,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13235821": {
       "event_id": "13235821",
@@ -8940,7 +8948,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12182488": {
       "event_id": "12182488",
@@ -9179,8 +9188,76 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13233997": {
+      "event_id": "13233997",
+      "bet365_id": "202189654",
+      "kickoff": 1791017100,
+      "candidate_at": 1791020125,
+      "country": "ua",
+      "league": "Ukraine Druha Liga",
+      "home": "FC Poltava 2",
+      "away": "PFC Oleksandria II",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12187801": {
+      "event_id": "12187801",
+      "bet365_id": "202143200",
+      "kickoff": 1791017260,
+      "candidate_at": 1791020125,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "Sparta Brno",
+      "away": "SK Zdirec Nad Doubravou",
+      "halftime_score": [
+        3,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232560": {
+      "event_id": "13232560",
+      "bet365_id": "202161394",
+      "kickoff": 1791017100,
+      "candidate_at": 1791020316,
+      "country": "dk",
+      "league": "Denmark Division 2 Women",
+      "home": "Fredensborg (W)",
+      "away": "BSF (W)",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12429385": {
+      "event_id": "12429385",
+      "bet365_id": "202204312",
+      "kickoff": 1791017100,
+      "candidate_at": 1791020316,
+      "country": "my",
+      "league": "Malaysia Liga A1 Semi Pro",
+      "home": "Imigresen FC II",
+      "away": "Negeri Sembilan II",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T09:25:07Z",
+  "updated_at": "2026-10-03T09:39:57Z",
   "api_calls_last_run": 9
 }
