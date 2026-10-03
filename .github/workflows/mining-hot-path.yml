@@ -2,14 +2,6 @@ name: Mining GitHub hot path
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
-  push:
-    branches: [main]
-    paths:
-      - "scanner.py"
-      - "strategies.json"
-      - ".github/workflows/mining-hot-path.yml"
 
 permissions:
   contents: write
