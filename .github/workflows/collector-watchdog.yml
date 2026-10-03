@@ -1,0 +1,77 @@
+name: Collector watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/collector-watchdog.yml"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: collector-watchdog
+  cancel-in-progress: true
+
+jobs:
+  ensure-workers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Keep one live worker and no waiting queue
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ensure_worker() {
+            local workflow="$1"
+            local status_path="$2"
+            local active
+            active="$(gh run list --workflow "$workflow" --limit 30 --json databaseId,status,createdAt --jq '[.[] | select(.status == "in_progress")] | sort_by(.createdAt) | last | .databaseId // empty')"
+
+            mapfile -t waiting < <(gh run list --workflow "$workflow" --limit 30 --json databaseId,status --jq '.[] | select(.status == "queued" or .status == "waiting" or .status == "pending" or .status == "requested") | .databaseId')
+
+            if [ -n "$active" ]; then
+              local stale="0"
+              if [ -f "$status_path" ]; then
+                stale="$(python3 - "$status_path" <<'PY'
+          import json,sys
+          from datetime import datetime,timezone
+          try:
+              row=json.load(open(sys.argv[1],encoding="utf-8"))
+              ts=datetime.fromisoformat(str(row["updated_at"]).replace("Z","+00:00"))
+              print("1" if (datetime.now(timezone.utc)-ts).total_seconds()>1800 else "0")
+          except Exception:
+              print("0")
+          PY
+          )"
+              fi
+              if [ "$stale" = "1" ]; then
+                gh run cancel "$active" || true
+                sleep 5
+                active=""
+              fi
+            fi
+
+            for run_id in "${waiting[@]}"; do
+              gh run cancel "$run_id" || true
+            done
+
+            if [ -z "$active" ]; then
+              gh workflow run "$workflow" --ref main
+            fi
+          }
+
+          ensure_worker "scaner-hot-path.yml" "forward_log/scanner_worker_status.json"
+          ensure_worker "s30-hot-path.yml" "forward_log/s30/worker_status.json"

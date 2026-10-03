@@ -2,20 +2,10 @@ name: S30 continuous worker
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "scanner.py"
-      - "s30_worker.py"
-      - "strategies.json"
-      - ".github/workflows/s30-hot-path.yml"
-  schedule:
-    # Hourly watchdog. A queued run takes over when the long worker exits.
-    # Minute 17 avoids the busiest start-of-hour scheduling window.
-    - cron: "17 * * * *"
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: s30-continuous-worker
@@ -27,7 +17,7 @@ jobs:
     timeout-minutes: 345
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-      S30_DURATION_SECONDS: ${{ github.event_name == 'workflow_dispatch' && '130' || '19200' }}
+      S30_DURATION_SECONDS: "19200"
       S30_POLL_SECONDS: "55"
       S30_CHECKPOINT_SECONDS: "600"
       S30_GIT_CHECKPOINT: "1"
@@ -51,3 +41,9 @@ jobs:
         run: |
           test -f forward_log/s30/worker_status.json
           cat forward_log/s30/worker_status.json
+
+      - name: Start successor
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run s30-hot-path.yml --ref main

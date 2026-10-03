@@ -2,20 +2,10 @@ name: Scanner continuous worker
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "scanner.py"
-      - "scanner_worker.py"
-      - "strategies.json"
-      - ".github/workflows/scaner-hot-path.yml"
-  schedule:
-    # Hourly watchdog. A queued run takes over when the long worker exits.
-    # Minute 37 avoids the busiest start-of-hour scheduling window.
-    - cron: "37 * * * *"
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: scaner-forward-log
@@ -52,3 +42,9 @@ jobs:
         run: |
           test -f forward_log/scanner_worker_status.json
           cat forward_log/scanner_worker_status.json
+
+      - name: Start successor
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scaner-hot-path.yml --ref main
