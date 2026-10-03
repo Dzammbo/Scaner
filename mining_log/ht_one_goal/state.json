@@ -15871,8 +15871,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233607": {
       "event_id": "13233607",
@@ -16129,8 +16130,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12165261": {
       "event_id": "12165261",
@@ -16147,7 +16149,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12165970": {
       "event_id": "12165970",
@@ -16164,7 +16167,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12323503": {
       "event_id": "12323503",
@@ -16181,7 +16185,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13190014": {
       "event_id": "13190014",
@@ -16198,7 +16203,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13185894": {
       "event_id": "13185894",
@@ -16947,8 +16953,93 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13226675": {
+      "event_id": "13226675",
+      "bet365_id": "202185486",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055288,
+      "country": "",
+      "league": "Gulf Cup",
+      "home": "United Arab Emirates",
+      "away": "Oman",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12333140": {
+      "event_id": "12333140",
+      "bet365_id": "200871310",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055357,
+      "country": "it",
+      "league": "Italy Serie C Group C",
+      "home": "Catania",
+      "away": "Crotone",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13233403": {
+      "event_id": "13233403",
+      "bet365_id": "202142698",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055357,
+      "country": "br",
+      "league": "Brazil Campeonato Brasiliense Women",
+      "home": "Cresspom (W)",
+      "away": "Minas Brasilia DF (W)",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13233589": {
+      "event_id": "13233589",
+      "bet365_id": "202145832",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055357,
+      "country": "br",
+      "league": "Brazil Copa Goias U20",
+      "home": "Trindade U20",
+      "away": "Vila Nova U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12059211": {
+      "event_id": "12059211",
+      "bet365_id": "202145678",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055621,
+      "country": "br",
+      "league": "Brazil Campeonato Goiano 2",
+      "home": "Sao Luis GO",
+      "away": "Goiania",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T19:20:25Z",
+  "updated_at": "2026-10-03T19:30:40Z",
   "api_calls_last_run": 9
 }
