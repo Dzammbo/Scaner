@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 345
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-      S30_DURATION_SECONDS: ${{ github.event_name == 'schedule' && '19200' || '130' }}
+      S30_DURATION_SECONDS: ${{ github.event_name == 'workflow_dispatch' && '130' || '19200' }}
       S30_POLL_SECONDS: "55"
       S30_CHECKPOINT_SECONDS: "600"
       S30_GIT_CHECKPOINT: "1"
