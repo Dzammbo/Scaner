@@ -17,9 +17,9 @@ ENABLED_SPORTS = {
     x.strip() for x in os.environ.get("SCANER_SPORTS", "football,tennis").split(",") if x.strip()
 }
 S30_CAPTURE = os.environ.get("S30_CAPTURE", "0") == "1"
-LOG_DIR = Path("forward_log" if MODE == "scanner" else "mining_log")
-LOG_PREFIX = "scanner" if MODE == "scanner" else "mining"
-STATE_PATH = LOG_DIR / f"{LOG_PREFIX}_state.json"
+LOG_DIR = Path(os.environ.get("SCANER_LOG_DIR") or ("forward_log" if MODE == "scanner" else "mining_log"))
+LOG_PREFIX = os.environ.get("SCANER_LOG_PREFIX") or ("scanner" if MODE == "scanner" else "mining")
+STATE_PATH = Path(os.environ.get("SCANER_STATE_PATH") or (LOG_DIR / f"{LOG_PREFIX}_state.json"))
 RUN_LABEL = "SCANER_V1" if MODE == "scanner" else "MINING_GITHUB_V1"
 
 def now_iso():
@@ -786,7 +786,8 @@ registry = json.loads(Path("strategies.json").read_text(encoding="utf-8"))
 if MODE == "scanner":
     strategies = [
         s for s in registry["strategies"]
-        if s.get("scanner_enabled", True) and s.get("collection_engine", "scanner.py") == "scanner.py"
+        if s.get("scanner_enabled", True)
+        and (bool(ONLY_STRATEGY_IDS) or s.get("collection_engine", "scanner.py") == "scanner.py")
     ]
 else:
     strategies = [s for s in registry["strategies"] if s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY"]
@@ -823,6 +824,9 @@ for sport in ("football", "tennis"):
             queues[sport][ev["event_id"]] = {"event": ev, "strategies": sts}
 
 def priority(row):
+    if S30_CAPTURE and row["event"].get("sport") == "football":
+        minute_rank = {85: 0, 86: 1, 87: 2, 88: 3, 89: 4, 84: 5, 83: 6, 90: 7}
+        return (0, minute_rank.get(row["event"].get("minute"), 9), -len(row["strategies"]))
     return (min(rank.get(s["tier"], 9) for s in row["strategies"]), -len(row["strategies"]))
 
 football_ranked = sorted(queues["football"].values(), key=priority)

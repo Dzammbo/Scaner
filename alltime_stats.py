@@ -7,9 +7,15 @@ import os
 TOKEN=os.environ["BETSAPI_KEY"]
 
 def read_github():
-    url="https://raw.githubusercontent.com/Dzammbo/Scaner/main/forward_log/scanner_signals.jsonl"
-    with urllib.request.urlopen(url,timeout=30) as r: txt=r.read().decode()
-    return [json.loads(x) for x in txt.splitlines() if x.strip()]
+    rows=[]
+    for path in ("forward_log/scanner_signals.jsonl","forward_log/s30/s30_signals.jsonl"):
+        url="https://raw.githubusercontent.com/Dzammbo/Scaner/main/"+path
+        try:
+            with urllib.request.urlopen(url,timeout=30) as r: txt=r.read().decode()
+        except Exception:
+            continue
+        rows.extend(json.loads(x) for x in txt.splitlines() if x.strip())
+    return rows
 
 def read_local():
     p=Path("recovery/selectel_scanner_signals_20260927.jsonl")

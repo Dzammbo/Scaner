@@ -1,5 +1,7 @@
 name: Current Scanner status
 on:
+  schedule:
+    - cron: "37 */4 * * *"
   push:
     branches: [main]
     paths: ["current_status.py","recovery/selectel_scanner_signals_current.jsonl"]

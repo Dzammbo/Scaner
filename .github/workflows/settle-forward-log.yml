@@ -24,7 +24,10 @@ jobs:
 
           BASE="https://api.b365api.com"
           TOKEN=os.environ["BETSAPI_KEY"]
-          rows=[json.loads(x) for x in Path("forward_log/scanner_signals.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
+          rows=[]
+          for path in (Path("forward_log/scanner_signals.jsonl"),Path("forward_log/s30/s30_signals.jsonl")):
+              if path.exists():
+                  rows.extend(json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip())
 
           def get(path, params):
               import time, urllib.error

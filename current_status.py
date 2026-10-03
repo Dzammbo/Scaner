@@ -5,7 +5,7 @@ BASE="https://api.b365api.com";TOKEN=os.environ["BETSAPI_KEY"]
 def load(p):
  path=Path(p)
  return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()] if path.exists() else []
-rows=load("forward_log/scanner_signals.jsonl")+load("forward_log/stateful_pressure_signals.jsonl")+load("recovery/selectel_scanner_signals_20260927.jsonl")+load("recovery/selectel_scanner_signals_current.jsonl")
+rows=load("forward_log/scanner_signals.jsonl")+load("forward_log/s30/s30_signals.jsonl")+load("forward_log/stateful_pressure_signals.jsonl")+load("recovery/selectel_scanner_signals_20260927.jsonl")+load("recovery/selectel_scanner_signals_current.jsonl")
 rows.sort(key=lambda r:str(r.get("timestamp") or ""))
 bykey={};order=[]
 for r in rows:

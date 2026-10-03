@@ -47,8 +47,9 @@ jobs:
           per_pass = 25 if morning else 50
           board_calls = 2
           used = 0
-          path = Path("forward_log/scanner_runs.jsonl")
-          if path.exists():
+          paths = [Path("forward_log/scanner_runs.jsonl"), Path("forward_log/s30/s30_runs.jsonl")]
+          for path in paths:
+            if path.exists():
               for line in path.read_text(encoding="utf-8").splitlines():
                   if not line.strip():
                       continue
@@ -58,7 +59,7 @@ jobs:
                   except Exception:
                       continue
                   if now - timedelta(hours=1) <= ts <= now:
-                      used += int(row.get("api_calls") or 0)
+                    used += int(row.get("api_calls") or 0)
           remaining = max(0, cap-used)
           run_budget = min(per_pass, remaining)
           skip = run_budget < board_calls
