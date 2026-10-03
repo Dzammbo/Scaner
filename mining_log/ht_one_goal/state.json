@@ -13267,8 +13267,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12418370": {
       "event_id": "12418370",
@@ -13321,8 +13322,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12414728": {
       "event_id": "12414728",
@@ -13339,8 +13341,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12390815": {
       "event_id": "12390815",
@@ -13447,7 +13450,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12245121": {
       "event_id": "12245121",
@@ -13464,7 +13468,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12139765": {
       "event_id": "12139765",
@@ -13481,7 +13487,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12245065": {
       "event_id": "12245065",
@@ -13498,7 +13505,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232567": {
       "event_id": "13232567",
@@ -13515,7 +13523,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228052": {
       "event_id": "13228052",
@@ -13532,7 +13541,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12152698": {
       "event_id": "12152698",
@@ -13549,7 +13559,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12148433": {
       "event_id": "12148433",
@@ -13566,7 +13577,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232883": {
       "event_id": "13232883",
@@ -14009,8 +14021,59 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13237155": {
+      "event_id": "13237155",
+      "bet365_id": "202287609",
+      "kickoff": 1791040500,
+      "candidate_at": 1791043660,
+      "country": "ne",
+      "league": "Niger Super League",
+      "home": "AS Police Niger",
+      "away": "Tagour PC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12349470": {
+      "event_id": "12349470",
+      "bet365_id": "202121179",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044249,
+      "country": "cl",
+      "league": "Chile Segunda",
+      "home": "Santiago City",
+      "away": "CD Trasandino de Los Andes",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12333138": {
+      "event_id": "12333138",
+      "bet365_id": "200871304",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044249,
+      "country": "it",
+      "league": "Italy Serie C Group C",
+      "home": "Giugliano",
+      "away": "Barletta",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T16:04:32Z",
+  "updated_at": "2026-10-03T16:17:46Z",
   "api_calls_last_run": 9
 }
