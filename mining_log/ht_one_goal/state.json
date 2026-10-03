@@ -14617,8 +14617,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13231891": {
       "event_id": "13231891",
@@ -15159,8 +15160,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233610": {
       "event_id": "13233610",
@@ -15177,7 +15179,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232733": {
       "event_id": "13232733",
@@ -15194,7 +15197,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13189719": {
       "event_id": "13189719",
@@ -15211,7 +15215,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12088898": {
       "event_id": "12088898",
@@ -15484,8 +15489,127 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "12281092": {
+      "event_id": "12281092",
+      "bet365_id": "202035223",
+      "kickoff": 1791045900,
+      "candidate_at": 1791049230,
+      "country": "es",
+      "league": "Spain Primera Division RFEF Group 2",
+      "home": "FC Cartagena",
+      "away": "Aguilas",
+      "halftime_score": [
+        4,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12281094": {
+      "event_id": "12281094",
+      "bet365_id": "202035222",
+      "kickoff": 1791045900,
+      "candidate_at": 1791049427,
+      "country": "es",
+      "league": "Spain Primera Division RFEF Group 2",
+      "home": "Alcorcon",
+      "away": "Juventud Torremolinos CF",
+      "halftime_score": [
+        4,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232800": {
+      "event_id": "13232800",
+      "bet365_id": "202151011",
+      "kickoff": 1791046800,
+      "candidate_at": 1791049575,
+      "country": "",
+      "league": "Luxembourg Ligue 1 Women",
+      "home": "Young Boys Diekirch (W)",
+      "away": "SC Ell (W)",
+      "halftime_score": [
+        2,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12283421": {
+      "event_id": "12283421",
+      "bet365_id": "202169162",
+      "kickoff": 1791046800,
+      "candidate_at": 1791049575,
+      "country": "fr",
+      "league": "France Ligue 3",
+      "home": "AS Montlouis",
+      "away": "St Pryve St Hilaire",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12386492": {
+      "event_id": "12386492",
+      "bet365_id": "202145581",
+      "kickoff": 1791046800,
+      "candidate_at": 1791049575,
+      "country": "es",
+      "league": "Spain Tercera Group 2",
+      "home": "L'Entregu CF",
+      "away": "CD Colunga",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13216649": {
+      "event_id": "13216649",
+      "bet365_id": "201927288",
+      "kickoff": 1791046800,
+      "candidate_at": 1791049702,
+      "country": "es",
+      "league": "Spain Segunda Division RFEF Group 4",
+      "home": "CD Estepona",
+      "away": "Don Benito",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13228171": {
+      "event_id": "13228171",
+      "bet365_id": "202148413",
+      "kickoff": 1791046800,
+      "candidate_at": 1791049771,
+      "country": "",
+      "league": "U20 Africa Cup of Nations Qual",
+      "home": "Egypt U20",
+      "away": "Morocco U20",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T17:38:36Z",
+  "updated_at": "2026-10-03T17:49:36Z",
   "api_calls_last_run": 9
 }
