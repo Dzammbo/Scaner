@@ -130,6 +130,12 @@ def first_half_total(event: dict) -> int | None:
     for key in ("1", "1st", "1st Half", "1H", "first_half"):
         value = scores.get(key)
         if isinstance(value, dict):
+            home, away = value.get("home"), value.get("away")
+            if home is not None and away is not None:
+                try:
+                    return int(home) + int(away)
+                except (TypeError, ValueError):
+                    pass
             value = value.get("score") or value.get("ss")
         total = score_total(value)
         if total is not None:
@@ -146,6 +152,11 @@ def tennis_winner(score) -> str | None:
     home_wins = sum(home > away for home, away in sets)
     away_wins = sum(away > home for home, away in sets)
     return "home" if home_wins > away_wins else "away" if away_wins > home_wins else None
+
+
+def normalized_competitor(value) -> tuple[str, ...]:
+    value = re.sub(r"\([^)]*\)", " ", str(value or "")).casefold()
+    return tuple(sorted(re.findall(r"[\w]+", value)))
 
 
 def selection_profit(row: dict, event: dict, bet_key: str, odds_key: str) -> tuple[float | None, str]:
@@ -187,7 +198,12 @@ def selection_profit(row: dict, event: dict, bet_key: str, odds_key: str) -> tup
         if not winner:
             return None, "TENNIS_WINNER_MISSING"
         home, away = str(event.get("home") or ""), str(event.get("away") or "")
-        selected = "home" if bet == home else "away" if bet == away else None
+        normalized_bet = normalized_competitor(bet)
+        selected = (
+            "home" if normalized_bet and normalized_bet == normalized_competitor(home)
+            else "away" if normalized_bet and normalized_bet == normalized_competitor(away)
+            else None
+        )
         if selected is None:
             return None, "TENNIS_SELECTION_MISMATCH"
         return (odds - 1 if selected == winner else -1), "SETTLED"
@@ -232,6 +248,11 @@ def settle(signals: list[dict], cache: dict[str, dict], overrides: dict) -> tupl
             pending.append(item)
             continue
         profit, reason = selection_profit(row, event, "exact_bet_line", "current_odds")
+        if profit is None and reason in {"INVALID_SCORE_DELTA", "TENNIS_WINNER_MISSING"}:
+            item = dict(row)
+            item["settlement_reason"] = "VOID_" + reason
+            voided.append(item)
+            continue
         if profit is None:
             item = dict(row)
             item["settlement_reason"] = "FINAL_" + reason
