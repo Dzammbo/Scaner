@@ -1,0 +1,87 @@
+name: Scanner settlement
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 */2 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scanner_settlement.py"
+      - "current_status.py"
+      - ".github/workflows/scanner-settlement.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scanner-settlement
+  cancel-in-progress: false
+
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      SCANNER_SETTLEMENT_QUERY_BUDGET: "80"
+      SCANNER_SETTLEMENT_BOOTSTRAP_QUERY_BUDGET: "300"
+      SCANNER_SETTLEMENT_RETRY_SECONDS: "7200"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Refresh persistent settlement cache
+        run: python3 scanner_settlement.py
+      - name: Recalculate all Scanner statistics
+        run: python3 current_status.py
+      - name: Validate settlement output
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          required = [
+              "forward_log/settlement/results.jsonl",
+              "forward_log/settlement/status.json",
+              "current_status_current.json",
+              "priority_pockets_current.json",
+              "pockets_current.json",
+              "pending_current.json",
+              "settlement_diagnostics_current.json",
+          ]
+          for filename in required:
+              assert Path(filename).is_file() and Path(filename).stat().st_size > 0, filename
+          provider = json.loads(Path(required[1]).read_text())
+          current = json.loads(Path(required[2]).read_text())
+          assert provider["provider_queries"] <= provider["query_budget"]
+          assert current["merged"] == current["settled"] + current["void"] + current["pending"]
+          assert {"S26", "S30"}.issubset(current["strategies"])
+          PY
+      - name: Persist cache and statistics
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json
+          if git diff --cached --quiet; then
+            echo "No settlement changes"
+            exit 0
+          fi
+          git commit -m "Refresh Scanner settlement cache"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scanner-settlement
+          path: |
+            forward_log/settlement/status.json
+            current_status_current.json
+            settlement_diagnostics_current.json

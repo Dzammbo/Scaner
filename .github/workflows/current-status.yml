@@ -1,10 +1,6 @@
 name: Current Scanner status
 on:
-  schedule:
-    - cron: "37 */4 * * *"
-  push:
-    branches: [main]
-    paths: ["current_status.py","recovery/selectel_scanner_signals_current.jsonl"]
+  workflow_dispatch:
 permissions:
   contents: write
 
@@ -14,19 +10,23 @@ jobs:
     timeout-minutes: 20
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      SCANNER_SETTLEMENT_QUERY_BUDGET: "80"
+      SCANNER_SETTLEMENT_BOOTSTRAP_QUERY_BUDGET: "300"
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
       - name: Calculate fresh Scanner status
-        run: python3 current_status.py
+        run: |
+          python3 scanner_settlement.py
+          python3 current_status.py
       - name: Persist current statistics
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add current_status_current.json priority_pockets_current.json pockets_current.json
+          git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json
           if git diff --cached --quiet; then
             echo "No statistics changes"
             exit 0
@@ -40,11 +40,6 @@ jobs:
             sleep $((attempt * 2))
           done
           exit 1
-      - name: Supplement pending with web settlement
-        continue-on-error: true
-        run: python3 web_mass_settle.py
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@v4
         with:
           name: pending-current
@@ -53,4 +48,4 @@ jobs:
             pockets_current.json
             current_status_current.json
             pending_current.json
-            web_mass_settlement.json
+            settlement_diagnostics_current.json
