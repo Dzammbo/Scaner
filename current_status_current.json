@@ -1,12 +1,12 @@
 {
-  "merged": 4243,
+  "merged": 4251,
   "settled": 4064,
   "void": 36,
-  "pending": 143,
-  "pending_live_or_delayed": 143,
+  "pending": 151,
+  "pending_live_or_delayed": 151,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 118,
+    "INPLAY": 126,
     "PENDING_PROVIDER_FIX": 19,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 6
   },
   "settlement_event_reasons": {
-    "INPLAY": 32,
+    "INPLAY": 37,
     "PENDING_PROVIDER_FIX": 15,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 4
   },
   "settlement_cache": {
-    "updated_at": "2026-10-03T19:05:46Z",
+    "updated_at": "2026-10-03T19:10:04Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 42,
-    "queried_events": 413,
-    "signal_unique_events": 2491,
-    "cache_events": 2491,
+    "provider_queries": 1,
+    "queried_events": 5,
+    "signal_unique_events": 2496,
+    "cache_events": 2496,
     "final_events": 2427,
     "void_events": 16,
     "immutable_events": 2443,
-    "retryable_events": 48,
+    "retryable_events": 53,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 2427,
-      "INPLAY": 32,
+      "INPLAY": 37,
       "PENDING_PROVIDER_FIX": 15,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -90,7 +90,7 @@
     "S02": {
       "name": "Гол после 70-й при счёте 0:2",
       "start": "2026-09-26T15:19:55+00:00",
-      "recorded": 47,
+      "recorded": 48,
       "original": {
         "N": 47,
         "W": 20,
@@ -127,7 +127,7 @@
     "S06": {
       "name": "Основной тотал больше - Бразилия",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 298,
+      "recorded": 302,
       "original": {
         "N": 192,
         "W": 90,
@@ -275,7 +275,7 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 710,
+      "recorded": 713,
       "original": {
         "N": 695,
         "W": 292,
