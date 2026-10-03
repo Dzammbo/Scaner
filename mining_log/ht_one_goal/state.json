@@ -15542,8 +15542,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12130556": {
       "event_id": "12130556",
@@ -15596,8 +15597,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12158062": {
       "event_id": "12158062",
@@ -18278,8 +18280,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13234962": {
       "event_id": "13234962",
@@ -18350,8 +18353,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13036652": {
       "event_id": "13036652",
@@ -18423,7 +18427,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11188852": {
       "event_id": "11188852",
@@ -18440,7 +18445,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233856": {
       "event_id": "13233856",
@@ -18509,8 +18515,76 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13055358": {
+      "event_id": "13055358",
+      "bet365_id": "202170116",
+      "kickoff": 1791066600,
+      "candidate_at": 1791069538,
+      "country": "br",
+      "league": "Brazil Serie C",
+      "home": "Paysandu",
+      "away": "Ferroviaria SP",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13055359": {
+      "event_id": "13055359",
+      "bet365_id": "202143139",
+      "kickoff": 1791066600,
+      "candidate_at": 1791069681,
+      "country": "br",
+      "league": "Brazil Serie C",
+      "home": "Inter de Limeira",
+      "away": "Brusque",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13233922": {
+      "event_id": "13233922",
+      "bet365_id": "202095595",
+      "kickoff": 1791066600,
+      "candidate_at": 1791069742,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Arietes FC",
+      "away": "Canoneros Futbol Club II",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11285059": {
+      "event_id": "11285059",
+      "bet365_id": "202049175",
+      "kickoff": 1791066600,
+      "candidate_at": 1791070017,
+      "country": "us",
+      "league": "USA NWSL Women",
+      "home": "Kansas City Current (W)",
+      "away": "Bay FC (W)",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T23:18:06Z",
+  "updated_at": "2026-10-03T23:28:08Z",
   "api_calls_last_run": 9
 }
