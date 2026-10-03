@@ -15614,8 +15614,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228171": {
       "event_id": "13228171",
@@ -15632,7 +15633,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12387398": {
       "event_id": "12387398",
@@ -15649,7 +15651,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12148370": {
       "event_id": "12148370",
@@ -15820,8 +15823,42 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "12166176": {
+      "event_id": "12166176",
+      "bet365_id": "202168756",
+      "kickoff": 1791048600,
+      "candidate_at": 1791051675,
+      "country": "nl",
+      "league": "Netherlands Derde Divisie",
+      "home": "VV Dongen",
+      "away": "SV Poortugaal",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13233167": {
+      "event_id": "13233167",
+      "bet365_id": "202145555",
+      "kickoff": 1791048600,
+      "candidate_at": 1791051739,
+      "country": "es",
+      "league": "Spain Segunda Federacion Women",
+      "home": "CD Guiniguada Apolinario (W)",
+      "away": "EMF Fuensalida (W)",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T18:20:22Z",
+  "updated_at": "2026-10-03T18:30:19Z",
   "api_calls_last_run": 9
 }
