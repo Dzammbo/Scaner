@@ -2,13 +2,6 @@ name: Stateful goal Mining
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
-  push:
-    branches: [main]
-    paths:
-      - "stateful_goal_mining.py"
-      - ".github/workflows/stateful-goal-mining.yml"
 
 permissions:
   contents: write
