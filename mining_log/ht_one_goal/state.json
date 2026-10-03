@@ -7474,8 +7474,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12177627": {
       "event_id": "12177627",
@@ -7511,8 +7512,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13227331": {
       "event_id": "13227331",
@@ -8280,8 +8282,129 @@
       "status": "MISSED_BEFORE_QUOTE",
       "last_error": "HTTPError",
       "miss_reason": "SCORE_CHANGED"
+    },
+    "11444732": {
+      "event_id": "11444732",
+      "bet365_id": "202116235",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan L1 League Women",
+      "home": "Loveledge Nagoya (W)",
+      "away": "Nittaidai FC (W)",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13232828": {
+      "event_id": "13232828",
+      "bet365_id": "202116266",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan L2 League Women",
+      "home": "Speranza Takatsuki (W)",
+      "away": "Diavorosso Hiroshima (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12186942": {
+      "event_id": "12186942",
+      "bet365_id": "202112804",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan Football League",
+      "home": "Vonds Ichihara",
+      "away": "Grulla Morioka FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13235722": {
+      "event_id": "13235722",
+      "bet365_id": "202248051",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "",
+      "league": "International Match",
+      "home": "Fiji",
+      "away": "Vanuatu",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232827": {
+      "event_id": "13232827",
+      "bet365_id": "202116237",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan L2 League Women",
+      "home": "Diosa Izumo (W)",
+      "away": "Renofa Yamaguchi (W)",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232826": {
+      "event_id": "13232826",
+      "bet365_id": "202116232",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan L2 League Women",
+      "home": "SEISA OSA Rheia FC (W)",
+      "away": "Nankatsu SC (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12187037": {
+      "event_id": "12187037",
+      "bet365_id": "202112806",
+      "kickoff": 1791000000,
+      "candidate_at": 1791003131,
+      "country": "jp",
+      "league": "Japan Football League",
+      "home": "Yokogawa Musashino FC",
+      "away": "Azul Claro Numazu",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T04:42:51Z",
-  "api_calls_last_run": 2
+  "updated_at": "2026-10-03T04:56:05Z",
+  "api_calls_last_run": 4
 }
