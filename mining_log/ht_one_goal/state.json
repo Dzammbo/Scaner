@@ -8595,8 +8595,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13230615": {
       "event_id": "13230615",
@@ -8613,8 +8614,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12049999": {
       "event_id": "12049999",
@@ -8650,8 +8652,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12182526": {
       "event_id": "12182526",
@@ -8668,8 +8671,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233107": {
       "event_id": "13233107",
@@ -8705,8 +8709,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13236890": {
       "event_id": "13236890",
@@ -8759,7 +8764,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12050003": {
       "event_id": "12050003",
@@ -8776,7 +8782,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13225894": {
       "event_id": "13225894",
@@ -8793,7 +8800,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12050646": {
       "event_id": "12050646",
@@ -8810,7 +8818,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233035": {
       "event_id": "13233035",
@@ -8827,7 +8836,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232243": {
       "event_id": "13232243",
@@ -8844,7 +8854,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12187366": {
       "event_id": "12187366",
@@ -9032,8 +9043,144 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13232673": {
+      "event_id": "13232673",
+      "bet365_id": "202080175",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "th",
+      "league": "Thailand Division 3",
+      "home": "Udon Banjan United",
+      "away": "Korat City FC",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12479507": {
+      "event_id": "12479507",
+      "bet365_id": "202141088",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "id",
+      "league": "Indonesia Championship",
+      "home": "Persiku Kudus",
+      "away": "PSGC Ciamis",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13232672": {
+      "event_id": "13232672",
+      "bet365_id": "202080168",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "th",
+      "league": "Thailand Division 3",
+      "home": "Royal Thai Army",
+      "away": "Raj Pracha",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13231173": {
+      "event_id": "13231173",
+      "bet365_id": "202190605",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "cz",
+      "league": "Czechia 5. Liga",
+      "home": "FC Zlicin",
+      "away": "Prague Raptors",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13228400": {
+      "event_id": "13228400",
+      "bet365_id": "202200191",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Slavia Sofia",
+      "away": "Botev Vratsa",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12183190": {
+      "event_id": "12183190",
+      "bet365_id": "202143197",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019238,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "FK Prepere",
+      "away": "TJ Svitavy",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232680": {
+      "event_id": "13232680",
+      "bet365_id": "202163368",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019306,
+      "country": "th",
+      "league": "Thailand Division 3",
+      "home": "Esan Fighter FC",
+      "away": "Surin City FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232670": {
+      "event_id": "13232670",
+      "bet365_id": "202080150",
+      "kickoff": 1791016200,
+      "candidate_at": 1791019381,
+      "country": "th",
+      "league": "Thailand Division 3",
+      "home": "Prime Bangkok",
+      "away": "Lopburi City FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T09:07:36Z",
+  "updated_at": "2026-10-03T09:25:07Z",
   "api_calls_last_run": 9
 }
