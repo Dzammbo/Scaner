@@ -9826,8 +9826,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13204906": {
       "event_id": "13204906",
@@ -9844,8 +9845,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11425285": {
       "event_id": "11425285",
@@ -9898,8 +9900,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13229218": {
       "event_id": "13229218",
@@ -13432,8 +13435,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13137837": {
       "event_id": "13137837",
@@ -13577,8 +13581,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232883": {
       "event_id": "13232883",
@@ -13595,7 +13600,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12244995": {
       "event_id": "12244995",
@@ -13612,7 +13618,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233046": {
       "event_id": "13233046",
@@ -13629,7 +13636,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12408926": {
       "event_id": "12408926",
@@ -13646,7 +13654,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12406265": {
       "event_id": "12406265",
@@ -13663,7 +13672,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12393370": {
       "event_id": "12393370",
@@ -13680,7 +13690,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12392134": {
       "event_id": "12392134",
@@ -13697,7 +13708,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12370791": {
       "event_id": "12370791",
@@ -14072,8 +14084,195 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13230253": {
+      "event_id": "13230253",
+      "bet365_id": "202161359",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "bf",
+      "league": "Burkina Faso League",
+      "home": "Rahimo FC",
+      "away": "AS Douanes Ouagadougou",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12337484": {
+      "event_id": "12337484",
+      "bet365_id": "200871218",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "it",
+      "league": "Italy Serie C Group B",
+      "home": "Livorno",
+      "away": "Pescara",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12333137": {
+      "event_id": "12333137",
+      "bet365_id": "200871314",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "it",
+      "league": "Italy Serie C Group C",
+      "home": "Monopoli",
+      "away": "AC Savoia 1908",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13225895": {
+      "event_id": "13225895",
+      "bet365_id": "202168954",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "",
+      "league": "U20 International",
+      "home": "England U20",
+      "away": "Germany U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12246824": {
+      "event_id": "12246824",
+      "bet365_id": "202164149",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "es",
+      "league": "Spain Youth League",
+      "home": "UD Montecarlo U19",
+      "away": "Osasuna U19",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11151502": {
+      "event_id": "11151502",
+      "bet365_id": "202097285",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044429,
+      "country": "ie",
+      "league": "Republic of Ireland National League Women",
+      "home": "Athlone Town (W)",
+      "away": "Galway (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12331119": {
+      "event_id": "12331119",
+      "bet365_id": "200871125",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044497,
+      "country": "it",
+      "league": "Italy Serie C Group A",
+      "home": "ASD Union Arzignanochiampo",
+      "away": "US Pergolettese",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12337487": {
+      "event_id": "12337487",
+      "bet365_id": "200871216",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044559,
+      "country": "it",
+      "league": "Italy Serie C Group B",
+      "home": "Grosseto",
+      "away": "Sambenedettese",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13230254": {
+      "event_id": "13230254",
+      "bet365_id": "202161377",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044686,
+      "country": "bf",
+      "league": "Burkina Faso League",
+      "home": "ASFA-Yennenga",
+      "away": "ASF Bolo Dioulasso",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13230252": {
+      "event_id": "13230252",
+      "bet365_id": "202161356",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044686,
+      "country": "bf",
+      "league": "Burkina Faso League",
+      "home": "Majestic FC",
+      "away": "Vitesse FC",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13131607": {
+      "event_id": "13131607",
+      "bet365_id": "202084875",
+      "kickoff": 1791041400,
+      "candidate_at": 1791044755,
+      "country": "cl",
+      "league": "Chile Primera B",
+      "home": "Magallanes",
+      "away": "Curico Unido",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T16:17:46Z",
+  "updated_at": "2026-10-03T16:27:08Z",
   "api_calls_last_run": 9
 }
