@@ -9093,8 +9093,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12479507": {
       "event_id": "12479507",
@@ -10081,8 +10082,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179436": {
       "event_id": "13179436",
@@ -10099,8 +10101,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179438": {
       "event_id": "13179438",
@@ -10190,8 +10193,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179767": {
       "event_id": "13179767",
@@ -10226,7 +10230,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13186706": {
       "event_id": "13186706",
@@ -10243,7 +10249,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13181825": {
       "event_id": "13181825",
@@ -10260,7 +10267,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13181613": {
       "event_id": "13181613",
@@ -10277,7 +10285,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13181597": {
       "event_id": "13181597",
@@ -10294,7 +10303,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179771": {
       "event_id": "13179771",
@@ -10311,7 +10321,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13180799": {
       "event_id": "13180799",
@@ -10328,7 +10339,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13181209": {
       "event_id": "13181209",
@@ -10345,7 +10357,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13180864": {
       "event_id": "13180864",
@@ -10362,7 +10375,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11151461": {
       "event_id": "11151461",
@@ -13049,8 +13063,195 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "12138096": {
+      "event_id": "12138096",
+      "bet365_id": "201924916",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040591,
+      "country": "es",
+      "league": "Spain Segunda Division RFEF Group 1",
+      "home": "Rayo Cantabria",
+      "away": "Eibar B",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12246872": {
+      "event_id": "12246872",
+      "bet365_id": "202164146",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040718,
+      "country": "es",
+      "league": "Spain Youth League",
+      "home": "Huesca U19",
+      "away": "Real Zaragoza U19",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12143986": {
+      "event_id": "12143986",
+      "bet365_id": "202169237",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040718,
+      "country": "ch",
+      "league": "Switzerland 1.Liga Classic",
+      "home": "FC Mendrisio",
+      "away": "FC Tuggen",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12031952": {
+      "event_id": "12031952",
+      "bet365_id": "201316761",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040852,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "Top Oss",
+      "away": "Maastricht",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12158061": {
+      "event_id": "12158061",
+      "bet365_id": "202028588",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040852,
+      "country": "es",
+      "league": "Spain Primera Division RFEF Group 1",
+      "home": "Racing Ferrol",
+      "away": "Pontevedra",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12418370": {
+      "event_id": "12418370",
+      "bet365_id": "202197814",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040852,
+      "country": "it",
+      "league": "Italy Serie D",
+      "home": "ASD Lavarian Mortean Esperia",
+      "away": "Cjarlins Muzane",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12248239": {
+      "event_id": "12248239",
+      "bet365_id": "202143428",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040852,
+      "country": "es",
+      "league": "Spain Youth League",
+      "home": "UD Logrones U19",
+      "away": "Real Sociedad U19",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12247890": {
+      "event_id": "12247890",
+      "bet365_id": "202143403",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040852,
+      "country": "es",
+      "league": "Spain Youth League",
+      "home": "Deportivo La Coruna U19",
+      "away": "Real Aviles CF U19",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12414728": {
+      "event_id": "12414728",
+      "bet365_id": "202093887",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040919,
+      "country": "es",
+      "league": "Spain Tercera Group 1",
+      "home": "Alondras",
+      "away": "Montaneros",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12390815": {
+      "event_id": "12390815",
+      "bet365_id": "202168879",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040919,
+      "country": "es",
+      "league": "Spain Tercera Group 5",
+      "home": "UE Tona",
+      "away": "Badalona",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13233141": {
+      "event_id": "13233141",
+      "bet365_id": "202188670",
+      "kickoff": 1791037800,
+      "candidate_at": 1791040919,
+      "country": "it",
+      "league": "Italy Eccellenza",
+      "home": "USD Usinese",
+      "away": "Atletico Uri",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T15:13:19Z",
+  "updated_at": "2026-10-03T15:23:17Z",
   "api_calls_last_run": 9
 }
