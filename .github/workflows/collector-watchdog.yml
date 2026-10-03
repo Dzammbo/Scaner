@@ -32,7 +32,6 @@ concurrency:
 
 jobs:
   ensure-workers:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
@@ -99,19 +98,26 @@ jobs:
               gh run cancel "$run_id" || true
             done
 
-            stale="$(python3 - "$status_path" <<'PY'
+            if [ -n "$active" ] && [ -f "$status_path" ]; then
+              stale="$(python3 - "$status_path" <<'PY'
           import json,sys
           from datetime import datetime,timezone
           try:
               row=json.load(open(sys.argv[1],encoding="utf-8"))
               ts=datetime.fromisoformat(str(row["updated_at"]).replace("Z","+00:00"))
-              print("1" if (datetime.now(timezone.utc)-ts).total_seconds()>3600 else "0")
+              print("1" if (datetime.now(timezone.utc)-ts).total_seconds()>5400 else "0")
           except Exception:
-              print("1")
+              print("0")
           PY
           )"
+              if [ "$stale" = "1" ]; then
+                gh run cancel "$active" || true
+                sleep 5
+                active=""
+              fi
+            fi
 
-            if [ "$stale" = "1" ] && [ -z "$active" ]; then
+            if [ -z "$active" ]; then
               gh workflow run "$workflow" --ref main
             fi
           }

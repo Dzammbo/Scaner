@@ -13,24 +13,36 @@ concurrency:
 jobs:
   settle:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 350
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
       SCANNER_SETTLEMENT_QUERY_BUDGET: "100"
       SCANNER_SETTLEMENT_BOOTSTRAP_QUERY_BUDGET: "300"
       SCANNER_SETTLEMENT_RETRY_SECONDS: "7200"
+      SCANNER_SETTLEMENT_WORKER_DURATION_SECONDS: "19200"
+      SCANNER_SETTLEMENT_INTERVAL_SECONDS: "3600"
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
-      - name: Refresh persistent settlement cache
-        run: python3 scanner_settlement.py
-      - name: Recalculate all Scanner statistics
-        run: python3 current_status.py
-      - name: Validate settlement output
+      - name: Keep settlement cache and statistics current
+        shell: bash
         run: |
-          python3 - <<'PY'
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          started="$(date +%s)"
+          deadline="$((started + SCANNER_SETTLEMENT_WORKER_DURATION_SECONDS))"
+
+          while [ "$(date +%s)" -lt "$deadline" ]; do
+            git pull --rebase origin main
+            python3 scanner_settlement.py
+            python3 current_status.py
+
+            python3 - <<'PY'
           import json
           from pathlib import Path
 
@@ -48,29 +60,39 @@ jobs:
           provider = json.loads(Path(required[1]).read_text())
           current = json.loads(Path(required[2]).read_text())
           assert provider["provider_queries"] <= provider["query_budget"]
+          assert provider["due_events_remaining"] == 0
           assert current["merged"] == current["settled"] + current["void"] + current["pending"]
           assert {"S26", "S30"}.issubset(current["strategies"])
           PY
-      - name: Persist cache and statistics
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json
-          if git diff --cached --quiet; then
-            echo "No settlement changes"
-            exit 0
-          fi
-          git commit -m "Refresh Scanner settlement cache"
-          for attempt in 1 2 3 4 5; do
-            git pull --rebase origin main
-            if git push origin HEAD:main; then
-              exit 0
+
+            git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Refresh Scanner settlement cache"
+              pushed="0"
+              for attempt in 1 2 3 4 5; do
+                if git push origin HEAD:main; then
+                  pushed="1"
+                  break
+                fi
+                git pull --rebase origin main
+                sleep $((attempt * 2))
+              done
+              test "$pushed" = "1"
             fi
-            sleep $((attempt * 2))
+
+            now="$(date +%s)"
+            remaining="$((deadline - now))"
+            if [ "$remaining" -le 0 ]; then
+              break
+            fi
+            sleep_for="$SCANNER_SETTLEMENT_INTERVAL_SECONDS"
+            if [ "$remaining" -lt "$sleep_for" ]; then
+              sleep_for="$remaining"
+            fi
+            sleep "$sleep_for"
           done
-          exit 1
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: scanner-settlement
           path: |
