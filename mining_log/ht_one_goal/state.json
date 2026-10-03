@@ -8910,8 +8910,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12183198": {
       "event_id": "12183198",
@@ -9037,8 +9038,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13231172": {
       "event_id": "13231172",
@@ -10023,8 +10025,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232623": {
       "event_id": "13232623",
@@ -10041,8 +10044,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179437": {
       "event_id": "13179437",
@@ -10113,8 +10117,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13180862": {
       "event_id": "13180862",
@@ -10167,7 +10172,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13179447": {
       "event_id": "13179447",
@@ -10184,7 +10190,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13179767": {
       "event_id": "13179767",
@@ -10201,7 +10208,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13181651": {
       "event_id": "13181651",
@@ -12973,8 +12981,76 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13181208": {
+      "event_id": "13181208",
+      "bet365_id": "202129041",
+      "kickoff": 1791036000,
+      "candidate_at": 1791039840,
+      "country": "gb",
+      "league": "England FA Cup Qualification",
+      "home": "Worksop",
+      "away": "FC United of Manchester",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13181822": {
+      "event_id": "13181822",
+      "bet365_id": "202128815",
+      "kickoff": 1791036000,
+      "candidate_at": 1791039840,
+      "country": "gb",
+      "league": "England FA Cup Qualification",
+      "home": "AFC Rushden & Diamonds",
+      "away": "Braintree Town",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12139031": {
+      "event_id": "12139031",
+      "bet365_id": "201927252",
+      "kickoff": 1791036900,
+      "candidate_at": 1791039840,
+      "country": "es",
+      "league": "Spain Segunda Division RFEF Group 3",
+      "home": "Elche Ilicitano",
+      "away": "UCAM Murcia CF",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12130557": {
+      "event_id": "12130557",
+      "bet365_id": "201317392",
+      "kickoff": 1791036900,
+      "candidate_at": 1791039840,
+      "country": "es",
+      "league": "Spain Segunda",
+      "home": "Almeria",
+      "away": "Burgos",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T14:55:58Z",
+  "updated_at": "2026-10-03T15:13:19Z",
   "api_calls_last_run": 9
 }
