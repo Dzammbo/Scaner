@@ -2,17 +2,10 @@ name: Public Mining continuous worker
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scaner_mining_worker.py'
-      - '.github/workflows/scaner-mining-continuous.yml'
-  schedule:
-    - cron: '29 * * * *'
 
 permissions:
   contents: write
-  actions: write
+  actions: read
 
 concurrency:
   group: scaner-mining-continuous
@@ -47,12 +40,6 @@ jobs:
       - name: Run public Mining worker
         id: worker
         run: python3 scaner_mining_worker.py
-
-      - name: Queue successor
-        if: always() && steps.worker.outcome != 'skipped'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run scaner-mining-continuous.yml -R Dzammbo/Scaner --ref main
 
       - name: Show status
         if: always() && steps.worker.outcome != 'skipped'
