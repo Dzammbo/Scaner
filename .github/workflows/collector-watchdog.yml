@@ -1,8 +1,12 @@
 name: Collector watchdog
-# Transition trigger after legacy S30 worker completed.
+# Keeps exactly one worker per collector and starts the next Mining run only
+# after the previous Mining workflow has completed successfully.
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Public Mining continuous worker"]
+    types: [completed]
   schedule:
     - cron: "23 * * * *"
   push:
@@ -76,3 +80,7 @@ jobs:
 
           ensure_worker "scaner-hot-path.yml" "forward_log/scanner_worker_status.json"
           ensure_worker "s30-hot-path.yml" "forward_log/s30/worker_status.json"
+
+          if [ "${{ github.event_name }}" != "workflow_run" ] || [ "${{ github.event.workflow_run.conclusion }}" = "success" ]; then
+            ensure_worker "scaner-mining-continuous.yml" "mining_log/public_worker_status.json"
+          fi
