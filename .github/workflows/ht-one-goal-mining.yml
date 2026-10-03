@@ -2,13 +2,6 @@ name: HT one-goal Mining
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
-  push:
-    branches: [main]
-    paths:
-      - "ht_one_goal_mining.py"
-      - ".github/workflows/ht-one-goal-mining.yml"
 
 permissions:
   contents: write
