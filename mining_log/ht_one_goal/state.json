@@ -15888,8 +15888,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13125107": {
       "event_id": "13125107",
@@ -15996,7 +15997,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11178761": {
       "event_id": "11178761",
@@ -16813,8 +16815,42 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13233382": {
+      "event_id": "13233382",
+      "bet365_id": "202186251",
+      "kickoff": 1791051122,
+      "candidate_at": 1791054098,
+      "country": "br",
+      "league": "Brazil Campeonato Capixaba Women",
+      "home": "FC Estadual (W)",
+      "away": "Harpia (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12398378": {
+      "event_id": "12398378",
+      "bet365_id": "202143948",
+      "kickoff": 1791050400,
+      "candidate_at": 1791054239,
+      "country": "",
+      "league": "International Match",
+      "home": "Canada",
+      "away": "Peru",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T19:00:44Z",
+  "updated_at": "2026-10-03T19:10:39Z",
   "api_calls_last_run": 9
 }
