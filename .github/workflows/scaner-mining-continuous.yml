@@ -1,0 +1,59 @@
+name: Public Mining continuous worker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scaner_mining_worker.py'
+      - '.github/workflows/scaner-mining-continuous.yml'
+  schedule:
+    - cron: '29 * * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: scaner-mining-continuous
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      PUBLIC_MINING_DURATION_SECONDS: '19200'
+      PUBLIC_MINING_CHECKPOINT_SECONDS: '600'
+      PUBLIC_MINING_GIT_CHECKPOINT: '1'
+      PUBLIC_MINING_MAX_FAILURES: '3'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Validate public Mining worker
+        run: |
+          test -n "$BETSAPI_KEY"
+          python3 -m py_compile scaner_mining_worker.py scanner.py ht_one_goal_mining.py stateful_goal_mining.py prematch_line_movement.py
+
+      - name: Configure Git identity
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Run public Mining worker
+        id: worker
+        run: python3 scaner_mining_worker.py
+
+      - name: Queue successor
+        if: always() && steps.worker.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scaner-mining-continuous.yml -R Dzammbo/Scaner --ref main
+
+      - name: Show status
+        if: always() && steps.worker.outcome != 'skipped'
+        run: cat mining_log/public_worker_status.json
