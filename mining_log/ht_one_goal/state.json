@@ -18368,8 +18368,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11187338": {
       "event_id": "11187338",
@@ -18386,7 +18387,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233801": {
       "event_id": "13233801",
@@ -18403,7 +18405,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233926": {
       "event_id": "13233926",
@@ -18455,8 +18458,59 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13036845": {
+      "event_id": "13036845",
+      "bet365_id": "202095612",
+      "kickoff": 1791066552,
+      "candidate_at": 1791069333,
+      "country": "mx",
+      "league": "Mexico Liga Premier A",
+      "home": "Artesanos Metepec FC",
+      "away": "Club Canoneros Marina",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12276161": {
+      "event_id": "12276161",
+      "bet365_id": "201659622",
+      "kickoff": 1791066588,
+      "candidate_at": 1791069478,
+      "country": "py",
+      "league": "Paraguay Division Profesional",
+      "home": "Deportivo Recoleta",
+      "away": "Libertad Asuncion",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13163515": {
+      "event_id": "13163515",
+      "bet365_id": "202094541",
+      "kickoff": 1791066600,
+      "candidate_at": 1791069478,
+      "country": "nz",
+      "league": "New Zealand Football Championship",
+      "home": "Eastern Suburbs Auckland",
+      "away": "Auckland City",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T23:07:49Z",
+  "updated_at": "2026-10-03T23:18:06Z",
   "api_calls_last_run": 9
 }
