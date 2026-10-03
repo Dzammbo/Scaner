@@ -8025,8 +8025,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13181693": {
       "event_id": "13181693",
@@ -8483,8 +8484,26 @@
       "leading_side": "AWAY",
       "status": "MISSED_BEFORE_QUOTE",
       "miss_reason": "SCORE_CHANGED"
+    },
+    "13236941": {
+      "event_id": "13236941",
+      "bet365_id": "202133815",
+      "kickoff": 1791009900,
+      "candidate_at": 1791013033,
+      "country": "in",
+      "league": "India Shillong 1st Division",
+      "home": "Mawkhar SC",
+      "away": "Mylliem Lum SC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T07:23:37Z",
-  "api_calls_last_run": 2
+  "updated_at": "2026-10-03T07:41:03Z",
+  "api_calls_last_run": 3
 }
