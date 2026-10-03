@@ -2,13 +2,6 @@ name: Prematch line movement Mining
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "7,37 * * * *"
-  push:
-    branches: [main]
-    paths:
-      - "prematch_line_movement.py"
-      - ".github/workflows/prematch-line-movement.yml"
 
 permissions:
   contents: write
