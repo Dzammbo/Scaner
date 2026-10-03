@@ -15635,8 +15635,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12281094": {
       "event_id": "12281094",
@@ -15709,8 +15710,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13216649": {
       "event_id": "13216649",
@@ -18520,8 +18522,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13055358": {
       "event_id": "13055358",
@@ -18538,7 +18541,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13055359": {
       "event_id": "13055359",
@@ -18555,7 +18559,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233922": {
       "event_id": "13233922",
@@ -18590,8 +18595,42 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "12332394": {
+      "event_id": "12332394",
+      "bet365_id": "202186822",
+      "kickoff": 1791068400,
+      "candidate_at": 1791071270,
+      "country": "cr",
+      "league": "Costa Rica Segunda",
+      "home": "AD Rosario",
+      "away": "Quepos Cambute FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13131712": {
+      "event_id": "13131712",
+      "bet365_id": "202084891",
+      "kickoff": 1791068400,
+      "candidate_at": 1791071328,
+      "country": "cl",
+      "league": "Chile Primera B",
+      "home": "Club Deportes Santa Cruz",
+      "away": "San Marcos De Arica",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T23:38:59Z",
+  "updated_at": "2026-10-03T23:48:49Z",
   "api_calls_last_run": 9
 }
