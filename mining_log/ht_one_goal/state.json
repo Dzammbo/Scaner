@@ -10064,8 +10064,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13191763": {
       "event_id": "13191763",
@@ -10393,7 +10394,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13191764": {
       "event_id": "13191764",
@@ -10410,7 +10412,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232939": {
       "event_id": "13232939",
@@ -13250,8 +13253,25 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "12158067": {
+      "event_id": "12158067",
+      "bet365_id": "202028587",
+      "kickoff": 1791037800,
+      "candidate_at": 1791041116,
+      "country": "es",
+      "league": "Spain Primera Division RFEF Group 1",
+      "home": "Barakaldo",
+      "away": "Arenas Club de Getxo",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T15:23:17Z",
+  "updated_at": "2026-10-03T15:25:31Z",
   "api_calls_last_run": 9
 }
