@@ -15579,8 +15579,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12386492": {
       "event_id": "12386492",
@@ -15742,7 +15743,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12166174": {
       "event_id": "12166174",
@@ -15759,7 +15761,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12147089": {
       "event_id": "12147089",
@@ -15776,7 +15779,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13231894": {
       "event_id": "13231894",
@@ -15793,7 +15797,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12089531": {
       "event_id": "12089531",
@@ -15810,7 +15815,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12089530": {
       "event_id": "12089530",
@@ -15827,7 +15833,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12166176": {
       "event_id": "12166176",
@@ -15844,7 +15851,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233167": {
       "event_id": "13233167",
@@ -15861,7 +15869,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233607": {
       "event_id": "13233607",
@@ -15896,8 +15905,569 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "12031956": {
+      "event_id": "12031956",
+      "bet365_id": "201316777",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053190,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "Almere City FC",
+      "away": "FC Volendam",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12031955": {
+      "event_id": "12031955",
+      "bet365_id": "201316789",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053190,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "FC Den Bosch",
+      "away": "FC Dordrecht",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13215271": {
+      "event_id": "13215271",
+      "bet365_id": "202142716",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053248,
+      "country": "br",
+      "league": "Brazil Campeonato Gaucho 2",
+      "home": "APAFUT",
+      "away": "Santa Cruz RS",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13177240": {
+      "event_id": "13177240",
+      "bet365_id": "202146249",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053248,
+      "country": "br",
+      "league": "Brazil Campeonato Alagoano U20",
+      "home": "CRB U20",
+      "away": "Inter Alagoano U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12165257": {
+      "event_id": "12165257",
+      "bet365_id": "202093601",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053248,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "Tubize",
+      "away": "RSC Habay",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11178761": {
+      "event_id": "11178761",
+      "bet365_id": "201923144",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "ar",
+      "league": "Argentina Primera B Metropolitana",
+      "home": "Defensores Unidos",
+      "away": "Argentino Quilmes",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13177306": {
+      "event_id": "13177306",
+      "bet365_id": "202146423",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "br",
+      "league": "Brazil Campeonato Mineiro U20",
+      "home": "Cruzeiro U20",
+      "away": "Athletic Club MG U20",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12147084": {
+      "event_id": "12147084",
+      "bet365_id": "202165418",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "KVV Thes Sport",
+      "away": "KVV Zelzate",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12031953": {
+      "event_id": "12031953",
+      "bet365_id": "201316798",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "RKC",
+      "away": "FC Emmen",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12147085": {
+      "event_id": "12147085",
+      "bet365_id": "202165436",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "RFC Mandel Utd",
+      "away": "Belisia Bilzen SV",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12147087": {
+      "event_id": "12147087",
+      "bet365_id": "202165434",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "Hoogstraten VV",
+      "away": "KVC Houtvenne",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12165262": {
+      "event_id": "12165262",
+      "bet365_id": "202142111",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "ROC Charleroi",
+      "away": "RFC Meux",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12165261": {
+      "event_id": "12165261",
+      "bet365_id": "202192410",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "Union Rochefortoise",
+      "away": "Standard Liege II",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12165970": {
+      "event_id": "12165970",
+      "bet365_id": "202093583",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053313,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "RAEC Mons",
+      "away": "FC Flenu",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12323503": {
+      "event_id": "12323503",
+      "bet365_id": "202146558",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca B",
+      "home": "Goytacaz",
+      "away": "Duque de Caxias FC",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13190014": {
+      "event_id": "13190014",
+      "bet365_id": "202142722",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "br",
+      "league": "Brazil Gaucho Women",
+      "home": "Gremio (W)",
+      "away": "Internacional (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13185894": {
+      "event_id": "13185894",
+      "bet365_id": "201865269",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "uy",
+      "league": "Uruguay Clausura",
+      "home": "Albion FC",
+      "away": "Defensor Sporting",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13156807": {
+      "event_id": "13156807",
+      "bet365_id": "201750102",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ma",
+      "league": "Morocco GNF 1",
+      "home": "Difaa El Jadida",
+      "away": "WAC Casablanca",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13155152": {
+      "event_id": "13155152",
+      "bet365_id": "202208452",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ma",
+      "league": "Morocco GNF 2",
+      "home": "Mouloudia Oujda",
+      "away": "Olympique Dcheira",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11494326": {
+      "event_id": "11494326",
+      "bet365_id": "201316941",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ar",
+      "league": "Argentina Nacional B",
+      "home": "Acassuso",
+      "away": "Club Ciudad de Bolivar",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11490466": {
+      "event_id": "11490466",
+      "bet365_id": "201317041",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ar",
+      "league": "Argentina Nacional B",
+      "home": "Tristan Suarez",
+      "away": "Quilmes",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11181154": {
+      "event_id": "11181154",
+      "bet365_id": "201923141",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ar",
+      "league": "Argentina Primera C Metropolitana",
+      "home": "Juventud Unida San Miguel",
+      "away": "Berazategui",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11178768": {
+      "event_id": "11178768",
+      "bet365_id": "201923148",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "ar",
+      "league": "Argentina Primera B Metropolitana",
+      "home": "Villa San Carlos",
+      "away": "Arsenal de Sarandi",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12147088": {
+      "event_id": "12147088",
+      "bet365_id": "202093585",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053381,
+      "country": "be",
+      "league": "Belgium First Amateur Division",
+      "home": "KSK Heist",
+      "away": "Cercle Brugge Reserves",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11178763": {
+      "event_id": "11178763",
+      "bet365_id": "201923161",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "ar",
+      "league": "Argentina Primera B Metropolitana",
+      "home": "CS Dock Sud",
+      "away": "Deportivo Armenio",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13031202": {
+      "event_id": "13031202",
+      "bet365_id": "202084878",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca B",
+      "home": "Artsul Futebol Clube",
+      "away": "Serrano",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13132104": {
+      "event_id": "13132104",
+      "bet365_id": "202084842",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "cl",
+      "league": "Chile Primera B",
+      "home": "Deportes Recoleta",
+      "away": "Santiago Wanderers",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13232948": {
+      "event_id": "13232948",
+      "bet365_id": "202186311",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "br",
+      "league": "Brazil Copa Sul U20",
+      "home": "Criciuma U20",
+      "away": "Chapecoense U20",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13133416": {
+      "event_id": "13133416",
+      "bet365_id": "202084887",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "cl",
+      "league": "Chile Primera B",
+      "home": "Deportes Copiapo",
+      "away": "Puerto Montt",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12181952": {
+      "event_id": "12181952",
+      "bet365_id": "202084844",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "br",
+      "league": "Brazil Campeonato Carioca U20",
+      "home": "Volta Redonda U20",
+      "away": "Portuguesa RJ U20",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12031954": {
+      "event_id": "12031954",
+      "bet365_id": "201316795",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "nl",
+      "league": "Netherlands Eerste Divisie",
+      "home": "FC Eindhoven",
+      "away": "De Graafschap",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11178770": {
+      "event_id": "11178770",
+      "bet365_id": "201923199",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "ar",
+      "league": "Argentina Primera B Metropolitana",
+      "home": "Real Pilar",
+      "away": "Villa Dalmine",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11178769": {
+      "event_id": "11178769",
+      "bet365_id": "201923168",
+      "kickoff": 1791050400,
+      "candidate_at": 1791053444,
+      "country": "ar",
+      "league": "Argentina Primera B Metropolitana",
+      "home": "Deportivo Liniers",
+      "away": "Excursionistas",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T18:39:59Z",
+  "updated_at": "2026-10-03T18:50:54Z",
   "api_calls_last_run": 9
 }
