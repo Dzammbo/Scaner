@@ -6448,8 +6448,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232773": {
       "event_id": "13232773",
@@ -6466,8 +6467,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13234342": {
       "event_id": "13234342",
@@ -7820,8 +7822,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315900": {
       "event_id": "12315900",
@@ -7874,8 +7877,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13218240": {
       "event_id": "13218240",
@@ -7910,8 +7914,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11283922": {
       "event_id": "11283922",
@@ -7928,8 +7933,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12385261": {
       "event_id": "12385261",
@@ -7948,8 +7954,44 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13125113": {
+      "event_id": "13125113",
+      "bet365_id": "201200351",
+      "kickoff": 1790987400,
+      "candidate_at": 1790990214,
+      "country": "ar",
+      "league": "Argentina Liga Profesional",
+      "home": "Boca Juniors",
+      "away": "Union Santa Fe",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13125106": {
+      "event_id": "13125106",
+      "bet365_id": "201200328",
+      "kickoff": 1790987400,
+      "candidate_at": 1790990284,
+      "country": "ar",
+      "league": "Argentina Liga Profesional",
+      "home": "Independiente Rivadavia",
+      "away": "Gimnasia LP",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T01:04:22Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-03T01:19:22Z",
+  "api_calls_last_run": 7
 }
