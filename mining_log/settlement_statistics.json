@@ -1,19 +1,19 @@
 {
-  "generated_at_utc": "2026-10-03T14:51:54Z",
+  "generated_at_utc": "2026-10-03T14:53:34Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-03T14:51:54Z",
+    "updated_at": "2026-10-03T14:53:34Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
-    "provider_queries": 10,
-    "queried_events": 92,
-    "cache_events": 953,
-    "signal_unique_events": 873,
-    "signal_final_events": 863,
-    "signal_pending_events": 10,
+    "provider_queries": 2,
+    "queried_events": 14,
+    "cache_events": 967,
+    "signal_unique_events": 887,
+    "signal_final_events": 867,
+    "signal_pending_events": 20,
     "states": {
-      "FINAL": 927,
-      "NOT_FINAL_1": 8,
+      "FINAL": 931,
+      "NOT_FINAL_1": 18,
       "NOT_FINAL_2": 8,
       "NOT_FINAL_4": 1,
       "NOT_FINAL_5": 1,
@@ -23,8 +23,8 @@
   },
   "journals": {
     "native": {
-      "rows": 822,
-      "events": 670
+      "rows": 839,
+      "events": 684
     },
     "stateful": {
       "rows": 1138,
@@ -174,28 +174,28 @@
         }
       },
       "S16": {
-        "signals": 250,
-        "pending": 1,
+        "signals": 262,
+        "pending": 9,
         "direct": {
-          "N": 249,
+          "N": 253,
           "W": 20,
-          "L": 229,
+          "L": 233,
           "PUSH": 0,
-          "profit": -141.15,
-          "ROI_pct": -56.69
+          "profit": -145.15,
+          "ROI_pct": -57.37
         },
         "opposite": {
-          "N": 249,
-          "W": 229,
+          "N": 253,
+          "W": 233,
           "L": 20,
           "PUSH": 0,
-          "profit": 11.635,
-          "ROI_pct": 4.67
+          "profit": 12.22,
+          "ROI_pct": 4.83
         }
       },
       "S17": {
-        "signals": 1,
-        "pending": 1,
+        "signals": 2,
+        "pending": 2,
         "direct": {
           "N": 0,
           "W": 0,
@@ -206,8 +206,8 @@
         }
       },
       "S21": {
-        "signals": 13,
-        "pending": 1,
+        "signals": 14,
+        "pending": 2,
         "direct": {
           "N": 12,
           "W": 10,
@@ -246,8 +246,8 @@
         }
       },
       "S25": {
-        "signals": 35,
-        "pending": 0,
+        "signals": 37,
+        "pending": 2,
         "direct": {
           "N": 35,
           "W": 26,
@@ -306,8 +306,8 @@
         }
       },
       "T17": {
-        "signals": 163,
-        "pending": 6,
+        "signals": 164,
+        "pending": 7,
         "direct": {
           "N": 157,
           "W": 82,
