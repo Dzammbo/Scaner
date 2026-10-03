@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-10-03T19:51:33.544116+00:00",
+  "updated_at": "2026-10-03T20:01:39.409653+00:00",
   "started_at": "2026-10-03T15:25:46.226304+00:00",
   "passes": {
-    "ht": 207,
-    "general": 52,
-    "goal": 43,
-    "prematch": 9
+    "ht": 213,
+    "general": 54,
+    "goal": 45,
+    "prematch": 10
   },
   "failures": {
-    "ht": 32,
+    "ht": 34,
     "general": 0,
     "goal": 9,
     "prematch": 0
   },
-  "calls_last_hour": 1010,
+  "calls_last_hour": 992,
   "hourly_cap": 2300,
   "last_error": "ht: HT one-goal exited 1: pener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 521, in open\n    response = meth(req, response)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 630, in http_response\n    response = self.parent.error(\n               ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 559, in error\n    return self._call_chain(*args)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 639, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 502: Bad Gateway\n",
   "last_checkpoint": {
