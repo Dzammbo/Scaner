@@ -6209,7 +6209,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "13225287": {
       "event_id": "13225287",
@@ -6226,7 +6227,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "12152768": {
       "event_id": "12152768",
@@ -6243,7 +6245,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "13226940": {
       "event_id": "13226940",
@@ -7740,8 +7743,26 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13227612": {
+      "event_id": "13227612",
+      "bet365_id": "202116219",
+      "kickoff": 1790982612,
+      "candidate_at": 1790985792,
+      "country": "ca",
+      "league": "Canada Northern Super League Women",
+      "home": "Montreal Roses FC (W)",
+      "away": "Ottawa Rapid FC (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-02T23:57:49Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-03T00:07:16Z",
+  "api_calls_last_run": 7
 }
