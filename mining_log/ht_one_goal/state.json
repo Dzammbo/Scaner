@@ -8595,7 +8595,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13230615": {
       "event_id": "13230615",
@@ -8612,7 +8613,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12049999": {
       "event_id": "12049999",
@@ -8629,7 +8631,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233034": {
       "event_id": "13233034",
@@ -8646,7 +8650,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12182526": {
       "event_id": "12182526",
@@ -8663,7 +8668,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233107": {
       "event_id": "13233107",
@@ -8680,7 +8686,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233108": {
       "event_id": "13233108",
@@ -8697,7 +8705,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13236890": {
       "event_id": "13236890",
@@ -8714,7 +8723,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12050655": {
       "event_id": "12050655",
@@ -8731,7 +8741,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12050648": {
       "event_id": "12050648",
@@ -8834,8 +8845,195 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "12187366": {
+      "event_id": "12187366",
+      "bet365_id": "202082587",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018175,
+      "country": "cz",
+      "league": "Czechia 3. Liga",
+      "home": "Sigma Olomouc B",
+      "away": "MFK Vitkovice",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12183205": {
+      "event_id": "12183205",
+      "bet365_id": "202143183",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018175,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "Slavoj Cesky Krumlov",
+      "away": "FC Rokycany",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12183198": {
+      "event_id": "12183198",
+      "bet365_id": "202143189",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018175,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "FK Brandys nad Labem",
+      "away": "Slavoj Vysehrad",
+      "halftime_score": [
+        4,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12136333": {
+      "event_id": "12136333",
+      "bet365_id": "202082496",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018175,
+      "country": "cz",
+      "league": "Czechia 3. Liga",
+      "home": "Motorlet Praha",
+      "away": "FK Loko Praha",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13235821": {
+      "event_id": "13235821",
+      "bet365_id": "202254399",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018175,
+      "country": "cz",
+      "league": "Czechia 5. Liga",
+      "home": "TJ Sokol Srbice",
+      "away": "Slavoj Zatec",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12182488": {
+      "event_id": "12182488",
+      "bet365_id": "202141743",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018240,
+      "country": "cz",
+      "league": "Czechia Youth League",
+      "home": "Dukla Praha U19",
+      "away": "FK Pardubice U19",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12187802": {
+      "event_id": "12187802",
+      "bet365_id": "202143193",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018306,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "FC Kurim",
+      "away": "Velke Mezirici",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12187811": {
+      "event_id": "12187811",
+      "bet365_id": "202143195",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018377,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "FC Vratimov",
+      "away": "Bridlicna",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12183197": {
+      "event_id": "12183197",
+      "bet365_id": "202165450",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018377,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "SK Ujezd Praha 4",
+      "away": "Slovan Velvary",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13231172": {
+      "event_id": "13231172",
+      "bet365_id": "202190599",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018443,
+      "country": "cz",
+      "league": "Czechia 5. Liga",
+      "home": "Luhacovice",
+      "away": "Tj Stitna Nad Vlari",
+      "halftime_score": [
+        4,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12183204": {
+      "event_id": "12183204",
+      "bet365_id": "202183187",
+      "kickoff": 1791015300,
+      "candidate_at": 1791018443,
+      "country": "cz",
+      "league": "Czechia 4. Liga",
+      "home": "SK Petrin Plzen",
+      "away": "Spartak Pribram",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T08:55:47Z",
-  "api_calls_last_run": 4
+  "updated_at": "2026-10-03T09:07:36Z",
+  "api_calls_last_run": 9
 }
