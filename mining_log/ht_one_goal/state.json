@@ -17235,8 +17235,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12150088": {
       "event_id": "12150088",
@@ -17451,7 +17452,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13234964": {
       "event_id": "13234964",
@@ -17468,7 +17470,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13218818": {
       "event_id": "13218818",
@@ -17485,7 +17488,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13211213": {
       "event_id": "13211213",
@@ -17502,7 +17506,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13181152": {
       "event_id": "13181152",
@@ -17522,6 +17527,6 @@
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T20:30:23Z",
+  "updated_at": "2026-10-03T20:41:21Z",
   "api_calls_last_run": 9
 }
