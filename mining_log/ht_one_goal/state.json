@@ -8063,8 +8063,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12222293": {
       "event_id": "12222293",
@@ -8081,8 +8082,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12321866": {
       "event_id": "12321866",
@@ -8445,8 +8447,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13222898": {
       "event_id": "13222898",
@@ -8502,8 +8505,78 @@
       "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "12050002": {
+      "event_id": "12050002",
+      "bet365_id": "201317231",
+      "kickoff": 1791010800,
+      "candidate_at": 1791013863,
+      "country": "jp",
+      "league": "Japan J2-League",
+      "home": "Ventforet Kofu",
+      "away": "Kataller Toyama",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12167797": {
+      "event_id": "12167797",
+      "bet365_id": "202130348",
+      "kickoff": 1791010800,
+      "candidate_at": 1791013863,
+      "country": "jp",
+      "league": "Japan J-League Cup",
+      "home": "Machida Zelvia",
+      "away": "Kyoto Sanga FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13232493": {
+      "event_id": "13232493",
+      "bet365_id": "202135080",
+      "kickoff": 1791010800,
+      "candidate_at": 1791013863,
+      "country": "kr",
+      "league": "South Korea K4 League",
+      "home": "Jinju Citizen FC",
+      "away": "Geoje Citizen FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13232679": {
+      "event_id": "13232679",
+      "bet365_id": "202154033",
+      "kickoff": 1791010800,
+      "candidate_at": 1791014035,
+      "country": "za",
+      "league": "South Africa League Women",
+      "home": "UWC (W)",
+      "away": "University of Pretoria (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T07:41:03Z",
-  "api_calls_last_run": 3
+  "updated_at": "2026-10-03T07:54:52Z",
+  "api_calls_last_run": 4
 }
