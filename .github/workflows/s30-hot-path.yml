@@ -41,9 +41,3 @@ jobs:
         run: |
           test -f forward_log/s30/worker_status.json
           cat forward_log/s30/worker_status.json
-
-      - name: Start successor
-        if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run s30-hot-path.yml --ref main

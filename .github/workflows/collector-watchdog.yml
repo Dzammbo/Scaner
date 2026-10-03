@@ -5,7 +5,10 @@ name: Collector watchdog
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Public Mining continuous worker"]
+    workflows:
+      - "Scanner continuous worker"
+      - "S30 continuous worker"
+      - "Public Mining continuous worker"
     types: [completed]
   schedule:
     - cron: "23 * * * *"
@@ -24,6 +27,7 @@ concurrency:
 
 jobs:
   ensure-workers:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
@@ -80,7 +84,4 @@ jobs:
 
           ensure_worker "scaner-hot-path.yml" "forward_log/scanner_worker_status.json"
           ensure_worker "s30-hot-path.yml" "forward_log/s30/worker_status.json"
-
-          if [ "${{ github.event_name }}" != "workflow_run" ] || [ "${{ github.event.workflow_run.conclusion }}" = "success" ]; then
-            ensure_worker "scaner-mining-continuous.yml" "mining_log/public_worker_status.json"
-          fi
+          ensure_worker "scaner-mining-continuous.yml" "mining_log/public_worker_status.json"

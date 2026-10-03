@@ -42,9 +42,3 @@ jobs:
         run: |
           test -f forward_log/scanner_worker_status.json
           cat forward_log/scanner_worker_status.json
-
-      - name: Start successor
-        if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run scaner-hot-path.yml --ref main
