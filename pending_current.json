@@ -746,10 +746,14 @@
     "reverse_odds": 2.2,
     "strategy_id": "T14",
     "strategy_ids": [
-      "T14"
+      "T14",
+      "T18",
+      "T16"
     ],
     "strategy_names": [
-      "Зеркало плотного сета - за проигравшего предыдущего сета"
+      "Зеркало плотного сета - за проигравшего предыдущего сета",
+      "Победитель предыдущего разгромного сета",
+      "Решающий сет - за победителя второго сета"
     ],
     "tier": "WATCHLIST",
     "settlement_reason": "INPLAY"
@@ -775,6 +779,201 @@
       "Рыночный основной тотал больше при счёте 1:1"
     ],
     "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T06:57:27Z",
+    "sport": "football",
+    "tournament": "Japan J2-League",
+    "event_id": "12050000",
+    "match": "Fujieda MYFC - Shonan Bellmare",
+    "minute_score": "96' / '1-0'",
+    "minute": 96,
+    "score": "1-0",
+    "exact_bet_line": "ТБ 1.5",
+    "current_odds": 5.9,
+    "reverse_bet": "ТМ 1.5",
+    "reverse_odds": 1.13,
+    "strategy_id": "S26",
+    "strategy_ids": [
+      "S26"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 матча"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 68.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:32:17Z",
+    "sport": "football",
+    "tournament": "Japan J2-League",
+    "event_id": "12050002",
+    "match": "Ventforet Kofu - Kataller Toyama",
+    "minute_score": "29' / '0-0'",
+    "minute": 29,
+    "score": "0-0",
+    "exact_bet_line": "ТБ 0.5",
+    "current_odds": 2.15,
+    "reverse_bet": "ТМ 0.5",
+    "reverse_odds": 1.675,
+    "strategy_id": "S27",
+    "strategy_ids": [
+      "S27"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 первого тайма"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 48.0,
+    "period": "FH",
+    "source": "stateful_goal_mining",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:32:36.821727+00:00",
+    "sport": "tennis",
+    "tournament": "W15 Maanshan",
+    "event_id": "13235373",
+    "match": "Xi Luo - Zijun Jiang",
+    "minute_score": "6-1,1-6,0-0",
+    "minute": null,
+    "score": "6-1,1-6,0-0",
+    "exact_bet_line": "Zijun Jiang",
+    "current_odds": 2.2,
+    "reverse_bet": "Xi Luo",
+    "reverse_odds": 1.615,
+    "strategy_id": "T16",
+    "strategy_ids": [
+      "T16"
+    ],
+    "strategy_names": [
+      "Решающий сет - за победителя второго сета"
+    ],
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:44:18.656449+00:00",
+    "sport": "football",
+    "tournament": "Asian Games",
+    "event_id": "13222898",
+    "match": "China U23 - Uzbekistan U23",
+    "minute_score": "85' / '2-1",
+    "minute": 85,
+    "score": "2-1",
+    "exact_bet_line": "ТМ 3.5",
+    "current_odds": 1.475,
+    "reverse_bet": "ТБ 3.5",
+    "reverse_odds": 2.6,
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:48:41Z",
+    "sport": "football",
+    "tournament": "Asian Games",
+    "event_id": "13222898",
+    "match": "China U23 - Uzbekistan U23",
+    "minute_score": "90' / '2-2'",
+    "minute": 90,
+    "score": "2-2",
+    "exact_bet_line": "ТБ 4.5",
+    "current_odds": 5.0,
+    "reverse_bet": "ТМ 4.5",
+    "reverse_odds": 1.17,
+    "strategy_id": "S26",
+    "strategy_ids": [
+      "S26"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 матча"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 46.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:51:59.803053+00:00",
+    "sport": "tennis",
+    "tournament": "WTA Beijing",
+    "event_id": "13227589",
+    "match": "Katerina Siniakova - Elina Svitolina",
+    "minute_score": "6-1,4-6,0-1",
+    "minute": null,
+    "score": "6-1,4-6,0-1",
+    "exact_bet_line": "Elina Svitolina",
+    "current_odds": 1.333,
+    "reverse_bet": "Katerina Siniakova",
+    "reverse_odds": 3.4,
+    "strategy_id": "S11",
+    "strategy_ids": [
+      "S11",
+      "T16"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего плотного сета",
+      "Решающий сет - за победителя второго сета"
+    ],
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T07:51:59.803053+00:00",
+    "sport": "tennis",
+    "tournament": "WTA Beijing",
+    "event_id": "13227589",
+    "match": "Katerina Siniakova - Elina Svitolina",
+    "minute_score": "6-1,4-6,0-1",
+    "minute": null,
+    "score": "6-1,4-6,0-1",
+    "exact_bet_line": "Katerina Siniakova",
+    "current_odds": 3.4,
+    "reverse_bet": "Elina Svitolina",
+    "reverse_odds": 1.333,
+    "strategy_id": "T14",
+    "strategy_ids": [
+      "T14"
+    ],
+    "strategy_names": [
+      "Зеркало плотного сета - за проигравшего предыдущего сета"
+    ],
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-03T08:11:00.372825+00:00",
+    "sport": "tennis",
+    "tournament": "WTA Beijing",
+    "event_id": "13227593",
+    "match": "Kamilla Rakhimova - Leylah Annie Fernandez",
+    "minute_score": "6-2,0-0",
+    "minute": null,
+    "score": "6-2,0-0",
+    "exact_bet_line": "Kamilla Rakhimova",
+    "current_odds": 1.5,
+    "reverse_bet": "Leylah Annie Fernandez",
+    "reverse_odds": 2.625,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "Победитель предыдущего разгромного сета"
+    ],
+    "tier": "ACTIVE",
     "settlement_reason": "INPLAY"
   }
 ]
