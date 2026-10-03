@@ -179,7 +179,7 @@ S15 «Гол 80-84 при 2,50-2,99» и S25 «Фора гостей после 
 
 Production collection runs on GitHub-hosted Actions. Selectel is no longer part of the hot path.
 
-- `scaner-hot-path.yml` - Scanner, every 5 minutes.
+- `scaner-hot-path.yml` - continuous Scanner worker for 5 h 20 min, polling every 5 minutes, checkpointing every 10 minutes, with an hourly watchdog at minute 37.
 - `mining-hot-path.yml` - general Mining strategies, every 5 minutes.
 - `stateful-goal-mining.yml` - 10-minute pressure and next-goal state, every 5 minutes.
 - `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, five one-minute polls per five-minute GitHub run.
