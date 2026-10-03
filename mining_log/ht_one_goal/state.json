@@ -17988,8 +17988,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233895": {
       "event_id": "13233895",
@@ -18171,7 +18172,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12323521": {
       "event_id": "12323521",
@@ -18223,8 +18225,59 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13033420": {
+      "event_id": "13033420",
+      "bet365_id": "202151047",
+      "kickoff": 1791063000,
+      "candidate_at": 1791066526,
+      "country": "mx",
+      "league": "Mexico Primera Premier",
+      "home": "Zacatepec FC",
+      "away": "CF Reboceros La Piedad",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13225502": {
+      "event_id": "13225502",
+      "bet365_id": "202231072",
+      "kickoff": 1791063000,
+      "candidate_at": 1791066526,
+      "country": "hn",
+      "league": "Honduras Liga de Ascenso",
+      "home": "Tela FC",
+      "away": "Estrella FC Santos Guardiola",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13234962": {
+      "event_id": "13234962",
+      "bet365_id": "202236451",
+      "kickoff": 1791063000,
+      "candidate_at": 1791066854,
+      "country": "py",
+      "league": "Paraguay Copa EFE Women",
+      "home": "Libertad Limpeno (W)",
+      "away": "Olimpia Asuncion (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T22:26:43Z",
+  "updated_at": "2026-10-03T22:37:30Z",
   "api_calls_last_run": 9
 }
