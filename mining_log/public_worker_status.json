@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-03T20:41:51.620269+00:00",
+  "updated_at": "2026-10-03T20:45:53.526744+00:00",
   "started_at": "2026-10-03T15:25:46.226304+00:00",
   "passes": {
-    "ht": 244,
-    "general": 62,
+    "ht": 248,
+    "general": 63,
     "goal": 52,
     "prematch": 11
   },
@@ -13,7 +13,7 @@
     "goal": 10,
     "prematch": 0
   },
-  "calls_last_hour": 1033,
+  "calls_last_hour": 1030,
   "hourly_cap": 2300,
   "last_error": "ht: HT one-goal exited 1: begin()\n  File \"/usr/lib/python3.12/http/client.py\", line 336, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/http/client.py\", line 297, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/socket.py\", line 707, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1252, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1104, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out\n",
   "last_checkpoint": {
