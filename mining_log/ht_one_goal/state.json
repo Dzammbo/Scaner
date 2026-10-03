@@ -15542,8 +15542,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232800": {
       "event_id": "13232800",
@@ -15669,7 +15670,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12147969": {
       "event_id": "12147969",
@@ -15686,7 +15688,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232462": {
       "event_id": "13232462",
@@ -15703,7 +15706,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13036847": {
       "event_id": "13036847",
@@ -15720,7 +15724,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13231088": {
       "event_id": "13231088",
@@ -15857,8 +15862,42 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13233607": {
+      "event_id": "13233607",
+      "bet365_id": "202235671",
+      "kickoff": 1791049368,
+      "candidate_at": 1791052338,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Atletico ECCA",
+      "away": "Centro De Especializacion De Futbolistas Lu",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13125107": {
+      "event_id": "13125107",
+      "bet365_id": "201200330",
+      "kickoff": 1791049500,
+      "candidate_at": 1791052534,
+      "country": "ar",
+      "league": "Argentina Liga Profesional",
+      "home": "Defensa y Justicia",
+      "away": "San Lorenzo",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T18:30:19Z",
+  "updated_at": "2026-10-03T18:39:59Z",
   "api_calls_last_run": 9
 }
