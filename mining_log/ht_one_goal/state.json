@@ -15762,8 +15762,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12147089": {
       "event_id": "12147089",
@@ -15943,8 +15944,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13215271": {
       "event_id": "13215271",
@@ -15979,8 +15981,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12165257": {
       "event_id": "12165257",
@@ -15997,8 +16000,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11178761": {
       "event_id": "11178761",
@@ -16015,7 +16019,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13177306": {
       "event_id": "13177306",
@@ -16032,7 +16037,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12147084": {
       "event_id": "12147084",
@@ -16049,7 +16056,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12031953": {
       "event_id": "12031953",
@@ -16066,7 +16074,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12147085": {
       "event_id": "12147085",
@@ -16083,7 +16093,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12147087": {
       "event_id": "12147087",
@@ -16100,7 +16111,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12165262": {
       "event_id": "12165262",
@@ -16117,7 +16129,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12165261": {
       "event_id": "12165261",
@@ -16849,8 +16862,93 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "12331113": {
+      "event_id": "12331113",
+      "bet365_id": "200871132",
+      "kickoff": 1791052200,
+      "candidate_at": 1791054971,
+      "country": "it",
+      "league": "Italy Serie C Group A",
+      "home": "Pro Vercelli",
+      "away": "AC Carpi",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12331114": {
+      "event_id": "12331114",
+      "bet365_id": "200871129",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055102,
+      "country": "it",
+      "league": "Italy Serie C Group A",
+      "home": "A.C. Ospitaletto",
+      "away": "Renate",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13214946": {
+      "event_id": "13214946",
+      "bet365_id": "202257938",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055162,
+      "country": "br",
+      "league": "Brazil Campeonato Paranaense 3",
+      "home": "City London FC",
+      "away": "PSTC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13218792": {
+      "event_id": "13218792",
+      "bet365_id": "202161224",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055224,
+      "country": "ar",
+      "league": "Argentina Championship Women",
+      "home": "Lanus (W)",
+      "away": "Social Atletico Television (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12330313": {
+      "event_id": "12330313",
+      "bet365_id": "200871127",
+      "kickoff": 1791052200,
+      "candidate_at": 1791055224,
+      "country": "it",
+      "league": "Italy Serie C Group A",
+      "home": "US Folgore Caratese",
+      "away": "Desenzano",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T19:10:39Z",
+  "updated_at": "2026-10-03T19:20:25Z",
   "api_calls_last_run": 9
 }
