@@ -7688,8 +7688,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13116519": {
       "event_id": "13116519",
@@ -7724,8 +7725,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13138517": {
       "event_id": "13138517",
@@ -7779,10 +7781,83 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "11767319": {
+      "event_id": "11767319",
+      "bet365_id": "201254065",
+      "kickoff": 1790984700,
+      "candidate_at": 1790988328,
+      "country": "br",
+      "league": "Brazil Serie B",
+      "home": "EC Juventude",
+      "away": "Operario PR",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315892": {
+      "event_id": "12315892",
+      "bet365_id": "202112819",
+      "kickoff": 1790985600,
+      "candidate_at": 1790988444,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "Bonaire",
+      "away": "Grenada",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315900": {
+      "event_id": "12315900",
+      "bet365_id": "202112814",
+      "kickoff": 1790985600,
+      "candidate_at": 1790988506,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "Barbados",
+      "away": "Bermuda",
+      "halftime_score": [
+        3,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12315922": {
+      "event_id": "12315922",
+      "bet365_id": "202116221",
+      "kickoff": 1790985600,
+      "candidate_at": 1790988562,
+      "country": "",
+      "league": "CONCACAF Nations League",
+      "home": "Martinique",
+      "away": "Honduras",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T00:30:25Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-03T00:49:26Z",
+  "api_calls_last_run": 7
 }
