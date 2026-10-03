@@ -6710,8 +6710,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "10571461": {
       "event_id": "10571461",
@@ -6728,8 +6729,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13169908": {
       "event_id": "13169908",
@@ -6783,8 +6785,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11437388": {
       "event_id": "11437388",
@@ -6855,8 +6858,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11437389": {
       "event_id": "11437389",
@@ -6945,8 +6949,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11437518": {
       "event_id": "11437518",
@@ -7841,8 +7846,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315922": {
       "event_id": "12315922",
@@ -7859,8 +7865,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233556": {
       "event_id": "13233556",
@@ -8009,8 +8016,44 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13181693": {
+      "event_id": "13181693",
+      "bet365_id": "202130334",
+      "kickoff": 1790989200,
+      "candidate_at": 1790991943,
+      "country": "nz",
+      "league": "New Zealand National League Women",
+      "home": "West Coast Rangers (W)",
+      "away": "Waterside Karori (W)",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225504": {
+      "event_id": "13225504",
+      "bet365_id": "202274942",
+      "kickoff": 1790989200,
+      "candidate_at": 1790992064,
+      "country": "hn",
+      "league": "Honduras Liga de Ascenso",
+      "home": "Real Tegus",
+      "away": "Meluca FC",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T01:33:48Z",
+  "updated_at": "2026-10-03T01:47:51Z",
   "api_calls_last_run": 7
 }
