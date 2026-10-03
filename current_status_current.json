@@ -1,50 +1,46 @@
 {
-  "merged": 2971,
-  "settled": 2781,
-  "void": 25,
-  "pending": 165,
-  "pending_live_or_delayed": 22,
-  "unresolved": 143,
+  "merged": 2987,
+  "settled": 2917,
+  "void": 32,
+  "pending": 38,
+  "pending_live_or_delayed": 38,
+  "unresolved": 0,
   "settlement_reasons": {
-    "FINAL_FIRST_HALF_SCORE_MISSING": 134,
-    "FINAL_INVALID_SCORE_DELTA": 1,
-    "FINAL_TENNIS_SELECTION_MISMATCH": 2,
-    "FINAL_TENNIS_WINNER_MISSING": 6,
-    "INPLAY": 6,
+    "INPLAY": 22,
     "PENDING_PROVIDER_FIX": 10,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
+    "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
-    "VOID_RETIRED": 21
+    "VOID_RETIRED": 21,
+    "VOID_TENNIS_WINNER_MISSING": 6
   },
   "settlement_event_reasons": {
-    "FINAL_FIRST_HALF_SCORE_MISSING": 134,
-    "FINAL_INVALID_SCORE_DELTA": 1,
-    "FINAL_TENNIS_SELECTION_MISMATCH": 2,
-    "FINAL_TENNIS_WINNER_MISSING": 4,
-    "INPLAY": 4,
+    "INPLAY": 15,
     "PENDING_PROVIDER_FIX": 6,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
+    "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
-    "VOID_RETIRED": 13
+    "VOID_RETIRED": 13,
+    "VOID_TENNIS_WINNER_MISSING": 4
   },
   "settlement_cache": {
-    "updated_at": "2026-10-03T06:47:44Z",
-    "bootstrap": true,
-    "query_budget": 300,
-    "provider_queries": 174,
-    "queried_events": 1732,
-    "signal_unique_events": 1732,
-    "cache_events": 1732,
+    "updated_at": "2026-10-03T06:50:16Z",
+    "bootstrap": false,
+    "query_budget": 80,
+    "provider_queries": 2,
+    "queried_events": 11,
+    "signal_unique_events": 1743,
+    "cache_events": 1743,
     "final_events": 1707,
     "void_events": 14,
     "immutable_events": 1721,
-    "retryable_events": 11,
+    "retryable_events": 22,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 1707,
-      "INPLAY": 4,
+      "INPLAY": 15,
       "PENDING_PROVIDER_FIX": 6,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -170,36 +166,36 @@
       "start": "1970-01-01T00:00:00+00:00",
       "recorded": 29,
       "original": {
-        "N": 26,
+        "N": 29,
         "W": 12,
-        "L": 13,
+        "L": 16,
         "P": 1,
-        "profit": -3.375,
-        "ROI": -12.98
+        "profit": -6.375,
+        "ROI": -21.98
       },
       "original_without_top3": {
-        "N": 23,
+        "N": 26,
         "W": 9,
-        "L": 13,
+        "L": 16,
         "P": 1,
-        "profit": -6.175,
-        "ROI": -26.85
+        "profit": -9.175,
+        "ROI": -35.29
       },
       "reverse": {
+        "N": 29,
+        "W": 16,
+        "L": 12,
+        "P": 1,
+        "profit": 3.45,
+        "ROI": 11.9
+      },
+      "reverse_without_top3": {
         "N": 26,
         "W": 13,
         "L": 12,
         "P": 1,
-        "profit": 0.725,
-        "ROI": 2.79
-      },
-      "reverse_without_top3": {
-        "N": 23,
-        "W": 10,
-        "L": 12,
-        "P": 1,
-        "profit": -2.2,
-        "ROI": -9.57
+        "profit": 0.525,
+        "ROI": 2.02
       }
     },
     "S10": {
@@ -242,44 +238,44 @@
     "S11": {
       "name": "За победителя предыдущего плотного сета",
       "start": "2026-09-26T15:19:55+00:00",
-      "recorded": 591,
+      "recorded": 593,
       "original": {
-        "N": 575,
+        "N": 576,
         "W": 413,
-        "L": 162,
+        "L": 163,
         "P": 0,
-        "profit": 0.962,
-        "ROI": 0.17
+        "profit": -0.038,
+        "ROI": -0.01
       },
       "original_without_top3": {
-        "N": 572,
+        "N": 573,
         "W": 410,
-        "L": 162,
+        "L": 163,
         "P": 0,
-        "profit": -13.538,
-        "ROI": -2.37
+        "profit": -14.538,
+        "ROI": -2.54
       },
       "reverse": {
-        "N": 573,
-        "W": 162,
-        "L": 411,
+        "N": 575,
+        "W": 163,
+        "L": 412,
         "P": 0,
-        "profit": -179.64,
-        "ROI": -31.35
+        "profit": -179.015,
+        "ROI": -31.13
       },
       "reverse_without_top3": {
-        "N": 570,
-        "W": 159,
-        "L": 411,
+        "N": 572,
+        "W": 160,
+        "L": 412,
         "P": 0,
-        "profit": -203.64,
-        "ROI": -35.73
+        "profit": -203.015,
+        "ROI": -35.49
       }
     },
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 472,
+      "recorded": 473,
       "original": {
         "N": 464,
         "W": 194,
@@ -316,38 +312,38 @@
     "T14": {
       "name": "Зеркало плотного сета - за проигравшего предыдущего сета",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 235,
+      "recorded": 237,
       "original": {
-        "N": 225,
+        "N": 226,
         "W": 57,
-        "L": 168,
+        "L": 169,
         "P": 0,
-        "profit": -91.558,
-        "ROI": -40.69
+        "profit": -92.558,
+        "ROI": -40.95
       },
       "original_without_top3": {
-        "N": 222,
+        "N": 223,
         "W": 54,
-        "L": 168,
+        "L": 169,
         "P": 0,
-        "profit": -109.058,
-        "ROI": -49.13
+        "profit": -110.058,
+        "ROI": -49.35
       },
       "reverse": {
-        "N": 210,
-        "W": 155,
+        "N": 211,
+        "W": 156,
         "L": 55,
         "P": 0,
-        "profit": 18.677,
-        "ROI": 8.89
+        "profit": 18.802,
+        "ROI": 8.91
       },
       "reverse_without_top3": {
-        "N": 207,
-        "W": 152,
+        "N": 208,
+        "W": 153,
         "L": 55,
         "P": 0,
-        "profit": 2.677,
-        "ROI": 1.29
+        "profit": 2.802,
+        "ROI": 1.35
       }
     },
     "T16": {
@@ -392,36 +388,36 @@
       "start": "1970-01-01T00:00:00+00:00",
       "recorded": 141,
       "original": {
-        "N": 132,
+        "N": 141,
         "W": 45,
-        "L": 87,
+        "L": 96,
         "P": 0,
-        "profit": -18.4,
-        "ROI": -13.94
+        "profit": -27.4,
+        "ROI": -19.43
       },
       "original_without_top3": {
-        "N": 129,
+        "N": 138,
         "W": 42,
-        "L": 87,
+        "L": 96,
         "P": 0,
-        "profit": -32.55,
-        "ROI": -25.23
+        "profit": -41.55,
+        "ROI": -30.11
       },
       "reverse": {
-        "N": 132,
-        "W": 87,
+        "N": 141,
+        "W": 96,
         "L": 45,
         "P": 0,
-        "profit": -9.59,
-        "ROI": -7.27
+        "profit": -2.54,
+        "ROI": -1.8
       },
       "reverse_without_top3": {
-        "N": 129,
-        "W": 84,
+        "N": 138,
+        "W": 93,
         "L": 45,
         "P": 0,
-        "profit": -12.64,
-        "ROI": -9.8
+        "profit": -5.59,
+        "ROI": -4.05
       }
     },
     "S27": {
@@ -429,36 +425,36 @@
       "start": "2026-10-01T19:15:00+00:00",
       "recorded": 71,
       "original": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 71,
+        "W": 33,
+        "L": 38,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -5.325,
+        "ROI": -7.5
       },
       "original_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 68,
+        "W": 30,
+        "L": 38,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -9.7,
+        "ROI": -14.26
       },
       "reverse": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 71,
+        "W": 38,
+        "L": 33,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -5.385,
+        "ROI": -7.58
       },
       "reverse_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 68,
+        "W": 35,
+        "L": 33,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -8.335,
+        "ROI": -12.26
       }
     },
     "S28": {
@@ -575,7 +571,7 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 69,
+      "recorded": 80,
       "original": {
         "N": 69,
         "W": 53,
