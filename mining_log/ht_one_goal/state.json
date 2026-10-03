@@ -13315,8 +13315,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12143986": {
       "event_id": "12143986",
@@ -13333,8 +13334,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12031952": {
       "event_id": "12031952",
@@ -13480,8 +13482,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12158067": {
       "event_id": "12158067",
@@ -17639,8 +17642,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13125109": {
       "event_id": "13125109",
@@ -17693,8 +17697,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13218791": {
       "event_id": "13218791",
@@ -17803,7 +17808,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12309575": {
       "event_id": "12309575",
@@ -17820,7 +17827,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11285060": {
       "event_id": "11285060",
@@ -17837,7 +17845,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11419923": {
       "event_id": "11419923",
@@ -17855,8 +17864,76 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "12177626": {
+      "event_id": "12177626",
+      "bet365_id": "202142199",
+      "kickoff": 1791059400,
+      "candidate_at": 1791062270,
+      "country": "co",
+      "league": "Colombia Primera B",
+      "home": "Patriotas FC",
+      "away": "Independiente Valle del Cauca",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12177628": {
+      "event_id": "12177628",
+      "bet365_id": "202042667",
+      "kickoff": 1791059400,
+      "candidate_at": 1791062339,
+      "country": "co",
+      "league": "Colombia Primera B",
+      "home": "Real San Andres",
+      "away": "Union Magdalena",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13143450": {
+      "event_id": "13143450",
+      "bet365_id": "202190296",
+      "kickoff": 1791059400,
+      "candidate_at": 1791062339,
+      "country": "ec",
+      "league": "Ecuador LigaPro Serie B",
+      "home": "LDU Portoviejo",
+      "away": "El Nacional",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13133415": {
+      "event_id": "13133415",
+      "bet365_id": "202084898",
+      "kickoff": 1791059400,
+      "candidate_at": 1791062465,
+      "country": "cl",
+      "league": "Chile Primera B",
+      "home": "Deportes Temuco",
+      "away": "Cobreloa",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T21:15:35Z",
+  "updated_at": "2026-10-03T21:26:24Z",
   "api_calls_last_run": 9
 }
