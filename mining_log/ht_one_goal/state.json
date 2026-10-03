@@ -13510,8 +13510,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232567": {
       "event_id": "13232567",
@@ -13692,8 +13693,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12392134": {
       "event_id": "12392134",
@@ -13710,8 +13712,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12370791": {
       "event_id": "12370791",
@@ -13873,8 +13876,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12134258": {
       "event_id": "12134258",
@@ -13981,7 +13985,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12184059": {
       "event_id": "12184059",
@@ -13998,7 +14003,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233023": {
       "event_id": "13233023",
@@ -14015,7 +14021,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13092241": {
       "event_id": "13092241",
@@ -14032,7 +14039,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13233739": {
       "event_id": "13233739",
@@ -14049,7 +14057,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13237155": {
       "event_id": "13237155",
@@ -14066,7 +14075,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12349470": {
       "event_id": "12349470",
@@ -14083,7 +14093,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12333138": {
       "event_id": "12333138",
@@ -14100,7 +14111,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13230253": {
       "event_id": "13230253",
@@ -14288,8 +14300,399 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "12261380": {
+      "event_id": "12261380",
+      "bet365_id": "202082526",
+      "kickoff": 1791042900,
+      "candidate_at": 1791045775,
+      "country": "de",
+      "league": "Germany Bundesliga Women",
+      "home": "Eintracht Frankfurt (W)",
+      "away": "Bayern Munich (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13231888": {
+      "event_id": "13231888",
+      "bet365_id": "202171081",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045912,
+      "country": "fr",
+      "league": "France National 2",
+      "home": "AS Ginglin Cesson",
+      "away": "Saint-Lo Manche",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12393037": {
+      "event_id": "12393037",
+      "bet365_id": "202093950",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045912,
+      "country": "es",
+      "league": "Spain Tercera Group 9",
+      "home": "Atletico Malagueno",
+      "away": "Recreativo Granada",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13237375": {
+      "event_id": "13237375",
+      "bet365_id": "202161464",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045982,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Deportivo Independiente Mexiquense",
+      "away": "Atletico Mexicano F.E.",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13191768": {
+      "event_id": "13191768",
+      "bet365_id": "202145567",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045982,
+      "country": "es",
+      "league": "Spain Tercera Group 15",
+      "home": "AD San Juan",
+      "away": "Subiza",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12088903": {
+      "event_id": "12088903",
+      "bet365_id": "202070616",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045982,
+      "country": "si",
+      "league": "Slovenia 2. SNL",
+      "home": "Tabor Sezana",
+      "away": "NK Krka",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12233192": {
+      "event_id": "12233192",
+      "bet365_id": "202128812",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045982,
+      "country": "hu",
+      "league": "Hungary NB III",
+      "home": "Papai Perutz",
+      "away": "Györi ETO II",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12370327": {
+      "event_id": "12370327",
+      "bet365_id": "202283101",
+      "kickoff": 1791043200,
+      "candidate_at": 1791045982,
+      "country": "ba",
+      "league": "Bosnia & Herzegovina 1st League",
+      "home": "HSK Posusje",
+      "away": "Sloboda Tuzla",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13232911": {
+      "event_id": "13232911",
+      "bet365_id": "202192805",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "AEK Larnaca",
+      "away": "Apollon Limassol",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13234191": {
+      "event_id": "13234191",
+      "bet365_id": "202128003",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "tr",
+      "league": "Türkiye 3.Lig Group 2",
+      "home": "Altay SK Izmir",
+      "away": "Alanya 1221 FSK",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13233416": {
+      "event_id": "13233416",
+      "bet365_id": "202183395",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "ie",
+      "league": "Ireland National League",
+      "home": "Bonagee United",
+      "away": "Mervue United",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "13233417": {
+      "event_id": "13233417",
+      "bet365_id": "202183397",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "ie",
+      "league": "Ireland National League",
+      "home": "Newbridge Town FC",
+      "away": "UCC Soccer",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12138099": {
+      "event_id": "12138099",
+      "bet365_id": "201924923",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "es",
+      "league": "Spain Segunda Division RFEF Group 1",
+      "home": "Portugalete",
+      "away": "Alaves B",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12205055": {
+      "event_id": "12205055",
+      "bet365_id": "202172718",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "fr",
+      "league": "France Division 1 Women",
+      "home": "Lyon (W)",
+      "away": "Toulouse (W)",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12114208": {
+      "event_id": "12114208",
+      "bet365_id": "201317314",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "pl",
+      "league": "Poland II Liga",
+      "home": "Sandecja Nowy Sacz",
+      "away": "Lechia Zielona Góra",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "12395601": {
+      "event_id": "12395601",
+      "bet365_id": "202093911",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046040,
+      "country": "es",
+      "league": "Spain Tercera Group 12",
+      "home": "CD Arcangel San Miguel",
+      "away": "Tenerife C",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13231891": {
+      "event_id": "13231891",
+      "bet365_id": "202171097",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "fr",
+      "league": "France National 2",
+      "home": "ASM Belfort",
+      "away": "Thaon",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12138972": {
+      "event_id": "12138972",
+      "bet365_id": "201929767",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "es",
+      "league": "Spain Segunda Division RFEF Group 5",
+      "home": "CD Guadalajara",
+      "away": "Gimnastica Segoviana",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11339351": {
+      "event_id": "11339351",
+      "bet365_id": "202188819",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "se",
+      "league": "Sweden 2.div Norra Svealand",
+      "home": "FC Gute",
+      "away": "Skiljebo SK",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11437528": {
+      "event_id": "11437528",
+      "bet365_id": "201150672",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "",
+      "league": "UEFA Nations League C",
+      "home": "Iceland",
+      "away": "Bulgaria",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12283878": {
+      "event_id": "12283878",
+      "bet365_id": "202189633",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "fr",
+      "league": "France Ligue 3",
+      "home": "GOAL FC",
+      "away": "Lyon Duchere",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11151460": {
+      "event_id": "11151460",
+      "bet365_id": "202082528",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "ie",
+      "league": "Republic of Ireland National League Women",
+      "home": "Sligo Rovers (W)",
+      "away": "FC Treaty United (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12090227": {
+      "event_id": "12090227",
+      "bet365_id": "201316892",
+      "kickoff": 1791043200,
+      "candidate_at": 1791046098,
+      "country": "sk",
+      "league": "Slovakia 2. Liga",
+      "home": "FC Tatran Presov",
+      "away": "OFK Banik Lehota",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T16:38:44Z",
+  "updated_at": "2026-10-03T16:48:28Z",
   "api_calls_last_run": 9
 }
