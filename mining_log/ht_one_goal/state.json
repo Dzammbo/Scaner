@@ -9258,8 +9258,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232560": {
       "event_id": "13232560",
@@ -9294,8 +9295,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232881": {
       "event_id": "13232881",
@@ -10159,8 +10161,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13179445": {
       "event_id": "13179445",
@@ -10380,8 +10383,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11151461": {
       "event_id": "11151461",
@@ -10579,8 +10583,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232991": {
       "event_id": "13232991",
@@ -10651,7 +10656,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233628": {
       "event_id": "13233628",
@@ -10668,7 +10675,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13235930": {
       "event_id": "13235930",
@@ -10685,7 +10693,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13236729": {
       "event_id": "13236729",
@@ -10702,7 +10711,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13238787": {
       "event_id": "13238787",
@@ -10719,7 +10729,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232788": {
       "event_id": "13232788",
@@ -10736,7 +10747,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232422": {
       "event_id": "13232422",
@@ -10753,7 +10765,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13194565": {
       "event_id": "13194565",
@@ -10770,7 +10783,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13199030": {
       "event_id": "13199030",
@@ -13321,8 +13335,25 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "13137837": {
+      "event_id": "13137837",
+      "bet365_id": "202093917",
+      "kickoff": 1791039600,
+      "candidate_at": 1791042362,
+      "country": "es",
+      "league": "Spain Tercera Group 2",
+      "home": "UC Ceares",
+      "away": "El San Martin",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T15:35:21Z",
+  "updated_at": "2026-10-03T15:46:11Z",
   "api_calls_last_run": 9
 }
