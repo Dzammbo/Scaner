@@ -54,16 +54,16 @@
 ## Канон квоты BetsAPI
 
 1. Проверенный provider-limit BetsAPI Events: 3600 запросов в час.
-2. Рабочий общий потолок: 3500 запросов в час. Последние 100 запросов/час остаются аварийным запасом.
-3. Scanner получает до 1200 запросов в час, с 07:00 до 12:00 МСК - до 600 запросов в час.
-4. Автоматический Scanner запускается каждые 5 минут.
-5. Один проход Scanner может использовать максимум 50 запросов, в утреннем окне - 25, включая 2 live-board запроса; detail-бюджет - максимум 48 или 23 соответственно.
-6. Лимит Scanner считается rolling-window и включает автоматические и ручные проходы. При исчерпании бюджета проход фиксируется как пропущенный по квоте без сетевых вызовов.
-7. Mining получает отдельный потолок 2300 запросов в час, с 07:00 до 12:00 МСК - 1150. Лимиты одного прохода в это окно тоже уменьшаются вдвое во всех четырёх Mining workflow.
-8. Утреннее окно определяется по `Europe/Moscow`: 07:00 включительно, 12:00 исключительно. На его старте учитываются запросы предыдущих 60 минут; если они уже превышают сниженный лимит, новые проходы пропускаются до освобождения rolling-бюджета. В 12:00 возвращаются обычные лимиты.
-9. Если фактические provider headers показывают меньший доступный остаток, они имеют приоритет над локальными бюджетами.
-
-
+2. Рабочий общий потолок: 3400 запросов в час. Последние 200 запросов/час остаются неприкосновенным аварийным запасом.
+3. Scanner и S30 получают общий потолок 1400 запросов в час: основной Scanner - до 650, S30 - до 750.
+4. С 07:00 до 12:00 МСК общий потолок Scanner и S30 равен 700 запросам в час: основной Scanner - до 325, S30 - до 375.
+5. Автоматический Scanner выполняет проход каждые 5 минут. Один проход использует максимум 50 запросов, утром - 25, включая 2 live-board запроса.
+6. Mining получает общий потолок 1600 запросов в час, с 07:00 до 12:00 МСК - 800. Лимиты одного прохода утром уменьшаются вдвое.
+7. Scanner settlement и Mining settlement получают по 50 запросов на плановый двухчасовой запуск, суммарно не более 100.
+8. Для Интуиции и ручных проверок зарезервировано до 300 запросов в час; эта квота не расходуется автоматическими Scanner и Mining.
+9. Все автоматические лимиты считаются по rolling-window за последние 60 минут. При исчерпании квоты новые сетевые запросы пропускаются.
+10. Утреннее окно определяется по `Europe/Moscow`: 07:00 включительно, 12:00 исключительно.
+11. Если фактические provider headers показывают меньший доступный остаток, они имеют приоритет над локальными бюджетами.
 ## Стратегия «Фора гостей после первого гола при 0:1»
 
 - Футбол, live.
@@ -185,7 +185,7 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 - `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, five one-minute polls per five-minute GitHub run.
 - `prematch-line-movement.yml` - prematch probability movement, twice per hour.
 
-All Mining collectors share the 1,150 requests/hour envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
+All Mining collectors share the 800 requests/hour morning envelope and the 1,600 requests/hour normal envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
 
 ## Приоритет статистики Scanner, 2026-10-01
 

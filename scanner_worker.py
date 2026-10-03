@@ -26,32 +26,43 @@ def now_utc():
 
 def hourly_cap(at=None):
     local = (at or now_utc()).astimezone(MSK)
-    return 600 if 7 <= local.hour < 12 else 1200
+    return 700 if 7 <= local.hour < 12 else 1400
+
+
+def scanner_cap(at=None):
+    local = (at or now_utc()).astimezone(MSK)
+    return 325 if 7 <= local.hour < 12 else 650
+
+
+def calls_for_path(path, at=None):
+    at = at or now_utc()
+    floor = at - timedelta(hours=1)
+    total = 0
+    if not path.exists():
+        return total
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            row = json.loads(line)
+            ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if floor <= ts <= at:
+            total += int(row.get("api_calls") or 0)
+    return total
 
 
 def recent_calls(at=None):
     at = at or now_utc()
-    floor = at - timedelta(hours=1)
-    total = 0
-    for path in (RUNS_PATH, S30_RUNS_PATH):
-        if not path.exists():
-            continue
-        for line in path.read_text(encoding="utf-8").splitlines():
-            try:
-                row = json.loads(line)
-                ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z", "+00:00"))
-            except Exception:
-                continue
-            if floor <= ts <= at:
-                total += int(row.get("api_calls") or 0)
-    return total
+    return calls_for_path(RUNS_PATH, at) + calls_for_path(S30_RUNS_PATH, at)
 
 
 def pass_budget(at=None):
     at = at or now_utc()
     cap = hourly_cap(at)
     used = recent_calls(at)
-    remaining = max(0, cap - used)
+    own_cap = scanner_cap(at)
+    own_used = calls_for_path(RUNS_PATH, at)
+    remaining = min(max(0, cap - used), max(0, own_cap - own_used))
     per_pass = 25 if cap == 600 else 50
     run_budget = min(per_pass, remaining)
     board_calls = 2

@@ -26,32 +26,43 @@ def now_utc():
 
 def hourly_cap(at=None):
     local = (at or now_utc()).astimezone(MSK)
-    return 600 if 7 <= local.hour < 12 else 1200
+    return 700 if 7 <= local.hour < 12 else 1400
+
+
+def s30_cap(at=None):
+    local = (at or now_utc()).astimezone(MSK)
+    return 375 if 7 <= local.hour < 12 else 750
+
+
+def calls_for_path(path, at=None):
+    at = at or now_utc()
+    floor = at - timedelta(hours=1)
+    total = 0
+    if not path.exists():
+        return total
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            row = json.loads(line)
+            ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if floor <= ts <= at:
+            total += int(row.get("api_calls") or 0)
+    return total
 
 
 def recent_calls(at=None):
     at = at or now_utc()
-    floor = at - timedelta(hours=1)
-    total = 0
-    for path in (MAIN_RUNS_PATH, RUNS_PATH):
-        if not path.exists():
-            continue
-        for line in path.read_text(encoding="utf-8").splitlines():
-            try:
-                row = json.loads(line)
-                ts = datetime.fromisoformat(str(row.get("timestamp")).replace("Z", "+00:00"))
-            except Exception:
-                continue
-            if floor <= ts <= at:
-                total += int(row.get("api_calls") or 0)
-    return total
+    return calls_for_path(MAIN_RUNS_PATH, at) + calls_for_path(RUNS_PATH, at)
 
 
 def detail_budget(at=None):
     at = at or now_utc()
     cap = hourly_cap(at)
-    remaining = max(0, cap - recent_calls(at))
-    per_poll = 7 if cap == 600 else 14
+    used = recent_calls(at)
+    own_remaining = max(0, s30_cap(at) - calls_for_path(RUNS_PATH, at))
+    remaining = min(max(0, cap - used), own_remaining)
+    per_poll = 7 if cap == 700 else 14
     return max(0, min(per_poll, remaining - 1)), remaining
 
 

@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 10
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-      MINING_SETTLEMENT_QUERY_BUDGET: "80"
+      MINING_SETTLEMENT_QUERY_BUDGET: "50"
       MINING_SETTLEMENT_RETRY_SECONDS: "7200"
     steps:
       - uses: actions/checkout@v4

@@ -37,7 +37,7 @@ jobs:
           from zoneinfo import ZoneInfo
           now=datetime.now(timezone.utc);used=0
           morning=7<=now.astimezone(ZoneInfo("Europe/Moscow")).hour<12
-          cap=1150 if morning else 2300
+          cap=800 if morning else 1600
           per_run=14 if morning else 28
           for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
