@@ -7896,8 +7896,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13228859": {
       "event_id": "13228859",
@@ -7990,8 +7991,26 @@
       "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "11632935": {
+      "event_id": "11632935",
+      "bet365_id": "201254063",
+      "kickoff": 1790987700,
+      "candidate_at": 1790990974,
+      "country": "br",
+      "league": "Brazil Serie B",
+      "home": "Fortaleza",
+      "away": "Nautico",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T01:19:22Z",
+  "updated_at": "2026-10-03T01:33:48Z",
   "api_calls_last_run": 7
 }
