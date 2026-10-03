@@ -1,31 +1,81 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-03T07:32:27Z",
-  "signals": 278,
+  "updated_at": "2026-10-03T07:48:43Z",
+  "signals": 281,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-03T07:32:17Z",
+      "timestamp": "2026-10-03T07:48:41Z",
       "sport": "football",
-      "tournament": "Japan J2-League",
-      "event_id": "12050002",
-      "match": "Ventforet Kofu - Kataller Toyama",
-      "minute_score": "29' / '0-0'",
-      "minute": 29,
-      "score": "0-0",
-      "exact_bet_line": "ТБ 0.5",
-      "current_odds": 2.15,
-      "reverse_bet": "ТМ 0.5",
-      "reverse_odds": 1.675,
-      "strategy_id": "S27",
+      "tournament": "Japan J3-League",
+      "event_id": "12050649",
+      "match": "Ehime FC - Thespa Gunma",
+      "minute_score": "89' / '3-1'",
+      "minute": 89,
+      "score": "3-1",
+      "exact_bet_line": "ТБ 4.5",
+      "current_odds": 4.0,
+      "reverse_bet": "ТМ 4.5",
+      "reverse_odds": 1.23,
+      "strategy_id": "S26",
       "strategy_ids": [
-        "S27"
+        "S26"
       ],
       "strategy_names": [
-        "High Pressure ТБ 0.5 первого тайма"
+        "High Pressure ТБ 0.5 матча"
       ],
       "tier": "ACTIVE",
-      "pressure10": 48.0,
-      "period": "FH",
+      "pressure10": 34.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-03T07:48:41Z",
+      "sport": "football",
+      "tournament": "Japan U21 League",
+      "event_id": "13120806",
+      "match": "Kawasaki Frontale U21 - Tokyo Verdy U21",
+      "minute_score": "86' / '4-1'",
+      "minute": 86,
+      "score": "4-1",
+      "exact_bet_line": "ТБ 5.5",
+      "current_odds": 2.75,
+      "reverse_bet": "ТМ 5.5",
+      "reverse_odds": 1.425,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 47.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-03T07:48:41Z",
+      "sport": "football",
+      "tournament": "Asian Games",
+      "event_id": "13222898",
+      "match": "China U23 - Uzbekistan U23",
+      "minute_score": "90' / '2-2'",
+      "minute": 90,
+      "score": "2-2",
+      "exact_bet_line": "ТБ 4.5",
+      "current_odds": 5.0,
+      "reverse_bet": "ТМ 4.5",
+      "reverse_odds": 1.17,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 46.0,
+      "period": "FT",
       "source": "stateful_goal_mining"
     }
   ]
