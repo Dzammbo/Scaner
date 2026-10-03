@@ -7707,8 +7707,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12100160": {
       "event_id": "12100160",
@@ -7800,8 +7801,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12315892": {
       "event_id": "12315892",
@@ -7856,8 +7858,98 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13233556": {
+      "event_id": "13233556",
+      "bet365_id": "202196832",
+      "kickoff": 1790985600,
+      "candidate_at": 1790989184,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Atletico Morelia UMSNH",
+      "away": "La Piedad Imperial",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13218240": {
+      "event_id": "13218240",
+      "bet365_id": "202075577",
+      "kickoff": 1790985600,
+      "candidate_at": 1790989184,
+      "country": "",
+      "league": "International Match",
+      "home": "Colombia",
+      "away": "Paraguay",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13228859": {
+      "event_id": "13228859",
+      "bet365_id": "202178618",
+      "kickoff": 1790985600,
+      "candidate_at": 1790989184,
+      "country": "ar",
+      "league": "Argentina Torneo Regional Amateur",
+      "home": "General Paz Juniors",
+      "away": "DYC Union Oncativo",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "11283922": {
+      "event_id": "11283922",
+      "bet365_id": "201997090",
+      "kickoff": 1790985600,
+      "candidate_at": 1790989184,
+      "country": "us",
+      "league": "USA NWSL Women",
+      "home": "Orlando Pride (W)",
+      "away": "San Diego Wave (W)",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12385261": {
+      "event_id": "12385261",
+      "bet365_id": "202130344",
+      "kickoff": 1790985600,
+      "candidate_at": 1790989184,
+      "country": "bo",
+      "league": "Bolivia Copa Division Profesional",
+      "home": "Real Potosi",
+      "away": "Club Aurora",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T00:49:26Z",
-  "api_calls_last_run": 7
+  "updated_at": "2026-10-03T01:04:22Z",
+  "api_calls_last_run": 9
 }
