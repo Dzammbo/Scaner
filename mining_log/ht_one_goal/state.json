@@ -17866,8 +17866,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12177626": {
       "event_id": "12177626",
@@ -17884,8 +17885,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12177628": {
       "event_id": "12177628",
@@ -17920,7 +17922,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13133415": {
       "event_id": "13133415",
@@ -17937,9 +17940,28 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13185893": {
+      "event_id": "13185893",
+      "bet365_id": "201865273",
+      "kickoff": 1791061200,
+      "candidate_at": 1791063993,
+      "country": "uy",
+      "league": "Uruguay Clausura",
+      "home": "Deportivo Maldonado",
+      "away": "Central Espanol",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T21:36:26Z",
+  "updated_at": "2026-10-03T21:46:39Z",
   "api_calls_last_run": 9
 }
