@@ -7968,8 +7968,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13125113": {
       "event_id": "13125113",
@@ -8408,8 +8409,79 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
       "status": "ELIGIBLE"
+    },
+    "12050649": {
+      "event_id": "12050649",
+      "bet365_id": "202069867",
+      "kickoff": 1791007200,
+      "candidate_at": 1791010906,
+      "country": "jp",
+      "league": "Japan J3-League",
+      "home": "Ehime FC",
+      "away": "Thespa Gunma",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13120806": {
+      "event_id": "13120806",
+      "bet365_id": "202130357",
+      "kickoff": 1791007200,
+      "candidate_at": 1791010906,
+      "country": "jp",
+      "league": "Japan U21 League",
+      "home": "Kawasaki Frontale U21",
+      "away": "Tokyo Verdy U21",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13222898": {
+      "event_id": "13222898",
+      "bet365_id": "202178621",
+      "kickoff": 1791007200,
+      "candidate_at": 1791010906,
+      "country": "",
+      "league": "Asian Games",
+      "home": "China U23",
+      "away": "Uzbekistan U23",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13225716": {
+      "event_id": "13225716",
+      "bet365_id": "202173534",
+      "kickoff": 1791007200,
+      "candidate_at": 1791010906,
+      "country": "",
+      "league": "World Club Friendlies",
+      "home": "Perth Glory",
+      "away": "Adelaide United",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T06:37:35Z",
-  "api_calls_last_run": 1
+  "updated_at": "2026-10-03T07:05:33Z",
+  "api_calls_last_run": 4
 }
