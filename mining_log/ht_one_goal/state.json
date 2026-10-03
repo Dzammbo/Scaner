@@ -17854,8 +17854,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11419923": {
       "event_id": "11419923",
@@ -18055,9 +18056,78 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12289792": {
+      "event_id": "12289792",
+      "bet365_id": "202138152",
+      "kickoff": 1791061200,
+      "candidate_at": 1791064728,
+      "country": "sv",
+      "league": "El Salvador Apertura",
+      "home": "CD Aguila",
+      "away": "CD Cacahuatique",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12132213": {
+      "event_id": "12132213",
+      "bet365_id": "202142563",
+      "kickoff": 1791061200,
+      "candidate_at": 1791064728,
+      "country": "gt",
+      "league": "Guatemala Liga Nacional",
+      "home": "Coban Imperial",
+      "away": "Malacateco",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12385233": {
+      "event_id": "12385233",
+      "bet365_id": "202141112",
+      "kickoff": 1791062100,
+      "candidate_at": 1791064854,
+      "country": "bo",
+      "league": "Bolivia Copa Division Profesional",
+      "home": "Nacional Potosi",
+      "away": "Real Oruro",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13224817": {
+      "event_id": "13224817",
+      "bet365_id": "202231070",
+      "kickoff": 1791061963,
+      "candidate_at": 1791064986,
+      "country": "hn",
+      "league": "Honduras Liga de Ascenso",
+      "home": "FC Brasilia Rio Lindo",
+      "away": "Parrillas One",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T21:57:48Z",
+  "updated_at": "2026-10-03T22:07:29Z",
   "api_calls_last_run": 9
 }

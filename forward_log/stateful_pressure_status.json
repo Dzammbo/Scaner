@@ -1,31 +1,56 @@
 {
   "scanner": "STATEFUL_HIGH_PRESSURE",
-  "updated_at": "2026-10-03T21:53:29Z",
-  "signals": 365,
+  "updated_at": "2026-10-03T22:03:46Z",
+  "signals": 367,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-03T21:53:16Z",
+      "timestamp": "2026-10-03T21:58:24Z",
       "sport": "football",
-      "tournament": "Honduras Liga de Ascenso",
-      "event_id": "13225502",
-      "match": "Tela FC - Estrella FC Santos Guardiola",
-      "minute_score": "18' / '1-0'",
-      "minute": 18,
+      "tournament": "USA NWSL Women",
+      "event_id": "11285060",
+      "match": "Racing Louisville FC (W) - Utah Royals (W)",
+      "minute_score": "94' / '1-0'",
+      "minute": 94,
       "score": "1-0",
       "exact_bet_line": "ТБ 1.5",
-      "current_odds": 1.85,
+      "current_odds": 11.0,
       "reverse_bet": "ТМ 1.5",
-      "reverse_odds": 1.95,
-      "strategy_id": "S27",
+      "reverse_odds": 1.05,
+      "strategy_id": "S26",
       "strategy_ids": [
-        "S27"
+        "S26"
       ],
       "strategy_names": [
-        "High Pressure ТБ 0.5 первого тайма"
+        "High Pressure ТБ 0.5 матча"
       ],
       "tier": "ACTIVE",
-      "pressure10": 32.0,
-      "period": "FH",
+      "pressure10": 38.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-03T21:58:24Z",
+      "sport": "football",
+      "tournament": "Canada Premier League",
+      "event_id": "11419923",
+      "match": "Forge FC - HFX Wanderers",
+      "minute_score": "91' / '3-1'",
+      "minute": 91,
+      "score": "3-1",
+      "exact_bet_line": "ТБ 4.5",
+      "current_odds": 4.4,
+      "reverse_bet": "ТМ 4.5",
+      "reverse_odds": 1.2,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 59.0,
+      "period": "FT",
       "source": "stateful_goal_mining"
     }
   ]
