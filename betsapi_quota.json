@@ -2,14 +2,14 @@
   "schema_version": 1,
   "provider": "betsapi_events",
   "provider_limit_per_hour": 3600,
-  "working_limit_per_hour": 3400,
-  "emergency_reserve_per_hour": 200,
+  "working_limit_per_hour": 3450,
+  "emergency_reserve_per_hour": 150,
   "normal": {
     "scanner_total": 1400,
     "scanner_main": 650,
     "s30": 750,
     "mining": 1600,
-    "settlement_total": 100,
+    "settlement_total": 150,
     "intuition_manual": 300
   },
   "morning_msk": {
@@ -19,12 +19,12 @@
     "scanner_main": 325,
     "s30": 375,
     "mining": 800,
-    "settlement_total": 100,
+    "settlement_total": 150,
     "intuition_manual": 300,
-    "unallocated": 1700
+    "unallocated": 1650
   },
   "settlement": {
-    "scanner_per_scheduled_run": 50,
+    "scanner_per_scheduled_run": 100,
     "mining_per_scheduled_run": 50,
     "bootstrap_manual_max": 300
   },

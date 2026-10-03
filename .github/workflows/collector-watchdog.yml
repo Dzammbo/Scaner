@@ -9,6 +9,7 @@ on:
       - "Scanner continuous worker"
       - "S30 continuous worker"
       - "Public Mining continuous worker"
+      - "Scanner settlement"
     types: [completed]
   schedule:
     - cron: "23 * * * *"
@@ -16,6 +17,10 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/collector-watchdog.yml"
+      - ".github/workflows/scanner-settlement.yml"
+      - "forward_log/scanner_worker_status.json"
+      - "forward_log/s30/worker_status.json"
+      - "forward_log/settlement/status.json"
 
 permissions:
   actions: write
@@ -82,6 +87,36 @@ jobs:
             fi
           }
 
+          ensure_settlement() {
+            local workflow="scanner-settlement.yml"
+            local status_path="forward_log/settlement/status.json"
+            local active stale
+
+            active="$(gh run list --workflow "$workflow" --limit 30 --json databaseId,status,createdAt --jq '[.[] | select(.status == "in_progress")] | sort_by(.createdAt) | last | .databaseId // empty')"
+            mapfile -t waiting < <(gh run list --workflow "$workflow" --limit 30 --json databaseId,status --jq '.[] | select(.status == "queued" or .status == "waiting" or .status == "pending" or .status == "requested") | .databaseId')
+
+            for run_id in "${waiting[@]}"; do
+              gh run cancel "$run_id" || true
+            done
+
+            stale="$(python3 - "$status_path" <<'PY'
+          import json,sys
+          from datetime import datetime,timezone
+          try:
+              row=json.load(open(sys.argv[1],encoding="utf-8"))
+              ts=datetime.fromisoformat(str(row["updated_at"]).replace("Z","+00:00"))
+              print("1" if (datetime.now(timezone.utc)-ts).total_seconds()>3600 else "0")
+          except Exception:
+              print("1")
+          PY
+          )"
+
+            if [ "$stale" = "1" ] && [ -z "$active" ]; then
+              gh workflow run "$workflow" --ref main
+            fi
+          }
+
           ensure_worker "scaner-hot-path.yml" "forward_log/scanner_worker_status.json"
           ensure_worker "s30-hot-path.yml" "forward_log/s30/worker_status.json"
           ensure_worker "scaner-mining-continuous.yml" "mining_log/public_worker_status.json"
+          ensure_settlement

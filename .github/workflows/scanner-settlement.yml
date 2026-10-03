@@ -2,14 +2,6 @@ name: Scanner settlement
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "7 */2 * * *"
-  push:
-    branches: [main]
-    paths:
-      - "scanner_settlement.py"
-      - "current_status.py"
-      - ".github/workflows/scanner-settlement.yml"
 
 permissions:
   contents: write
@@ -24,7 +16,7 @@ jobs:
     timeout-minutes: 20
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-      SCANNER_SETTLEMENT_QUERY_BUDGET: "50"
+      SCANNER_SETTLEMENT_QUERY_BUDGET: "100"
       SCANNER_SETTLEMENT_BOOTSTRAP_QUERY_BUDGET: "300"
       SCANNER_SETTLEMENT_RETRY_SECONDS: "7200"
     steps:
