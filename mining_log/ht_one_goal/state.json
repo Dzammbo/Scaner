@@ -7303,8 +7303,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13143452": {
       "event_id": "13143452",
@@ -8202,8 +8203,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12183762": {
       "event_id": "12183762",
@@ -8222,8 +8224,26 @@
       "leading_side": "AWAY",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "12394579": {
+      "event_id": "12394579",
+      "bet365_id": "202180542",
+      "kickoff": 1790994600,
+      "candidate_at": 1790997990,
+      "country": "cr",
+      "league": "Costa Rica Primera Division Women",
+      "home": "Moravia (W)",
+      "away": "Municipal Pococi (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-03T02:47:31Z",
-  "api_calls_last_run": 5
+  "updated_at": "2026-10-03T03:30:15Z",
+  "api_calls_last_run": 2
 }
