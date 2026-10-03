@@ -8326,8 +8326,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12186942": {
       "event_id": "12186942",
@@ -8344,8 +8345,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13235722": {
       "event_id": "13235722",
@@ -8362,8 +8364,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232827": {
       "event_id": "13232827",
@@ -8380,7 +8383,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "13232826": {
       "event_id": "13232826",
@@ -8397,7 +8401,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "12187037": {
       "event_id": "12187037",
@@ -8414,7 +8419,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "12050649": {
       "event_id": "12050649",
@@ -9759,7 +9765,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232996": {
       "event_id": "13232996",
@@ -9776,7 +9783,8 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13236391": {
       "event_id": "13236391",
@@ -9793,7 +9801,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13204906": {
       "event_id": "13204906",
@@ -9810,7 +9819,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11425285": {
       "event_id": "11425285",
@@ -9827,7 +9837,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12159347": {
       "event_id": "12159347",
@@ -9844,7 +9855,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13232668": {
       "event_id": "13232668",
@@ -9861,9 +9873,135 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13229218": {
+      "event_id": "13229218",
+      "bet365_id": "202197774",
+      "kickoff": 1791021600,
+      "candidate_at": 1791026241,
+      "country": "",
+      "league": "Europe Friendlies",
+      "home": "Chrobry Glogow",
+      "away": "Warta Poznan",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12142138": {
+      "event_id": "12142138",
+      "bet365_id": "202186527",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026241,
+      "country": "pl",
+      "league": "Poland III Liga",
+      "home": "Grom Nowy Staw",
+      "away": "Baltyk Koszalin",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13233216": {
+      "event_id": "13233216",
+      "bet365_id": "202168891",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026241,
+      "country": "es",
+      "league": "Spain Tercera Federacion Women",
+      "home": "Mulier FCN (W)",
+      "away": "CD Lourdes (W)",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13222897": {
+      "event_id": "13222897",
+      "bet365_id": "202182140",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026304,
+      "country": "",
+      "league": "Asian Games",
+      "home": "South Korea U23",
+      "away": "Japan U23",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12330666": {
+      "event_id": "12330666",
+      "bet365_id": "202093958",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026365,
+      "country": "es",
+      "league": "Spain Primera Federacion Women",
+      "home": "Athletic Bilbao B (W)",
+      "away": "Osasuna (W)",
+      "halftime_score": [
+        0,
+        3
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13232361": {
+      "event_id": "13232361",
+      "bet365_id": "202190572",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026423,
+      "country": "gr",
+      "league": "Greece U19 Cup",
+      "home": "Kalamata U19",
+      "away": "AEK Athens U19",
+      "halftime_score": [
+        0,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13233166": {
+      "event_id": "13233166",
+      "bet365_id": "202145546",
+      "kickoff": 1791023400,
+      "candidate_at": 1791026491,
+      "country": "es",
+      "league": "Spain Segunda Federacion Women",
+      "home": "FC Badalona B (W)",
+      "away": "Villaviciosa Odon (W)",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-03T10:28:11Z",
+  "updated_at": "2026-10-03T11:21:46Z",
   "api_calls_last_run": 9
 }
