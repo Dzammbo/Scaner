@@ -1,6 +1,57 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-04T19:15:37Z",
-  "signals": 474,
-  "active_last_10m": []
+  "updated_at": "2026-10-04T19:25:49Z",
+  "signals": 476,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-04T19:20:37Z",
+      "sport": "football",
+      "tournament": "UEFA Nations League A",
+      "event_id": "11437357",
+      "match": "Portugal - Norway",
+      "minute_score": "32' / '0-0'",
+      "minute": 32,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 2.025,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.775,
+      "strategy_id": "S32",
+      "strategy_ids": [
+        "S32"
+      ],
+      "strategy_names": [
+        "Гол до перерыва при высокой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 42.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-04T19:20:37Z",
+      "sport": "football",
+      "tournament": "Chile Cup",
+      "event_id": "13214391",
+      "match": "O'Higgins - Deportes Concepcion",
+      "minute_score": "45' / '0-0'",
+      "minute": 45,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 1.25",
+      "current_odds": 1.875,
+      "reverse_bet": "ТБ 1.25",
+      "reverse_odds": 1.925,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 0.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
