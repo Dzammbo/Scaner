@@ -18936,8 +18936,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12385232": {
       "event_id": "12385232",
@@ -19923,8 +19924,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11444730": {
       "event_id": "11444730",
@@ -19941,7 +19943,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13120805": {
       "event_id": "13120805",
@@ -20061,8 +20064,76 @@
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
       "status": "ELIGIBLE"
+    },
+    "13235652": {
+      "event_id": "13235652",
+      "bet365_id": "202190766",
+      "kickoff": 1791091797,
+      "candidate_at": 1791094596,
+      "country": "hk",
+      "league": "Hong Kong 3rd Division",
+      "home": "Soar FC",
+      "away": "Qi Yi FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13235653": {
+      "event_id": "13235653",
+      "bet365_id": "202190770",
+      "kickoff": 1791091800,
+      "candidate_at": 1791094727,
+      "country": "hk",
+      "league": "Hong Kong 3rd Division",
+      "home": "Spark Ornament",
+      "away": "CityLinkers SW",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "13018753": {
+      "event_id": "13018753",
+      "bet365_id": "202141086",
+      "kickoff": 1791091800,
+      "candidate_at": 1791094727,
+      "country": "hk",
+      "league": "Hong Kong 1st Division",
+      "home": "Hoi King",
+      "away": "Leaper FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13017415": {
+      "event_id": "13017415",
+      "bet365_id": "202082591",
+      "kickoff": 1791091800,
+      "candidate_at": 1791095028,
+      "country": "hk",
+      "league": "Hong Kong 1st Division",
+      "home": "Central & Western",
+      "away": "Resources Capital FC",
+      "halftime_score": [
+        1,
+        2
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T06:14:33Z",
+  "updated_at": "2026-10-04T06:23:51Z",
   "api_calls_last_run": 4
 }
