@@ -148,9 +148,11 @@ def classify_competition(league, home, away):
     text = " ".join(map(str, (league or "", home or "", away or "")))
     low = text.lower()
     doubles = "/" in str(home or "") or "/" in str(away or "") or "double" in low or "pairs" in low
-    women = bool(re.search(r"\bW(?:15|25|35|50|75|100)\b", text, re.I) or "women" in low or "wta" in low)
-    men = bool(re.search(r"\bM(?:15|25|25|35|50|75|100)\b", text, re.I))
-    itf = bool("itf" in low or "world tennis" in low or women or men)
+    itf_women = bool(re.search(r"\bW(?:15|25|35|50|75|100)\b", text, re.I))
+    itf_men = bool(re.search(r"\bM(?:15|25|35|50|75|100)\b", text, re.I))
+    women = bool(itf_women or "women" in low or "wta" in low)
+    itf = bool("itf" in low or "world tennis" in low or itf_women or itf_men)
+    men = itf and not women
     return {"itf": itf, "women": women, "men": itf and not women, "doubles": doubles}
 
 
