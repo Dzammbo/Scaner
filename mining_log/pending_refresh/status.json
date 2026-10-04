@@ -1,20 +1,21 @@
 {
-  "updated_at": "2026-10-04T18:12:47Z",
+  "updated_at": "2026-10-04T20:53:02Z",
   "query_budget": 50,
   "retry_after_seconds": 7200,
-  "provider_queries": 14,
-  "queried_events": 133,
-  "cache_events": 1628,
-  "signal_unique_events": 1548,
-  "signal_final_events": 1527,
-  "signal_pending_events": 21,
+  "provider_queries": 7,
+  "queried_events": 70,
+  "cache_events": 1661,
+  "signal_unique_events": 1581,
+  "signal_final_events": 1566,
+  "signal_void_events": 5,
+  "signal_pending_events": 10,
   "states": {
-    "FINAL": 1591,
-    "NOT_FINAL_1": 15,
+    "FINAL": 1630,
+    "NOT_FINAL_1": 9,
     "NOT_FINAL_2": 9,
     "NOT_FINAL_4": 1,
-    "NOT_FINAL_5": 1,
-    "NOT_FINAL_9": 11
+    "VOID_CANCELLED": 1,
+    "VOID_RETIRED": 11
   },
   "errors": []
 }
