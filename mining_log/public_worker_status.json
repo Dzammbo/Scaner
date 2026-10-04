@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-04T09:08:05.516182+00:00",
-  "started_at": "2026-10-04T08:47:44.148824+00:00",
+  "updated_at": "2026-10-04T14:01:04.210644+00:00",
+  "started_at": "2026-10-04T13:50:59.410935+00:00",
   "passes": {
-    "general": 5,
-    "goal": 4
+    "general": 2,
+    "goal": 0
   },
   "failures": {
     "general": 0,
-    "goal": 0
+    "goal": 2
   },
-  "calls_last_hour": 160,
+  "calls_last_hour": 80,
   "hourly_cap": 2300,
   "active_collectors": {
     "general": 300,
@@ -21,10 +21,6 @@
     "S22",
     "S25"
   ],
-  "last_error": null,
-  "last_checkpoint": {
-    "ok": true,
-    "changed": true,
-    "attempt": 1
-  }
+  "last_error": "goal: stateful goal exited 1: l_mining.py\", line 223, in main\n    sync_scanner_signals(active_signals)\n  File \"/home/runner/work/Scaner/Scaner/stateful_goal_mining.py\", line 54, in sync_scanner_signals\n    current=load_rows(SCANNER_SIGNALS);by_key={(str(x.get(\"event_id\")),str(x.get(\"exact_bet_line\")),str(x.get(\"strategy_id\"))):x for x in current}\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/Scaner/Scaner/stateful_goal_mining.py\", line 45, in load_rows\n    for line in path.read_text(encoding=\"utf-8\").splitlines():\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1030, in read_text\n    return f.read()\n           ^^^^^^^^\n  File \"<frozen codecs>\", line 322, in decode\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xaa in position 1: invalid start byte\n",
+  "last_checkpoint": null
 }
