@@ -1,8 +1,8 @@
 {
-  "pending_signals": 84,
+  "pending_signals": 87,
   "void_signals": 100,
   "signal_reasons": {
-    "INPLAY": 57,
+    "INPLAY": 60,
     "PENDING_PROVIDER_FIX": 21,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -40,14 +40,20 @@
       "S30": 1
     },
     "settlement_score_sources": {
-      "scores.2": 3433,
-      "ss": 1177
+      "scores.2": 3458,
+      "ss": 1193
     }
   },
   "observation_watchlist": {
     "status": "OBSERVATION_ONLY",
     "forward_start_at": "2026-10-04T04:40:08Z",
     "items": 4,
+    "review_ready": 0
+  },
+  "s30_top6": {
+    "status": "OBSERVATION_ONLY",
+    "forward_start_at": "2026-10-04T06:27:49Z",
+    "items": 6,
     "review_ready": 0
   }
 }
