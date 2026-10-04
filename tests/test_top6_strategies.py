@@ -87,6 +87,48 @@ class TopSixRegistryTest(unittest.TestCase):
 
 
 class FootballTopSixTest(unittest.TestCase):
+    def test_brazil_categories_are_split_with_one_first_entry(self):
+        now = int(time.time())
+        detail = totals_detail([
+            {"add_time": now, "ss": "0-0", "time_str": "12", "handicap": "2.5", "over_od": "1.90", "under_od": "1.90"},
+        ])
+        cases = (
+            ("S06W", "Brazil Serie A1 Women", "ТМ 2.5"),
+            ("S06Y", "Brazil Campeonato Paulista U20", "ТБ 2.5"),
+            ("S06A", "Brazil Serie A", "ТМ 2.5"),
+        )
+        for strategy_id, league, expected_bet in cases:
+            ev = football_event("0-0", 12)
+            ev.update({"country": "br", "league": league})
+            hit = scanner.football_evaluate(ev, strategy(strategy_id), detail)
+            self.assertIsNotNone(hit)
+            self.assertEqual(hit["bet"], expected_bet)
+            self.assertTrue(strategy(strategy_id)["rule"]["one_entry_per_match"])
+
+    def test_brazil_split_does_not_mix_categories(self):
+        ev = football_event("0-0", 12)
+        ev.update({"country": "br", "league": "Brazil Serie A1 Women"})
+        self.assertTrue(scanner.rule_prefilter(ev, strategy("S06W")))
+        self.assertFalse(scanner.rule_prefilter(ev, strategy("S06Y")))
+        self.assertFalse(scanner.rule_prefilter(ev, strategy("S06A")))
+
+    def test_first_brazil_signal_stops_later_line_changes(self):
+        ev = football_event("0-0", 12)
+        ev.update({"country": "br", "league": "Brazil Serie A"})
+        st = strategy("S06A")
+        with tempfile.TemporaryDirectory() as tmp:
+            old_log_dir = scanner.LOG_DIR
+            scanner.LOG_DIR = Path(tmp)
+            try:
+                self.assertTrue(scanner.cheap_core_prefilter(ev, st, {"events": {}}))
+                (Path(tmp) / "scanner_signals.jsonl").write_text(
+                    json.dumps({"event_id": "1001", "strategy_ids": ["S06A"], "exact_bet_line": "ТМ 2.5"}) + "\n",
+                    encoding="utf-8",
+                )
+                self.assertFalse(scanner.cheap_core_prefilter(ev, st, {"events": {}}))
+            finally:
+                scanner.LOG_DIR = old_log_dir
+
     def test_s30_selects_current_total_under_at_any_score(self):
         now = int(time.time())
         detail = totals_detail([

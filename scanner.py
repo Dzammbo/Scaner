@@ -23,6 +23,14 @@ STATE_PATH = Path(os.environ.get("SCANER_STATE_PATH") or (LOG_DIR / f"{LOG_PREFI
 RUN_LABEL = "SCANER_V1" if MODE == "scanner" else "MINING_GITHUB_V1"
 
 FIRST_HALF_STRATEGIES = {"S27"}
+YOUTH_TOURNAMENT = re.compile(
+    r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|\byouth\b|\breserves?\b|\bdevelopment\b|\bjuniors?\b",
+    re.IGNORECASE,
+)
+WOMEN_TOURNAMENT = re.compile(
+    r"\bwomen\b|\bwoman\b|\bladies\b|\bfemenil\b|\bfeminina\b|\bfeminine\b|\bfemale\b|\(w\)",
+    re.IGNORECASE,
+)
 
 
 def signal_period(row=None, strategy_id=None):
@@ -201,7 +209,7 @@ def save_scanner_state(boards):
             }
     STATE_PATH.write_text(json.dumps({"updated_at":now_iso(),"events":events},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 
-def s30_already_signaled(event_id):
+def strategy_already_signaled(event_id, strategy_id):
     path = LOG_DIR / f"{LOG_PREFIX}_signals.jsonl"
     if not path.exists():
         return False
@@ -211,15 +219,24 @@ def s30_already_signaled(event_id):
         except Exception:
             continue
         ids = row.get("strategy_ids") or [row.get("strategy_id")]
-        if str(row.get("event_id")) == str(event_id) and "S30" in ids:
+        if str(row.get("event_id")) == str(event_id) and strategy_id in ids:
             return True
     return False
+
+
+def s30_already_signaled(event_id):
+    return strategy_already_signaled(event_id, "S30")
 
 def cheap_core_prefilter(ev, st, previous):
     if not rule_prefilter(ev, st):
         return False
     sid=st["id"]
     prev=(previous or {}).get("events",{}).get(f"{ev['sport']}:{ev['event_id']}") or {}
+
+    # Frozen first-entry rules keep retrying until a quote is persisted, then
+    # permanently stop for this strategy/event even if the market line changes.
+    if st.get("rule", {}).get("one_entry_per_match") and strategy_already_signaled(ev.get("event_id"), sid):
+        return False
 
     # Mining P1: first available observation inside 60-69 at score 0-1.
     # Once the event was already observed in this window, do not create a later entry.
@@ -348,6 +365,17 @@ def country(e):
     x = e.get("league") or {}
     return str(x.get("cc") or "").lower() if isinstance(x, dict) else ""
 
+
+def football_category(ev):
+    text = " ".join(
+        [str(ev.get("league") or ""), str(ev.get("home") or ""), str(ev.get("away") or "")]
+    )
+    if WOMEN_TOURNAMENT.search(text):
+        return "women"
+    if YOUTH_TOURNAMENT.search(text):
+        return "youth_reserve"
+    return "adult_men"
+
 def virtual(e):
     txt = " ".join(
         [league(e), str(obj_name(e.get("home")) or ""), str(obj_name(e.get("away")) or "")]
@@ -399,6 +427,8 @@ def rule_prefilter(ev, st):
     if r.get("score_state") == "draw" and score_state(s) != "draw":
         return False
     if "country" in r and ev.get("country") != str(r["country"]).lower():
+        return False
+    if "category" in r and football_category(ev) != str(r["category"]):
         return False
     if "league_contains" in r and not contains(ev.get("league"), r["league_contains"]):
         return False
@@ -593,6 +623,12 @@ def football_evaluate(ev, st, detail):
         bet_line = tf["main_handicap"]
         bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
         reverse_bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
+    elif market == "main_under":
+        current_odds = tf["main_under_odds"]
+        reverse_odds = tf["main_over_odds"]
+        bet_line = tf["main_handicap"]
+        bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
+        reverse_bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "draw":
         # draw price lives in 1_1
         rows = latest_rows(((detail or {}).get("odds") or {}).get("1_1"))
@@ -633,7 +669,7 @@ def football_evaluate(ev, st, detail):
         return None
 
     # Rules with a price-dependent market are emitted only when that price is available.
-    if market in ("next_goal_over", "next_goal_under", "main_over", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
+    if market in ("next_goal_over", "next_goal_under", "main_over", "main_under", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
         return None
 
     return {
