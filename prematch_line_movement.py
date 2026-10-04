@@ -7,6 +7,7 @@ from pathlib import Path
 BASE="https://api.b365api.com"; TOKEN=os.environ["BETSAPI_KEY"]
 ROOT=Path("mining_log/prematch_line_movement"); STATE=ROOT/"state.json"; SIGNALS=ROOT/"signals.jsonl"; RUNS=ROOT/"runs.jsonl"; STATUS=ROOT/"status.json"
 MAX_CALLS=max(6,int(os.environ.get("LINE_MOVEMENT_CALL_BUDGET","28"))); calls=0; now=int(time.time())
+RETIRED=os.environ.get("ENABLE_RETIRED_PREMATCH_MOVEMENT","0")!="1"
 SPORTS=[(1,"football","1_1"),(13,"tennis","13_1"),(16,"baseball","16_1"),(17,"ice_hockey","17_1"),(18,"basketball","18_1")]
 
 def iso(ts=None): return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
@@ -50,6 +51,9 @@ def rows(path):
 def save_rows(path,data):path.write_text("".join(json.dumps(x,ensure_ascii=False,separators=(",",":"))+"\n" for x in data),encoding="utf-8")
 
 def main():
+ if RETIRED:
+  print(json.dumps({"collector":"prematch_line_movement","status":"disabled"}))
+  return
  ROOT.mkdir(parents=True,exist_ok=True);state=load(STATE,{"events":{}});events=state.setdefault("events",{});signals=rows(SIGNALS)
  signal_keys={(x["event_id"],x["side"],x["band"],x["timing_bucket"]) for x in signals}
  for sport_id,sport,market in SPORTS:

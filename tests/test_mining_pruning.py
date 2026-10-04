@@ -6,6 +6,8 @@ os.environ.setdefault("BETSAPI_KEY", "test-token")
 
 import scaner_mining_worker as worker
 import stateful_goal_mining as stateful
+import ht_one_goal_mining as ht
+import prematch_line_movement as prematch
 
 
 class MiningPruningTest(unittest.TestCase):
@@ -33,6 +35,10 @@ class MiningPruningTest(unittest.TestCase):
             "strategy": "LIVE_GOAL_SELECTION_V3",
             "arm": "PLUS_0_5",
         }))
+
+    def test_retired_collectors_are_disabled_by_default(self):
+        self.assertTrue(ht.RETIRED)
+        self.assertTrue(prematch.RETIRED)
 
 
 if __name__ == "__main__":

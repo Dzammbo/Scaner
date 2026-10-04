@@ -22,6 +22,7 @@ RUNS_PATH = ROOT / "runs.jsonl"
 MAX_CALLS = max(4, int(os.environ.get("HT_ONE_GOAL_CALL_BUDGET", "30")))
 MAX_DETAILS = max(1, int(os.environ.get("HT_ONE_GOAL_DETAIL_BUDGET", "24")))
 calls = 0
+RETIRED = os.environ.get("ENABLE_RETIRED_HT_ONE_GOAL", "0") != "1"
 
 
 def now_ts(): return int(time.time())
@@ -280,6 +281,9 @@ def write_status(rows, candidates, board_n):
 
 
 def main():
+    if RETIRED:
+        print(json.dumps({"collector": "football_ht_one_goal_second_half_v1", "status": "disabled"}))
+        return
     ROOT.mkdir(parents=True, exist_ok=True)
     state = load_json(STATE_PATH, {"candidates": {}}); candidates = state.setdefault("candidates", {})
     rows = load_signals(); signaled = {r["event_id"] for r in rows}
