@@ -18,6 +18,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/collector-watchdog.yml"
+      - ".github/workflows/s30-hot-path.yml"
       - ".github/workflows/scanner-settlement.yml"
       - "forward_log/scanner_worker_status.json"
       - "forward_log/s30/worker_status.json"
