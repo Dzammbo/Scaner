@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-04T20:40:17.229201Z",
+  "generated_at": "2026-10-04T21:40:26.098975Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,39 +25,39 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 68,
-      "settled": 63,
-      "pending": 5,
+      "recorded": 69,
+      "settled": 65,
+      "pending": 4,
       "void": 0,
       "result": {
-        "N": 63,
-        "W": 34,
-        "L": 29,
+        "N": 65,
+        "W": 35,
+        "L": 30,
         "P": 0,
-        "profit": -6.862,
-        "ROI": -10.89
+        "profit": -7.45,
+        "ROI": -11.46
       },
       "without_top3": {
-        "N": 60,
-        "W": 31,
-        "L": 29,
+        "N": 62,
+        "W": 32,
+        "L": 30,
         "P": 0,
-        "profit": -9.863,
-        "ROI": -16.44
+        "profit": -10.45,
+        "ROI": -16.85
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 415,
-        "settled": 376,
-        "pending": 39,
+        "recorded": 422,
+        "settled": 406,
+        "pending": 16,
         "void": 0,
         "result": {
-          "N": 376,
-          "W": 148,
-          "L": 191,
-          "P": 37,
-          "profit": -40.1,
-          "ROI": -10.66
+          "N": 406,
+          "W": 156,
+          "L": 209,
+          "P": 41,
+          "profit": -50.263,
+          "ROI": -12.38
         }
       },
       "review_ready": false
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 452,
-        "settled": 408,
-        "pending": 44,
+        "recorded": 460,
+        "settled": 440,
+        "pending": 20,
         "void": 0,
         "result": {
-          "N": 408,
-          "W": 203,
-          "L": 169,
-          "P": 36,
-          "profit": 7.757,
-          "ROI": 1.9
+          "N": 440,
+          "W": 222,
+          "L": 178,
+          "P": 40,
+          "profit": 14.93,
+          "ROI": 3.39
         }
       },
       "review_ready": false
