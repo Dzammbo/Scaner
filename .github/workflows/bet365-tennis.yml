@@ -1,0 +1,49 @@
+name: Bet365 tennis continuous worker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "bet365_tennis.py"
+      - "bet365_tennis_worker.py"
+      - ".github/workflows/bet365-tennis.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bet365-tennis-forward-log
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      BET365_TENNIS_DURATION_SECONDS: "19200"
+      BET365_TENNIS_POLL_SECONDS: "180"
+      BET365_TENNIS_CHECKPOINT_SECONDS: "600"
+      BET365_TENNIS_HOURLY_CAP: "1200"
+      BET365_TENNIS_DETAILS_PER_PASS: "24"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Validate collector
+        run: |
+          python3 -m py_compile bet365_tennis.py bet365_tennis_worker.py
+          python3 -m unittest tests.test_bet365_tennis
+      - name: Run Bet365 tennis collector
+        run: python3 bet365_tennis_worker.py
+      - name: Show worker status
+        if: always()
+        run: |
+          test -f forward_log/bet365_tennis/worker_status.json
+          cat forward_log/bet365_tennis/worker_status.json
