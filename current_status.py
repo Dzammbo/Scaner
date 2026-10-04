@@ -513,6 +513,14 @@ def within_strategy(rows: list[dict], strategy_id: str) -> list[dict]:
         item["attribution_quality"] = "exact"
         if timestamp_at_or_after(item.get("timestamp"), start):
             output.append(item)
+    if strategy_id == "S30":
+        # S30 is defined as the first saved entry per match. Historical worker
+        # passes could append a later line after a goal, so reporting must not
+        # count those repeated observations as independent bets.
+        first_by_event = {}
+        for item in sorted(output, key=lambda row: str(row.get("timestamp") or "")):
+            first_by_event.setdefault(str(item.get("event_id")), item)
+        return list(first_by_event.values())
     return output
 
 

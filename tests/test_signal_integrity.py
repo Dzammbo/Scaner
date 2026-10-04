@@ -113,6 +113,25 @@ class SignalIntegrityTest(unittest.TestCase):
             definitions["S30T05"],
         ))
 
+    def test_s30_statistics_keep_only_first_entry_per_match(self):
+        rows = [
+            {
+                "timestamp": "2026-10-04T10:00:00Z", "event_id": "42", "sport": "football",
+                "period": "FT", "score": "1-0", "exact_bet_line": "ТМ 1.5",
+                "current_odds": 1.40, "reverse_bet": "ТБ 1.5", "reverse_odds": 2.80,
+                "strategy_id": "S30", "strategy_ids": ["S30"],
+            },
+            {
+                "timestamp": "2026-10-04T10:02:00Z", "event_id": "42", "sport": "football",
+                "period": "FT", "score": "1-1", "exact_bet_line": "ТМ 2.5",
+                "current_odds": 1.30, "reverse_bet": "ТБ 2.5", "reverse_odds": 3.20,
+                "strategy_id": "S30", "strategy_ids": ["S30"],
+            },
+        ]
+        selected = current_status.within_strategy(rows, "S30")
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(selected[0]["exact_bet_line"], "ТМ 1.5")
+
 
 if __name__ == "__main__":
     unittest.main()
