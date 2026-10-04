@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are shadow/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 15,
-    "last_operational_change_at": "2026-10-02T20:38:06Z",
-    "last_operational_change": "Added S30 broad 85-minute next-goal Under forward hypothesis with no score or odds filter."
+    "operational_scanner_count": 12,
+    "last_operational_change_at": "2026-10-04T07:05:00Z",
+    "last_operational_change": "Moved three corrected-forward negative rules without robust direct pockets from operational Scanner to Mining shadow."
   },
   "strategies": [
     {
@@ -533,12 +533,14 @@
         "state": "tight_set_loss",
         "side": "previous_set_loser"
       },
-      "user_output": true,
-      "research_role": "scanner_watchlist",
-      "scanner_enabled": true,
-      "research_destination": "scanner",
-      "scanner_core8": true,
-      "scanner_activated_at": "2026-10-01"
+      "user_output": false,
+      "research_role": "mining_shadow",
+      "scanner_enabled": false,
+      "research_destination": "mining",
+      "scanner_core8": false,
+      "scanner_activated_at": "2026-10-01",
+      "scanner_retired_at": "2026-10-04T07:05:00Z",
+      "scanner_retired_reason": "Corrected forward sample: N=229, ROI -37.80%, ROI without top-3 -47.59%; no direct pocket with N>=20 remains positive without top-3. Continue in Mining shadow."
     },
     {
       "id": "T16",
@@ -550,9 +552,12 @@
         "state": "deciding_set",
         "side": "second_set_winner"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "scanner_retired_at": "2026-10-04T07:05:00Z",
+      "scanner_retired_reason": "Corrected forward sample: N=98, ROI -5.71%, ROI without top-3 -15.52%; no direct pocket with N>=20 remains positive without top-3. Continue in Mining shadow."
     },
     {
       "id": "T17",
@@ -623,14 +628,16 @@
         ],
         "market": "plus_0_5"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true,
-      "research_destination": "scanner",
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
       "collection_engine": "stateful_goal_mining.py",
       "scanner_activated_at": "2026-10-01",
       "clean_epoch_start": "2026-10-01T19:15:00Z",
-      "history_note": "Before this epoch S27 accepted every available price; exact Top-6 rule uses 1.80-2.15."
+      "history_note": "Before this epoch S27 accepted every available price; exact Top-6 rule uses 1.80-2.15.",
+      "scanner_retired_at": "2026-10-04T07:05:00Z",
+      "scanner_retired_reason": "Corrected forward sample: N=98, ROI -8.88%, ROI without top-3 -13.76%; no direct pocket with N>=20 remains positive without top-3. Continue in stateful Mining shadow."
     },
     {
       "id": "S28",

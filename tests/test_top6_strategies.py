@@ -54,7 +54,6 @@ class TopSixRegistryTest(unittest.TestCase):
         expected = {
             "S01": [1.70, 2.00],
             "S10": [2.00, 2.10],
-            "S27": [1.80, 2.15],
             "S28": [1.30, 2.075],
             "T18": [1.50, 1.75],
             "S29": [1.30, 1.95],
@@ -64,6 +63,13 @@ class TopSixRegistryTest(unittest.TestCase):
             self.assertTrue(row["scanner_enabled"])
             self.assertEqual(row["rule"]["odds"], odds)
             self.assertEqual(row["clean_epoch_start"], "2026-10-01T19:15:00Z")
+
+    def test_retired_negative_rules_are_mining_only(self):
+        for strategy_id in ("T14", "T16", "S27"):
+            row = strategy(strategy_id)
+            self.assertFalse(row["scanner_enabled"])
+            self.assertFalse(row["user_output"])
+            self.assertEqual(row["research_destination"], "mining")
 
     def test_operational_count_matches_registry(self):
         registry = json.loads((ROOT / "strategies.json").read_text(encoding="utf-8"))
