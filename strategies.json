@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are shadow/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 12,
-    "last_operational_change_at": "2026-10-04T07:05:00Z",
-    "last_operational_change": "Moved three corrected-forward negative rules without robust direct pockets from operational Scanner to Mining shadow."
+    "operational_scanner_count": 11,
+    "last_operational_change_at": "2026-10-04T08:10:00Z",
+    "last_operational_change": "Archived the persistently negative tight-set winner rule; it is no longer collected by Scanner."
   },
   "strategies": [
     {
@@ -260,9 +260,13 @@
         "state": "tight_set_loss",
         "side": "previous_set_winner"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "history",
+      "status": "ARCHIVED",
+      "scanner_retired_at": "2026-10-04T08:10:00Z",
+      "scanner_retired_reason": "Большая выборка остаётся отрицательной: N=531, ROI -2,92%, без трёх крупнейших выигрышей -4,55%; устойчивого масштабируемого плюсового кармана не найдено."
     },
     {
       "id": "S12",
