@@ -15,11 +15,11 @@
       "SECONDARY",
       "WATCHLIST"
     ],
-    "note": "Not a real-money execution list. Rules are shadow/research candidates.",
+    "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 11,
-    "last_operational_change_at": "2026-10-04T08:10:00Z",
-    "last_operational_change": "Archived the persistently negative tight-set winner rule; it is no longer collected by Scanner."
+    "operational_scanner_count": 15,
+    "last_operational_change_at": "2026-10-04T09:00:32Z",
+    "last_operational_change": "Made the four stateful Mining hypotheses S31-S34 visible in Scanner output and statistics without duplicating collection."
   },
   "strategies": [
     {
@@ -808,12 +808,12 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": false,
-      "scanner_enabled": false,
+      "user_output": true,
+      "scanner_enabled": true,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "STATEFUL_MINING_ONLY",
-      "research_destination": "stateful_mining",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
       "clean_epoch_start": "2026-10-04T08:47:35Z"
     },
     {
@@ -832,12 +832,12 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": false,
-      "scanner_enabled": false,
+      "user_output": true,
+      "scanner_enabled": true,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "STATEFUL_MINING_ONLY",
-      "research_destination": "stateful_mining",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
       "clean_epoch_start": "2026-10-04T08:47:35Z"
     },
     {
@@ -855,12 +855,12 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": false,
-      "scanner_enabled": false,
+      "user_output": true,
+      "scanner_enabled": true,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "STATEFUL_MINING_ONLY",
-      "research_destination": "stateful_mining",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
       "clean_epoch_start": "2026-10-04T08:47:35Z"
     },
     {
@@ -879,12 +879,12 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": false,
-      "scanner_enabled": false,
+      "user_output": true,
+      "scanner_enabled": true,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "STATEFUL_MINING_ONLY",
-      "research_destination": "stateful_mining",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
       "clean_epoch_start": "2026-10-04T08:47:35Z"
     },
     {

@@ -25,7 +25,7 @@ WATCHLIST_FILE = Path("observation_watchlist.json")
 WATCHLIST_OUTPUT_FILE = Path("observation_watchlist_current.json")
 S30_TOP6_FILE = Path("s30_top6.json")
 S30_TOP6_OUTPUT_FILE = Path("s30_top6_current.json")
-FIRST_HALF_STRATEGIES = {"S27"}
+FIRST_HALF_STRATEGIES = {"S27", "S32"}
 
 YOUTH_TOURNAMENT = re.compile(
     r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|\byouth\b|\breserves?\b|\bdevelopment\b|\bjuniors?\b",
@@ -51,6 +51,10 @@ STRATEGY_STARTS = {
     "S28": "2026-10-01T19:15:00+00:00",
     "S29": "2026-10-01T19:15:00+00:00",
     "S30": "2026-10-02T20:38:06+00:00",
+    "S31": "2026-10-04T08:47:35+00:00",
+    "S32": "2026-10-04T08:47:35+00:00",
+    "S33": "2026-10-04T08:47:35+00:00",
+    "S34": "2026-10-04T08:47:35+00:00",
     "T14": "1970-01-01T00:00:00+00:00",
     "T16": "2026-09-26T15:19:55+00:00",
     "T18": "2026-10-01T19:15:00+00:00",

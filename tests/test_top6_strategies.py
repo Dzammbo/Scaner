@@ -77,6 +77,14 @@ class TopSixRegistryTest(unittest.TestCase):
         enabled = sum(row.get("scanner_enabled", True) for row in registry["strategies"])
         self.assertEqual(registry["policy"]["operational_scanner_count"], enabled)
 
+    def test_new_stateful_hypotheses_are_user_visible(self):
+        for strategy_id in ("S31", "S32", "S33", "S34"):
+            row = strategy(strategy_id)
+            self.assertTrue(row["scanner_enabled"])
+            self.assertTrue(row["user_output"])
+            self.assertEqual(row["status"], "FORWARD_HYPOTHESIS")
+            self.assertEqual(row["collection_engine"], "stateful_goal_mining.py")
+
 
 class FootballTopSixTest(unittest.TestCase):
     def test_s30_selects_current_total_under_at_any_score(self):
@@ -164,7 +172,7 @@ class TennisTopSixTest(unittest.TestCase):
 
 
 class PressureTopSixTest(unittest.TestCase):
-    def test_sync_keeps_only_full_time_s26(self):
+    def test_sync_publishes_all_active_stateful_signals(self):
         base = {
             "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
             "arm": "HIGH_PRESSURE_O05_FT",
@@ -182,12 +190,17 @@ class PressureTopSixTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             stateful.SCANNER_SIGNALS = Path(tmp) / "signals.jsonl"
             stateful.SCANNER_STATUS = Path(tmp) / "status.json"
-            stateful.sync_scanner_pressure([
+            stateful.sync_scanner_signals([
                 {**base, "event_id": "s26", "selected_odds": 1.95},
+                {**base, "event_id": "s31", "strategy": "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.90},
+                {**base, "event_id": "s32", "strategy": "FOOTBALL_FH_PRESSURE_GOAL_V1", "arm": "PRIMARY", "period": "FH", "selection": "OVER", "selected_odds": 2.10},
+                {**base, "event_id": "s33", "strategy": "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.75},
+                {**base, "event_id": "s34", "strategy": "FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1", "arm": "PRIMARY", "selection": "OVER", "selected_odds": 1.60},
                 {**base, "event_id": "s27", "arm": "HIGH_PRESSURE_O05_FH", "period": "FH", "selected_odds": 1.95},
             ])
             rows = stateful.load_rows(stateful.SCANNER_SIGNALS)
-        self.assertEqual([row["event_id"] for row in rows], ["s26"])
+        self.assertEqual({row["strategy_id"] for row in rows}, {"S26", "S31", "S32", "S33", "S34"})
+        self.assertNotIn("s27", {row["event_id"] for row in rows})
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ import scaner_mining_worker as worker
 import stateful_goal_mining as stateful
 import ht_one_goal_mining as ht
 import prematch_line_movement as prematch
+import mining_pending_refresh as refresh
 
 
 class MiningPruningTest(unittest.TestCase):
@@ -51,6 +52,12 @@ class MiningPruningTest(unittest.TestCase):
         self.assertEqual(stateful.outcome_for(1, 0.5, "OVER"), "WIN")
         self.assertEqual(stateful.outcome_for(2, 1.75, "UNDER"), "HALF_LOSS")
         self.assertEqual(stateful.profit_for("HALF_LOSS", 1.9), -0.5)
+
+    def test_mining_refresh_respects_under_selection(self):
+        row = {"period": "FT", "selection": "UNDER", "selected_line": 0.5, "selected_odds": 1.8, "reverse_odds": 2.0}
+        event = {"state": "FINAL", "ss": "0-0"}
+        self.assertEqual(refresh.stateful(row, event), ("WIN", 0.8))
+        self.assertEqual(refresh.stateful(row, event, True), ("LOSS", -1.0))
 
     def test_retired_collectors_are_disabled_by_default(self):
         self.assertTrue(ht.RETIRED)

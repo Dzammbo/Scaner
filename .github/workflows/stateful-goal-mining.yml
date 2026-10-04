@@ -49,7 +49,7 @@ jobs:
         run: |
           python3 -m py_compile stateful_goal_mining.py
           grep -q 'STATEFUL_GOAL_MINING' mining_log/stateful_goal/status.json
-          grep -q 'STATEFUL_HIGH_PRESSURE' forward_log/stateful_pressure_status.json
+          grep -q 'STATEFUL_USER_SIGNALS' forward_log/stateful_pressure_status.json
       - name: Persist Mining evidence
         if: env.GOAL_SKIP != '1'
         shell: bash

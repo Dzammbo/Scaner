@@ -181,11 +181,11 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 
 - `scaner-hot-path.yml` - continuous Scanner worker for 5 h 20 min, polling every 5 minutes, checkpointing every 10 minutes, with an hourly watchdog at minute 37.
 - `mining-hot-path.yml` - retained general Mining rules S09, S21, S22 and S25, every 5 minutes.
-- `stateful-goal-mining.yml` / the continuous Mining worker - S26 plus shadow S31-S34, every 5 minutes with one shared ceiling of 5 calls per pass. S26 keeps a 10-minute per-event odds cooldown; the four narrow-window hypotheses use 5 minutes.
+- `stateful-goal-mining.yml` / the continuous Mining worker - S26 plus user-visible S31-S34, every 5 minutes with one shared ceiling of 5 calls per pass. S26 keeps a 10-minute per-event odds cooldown; the four narrow-window hypotheses use 5 minutes.
 
 С 2026-10-04 остановлены HT one-goal и prematch line movement, а также сбор правил S15-S19, S23, S24, T13, T14, T16, T17 и S27. Исторические журналы сохранены, но новые запросы и сигналы по ним не создаются.
 
-С 2026-10-04 в stateful Mining запущены четыре новые футбольные shadow-гипотезы без пользовательской выдачи: S31 ТМ матча в перерыве при 0-1 голе и не более двух ударов в створ; S32 гол до перерыва на 30-35-й при 0:0, минимум четырёх ударах в створ и pressure10 от 20; S33 отсутствие гола после 60-й при 0:0 и не более двух ударах в створ; S34 гол во втором тайме после активного первого тайма 0:0. Для каждого правила сохраняется фактический коэффициент и действует один вход на матч.
+С 2026-10-04 в stateful Mining запущены четыре новые футбольные forward-гипотезы с пользовательской выдачей: S31 ТМ матча в перерыве при 0-1 голе и не более двух ударов в створ; S32 гол до перерыва на 30-35-й при 0:0, минимум четырёх ударах в створ и pressure10 от 20; S33 отсутствие гола после 60-й при 0:0 и не более двух ударах в створ; S34 гол во втором тайме после активного первого тайма 0:0. Каждый подходящий вход отображается в Scanner, сохраняется с фактическим коэффициентом и учитывается в обычной статистике; действует один вход на матч.
 
 All active Mining collectors share the 800 requests/hour morning envelope and the 1,600 requests/hour normal envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. Historical HT and prematch datasets remain available for offline analysis, while both collectors are disabled.
 
@@ -231,13 +231,13 @@ All active Mining collectors share the 800 requests/hour morning envelope and th
 
 `S28` и `S29` относятся к общей идее отсутствия следующего гола, но имеют разные точки входа и ведутся раздельно. Forward-log дедуплицирует одну и ту же фактическую ставку по `event_id + period + exact_bet_line`, сохраняя отдельный первый снимок условий для каждой совпавшей стратегии.
 
-С 2026-10-04 из оперативного Scanner в Mining/shadow перенесены три правила с устойчивым отрицательным corrected-forward результатом и без прямого положительного кармана `N>=20`, сохраняющего плюс без трёх крупнейших выигрышей:
+С 2026-10-04 из оперативного Scanner исключены и впоследствии архивированы три правила с устойчивым отрицательным corrected-forward результатом и без прямого положительного кармана `N>=20`, сохраняющего плюс без трёх крупнейших выигрышей:
 
 - «За проигравшего предыдущего плотного сета»: N=229, ROI -37,80%, без топ-3 -47,59%.
 - «В решающем сете за победителя второго сета»: N=98, ROI -5,71%, без топ-3 -15,52%.
 - «Гол до конца первого тайма при высоком давлении»: N=98, ROI -8,88%, без топ-3 -13,76%.
 
-История и settlement сохранены. Правила не потребляют бюджет оперативного Scanner и продолжают наблюдаться в Mining/shadow.
+История и settlement сохранены. Новые запросы и сигналы по этим правилам не создаются.
 
 С 2026-10-04 «За победителя предыдущего плотного сета» также исключена из оперативного Scanner и полностью архивирована без переноса в Mining. Основание: N=531, ROI -2,92%, без трёх крупнейших выигрышей -4,55%; найденные положительные разрезы либо экономически незначимы, либо ограничены одним турниром. История и settlement сохранены, новые запросы по правилу не создаются.
 

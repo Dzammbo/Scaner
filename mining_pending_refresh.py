@@ -85,7 +85,9 @@ def period_goals(e,period):
 def stateful(row,e,reverse=False):
  if e.get("state")!="FINAL":return None
  goals=period_goals(e,str(row.get("period") or "FT"));odds=num(row.get("reverse_odds") if reverse else row.get("selected_odds"));line=num(row.get("selected_line"))
- return None if None in (goals,odds,line) else settle_value(goals,line,odds,not reverse)
+ higher=str(row.get("selection") or "OVER").upper()=="OVER"
+ if reverse:higher=not higher
+ return None if None in (goals,odds,line) else settle_value(goals,line,odds,higher)
 def ht(row,e,reverse=False):
  if e.get("state")!="FINAL":return None
  final=score(e.get("ss"));half=row.get("halftime_score");odds=num(row.get("sh_under05_odds") if reverse else row.get("sh_over05_odds"))

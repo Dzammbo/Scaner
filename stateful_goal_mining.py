@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Low-cost stateful football Mining collector for active shadow hypotheses."""
+"""Low-cost stateful football Mining collector with user-visible signals."""
 import json,math,os,time,urllib.parse,urllib.request
 from datetime import datetime,timezone
 from pathlib import Path
@@ -15,6 +15,13 @@ ACTIVE_SIGNAL_IDS={
  ("FOOTBALL_FH_PRESSURE_GOAL_V1","PRIMARY"):"S32",
  ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
  ("FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","PRIMARY"):"S34",
+}
+SIGNAL_NAMES={
+ "S26":"High Pressure ТБ 0.5 матча",
+ "S31":"ТМ матча в перерыве при низкой активности",
+ "S32":"Гол до перерыва при высокой активности",
+ "S33":"Без гола после 60-й при 0:0 и низкой активности",
+ "S34":"Гол во втором тайме после активного первого без голов",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
@@ -42,18 +49,19 @@ def load_rows(path):
 def save_rows(path,rows):path.write_text("".join(json.dumps(x,ensure_ascii=False,separators=(",",":"))+"\n" for x in rows),encoding="utf-8")
 def fmtline(v):
  return str(int(v)) if float(v).is_integer() else str(float(v)).rstrip("0").rstrip(".")
-def sync_scanner_pressure(rows):
+def sync_scanner_signals(rows):
  SCANNER_SIGNALS.parent.mkdir(parents=True,exist_ok=True)
  current=load_rows(SCANNER_SIGNALS);by_key={(str(x.get("event_id")),str(x.get("exact_bet_line")),str(x.get("strategy_id"))):x for x in current}
  for x in rows:
-  arm=str(x.get("arm") or "")
-  if x.get("strategy")!="FOOTBALL_PRESSURE_TOTAL_O05_V1" or arm!="HIGH_PRESSURE_O05_FT":continue
-  sid="S26";name="High Pressure ТБ 0.5 матча";line=fmtline(x["selected_line"]);key=(str(x["event_id"]),f"ТБ {line}",sid)
+  sid=signal_id(x)
+  if not sid:continue
+  line=fmtline(x["selected_line"]);over=x.get("selection","OVER")=="OVER";bet=f"Т{'Б' if over else 'М'} {line}";reverse=f"Т{'М' if over else 'Б'} {line}";key=(str(x["event_id"]),bet,sid)
   if key in by_key:continue
-  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":f"ТБ {line}","current_odds":x.get("selected_odds"),"reverse_bet":f"ТМ {line}","reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[name],"tier":"ACTIVE","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
+  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":bet,"current_odds":x.get("selected_odds"),"reverse_bet":reverse,"reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[SIGNAL_NAMES[sid]],"tier":"ACTIVE" if sid=="S26" else "WATCHLIST","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
  save_rows(SCANNER_SIGNALS,sorted(by_key.values(),key=lambda x:str(x.get("timestamp") or "")))
  active=[x for x in by_key.values() if int(time.time())-int(datetime.fromisoformat(str(x["timestamp"]).replace("Z","+00:00")).timestamp())<=600]
- SCANNER_STATUS.write_text(json.dumps({"scanner":"STATEFUL_HIGH_PRESSURE","updated_at":iso(),"signals":len(by_key),"active_last_10m":active},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ SCANNER_STATUS.write_text(json.dumps({"scanner":"STATEFUL_USER_SIGNALS","updated_at":iso(),"signals":len(by_key),"active_last_10m":active},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+sync_scanner_pressure=sync_scanner_signals
 def pair(stats,key):
  v=(stats or {}).get(key)
  if isinstance(v,list) and len(v)>=2:
@@ -212,10 +220,10 @@ def main():
  settle(signals,live_ids)
  active_signals=[x for x in signals if is_active_signal(x)]
  save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
- sync_scanner_pressure(active_signals)
+ sync_scanner_signals(active_signals)
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
- status={"strategy":"STATEFUL_GOAL_MINING_ACTIVE_SHADOWS","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
+ status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
  STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  with RUNS.open("a",encoding="utf-8") as f:f.write(json.dumps({"timestamp":iso(),"collector":"stateful_goal_mining","api_calls":calls,"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals)},separators=(",",":"))+"\n")
  print(json.dumps(status,ensure_ascii=False))
