@@ -19962,8 +19962,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13237548": {
       "event_id": "13237548",
@@ -19980,7 +19981,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12050650": {
       "event_id": "12050650",
@@ -20136,6 +20138,6 @@
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T06:34:26Z",
+  "updated_at": "2026-10-04T06:44:21Z",
   "api_calls_last_run": 4
 }
