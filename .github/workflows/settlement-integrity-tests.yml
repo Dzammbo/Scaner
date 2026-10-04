@@ -31,4 +31,4 @@ jobs:
       - name: Run settlement regression tests
         run: python -m unittest discover -s tests -p "test_*settlement*.py" -v
       - name: Run signal integrity tests
-        run: python tests/test_signal_integrity.py
+        run: python -m unittest discover -s tests -p "test_signal_integrity.py" -v
