@@ -1,65 +1,16 @@
 {
-  "strategy": "STATEFUL_GOAL_MINING",
+  "strategy": "STATEFUL_GOAL_MINING_S26_ONLY",
   "runtime": "github-actions",
-  "updated_at": "2026-10-04T07:42:57Z",
+  "updated_at": "2026-10-04T07:53:17Z",
   "api_calls": 5,
-  "board_n": 11,
-  "observations": 2570,
-  "signals": 2045,
+  "board_n": 10,
+  "observations": 2572,
+  "signals": 266,
+  "archived_signals": 1780,
   "arms": {
-    "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FH": {
-      "signals": 329,
-      "pending": 329,
-      "N": 0,
-      "W": 0,
-      "L": 0,
-      "PUSH": 0,
-      "profit": 0,
-      "ROI": null
-    },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
-      "signals": 265,
-      "pending": 265,
-      "N": 0,
-      "W": 0,
-      "L": 0,
-      "PUSH": 0,
-      "profit": 0,
-      "ROI": null
-    },
-    "FOOTBALL_PRESSURE_TOTAL_O05_V1:LOW_PRESSURE_O05_FH": {
-      "signals": 247,
-      "pending": 247,
-      "N": 0,
-      "W": 0,
-      "L": 0,
-      "PUSH": 0,
-      "profit": 0,
-      "ROI": null
-    },
-    "FOOTBALL_PRESSURE_TOTAL_O05_V1:LOW_PRESSURE_O05_FT": {
-      "signals": 214,
-      "pending": 213,
-      "N": 1,
-      "W": 1,
-      "L": 0,
-      "PUSH": 0,
-      "profit": 0.775,
-      "ROI": 0.775
-    },
-    "LIVE_GOAL_SELECTION_V3:PLUS_0_5": {
-      "signals": 687,
-      "pending": 686,
-      "N": 1,
-      "W": 1,
-      "L": 0,
-      "PUSH": 0,
-      "profit": 0.775,
-      "ROI": 0.775
-    },
-    "LIVE_GOAL_SELECTION_V3:PLUS_1_0": {
-      "signals": 303,
-      "pending": 303,
+      "signals": 266,
+      "pending": 266,
       "N": 0,
       "W": 0,
       "L": 0,
