@@ -1,21 +1,21 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-04T17:13:13Z",
-  "signals": 452,
+  "updated_at": "2026-10-04T17:23:33Z",
+  "signals": 455,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-04T17:08:05Z",
+      "timestamp": "2026-10-04T17:18:17Z",
       "sport": "football",
-      "tournament": "Spain Tercera Group 9",
-      "event_id": "12393040",
-      "match": "CD Malaga Juniors FC - FC Marbelli",
-      "minute_score": "45' / '0-1'",
+      "tournament": "Spain Segunda Division RFEF Group 4",
+      "event_id": "12145018",
+      "match": "Club Atletico Central - Linares Deportivo",
+      "minute_score": "45' / '0-0'",
       "minute": 45,
-      "score": "0-1",
-      "exact_bet_line": "ТМ 2.5",
-      "current_odds": 1.975,
-      "reverse_bet": "ТБ 2.5",
-      "reverse_odds": 1.825,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 1.25",
+      "current_odds": 1.75,
+      "reverse_bet": "ТБ 1.25",
+      "reverse_odds": 2.05,
       "strategy_id": "S31",
       "strategy_ids": [
         "S31"
@@ -24,7 +24,57 @@
         "ТМ матча в перерыве при низкой активности"
       ],
       "tier": "WATCHLIST",
-      "pressure10": 45.0,
+      "pressure10": 25.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-04T17:23:21Z",
+      "sport": "football",
+      "tournament": "Spain Segunda",
+      "event_id": "12130555",
+      "match": "CD Castellon - AD Ceuta FC",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТМ 2.75",
+      "current_odds": 1.8,
+      "reverse_bet": "ТБ 2.75",
+      "reverse_odds": 2.0,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 30.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-04T17:23:21Z",
+      "sport": "football",
+      "tournament": "Morocco GNF 2",
+      "event_id": "13155151",
+      "match": "SC Chabab Mohammedia - USM Oujda",
+      "minute_score": "62' / '0-0'",
+      "minute": 62,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 0.5",
+      "current_odds": 1.85,
+      "reverse_bet": "ТБ 0.5",
+      "reverse_odds": 1.95,
+      "strategy_id": "S33",
+      "strategy_ids": [
+        "S33"
+      ],
+      "strategy_names": [
+        "Без гола после 60-й при 0:0 и низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 27.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
