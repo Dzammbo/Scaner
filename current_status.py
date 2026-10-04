@@ -23,7 +23,18 @@ CACHE_STATUS_FILE = Path("forward_log/settlement/status.json")
 OVERRIDES_FILE = Path("web_settlement_overrides.json")
 WATCHLIST_FILE = Path("observation_watchlist.json")
 WATCHLIST_OUTPUT_FILE = Path("observation_watchlist_current.json")
+S30_TOP6_FILE = Path("s30_top6.json")
+S30_TOP6_OUTPUT_FILE = Path("s30_top6_current.json")
 FIRST_HALF_STRATEGIES = {"S27"}
+
+YOUTH_TOURNAMENT = re.compile(
+    r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|\byouth\b|\breserves?\b|\bdevelopment\b|\bjuniors?\b",
+    re.IGNORECASE,
+)
+WOMEN_TOURNAMENT = re.compile(
+    r"\bwomen\b|\bwoman\b|\bladies\b|\bfemenil\b|\bfeminina\b|\bfeminine\b|\bfemale\b|\(w\)",
+    re.IGNORECASE,
+)
 
 # Clean-forward boundaries documented in README. Strategies without a boundary
 # intentionally retain their full Scanner sample.
@@ -497,6 +508,53 @@ def numeric_between(value, low=None, high=None) -> bool:
     return True
 
 
+def numeric_range(value, low=None, high=None, high_exclusive=None) -> bool:
+    if not numeric_between(value, low, high):
+        return False
+    if high_exclusive is None:
+        return True
+    try:
+        return float(value) < float(high_exclusive)
+    except (TypeError, ValueError):
+        return False
+
+
+def tournament_category(row: dict) -> str:
+    tournament = str(row.get("tournament") or "")
+    if WOMEN_TOURNAMENT.search(tournament):
+        return "women"
+    if YOUTH_TOURNAMENT.search(tournament):
+        return "youth_reserve"
+    return "adult_men"
+
+
+def score_features(row: dict) -> dict:
+    score = parse_score(row.get("score"))
+    if score is None:
+        return {
+            "score_state": "unknown",
+            "margin_state": "unknown",
+            "entry_total": None,
+            "home_not_leading": None,
+        }
+    home, away = score
+    if home == away:
+        score_state = "draw"
+        margin_state = "draw"
+    elif home > away:
+        score_state = "home_leads"
+        margin_state = "home_by_1" if home - away == 1 else "home_by_2plus"
+    else:
+        score_state = "away_leads"
+        margin_state = "away_by_1" if away - home == 1 else "away_by_2plus"
+    return {
+        "score_state": score_state,
+        "margin_state": margin_state,
+        "entry_total": home + away,
+        "home_not_leading": home <= away,
+    }
+
+
 def watchlist_match(row: dict, item: dict) -> bool:
     filters = item.get("filters") or {}
     reverse = item.get("direction") == "reverse"
@@ -511,12 +569,29 @@ def watchlist_match(row: dict, item: dict) -> bool:
         filters.get("total_line_min") is not None or filters.get("total_line_max") is not None
     ):
         return False
-    if not numeric_between(row.get(odds_key), filters.get("odds_min"), filters.get("odds_max")) and (
-        filters.get("odds_min") is not None or filters.get("odds_max") is not None
+    if not numeric_range(
+        row.get(odds_key), filters.get("odds_min"), filters.get("odds_max"), filters.get("odds_max_exclusive")
+    ) and (
+        filters.get("odds_min") is not None
+        or filters.get("odds_max") is not None
+        or filters.get("odds_max_exclusive") is not None
     ):
         return False
     if not numeric_between(row.get("reverse_odds"), filters.get("reverse_odds_min"), filters.get("reverse_odds_max")) and (
         filters.get("reverse_odds_min") is not None or filters.get("reverse_odds_max") is not None
+    ):
+        return False
+    features = score_features(row)
+    if filters.get("category") is not None and tournament_category(row) != filters["category"]:
+        return False
+    if filters.get("score_state") is not None and features["score_state"] != filters["score_state"]:
+        return False
+    if filters.get("margin_state") is not None and features["margin_state"] != filters["margin_state"]:
+        return False
+    if filters.get("home_not_leading") is not None and features["home_not_leading"] is not filters["home_not_leading"]:
+        return False
+    if filters.get("entry_total") is not None and not numeric_between(
+        features["entry_total"], filters["entry_total"], filters["entry_total"]
     ):
         return False
     focus = item.get("focus") or {}
@@ -574,6 +649,57 @@ def build_watchlist_report(signals: list[dict], cache: dict[str, dict], override
         "items": items,
     }
     WATCHLIST_OUTPUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def pocket_period_report(rows: list[dict], cache: dict[str, dict], overrides: dict, key: str) -> dict:
+    settled, voided, pending = settle(rows, cache, overrides)
+    return {
+        "recorded": len(rows),
+        "settled": len(settled),
+        "pending": len(pending),
+        "void": len(voided),
+        "result": aggregate(settled, key),
+        "without_top3": aggregate_without_top(settled, key),
+        "without_top5": aggregate_without_top(settled, key, 5),
+    }
+
+
+def build_s30_top6_report(signals: list[dict], cache: dict[str, dict], overrides: dict) -> dict:
+    config = json.loads(S30_TOP6_FILE.read_text(encoding="utf-8"))
+    start = str(config["policy"]["forward_start_at"])
+    minimum = int(config["policy"]["minimum_new_settled_before_review"])
+    minimum_days = int(config["policy"]["minimum_observation_days_before_review"])
+    started = datetime.fromisoformat(start.replace("Z", "+00:00"))
+    elapsed_days = max(0, (datetime.now(timezone.utc) - started).days)
+    candidates = within_strategy(signals, "S30")
+    items = []
+    for definition in sorted(config["items"], key=lambda item: item["rank"]):
+        key = "reverse_profit" if definition["direction"] == "reverse" else "profit"
+        selected = [row for row in candidates if watchlist_match(row, definition)]
+        forward = [row for row in selected if timestamp_at_or_after(row.get("timestamp"), start)]
+        cumulative_report = pocket_period_report(selected, cache, overrides, key)
+        forward_report = pocket_period_report(forward, cache, overrides, key)
+        items.append({
+            "rank": definition["rank"],
+            "id": definition["id"],
+            "name_ru": definition["name_ru"],
+            "direction": definition["direction"],
+            "filters": definition["filters"],
+            "baseline": definition["baseline"],
+            "cumulative": cumulative_report,
+            "clean_forward": forward_report,
+            "review_ready": forward_report["settled"] >= minimum and elapsed_days >= minimum_days,
+        })
+    report = {
+        "schema_version": config["schema_version"],
+        "name": config["name"],
+        "status": config["status"],
+        "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "policy": config["policy"],
+        "items": items,
+    }
+    S30_TOP6_OUTPUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return report
 
 
@@ -637,6 +763,7 @@ def build_status() -> dict:
     live_or_delayed = sum(row["settlement_reason"] in retryable_states for row in pending)
     unresolved = len(pending) - live_or_delayed
     watchlist = build_watchlist_report(signals, cache, overrides)
+    s30_top6 = build_s30_top6_report(signals, cache, overrides)
     legacy_by_strategy = {
         strategy_id: excluded_legacy_attributions(signals, strategy_id)
         for strategy_id in names
@@ -673,6 +800,12 @@ def build_status() -> dict:
             "items": len(watchlist["items"]),
             "review_ready": sum(item["review_ready"] for item in watchlist["items"]),
         },
+        "s30_top6": {
+            "status": s30_top6["status"],
+            "forward_start_at": s30_top6["policy"]["forward_start_at"],
+            "items": len(s30_top6["items"]),
+            "review_ready": sum(item["review_ready"] for item in s30_top6["items"]),
+        },
         "strategies": strategy_stats,
     }
 
@@ -686,6 +819,7 @@ def build_status() -> dict:
         "unique_event_reasons": event_reasons,
         "data_quality": status["data_quality"],
         "observation_watchlist": status["observation_watchlist"],
+        "s30_top6": status["s30_top6"],
     }
     Path("settlement_diagnostics_current.json").write_text(json.dumps(diagnostics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     Path("current_status_current.json").write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

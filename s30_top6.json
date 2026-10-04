@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "name": "S30_FIXED_TOP6_20261004",
+  "created_at": "2026-10-04",
+  "status": "OBSERVATION_ONLY",
+  "policy": {
+    "filters_frozen": true,
+    "changes_s30_collection": false,
+    "changes_user_signals": false,
+    "real_money_signal": false,
+    "forward_start_at": "2026-10-04T06:27:49Z",
+    "minimum_new_settled_before_review": 300,
+    "minimum_observation_days_before_review": 30,
+    "note": "Top-6 выделен после атомарного exploratory-перебора 1530 групп. Общий S30 продолжает собираться без фильтрации. Для каждого кармана отдельно публикуются замороженная исходная выборка, накопительный срез и clean-forward срез после фиксации. Карманы могут пересекаться, поэтому их прибыли нельзя складывать."
+  },
+  "items": [
+    {
+      "rank": 1,
+      "id": "S30T01",
+      "name_ru": "ТБ текущего тотала +0,5 - коэффициент 2,25-2,49",
+      "strategy_id": "S30",
+      "direction": "reverse",
+      "filters": {
+        "odds_min": 2.25,
+        "odds_max_exclusive": 2.5
+      },
+      "baseline": {
+        "settled": 126,
+        "wins": 64,
+        "losses": 62,
+        "profit_units": 25.5,
+        "roi_pct": 20.24,
+        "roi_without_top3_pct": 17.26,
+        "roi_without_top5_pct": 15.19
+      }
+    },
+    {
+      "rank": 2,
+      "id": "S30T02",
+      "name_ru": "ТМ 1,5 при счёте 1:0 после 85-й минуты",
+      "strategy_id": "S30",
+      "direction": "direct",
+      "filters": {
+        "score": "1-0",
+        "total_line": 1.5
+      },
+      "baseline": {
+        "settled": 95,
+        "wins": 74,
+        "losses": 21,
+        "profit_units": 6.835,
+        "roi_pct": 7.19,
+        "roi_without_top3_pct": 5.55,
+        "roi_without_top5_pct": 4.46
+      }
+    },
+    {
+      "rank": 3,
+      "id": "S30T03",
+      "name_ru": "ТМ в женских матчах, если хозяева не ведут - коэффициент 1,25-1,49",
+      "strategy_id": "S30",
+      "direction": "direct",
+      "filters": {
+        "category": "women",
+        "home_not_leading": true,
+        "odds_min": 1.25,
+        "odds_max_exclusive": 1.5
+      },
+      "baseline": {
+        "settled": 36,
+        "wins": 31,
+        "losses": 5,
+        "profit_units": 6.275,
+        "roi_pct": 17.43,
+        "roi_without_top3_pct": 14.85,
+        "roi_without_top5_pct": 12.9
+      }
+    },
+    {
+      "rank": 4,
+      "id": "S30T04",
+      "name_ru": "ТБ при преимуществе хозяев в два мяча и более - коэффициент 2,50-2,74",
+      "strategy_id": "S30",
+      "direction": "reverse",
+      "filters": {
+        "margin_state": "home_by_2plus",
+        "odds_min": 2.5,
+        "odds_max_exclusive": 2.75
+      },
+      "baseline": {
+        "settled": 46,
+        "wins": 22,
+        "losses": 24,
+        "profit_units": 10.65,
+        "roi_pct": 23.15,
+        "roi_without_top3_pct": 13.08,
+        "roi_without_top5_pct": 5.55
+      }
+    },
+    {
+      "rank": 5,
+      "id": "S30T05",
+      "name_ru": "ТБ во взрослых мужских матчах, если хозяева не ведут - коэффициент 2,75-2,99",
+      "strategy_id": "S30",
+      "direction": "reverse",
+      "filters": {
+        "category": "adult_men",
+        "home_not_leading": true,
+        "odds_min": 2.75,
+        "odds_max_exclusive": 3.0
+      },
+      "baseline": {
+        "settled": 67,
+        "wins": 29,
+        "losses": 38,
+        "profit_units": 14.45,
+        "roi_pct": 21.57,
+        "roi_without_top3_pct": 13.91,
+        "roi_without_top5_pct": 8.39
+      }
+    },
+    {
+      "rank": 6,
+      "id": "S30T06",
+      "name_ru": "ТБ во взрослых мужских матчах при лидерстве гостей и трёх голах на входе",
+      "strategy_id": "S30",
+      "direction": "reverse",
+      "filters": {
+        "category": "adult_men",
+        "score_state": "away_leads",
+        "entry_total": 3
+      },
+      "baseline": {
+        "settled": 75,
+        "wins": 33,
+        "losses": 42,
+        "profit_units": 14.5,
+        "roi_pct": 19.33,
+        "roi_without_top3_pct": 9.31,
+        "roi_without_top5_pct": 2.79
+      }
+    }
+  ]
+}

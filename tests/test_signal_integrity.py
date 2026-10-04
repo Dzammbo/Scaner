@@ -89,6 +89,30 @@ class SignalIntegrityTest(unittest.TestCase):
     def test_incomplete_tennis_lead_has_no_winner(self):
         self.assertIsNone(current_status.tennis_winner("6-4,2-0"))
 
+    def test_s30_top6_atomic_filters(self):
+        config = json.loads((ROOT / "s30_top6.json").read_text(encoding="utf-8"))
+        definitions = {item["id"]: item for item in config["items"]}
+        base = {
+            "sport": "football", "minute": 86, "exact_bet_line": "ТМ 3.5",
+            "current_odds": 1.35, "reverse_bet": "ТБ 3.5", "reverse_odds": 2.35,
+            "tournament": "Test Premier League", "score": "1-2",
+        }
+        cases = {
+            "S30T01": base,
+            "S30T02": {**base, "score": "1-0", "exact_bet_line": "ТМ 1.5"},
+            "S30T03": {**base, "score": "1-1", "tournament": "Test League Women"},
+            "S30T04": {**base, "score": "3-0", "reverse_odds": 2.60},
+            "S30T05": {**base, "reverse_odds": 2.85},
+            "S30T06": base,
+        }
+        for pocket_id, row in cases.items():
+            with self.subTest(pocket=pocket_id):
+                self.assertTrue(current_status.watchlist_match(row, definitions[pocket_id]))
+        self.assertFalse(current_status.watchlist_match(
+            {**base, "tournament": "Test U21 League", "reverse_odds": 2.85},
+            definitions["S30T05"],
+        ))
+
 
 if __name__ == "__main__":
     unittest.main()
