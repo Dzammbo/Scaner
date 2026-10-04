@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 19,
-    "last_operational_change_at": "2026-10-04T13:30:00Z",
-    "last_operational_change": "Added four reproducible Bet365 tennis forward candidates from the Telegram reconstruction; singles only and one entry per match."
+    "operational_scanner_count": 21,
+    "last_operational_change_at": "2026-10-04T19:48:00Z",
+    "last_operational_change": "Split the mixed Brazil main-total rule into women, youth/reserve and adult-men forward hypotheses; one frozen first entry per match."
   },
   "strategies": [
     {
@@ -144,7 +144,7 @@
     },
     {
       "id": "S06",
-      "tier": "ACTIVE",
+      "tier": "WATCHLIST",
       "sport": "football",
       "name_ru": "Основной тотал больше - Бразилия",
       "source": "historical_confirmed",
@@ -152,11 +152,77 @@
         "country": "br",
         "market": "main_over"
       },
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "history",
+      "status": "ARCHIVED",
+      "scanner_activated_at": "2026-10-01",
+      "scanner_retired_at": "2026-10-04T19:48:00Z",
+      "scanner_retired_reason": "Mixed adult, women and youth tournaments and allowed repeated entries when the main line changed; 444 records represented only 80 matches."
+    },
+    {
+      "id": "S06W",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Бразилия, женщины - ТМ основного тотала, первый сигнал",
+      "source": "brazil_split_forward_20261004",
+      "rule": {
+        "country": "br",
+        "category": "women",
+        "market": "main_under",
+        "entry_policy": "first_available_quote",
+        "one_entry_per_match": true
+      },
       "user_output": true,
       "scanner_enabled": true,
-      "scanner_core8": true,
+      "scanner_core8": false,
       "research_destination": "scanner",
-      "scanner_activated_at": "2026-10-01"
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-04T19:48:00Z",
+      "history_note": "Exploratory source sample: 8 unique matches. Keep separate and do not merge with repeated historical entries."
+    },
+    {
+      "id": "S06Y",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Бразилия, молодёжь и резервы - ТБ основного тотала, первый сигнал",
+      "source": "brazil_split_forward_20261004",
+      "rule": {
+        "country": "br",
+        "category": "youth_reserve",
+        "market": "main_over",
+        "entry_policy": "first_available_quote",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-04T19:48:00Z",
+      "history_note": "Exploratory first-entry sample: 30 unique matches. Forward collection starts from zero."
+    },
+    {
+      "id": "S06A",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Бразилия, взрослые мужчины - ТМ основного тотала, первый сигнал",
+      "source": "brazil_split_forward_20261004",
+      "rule": {
+        "country": "br",
+        "category": "adult_men",
+        "market": "main_under",
+        "entry_policy": "first_available_quote",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-04T19:48:00Z",
+      "history_note": "Control hypothesis only: historical first-entry sample was negative. Retained to measure the category separately."
     },
     {
       "id": "S07",
