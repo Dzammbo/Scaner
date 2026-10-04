@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: scanner-settlement
@@ -38,6 +39,17 @@ jobs:
           deadline="$((started + SCANNER_SETTLEMENT_WORKER_DURATION_SECONDS))"
 
           while [ "$(date +%s)" -lt "$deadline" ]; do
+            # Reports are regenerated on every pass. Restore the committed copies
+            # before rebasing so a previous pass can never block the next one.
+            git restore --worktree -- \
+              forward_log/settlement/results.jsonl \
+              forward_log/settlement/status.json \
+              current_status_current.json \
+              priority_pockets_current.json \
+              pockets_current.json \
+              pending_current.json \
+              settlement_diagnostics_current.json \
+              s30_top6_current.json
             git pull --rebase origin main
             python3 scanner_settlement.py
             python3 current_status.py
@@ -93,6 +105,24 @@ jobs:
             fi
             sleep "$sleep_for"
           done
+
+      - name: Hand off to the next settlement worker
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          other_run="$(gh run list \
+            --workflow scanner-settlement.yml \
+            --limit 30 \
+            --json databaseId,status \
+            --jq '[.[] | select(.databaseId != '"$GITHUB_RUN_ID"' and (.status == "in_progress" or .status == "queued" or .status == "waiting" or .status == "pending" or .status == "requested"))] | length')"
+
+          if [ "$other_run" = "0" ]; then
+            gh workflow run scanner-settlement.yml --ref main
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
