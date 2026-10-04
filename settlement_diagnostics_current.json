@@ -1,26 +1,53 @@
 {
-  "pending_signals": 65,
-  "void_signals": 38,
+  "pending_signals": 84,
+  "void_signals": 100,
   "signal_reasons": {
-    "FINAL_FINAL_SCORE_MISSING": 3,
-    "INPLAY": 35,
+    "INPLAY": 57,
     "PENDING_PROVIDER_FIX": 21,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
-    "VOID_RETIRED": 27,
-    "VOID_TENNIS_WINNER_MISSING": 6
+    "VOID_RETIRED": 29,
+    "VOID_TENNIS_WINNER_MISSING": 66
   },
   "unique_event_reasons": {
-    "FINAL_FINAL_SCORE_MISSING": 1,
-    "INPLAY": 17,
+    "INPLAY": 21,
     "PENDING_PROVIDER_FIX": 13,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
-    "VOID_RETIRED": 16,
-    "VOID_TENNIS_WINNER_MISSING": 4
+    "VOID_RETIRED": 17,
+    "VOID_TENNIS_WINNER_MISSING": 46
+  },
+  "data_quality": {
+    "dedup_key": [
+      "event_id",
+      "period",
+      "exact_bet_line"
+    ],
+    "strategy_quote_snapshot_required": true,
+    "excluded_legacy_attributions": 388,
+    "excluded_legacy_attributions_by_strategy": {
+      "S06": 1,
+      "S08": 14,
+      "S11": 67,
+      "S20": 52,
+      "T14": 46,
+      "T16": 190,
+      "T18": 17,
+      "S30": 1
+    },
+    "settlement_score_sources": {
+      "scores.2": 3433,
+      "ss": 1177
+    }
+  },
+  "observation_watchlist": {
+    "status": "OBSERVATION_ONLY",
+    "forward_start_at": "2026-10-04T04:40:08Z",
+    "items": 4,
+    "review_ready": 0
   }
 }
