@@ -31,6 +31,7 @@ CACHE = ROOT / "results.jsonl"
 STATUS = ROOT / "status.json"
 SIGNAL_FILES = (
     Path("forward_log/scanner_signals.jsonl"),
+    Path("forward_log/bet365_tennis/signals.jsonl"),
     Path("forward_log/s30/s30_signals.jsonl"),
     Path("forward_log/stateful_pressure_signals.jsonl"),
     Path("recovery/selectel_scanner_signals_20260927.jsonl"),
