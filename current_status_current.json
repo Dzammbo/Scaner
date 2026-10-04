@@ -1,12 +1,12 @@
 {
-  "merged": 5975,
+  "merged": 5986,
   "settled": 5777,
   "void": 105,
-  "pending": 93,
-  "pending_live_or_delayed": 93,
+  "pending": 104,
+  "pending_live_or_delayed": 104,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 56,
+    "INPLAY": 67,
     "PENDING_PROVIDER_FIX": 31,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 69
   },
   "settlement_event_reasons": {
-    "INPLAY": 26,
+    "INPLAY": 31,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 49
   },
   "settlement_cache": {
-    "updated_at": "2026-10-04T19:26:21Z",
+    "updated_at": "2026-10-04T19:39:38Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 5,
-    "queried_events": 49,
-    "signal_unique_events": 3274,
-    "cache_events": 3274,
+    "provider_queries": 1,
+    "queried_events": 5,
+    "signal_unique_events": 3279,
+    "cache_events": 3279,
     "final_events": 3212,
     "void_events": 19,
     "immutable_events": 3231,
-    "retryable_events": 43,
+    "retryable_events": 48,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3212,
-      "INPLAY": 26,
+      "INPLAY": 31,
       "PENDING_PROVIDER_FIX": 16,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -285,8 +285,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1244,
-      "pending": 38,
+      "recorded": 1249,
+      "pending": 43,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -365,8 +365,8 @@
     "S28": {
       "name": "ТМ 2.5 после гола при счёте 0:2 с 60-й минуты",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 35,
-      "pending": 0,
+      "recorded": 36,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -485,8 +485,8 @@
     "S31": {
       "name": "ТМ матча в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 21,
-      "pending": 9,
+      "recorded": 23,
+      "pending": 11,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -525,8 +525,8 @@
     "S32": {
       "name": "Гол до перерыва при высокой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 3,
-      "pending": 0,
+      "recorded": 4,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -805,8 +805,8 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1381,
-      "pending": 21,
+      "recorded": 1383,
+      "pending": 23,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {

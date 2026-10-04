@@ -4028,6 +4028,82 @@
     "settlement_reason": "INPLAY"
   },
   {
+    "timestamp": "2026-10-04T19:20:37Z",
+    "sport": "football",
+    "tournament": "UEFA Nations League A",
+    "event_id": "11437357",
+    "match": "Portugal - Norway",
+    "minute_score": "32' / '0-0'",
+    "minute": 32,
+    "score": "0-0",
+    "exact_bet_line": "ТБ 0.5",
+    "current_odds": 2.025,
+    "reverse_bet": "ТМ 0.5",
+    "reverse_odds": 1.775,
+    "strategy_id": "S32",
+    "strategy_ids": [
+      "S32"
+    ],
+    "strategy_names": [
+      "Гол до перерыва при высокой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 42.0,
+    "period": "FH",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S32": {
+        "timestamp": "2026-10-04T19:20:37Z",
+        "period": "FH",
+        "minute": 32,
+        "score": "0-0",
+        "exact_bet_line": "ТБ 0.5",
+        "current_odds": 2.025,
+        "reverse_bet": "ТМ 0.5",
+        "reverse_odds": 1.775
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:20:37Z",
+    "sport": "football",
+    "tournament": "Chile Cup",
+    "event_id": "13214391",
+    "match": "O'Higgins - Deportes Concepcion",
+    "minute_score": "45' / '0-0'",
+    "minute": 45,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 1.25",
+    "current_odds": 1.875,
+    "reverse_bet": "ТБ 1.25",
+    "reverse_odds": 1.925,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "ТМ матча в перерыве при низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 0.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-04T19:20:37Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 1.25",
+        "current_odds": 1.875,
+        "reverse_bet": "ТБ 1.25",
+        "reverse_odds": 1.925
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
     "timestamp": "2026-10-04T19:22:12.766489+00:00",
     "sport": "football",
     "tournament": "Spain Primera Women",
@@ -4289,6 +4365,476 @@
       }
     },
     "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:27:41.423044+00:00",
+    "sport": "football",
+    "tournament": "Israel Liga Bet South",
+    "event_id": "13243206",
+    "match": "Bnei Yehud - Maccabi Amishav Petah Tikva",
+    "minute_score": "85' / '1-1",
+    "minute": 85,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 2.5",
+    "current_odds": 1.575,
+    "reverse_bet": "ТБ 2.5",
+    "reverse_odds": 2.35,
+    "market": "next_goal_under",
+    "bet_line": 2.5,
+    "features": {
+      "drought_min": 32,
+      "last_goal_minute": 53,
+      "main_total": 2.5,
+      "selected_total": 2.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-04T19:27:41.423044+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 2.5",
+        "current_odds": 1.575,
+        "reverse_bet": "ТБ 2.5",
+        "reverse_odds": 2.35,
+        "market": "next_goal_under",
+        "bet_line": 2.5,
+        "features": {
+          "drought_min": 32,
+          "last_goal_minute": 53,
+          "main_total": 2.5,
+          "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:28:16.947450+00:00",
+    "sport": "football",
+    "tournament": "Argentina Primera C Metropolitana",
+    "event_id": "11181197",
+    "match": "CA Lugano - Argentino de Rosario",
+    "minute_score": "60' / '1-1",
+    "minute": 60,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 2.75",
+    "current_odds": 1.725,
+    "reverse_bet": "ТМ 2.75",
+    "reverse_odds": 2.075,
+    "market": "main_over",
+    "bet_line": 2.75,
+    "features": {
+      "drought_min": 5,
+      "last_goal_minute": 55,
+      "main_total": 2.75,
+      "selected_total": 2.75,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-04T19:28:16.947450+00:00",
+        "period": "FT",
+        "minute": 60,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 2.75",
+        "current_odds": 1.725,
+        "reverse_bet": "ТМ 2.75",
+        "reverse_odds": 2.075,
+        "market": "main_over",
+        "bet_line": 2.75,
+        "features": {
+          "drought_min": 5,
+          "last_goal_minute": 55,
+          "main_total": 2.75,
+          "selected_total": 2.75,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:28:16.947450+00:00",
+    "sport": "football",
+    "tournament": "UEFA Nations League A",
+    "event_id": "11437357",
+    "match": "Portugal - Norway",
+    "minute_score": "39' / '1-1",
+    "minute": 39,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 4.0",
+    "current_odds": 1.9,
+    "reverse_bet": "ТМ 4.0",
+    "reverse_odds": 1.95,
+    "market": "main_over",
+    "bet_line": 4.0,
+    "features": {
+      "drought_min": 1,
+      "last_goal_minute": 38,
+      "main_total": 4.0,
+      "selected_total": 4.0,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-04T19:28:16.947450+00:00",
+        "period": "FT",
+        "minute": 39,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 4.0",
+        "current_odds": 1.9,
+        "reverse_bet": "ТМ 4.0",
+        "reverse_odds": 1.95,
+        "market": "main_over",
+        "bet_line": 4.0,
+        "features": {
+          "drought_min": 1,
+          "last_goal_minute": 38,
+          "main_total": 4.0,
+          "selected_total": 4.0,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:28:16.947450+00:00",
+    "sport": "football",
+    "tournament": "UEFA Nations League A",
+    "event_id": "11437376",
+    "match": "Netherlands - Serbia",
+    "minute_score": "42' / '1-1",
+    "minute": 42,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 4.0",
+    "current_odds": 1.8,
+    "reverse_bet": "ТМ 4.0",
+    "reverse_odds": 2.05,
+    "market": "main_over",
+    "bet_line": 4.0,
+    "features": {
+      "drought_min": 7,
+      "last_goal_minute": 35,
+      "main_total": 4.0,
+      "selected_total": 4.0,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-04T19:28:16.947450+00:00",
+        "period": "FT",
+        "minute": 42,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 4.0",
+        "current_odds": 1.8,
+        "reverse_bet": "ТМ 4.0",
+        "reverse_odds": 2.05,
+        "market": "main_over",
+        "bet_line": 4.0,
+        "features": {
+          "drought_min": 7,
+          "last_goal_minute": 35,
+          "main_total": 4.0,
+          "selected_total": 4.0,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:28:16.947450+00:00",
+    "sport": "football",
+    "tournament": "Italy Serie C Group A",
+    "event_id": "12331120",
+    "match": "Alcione Milano - Trento",
+    "minute_score": "45' / '1-1",
+    "minute": 45,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 3.25",
+    "current_odds": 1.8,
+    "reverse_bet": "ТМ 3.25",
+    "reverse_odds": 2.0,
+    "market": "main_over",
+    "bet_line": 3.25,
+    "features": {
+      "drought_min": 3,
+      "last_goal_minute": 42,
+      "main_total": 3.25,
+      "selected_total": 3.25,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-04T19:28:16.947450+00:00",
+        "period": "FT",
+        "minute": 45,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 3.25",
+        "current_odds": 1.8,
+        "reverse_bet": "ТМ 3.25",
+        "reverse_odds": 2.0,
+        "market": "main_over",
+        "bet_line": 3.25,
+        "features": {
+          "drought_min": 3,
+          "last_goal_minute": 42,
+          "main_total": 3.25,
+          "selected_total": 3.25,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:30:23.801555+00:00",
+    "sport": "football",
+    "tournament": "Argentina Liga Profesional",
+    "event_id": "13125111",
+    "match": "Huracan - CA Aldosivi",
+    "minute_score": "85' / '1-0",
+    "minute": 85,
+    "score": "1-0",
+    "period": "FT",
+    "exact_bet_line": "ТМ 1.5",
+    "current_odds": 1.45,
+    "reverse_bet": "ТБ 1.5",
+    "reverse_odds": 2.675,
+    "market": "next_goal_under",
+    "bet_line": 1.5,
+    "features": {
+      "drought_min": 49,
+      "last_goal_minute": 36,
+      "main_total": 1.5,
+      "selected_total": 1.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-04T19:30:23.801555+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-0",
+        "exact_bet_line": "ТМ 1.5",
+        "current_odds": 1.45,
+        "reverse_bet": "ТБ 1.5",
+        "reverse_odds": 2.675,
+        "market": "next_goal_under",
+        "bet_line": 1.5,
+        "features": {
+          "drought_min": 49,
+          "last_goal_minute": 36,
+          "main_total": 1.5,
+          "selected_total": 1.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:33:21.273943+00:00",
+    "sport": "football",
+    "tournament": "UEFA Nations League A",
+    "event_id": "11437357",
+    "match": "Portugal - Norway",
+    "minute_score": "44' / '1-1",
+    "minute": 44,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 3.75",
+    "current_odds": 1.875,
+    "reverse_bet": "ТМ 3.75",
+    "reverse_odds": 1.975,
+    "market": "main_over",
+    "bet_line": 3.75,
+    "features": {
+      "drought_min": 6,
+      "last_goal_minute": 38,
+      "main_total": 3.75,
+      "selected_total": 3.75,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-04T19:33:21.273943+00:00",
+        "period": "FT",
+        "minute": 44,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 3.75",
+        "current_odds": 1.875,
+        "reverse_bet": "ТМ 3.75",
+        "reverse_odds": 1.975,
+        "market": "main_over",
+        "bet_line": 3.75,
+        "features": {
+          "drought_min": 6,
+          "last_goal_minute": 38,
+          "main_total": 3.75,
+          "selected_total": 3.75,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:35:44Z",
+    "sport": "football",
+    "tournament": "UEFA Nations League A",
+    "event_id": "11437537",
+    "match": "Wales - Denmark",
+    "minute_score": "45' / '0-0'",
+    "minute": 45,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 1.5",
+    "current_odds": 1.9,
+    "reverse_bet": "ТБ 1.5",
+    "reverse_odds": 1.95,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "ТМ матча в перерыве при низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 47.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-04T19:35:44Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 1.5",
+        "current_odds": 1.9,
+        "reverse_bet": "ТБ 1.5",
+        "reverse_odds": 1.95
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-04T19:38:16.369156+00:00",
+    "sport": "football",
+    "tournament": "Chile Primera B",
+    "event_id": "13132220",
+    "match": "Union San Felipe - Deportes Iquique",
+    "minute_score": "79' / '0-2",
+    "minute": 79,
+    "score": "0-2",
+    "period": "FT",
+    "exact_bet_line": "ТМ 2.5",
+    "current_odds": 1.75,
+    "reverse_bet": "ТБ 2.5",
+    "reverse_odds": 2.05,
+    "market": "next_goal_under",
+    "bet_line": 2.5,
+    "features": {
+      "drought_min": 1,
+      "last_goal_minute": 78,
+      "main_total": 2.5,
+      "selected_total": 2.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S28",
+    "strategy_ids": [
+      "S28"
+    ],
+    "strategy_names": [
+      "ТМ 2.5 после гола при счёте 0:2 с 60-й минуты"
+    ],
+    "strategy_observations": {
+      "S28": {
+        "timestamp": "2026-10-04T19:38:16.369156+00:00",
+        "period": "FT",
+        "minute": 79,
+        "score": "0-2",
+        "exact_bet_line": "ТМ 2.5",
+        "current_odds": 1.75,
+        "reverse_bet": "ТБ 2.5",
+        "reverse_odds": 2.05,
+        "market": "next_goal_under",
+        "bet_line": 2.5,
+        "features": {
+          "drought_min": 1,
+          "last_goal_minute": 78,
+          "main_total": 2.5,
+          "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "ACTIVE",
     "settlement_reason": "INPLAY"
   }
 ]
