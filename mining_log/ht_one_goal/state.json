@@ -19656,8 +19656,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11444652": {
       "event_id": "11444652",
@@ -19674,7 +19675,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12186939": {
       "event_id": "12186939",
@@ -19796,6 +19798,6 @@
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T05:03:30Z",
+  "updated_at": "2026-10-04T05:13:36Z",
   "api_calls_last_run": 4
 }
