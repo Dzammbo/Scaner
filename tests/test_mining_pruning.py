@@ -12,7 +12,7 @@ import prematch_line_movement as prematch
 
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 600})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300})
         self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22,S25")
 
     @patch.object(worker, "budget", return_value=20)
@@ -22,19 +22,35 @@ class MiningPruningTest(unittest.TestCase):
         env = invoke.call_args.args[2]
         self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S09,S21,S22,S25")
 
-    def test_stateful_accepts_only_s26_arm(self):
-        self.assertTrue(stateful.is_s26_signal({
-            "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
-            "arm": "HIGH_PRESSURE_O05_FT",
-        }))
-        self.assertFalse(stateful.is_s26_signal({
+    def test_stateful_accepts_only_active_arms(self):
+        for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:
+            self.assertTrue(stateful.is_active_signal({"strategy": strategy, "arm": arm}))
+        self.assertFalse(stateful.is_active_signal({
             "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
             "arm": "HIGH_PRESSURE_O05_FH",
         }))
-        self.assertFalse(stateful.is_s26_signal({
+        self.assertFalse(stateful.is_active_signal({
             "strategy": "LIVE_GOAL_SELECTION_V3",
             "arm": "PLUS_0_5",
         }))
+
+    def test_four_new_candidate_rules(self):
+        base = {"event_id": "1", "league": "Test", "country": "GB", "home": "A", "away": "B"}
+        cases = [
+            ({**base, "score": "1-0", "minute": 45, "stats": {"on_target": [1, 1]}}, {}, True, "S31"),
+            ({**base, "score": "0-0", "minute": 32, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, False, "S32"),
+            ({**base, "score": "0-0", "minute": 65, "stats": {"on_target": [1, 1]}}, {}, False, "S33"),
+            ({**base, "score": "0-0", "minute": 45, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, True, "S34"),
+        ]
+        for meta, features, halftime, expected in cases:
+            self.assertIn(expected, [x["id"] for x in stateful.candidate_arms(meta, features, halftime)])
+
+    def test_under_and_over_settlement(self):
+        self.assertEqual(stateful.outcome_for(0, 0.5, "UNDER"), "WIN")
+        self.assertEqual(stateful.outcome_for(1, 0.5, "UNDER"), "LOSS")
+        self.assertEqual(stateful.outcome_for(1, 0.5, "OVER"), "WIN")
+        self.assertEqual(stateful.outcome_for(2, 1.75, "UNDER"), "HALF_LOSS")
+        self.assertEqual(stateful.profit_for("HALF_LOSS", 1.9), -0.5)
 
     def test_retired_collectors_are_disabled_by_default(self):
         self.assertTrue(ht.RETIRED)

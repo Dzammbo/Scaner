@@ -181,9 +181,11 @@ Production collection runs on GitHub-hosted Actions. Selectel is no longer part 
 
 - `scaner-hot-path.yml` - continuous Scanner worker for 5 h 20 min, polling every 5 minutes, checkpointing every 10 minutes, with an hourly watchdog at minute 37.
 - `mining-hot-path.yml` - retained general Mining rules S09, S21, S22 and S25, every 5 minutes.
-- `stateful-goal-mining.yml` - only S26 high-pressure full-time signals, every 10 minutes with at most 5 calls.
+- `stateful-goal-mining.yml` / the continuous Mining worker - S26 plus shadow S31-S34, every 5 minutes with one shared ceiling of 5 calls per pass. S26 keeps a 10-minute per-event odds cooldown; the four narrow-window hypotheses use 5 minutes.
 
 С 2026-10-04 остановлены HT one-goal и prematch line movement, а также сбор правил S15-S19, S23, S24, T13, T14, T16, T17 и S27. Исторические журналы сохранены, но новые запросы и сигналы по ним не создаются.
+
+С 2026-10-04 в stateful Mining запущены четыре новые футбольные shadow-гипотезы без пользовательской выдачи: S31 ТМ матча в перерыве при 0-1 голе и не более двух ударов в створ; S32 гол до перерыва на 30-35-й при 0:0, минимум четырёх ударах в створ и pressure10 от 20; S33 отсутствие гола после 60-й при 0:0 и не более двух ударах в створ; S34 гол во втором тайме после активного первого тайма 0:0. Для каждого правила сохраняется фактический коэффициент и действует один вход на матч.
 
 All active Mining collectors share the 800 requests/hour morning envelope and the 1,600 requests/hour normal envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. Historical HT and prematch datasets remain available for offline analysis, while both collectors are disabled.
 

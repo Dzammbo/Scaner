@@ -21,7 +21,7 @@ CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECON
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
 GENERAL_STRATEGIES = os.environ.get("PUBLIC_MINING_STRATEGIES", "S09,S21,S22,S25")
-COLLECTOR_INTERVALS = {"general": 300, "goal": 600}
+COLLECTOR_INTERVALS = {"general": 300, "goal": 300}
 
 
 def now():

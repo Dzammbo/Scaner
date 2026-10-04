@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GitHub-native high-pressure full-time collector retained for S26 only."""
+"""Low-cost stateful football Mining collector for active shadow hypotheses."""
 import json,math,os,time,urllib.parse,urllib.request
 from datetime import datetime,timezone
 from pathlib import Path
@@ -8,7 +8,14 @@ BASE="https://api.b365api.com";TOKEN=os.environ["BETSAPI_KEY"]
 ROOT=Path("mining_log/stateful_goal");STATE=ROOT/"state.json";SIGNALS=ROOT/"signals.jsonl";OBS=ROOT/"observations.jsonl";RUNS=ROOT/"runs.jsonl";STATUS=ROOT/"status.json"
 SCANNER_SIGNALS=Path("forward_log/stateful_pressure_signals.jsonl")
 SCANNER_STATUS=Path("forward_log/stateful_pressure_status.json")
-MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0
+MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0;NEW_PRESSURE_CUTOFF=20.0
+ACTIVE_SIGNAL_IDS={
+ ("FOOTBALL_PRESSURE_TOTAL_O05_V1","HIGH_PRESSURE_O05_FT"):"S26",
+ ("FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","PRIMARY"):"S31",
+ ("FOOTBALL_FH_PRESSURE_GOAL_V1","PRIMARY"):"S32",
+ ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
+ ("FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","PRIMARY"):"S34",
+}
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
  try:x=float(v);return x if math.isfinite(x) else None
@@ -76,10 +83,37 @@ def quote(rows,wanted,cur_score):
   if now-at<0 or now-at>180:continue
   if best is None or at>best["quote_at"]:best={"line":line,"over":over,"under":under,"quote_at":at}
  return best
+def main_quote(rows,cur_score):
+ choices=[]
+ for r in rows or []:
+  line=lineval(r.get("handicap"));over=num(r.get("over_od"));under=num(r.get("under_od"));at=integer(r.get("add_time"));rs=str(r.get("ss") or "").replace(":","-")
+  if None in (line,over,under,at) or over<=1 or under<=1 or (rs and rs!=cur_score):continue
+  if now-at<0 or now-at>180:continue
+  choices.append((at,-abs(math.log(over/under)),{"line":line,"over":over,"under":under,"quote_at":at}))
+ return None if not choices else max(choices,key=lambda x:(x[0],x[1]))[2]
+def in_range(value,bounds):return bounds is None or (value is not None and bounds[0]<=value<=bounds[1])
+def is_halftime(ev):
+ timer=ev.get("timer") or {};minute=integer(timer.get("tm"));running=str(timer.get("tt") if timer.get("tt") is not None else "");label=str(ev.get("time_str") or ev.get("status") or "").lower()
+ return ("half" in label and "time" in label) or (minute==45 and running in ("0",""))
 def event_meta(ev):
  league=ev.get("league") or {};home=ev.get("home") or {};away=ev.get("away") or {};timer=ev.get("timer") or {}
  minute=integer(timer.get("tm"));sec=integer(timer.get("ts")) or 0
  return {"event_id":str(ev.get("id") or ""),"league":str(league.get("name") or ""),"country":str(league.get("cc") or ""),"home":str(home.get("name") or ""),"away":str(away.get("name") or ""),"score":str(ev.get("ss") or "").replace(":","-"),"minute":minute,"elapsed":None if minute is None else minute*60+sec,"stats":ev.get("stats") or {}}
+def candidate_arms(meta,features,halftime=False):
+ s=score(meta.get("score"));minute=meta.get("minute");sot=total(meta.get("stats") or {},"on_target");pressure=None if not features else features.get("pressure10");out=[]
+ if not s or minute is None:return out
+ goals=sum(s)
+ if halftime and goals<=1 and sot is not None and sot<=2:
+  out.append({"id":"S31","strategy":"FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","arm":"PRIMARY","market":"FT_MAIN","selection":"UNDER","period":"FT","odds":[1.70,2.20],"interval":300,"priority":0})
+ if 30<=minute<=35 and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
+  out.append({"id":"S32","strategy":"FOOTBALL_FH_PRESSURE_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":0})
+ if 60<=minute<=69 and s==(0,0) and sot is not None and sot<=2:
+  out.append({"id":"S33","strategy":"FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":[1.50,2.20],"interval":300,"priority":1})
+ if halftime and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
+  out.append({"id":"S34","strategy":"FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"OVER","period":"FT","odds":[1.40,2.00],"interval":300,"priority":0})
+ if minute>45 and pressure is not None and pressure>=PRESSURE_CUTOFF:
+  out.append({"id":"S26","strategy":"FOOTBALL_PRESSURE_TOTAL_O05_V1","arm":"HIGH_PRESSURE_O05_FT","market":"FT_NEXT","selection":"OVER","period":"FT","odds":None,"interval":600,"priority":2})
+ return out
 def final_period_goals(ev,period):
  if period=="FT":
   s=score(ev.get("ss"));return None if not s else sum(s)
@@ -89,27 +123,55 @@ def final_period_goals(ev,period):
    s=score(scores.get(key))
    if s:return sum(s)
  return None
+def outcome_for(goals,line,selection):
+ fraction=round(float(line)%1,2)
+ if fraction in (.25,.75):
+  legs=[outcome_for(goals,line-.25,selection),outcome_for(goals,line+.25,selection)]
+  if legs[0]==legs[1]:return legs[0]
+  if "PUSH" in legs:return "HALF_WIN" if "WIN" in legs else "HALF_LOSS"
+ if goals==line:return "PUSH"
+ return "WIN" if (goals>line)==(selection=="OVER") else "LOSS"
+def profit_for(outcome,odds):
+ if outcome=="WIN":return odds-1
+ if outcome=="HALF_WIN":return (odds-1)/2
+ if outcome=="HALF_LOSS":return -.5
+ if outcome in ("PUSH","VOID"):return 0
+ return -1
 def settle(rows,live_ids):
+ pending={}
  for row in rows:
-  if row.get("outcome") is not None or row["event_id"] in live_ids or now-row["entry_at"]<300:continue
+  if row.get("outcome") is not None or row["event_id"] in live_ids or now-int(row["entry_at"])<300:continue
+  pending.setdefault(row["event_id"],[]).append(row)
+ for event_id,event_rows in pending.items():
   if calls>=MAX_CALLS:break
-  try:p=get("/v1/event/view",{"event_id":row["event_id"]})
+  try:p=get("/v1/event/view",{"event_id":event_id})
   except Exception:continue
-  ev=next((x for x in p.get("results") or [] if isinstance(x,dict) and str(x.get("id"))==row["event_id"]),None)
+  ev=next((x for x in p.get("results") or [] if isinstance(x,dict) and str(x.get("id"))==event_id),None)
   if not ev:continue
   status=str(ev.get("time_status") or "")
-  if status=="3":
-   goals=final_period_goals(ev,row["period"])
-   if goals is None:continue
-   outcome="WIN" if goals>row["selected_line"] else "PUSH" if goals==row["selected_line"] else "LOSS"
-   row.update({"settled_at":now,"final_period_goals":goals,"outcome":outcome,"profit":row["selected_odds"]-1 if outcome=="WIN" else 0 if outcome=="PUSH" else -1})
-  elif status in ("4","5","7","8") and now-row["entry_at"]>=12*3600:row.update({"settled_at":now,"outcome":"VOID","profit":0})
+  for row in event_rows:
+   if status=="3":
+    goals=final_period_goals(ev,row["period"])
+    if goals is None:continue
+    outcome=outcome_for(goals,row["selected_line"],row.get("selection") or "OVER")
+    row.update({"settled_at":now,"final_period_goals":goals,"outcome":outcome,"profit":profit_for(outcome,row["selected_odds"])})
+   elif status in ("4","5","7","8") and now-int(row["entry_at"])>=12*3600:row.update({"settled_at":now,"outcome":"VOID","profit":0})
 def metrics(rows):
  rr=[x for x in rows if x.get("outcome") not in (None,"VOID")];profit=sum(float(x.get("profit") or 0) for x in rr)
- return {"N":len(rr),"W":sum(x["outcome"]=="WIN" for x in rr),"L":sum(x["outcome"]=="LOSS" for x in rr),"PUSH":sum(x["outcome"]=="PUSH" for x in rr),"profit":round(profit,6),"ROI":None if not rr else round(profit/len(rr),6)}
+ return {"N":len(rr),"W":sum(x["outcome"] in ("WIN","HALF_WIN") for x in rr),"L":sum(x["outcome"] in ("LOSS","HALF_LOSS") for x in rr),"PUSH":sum(x["outcome"]=="PUSH" for x in rr),"profit":round(profit,6),"ROI":None if not rr else round(profit/len(rr),6)}
 
-def is_s26_signal(row):
- return row.get("strategy")=="FOOTBALL_PRESSURE_TOTAL_O05_V1" and row.get("arm")=="HIGH_PRESSURE_O05_FT"
+def signal_id(row):return ACTIVE_SIGNAL_IDS.get((row.get("strategy"),row.get("arm")))
+def is_active_signal(row):return signal_id(row) is not None
+
+def quote_for_arm(arm,odds,meta):
+ goals=sum(score(meta["score"]))
+ if arm["market"]=="FT_MAIN":q=main_quote(odds.get("1_3"),meta["score"])
+ elif arm["market"]=="FH_NEXT":q=quote(odds.get("1_6"),goals+.5,meta["score"])
+ else:q=quote(odds.get("1_3"),goals+.5,meta["score"])
+ if not q:return None
+ selected=q["over"] if arm["selection"]=="OVER" else q["under"]
+ if not in_range(selected,arm["odds"]):return None
+ return {**q,"selected":selected,"reverse":q["under"] if arm["selection"]=="OVER" else q["over"]}
 
 def main():
  ROOT.mkdir(parents=True,exist_ok=True);state=load(STATE,{"events":{},"last_query":{}});history=state.setdefault("events",{});last_query=state.setdefault("last_query",{})
@@ -127,27 +189,33 @@ def main():
    dangerous=delta(meta["stats"],prior.get("stats") or {},"dangerous_attacks");ont=delta(meta["stats"],prior.get("stats") or {},"on_target");off=delta(meta["stats"],prior.get("stats") or {},"off_target");corners=delta(meta["stats"],prior.get("stats") or {},"corners");shots=None if ont is None or off is None else ont+off;pressure=None if None in (dangerous,shots,ont) else dangerous+3*shots+5*ont
    features={"dangerous10":dangerous,"shots10":shots,"on_target10":ont,"corners10":corners,"pressure10":pressure}
   old.append({"seen_at":now,"elapsed":meta["elapsed"],"score":meta["score"],"stats":meta["stats"]});history[eid]=old[-10:]
-  if features and meta["minute"]>45 and features["pressure10"] is not None and features["pressure10"]>=PRESSURE_CUTOFF:
-   candidates.append((last_query.get(eid,0),meta,features))
- candidates.sort(key=lambda x:(x[0],x[1]["event_id"]))
- for _,meta,features in candidates:
-  if calls>=MAX_CALLS:break
+  arms=[]
+  for arm in candidate_arms(meta,features,is_halftime(ev)):
+   key=(eid,arm["strategy"],arm["arm"]);query_key=":".join(key)
+   if key not in sigkeys and now-int(last_query.get(query_key,0))>=arm["interval"]:arms.append(arm)
+  if arms:candidates.append((min(x["priority"] for x in arms),min(int(last_query.get(":".join((eid,x["strategy"],x["arm"])),0)) for x in arms),meta,features or {},arms))
+ candidates.sort(key=lambda x:(x[0],x[1],x[2]["event_id"]))
+ detail_call_ceiling=max(2,MAX_CALLS-1)
+ for _,_,meta,features,arms in candidates:
+  if calls>=detail_call_ceiling:break
   eid=meta["event_id"]
-  if now-int(last_query.get(eid,0))<60:continue
-  try:p=get("/v2/event/odds",{"event_id":eid,"source":"bet365","odds_market":"1,3"})
+  try:p=get("/v2/event/odds",{"event_id":eid,"source":"bet365","odds_market":"1,3,6"})
   except Exception:continue
-  last_query[eid]=now;odds=((p.get("results") or {}).get("odds") or {});goals=sum(score(meta["score"]));period="FT";q05=quote(odds.get("1_3"),goals+.5,meta["score"])
-  observation={**{k:v for k,v in meta.items() if k!="stats"},**features,"observed_at":now,"period":period,"leg05_line":None if not q05 else q05["line"],"leg05_odds":None if not q05 else q05["over"],"leg10_line":None,"leg10_odds":None}
+  odds=((p.get("results") or {}).get("odds") or {})
+  for arm in arms:last_query[":".join((eid,arm["strategy"],arm["arm"]))]=now
+  observation={**{k:v for k,v in meta.items() if k!="stats"},**features,"observed_at":now,"eligible_arms":[x["id"] for x in arms]}
   if (eid,meta["minute"]) not in obskeys:observations.append(observation);obskeys.add((eid,meta["minute"]))
-  if q05:
-   arm="HIGH_PRESSURE_O05_FT";key=(eid,"FOOTBALL_PRESSURE_TOTAL_O05_V1",arm)
-   if key not in sigkeys:signals.append({**observation,"strategy":"FOOTBALL_PRESSURE_TOTAL_O05_V1","arm":arm,"entry_at":now,"selected_line":q05["line"],"selected_odds":q05["over"],"reverse_odds":q05["under"],"outcome":None});sigkeys.add(key)
- active_signals=[x for x in signals if is_s26_signal(x)]
- settle(signals,live_ids);save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
+  for arm in arms:
+   q=quote_for_arm(arm,odds,meta);key=(eid,arm["strategy"],arm["arm"])
+   if not q or key in sigkeys:continue
+   signals.append({**observation,"strategy_id":arm["id"],"strategy":arm["strategy"],"arm":arm["arm"],"entry_at":now,"selection":arm["selection"],"period":arm["period"],"selected_line":q["line"],"selected_odds":q["selected"],"reverse_odds":q["reverse"],"quote_at":q["quote_at"],"outcome":None});sigkeys.add(key)
+ settle(signals,live_ids)
+ active_signals=[x for x in signals if is_active_signal(x)]
+ save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
  sync_scanner_pressure(active_signals)
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
- status={"strategy":"STATEFUL_GOAL_MINING_S26_ONLY","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
+ status={"strategy":"STATEFUL_GOAL_MINING_ACTIVE_SHADOWS","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
  STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  with RUNS.open("a",encoding="utf-8") as f:f.write(json.dumps({"timestamp":iso(),"collector":"stateful_goal_mining","api_calls":calls,"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals)},separators=(",",":"))+"\n")
  print(json.dumps(status,ensure_ascii=False))
