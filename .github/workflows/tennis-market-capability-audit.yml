@@ -2,11 +2,6 @@ name: Tennis market capability audit
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - tennis_market_capability_audit.py
-      - .github/workflows/tennis-market-capability-audit.yml
 
 permissions:
   contents: write
