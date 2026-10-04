@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-04T16:23:36.541909Z",
+  "generated_at": "2026-10-04T17:25:01.849639Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,39 +25,39 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 46,
-      "settled": 40,
-      "pending": 6,
+      "recorded": 57,
+      "settled": 49,
+      "pending": 8,
       "void": 0,
       "result": {
-        "N": 40,
-        "W": 22,
-        "L": 18,
+        "N": 49,
+        "W": 28,
+        "L": 21,
         "P": 0,
-        "profit": -3.612,
-        "ROI": -9.03
+        "profit": -2.413,
+        "ROI": -4.92
       },
       "without_top3": {
-        "N": 37,
-        "W": 19,
-        "L": 18,
+        "N": 46,
+        "W": 25,
+        "L": 21,
         "P": 0,
-        "profit": -6.612,
-        "ROI": -17.87
+        "profit": -5.413,
+        "ROI": -11.77
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 332,
-        "settled": 286,
-        "pending": 46,
+        "recorded": 352,
+        "settled": 316,
+        "pending": 36,
         "void": 0,
         "result": {
-          "N": 286,
-          "W": 115,
-          "L": 142,
-          "P": 29,
-          "profit": -31.575,
-          "ROI": -11.04
+          "N": 316,
+          "W": 125,
+          "L": 160,
+          "P": 31,
+          "profit": -36.55,
+          "ROI": -11.57
         }
       },
       "review_ready": false
@@ -67,39 +67,39 @@
       "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 27,
-      "settled": 20,
-      "pending": 7,
+      "recorded": 28,
+      "settled": 23,
+      "pending": 5,
       "void": 0,
       "result": {
+        "N": 23,
+        "W": 11,
+        "L": 11,
+        "P": 1,
+        "profit": 0.4,
+        "ROI": 1.74
+      },
+      "without_top3": {
         "N": 20,
         "W": 8,
         "L": 11,
         "P": 1,
-        "profit": -2.25,
-        "ROI": -11.25
-      },
-      "without_top3": {
-        "N": 17,
-        "W": 5,
-        "L": 11,
-        "P": 1,
-        "profit": -5.225,
-        "ROI": -30.74
+        "profit": -2.575,
+        "ROI": -12.87
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 351,
-        "settled": 306,
-        "pending": 45,
+        "recorded": 381,
+        "settled": 342,
+        "pending": 39,
         "void": 0,
         "result": {
-          "N": 306,
-          "W": 152,
-          "L": 126,
-          "P": 28,
-          "profit": 6.845,
-          "ROI": 2.24
+          "N": 342,
+          "W": 170,
+          "L": 142,
+          "P": 30,
+          "profit": 7.045,
+          "ROI": 2.06
         }
       },
       "review_ready": false
@@ -109,38 +109,38 @@
       "name_ru": "Reverse ТМ 2,5 после 70-й при счёте 0:2",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 9,
-      "settled": 9,
+      "recorded": 10,
+      "settled": 10,
       "pending": 0,
       "void": 0,
       "result": {
-        "N": 9,
+        "N": 10,
         "W": 3,
-        "L": 6,
+        "L": 7,
         "P": 0,
-        "profit": -3.25,
-        "ROI": -36.11
+        "profit": -4.25,
+        "ROI": -42.5
       },
       "without_top3": {
-        "N": 6,
+        "N": 7,
         "W": 0,
-        "L": 6,
+        "L": 7,
         "P": 0,
-        "profit": -6.0,
+        "profit": -7.0,
         "ROI": -100.0
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 2,
-        "settled": 2,
+        "recorded": 3,
+        "settled": 3,
         "pending": 0,
         "void": 0,
         "result": {
-          "N": 2,
-          "W": 2,
+          "N": 3,
+          "W": 3,
           "L": 0,
           "P": 0,
-          "profit": 2.0,
+          "profit": 3.0,
           "ROI": 100.0
         }
       },
