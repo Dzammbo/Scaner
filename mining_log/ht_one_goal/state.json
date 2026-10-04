@@ -18973,8 +18973,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11187333": {
       "event_id": "11187333",
@@ -19961,7 +19962,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13237548": {
       "event_id": "13237548",
@@ -20134,6 +20136,6 @@
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T06:23:51Z",
+  "updated_at": "2026-10-04T06:34:26Z",
   "api_calls_last_run": 4
 }
