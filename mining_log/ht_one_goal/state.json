@@ -18676,8 +18676,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13033257": {
       "event_id": "13033257",
@@ -18712,8 +18713,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13234347": {
       "event_id": "13234347",
@@ -18730,7 +18732,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11188851": {
       "event_id": "11188851",
@@ -18747,7 +18750,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11188831": {
       "event_id": "11188831",
@@ -18764,7 +18768,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11187346": {
       "event_id": "11187346",
@@ -18901,8 +18906,59 @@
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "11188850": {
+      "event_id": "11188850",
+      "bet365_id": "202050829",
+      "kickoff": 1791070200,
+      "candidate_at": 1791073473,
+      "country": "us",
+      "league": "USA USL League One",
+      "home": "Fort Wayne FC",
+      "away": "Forward Madison FC",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11187333": {
+      "event_id": "11187333",
+      "bet365_id": "200870989",
+      "kickoff": 1791070200,
+      "candidate_at": 1791073667,
+      "country": "us",
+      "league": "USA USL Championship",
+      "home": "Tampa Bay Rowdies",
+      "away": "Miami FC",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE"
+    },
+    "11188830": {
+      "event_id": "11188830",
+      "bet365_id": "202050828",
+      "kickoff": 1791070200,
+      "candidate_at": 1791073735,
+      "country": "us",
+      "league": "USA USL League One",
+      "home": "Sarasota Paradise",
+      "away": "Charlotte Independence",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T00:19:20Z",
+  "updated_at": "2026-10-04T00:28:58Z",
   "api_calls_last_run": 9
 }
