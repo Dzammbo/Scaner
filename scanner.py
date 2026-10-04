@@ -863,10 +863,6 @@ queues = {"football": {}, "tennis": {}}
 for sport in ("football", "tennis"):
     for ev in boards[sport]["events"]:
         sts = [st for st in strategies if st["sport"] == sport and cheap_core_prefilter(ev, st, previous_state)]
-        if S30_CAPTURE and sport == "football" and ev.get("minute") is not None and 83 <= ev["minute"] <= 90:
-            s30 = next((st for st in strategies if st.get("id") == "S30"), None)
-            if s30 and s30 not in sts:
-                sts.append(s30)
         if sts:
             queues[sport][ev["event_id"]] = {"event": ev, "strategies": sts}
 
