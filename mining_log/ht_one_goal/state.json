@@ -18542,8 +18542,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13163515": {
       "event_id": "13163515",
@@ -18579,8 +18580,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13055359": {
       "event_id": "13055359",
@@ -18616,8 +18618,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11285059": {
       "event_id": "11285059",
@@ -19675,8 +19678,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12186939": {
       "event_id": "12186939",
@@ -19693,7 +19697,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12186940": {
       "event_id": "12186940",
@@ -19710,7 +19715,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13232830": {
       "event_id": "13232830",
@@ -19796,8 +19802,42 @@
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
       "status": "ELIGIBLE"
+    },
+    "13236012": {
+      "event_id": "13236012",
+      "bet365_id": "202147366",
+      "kickoff": 1791088200,
+      "candidate_at": 1791091069,
+      "country": "jp",
+      "league": "Japan Regional League",
+      "home": "Toyama Shinjo Club",
+      "away": "Fukui United",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13236011": {
+      "event_id": "13236011",
+      "bet365_id": "202147364",
+      "kickoff": 1791088200,
+      "candidate_at": 1791091069,
+      "country": "jp",
+      "league": "Japan Regional League",
+      "home": "Niigata Uni of Management II",
+      "away": "Artista Asama",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T05:13:36Z",
+  "updated_at": "2026-10-04T05:24:00Z",
   "api_calls_last_run": 4
 }
