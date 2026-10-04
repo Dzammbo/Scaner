@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Continuous collector for the Mining strategies already hosted in Scaner."""
+"""Continuous collector for the retained low-cost Mining strategies."""
 
 from __future__ import annotations
 
@@ -20,6 +20,8 @@ DURATION_SECONDS = max(1, int(os.environ.get("PUBLIC_MINING_DURATION_SECONDS", "
 CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECONDS", "600")))
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
+GENERAL_STRATEGIES = os.environ.get("PUBLIC_MINING_STRATEGIES", "S09,S21,S22,S25")
+COLLECTOR_INTERVALS = {"general": 300, "goal": 600}
 
 
 def now():
@@ -99,36 +101,21 @@ def checkpoint():
 
 
 def run_pass(name):
-    if name == "ht":
-        cap = 5 if morning() else 10
-        calls = budget(cap, 4)
-        if not calls:
-            return False
-        invoke("HT one-goal", ["python3", "ht_one_goal_mining.py"], {
-            "HT_ONE_GOAL_CALL_BUDGET": str(calls),
-            "HT_ONE_GOAL_DETAIL_BUDGET": str(max(1, calls - 1)),
-        })
-    elif name == "general":
+    if name == "general":
         calls = budget(20 if morning() else 40, 2)
         if not calls:
             return False
         invoke("general Mining", ["python3", "scanner.py"], {
             "SCANER_MODE": "mining",
             "SCANER_DETAIL_BUDGET": str(max(0, calls - 2)),
+            "SCANER_ONLY_STRATEGIES": GENERAL_STRATEGIES,
         })
     elif name == "goal":
-        calls = budget(5 if morning() else 10, 3)
+        calls = budget(5, 3)
         if not calls:
             return False
         invoke("stateful goal", ["python3", "stateful_goal_mining.py"], {
             "STATEFUL_GOAL_CALL_BUDGET": str(calls),
-        })
-    elif name == "prematch":
-        calls = budget(14 if morning() else 28, 6)
-        if not calls:
-            return False
-        invoke("prematch movement", ["python3", "prematch_line_movement.py"], {
-            "LINE_MOVEMENT_CALL_BUDGET": str(calls),
         })
     return True
 
@@ -138,7 +125,7 @@ def main():
     started = now()
     end = time.monotonic() + DURATION_SECONDS
     next_checkpoint = time.monotonic() + CHECKPOINT_SECONDS
-    intervals = {"ht": 60, "general": 300, "goal": 300, "prematch": 1800}
+    intervals = COLLECTOR_INTERVALS
     next_due = {name: 0.0 for name in intervals}
     counts = {name: 0 for name in intervals}
     failures = {name: 0 for name in intervals}
@@ -167,6 +154,8 @@ def main():
             "failures": failures,
             "calls_last_hour": recent_calls(),
             "hourly_cap": 1150 if morning() else 2300,
+            "active_collectors": intervals,
+            "general_strategies": GENERAL_STRATEGIES.split(","),
             "last_error": last_error,
             "last_checkpoint": last_checkpoint,
         }

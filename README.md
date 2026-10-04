@@ -181,12 +181,12 @@ S15 «Гол 80-84 при 2,50-2,99» и S25 «Фора гостей после 
 Production collection runs on GitHub-hosted Actions. Selectel is no longer part of the hot path.
 
 - `scaner-hot-path.yml` - continuous Scanner worker for 5 h 20 min, polling every 5 minutes, checkpointing every 10 minutes, with an hourly watchdog at minute 37.
-- `mining-hot-path.yml` - general Mining strategies, every 5 minutes.
-- `stateful-goal-mining.yml` - 10-minute pressure and next-goal state, every 5 minutes.
-- `ht-one-goal-mining.yml` - halftime 1:0/0:1 hypothesis and control groups, five one-minute polls per five-minute GitHub run.
-- `prematch-line-movement.yml` - prematch probability movement, twice per hour.
+- `mining-hot-path.yml` - retained general Mining rules S09, S21, S22 and S25, every 5 minutes.
+- `stateful-goal-mining.yml` - only S26 high-pressure full-time signals, every 10 minutes with at most 5 calls.
 
-All Mining collectors share the 800 requests/hour morning envelope and the 1,600 requests/hour normal envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. The halftime hypothesis remains Mining-only until at least 10 complete days and preferably 500 settled primary signals.
+С 2026-10-04 остановлены HT one-goal и prematch line movement, а также сбор правил S15-S19, S23, S24, T13, T14, T16, T17 и S27. Исторические журналы сохранены, но новые запросы и сигналы по ним не создаются.
+
+All active Mining collectors share the 800 requests/hour morning envelope and the 1,600 requests/hour normal envelope through committed run ledgers. Evidence and settlement state are stored under `mining_log/`; Scanner evidence remains under `forward_log/`. Historical HT and prematch datasets remain available for offline analysis, while both collectors are disabled.
 
 ## Приоритет статистики Scanner, 2026-10-01
 

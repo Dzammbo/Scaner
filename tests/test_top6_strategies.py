@@ -64,12 +64,13 @@ class TopSixRegistryTest(unittest.TestCase):
             self.assertEqual(row["rule"]["odds"], odds)
             self.assertEqual(row["clean_epoch_start"], "2026-10-01T19:15:00Z")
 
-    def test_retired_negative_rules_are_mining_only(self):
+    def test_retired_negative_rules_are_archived(self):
         for strategy_id in ("T14", "T16", "S27"):
             row = strategy(strategy_id)
             self.assertFalse(row["scanner_enabled"])
             self.assertFalse(row["user_output"])
-            self.assertEqual(row["research_destination"], "mining")
+            self.assertEqual(row["research_destination"], "history")
+            self.assertEqual(row["status"], "ARCHIVED")
 
     def test_operational_count_matches_registry(self):
         registry = json.loads((ROOT / "strategies.json").read_text(encoding="utf-8"))
@@ -163,30 +164,30 @@ class TennisTopSixTest(unittest.TestCase):
 
 
 class PressureTopSixTest(unittest.TestCase):
-    def test_first_half_sync_keeps_only_top_six_price_band(self):
+    def test_sync_keeps_only_full_time_s26(self):
         base = {
             "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
-            "arm": "HIGH_PRESSURE_O05_FH",
+            "arm": "HIGH_PRESSURE_O05_FT",
             "entry_at": int(time.time()),
             "league": "Test League",
             "home": "Home",
             "away": "Away",
-            "minute": 30,
+            "minute": 60,
             "score": "0-0",
             "selected_line": 0.5,
             "reverse_odds": 1.80,
             "pressure10": 30,
-            "period": "FH",
+            "period": "FT",
         }
         with tempfile.TemporaryDirectory() as tmp:
             stateful.SCANNER_SIGNALS = Path(tmp) / "signals.jsonl"
             stateful.SCANNER_STATUS = Path(tmp) / "status.json"
             stateful.sync_scanner_pressure([
-                {**base, "event_id": "in", "selected_odds": 1.95},
-                {**base, "event_id": "out", "selected_odds": 1.70},
+                {**base, "event_id": "s26", "selected_odds": 1.95},
+                {**base, "event_id": "s27", "arm": "HIGH_PRESSURE_O05_FH", "period": "FH", "selected_odds": 1.95},
             ])
             rows = stateful.load_rows(stateful.SCANNER_SIGNALS)
-        self.assertEqual([row["event_id"] for row in rows], ["in"])
+        self.assertEqual([row["event_id"] for row in rows], ["s26"])
 
 
 if __name__ == "__main__":

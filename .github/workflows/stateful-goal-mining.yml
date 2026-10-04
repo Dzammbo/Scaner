@@ -30,7 +30,7 @@ jobs:
           now=datetime.now(timezone.utc);used=0
           morning=7<=now.astimezone(ZoneInfo("Europe/Moscow")).hour<12
           cap=800 if morning else 1600
-          per_run=5 if morning else 10
+          per_run=5
           for p in Path("mining_log").glob("**/*runs*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
               try:r=json.loads(line);ts=datetime.fromisoformat(str(r["timestamp"]).replace("Z","+00:00"))

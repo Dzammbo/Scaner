@@ -30,7 +30,7 @@ jobs:
       - name: Validate public Mining worker
         run: |
           test -n "$BETSAPI_KEY"
-          python3 -m py_compile scaner_mining_worker.py scanner.py ht_one_goal_mining.py stateful_goal_mining.py prematch_line_movement.py
+          python3 -m py_compile scaner_mining_worker.py scanner.py stateful_goal_mining.py
 
       - name: Configure Git identity
         run: |
