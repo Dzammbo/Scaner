@@ -20110,8 +20110,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13018753": {
       "event_id": "13018753",
@@ -20164,8 +20165,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13122970": {
       "event_id": "13122970",
@@ -20200,9 +20202,10 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-04T07:04:17Z",
-  "api_calls_last_run": 4
+  "updated_at": "2026-10-04T07:14:43Z",
+  "api_calls_last_run": 3
 }
