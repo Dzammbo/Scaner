@@ -10,6 +10,7 @@ on:
       - "S30 continuous worker"
       - "Public Mining continuous worker"
       - "Scanner settlement"
+      - "Bet365 tennis continuous worker"
     types: [completed]
   schedule:
     - cron: "23 * * * *"
@@ -21,6 +22,7 @@ on:
       - "forward_log/scanner_worker_status.json"
       - "forward_log/s30/worker_status.json"
       - "forward_log/settlement/status.json"
+      - "forward_log/bet365_tennis/worker_status.json"
 
 permissions:
   actions: write
@@ -125,4 +127,5 @@ jobs:
           ensure_worker "scaner-hot-path.yml" "forward_log/scanner_worker_status.json"
           ensure_worker "s30-hot-path.yml" "forward_log/s30/worker_status.json"
           ensure_worker "scaner-mining-continuous.yml" "mining_log/public_worker_status.json"
+          ensure_worker "bet365-tennis.yml" "forward_log/bet365_tennis/worker_status.json"
           ensure_settlement
