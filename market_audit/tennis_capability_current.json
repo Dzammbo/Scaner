@@ -1,0 +1,401 @@
+{
+  "schema": "TENNIS_CAPABILITY_AUDIT_V1",
+  "generated_at_utc": "2026-10-04T08:20:26.543438Z",
+  "intended_use": "Determine whether Mining candidates 1-7 can be collected from the current BetsAPI subscription.",
+  "api_calls": 28,
+  "requested_markets": "1,2,3,4,5,6,7,8,9",
+  "population": {
+    "upcoming_events": 150,
+    "live_events": 30,
+    "upcoming_by_category": {
+      "atp_challenger": 67,
+      "itf_men": 16,
+      "itf_women": 33,
+      "other": 2,
+      "utr": 20,
+      "wta": 12
+    },
+    "live_by_category": {
+      "atp_challenger": 9,
+      "itf_men": 5,
+      "itf_women": 11,
+      "wta": 5
+    },
+    "events_odds_probed": 24,
+    "probed_by_category": {
+      "atp_challenger": 5,
+      "itf_men": 5,
+      "itf_women": 5,
+      "other": 2,
+      "utr": 3,
+      "wta": 4
+    }
+  },
+  "schema_evidence": {
+    "all_event_fields": [
+      "away",
+      "bet365_id",
+      "home",
+      "id",
+      "league",
+      "o_away",
+      "o_home",
+      "playing_indicator",
+      "points",
+      "round",
+      "scores",
+      "sport_id",
+      "ss",
+      "time",
+      "time_status"
+    ],
+    "live_event_fields": [
+      "away",
+      "bet365_id",
+      "home",
+      "id",
+      "league",
+      "o_away",
+      "playing_indicator",
+      "points",
+      "scores",
+      "sport_id",
+      "ss",
+      "time",
+      "time_status"
+    ],
+    "live_stats_fields": [],
+    "possible_serving_fields": [
+      "playing_indicator"
+    ],
+    "possible_utr_fields": [],
+    "possible_medical_fields": []
+  },
+  "market_evidence": {
+    "markets": {
+      "13_1": {
+        "events_with_rows": 24,
+        "rows": 897,
+        "fields": [
+          "add_time",
+          "away_od",
+          "home_od",
+          "id",
+          "ss"
+        ],
+        "samples": [
+          {
+            "home_od": "1.030",
+            "away_od": "10.000"
+          },
+          {
+            "home_od": "1.111",
+            "away_od": "6.000"
+          },
+          {
+            "home_od": "1.166",
+            "away_od": "4.500"
+          }
+        ]
+      },
+      "13_4": {
+        "events_with_rows": 7,
+        "rows": 921,
+        "fields": [
+          "add_time",
+          "away_od",
+          "home_od",
+          "id",
+          "ss"
+        ],
+        "samples": [
+          {
+            "home_od": "1.071",
+            "away_od": "7.500",
+            "ss": "7-6,5-4,40-40"
+          },
+          {
+            "home_od": "-",
+            "away_od": "-",
+            "ss": "7-6,5-4,A-40"
+          },
+          {
+            "home_od": "1.030",
+            "away_od": "11.000",
+            "ss": "7-6,5-4,A-40"
+          }
+        ]
+      }
+    },
+    "total_2_5_rows": [],
+    "game_total_rows": [],
+    "live_set_total_rows": []
+  },
+  "events": [
+    {
+      "event_id": "13239829",
+      "category": "itf_women",
+      "league": "W50 Burgas",
+      "match": "Sarah Van Emst - Milana Konovalova",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13240229",
+      "category": "itf_women",
+      "league": "W50 Heraklion",
+      "match": "Stella Jurina - Sapir Cohen",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13240233",
+      "category": "itf_women",
+      "league": "W50 Heraklion",
+      "match": "Zejda Veljacic - Karyna Fiadosik",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239237",
+      "category": "itf_men",
+      "league": "M15 Monastir",
+      "match": "Kris Van Wyk - Tuncay Duran",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239407",
+      "category": "itf_men",
+      "league": "M15 Sibenik",
+      "match": "Nikita Mashtakov - Noah Lopez",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239365",
+      "category": "itf_men",
+      "league": "M25 Slobozia",
+      "match": "Sebastian Gima - Gabi Adrian Boitan",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13233643",
+      "category": "wta",
+      "league": "WTA Beijing WD",
+      "match": "Andreeva/Kalinskaya - Joint/Klepac",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239523",
+      "category": "wta",
+      "league": "WTA Samsun",
+      "match": "Noma Noha Akugue - Ilay Yoruk",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239524",
+      "category": "wta",
+      "league": "WTA Samsun",
+      "match": "Maria Golovina - Elena Micic",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239807",
+      "category": "utr",
+      "league": "UTR Pro Ithaca",
+      "match": "Rodrigo Fernandes - Eric David Verdes",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13240466",
+      "category": "utr",
+      "league": "UTR Pro Ithaca",
+      "match": "Nathan Gold - Brian Windsor",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13240628",
+      "category": "utr",
+      "league": "UTR Pro Ithaca Women",
+      "match": "Nelly Knezkova - Victoria Zhao",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13238450",
+      "category": "atp_challenger",
+      "league": "ATP Tokyo",
+      "match": "Jiri Lehecka - Adolfo Daniel Vallejo",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239066",
+      "category": "atp_challenger",
+      "league": "ATP Beijing",
+      "match": "Daniil Medvedev - Francisco Cerundolo",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239545",
+      "category": "atp_challenger",
+      "league": "Challenger Bari",
+      "match": "Juan Cruz Martin Manzano - Samuele Pieri",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13241054",
+      "category": "other",
+      "league": "Premier Padel Rotterdam Women",
+      "match": "Ustero/Sanchez - Gonzalez/Josemaria",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13241087",
+      "category": "other",
+      "league": "Premier Padel Rotterdam",
+      "match": "Coello/Tapia - Stupaczuk/Sanz",
+      "is_live_at_audit": false,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13232521",
+      "category": "itf_men",
+      "league": "M15 Baku",
+      "match": "Millen Hurrion - Kerem Yilmaz",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13232522",
+      "category": "itf_men",
+      "league": "M15 Baku",
+      "match": "Marcus Walters - Digvijay Pratap Singh",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13239831",
+      "category": "itf_women",
+      "league": "W50 Burgas",
+      "match": "Ilinca D Amariei - Alexia-Shara Iancu",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13233741",
+      "category": "wta",
+      "league": "WTA Suzhou",
+      "match": "Han Shi - Chengyiyi Yuan",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13237561",
+      "category": "atp_challenger",
+      "league": "ATP Beijing",
+      "match": "Alex De Minaur - Andrey Rublev",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13240231",
+      "category": "itf_women",
+      "league": "W50 Heraklion",
+      "match": "Anastasia Huijsegoms - Natalia Fehr",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    },
+    {
+      "event_id": "13233377",
+      "category": "atp_challenger",
+      "league": "ATP Tokyo",
+      "match": "Valentin Vacherot - Arthur Fils",
+      "is_live_at_audit": true,
+      "market_keys": [
+        "13_1",
+        "13_4"
+      ]
+    }
+  ],
+  "errors": []
+}
