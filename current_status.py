@@ -13,6 +13,7 @@ from pathlib import Path
 
 SIGNAL_FILES = (
     Path("forward_log/scanner_signals.jsonl"),
+    Path("forward_log/bet365_tennis/signals.jsonl"),
     Path("forward_log/s30/s30_signals.jsonl"),
     Path("forward_log/stateful_pressure_signals.jsonl"),
     Path("recovery/selectel_scanner_signals_20260927.jsonl"),
@@ -58,6 +59,10 @@ STRATEGY_STARTS = {
     "T14": "1970-01-01T00:00:00+00:00",
     "T16": "2026-09-26T15:19:55+00:00",
     "T18": "2026-10-01T19:15:00+00:00",
+    "BT01M": "2026-10-04T13:30:00+00:00",
+    "BT01W": "2026-10-04T13:30:00+00:00",
+    "BT02W": "2026-10-04T13:30:00+00:00",
+    "BT03W": "2026-10-04T13:30:00+00:00",
 }
 
 
@@ -300,6 +305,25 @@ def selection_profit(row: dict, event: dict, bet_key: str, odds_key: str) -> tup
         return None, "UNSUPPORTED_FOOTBALL_MARKET"
 
     if row.get("sport") == "tennis":
+        total_match = re.fullmatch(r"Т([БМ])\s+(-?\d+(?:\.\d+)?)", bet)
+        if total_match:
+            sets = [parse_score(token) for token in str(event.get("ss") or "").split(",") if str(token).strip()]
+            if not sets or any(pair is None or not completed_tennis_set(*pair) for pair in sets):
+                return None, "TENNIS_WINNER_MISSING"
+            if any(max(pair) > 7 for pair in sets):
+                return None, "TENNIS_NONSTANDARD_SET"
+            set_number = row.get("tennis_set_number")
+            if set_number is not None:
+                try:
+                    index = int(set_number) - 1
+                    total = sum(sets[index])
+                except (TypeError, ValueError, IndexError):
+                    return None, "TENNIS_SET_SCORE_MISSING"
+            else:
+                total = sum(sum(pair) for pair in sets)
+            line = float(total_match.group(2))
+            return asian_total_profit(total, line, total_match.group(1) == "Б", odds), "SETTLED"
+
         winner = tennis_winner(event.get("ss"), row.get("tournament") or "")
         if not winner:
             return None, "TENNIS_WINNER_MISSING"
@@ -359,7 +383,7 @@ def settle(signals: list[dict], cache: dict[str, dict], overrides: dict) -> tupl
             pending.append(item)
             continue
         profit, reason = selection_profit(row, event, "exact_bet_line", "current_odds")
-        if profit is None and reason in {"INVALID_SCORE_DELTA", "TENNIS_WINNER_MISSING"}:
+        if profit is None and reason in {"INVALID_SCORE_DELTA", "TENNIS_WINNER_MISSING", "TENNIS_NONSTANDARD_SET"}:
             item = dict(row)
             item["settlement_reason"] = "VOID_" + reason
             voided.append(item)
