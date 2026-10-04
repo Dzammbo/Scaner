@@ -19518,8 +19518,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12398380": {
       "event_id": "12398380",
@@ -19536,8 +19537,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12331373": {
       "event_id": "12331373",
@@ -19554,10 +19556,29 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
+    },
+    "11187343": {
+      "event_id": "11187343",
+      "bet365_id": "200871014",
+      "kickoff": 1791081000,
+      "candidate_at": 1791084623,
+      "country": "us",
+      "league": "USA USL Championship",
+      "home": "Las Vegas Lights FC",
+      "away": "San Antonio FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-04T03:21:51Z",
-  "api_calls_last_run": 8
+  "updated_at": "2026-10-04T03:32:30Z",
+  "api_calls_last_run": 6
 }
