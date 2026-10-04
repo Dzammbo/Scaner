@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 15,
-    "last_operational_change_at": "2026-10-04T09:00:32Z",
-    "last_operational_change": "Made the four stateful Mining hypotheses S31-S34 visible in Scanner output and statistics without duplicating collection."
+    "operational_scanner_count": 19,
+    "last_operational_change_at": "2026-10-04T13:30:00Z",
+    "last_operational_change": "Added four reproducible Bet365 tennis forward candidates from the Telegram reconstruction; singles only and one entry per match."
   },
   "strategies": [
     {
@@ -886,6 +886,94 @@
       "status": "FORWARD_HYPOTHESIS",
       "research_destination": "scanner",
       "clean_epoch_start": "2026-10-04T08:47:35Z"
+    },
+    {
+      "id": "BT01M",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "ITF мужчины - тотал матча меньше 14,5-18,5",
+      "source": "telegram_reconstruction_20261004",
+      "rule": {
+        "competition": "ITF/World Tennis men singles",
+        "market": "live_match_total_under",
+        "line": [14.5, 18.5],
+        "odds": [1.65, 2.05],
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "collection_engine": "bet365_tennis.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
+      "clean_epoch_start": "2026-10-04T13:30:00Z"
+    },
+    {
+      "id": "BT01W",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "ITF женщины - тотал матча меньше 14,5-18,5",
+      "source": "telegram_reconstruction_20261004",
+      "rule": {
+        "competition": "ITF/World Tennis women singles",
+        "market": "live_match_total_under",
+        "line": [14.5, 18.5],
+        "odds": [1.65, 2.05],
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "collection_engine": "bet365_tennis.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
+      "clean_epoch_start": "2026-10-04T13:30:00Z"
+    },
+    {
+      "id": "BT02W",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Женский теннис - тотал текущего сета меньше при подаче отстающей",
+      "source": "telegram_reconstruction_20261004",
+      "rule": {
+        "competition": "WTA/ITF women singles",
+        "score": "5:1-5:4",
+        "server": "trailing_player",
+        "market": "current_set_total_under",
+        "line_formula": "games_played+1.5",
+        "allowed_lines": [7.5, 8.5, 9.5, 10.5],
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "collection_engine": "bet365_tennis.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
+      "clean_epoch_start": "2026-10-04T13:30:00Z"
+    },
+    {
+      "id": "BT03W",
+      "tier": "WATCHLIST",
+      "sport": "tennis",
+      "name_ru": "Женский теннис - тотал текущего сета больше при подаче лидирующей",
+      "source": "telegram_reconstruction_20261004",
+      "rule": {
+        "competition": "WTA/ITF women singles",
+        "score": "5:1-5:4",
+        "server": "leading_player",
+        "market": "current_set_total_over",
+        "line_formula": "games_played+1.5",
+        "allowed_lines": [7.5, 8.5, 9.5, 10.5],
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "collection_engine": "bet365_tennis.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "scanner",
+      "clean_epoch_start": "2026-10-04T13:30:00Z"
     },
     {
       "id": "S30",
