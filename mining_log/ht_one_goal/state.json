@@ -17094,8 +17094,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13218792": {
       "event_id": "13218792",
@@ -19023,8 +19024,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13233465": {
       "event_id": "13233465",
@@ -19041,8 +19043,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13213556": {
       "event_id": "13213556",
@@ -19099,6 +19102,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-04T01:09:53Z",
-  "api_calls_last_run": 9
+  "updated_at": "2026-10-04T01:20:11Z",
+  "api_calls_last_run": 7
 }
