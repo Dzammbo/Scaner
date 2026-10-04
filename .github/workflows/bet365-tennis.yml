@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: bet365-tennis-forward-log
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   collect:
