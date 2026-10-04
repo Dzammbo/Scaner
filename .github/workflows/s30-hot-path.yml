@@ -41,3 +41,21 @@ jobs:
         run: |
           test -f forward_log/s30/worker_status.json
           cat forward_log/s30/worker_status.json
+
+      - name: Hand off to the next S30 worker
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          other_run="$(gh run list \
+            --workflow s30-hot-path.yml \
+            --limit 30 \
+            --json databaseId,status \
+            --jq '[.[] | select(.databaseId != '"$GITHUB_RUN_ID"' and (.status == "in_progress" or .status == "queued" or .status == "waiting" or .status == "pending" or .status == "requested"))] | length')"
+
+          if [ "$other_run" = "0" ]; then
+            gh workflow run s30-hot-path.yml --ref main
+          fi
