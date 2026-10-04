@@ -19446,8 +19446,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "13181692": {
       "event_id": "13181692",
@@ -19500,8 +19501,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11187335": {
       "event_id": "11187335",
@@ -19579,6 +19581,6 @@
       "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-04T03:32:30Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-04T03:42:02Z",
+  "api_calls_last_run": 4
 }
