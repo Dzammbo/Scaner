@@ -16326,8 +16326,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13185894": {
       "event_id": "13185894",
@@ -16416,8 +16417,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11181154": {
       "event_id": "11181154",
@@ -16543,8 +16545,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13133416": {
       "event_id": "13133416",
@@ -16615,8 +16618,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11178769": {
       "event_id": "11178769",
@@ -16651,8 +16655,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13208359": {
       "event_id": "13208359",
@@ -16741,8 +16746,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13218819": {
       "event_id": "13218819",
@@ -16831,7 +16837,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "FINISHED_NO_QUOTE",
+      "miss_reason": "LEFT_BOARD"
     },
     "13215272": {
       "event_id": "13215272",
@@ -16902,8 +16909,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11178765": {
       "event_id": "11178765",
@@ -16974,8 +16982,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13031203": {
       "event_id": "13031203",
@@ -16992,8 +17001,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13233382": {
       "event_id": "13233382",
@@ -18955,7 +18965,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE"
+      "status": "MISSED_BEFORE_QUOTE",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11188830": {
       "event_id": "11188830",
@@ -18972,7 +18983,8 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "13163514": {
       "event_id": "13163514",
@@ -18989,9 +19001,96 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13036651": {
+      "event_id": "13036651",
+      "bet365_id": "202204325",
+      "kickoff": 1791072000,
+      "candidate_at": 1791075021,
+      "country": "mx",
+      "league": "Mexico Liga Premier B",
+      "home": "CD Ayense",
+      "away": "Racing de Veracruz II",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13233465": {
+      "event_id": "13233465",
+      "bet365_id": "202151053",
+      "kickoff": 1791072000,
+      "candidate_at": 1791075021,
+      "country": "mx",
+      "league": "Mexico Liga Premier A",
+      "home": "Dragones de Oaxaca",
+      "away": "Real Refineros FC",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13213556": {
+      "event_id": "13213556",
+      "bet365_id": "202148334",
+      "kickoff": 1791072000,
+      "candidate_at": 1791075215,
+      "country": "ni",
+      "league": "Nicaragua Apertura",
+      "home": "CD Walter Ferretti",
+      "away": "Jalapa",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13184338": {
+      "event_id": "13184338",
+      "bet365_id": "201815766",
+      "kickoff": 1791072000,
+      "candidate_at": 1791075215,
+      "country": "",
+      "league": "International Match",
+      "home": "Argentina",
+      "away": "Burkina Faso",
+      "halftime_score": [
+        5,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11187345": {
+      "event_id": "11187345",
+      "bet365_id": "200870995",
+      "kickoff": 1791072000,
+      "candidate_at": 1791075339,
+      "country": "us",
+      "league": "USA USL Championship",
+      "home": "Tulsa",
+      "away": "Sacramento Republic",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T00:49:19Z",
+  "updated_at": "2026-10-04T01:00:09Z",
   "api_calls_last_run": 9
 }
