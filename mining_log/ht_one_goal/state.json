@@ -19299,8 +19299,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "12222290": {
       "event_id": "12222290",
@@ -19497,7 +19498,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "11187335": {
       "event_id": "11187335",
@@ -19514,7 +19516,8 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE"
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     },
     "12398380": {
       "event_id": "12398380",
@@ -19531,9 +19534,27 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12331373": {
+      "event_id": "12331373",
+      "bet365_id": "202162109",
+      "kickoff": 1791080100,
+      "candidate_at": 1791082939,
+      "country": "cr",
+      "league": "Costa Rica Primera Division Women",
+      "home": "Alajuelense (W)",
+      "away": "Sporting San Jose (W)",
+      "halftime_score": [
+        2,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
       "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T03:01:26Z",
+  "updated_at": "2026-10-04T03:12:17Z",
   "api_calls_last_run": 9
 }
