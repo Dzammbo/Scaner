@@ -1,0 +1,51 @@
+name: Tennis market capability audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - tennis_market_capability_audit.py
+      - .github/workflows/tennis-market-capability-audit.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-market-capability-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Validate
+        run: |
+          test -n "$BETSAPI_KEY"
+          python3 -m py_compile tennis_market_capability_audit.py
+
+      - name: Audit current tennis capabilities
+        run: python3 tennis_market_capability_audit.py
+
+      - name: Persist audit evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add market_audit/tennis_capability_current.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record current tennis market capability audit"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            [ "$attempt" -eq 5 ] && exit 1
+            sleep $((attempt*3))
+          done
