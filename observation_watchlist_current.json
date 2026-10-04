@@ -1,0 +1,150 @@
+{
+  "schema_version": 2,
+  "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
+  "status": "OBSERVATION_ONLY",
+  "generated_at": "2026-10-04T08:48:08.344557Z",
+  "policy": {
+    "filters_frozen": true,
+    "changes_operational_scanner": false,
+    "user_output": false,
+    "real_money_signal": false,
+    "forward_start_at": "2026-10-04T04:40:08Z",
+    "minimum_new_settled_before_review": 500,
+    "minimum_observation_days_before_review": 30,
+    "control_group": "Та же стратегия и направление вне замороженного фильтра кармана.",
+    "stop_conditions": [
+      "Обнаружена утечка будущих данных или неверный settlement.",
+      "Невозможно подтвердить фактический коэффициент и время сигнала.",
+      "Правило или источник данных изменились - требуется новая версия и новая эпоха."
+    ],
+    "note": "Карманы выделены после exploratory-анализа. С 2026-10-04 учитываются только сигналы с собственной сохранённой минутой, периодом и котировкой стратегии. 500 рассчитанных ставок - порог первого формального пересмотра, а не автоматическое подтверждение преимущества. До отдельного решения карманы не меняют пользовательский вывод Scanner и не являются сигналами для реальных ставок."
+  },
+  "items": [
+    {
+      "id": "OW01",
+      "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
+      "direction": "direct",
+      "forward_start_at": "2026-10-04T04:40:08Z",
+      "recorded": 6,
+      "settled": 6,
+      "pending": 0,
+      "void": 0,
+      "result": {
+        "N": 6,
+        "W": 2,
+        "L": 4,
+        "P": 0,
+        "profit": -2.675,
+        "ROI": -44.58
+      },
+      "without_top3": {
+        "N": 3,
+        "W": 0,
+        "L": 3,
+        "P": 0,
+        "profit": -3.0,
+        "ROI": -100.0
+      },
+      "control_group": {
+        "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
+        "recorded": 47,
+        "settled": 47,
+        "pending": 0,
+        "void": 0,
+        "result": {
+          "N": 47,
+          "W": 22,
+          "L": 20,
+          "P": 5,
+          "profit": -0.637,
+          "ROI": -1.36
+        }
+      },
+      "review_ready": false
+    },
+    {
+      "id": "OW02",
+      "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
+      "direction": "reverse",
+      "forward_start_at": "2026-10-04T04:40:08Z",
+      "recorded": 4,
+      "settled": 4,
+      "pending": 0,
+      "void": 0,
+      "result": {
+        "N": 4,
+        "W": 2,
+        "L": 2,
+        "P": 0,
+        "profit": -0.2,
+        "ROI": -5.0
+      },
+      "without_top3": {
+        "N": 1,
+        "W": 0,
+        "L": 1,
+        "P": 0,
+        "profit": -1.0,
+        "ROI": -100.0
+      },
+      "control_group": {
+        "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
+        "recorded": 49,
+        "settled": 49,
+        "pending": 0,
+        "void": 0,
+        "result": {
+          "N": 49,
+          "W": 22,
+          "L": 22,
+          "P": 5,
+          "profit": -2.583,
+          "ROI": -5.27
+        }
+      },
+      "review_ready": false
+    },
+    {
+      "id": "OW03",
+      "name_ru": "Reverse ТМ 2,5 после 70-й при счёте 0:2",
+      "direction": "reverse",
+      "forward_start_at": "2026-10-04T04:40:08Z",
+      "recorded": 1,
+      "settled": 1,
+      "pending": 0,
+      "void": 0,
+      "result": {
+        "N": 1,
+        "W": 1,
+        "L": 0,
+        "P": 0,
+        "profit": 0.85,
+        "ROI": 85.0
+      },
+      "without_top3": {
+        "N": 0,
+        "W": 0,
+        "L": 0,
+        "P": 0,
+        "profit": 0,
+        "ROI": null
+      },
+      "control_group": {
+        "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
+        "recorded": 1,
+        "settled": 1,
+        "pending": 0,
+        "void": 0,
+        "result": {
+          "N": 1,
+          "W": 1,
+          "L": 0,
+          "P": 0,
+          "profit": 1.0,
+          "ROI": 100.0
+        }
+      },
+      "review_ready": false
+    }
+  ]
+}

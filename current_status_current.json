@@ -1,50 +1,50 @@
 {
-  "merged": 4838,
-  "settled": 4651,
-  "void": 100,
-  "pending": 87,
-  "pending_live_or_delayed": 87,
+  "merged": 4880,
+  "settled": 4747,
+  "void": 102,
+  "pending": 31,
+  "pending_live_or_delayed": 31,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 60,
+    "INPLAY": 4,
     "PENDING_PROVIDER_FIX": 21,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
-    "VOID_RETIRED": 29,
+    "VOID_RETIRED": 31,
     "VOID_TENNIS_WINNER_MISSING": 66
   },
   "settlement_event_reasons": {
-    "INPLAY": 21,
+    "INPLAY": 4,
     "PENDING_PROVIDER_FIX": 13,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
-    "VOID_RETIRED": 17,
+    "VOID_RETIRED": 18,
     "VOID_TENNIS_WINNER_MISSING": 46
   },
   "settlement_cache": {
-    "updated_at": "2026-10-04T06:43:03Z",
+    "updated_at": "2026-10-04T08:48:08Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 4,
-    "queried_events": 38,
-    "signal_unique_events": 2681,
-    "cache_events": 2681,
-    "final_events": 2628,
-    "void_events": 18,
-    "immutable_events": 2646,
-    "retryable_events": 35,
+    "provider_queries": 6,
+    "queried_events": 52,
+    "signal_unique_events": 2698,
+    "cache_events": 2698,
+    "final_events": 2661,
+    "void_events": 19,
+    "immutable_events": 2680,
+    "retryable_events": 18,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 2628,
-      "INPLAY": 21,
+      "FINAL": 2661,
+      "INPLAY": 4,
       "PENDING_PROVIDER_FIX": 13,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
-      "VOID_RETIRED": 17
+      "VOID_RETIRED": 18
     },
     "errors": [],
     "health": "ok"
@@ -56,26 +56,23 @@
       "exact_bet_line"
     ],
     "strategy_quote_snapshot_required": true,
-    "excluded_legacy_attributions": 388,
+    "excluded_legacy_attributions": 85,
     "excluded_legacy_attributions_by_strategy": {
       "S06": 1,
       "S08": 14,
-      "S11": 67,
       "S20": 52,
-      "T14": 46,
-      "T16": 190,
       "T18": 17,
       "S30": 1
     },
     "settlement_score_sources": {
-      "scores.2": 3458,
-      "ss": 1193
+      "scores.2": 3539,
+      "ss": 1208
     }
   },
   "observation_watchlist": {
     "status": "OBSERVATION_ONLY",
     "forward_start_at": "2026-10-04T04:40:08Z",
-    "items": 4,
+    "items": 3,
     "review_ready": 0
   },
   "s30_top6": {
@@ -129,40 +126,40 @@
       "name": "Гол после 70-й при счёте 0:2",
       "start": "2026-09-26T15:19:55+00:00",
       "recorded": 52,
-      "pending": 2,
+      "pending": 0,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 50,
+        "N": 52,
         "W": 21,
-        "L": 29,
+        "L": 31,
         "P": 0,
-        "profit": -10.05,
-        "ROI": -20.1
+        "profit": -12.05,
+        "ROI": -23.17
       },
       "original_without_top3": {
-        "N": 47,
+        "N": 49,
         "W": 18,
-        "L": 29,
+        "L": 31,
         "P": 0,
-        "profit": -12.975,
-        "ROI": -27.61
+        "profit": -14.975,
+        "ROI": -30.56
       },
       "reverse": {
-        "N": 50,
-        "W": 29,
+        "N": 52,
+        "W": 31,
         "L": 21,
         "P": 0,
-        "profit": 5.8,
-        "ROI": 11.6
+        "profit": 7.65,
+        "ROI": 14.71
       },
       "reverse_without_top3": {
-        "N": 47,
-        "W": 26,
+        "N": 49,
+        "W": 28,
         "L": 21,
         "P": 0,
-        "profit": 2.8,
-        "ROI": 5.96
+        "profit": 4.65,
+        "ROI": 9.49
       }
     },
     "S06": {
@@ -208,321 +205,161 @@
     "S08": {
       "name": "Тотал больше после 50+ минут без гола",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 83,
-      "pending": 3,
+      "recorded": 86,
+      "pending": 0,
       "void": 0,
       "excluded_legacy_attributions": 14,
       "original": {
-        "N": 80,
-        "W": 37,
-        "L": 39,
-        "P": 4,
-        "profit": -8.85,
-        "ROI": -11.06
+        "N": 86,
+        "W": 40,
+        "L": 40,
+        "P": 6,
+        "profit": -7.625,
+        "ROI": -8.87
       },
       "original_without_top3": {
-        "N": 77,
-        "W": 34,
-        "L": 39,
-        "P": 4,
-        "profit": -11.775,
-        "ROI": -15.29
+        "N": 83,
+        "W": 37,
+        "L": 40,
+        "P": 6,
+        "profit": -10.55,
+        "ROI": -12.71
       },
       "reverse": {
-        "N": 80,
-        "W": 39,
-        "L": 37,
-        "P": 4,
-        "profit": 1.525,
-        "ROI": 1.91
+        "N": 86,
+        "W": 40,
+        "L": 40,
+        "P": 6,
+        "profit": -0.125,
+        "ROI": -0.15
       },
       "reverse_without_top3": {
-        "N": 77,
-        "W": 36,
-        "L": 37,
-        "P": 4,
-        "profit": -1.45,
-        "ROI": -1.88
+        "N": 83,
+        "W": 37,
+        "L": 40,
+        "P": 6,
+        "profit": -3.1,
+        "ROI": -3.73
       }
     },
     "S10": {
       "name": "Против live-фаворита при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
       "recorded": 13,
-      "pending": 3,
-      "void": 2,
+      "pending": 0,
+      "void": 4,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 8,
-        "W": 5,
+        "N": 9,
+        "W": 6,
         "L": 3,
         "P": 0,
-        "profit": 2.4,
-        "ROI": 30.0
+        "profit": 3.5,
+        "ROI": 38.89
       },
       "original_without_top3": {
-        "N": 5,
-        "W": 2,
-        "L": 3,
-        "P": 0,
-        "profit": -0.9,
-        "ROI": -18.0
-      },
-      "reverse": {
-        "N": 8,
+        "N": 6,
         "W": 3,
-        "L": 5,
+        "L": 3,
         "P": 0,
-        "profit": -2.868,
-        "ROI": -35.85
-      },
-      "reverse_without_top3": {
-        "N": 5,
-        "W": 0,
-        "L": 5,
-        "P": 0,
-        "profit": -5.0,
-        "ROI": -100.0
-      }
-    },
-    "S11": {
-      "name": "За победителя предыдущего плотного сета",
-      "start": "2026-09-26T15:19:55+00:00",
-      "recorded": 582,
-      "pending": 7,
-      "void": 44,
-      "excluded_legacy_attributions": 67,
-      "original": {
-        "N": 531,
-        "W": 403,
-        "L": 128,
-        "P": 0,
-        "profit": -15.527,
-        "ROI": -2.92
-      },
-      "original_without_top3": {
-        "N": 528,
-        "W": 400,
-        "L": 128,
-        "P": 0,
-        "profit": -24.01,
-        "ROI": -4.55
+        "profit": 0.2,
+        "ROI": 3.33
       },
       "reverse": {
-        "N": 530,
-        "W": 128,
-        "L": 402,
+        "N": 9,
+        "W": 3,
+        "L": 6,
         "P": 0,
-        "profit": -179.554,
-        "ROI": -33.88
+        "profit": -3.868,
+        "ROI": -42.98
       },
       "reverse_without_top3": {
-        "N": 527,
-        "W": 125,
-        "L": 402,
+        "N": 6,
+        "W": 0,
+        "L": 6,
         "P": 0,
-        "profit": -204.554,
-        "ROI": -38.81
+        "profit": -6.0,
+        "ROI": -100.0
       }
     },
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 832,
-      "pending": 40,
+      "recorded": 841,
+      "pending": 5,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
-        "N": 788,
-        "W": 334,
-        "L": 397,
-        "P": 57,
-        "profit": -76.0,
-        "ROI": -9.64
+        "N": 832,
+        "W": 357,
+        "L": 414,
+        "P": 61,
+        "profit": -73.225,
+        "ROI": -8.8
       },
       "original_without_top3": {
-        "N": 785,
-        "W": 331,
-        "L": 397,
-        "P": 57,
-        "profit": -91.05,
-        "ROI": -11.6
+        "N": 829,
+        "W": 354,
+        "L": 414,
+        "P": 61,
+        "profit": -88.275,
+        "ROI": -10.65
       },
       "reverse": {
-        "N": 788,
-        "W": 397,
-        "L": 334,
-        "P": 57,
-        "profit": -1.4,
-        "ROI": -0.18
+        "N": 832,
+        "W": 414,
+        "L": 357,
+        "P": 61,
+        "profit": -9.52,
+        "ROI": -1.14
       },
       "reverse_without_top3": {
-        "N": 785,
-        "W": 394,
-        "L": 334,
-        "P": 57,
-        "profit": -4.7,
-        "ROI": -0.6
-      }
-    },
-    "T14": {
-      "name": "Зеркало плотного сета - за проигравшего предыдущего сета",
-      "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 247,
-      "pending": 7,
-      "void": 11,
-      "excluded_legacy_attributions": 46,
-      "original": {
-        "N": 229,
-        "W": 47,
-        "L": 182,
-        "P": 0,
-        "profit": -86.555,
-        "ROI": -37.8
-      },
-      "original_without_top3": {
-        "N": 226,
-        "W": 44,
-        "L": 182,
-        "P": 0,
-        "profit": -107.555,
-        "ROI": -47.59
-      },
-      "reverse": {
-        "N": 214,
-        "W": 169,
-        "L": 45,
-        "P": 0,
-        "profit": 4.939,
-        "ROI": 2.31
-      },
-      "reverse_without_top3": {
-        "N": 211,
-        "W": 166,
-        "L": 45,
-        "P": 0,
-        "profit": -1.661,
-        "ROI": -0.79
-      }
-    },
-    "T16": {
-      "name": "Решающий сет - за победителя второго сета",
-      "start": "2026-09-26T15:19:55+00:00",
-      "recorded": 120,
-      "pending": 3,
-      "void": 19,
-      "excluded_legacy_attributions": 190,
-      "original": {
-        "N": 98,
-        "W": 58,
-        "L": 40,
-        "P": 0,
-        "profit": -5.598,
-        "ROI": -5.71
-      },
-      "original_without_top3": {
-        "N": 95,
-        "W": 55,
-        "L": 40,
-        "P": 0,
-        "profit": -14.748,
-        "ROI": -15.52
-      },
-      "reverse": {
-        "N": 98,
-        "W": 40,
-        "L": 58,
-        "P": 0,
-        "profit": -21.787,
-        "ROI": -22.23
-      },
-      "reverse_without_top3": {
-        "N": 95,
-        "W": 37,
-        "L": 58,
-        "P": 0,
-        "profit": -30.537,
-        "ROI": -32.14
+        "N": 829,
+        "W": 411,
+        "L": 357,
+        "P": 61,
+        "profit": -12.82,
+        "ROI": -1.55
       }
     },
     "S26": {
       "name": "High Pressure ТБ 0.5 матча",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 259,
-      "pending": 2,
-      "void": 0,
-      "excluded_legacy_attributions": 0,
-      "original": {
-        "N": 257,
-        "W": 84,
-        "L": 173,
-        "P": 0,
-        "profit": -23.05,
-        "ROI": -8.97
-      },
-      "original_without_top3": {
-        "N": 254,
-        "W": 81,
-        "L": 173,
-        "P": 0,
-        "profit": -43.85,
-        "ROI": -17.26
-      },
-      "reverse": {
-        "N": 257,
-        "W": 173,
-        "L": 84,
-        "P": 0,
-        "profit": -13.295,
-        "ROI": -5.17
-      },
-      "reverse_without_top3": {
-        "N": 254,
-        "W": 170,
-        "L": 84,
-        "P": 0,
-        "profit": -16.445,
-        "ROI": -6.47
-      }
-    },
-    "S27": {
-      "name": "High Pressure ТБ 0.5 первого тайма",
-      "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 98,
+      "recorded": 266,
       "pending": 0,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 98,
-        "W": 45,
-        "L": 53,
+        "N": 266,
+        "W": 86,
+        "L": 180,
         "P": 0,
-        "profit": -8.7,
-        "ROI": -8.88
+        "profit": -27.95,
+        "ROI": -10.51
       },
       "original_without_top3": {
-        "N": 95,
-        "W": 42,
-        "L": 53,
+        "N": 263,
+        "W": 83,
+        "L": 180,
         "P": 0,
-        "profit": -13.075,
-        "ROI": -13.76
+        "profit": -48.75,
+        "ROI": -18.54
       },
       "reverse": {
-        "N": 98,
-        "W": 53,
-        "L": 45,
+        "N": 266,
+        "W": 180,
+        "L": 86,
         "P": 0,
-        "profit": -5.61,
-        "ROI": -5.72
+        "profit": -12.425,
+        "ROI": -4.67
       },
       "reverse_without_top3": {
-        "N": 95,
-        "W": 50,
-        "L": 45,
+        "N": 263,
+        "W": 177,
+        "L": 86,
         "P": 0,
-        "profit": -8.61,
-        "ROI": -9.06
+        "profit": -15.575,
+        "ROI": -5.92
       }
     },
     "S28": {
@@ -568,41 +405,41 @@
     "T18": {
       "name": "Победитель предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 38,
-      "pending": 0,
+      "recorded": 41,
+      "pending": 2,
       "void": 1,
       "excluded_legacy_attributions": 17,
       "original": {
-        "N": 37,
-        "W": 17,
+        "N": 38,
+        "W": 18,
         "L": 20,
         "P": 0,
-        "profit": -10.089,
-        "ROI": -27.27
+        "profit": -9.389,
+        "ROI": -24.71
       },
       "original_without_top3": {
-        "N": 34,
-        "W": 14,
+        "N": 35,
+        "W": 15,
         "L": 20,
         "P": 0,
-        "profit": -12.155,
-        "ROI": -35.75
+        "profit": -11.489,
+        "ROI": -32.83
       },
       "reverse": {
-        "N": 37,
+        "N": 38,
         "W": 20,
-        "L": 17,
+        "L": 18,
         "P": 0,
-        "profit": 5.625,
-        "ROI": 15.2
+        "profit": 4.625,
+        "ROI": 12.17
       },
       "reverse_without_top3": {
-        "N": 34,
+        "N": 35,
         "W": 17,
-        "L": 17,
+        "L": 18,
         "P": 0,
-        "profit": 1.5,
-        "ROI": 4.41
+        "profit": 0.5,
+        "ROI": 1.43
       }
     },
     "S29": {
@@ -648,41 +485,41 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 916,
-      "pending": 11,
+      "recorded": 937,
+      "pending": 5,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
-        "N": 905,
-        "W": 609,
-        "L": 296,
+        "N": 932,
+        "W": 629,
+        "L": 303,
         "P": 0,
-        "profit": -50.815,
-        "ROI": -5.61
+        "profit": -49.615,
+        "ROI": -5.32
       },
       "original_without_top3": {
-        "N": 902,
-        "W": 606,
-        "L": 296,
+        "N": 929,
+        "W": 626,
+        "L": 303,
         "P": 0,
-        "profit": -53.74,
-        "ROI": -5.96
+        "profit": -52.54,
+        "ROI": -5.66
       },
       "reverse": {
-        "N": 905,
-        "W": 296,
-        "L": 609,
+        "N": 932,
+        "W": 303,
+        "L": 629,
         "P": 0,
-        "profit": -73.825,
-        "ROI": -8.16
+        "profit": -81.9,
+        "ROI": -8.79
       },
       "reverse_without_top3": {
-        "N": 902,
-        "W": 293,
-        "L": 609,
+        "N": 929,
+        "W": 300,
+        "L": 629,
         "P": 0,
-        "profit": -84.575,
-        "ROI": -9.38
+        "profit": -92.65,
+        "ROI": -9.97
       }
     }
   }
