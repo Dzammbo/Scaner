@@ -54,6 +54,7 @@ jobs:
               "pockets_current.json",
               "pending_current.json",
               "settlement_diagnostics_current.json",
+              "observation_watchlist_current.json",
           ]
           for filename in required:
               assert Path(filename).is_file() and Path(filename).stat().st_size > 0, filename
@@ -65,7 +66,7 @@ jobs:
           assert {"S26", "S30"}.issubset(current["strategies"])
           PY
 
-            git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json
+            git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json observation_watchlist_current.json
             if ! git diff --cached --quiet; then
               git commit -m "Refresh Scanner settlement cache"
               pushed="0"
@@ -99,3 +100,4 @@ jobs:
             forward_log/settlement/status.json
             current_status_current.json
             settlement_diagnostics_current.json
+            observation_watchlist_current.json

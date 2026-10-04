@@ -22,6 +22,41 @@ LOG_PREFIX = os.environ.get("SCANER_LOG_PREFIX") or ("scanner" if MODE == "scann
 STATE_PATH = Path(os.environ.get("SCANER_STATE_PATH") or (LOG_DIR / f"{LOG_PREFIX}_state.json"))
 RUN_LABEL = "SCANER_V1" if MODE == "scanner" else "MINING_GITHUB_V1"
 
+FIRST_HALF_STRATEGIES = {"S27"}
+
+
+def signal_period(row=None, strategy_id=None):
+    row = row or {}
+    explicit = str(row.get("period") or "").upper()
+    if explicit in {"FH", "FT"}:
+        return explicit
+    primary = strategy_id or row.get("strategy_id")
+    return "FH" if primary in FIRST_HALF_STRATEGIES else "FT"
+
+
+def signal_key(row):
+    return (
+        str(row.get("event_id")),
+        signal_period(row),
+        str(row.get("exact_bet_line")),
+    )
+
+
+def strategy_snapshot(result, ev, hit, exact):
+    return {
+        "timestamp": result.get("generated_at_utc"),
+        "period": signal_period(hit, hit.get("strategy_id")),
+        "minute": ev.get("minute"),
+        "score": ev.get("score"),
+        "exact_bet_line": exact,
+        "current_odds": hit.get("current_odds"),
+        "reverse_bet": hit.get("reverse_bet"),
+        "reverse_odds": hit.get("reverse_odds"),
+        "market": hit.get("market"),
+        "bet_line": hit.get("bet_line"),
+        "features": hit.get("features") or {},
+    }
+
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
@@ -39,7 +74,8 @@ def append_forward_log(result):
             if not line.strip(): continue
             try: row=json.loads(line)
             except Exception: continue
-            key=(str(row.get("event_id")),str(row.get("exact_bet_line")))
+            row["period"] = signal_period(row)
+            key=signal_key(row)
             if key not in by_key:
                 by_key[key]=row;order.append(key)
     appended=0
@@ -51,29 +87,39 @@ def append_forward_log(result):
             if not exact:
                 line=hit.get("bet_line"); market=hit.get("market")
                 exact=f"{market}:{line}" if line is not None else str(market or "")
-            key=(eid,str(exact))
             sid=hit.get("strategy_id")
             sname=hit.get("strategy")
+            period=signal_period(hit, sid)
+            key=(eid,period,str(exact))
             if key in by_key:
                 row=by_key[key]
                 ids=list(row.get("strategy_ids") or ([row.get("strategy_id")] if row.get("strategy_id") else []))
                 names=list(row.get("strategy_names") or [])
+                observations=dict(row.get("strategy_observations") or {})
                 if sid and sid not in ids:
                     ids.append(sid);updated+=1
                 if sname and sname not in names:names.append(sname)
+                if sid and sid not in observations:
+                    observations[sid]=strategy_snapshot(result,ev,hit,exact)
                 row["strategy_ids"]=ids
                 row["strategy_names"]=names
+                row["strategy_observations"]=observations
                 continue
+            observations={sid:strategy_snapshot(result,ev,hit,exact)} if sid else {}
             row={
                 "timestamp":result.get("generated_at_utc"),"sport":ev.get("sport"),
                 "tournament":ev.get("league"),"event_id":eid,
                 "match":f"{ev.get('home')} - {ev.get('away')}",
                 "minute_score":f"{ev.get('minute')}' / '{ev.get('score')}" if ev.get("minute") is not None else str(ev.get("score") or ""),
                 "minute":ev.get("minute"),"score":ev.get("score"),
+                "period":period,
                 "exact_bet_line":exact,"current_odds":hit.get("current_odds"),
                 "reverse_bet":hit.get("reverse_bet"),"reverse_odds":hit.get("reverse_odds"),
+                "market":hit.get("market"),"bet_line":hit.get("bet_line"),
+                "features":hit.get("features") or {},
                 "strategy_id":sid,"strategy_ids":[sid] if sid else [],
                 "strategy_names":[sname] if sname else [],
+                "strategy_observations":observations,
                 "tier":hit.get("tier"),
             }
             by_key[key]=row;order.append(key);appended+=1
@@ -598,6 +644,7 @@ def football_evaluate(ev, st, detail):
         "bet": bet,
         "current_odds": current_odds,
         "bet_line": bet_line,
+        "period": r.get("period") or "FT",
         "reverse_bet": reverse_bet,
         "reverse_odds": reverse_odds,
         "features": {

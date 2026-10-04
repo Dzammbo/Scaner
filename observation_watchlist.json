@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V1",
+  "schema_version": 2,
+  "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "created_at": "2026-10-01",
   "status": "OBSERVATION_ONLY",
   "policy": {
@@ -8,9 +8,16 @@
     "changes_operational_scanner": false,
     "user_output": false,
     "real_money_signal": false,
-    "minimum_new_settled_before_review": 50,
-    "minimum_observation_days_before_review": 10,
-    "note": "Карманы выделены после exploratory-анализа. До отдельного решения они только накапливают clean-forward статистику и не меняют пользовательский вывод Scanner."
+    "forward_start_at": "2026-10-04T04:40:08Z",
+    "minimum_new_settled_before_review": 500,
+    "minimum_observation_days_before_review": 30,
+    "control_group": "Та же стратегия и направление вне замороженного фильтра кармана.",
+    "stop_conditions": [
+      "Обнаружена утечка будущих данных или неверный settlement.",
+      "Невозможно подтвердить фактический коэффициент и время сигнала.",
+      "Правило или источник данных изменились - требуется новая версия и новая эпоха."
+    ],
+    "note": "Карманы выделены после exploratory-анализа. С 2026-10-04 учитываются только сигналы с собственной сохранённой минутой, периодом и котировкой стратегии. 500 рассчитанных ставок - порог первого формального пересмотра, а не автоматическое подтверждение преимущества. До отдельного решения карманы не меняют пользовательский вывод Scanner и не являются сигналами для реальных ставок."
   },
   "items": [
     {

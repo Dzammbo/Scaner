@@ -7,6 +7,7 @@ import json
 import math
 import re
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -20,6 +21,9 @@ SIGNAL_FILES = (
 CACHE_FILE = Path("forward_log/settlement/results.jsonl")
 CACHE_STATUS_FILE = Path("forward_log/settlement/status.json")
 OVERRIDES_FILE = Path("web_settlement_overrides.json")
+WATCHLIST_FILE = Path("observation_watchlist.json")
+WATCHLIST_OUTPUT_FILE = Path("observation_watchlist_current.json")
+FIRST_HALF_STRATEGIES = {"S27"}
 
 # Clean-forward boundaries documented in README. Strategies without a boundary
 # intentionally retain their full Scanner sample.
@@ -62,15 +66,62 @@ def strategy_ids(row: dict) -> list[str]:
     return row.get("strategy_ids") or ([row.get("strategy_id")] if row.get("strategy_id") else [])
 
 
+def parse_timestamp(value) -> datetime | None:
+    try:
+        return datetime.fromisoformat(str(value or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def timestamp_at_or_after(value, boundary) -> bool:
+    timestamp = parse_timestamp(value)
+    start = parse_timestamp(boundary)
+    return timestamp is not None and start is not None and timestamp >= start
+
+
+def signal_period(row: dict) -> str:
+    explicit = str(row.get("period") or "").upper()
+    if explicit in {"FH", "FT"}:
+        return explicit
+    return "FH" if row.get("strategy_id") in FIRST_HALF_STRATEGIES else "FT"
+
+
+def signal_key(row: dict) -> tuple[str, str, str]:
+    return (str(row.get("event_id")), signal_period(row), str(row.get("exact_bet_line")))
+
+
+def attribution_snapshot(row: dict) -> dict:
+    fields = (
+        "timestamp", "period", "minute", "score", "exact_bet_line",
+        "current_odds", "reverse_bet", "reverse_odds", "market",
+        "bet_line", "features",
+    )
+    snapshot = {field: row.get(field) for field in fields if field in row}
+    snapshot["period"] = signal_period(row)
+    return snapshot
+
+
+def normalize_signal(row: dict) -> dict:
+    item = dict(row)
+    item["period"] = signal_period(item)
+    observations = dict(item.get("strategy_observations") or {})
+    primary = item.get("strategy_id")
+    if primary and primary not in observations:
+        observations[primary] = attribution_snapshot(item)
+    item["strategy_observations"] = observations
+    return item
+
+
 def load_signals() -> list[dict]:
     rows = []
     for path in SIGNAL_FILES:
         rows.extend(load_jsonl(path))
     rows.sort(key=lambda row: str(row.get("timestamp") or ""))
-    merged: dict[tuple[str, str], dict] = {}
+    merged: dict[tuple[str, str, str], dict] = {}
     order = []
     for row in rows:
-        key = (str(row.get("event_id")), str(row.get("exact_bet_line")))
+        row = normalize_signal(row)
+        key = signal_key(row)
         if key not in merged:
             merged[key] = dict(row)
             order.append(key)
@@ -81,6 +132,11 @@ def load_signals() -> list[dict]:
             if strategy_id and strategy_id not in ids:
                 ids.append(strategy_id)
         old["strategy_ids"] = ids
+        observations = dict(old.get("strategy_observations") or {})
+        for strategy_id, snapshot in (row.get("strategy_observations") or {}).items():
+            if strategy_id not in observations:
+                observations[strategy_id] = snapshot
+        old["strategy_observations"] = observations
     return [merged[key] for key in order]
 
 
@@ -92,6 +148,31 @@ def parse_score(value) -> tuple[int, int] | None:
 def score_total(value) -> int | None:
     parsed = parse_score(value)
     return sum(parsed) if parsed else None
+
+
+def score_pair(value) -> tuple[int, int] | None:
+    if isinstance(value, dict):
+        home, away = value.get("home"), value.get("away")
+        if home is not None and away is not None:
+            try:
+                return int(home), int(away)
+            except (TypeError, ValueError):
+                return None
+        value = value.get("score") or value.get("ss")
+    return parse_score(value)
+
+
+def football_regulation_score(event: dict) -> tuple[tuple[int, int] | None, str]:
+    """Return the 90-minute score, excluding extra time and shoot-outs."""
+    scores = event.get("scores") or {}
+    if isinstance(scores, dict):
+        regulation = score_pair(scores.get("2"))
+        if regulation is not None:
+            return regulation, "scores.2"
+        if any(str(key) in {"3", "4"} for key in scores):
+            return None, "REGULATION_SCORE_MISSING"
+    score = parse_score(event.get("ss"))
+    return (score, "ss") if score is not None else (None, "FINAL_SCORE_MISSING")
 
 
 def component(total: float, line: float, over: bool, odds: float) -> float:
@@ -129,29 +210,35 @@ def first_half_total(event: dict) -> int | None:
         return None
     for key in ("1", "1st", "1st Half", "1H", "first_half"):
         value = scores.get(key)
-        if isinstance(value, dict):
-            home, away = value.get("home"), value.get("away")
-            if home is not None and away is not None:
-                try:
-                    return int(home) + int(away)
-                except (TypeError, ValueError):
-                    pass
-            value = value.get("score") or value.get("ss")
-        total = score_total(value)
-        if total is not None:
-            return total
+        pair = score_pair(value)
+        if pair is not None:
+            return sum(pair)
     return None
 
 
-def tennis_winner(score) -> str | None:
-    sets = []
-    for token in str(score or "").split(","):
-        parsed = parse_score(token)
-        if parsed:
-            sets.append(parsed)
+def completed_tennis_set(home: int, away: int) -> bool:
+    high, low = max(home, away), min(home, away)
+    if high == 7 and low in {5, 6}:
+        return True
+    if high >= 10 and high - low >= 2:
+        return True
+    return high >= 6 and high - low >= 2
+
+
+def tennis_winner(score, tournament: str = "") -> str | None:
+    # The provider separates sets with commas. Keeping the parser strict makes
+    # truncated retirement scores diagnostic instead of silently settled.
+    sets = [parse_score(token) for token in str(score or "").split(",") if str(token).strip()]
+    if not sets or any(pair is None or not completed_tennis_set(*pair) for pair in sets):
+        return None
+    required = 2
     home_wins = sum(home > away for home, away in sets)
     away_wins = sum(away > home for home, away in sets)
-    return "home" if home_wins > away_wins else "away" if away_wins > home_wins else None
+    if home_wins >= required and home_wins > away_wins:
+        return "home"
+    if away_wins >= required and away_wins > home_wins:
+        return "away"
+    return None
 
 
 def normalized_competitor(value) -> tuple[str, ...]:
@@ -170,18 +257,22 @@ def selection_profit(row: dict, event: dict, bet_key: str, odds_key: str) -> tup
         total_match = re.fullmatch(r"Т([БМ])\s+(-?\d+(?:\.\d+)?)", bet)
         if total_match:
             line = float(total_match.group(2))
-            total = first_half_total(event) if row.get("period") == "FH" else score_total(event.get("ss"))
+            if signal_period(row) == "FH":
+                total = first_half_total(event)
+                score_reason = "FIRST_HALF_SCORE_MISSING"
+            else:
+                regulation, score_reason = football_regulation_score(event)
+                total = sum(regulation) if regulation is not None else None
             if total is None:
-                suffix = "FIRST_HALF_SCORE_MISSING" if row.get("period") == "FH" else "FINAL_SCORE_MISSING"
-                return None, suffix
+                return None, score_reason
             return asian_total_profit(total, line, total_match.group(1) == "Б", odds), "SETTLED"
 
         handicap_match = re.fullmatch(r"Фора\s+(хозяев|гостей)\s+([+-]?\d+(?:\.\d+)?)", bet)
         if handicap_match:
-            final_score = parse_score(event.get("ss"))
+            final_score, score_reason = football_regulation_score(event)
             entry_score = parse_score(row.get("score"))
             if final_score is None:
-                return None, "FINAL_SCORE_MISSING"
+                return None, score_reason
             if entry_score is None:
                 return None, "ENTRY_SCORE_MISSING"
             home_after = final_score[0] - entry_score[0]
@@ -194,7 +285,7 @@ def selection_profit(row: dict, event: dict, bet_key: str, odds_key: str) -> tup
         return None, "UNSUPPORTED_FOOTBALL_MARKET"
 
     if row.get("sport") == "tennis":
-        winner = tennis_winner(event.get("ss"))
+        winner = tennis_winner(event.get("ss"), row.get("tournament") or "")
         if not winner:
             return None, "TENNIS_WINNER_MISSING"
         home, away = str(event.get("home") or ""), str(event.get("away") or "")
@@ -227,7 +318,12 @@ def event_for_signal(row: dict, cache: dict[str, dict], overrides: dict) -> dict
         return {"event_id": event_id, "state": "VOID_MANUAL"}
     if override and override.get("status") == "ended":
         original = dict(cache.get(event_id) or {})
-        original.update({"event_id": event_id, "state": "FINAL", "ss": str(override.get("final_score") or "").replace(":", "-")})
+        original.update({
+            "event_id": event_id,
+            "state": "FINAL",
+            "ss": str(override.get("final_score") or "").replace(":", "-"),
+            "scores": {},
+        })
         return original
     return cache.get(event_id)
 
@@ -262,7 +358,19 @@ def settle(signals: list[dict], cache: dict[str, dict], overrides: dict) -> tupl
         if row.get("reverse_bet") and row.get("reverse_odds") is not None:
             reverse_profit, _ = selection_profit(row, event, "reverse_bet", "reverse_odds")
         item = dict(row)
-        item.update({"profit": profit, "reverse_profit": reverse_profit, "final_score": event.get("ss")})
+        settlement_score = event.get("ss")
+        score_source = "ss"
+        if row.get("sport") == "football" and signal_period(row) != "FH":
+            pair, score_source = football_regulation_score(event)
+            if pair is not None:
+                settlement_score = f"{pair[0]}-{pair[1]}"
+        item.update({
+            "profit": profit,
+            "reverse_profit": reverse_profit,
+            "final_score": settlement_score,
+            "provider_final_score": event.get("ss"),
+            "settlement_score_source": score_source,
+        })
         settled.append(item)
     return settled, voided, pending
 
@@ -347,24 +455,151 @@ def enabled_strategies() -> dict[str, str]:
 
 def within_strategy(rows: list[dict], strategy_id: str) -> list[dict]:
     start = STRATEGY_STARTS.get(strategy_id, "1970-01-01T00:00:00+00:00")
-    return [row for row in rows if strategy_id in strategy_ids(row) and str(row.get("timestamp") or "") >= start]
+    output = []
+    for row in rows:
+        observation = (row.get("strategy_observations") or {}).get(strategy_id)
+        if observation is None:
+            # Old rows may list a later strategy without preserving its own
+            # quote/time snapshot. They remain in the raw log but are not safe
+            # for per-strategy P&L.
+            if row.get("strategy_id") != strategy_id:
+                continue
+            observation = attribution_snapshot(row)
+        item = dict(row)
+        item.update(observation)
+        item["period"] = signal_period(item)
+        item["strategy_id"] = strategy_id
+        item["strategy_ids"] = [strategy_id]
+        item["attribution_quality"] = "exact"
+        if timestamp_at_or_after(item.get("timestamp"), start):
+            output.append(item)
+    return output
+
+
+def excluded_legacy_attributions(rows: list[dict], strategy_id: str) -> int:
+    return sum(
+        strategy_id in strategy_ids(row)
+        and row.get("strategy_id") != strategy_id
+        and strategy_id not in (row.get("strategy_observations") or {})
+        for row in rows
+    )
+
+
+def numeric_between(value, low=None, high=None) -> bool:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return False
+    if low is not None and number < float(low):
+        return False
+    if high is not None and number > float(high):
+        return False
+    return True
+
+
+def watchlist_match(row: dict, item: dict) -> bool:
+    filters = item.get("filters") or {}
+    reverse = item.get("direction") == "reverse"
+    bet_key = "reverse_bet" if reverse else "exact_bet_line"
+    odds_key = "reverse_odds" if reverse else "current_odds"
+    if filters.get("score") is not None and str(row.get("score")) != str(filters["score"]):
+        return False
+    line = total_line(row.get(bet_key))
+    if filters.get("total_line") is not None and not numeric_between(line, filters["total_line"], filters["total_line"]):
+        return False
+    if not numeric_between(line, filters.get("total_line_min"), filters.get("total_line_max")) and (
+        filters.get("total_line_min") is not None or filters.get("total_line_max") is not None
+    ):
+        return False
+    if not numeric_between(row.get(odds_key), filters.get("odds_min"), filters.get("odds_max")) and (
+        filters.get("odds_min") is not None or filters.get("odds_max") is not None
+    ):
+        return False
+    if not numeric_between(row.get("reverse_odds"), filters.get("reverse_odds_min"), filters.get("reverse_odds_max")) and (
+        filters.get("reverse_odds_min") is not None or filters.get("reverse_odds_max") is not None
+    ):
+        return False
+    focus = item.get("focus") or {}
+    if focus and not numeric_between(row.get("minute"), focus.get("minute_min"), focus.get("minute_max")):
+        return False
+    return True
+
+
+def build_watchlist_report(signals: list[dict], cache: dict[str, dict], overrides: dict) -> dict:
+    config = json.loads(WATCHLIST_FILE.read_text(encoding="utf-8"))
+    start = str(config["policy"]["forward_start_at"])
+    minimum = int(config["policy"]["minimum_new_settled_before_review"])
+    minimum_days = int(config["policy"]["minimum_observation_days_before_review"])
+    started = datetime.fromisoformat(start.replace("Z", "+00:00"))
+    elapsed_days = max(0, (datetime.now(timezone.utc) - started).days)
+    items = []
+    for definition in config["items"]:
+        strategy_id = definition["strategy_id"]
+        candidates = [
+            row for row in within_strategy(signals, strategy_id)
+            if timestamp_at_or_after(row.get("timestamp"), start)
+        ]
+        selected_signals = [row for row in candidates if watchlist_match(row, definition)]
+        control_signals = [row for row in candidates if not watchlist_match(row, definition)]
+        selected, voided, pending = settle(selected_signals, cache, overrides)
+        controls, control_voided, control_pending = settle(control_signals, cache, overrides)
+        key = "reverse_profit" if definition["direction"] == "reverse" else "profit"
+        items.append({
+            "id": definition["id"],
+            "name_ru": definition["name_ru"],
+            "direction": definition["direction"],
+            "forward_start_at": start,
+            "recorded": len(selected_signals),
+            "settled": len(selected),
+            "pending": len(pending),
+            "void": len(voided),
+            "result": aggregate(selected, key),
+            "without_top3": aggregate_without_top(selected, key),
+            "control_group": {
+                "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
+                "recorded": len(control_signals),
+                "settled": len(controls),
+                "pending": len(control_pending),
+                "void": len(control_voided),
+                "result": aggregate(controls, key),
+            },
+            "review_ready": len(selected) >= minimum and elapsed_days >= minimum_days,
+        })
+    report = {
+        "schema_version": config["schema_version"],
+        "name": config["name"],
+        "status": config["status"],
+        "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "policy": config["policy"],
+        "items": items,
+    }
+    WATCHLIST_OUTPUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
 
 
 def build_status() -> dict:
     signals = load_signals()
     cache = {str(row.get("event_id")): row for row in load_jsonl(CACHE_FILE) if row.get("event_id") is not None}
-    settled, voided, pending = settle(signals, cache, load_overrides())
+    overrides = load_overrides()
+    settled, voided, pending = settle(signals, cache, overrides)
     names = enabled_strategies()
 
     strategy_stats = {}
     pockets = {}
+    strategy_signals_by_id = {}
+    strategy_settled_by_id = {}
     for strategy_id, name in names.items():
-        settled_rows = within_strategy(settled, strategy_id)
         raw_rows = within_strategy(signals, strategy_id)
+        settled_rows, strategy_void, strategy_pending = settle(raw_rows, cache, overrides)
+        strategy_signals_by_id[strategy_id] = raw_rows
+        strategy_settled_by_id[strategy_id] = settled_rows
         strategy_stats[strategy_id] = {
             "name": name,
             "start": STRATEGY_STARTS.get(strategy_id, "1970-01-01T00:00:00+00:00"),
             "recorded": len(raw_rows),
+            "pending": len(strategy_pending),
+            "void": len(strategy_void),
+            "excluded_legacy_attributions": excluded_legacy_attributions(signals, strategy_id),
             "original": aggregate(settled_rows),
             "original_without_top3": aggregate_without_top(settled_rows),
             "reverse": aggregate(settled_rows, "reverse_profit"),
@@ -385,8 +620,8 @@ def build_status() -> dict:
         odds_key = "reverse_odds" if reverse else "current_odds"
         bet_key = "reverse_bet" if reverse else "exact_bet_line"
         dimension = group_dimensions(odds_key, bet_key)[item["dimension"]]
-        selected = [row for row in within_strategy(settled, strategy_id) if dimension(row) == item["value"]]
-        raw = [row for row in within_strategy(signals, strategy_id) if dimension(row) == item["value"]]
+        selected = [row for row in strategy_settled_by_id.get(strategy_id, []) if dimension(row) == item["value"]]
+        raw = [row for row in strategy_signals_by_id.get(strategy_id, []) if dimension(row) == item["value"]]
         priority.append({**item, "recorded": len(raw), "result": aggregate(selected, key), "without_top3": aggregate_without_top(selected, key)})
 
     signal_reasons = Counter(row["settlement_reason"] for row in pending + voided)
@@ -396,10 +631,18 @@ def build_status() -> dict:
     event_reasons = {reason: len(events) for reason, events in sorted(events_by_reason.items())}
     retryable_states = {
         "NOT_STARTED", "INPLAY", "PENDING_PROVIDER_FIX", "POSTPONED",
-        "INTERRUPTED", "SUSPENDED", "DELAYED",
+        "INTERRUPTED", "SUSPENDED", "DELAYED", "NOT_CACHED",
+        "NOT_CHECKED", "NO_PROVIDER_ROW",
     }
     live_or_delayed = sum(row["settlement_reason"] in retryable_states for row in pending)
     unresolved = len(pending) - live_or_delayed
+    watchlist = build_watchlist_report(signals, cache, overrides)
+    legacy_by_strategy = {
+        strategy_id: excluded_legacy_attributions(signals, strategy_id)
+        for strategy_id in names
+        if excluded_legacy_attributions(signals, strategy_id)
+    }
+    score_sources = Counter(str(row.get("settlement_score_source") or "unknown") for row in settled)
     cache_status = {}
     if CACHE_STATUS_FILE.exists():
         try:
@@ -417,6 +660,19 @@ def build_status() -> dict:
         "settlement_reasons": dict(sorted(signal_reasons.items())),
         "settlement_event_reasons": event_reasons,
         "settlement_cache": cache_status,
+        "data_quality": {
+            "dedup_key": ["event_id", "period", "exact_bet_line"],
+            "strategy_quote_snapshot_required": True,
+            "excluded_legacy_attributions": sum(legacy_by_strategy.values()),
+            "excluded_legacy_attributions_by_strategy": legacy_by_strategy,
+            "settlement_score_sources": dict(sorted(score_sources.items())),
+        },
+        "observation_watchlist": {
+            "status": watchlist["status"],
+            "forward_start_at": watchlist["policy"]["forward_start_at"],
+            "items": len(watchlist["items"]),
+            "review_ready": sum(item["review_ready"] for item in watchlist["items"]),
+        },
         "strategies": strategy_stats,
     }
 
@@ -428,6 +684,8 @@ def build_status() -> dict:
         "void_signals": len(voided),
         "signal_reasons": dict(sorted(signal_reasons.items())),
         "unique_event_reasons": event_reasons,
+        "data_quality": status["data_quality"],
+        "observation_watchlist": status["observation_watchlist"],
     }
     Path("settlement_diagnostics_current.json").write_text(json.dumps(diagnostics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     Path("current_status_current.json").write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
