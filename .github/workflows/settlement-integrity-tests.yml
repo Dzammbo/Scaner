@@ -1,0 +1,34 @@
+name: Settlement integrity tests
+
+on:
+  pull_request:
+    paths:
+      - "mining_pending_refresh.py"
+      - "stateful_goal_mining.py"
+      - "current_status.py"
+      - "tests/test_mining_settlement.py"
+      - "tests/test_scanner_settlement.py"
+      - "tests/test_signal_integrity.py"
+      - ".github/workflows/settlement-integrity-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BETSAPI_KEY: test-token
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile settlement modules
+        run: python -m py_compile mining_pending_refresh.py stateful_goal_mining.py current_status.py
+      - name: Run settlement regression tests
+        run: python -m unittest discover -s tests -p "test_*settlement*.py" -v
+      - name: Run signal integrity tests
+        run: python -m unittest discover -s tests -p "test_signal_integrity.py" -v

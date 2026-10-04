@@ -74,6 +74,9 @@ def delta(cur,pre,key):
  a,b=total(cur,key),total(pre,key)
  return None if a is None or b is None else max(0.,a-b)
 def score(v):
+ if isinstance(v,dict):
+  try:return int(v["home"]),int(v["away"])
+  except Exception:return None
  try:a,b=str(v or "").replace(":","-").split("-",1);return int(a),int(b)
  except Exception:return None
 def esoccer(ev):
@@ -123,9 +126,13 @@ def candidate_arms(meta,features,halftime=False):
   out.append({"id":"S26","strategy":"FOOTBALL_PRESSURE_TOTAL_O05_V1","arm":"HIGH_PRESSURE_O05_FT","market":"FT_NEXT","selection":"OVER","period":"FT","odds":None,"interval":600,"priority":2})
  return out
 def final_period_goals(ev,period):
- if period=="FT":
-  s=score(ev.get("ss"));return None if not s else sum(s)
  scores=ev.get("scores") or {}
+ if period=="FT":
+  if isinstance(scores,dict):
+   regulation=score(scores.get("2"))
+   if regulation is not None:return sum(regulation)
+   if any(str(key) in ("3","4") for key in scores):return None
+  s=score(ev.get("ss"));return None if not s else sum(s)
  if isinstance(scores,dict):
   for key in ("1","1st","1st Half"):
    s=score(scores.get(key))
@@ -163,7 +170,7 @@ def settle(rows,live_ids):
     if goals is None:continue
     outcome=outcome_for(goals,row["selected_line"],row.get("selection") or "OVER")
     row.update({"settled_at":now,"final_period_goals":goals,"outcome":outcome,"profit":profit_for(outcome,row["selected_odds"])})
-   elif status in ("4","5","7","8") and now-int(row["entry_at"])>=12*3600:row.update({"settled_at":now,"outcome":"VOID","profit":0})
+   elif status in ("4","5","6","7","8","9") and now-int(row["entry_at"])>=12*3600:row.update({"settled_at":now,"outcome":"VOID","profit":0})
 def metrics(rows):
  rr=[x for x in rows if x.get("outcome") not in (None,"VOID")];profit=sum(float(x.get("profit") or 0) for x in rr)
  return {"N":len(rr),"W":sum(x["outcome"] in ("WIN","HALF_WIN") for x in rr),"L":sum(x["outcome"] in ("LOSS","HALF_LOSS") for x in rr),"PUSH":sum(x["outcome"]=="PUSH" for x in rr),"profit":round(profit,6),"ROI":None if not rr else round(profit/len(rr),6)}
