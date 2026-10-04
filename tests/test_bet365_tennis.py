@@ -38,6 +38,7 @@ class Bet365TennisTests(unittest.TestCase):
         self.assertEqual(classify_competition("M25 Madrid", "A", "B")["men"], True)
         self.assertEqual(classify_competition("W50 Porto", "A", "B")["women"], True)
         self.assertEqual(classify_competition("W50 Porto", "A/B", "C/D")["doubles"], True)
+        self.assertEqual(classify_competition("WTA Shanghai", "A", "B")["itf"], False)
 
     def test_match_under_and_trailing_server_set_under(self):
         identity, markets, signals = evaluate_event(payload(), {"our_event_id": "123"})
