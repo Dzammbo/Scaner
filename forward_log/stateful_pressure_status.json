@@ -1,6 +1,57 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-04T15:11:21Z",
-  "signals": 434,
-  "active_last_10m": []
+  "updated_at": "2026-10-04T15:21:30Z",
+  "signals": 436,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-04T15:21:21Z",
+      "sport": "football",
+      "tournament": "Spain Primera Division RFEF Group 1",
+      "event_id": "12158060",
+      "match": "Zamora CF - CD Coria",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТМ 2.25",
+      "current_odds": 1.9,
+      "reverse_bet": "ТБ 2.25",
+      "reverse_odds": 1.9,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 0.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-04T15:21:21Z",
+      "sport": "football",
+      "tournament": "Norway Division 3 Group 2",
+      "event_id": "11287377",
+      "match": "Spjelkavik - Ranheim 2",
+      "minute_score": "92' / '2-4'",
+      "minute": 92,
+      "score": "2-4",
+      "exact_bet_line": "ТБ 6.5",
+      "current_odds": 4.15,
+      "reverse_bet": "ТМ 6.5",
+      "reverse_odds": 1.22,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 30.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
