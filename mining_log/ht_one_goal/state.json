@@ -18105,8 +18105,9 @@
       ],
       "halftime_group": "CONTROL_HT00",
       "leading_side": "DRAW",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "12289792": {
       "event_id": "12289792",
@@ -19581,8 +19582,26 @@
       "leading_side": "HOME",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "12321861": {
+      "event_id": "12321861",
+      "bet365_id": "202143176",
+      "kickoff": 1791083400,
+      "candidate_at": 1791086354,
+      "country": "mx",
+      "league": "Mexico Liga MX Femenil",
+      "home": "Necaxa (W)",
+      "away": "Cruz Azul (W)",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
     }
   },
-  "updated_at": "2026-10-04T03:52:46Z",
-  "api_calls_last_run": 2
+  "updated_at": "2026-10-04T04:02:22Z",
+  "api_calls_last_run": 3
 }
