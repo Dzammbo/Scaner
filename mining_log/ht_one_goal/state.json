@@ -17518,8 +17518,9 @@
       ],
       "halftime_group": "CONTROL_HT2PLUS",
       "leading_side": "AWAY",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "11737749": {
       "event_id": "11737749",
@@ -17591,8 +17592,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "FINISHED_NO_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "LEFT_BOARD"
     },
     "13234964": {
       "event_id": "13234964",
@@ -19105,8 +19107,9 @@
       ],
       "halftime_group": "PRIMARY_ONE_GOAL",
       "leading_side": "HOME",
-      "status": "ELIGIBLE",
-      "last_error": "HTTPError"
+      "status": "MISSED_BEFORE_QUOTE",
+      "last_error": "HTTPError",
+      "miss_reason": "SCORE_CHANGED"
     },
     "11288003": {
       "event_id": "11288003",
@@ -19179,8 +19182,199 @@
       "leading_side": "DRAW",
       "status": "ELIGIBLE",
       "last_error": "HTTPError"
+    },
+    "13234349": {
+      "event_id": "13234349",
+      "bet365_id": "202204323",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078667,
+      "country": "mx",
+      "league": "Mexico Liga TDP",
+      "home": "Academia Dragones FC",
+      "away": "Lobos ITECA",
+      "halftime_score": [
+        0,
+        1
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "AWAY",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12222289": {
+      "event_id": "12222289",
+      "bet365_id": "200871082",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078730,
+      "country": "mx",
+      "league": "Mexico Liga de Expansion",
+      "home": "Atletico Morelia",
+      "away": "Tlaxcala FC",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "13104768": {
+      "event_id": "13104768",
+      "bet365_id": "202162556",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078730,
+      "country": "gt",
+      "league": "Guatemala Primera Division",
+      "home": "Nueva Santa Rosa CDF",
+      "away": "CSD Sayaxche",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12222288": {
+      "event_id": "12222288",
+      "bet365_id": "200871084",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078730,
+      "country": "mx",
+      "league": "Mexico Liga de Expansion",
+      "home": "Cancun FC",
+      "away": "Tapatio",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE",
+      "last_error": "HTTPError"
+    },
+    "12223108": {
+      "event_id": "12223108",
+      "bet365_id": "200871086",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078792,
+      "country": "mx",
+      "league": "Mexico Liga de Expansion",
+      "home": "Piratas",
+      "away": "Oaxaca",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13224819": {
+      "event_id": "13224819",
+      "bet365_id": "202192808",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078862,
+      "country": "hn",
+      "league": "Honduras Liga de Ascenso",
+      "home": "INFOP FC",
+      "away": "CD Cedeno",
+      "halftime_score": [
+        1,
+        1
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "12222290": {
+      "event_id": "12222290",
+      "bet365_id": "200871080",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078862,
+      "country": "mx",
+      "league": "Mexico Liga de Expansion",
+      "home": "Alacranes de Durango",
+      "away": "Mineros de Zacatecas",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "13033419": {
+      "event_id": "13033419",
+      "bet365_id": "202166930",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078930,
+      "country": "mx",
+      "league": "Mexico Primera Premier",
+      "home": "Lobos ULM",
+      "away": "Tritones Vallarta MFC",
+      "halftime_score": [
+        2,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "11187347": {
+      "event_id": "11187347",
+      "bet365_id": "200870998",
+      "kickoff": 1791075600,
+      "candidate_at": 1791078930,
+      "country": "us",
+      "league": "USA USL Championship",
+      "home": "Colorado Switchbacks FC",
+      "away": "Oakland Roots",
+      "halftime_score": [
+        0,
+        0
+      ],
+      "halftime_group": "CONTROL_HT00",
+      "leading_side": "DRAW",
+      "status": "ELIGIBLE"
+    },
+    "11188828": {
+      "event_id": "11188828",
+      "bet365_id": "202053329",
+      "kickoff": 1791075600,
+      "candidate_at": 1791079056,
+      "country": "us",
+      "league": "USA USL League One",
+      "home": "Spokane Velocity FC",
+      "away": "Portland Hearts of Pine",
+      "halftime_score": [
+        3,
+        0
+      ],
+      "halftime_group": "CONTROL_HT2PLUS",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
+    },
+    "12326279": {
+      "event_id": "12326279",
+      "bet365_id": "202143174",
+      "kickoff": 1791075960,
+      "candidate_at": 1791079200,
+      "country": "mx",
+      "league": "Mexico Liga MX Femenil",
+      "home": "Tijuana (W)",
+      "away": "Atlante (W)",
+      "halftime_score": [
+        1,
+        0
+      ],
+      "halftime_group": "PRIMARY_ONE_GOAL",
+      "leading_side": "HOME",
+      "status": "ELIGIBLE"
     }
   },
-  "updated_at": "2026-10-04T01:50:05Z",
-  "api_calls_last_run": 6
+  "updated_at": "2026-10-04T02:00:10Z",
+  "api_calls_last_run": 9
 }
