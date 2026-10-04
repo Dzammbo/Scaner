@@ -1,4 +1,4 @@
-name: Bet365 full-market entitlement probe
+name: Bet365 tennis entitlement probe
 
 on:
   push:
@@ -11,58 +11,129 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
-      - name: Probe upcoming football and one prematch market catalogue
+      - name: Probe tennis fixtures, prematch markets and live feed
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import json, os, sys, urllib.parse, urllib.request
+          import json, os, re, sys, urllib.error, urllib.parse, urllib.request
 
-          token = os.environ["BETSAPI_KEY"]
+          token = os.environ.get("BETSAPI_KEY", "")
+          if not token:
+              sys.exit("BETSAPI_KEY is empty")
           base = "https://api.b365api.com"
+          calls = 0
 
           def get(path, **params):
+              global calls
+              calls += 1
               params["token"] = token
               url = base + path + "?" + urllib.parse.urlencode(params)
               try:
-                  with urllib.request.urlopen(url, timeout=25) as r:
-                      return r.status, json.load(r)
-              except urllib.error.HTTPError as e:
-                  body = e.read().decode("utf-8", "replace")
-                  print(json.dumps({"endpoint": path, "http_status": e.code, "body": body[:500]}))
-                  raise
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      return response.status, json.load(response)
+              except urllib.error.HTTPError as error:
+                  body = error.read().decode("utf-8", "replace")
+                  print(json.dumps({"kind": "http_error", "endpoint": path,
+                                    "status": error.code, "body": body[:1000]}))
+                  return error.code, {"success": 0, "error": body[:1000]}
 
-          status, upcoming = get("/v1/bet365/upcoming", sport_id=1, page=1)
-          results = upcoming.get("results") or []
-          print(json.dumps({
-              "endpoint": "/v1/bet365/upcoming",
-              "http_status": status,
-              "success": upcoming.get("success"),
-              "pager": upcoming.get("pager"),
-              "events_returned": len(results),
-              "first_event_keys": sorted(results[0].keys()) if results else [],
-              "first_event": {k: results[0].get(k) for k in ("id", "FI", "home", "away", "time", "league") if k in results[0]} if results else None,
-          }, ensure_ascii=False))
+          def walk(value):
+              if isinstance(value, dict):
+                  yield value
+                  for child in value.values():
+                      yield from walk(child)
+              elif isinstance(value, list):
+                  for child in value:
+                      yield from walk(child)
 
-          if not results:
-              sys.exit("No fixtures returned, cannot test prematch catalogue")
-          fixture = results[0]
-          fi = fixture.get("FI") or fixture.get("id")
-          status, prematch = get("/v4/bet365/prematch", FI=fi, raw=1)
-          raw = prematch.get("results") or prematch.get("raw") or []
-          raw_text = raw if isinstance(raw, str) else json.dumps(raw, ensure_ascii=False)
-          print(json.dumps({
-              "endpoint": "/v4/bet365/prematch",
-              "http_status": status,
-              "success": prematch.get("success"),
-              "FI": fi,
-              "top_level_keys": sorted(prematch.keys()),
-              "raw_type": type(raw).__name__,
-              "raw_length": len(raw_text),
-              "market_groups_detected": raw_text.count("type=MG"),
-              "sample": raw_text[:700],
-          }, ensure_ascii=False))
+          fixtures = []
+          for page in (1, 2):
+              status, payload = get("/v1/bet365/upcoming", sport_id=13, page=page)
+              rows = payload.get("results") or []
+              print(json.dumps({"kind": "upcoming", "page": page, "status": status,
+                                "success": payload.get("success"), "events": len(rows),
+                                "pager": payload.get("pager")}, ensure_ascii=False))
+              fixtures.extend(rows)
+
+          if not fixtures:
+              sys.exit("No tennis fixtures returned")
+
+          buckets = {"atp": [], "wta": [], "challenger": [], "itf": [], "other": []}
+          for row in fixtures:
+              label = json.dumps({k: row.get(k) for k in ("league", "home", "away")}, ensure_ascii=False).lower()
+              if "challenger" in label:
+                  bucket = "challenger"
+              elif "itf" in label or re.search(r"\b[wm](?:15|25|35|50|75|100)\b", label):
+                  bucket = "itf"
+              elif "wta" in label:
+                  bucket = "wta"
+              elif "atp" in label:
+                  bucket = "atp"
+              else:
+                  bucket = "other"
+              buckets[bucket].append(row)
+
+          chosen = []
+          for bucket in ("atp", "wta", "challenger", "itf", "other"):
+              chosen.extend(buckets[bucket][:2])
+          seen = {str(row.get("FI") or row.get("id")) for row in chosen}
+          for row in fixtures:
+              fi = str(row.get("FI") or row.get("id"))
+              if fi not in seen and len(chosen) < 12:
+                  chosen.append(row)
+                  seen.add(fi)
+
+          coverage = {key: 0 for key in (
+              "match_winner", "first_set_winner", "first_set_total",
+              "first_set_handicap", "match_total", "match_handicap", "set_betting")}
+          patterns = {
+              "match_winner": r"match winner|to win match|money line|moneyline",
+              "first_set_winner": r"(1st|first|set 1).{0,30}(winner|money|result)|winner.{0,20}(1st|first|set 1)",
+              "first_set_total": r"(1st|first|set 1).{0,30}(total|over/under)|total.{0,20}(1st|first|set 1)",
+              "first_set_handicap": r"(1st|first|set 1).{0,30}(handicap|spread)|handicap.{0,20}(1st|first|set 1)",
+              "match_total": r"total games|games over/under|match total",
+              "match_handicap": r"game handicap|games handicap|match handicap",
+              "set_betting": r"set betting|correct set score|sets handicap",
+          }
+
+          for row in chosen:
+              fi = row.get("FI") or row.get("id")
+              event = {k: row.get(k) for k in ("league", "home", "away", "time")}
+              status, parsed = get("/v4/bet365/prematch", FI=fi)
+              nodes = list(walk(parsed.get("results") or parsed))
+              names = []
+              for node in nodes:
+                  for key in ("NA", "name", "market_name"):
+                      value = node.get(key)
+                      if isinstance(value, str) and value.strip():
+                          names.append(value.strip())
+              raw_status, raw = get("/v4/bet365/prematch", FI=fi, raw=1)
+              raw_text = json.dumps(raw.get("results") or raw, ensure_ascii=False)
+              haystack = (" | ".join(names) + " | " + raw_text).lower()
+              flags = {key: bool(re.search(pattern, haystack, re.I)) for key, pattern in patterns.items()}
+              for key, present in flags.items():
+                  coverage[key] += int(present)
+              market_names = []
+              for name in names:
+                  if name not in market_names:
+                      market_names.append(name)
+              print(json.dumps({"kind": "prematch", "FI": fi, "event": event,
+                                "status": status, "raw_status": raw_status,
+                                "success": parsed.get("success"), "flags": flags,
+                                "market_names": market_names[:80],
+                                "raw_chars": len(raw_text)}, ensure_ascii=False))
+
+          live_status, live = get("/v1/bet365/inplay_filter", sport_id=13)
+          live_rows = live.get("results") or []
+          print(json.dumps({"kind": "inplay", "status": live_status,
+                            "success": live.get("success"), "events": len(live_rows),
+                            "sample_keys": sorted(live_rows[0].keys()) if live_rows else [],
+                            "sample": live_rows[:2]}, ensure_ascii=False))
+          print(json.dumps({"kind": "summary", "fixtures_seen": len(fixtures),
+                            "fixtures_probed": len(chosen), "bucket_counts": {k: len(v) for k, v in buckets.items()},
+                            "coverage": coverage, "api_calls": calls}, ensure_ascii=False))
           PY
