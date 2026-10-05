@@ -711,8 +711,21 @@
       "research_destination": "scanner",
       "collection_engine": "stateful_goal_mining.py",
       "scanner_activated_at": "2026-10-01",
-      "data_quality_status": "RECONCILIATION_REQUIRED",
-      "data_quality_note": "2026-10-05: settlement report shows 322 settled/0 pending while operational status shows 323 signals, 96 settled/227 pending. Keep collection enabled; reconcile source journals and per-event settlement before updating performance figures."
+      "data_quality_status": "RECONCILED",
+      "data_quality_note": "2026-10-05T12:31:14Z: operational status reconciled with the persistent BetsAPI settlement cache. Both sources show 327 signals, 327 settled, 0 pending, 0 void; accounting invariant passed and no duplicate signals were found.",
+      "current_settlement": {
+        "as_of": "2026-10-05T12:31:14Z",
+        "signals": 327,
+        "settled": 327,
+        "pending": 0,
+        "void": 0,
+        "wins": 111,
+        "losses": 216,
+        "pushes": 0,
+        "profit": -27.7,
+        "roi_pct": -8.47,
+        "source": "mining_log/settlement_statistics.json"
+      }
     },
     {
       "id": "S27",
