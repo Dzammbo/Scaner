@@ -1,30 +1,55 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-05T23:19:22Z",
-  "signals": 605,
+  "updated_at": "2026-10-05T23:29:30Z",
+  "signals": 607,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-05T23:19:20Z",
+      "timestamp": "2026-10-05T23:24:28Z",
       "sport": "football",
-      "tournament": "Brazil Campeonato Mineiro 3",
-      "event_id": "13245436",
-      "match": "Nacional de Muriae - Nova Lavras",
-      "minute_score": "45' / '0-1'",
-      "minute": 45,
-      "score": "0-1",
-      "exact_bet_line": "ТМ 2.25",
-      "current_odds": 2.0,
-      "reverse_bet": "ТБ 2.25",
-      "reverse_odds": 1.8,
-      "strategy_id": "S31",
+      "tournament": "Argentina Primera B Metropolitana",
+      "event_id": "11178764",
+      "match": "Deportivo Merlo - CA Brown de Adrogue",
+      "minute_score": "62' / '0-0'",
+      "minute": 62,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 0.5",
+      "current_odds": 1.9,
+      "reverse_bet": "ТБ 0.5",
+      "reverse_odds": 1.9,
+      "strategy_id": "S33",
       "strategy_ids": [
-        "S31"
+        "S33"
       ],
       "strategy_names": [
-        "ТМ матча в перерыве при низкой активности"
+        "Без гола после 60-й при 0:0 и низкой активности"
       ],
       "tier": "WATCHLIST",
       "pressure10": 14.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-05T23:29:29Z",
+      "sport": "football",
+      "tournament": "Colombia Primera B",
+      "event_id": "12179729",
+      "match": "Bogota FC - Envigado FC",
+      "minute_score": "72' / '1-3'",
+      "minute": 72,
+      "score": "1-3",
+      "exact_bet_line": "ТБ 4.5",
+      "current_odds": 1.95,
+      "reverse_bet": "ТМ 4.5",
+      "reverse_odds": 1.85,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 37.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
