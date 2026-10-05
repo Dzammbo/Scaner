@@ -65,7 +65,7 @@ class TopSixRegistryTest(unittest.TestCase):
             self.assertEqual(row["clean_epoch_start"], "2026-10-01T19:15:00Z")
 
     def test_retired_negative_rules_are_archived(self):
-        for strategy_id in ("S11", "T14", "T16", "S27"):
+        for strategy_id in ("S08", "S11", "T14", "T16", "S27", "S25"):
             row = strategy(strategy_id)
             self.assertFalse(row["scanner_enabled"])
             self.assertFalse(row["user_output"])

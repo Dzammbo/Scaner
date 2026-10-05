@@ -714,7 +714,7 @@ def build_s30_top6_report(signals: list[dict], cache: dict[str, dict], overrides
     elapsed_days = max(0, (datetime.now(timezone.utc) - started).days)
     candidates = within_strategy(signals, "S30")
     items = []
-    for definition in sorted(config["items"], key=lambda item: item["rank"]):
+    for definition in sorted((item for item in config["items"] if item.get("status") != "ARCHIVED"), key=lambda item: item["rank"]):
         key = "reverse_profit" if definition["direction"] == "reverse" else "profit"
         selected = [row for row in candidates if watchlist_match(row, definition)]
         forward = [row for row in selected if timestamp_at_or_after(row.get("timestamp"), start)]
