@@ -14,14 +14,14 @@ import mining_pending_refresh as refresh
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22,S35")
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
     def test_general_pass_has_explicit_allowlist(self, invoke, _budget):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
-        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S09,S21,S22,S25")
+        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S09,S21,S22,S35")
 
     def test_stateful_accepts_only_active_arms(self):
         for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:
