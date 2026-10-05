@@ -3,6 +3,9 @@ name: Settlement integrity tests
 on:
   pull_request:
     paths:
+      - "scanner.py"
+      - "strategies.json"
+      - ".github/workflows/mining-hot-path.yml"
       - "mining_pending_refresh.py"
       - "stateful_goal_mining.py"
       - "current_status.py"
