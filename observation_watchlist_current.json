@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-05T21:01:48.145757Z",
+  "generated_at": "2026-10-05T22:01:53.104190Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,9 +25,9 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 90,
+      "recorded": 92,
       "settled": 90,
-      "pending": 0,
+      "pending": 2,
       "void": 0,
       "result": {
         "N": 90,
@@ -47,17 +47,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 529,
-        "settled": 520,
-        "pending": 9,
+        "recorded": 536,
+        "settled": 522,
+        "pending": 14,
         "void": 0,
         "result": {
-          "N": 520,
-          "W": 205,
+          "N": 522,
+          "W": 206,
           "L": 266,
-          "P": 49,
-          "profit": -61.2,
-          "ROI": -11.77
+          "P": 50,
+          "profit": -60.2,
+          "ROI": -11.53
         }
       },
       "review_ready": false
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 580,
-        "settled": 571,
-        "pending": 9,
+        "recorded": 589,
+        "settled": 573,
+        "pending": 16,
         "void": 0,
         "result": {
-          "N": 571,
+          "N": 573,
           "W": 292,
-          "L": 232,
-          "P": 47,
-          "profit": 25.745,
-          "ROI": 4.51
+          "L": 233,
+          "P": 48,
+          "profit": 24.745,
+          "ROI": 4.32
         }
       },
       "review_ready": false
