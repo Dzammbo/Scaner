@@ -1,20 +1,20 @@
 {
-  "generated_at_utc": "2026-10-05T08:10:53Z",
+  "generated_at_utc": "2026-10-05T10:10:49Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-05T08:10:53Z",
+    "updated_at": "2026-10-05T10:10:49Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
-    "provider_queries": 1,
-    "queried_events": 2,
-    "cache_events": 1709,
-    "signal_unique_events": 1629,
+    "provider_queries": 2,
+    "queried_events": 12,
+    "cache_events": 1711,
+    "signal_unique_events": 1631,
     "signal_final_events": 1622,
     "signal_void_events": 5,
-    "signal_pending_events": 2,
+    "signal_pending_events": 4,
     "states": {
       "FINAL": 1686,
-      "NOT_FINAL_1": 1,
+      "NOT_FINAL_1": 3,
       "NOT_FINAL_2": 9,
       "NOT_FINAL_4": 1,
       "VOID_CANCELLED": 1,
@@ -28,8 +28,8 @@
       "events": 1330
     },
     "stateful": {
-      "rows": 2148,
-      "events": 853
+      "rows": 2150,
+      "events": 855
     },
     "ht_one_goal": {
       "rows": 0,
@@ -415,8 +415,8 @@
         }
       },
       "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
-        "signals": 34,
-        "pending": 0,
+        "signals": 36,
+        "pending": 2,
         "void": 0,
         "direct": {
           "N": 34,
