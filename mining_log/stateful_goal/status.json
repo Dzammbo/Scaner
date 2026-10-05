@@ -1,70 +1,64 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-05T12:18:51Z",
+  "updated_at": "2026-10-05T12:42:58Z",
   "api_calls": 5,
-  "board_n": 10,
-  "observations": 2895,
-  "signals": 377,
+  "board_n": 14,
+  "observations": 2901,
+  "signals": 382,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
       "id": "S33",
       "signals": 6,
       "pending": 0,
+      "void": 0,
       "N": 6,
       "W": 3,
       "L": 3,
       "PUSH": 0,
       "profit": 0.025,
       "ROI": 0.004167,
-      "void": 0,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
       "signals": 6,
       "pending": 0,
+      "void": 0,
       "N": 6,
       "W": 2,
       "L": 4,
       "PUSH": 0,
       "profit": -2.15,
       "ROI": -0.358333,
-      "void": 0,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
-      "signals": 38,
-      "pending": 2,
+      "signals": 39,
+      "pending": 3,
+      "void": 0,
       "N": 36,
       "W": 18,
       "L": 15,
       "PUSH": 3,
       "profit": -0.1625,
       "ROI": -0.004514,
-      "void": 0,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
-      "signals": 327,
-      "pending": 0,
+      "signals": 331,
+      "pending": 4,
+      "void": 0,
       "N": 327,
       "W": 111,
       "L": 216,
       "PUSH": 0,
       "profit": -27.7,
       "ROI": -0.084709,
-      "void": 0,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-05T12:31:14Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
