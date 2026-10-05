@@ -98,22 +98,21 @@ class SignalIntegrityTest(unittest.TestCase):
         finally:
             scanner.time.time = original_time
 
-    def test_verified_over_epoch_uses_over_price_and_under_trigger(self):
+    def test_forward_over_epoch_uses_single_available_quote_and_under_trigger(self):
         original_time = scanner.time.time
         scanner.time.time = lambda: 1_000
         try:
             event = {"score": "1-1", "minute": 80}
             detail = {"odds": {"1_3": [
-                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "995", "time_str": "80"},
-                {"ss": "1-1", "handicap": "2.5", "over_od": "2.15", "under_od": "1.72", "add_time": "985", "time_str": "80"},
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "600", "time_str": "80"},
                 {"ss": "0-1", "handicap": "1.5", "over_od": "2.10", "under_od": "1.75", "add_time": "975", "time_str": "75"},
             ]}}
             strategy = {
-                "id": "S35", "name_ru": "Проверенная эпоха", "tier": "WATCHLIST", "sport": "football",
+                "id": "S35", "name_ru": "Новая эпоха", "tier": "WATCHLIST", "sport": "football",
                 "rule": {
                     "minutes_since_goal_max": 5, "market": "next_goal_over",
-                    "trigger_under_odds": [1.50, 1.79], "verified_price_required": True,
-                    "one_entry_per_match": True, "entry_epoch": "S35_VERIFIED_V1",
+                    "trigger_under_odds": [1.50, 1.79], "observed_price_required": True,
+                    "one_entry_per_match": True, "entry_epoch": "S35_FORWARD_V2",
                 },
             }
             hit = scanner.football_evaluate(event, strategy, detail)
@@ -122,7 +121,9 @@ class SignalIntegrityTest(unittest.TestCase):
             self.assertEqual(hit["current_odds"], 2.20)
             self.assertEqual(hit["reverse_odds"], 1.70)
             self.assertTrue(hit["price_verified"])
-            self.assertEqual(hit["entry_epoch"], "S35_VERIFIED_V1")
+            self.assertEqual(hit["quote_age_seconds"], 400)
+            self.assertEqual(hit["verification_method"], "single_provider_quote")
+            self.assertEqual(hit["entry_epoch"], "S35_FORWARD_V2")
         finally:
             scanner.time.time = original_time
 

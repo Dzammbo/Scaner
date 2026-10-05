@@ -573,6 +573,7 @@ def total_features(ev, detail):
         "plus_one_handicap": None,
         "last_goal_minute": None,
         "drought_min": None,
+        "next_goal_price_observed": False,
         "next_goal_price_verified": False,
         "next_goal_quote_at": None,
         "next_goal_quote_age_seconds": None,
@@ -607,9 +608,17 @@ def total_features(ev, detail):
             if abs(handicap - (goals + 1.0)) < 0.01 and best10 is None:
                 best10 = row
         if best05:
+            quote_at = as_int(best05.get("add_time"))
+            quote_age = int(time.time()) - quote_at if quote_at is not None else None
             out["next_goal_over_odds"] = as_float(best05.get("over_od"))
             out["next_goal_under_odds"] = as_float(best05.get("under_od"))
             out["next_goal_handicap"] = handicap_value(best05.get("handicap"))
+            out["next_goal_price_observed"] = valid_two_way_total_quote(best05)
+            out["next_goal_quote_at"] = quote_at
+            out["next_goal_quote_age_seconds"] = quote_age
+            out["next_goal_quote_score"] = str(best05.get("ss") or cur_score).replace(":", "-")
+            out["next_goal_verification_method"] = "single_provider_quote"
+            out["next_goal_confirmed_quote"] = dict(best05)
         if best10:
             out["plus_one_over_odds"] = as_float(best10.get("over_od"))
             out["plus_one_under_odds"] = as_float(best10.get("under_od"))
@@ -748,6 +757,8 @@ def football_evaluate(ev, st, detail):
         return None
     if "trigger_under_odds" in r and not in_range(tf["next_goal_under_odds"], r["trigger_under_odds"]):
         return None
+    if r.get("observed_price_required") and not tf["next_goal_price_observed"]:
+        return None
     if r.get("verified_price_required") and not tf["next_goal_price_verified"]:
         return None
     if "odds_min" in r and (current_odds is None or current_odds < r["odds_min"]):
@@ -756,7 +767,9 @@ def football_evaluate(ev, st, detail):
     if market in ("next_goal_over", "next_goal_under", "main_over", "main_under", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
         return None
 
+    price_observed = bool(r.get("observed_price_required") and tf["next_goal_price_observed"])
     verified = bool(r.get("verified_price_required") and tf["next_goal_price_verified"])
+    price_quality = "observed" if price_observed else ("verified" if verified else None)
     return {
         "strategy_id": st["id"],
         "strategy": st["name_ru"],
@@ -769,11 +782,11 @@ def football_evaluate(ev, st, detail):
         "reverse_bet": reverse_bet,
         "reverse_odds": reverse_odds,
         "entry_epoch": r.get("entry_epoch"),
-        "price_verified": verified,
-        "quote_at": tf["next_goal_quote_at"] if verified else None,
-        "quote_age_seconds": tf["next_goal_quote_age_seconds"] if verified else None,
-        "quote_score": tf["next_goal_quote_score"] if verified else None,
-        "verification_method": tf["next_goal_verification_method"] if verified else None,
+        "price_verified": bool(price_observed or verified),
+        "quote_at": tf["next_goal_quote_at"] if (price_observed or verified) else None,
+        "quote_age_seconds": tf["next_goal_quote_age_seconds"] if (price_observed or verified) else None,
+        "quote_score": tf["next_goal_quote_score"] if (price_observed or verified) else None,
+        "verification_method": tf["next_goal_verification_method"] if (price_observed or verified) else None,
         "features": {
             "drought_min": tf["drought_min"],
             "last_goal_minute": tf["last_goal_minute"],
@@ -781,14 +794,14 @@ def football_evaluate(ev, st, detail):
             "selected_total": bet_line,
             "main_ah_line": bet_line if market == "main_ah_away" else None,
             "entry_epoch": r.get("entry_epoch"),
-            "price_verified": verified,
-            "quote_at": tf["next_goal_quote_at"] if verified else None,
-            "quote_age_seconds": tf["next_goal_quote_age_seconds"] if verified else None,
-            "quote_score": tf["next_goal_quote_score"] if verified else None,
+            "price_verified": bool(price_observed or verified),
+            "quote_at": tf["next_goal_quote_at"] if (price_observed or verified) else None,
+            "quote_age_seconds": tf["next_goal_quote_age_seconds"] if (price_observed or verified) else None,
+            "quote_score": tf["next_goal_quote_score"] if (price_observed or verified) else None,
             "quote_confirmation_gap_seconds": tf["next_goal_confirmation_gap_seconds"] if verified else None,
-            "verification_method": tf["next_goal_verification_method"] if verified else None,
+            "verification_method": tf["next_goal_verification_method"] if (price_observed or verified) else None,
             "initial_provider_quote": tf["next_goal_initial_quote"] if verified else None,
-            "confirmed_provider_quote": tf["next_goal_confirmed_quote"] if verified else None,
+            "confirmed_provider_quote": tf["next_goal_confirmed_quote"] if (price_observed or verified) else None,
         },
     }
 
