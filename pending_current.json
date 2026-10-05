@@ -1716,7 +1716,8 @@
     },
     "strategy_id": "S20",
     "strategy_ids": [
-      "S20"
+      "S20",
+      "S26"
     ],
     "strategy_names": [
       "Рыночный основной тотал больше при счёте 1:1"
@@ -1740,6 +1741,16 @@
           "selected_total": 2.5,
           "main_ah_line": null
         }
+      },
+      "S26": {
+        "timestamp": "2026-10-05T03:01:12Z",
+        "period": "FT",
+        "minute": 87,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 2.5",
+        "current_odds": 3.45,
+        "reverse_bet": "ТМ 2.5",
+        "reverse_odds": 1.3
       }
     },
     "tier": "SECONDARY",
@@ -1889,6 +1900,254 @@
         "reverse_odds": 1.325
       }
     },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T02:59:23.882702+00:00",
+    "sport": "football",
+    "tournament": "Colombia Primera A",
+    "event_id": "12099976",
+    "match": "Llaneros - America de Cali",
+    "minute_score": "85' / '1-1",
+    "minute": 85,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 2.5",
+    "current_odds": 1.35,
+    "reverse_bet": "ТБ 2.5",
+    "reverse_odds": 3.1,
+    "market": "next_goal_under",
+    "bet_line": 2.5,
+    "features": {
+      "drought_min": 13,
+      "last_goal_minute": 72,
+      "main_total": 2.5,
+      "selected_total": 2.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T02:59:23.882702+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 2.5",
+        "current_odds": 1.35,
+        "reverse_bet": "ТБ 2.5",
+        "reverse_odds": 3.1,
+        "market": "next_goal_under",
+        "bet_line": 2.5,
+        "features": {
+          "drought_min": 13,
+          "last_goal_minute": 72,
+          "main_total": 2.5,
+          "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T03:13:53.111690+00:00",
+    "sport": "football",
+    "tournament": "CONCACAF Nations League",
+    "event_id": "12315929",
+    "match": "Nicaragua - Dominican Republic",
+    "minute_score": "58' / '1-1",
+    "minute": 58,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 2.75",
+    "current_odds": 1.75,
+    "reverse_bet": "ТМ 2.75",
+    "reverse_odds": 2.05,
+    "market": "main_over",
+    "bet_line": 2.75,
+    "features": {
+      "drought_min": 1,
+      "last_goal_minute": 57,
+      "main_total": 2.75,
+      "selected_total": 2.75,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-05T03:13:53.111690+00:00",
+        "period": "FT",
+        "minute": 58,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 2.75",
+        "current_odds": 1.75,
+        "reverse_bet": "ТМ 2.75",
+        "reverse_odds": 2.05,
+        "market": "main_over",
+        "bet_line": 2.75,
+        "features": {
+          "drought_min": 1,
+          "last_goal_minute": 57,
+          "main_total": 2.75,
+          "selected_total": 2.75,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T03:28:53.494576+00:00",
+    "sport": "tennis",
+    "tournament": "Challenger Wuning",
+    "event_id": "13242344",
+    "match": "Keisuke Saitoh - Yusuke Takahashi",
+    "minute_score": "4-6,6-3,0-0",
+    "minute": null,
+    "score": "4-6,6-3,0-0",
+    "period": "FT",
+    "exact_bet_line": "Keisuke Saitoh",
+    "current_odds": 1.533,
+    "reverse_bet": "Yusuke Takahashi",
+    "reverse_odds": 2.375,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "4-6,6-3,0-0,0-0",
+      "previous_set": "6-3"
+    },
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "Победитель предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-05T03:28:53.494576+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "4-6,6-3,0-0",
+        "exact_bet_line": "Keisuke Saitoh",
+        "current_odds": 1.533,
+        "reverse_bet": "Yusuke Takahashi",
+        "reverse_odds": 2.375,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "4-6,6-3,0-0,0-0",
+          "previous_set": "6-3"
+        }
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T03:31:36Z",
+    "sport": "football",
+    "tournament": "CONCACAF Nations League",
+    "event_id": "12315929",
+    "match": "Nicaragua - Dominican Republic",
+    "minute_score": "76' / '1-2'",
+    "minute": 76,
+    "score": "1-2",
+    "exact_bet_line": "ТБ 3.5",
+    "current_odds": 2.05,
+    "reverse_bet": "ТМ 3.5",
+    "reverse_odds": 1.75,
+    "strategy_id": "S26",
+    "strategy_ids": [
+      "S26"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 матча"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 41.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S26": {
+        "timestamp": "2026-10-05T03:31:36Z",
+        "period": "FT",
+        "minute": 76,
+        "score": "1-2",
+        "exact_bet_line": "ТБ 3.5",
+        "current_odds": 2.05,
+        "reverse_bet": "ТМ 3.5",
+        "reverse_odds": 1.75
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T03:40:39.584644+00:00",
+    "sport": "football",
+    "tournament": "CONCACAF Nations League",
+    "event_id": "12315929",
+    "match": "Nicaragua - Dominican Republic",
+    "minute_score": "85' / '1-2",
+    "minute": 85,
+    "score": "1-2",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.5",
+    "current_odds": 1.4,
+    "reverse_bet": "ТБ 3.5",
+    "reverse_odds": 2.85,
+    "market": "next_goal_under",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 20,
+      "last_goal_minute": 65,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T03:40:39.584644+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-2",
+        "exact_bet_line": "ТМ 3.5",
+        "current_odds": 1.4,
+        "reverse_bet": "ТБ 3.5",
+        "reverse_odds": 2.85,
+        "market": "next_goal_under",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 20,
+          "last_goal_minute": 65,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
     "settlement_reason": "INPLAY"
   }
 ]
