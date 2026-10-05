@@ -1,20 +1,20 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-05T19:28:53Z",
-  "signals": 585,
+  "updated_at": "2026-10-05T19:39:02Z",
+  "signals": 588,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-05T19:23:44Z",
+      "timestamp": "2026-10-05T19:33:56Z",
       "sport": "football",
-      "tournament": "Brazil Campeonato Carioca B2",
-      "event_id": "12318245",
-      "match": "Serra Macaense - Santa Cruz RJ",
+      "tournament": "UEFA Nations League B",
+      "event_id": "11437466",
+      "match": "Ukraine - Hungary",
       "minute_score": "45' / '0-0'",
       "minute": 45,
       "score": "0-0",
-      "exact_bet_line": "ТМ 1.5",
+      "exact_bet_line": "ТМ 1.25",
       "current_odds": 1.75,
-      "reverse_bet": "ТБ 1.5",
+      "reverse_bet": "ТБ 1.25",
       "reverse_odds": 2.05,
       "strategy_id": "S31",
       "strategy_ids": [
@@ -24,73 +24,48 @@
         "ТМ матча в перерыве при низкой активности"
       ],
       "tier": "WATCHLIST",
-      "pressure10": 30.0,
+      "pressure10": 10.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     },
     {
-      "timestamp": "2026-10-05T19:23:44Z",
+      "timestamp": "2026-10-05T19:33:56Z",
+      "sport": "football",
+      "tournament": "UEFA Nations League B",
+      "event_id": "11437484",
+      "match": "Romania - Sweden",
+      "minute_score": "45' / '0-1'",
+      "minute": 45,
+      "score": "0-1",
+      "exact_bet_line": "ТМ 2.5",
+      "current_odds": 1.825,
+      "reverse_bet": "ТБ 2.5",
+      "reverse_odds": 1.975,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 34.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-05T19:38:58Z",
       "sport": "football",
       "tournament": "Brazil Campeonato Carioca B2",
       "event_id": "12354980",
       "match": "Barra Mansa - Cardoso Moreira",
-      "minute_score": "65' / '0-0'",
-      "minute": 65,
+      "minute_score": "80' / '0-0'",
+      "minute": 80,
       "score": "0-0",
-      "exact_bet_line": "ТМ 0.5",
-      "current_odds": 2.025,
-      "reverse_bet": "ТБ 0.5",
-      "reverse_odds": 1.775,
-      "strategy_id": "S33",
-      "strategy_ids": [
-        "S33"
-      ],
-      "strategy_names": [
-        "Без гола после 60-й при 0:0 и низкой активности"
-      ],
-      "tier": "WATCHLIST",
-      "pressure10": 12.0,
-      "period": "FT",
-      "source": "stateful_goal_mining"
-    },
-    {
-      "timestamp": "2026-10-05T19:28:52Z",
-      "sport": "football",
-      "tournament": "Argentina Primera C Metropolitana",
-      "event_id": "13232651",
-      "match": "Lujan - General Lamadrid",
-      "minute_score": "65' / '0-0'",
-      "minute": 65,
-      "score": "0-0",
-      "exact_bet_line": "ТМ 0.5",
-      "current_odds": 1.875,
-      "reverse_bet": "ТБ 0.5",
-      "reverse_odds": 1.925,
-      "strategy_id": "S33",
-      "strategy_ids": [
-        "S33"
-      ],
-      "strategy_names": [
-        "Без гола после 60-й при 0:0 и низкой активности"
-      ],
-      "tier": "WATCHLIST",
-      "pressure10": 17.0,
-      "period": "FT",
-      "source": "stateful_goal_mining"
-    },
-    {
-      "timestamp": "2026-10-05T19:28:52Z",
-      "sport": "football",
-      "tournament": "Brazil Campeonato Carioca B2",
-      "event_id": "12318230",
-      "match": "Paraty - FC Rio de Janeiro",
-      "minute_score": "72' / '0-4'",
-      "minute": 72,
-      "score": "0-4",
-      "exact_bet_line": "ТБ 4.5",
-      "current_odds": 1.55,
-      "reverse_bet": "ТМ 4.5",
-      "reverse_odds": 2.375,
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 2.6,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.475,
       "strategy_id": "S26",
       "strategy_ids": [
         "S26"
@@ -99,7 +74,7 @@
         "High Pressure ТБ 0.5 матча"
       ],
       "tier": "ACTIVE",
-      "pressure10": 46.0,
+      "pressure10": 42.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
