@@ -1,20 +1,20 @@
 {
-  "generated_at_utc": "2026-10-05T10:10:49Z",
+  "generated_at_utc": "2026-10-05T12:11:23Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-05T10:10:49Z",
+    "updated_at": "2026-10-05T12:11:23Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
     "provider_queries": 2,
-    "queried_events": 12,
-    "cache_events": 1711,
-    "signal_unique_events": 1631,
-    "signal_final_events": 1622,
+    "queried_events": 16,
+    "cache_events": 1714,
+    "signal_unique_events": 1634,
+    "signal_final_events": 1626,
     "signal_void_events": 5,
-    "signal_pending_events": 4,
+    "signal_pending_events": 3,
     "states": {
-      "FINAL": 1686,
-      "NOT_FINAL_1": 3,
+      "FINAL": 1690,
+      "NOT_FINAL_1": 2,
       "NOT_FINAL_2": 9,
       "NOT_FINAL_4": 1,
       "VOID_CANCELLED": 1,
@@ -28,8 +28,8 @@
       "events": 1330
     },
     "stateful": {
-      "rows": 2150,
-      "events": 855
+      "rows": 2156,
+      "events": 858
     },
     "ht_one_goal": {
       "rows": 0,
@@ -267,23 +267,23 @@
       },
       "S25": {
         "signals": 246,
-        "pending": 2,
+        "pending": 1,
         "void": 0,
         "direct": {
-          "N": 244,
+          "N": 245,
           "W": 112,
-          "L": 102,
+          "L": 103,
           "PUSH": 30,
-          "profit": -4.125,
-          "ROI_pct": -1.69
+          "profit": -5.125,
+          "ROI_pct": -2.09
         },
         "opposite": {
-          "N": 244,
-          "W": 102,
+          "N": 245,
+          "W": 103,
           "L": 112,
           "PUSH": 30,
-          "profit": -15.4575,
-          "ROI_pct": -6.34
+          "profit": -14.5825,
+          "ROI_pct": -5.95
         }
       },
       "T13": {
@@ -373,24 +373,24 @@
     },
     "stateful": {
       "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
-        "signals": 5,
+        "signals": 6,
         "pending": 0,
         "void": 0,
         "direct": {
-          "N": 5,
-          "W": 2,
+          "N": 6,
+          "W": 3,
           "L": 3,
           "PUSH": 0,
-          "profit": -0.925,
-          "ROI_pct": -18.5
+          "profit": 0.025,
+          "ROI_pct": 0.42
         },
         "opposite": {
-          "N": 5,
+          "N": 6,
           "W": 3,
-          "L": 2,
+          "L": 3,
           "PUSH": 0,
-          "profit": 0.625,
-          "ROI_pct": 12.5
+          "profit": -0.375,
+          "ROI_pct": -6.25
         }
       },
       "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
@@ -415,24 +415,24 @@
         }
       },
       "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
-        "signals": 36,
+        "signals": 38,
         "pending": 2,
         "void": 0,
         "direct": {
-          "N": 34,
-          "W": 16,
+          "N": 36,
+          "W": 18,
           "L": 15,
           "PUSH": 3,
-          "profit": -1.45,
-          "ROI_pct": -4.26
+          "profit": -0.1625,
+          "ROI_pct": -0.45
         },
         "opposite": {
-          "N": 34,
+          "N": 36,
           "W": 15,
-          "L": 16,
+          "L": 18,
           "PUSH": 3,
-          "profit": -1.075,
-          "ROI_pct": -3.16
+          "profit": -2.575,
+          "ROI_pct": -7.15
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FH": {
@@ -457,24 +457,24 @@
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
-        "signals": 323,
+        "signals": 326,
         "pending": 0,
         "void": 0,
         "direct": {
-          "N": 323,
-          "W": 110,
-          "L": 213,
+          "N": 326,
+          "W": 111,
+          "L": 215,
           "PUSH": 0,
-          "profit": -26.3,
-          "ROI_pct": -8.14
+          "profit": -26.7,
+          "ROI_pct": -8.19
         },
         "opposite": {
-          "N": 323,
-          "W": 213,
-          "L": 110,
+          "N": 326,
+          "W": 215,
+          "L": 111,
           "PUSH": 0,
-          "profit": -20.715,
-          "ROI_pct": -6.41
+          "profit": -20.315,
+          "ROI_pct": -6.23
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:LOW_PRESSURE_O05_FH": {
