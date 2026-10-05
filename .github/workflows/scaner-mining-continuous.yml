@@ -2,6 +2,13 @@ name: Public Mining continuous worker
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scaner_mining_worker.py"
+      - "scanner.py"
+      - "stateful_goal_mining.py"
+      - ".github/workflows/scaner-mining-continuous.yml"
 
 permissions:
   contents: write
@@ -9,7 +16,7 @@ permissions:
 
 concurrency:
   group: scaner-mining-continuous
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   collect:
