@@ -175,6 +175,10 @@ def metrics(rows):
  rr=[x for x in rows if x.get("outcome") not in (None,"VOID")];profit=sum(float(x.get("profit") or 0) for x in rr)
  return {"N":len(rr),"W":sum(x["outcome"] in ("WIN","HALF_WIN") for x in rr),"L":sum(x["outcome"] in ("LOSS","HALF_LOSS") for x in rr),"PUSH":sum(x["outcome"]=="PUSH" for x in rr),"profit":round(profit,6),"ROI":None if not rr else round(profit/len(rr),6)}
 
+def status_metrics(rows):
+ summary=metrics(rows);pending=sum(x.get("outcome") is None for x in rows);void=sum(x.get("outcome")=="VOID" for x in rows)
+ return {"signals":len(rows),"pending":pending,"void":void,**summary,"balance_valid":len(rows)==summary["N"]+pending+void}
+
 def signal_id(row):return ACTIVE_SIGNAL_IDS.get((row.get("strategy"),row.get("arm")))
 def is_active_signal(row):return signal_id(row) is not None
 
@@ -230,7 +234,7 @@ def main():
  sync_scanner_signals(active_signals)
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
- status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),"signals":len(v),"pending":sum(x.get("outcome") is None for x in v),**metrics(v)} for k,v in sorted(arms.items())}}
+ status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),**status_metrics(v)} for k,v in sorted(arms.items())}}
  STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  with RUNS.open("a",encoding="utf-8") as f:f.write(json.dumps({"timestamp":iso(),"collector":"stateful_goal_mining","api_calls":calls,"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals)},separators=(",",":"))+"\n")
  print(json.dumps(status,ensure_ascii=False))
