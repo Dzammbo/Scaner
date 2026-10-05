@@ -8,7 +8,7 @@ from pathlib import Path
 BASE="https://api.b365api.com"; TOKEN=os.environ["BETSAPI_KEY"]
 MAX_QUERIES=max(1,int(os.environ.get("MINING_SETTLEMENT_QUERY_BUDGET","80")))
 RETRY=max(1800,int(os.environ.get("MINING_SETTLEMENT_RETRY_SECONDS","7200")))
-ROOT=Path("mining_log"); CACHE_DIR=ROOT/"pending_refresh"; CACHE=CACHE_DIR/"results.jsonl"; STATUS=CACHE_DIR/"status.json"; STATS=ROOT/"settlement_statistics.json"
+ROOT=Path("mining_log"); CACHE_DIR=ROOT/"pending_refresh"; CACHE=CACHE_DIR/"results.jsonl"; STATUS=CACHE_DIR/"status.json"; STATS=ROOT/"settlement_statistics.json"; STATEFUL_STATUS=ROOT/"stateful_goal/status.json"
 LOGS={"native":ROOT/"mining_signals.jsonl","stateful":ROOT/"stateful_goal/signals.jsonl","ht_one_goal":ROOT/"ht_one_goal/signals.jsonl","prematch":ROOT/"prematch_line_movement/signals.jsonl"}
 OLD_PENDING=["13194834","13155197","13194371","12141925","12336906","13198303","12331123","12387682","13083963","12399727","12147833","13194008","13083934","13210514","13209756","13195059","13201569","13173832","13193574","13194835","13194642","13033425","10551528","13210520","13083891","13185220","13184884","13187809","13179518","13172116","13179560","13189553","13183758","13189163","13194492","13197150","13197903","13190089","13197489","13197124","13197149","13196722","13197122","13197904","13197134","13197137","13198583","13200172","13201566","13201644","13205222","13210681","13203024","13207628","13207397","13208256","13208349","13203026","13210665","13213553","13213565","13212191","13202348","13215131","13171943","13187807","13184885","13184887","13183942","13199556","13196865","13197121","13198565","13197792","13202488","13206143","13208348","13213489","13208954","13207009"]
 
@@ -173,6 +173,34 @@ def grouped(journals,cache):
    stats[key]=entry
   out[name]=stats
  return out
+def reconcile_stateful_rows(rows,cache,settled_at=None):
+ changed=0;stamp=int(settled_at or time.time())
+ for row in rows:
+  event=cache.get(str(row.get("event_id")))
+  if not event:continue
+  state=str(event.get("state") or "")
+  if state.startswith("VOID_"):
+   expected={"outcome":"VOID","profit":0,"settled_at":stamp,"settlement_source":"betsapi_cache"}
+  elif state=="FINAL":
+   result=stateful(row,event,False)
+   if not result:continue
+   expected={"outcome":result[0],"profit":round(float(result[1]),6),"settled_at":stamp,"settlement_source":"betsapi_cache","final_period_goals":period_goals(event,str(row.get("period") or "FT"))}
+  else:continue
+  if any(row.get(key)!=value for key,value in expected.items()):
+   row.update(expected);changed+=1
+ return changed
+def sync_stateful_status(statistics,rows,path=STATEFUL_STATUS):
+ if not path.exists():return False
+ status=json.loads(path.read_text(encoding="utf-8"));groups=statistics.get("strategies",{}).get("stateful",{});changed=False
+ for key,target in (status.get("arms") or {}).items():
+  source=groups.get(key)
+  if not source:continue
+  direct=source["direct"];n=int(direct["N"]);profit=float(direct["profit"]);signals=int(source["signals"]);pending=int(source["pending"]);void=int(source.get("void") or 0)
+  values={"signals":signals,"pending":pending,"void":void,"N":n,"W":int(direct["W"]),"L":int(direct["L"]),"PUSH":int(direct["PUSH"]),"profit":profit,"ROI":None if not n else round(profit/n,6),"balance_valid":signals==n+pending+void,"settlement_source":"betsapi_cache"}
+  if any(target.get(k)!=v for k,v in values.items()):target.update(values);changed=True
+ generated=statistics.get("generated_at_utc");changed=changed or status.get("settlement_updated_at")!=generated or status.get("settlement_source")!="betsapi_cache";status["settlement_updated_at"]=generated;status["settlement_source"]="betsapi_cache"
+ if changed:path.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ return changed
 def main():
  started=int(time.time());CACHE_DIR.mkdir(parents=True,exist_ok=True);journals={n:load(p) for n,p in LOGS.items()};cache={str(x.get("event_id")):x for x in load(CACHE) if x.get("event_id") is not None}
  signal_ids={str(r.get("event_id")) for rr in journals.values() for r in rr if r.get("event_id") is not None};wanted=signal_ids|set(OLD_PENDING);due=[]
@@ -193,8 +221,8 @@ def main():
    queried.add(eid)
    if eid not in found:
     value=cache.get(eid,{"event_id":eid});value.update({"state":"NO_PROVIDER_ROW","checked_at":started,"checked_at_utc":iso(started)});cache[eid]=value
- cache_rows=[cache[k] for k in sorted(cache,key=lambda x:(len(x),x))];save(CACHE,cache_rows);final=sum(cache.get(eid,{}).get("state")=="FINAL" for eid in signal_ids);void=sum(str(cache.get(eid,{}).get("state") or "").startswith("VOID_") for eid in signal_ids);counts=defaultdict(int)
+ cache_rows=[cache[k] for k in sorted(cache,key=lambda x:(len(x),x))];save(CACHE,cache_rows);reconciled_stateful_rows=reconcile_stateful_rows(journals["stateful"],cache,started);save(LOGS["stateful"],journals["stateful"]);final=sum(cache.get(eid,{}).get("state")=="FINAL" for eid in signal_ids);void=sum(str(cache.get(eid,{}).get("state") or "").startswith("VOID_") for eid in signal_ids);counts=defaultdict(int)
  for x in cache_rows:counts[str(x.get("state") or "UNKNOWN")]+=1
- status={"updated_at":iso(),"query_budget":MAX_QUERIES,"retry_after_seconds":RETRY,"provider_queries":queries,"queried_events":len(queried),"cache_events":len(cache_rows),"signal_unique_events":len(signal_ids),"signal_final_events":final,"signal_void_events":void,"signal_pending_events":len(signal_ids)-final-void,"states":dict(sorted(counts.items())),"errors":errors};STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- statistics={"generated_at_utc":iso(),"scope":"GitHub Mining journals joined to persistent BetsAPI results","settlement_status":status,"journals":{n:{"rows":len(rr),"events":len({str(x.get('event_id')) for x in rr})} for n,rr in journals.items()},"strategies":grouped(journals,cache)};STATS.write_text(json.dumps(statistics,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");print(json.dumps(status,ensure_ascii=False))
+ status={"updated_at":iso(),"query_budget":MAX_QUERIES,"retry_after_seconds":RETRY,"provider_queries":queries,"queried_events":len(queried),"cache_events":len(cache_rows),"signal_unique_events":len(signal_ids),"signal_final_events":final,"signal_void_events":void,"signal_pending_events":len(signal_ids)-final-void,"reconciled_stateful_rows":reconciled_stateful_rows,"stateful_duplicate_signals":len(journals["stateful"])-len({(str(x.get("event_id")),str(x.get("strategy")),str(x.get("arm"))) for x in journals["stateful"]}),"states":dict(sorted(counts.items())),"errors":errors};STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ statistics={"generated_at_utc":iso(),"scope":"GitHub Mining journals joined to persistent BetsAPI results","settlement_status":status,"journals":{n:{"rows":len(rr),"events":len({str(x.get('event_id')) for x in rr})} for n,rr in journals.items()},"strategies":grouped(journals,cache)};STATS.write_text(json.dumps(statistics,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");sync_stateful_status(statistics,journals["stateful"]);print(json.dumps(status,ensure_ascii=False))
 if __name__=="__main__":main()

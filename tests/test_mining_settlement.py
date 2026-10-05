@@ -1,5 +1,8 @@
 import os
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 os.environ.setdefault("BETSAPI_KEY", "test-token")
 
@@ -94,6 +97,56 @@ class MiningSettlementIntegrityTest(unittest.TestCase):
         self.assertEqual(report["native"]["S09"]["void"], 1)
         self.assertEqual(report["native"]["S09"]["pending"], 0)
         self.assertEqual(report["native"]["S09"]["direct"]["N"], 0)
+
+
+    def test_external_cache_reconciles_stateful_journal_and_status(self):
+        row = {
+            "event_id": "1",
+            "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
+            "arm": "HIGH_PRESSURE_O05_FT",
+            "period": "FT",
+            "selection": "OVER",
+            "selected_line": 0.5,
+            "selected_odds": 1.8,
+            "reverse_odds": 2.0,
+            "outcome": None,
+        }
+        cache = {"1": {"state": "FINAL", "ss": "1-0", "scores": {"2": {"home": "1", "away": "0"}}}}
+        self.assertEqual(mining.reconcile_stateful_rows([row], cache, 123), 1)
+        self.assertEqual(row["outcome"], "WIN")
+        self.assertEqual(row["profit"], 0.8)
+        statistics = {
+            "generated_at_utc": "2026-10-05T12:00:00Z",
+            "strategies": mining.grouped(
+                {"native": [], "stateful": [row], "ht_one_goal": [], "prematch": []},
+                cache,
+            ),
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "status.json"
+            path.write_text(json.dumps({
+                "arms": {
+                    "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
+                        "id": "S26", "signals": 1, "pending": 1, "N": 0
+                    }
+                }
+            }), encoding="utf-8")
+            self.assertTrue(mining.sync_stateful_status(statistics, [row], path))
+            status = json.loads(path.read_text(encoding="utf-8"))
+        arm = status["arms"]["FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT"]
+        self.assertEqual((arm["signals"], arm["pending"], arm["void"], arm["N"]), (1, 0, 0, 1))
+        self.assertEqual(arm["ROI"], 0.8)
+        self.assertTrue(arm["balance_valid"])
+
+    def test_stateful_status_balance_counts_voids(self):
+        rows = [
+            {"outcome": "WIN", "profit": 0.8},
+            {"outcome": "VOID", "profit": 0},
+            {"outcome": None},
+        ]
+        summary = stateful.status_metrics(rows)
+        self.assertEqual((summary["signals"], summary["N"], summary["pending"], summary["void"]), (3, 1, 1, 1))
+        self.assertTrue(summary["balance_valid"])
 
     def test_retirement_and_walkover_are_provider_voids(self):
         retired = mining.provider_row({"id": "1", "time_status": "9"})

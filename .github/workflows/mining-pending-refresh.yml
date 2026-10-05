@@ -39,12 +39,24 @@ jobs:
           test -s mining_log/pending_refresh/status.json
           test -s mining_log/pending_refresh/results.jsonl
           test -s mining_log/settlement_statistics.json
+          test -s mining_log/stateful_goal/status.json
           python3 - <<'PY'
           import json
           from pathlib import Path
           status=json.loads(Path("mining_log/pending_refresh/status.json").read_text())
+          statistics=json.loads(Path("mining_log/settlement_statistics.json").read_text())
+          operational=json.loads(Path("mining_log/stateful_goal/status.json").read_text())
           assert status["provider_queries"] <= 80
           assert not status["errors"], status["errors"]
+          assert status["stateful_duplicate_signals"] == 0, status
+          for key, arm in operational["arms"].items():
+              source=statistics["strategies"]["stateful"][key]
+              direct=source["direct"]
+              assert arm["signals"] == source["signals"], (key, arm, source)
+              assert arm["pending"] == source["pending"], (key, arm, source)
+              assert arm["void"] == source["void"], (key, arm, source)
+              assert arm["N"] == direct["N"], (key, arm, direct)
+              assert arm["balance_valid"], (key, arm)
           PY
 
       - name: Commit refreshed results
@@ -53,7 +65,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add mining_log/pending_refresh/ mining_log/settlement_statistics.json
+          git add mining_log/pending_refresh/ mining_log/settlement_statistics.json mining_log/stateful_goal/signals.jsonl mining_log/stateful_goal/status.json
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
