@@ -550,8 +550,8 @@
       "id": "S35",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "ТБ после гола при ТМ 1,50-1,79 - проверенная цена",
-      "source": "verified_reverse_epoch_20261005",
+      "name_ru": "ТБ после гола при ТМ 1,50-1,79 - единичная котировка",
+      "source": "forward_reverse_epoch_20261005",
       "rule": {
         "minutes_since_goal_max": 5,
         "market": "next_goal_over",
@@ -559,11 +559,9 @@
           1.5,
           1.79
         ],
-        "verified_price_required": true,
-        "quote_max_age_seconds": 30,
-        "confirmation_min_gap_seconds": 5,
+        "observed_price_required": true,
         "one_entry_per_match": true,
-        "entry_epoch": "S35_VERIFIED_V1"
+        "entry_epoch": "S35_FORWARD_V2"
       },
       "user_output": true,
       "scanner_enabled": false,
@@ -571,7 +569,7 @@
       "research_destination": "mining",
       "status": "FORWARD_HYPOTHESIS",
       "collection_engine": "scanner.py",
-      "clean_epoch_start": "2026-10-05T06:07:20Z"
+      "clean_epoch_start": "2026-10-05T06:29:00Z"
     },
     {
       "id": "S23",
