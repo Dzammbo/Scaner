@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-05T19:01:29.934398Z",
+  "generated_at": "2026-10-05T20:01:42.377159Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,9 +25,9 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 88,
+      "recorded": 90,
       "settled": 88,
-      "pending": 0,
+      "pending": 2,
       "void": 0,
       "result": {
         "N": 88,
@@ -47,17 +47,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 516,
-        "settled": 506,
-        "pending": 10,
+        "recorded": 522,
+        "settled": 509,
+        "pending": 13,
         "void": 0,
         "result": {
-          "N": 506,
-          "W": 198,
-          "L": 261,
+          "N": 509,
+          "W": 200,
+          "L": 262,
           "P": 47,
-          "profit": -62.925,
-          "ROI": -12.44
+          "profit": -62.125,
+          "ROI": -12.21
         }
       },
       "review_ready": false
@@ -67,9 +67,9 @@
       "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 38,
+      "recorded": 39,
       "settled": 38,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "result": {
         "N": 38,
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 566,
-        "settled": 556,
-        "pending": 10,
+        "recorded": 573,
+        "settled": 559,
+        "pending": 14,
         "void": 0,
         "result": {
-          "N": 556,
-          "W": 287,
-          "L": 224,
+          "N": 559,
+          "W": 288,
+          "L": 226,
           "P": 45,
-          "profit": 29.607,
-          "ROI": 5.33
+          "profit": 28.007,
+          "ROI": 5.01
         }
       },
       "review_ready": false
