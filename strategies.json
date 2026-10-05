@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 21,
-    "last_operational_change_at": "2026-10-04T19:48:00Z",
-    "last_operational_change": "Split the mixed Brazil main-total rule into women, youth/reserve and adult-men forward hypotheses; one frozen first entry per match."
+    "operational_scanner_count": 20,
+    "last_operational_change_at": "2026-10-05T12:00:00Z",
+    "last_operational_change": "Archived S08 from Scanner, S25 from Mining, and the second S30 observation pocket; S26 remains active while its settlement discrepancy is reconciled."
   },
   "strategies": [
     {
@@ -258,11 +258,14 @@
         ],
         "market": "over"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true,
-      "research_destination": "scanner",
-      "scanner_activated_at": "2026-10-01"
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "history",
+      "scanner_activated_at": "2026-10-01",
+      "status": "ARCHIVED",
+      "scanner_retired_at": "2026-10-05T12:00:00Z",
+      "scanner_retired_reason": "Исключена по решению пользователя: устойчивая прибыльность на большой выборке не подтверждена. История сохранена."
     },
     {
       "id": "S09",
@@ -707,7 +710,9 @@
       "scanner_core8": true,
       "research_destination": "scanner",
       "collection_engine": "stateful_goal_mining.py",
-      "scanner_activated_at": "2026-10-01"
+      "scanner_activated_at": "2026-10-01",
+      "data_quality_status": "RECONCILIATION_REQUIRED",
+      "data_quality_note": "2026-10-05: settlement report shows 322 settled/0 pending while operational status shows 323 signals, 96 settled/227 pending. Keep collection enabled; reconcile source journals and per-event settlement before updating performance figures."
     },
     {
       "id": "S27",
@@ -880,9 +885,12 @@
       "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "status": "MINING_ONLY",
+      "status": "ARCHIVED",
       "removed_from_scanner_at": "2026-09-27T19:48:49Z",
-      "removal_reason": "После исправления live-AH settlement clean-forward отрицательный; продолжать исследование в Mining."
+      "removal_reason": "После исправления live-AH settlement clean-forward отрицательный; продолжать исследование в Mining.",
+      "research_destination": "history",
+      "archived_at": "2026-10-05T12:00:00Z",
+      "archive_reason": "Исключена из Mining по решению пользователя; дальнейший сбор остановлен, исторические сигналы и расчёты сохранены."
     },
     {
       "id": "S31",
