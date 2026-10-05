@@ -14,7 +14,7 @@ import mining_pending_refresh as refresh
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22,S25")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22")
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
