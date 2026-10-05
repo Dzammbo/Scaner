@@ -2,7 +2,7 @@
   "schema_version": 1,
   "name": "S30_FIXED_TOP6_20261004",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-05T06:20:03.985730Z",
+  "generated_at": "2026-10-05T07:20:07.496086Z",
   "policy": {
     "filters_frozen": true,
     "changes_s30_collection": false,
@@ -11,7 +11,7 @@
     "forward_start_at": "2026-10-04T06:27:49Z",
     "minimum_new_settled_before_review": 300,
     "minimum_observation_days_before_review": 30,
-    "note": "Top-6 выделен после атомарного exploratory-перебора 1530 групп. Общий S30 продолжает собираться без фильтрации. Для каждого кармана отдельно публикуются замороженная исходная выборка, накопительный срез и clean-forward срез после фиксации. Карманы могут пересекаться, поэтому их прибыли нельзя складывать."
+    "note": "Top-6 выделен после атомарного exploratory-перебора 1530 групп. Общий S30 продолжает собираться без фильтрации. Для каждого кармана отдельно публикуются замороженная исходная выборка, накопительный срез и clean-forward срез после фиксации. Карманы могут пересекаться, поэтому их прибыли нельзя складывать. Карман №2 исключён из списка наблюдения 2026-10-05; исторические данные сохранены, общий сбор S30 не меняется."
   },
   "items": [
     {
@@ -90,86 +90,6 @@
           "P": 0,
           "profit": -10.975,
           "ROI": -15.68
-        }
-      },
-      "review_ready": false
-    },
-    {
-      "rank": 2,
-      "id": "S30T02",
-      "name_ru": "ТМ 1,5 при счёте 1:0 после 85-й минуты",
-      "direction": "direct",
-      "filters": {
-        "score": "1-0",
-        "total_line": 1.5
-      },
-      "baseline": {
-        "settled": 95,
-        "wins": 74,
-        "losses": 21,
-        "profit_units": 6.835,
-        "roi_pct": 7.19,
-        "roi_without_top3_pct": 5.55,
-        "roi_without_top5_pct": 4.46
-      },
-      "cumulative": {
-        "recorded": 168,
-        "settled": 168,
-        "pending": 0,
-        "void": 0,
-        "result": {
-          "N": 168,
-          "W": 121,
-          "L": 47,
-          "P": 0,
-          "profit": -1.9,
-          "ROI": -1.13
-        },
-        "without_top3": {
-          "N": 165,
-          "W": 118,
-          "L": 47,
-          "P": 0,
-          "profit": -3.625,
-          "ROI": -2.2
-        },
-        "without_top5": {
-          "N": 163,
-          "W": 116,
-          "L": 47,
-          "P": 0,
-          "profit": -4.725,
-          "ROI": -2.9
-        }
-      },
-      "clean_forward": {
-        "recorded": 77,
-        "settled": 77,
-        "pending": 0,
-        "void": 0,
-        "result": {
-          "N": 77,
-          "W": 50,
-          "L": 27,
-          "P": 0,
-          "profit": -9.01,
-          "ROI": -11.7
-        },
-        "without_top3": {
-          "N": 74,
-          "W": 47,
-          "L": 27,
-          "P": 0,
-          "profit": -10.585,
-          "ROI": -14.3
-        },
-        "without_top5": {
-          "N": 72,
-          "W": 45,
-          "L": 27,
-          "P": 0,
-          "profit": -11.56,
-          "ROI": -16.06
         }
       },
       "review_ready": false
@@ -346,7 +266,7 @@
         "category": "adult_men",
         "home_not_leading": true,
         "odds_min": 2.75,
-        "odds_max_exclusive": 3.0
+        "odds_max_exclusive": 3
       },
       "baseline": {
         "settled": 67,
