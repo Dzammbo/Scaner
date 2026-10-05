@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-05T22:20:58.897517Z",
+  "generated_at": "2026-10-05T23:21:10.393325Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -26,38 +26,38 @@
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
       "recorded": 92,
-      "settled": 90,
-      "pending": 2,
+      "settled": 92,
+      "pending": 0,
       "void": 0,
       "result": {
-        "N": 90,
+        "N": 92,
         "W": 44,
-        "L": 46,
+        "L": 48,
         "P": 0,
-        "profit": -17.225,
-        "ROI": -19.14
+        "profit": -19.225,
+        "ROI": -20.9
       },
       "without_top3": {
-        "N": 87,
+        "N": 89,
         "W": 41,
-        "L": 46,
+        "L": 48,
         "P": 0,
-        "profit": -20.25,
-        "ROI": -23.28
+        "profit": -22.25,
+        "ROI": -25.0
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 539,
-        "settled": 522,
-        "pending": 17,
+        "recorded": 542,
+        "settled": 530,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 522,
-          "W": 206,
-          "L": 266,
+          "N": 530,
+          "W": 207,
+          "L": 273,
           "P": 50,
-          "profit": -60.2,
-          "ROI": -11.53
+          "profit": -66.3,
+          "ROI": -12.51
         }
       },
       "review_ready": false
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 592,
-        "settled": 573,
-        "pending": 19,
+        "recorded": 595,
+        "settled": 583,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 573,
-          "W": 292,
-          "L": 233,
+          "N": 583,
+          "W": 301,
+          "L": 234,
           "P": 48,
-          "profit": 24.745,
-          "ROI": 4.32
+          "profit": 32.17,
+          "ROI": 5.52
         }
       },
       "review_ready": false
