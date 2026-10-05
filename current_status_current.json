@@ -1,12 +1,12 @@
 {
-  "merged": 6530,
+  "merged": 6534,
   "settled": 6362,
   "void": 118,
-  "pending": 50,
-  "pending_live_or_delayed": 50,
+  "pending": 54,
+  "pending_live_or_delayed": 54,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 23,
+    "INPLAY": 27,
     "PENDING_PROVIDER_FIX": 21,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 79
   },
   "settlement_event_reasons": {
-    "INPLAY": 8,
+    "INPLAY": 9,
     "PENDING_PROVIDER_FIX": 14,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 58
   },
   "settlement_cache": {
-    "updated_at": "2026-10-05T22:01:52Z",
+    "updated_at": "2026-10-05T22:20:58Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 3,
-    "queried_events": 27,
-    "signal_unique_events": 3522,
-    "cache_events": 3522,
+    "provider_queries": 1,
+    "queried_events": 1,
+    "signal_unique_events": 3523,
+    "cache_events": 3523,
     "final_events": 3477,
     "void_events": 22,
     "immutable_events": 3499,
-    "retryable_events": 23,
+    "retryable_events": 24,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3477,
-      "INPLAY": 8,
+      "INPLAY": 9,
       "PENDING_PROVIDER_FIX": 14,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -323,8 +323,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1415,
-      "pending": 16,
+      "recorded": 1418,
+      "pending": 19,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -843,8 +843,8 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1579,
-      "pending": 10,
+      "recorded": 1580,
+      "pending": 11,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
