@@ -2428,7 +2428,8 @@
     },
     "strategy_id": "S20",
     "strategy_ids": [
-      "S20"
+      "S20",
+      "S26"
     ],
     "strategy_names": [
       "Рыночный основной тотал больше при счёте 1:1"
@@ -2452,6 +2453,16 @@
           "selected_total": 3.5,
           "main_ah_line": null
         }
+      },
+      "S26": {
+        "timestamp": "2026-10-05T00:42:32Z",
+        "period": "FT",
+        "minute": 84,
+        "score": "1-2",
+        "exact_bet_line": "ТБ 3.5",
+        "current_odds": 2.1,
+        "reverse_bet": "ТМ 3.5",
+        "reverse_odds": 1.7
       }
     },
     "tier": "SECONDARY",
@@ -3060,7 +3071,8 @@
     },
     "strategy_id": "S20",
     "strategy_ids": [
-      "S20"
+      "S20",
+      "S26"
     ],
     "strategy_names": [
       "Рыночный основной тотал больше при счёте 1:1"
@@ -3082,6 +3094,470 @@
           "last_goal_minute": 62,
           "main_total": 2.5,
           "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      },
+      "S26": {
+        "timestamp": "2026-10-05T00:52:42Z",
+        "period": "FT",
+        "minute": 91,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 2.5",
+        "current_odds": 3.55,
+        "reverse_bet": "ТМ 2.5",
+        "reverse_odds": 1.275
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:42:28.303900+00:00",
+    "sport": "football",
+    "tournament": "Barbados Prime Minister Cup",
+    "event_id": "13245919",
+    "match": "Whitehall FA - UWI Blackbirds",
+    "minute_score": "85' / '3-1",
+    "minute": 85,
+    "score": "3-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 4.5",
+    "current_odds": 1.6,
+    "reverse_bet": "ТБ 4.5",
+    "reverse_odds": 2.3,
+    "market": "next_goal_under",
+    "bet_line": 4.5,
+    "features": {
+      "drought_min": 3,
+      "last_goal_minute": 82,
+      "main_total": 4.5,
+      "selected_total": 4.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T00:42:28.303900+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "3-1",
+        "exact_bet_line": "ТМ 4.5",
+        "current_odds": 1.6,
+        "reverse_bet": "ТБ 4.5",
+        "reverse_odds": 2.3,
+        "market": "next_goal_under",
+        "bet_line": 4.5,
+        "features": {
+          "drought_min": 3,
+          "last_goal_minute": 82,
+          "main_total": 4.5,
+          "selected_total": 4.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:42:32Z",
+    "sport": "football",
+    "tournament": "USA NWSL Women",
+    "event_id": "11283920",
+    "match": "Houston Dash (W) - Washington Spirit (W)",
+    "minute_score": "76' / '2-2'",
+    "minute": 76,
+    "score": "2-2",
+    "exact_bet_line": "ТБ 4.5",
+    "current_odds": 1.825,
+    "reverse_bet": "ТМ 4.5",
+    "reverse_odds": 1.975,
+    "strategy_id": "S26",
+    "strategy_ids": [
+      "S26"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 матча"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 28.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S26": {
+        "timestamp": "2026-10-05T00:42:32Z",
+        "period": "FT",
+        "minute": 76,
+        "score": "2-2",
+        "exact_bet_line": "ТБ 4.5",
+        "current_odds": 1.825,
+        "reverse_bet": "ТМ 4.5",
+        "reverse_odds": 1.975
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:43:23.448039+00:00",
+    "sport": "football",
+    "tournament": "CONCACAF Nations League",
+    "event_id": "12315871",
+    "match": "Aruba - Anguilla",
+    "minute_score": "85' / '1-2",
+    "minute": 85,
+    "score": "1-2",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.5",
+    "current_odds": 1.675,
+    "reverse_bet": "ТБ 3.5",
+    "reverse_odds": 2.15,
+    "market": "next_goal_under",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 9,
+      "last_goal_minute": 76,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T00:43:23.448039+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-2",
+        "exact_bet_line": "ТМ 3.5",
+        "current_odds": 1.675,
+        "reverse_bet": "ТБ 3.5",
+        "reverse_odds": 2.15,
+        "market": "next_goal_under",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 9,
+          "last_goal_minute": 76,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:43:41.686213+00:00",
+    "sport": "football",
+    "tournament": "Panama LPF",
+    "event_id": "13228735",
+    "match": "CA Independiente de la Chorrera - CD Arabe Unido",
+    "minute_score": "67' / '1-1",
+    "minute": 67,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 2.5",
+    "current_odds": 1.8,
+    "reverse_bet": "ТМ 2.5",
+    "reverse_odds": 2.0,
+    "market": "main_over",
+    "bet_line": 2.5,
+    "features": {
+      "drought_min": 19,
+      "last_goal_minute": 48,
+      "main_total": 2.5,
+      "selected_total": 2.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-05T00:43:41.686213+00:00",
+        "period": "FT",
+        "minute": 67,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 2.5",
+        "current_odds": 1.8,
+        "reverse_bet": "ТМ 2.5",
+        "reverse_odds": 2.0,
+        "market": "main_over",
+        "bet_line": 2.5,
+        "features": {
+          "drought_min": 19,
+          "last_goal_minute": 48,
+          "main_total": 2.5,
+          "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "SECONDARY",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:44:20.319442+00:00",
+    "sport": "football",
+    "tournament": "Mexico Liga MX Femenil",
+    "event_id": "12321860",
+    "match": "Chivas Guadalajara (W) - Juarez FC (W)",
+    "minute_score": "85' / '1-0",
+    "minute": 85,
+    "score": "1-0",
+    "period": "FT",
+    "exact_bet_line": "ТМ 1.5",
+    "current_odds": 1.375,
+    "reverse_bet": "ТБ 1.5",
+    "reverse_odds": 3.0,
+    "market": "next_goal_under",
+    "bet_line": 1.5,
+    "features": {
+      "drought_min": 20,
+      "last_goal_minute": 65,
+      "main_total": 1.5,
+      "selected_total": 1.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T00:44:20.319442+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-0",
+        "exact_bet_line": "ТМ 1.5",
+        "current_odds": 1.375,
+        "reverse_bet": "ТБ 1.5",
+        "reverse_odds": 3.0,
+        "market": "next_goal_under",
+        "bet_line": 1.5,
+        "features": {
+          "drought_min": 20,
+          "last_goal_minute": 65,
+          "main_total": 1.5,
+          "selected_total": 1.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:46:09.820618+00:00",
+    "sport": "football",
+    "tournament": "El Salvador Apertura",
+    "event_id": "12289821",
+    "match": "Internacional Santa Tecla - Fuerte San Francisco",
+    "minute_score": "85' / '1-1",
+    "minute": 85,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 2.5",
+    "current_odds": 1.475,
+    "reverse_bet": "ТБ 2.5",
+    "reverse_odds": 2.6,
+    "market": "next_goal_under",
+    "bet_line": 2.5,
+    "features": {
+      "drought_min": 23,
+      "last_goal_minute": 62,
+      "main_total": 2.5,
+      "selected_total": 2.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T00:46:09.820618+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 2.5",
+        "current_odds": 1.475,
+        "reverse_bet": "ТБ 2.5",
+        "reverse_odds": 2.6,
+        "market": "next_goal_under",
+        "bet_line": 2.5,
+        "features": {
+          "drought_min": 23,
+          "last_goal_minute": 62,
+          "main_total": 2.5,
+          "selected_total": 2.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:47:32Z",
+    "sport": "football",
+    "tournament": "Barbados Prime Minister Cup",
+    "event_id": "13245919",
+    "match": "Whitehall FA - UWI Blackbirds",
+    "minute_score": "90' / '3-1'",
+    "minute": 90,
+    "score": "3-1",
+    "exact_bet_line": "ТБ 4.5",
+    "current_odds": 4.5,
+    "reverse_bet": "ТМ 4.5",
+    "reverse_odds": 1.19,
+    "strategy_id": "S26",
+    "strategy_ids": [
+      "S26"
+    ],
+    "strategy_names": [
+      "High Pressure ТБ 0.5 матча"
+    ],
+    "tier": "ACTIVE",
+    "pressure10": 28.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S26": {
+        "timestamp": "2026-10-05T00:47:32Z",
+        "period": "FT",
+        "minute": 90,
+        "score": "3-1",
+        "exact_bet_line": "ТБ 4.5",
+        "current_odds": 4.5,
+        "reverse_bet": "ТМ 4.5",
+        "reverse_odds": 1.19
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:50:43.326122+00:00",
+    "sport": "football",
+    "tournament": "USA NWSL Women",
+    "event_id": "11283920",
+    "match": "Houston Dash (W) - Washington Spirit (W)",
+    "minute_score": "85' / '2-3",
+    "minute": 85,
+    "score": "2-3",
+    "period": "FT",
+    "exact_bet_line": "ТМ 5.5",
+    "current_odds": 1.425,
+    "reverse_bet": "ТБ 5.5",
+    "reverse_odds": 2.75,
+    "market": "next_goal_under",
+    "bet_line": 5.5,
+    "features": {
+      "drought_min": 2,
+      "last_goal_minute": 83,
+      "main_total": 5.5,
+      "selected_total": 5.5,
+      "main_ah_line": null
+    },
+    "strategy_id": "S30",
+    "strategy_ids": [
+      "S30"
+    ],
+    "strategy_names": [
+      "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт"
+    ],
+    "strategy_observations": {
+      "S30": {
+        "timestamp": "2026-10-05T00:50:43.326122+00:00",
+        "period": "FT",
+        "minute": 85,
+        "score": "2-3",
+        "exact_bet_line": "ТМ 5.5",
+        "current_odds": 1.425,
+        "reverse_bet": "ТБ 5.5",
+        "reverse_odds": 2.75,
+        "market": "next_goal_under",
+        "bet_line": 5.5,
+        "features": {
+          "drought_min": 2,
+          "last_goal_minute": 83,
+          "main_total": 5.5,
+          "selected_total": 5.5,
+          "main_ah_line": null
+        }
+      }
+    },
+    "tier": "WATCHLIST",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-05T00:53:42.562834+00:00",
+    "sport": "football",
+    "tournament": "Jamaica Premier League",
+    "event_id": "13232962",
+    "match": "Mount Pleasant FA - Cavalier",
+    "minute_score": "23' / '1-1",
+    "minute": 23,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 4.0",
+    "current_odds": 2.0,
+    "reverse_bet": "ТМ 4.0",
+    "reverse_odds": 1.8,
+    "market": "main_over",
+    "bet_line": 4.0,
+    "features": {
+      "drought_min": 5,
+      "last_goal_minute": 18,
+      "main_total": 4.0,
+      "selected_total": 4.0,
+      "main_ah_line": null
+    },
+    "strategy_id": "S20",
+    "strategy_ids": [
+      "S20"
+    ],
+    "strategy_names": [
+      "Рыночный основной тотал больше при счёте 1:1"
+    ],
+    "strategy_observations": {
+      "S20": {
+        "timestamp": "2026-10-05T00:53:42.562834+00:00",
+        "period": "FT",
+        "minute": 23,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 4.0",
+        "current_odds": 2.0,
+        "reverse_bet": "ТМ 4.0",
+        "reverse_odds": 1.8,
+        "market": "main_over",
+        "bet_line": 4.0,
+        "features": {
+          "drought_min": 5,
+          "last_goal_minute": 18,
+          "main_total": 4.0,
+          "selected_total": 4.0,
           "main_ah_line": null
         }
       }

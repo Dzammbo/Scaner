@@ -1,12 +1,12 @@
 {
-  "merged": 6182,
+  "merged": 6191,
   "settled": 6008,
   "void": 105,
-  "pending": 69,
-  "pending_live_or_delayed": 69,
+  "pending": 78,
+  "pending_live_or_delayed": 78,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 32,
+    "INPLAY": 41,
     "PENDING_PROVIDER_FIX": 31,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 69
   },
   "settlement_event_reasons": {
-    "INPLAY": 11,
+    "INPLAY": 12,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 49
   },
   "settlement_cache": {
-    "updated_at": "2026-10-05T00:40:48Z",
+    "updated_at": "2026-10-05T00:59:47Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 4,
-    "queried_events": 34,
-    "signal_unique_events": 3360,
-    "cache_events": 3360,
+    "provider_queries": 1,
+    "queried_events": 1,
+    "signal_unique_events": 3361,
+    "cache_events": 3361,
     "final_events": 3313,
     "void_events": 19,
     "immutable_events": 3332,
-    "retryable_events": 28,
+    "retryable_events": 29,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3313,
-      "INPLAY": 11,
+      "INPLAY": 12,
       "PENDING_PROVIDER_FIX": 16,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -364,8 +364,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1319,
-      "pending": 34,
+      "recorded": 1321,
+      "pending": 36,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -404,8 +404,8 @@
     "S26": {
       "name": "High Pressure ТБ 0.5 матча",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 312,
-      "pending": 2,
+      "recorded": 316,
+      "pending": 6,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -884,8 +884,8 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1467,
-      "pending": 10,
+      "recorded": 1472,
+      "pending": 15,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
