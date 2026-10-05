@@ -63,6 +63,69 @@ class SignalIntegrityTest(unittest.TestCase):
             self.assertEqual(full_time["strategy_observations"]["S20"]["current_odds"], 2.10)
             self.assertEqual(full_time["strategy_observations"]["S20"]["minute"], 86)
 
+    def test_verified_next_goal_quote_requires_two_fresh_exact_score_updates(self):
+        original_time = scanner.time.time
+        scanner.time.time = lambda: 1_000
+        try:
+            event = {"score": "1-1", "minute": 80}
+            detail = {"odds": {"1_3": [
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "995", "time_str": "80"},
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.15", "under_od": "1.72", "add_time": "985", "time_str": "80"},
+            ]}}
+            features = scanner.total_features(event, detail)
+            self.assertTrue(features["next_goal_price_verified"])
+            self.assertEqual(features["next_goal_quote_at"], 995)
+            self.assertEqual(features["next_goal_quote_age_seconds"], 5)
+            self.assertEqual(features["next_goal_confirmation_gap_seconds"], 10)
+            self.assertEqual(features["next_goal_quote_score"], "1-1")
+        finally:
+            scanner.time.time = original_time
+
+    def test_verified_next_goal_quote_rejects_single_or_stale_price(self):
+        original_time = scanner.time.time
+        scanner.time.time = lambda: 1_000
+        try:
+            event = {"score": "1-1", "minute": 80}
+            single = {"odds": {"1_3": [
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "995", "time_str": "80"},
+            ]}}
+            stale = {"odds": {"1_3": [
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "960", "time_str": "80"},
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.15", "under_od": "1.72", "add_time": "950", "time_str": "80"},
+            ]}}
+            self.assertFalse(scanner.total_features(event, single)["next_goal_price_verified"])
+            self.assertFalse(scanner.total_features(event, stale)["next_goal_price_verified"])
+        finally:
+            scanner.time.time = original_time
+
+    def test_verified_over_epoch_uses_over_price_and_under_trigger(self):
+        original_time = scanner.time.time
+        scanner.time.time = lambda: 1_000
+        try:
+            event = {"score": "1-1", "minute": 80}
+            detail = {"odds": {"1_3": [
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70", "add_time": "995", "time_str": "80"},
+                {"ss": "1-1", "handicap": "2.5", "over_od": "2.15", "under_od": "1.72", "add_time": "985", "time_str": "80"},
+                {"ss": "0-1", "handicap": "1.5", "over_od": "2.10", "under_od": "1.75", "add_time": "975", "time_str": "75"},
+            ]}}
+            strategy = {
+                "id": "S35", "name_ru": "Проверенная эпоха", "tier": "WATCHLIST", "sport": "football",
+                "rule": {
+                    "minutes_since_goal_max": 5, "market": "next_goal_over",
+                    "trigger_under_odds": [1.50, 1.79], "verified_price_required": True,
+                    "one_entry_per_match": True, "entry_epoch": "S35_VERIFIED_V1",
+                },
+            }
+            hit = scanner.football_evaluate(event, strategy, detail)
+            self.assertIsNotNone(hit)
+            self.assertEqual(hit["bet"], "ТБ 2.5")
+            self.assertEqual(hit["current_odds"], 2.20)
+            self.assertEqual(hit["reverse_odds"], 1.70)
+            self.assertTrue(hit["price_verified"])
+            self.assertEqual(hit["entry_epoch"], "S35_VERIFIED_V1")
+        finally:
+            scanner.time.time = original_time
+
     def test_current_status_keeps_first_and_full_time_lines_separate(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "signals.jsonl"
