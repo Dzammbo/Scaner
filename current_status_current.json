@@ -1,12 +1,12 @@
 {
-  "merged": 6270,
+  "merged": 6275,
   "settled": 6108,
   "void": 109,
-  "pending": 53,
-  "pending_live_or_delayed": 53,
+  "pending": 58,
+  "pending_live_or_delayed": 58,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 21,
+    "INPLAY": 26,
     "PENDING_PROVIDER_FIX": 26,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 72
   },
   "settlement_event_reasons": {
-    "INPLAY": 14,
+    "INPLAY": 17,
     "PENDING_PROVIDER_FIX": 15,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 52
   },
   "settlement_cache": {
-    "updated_at": "2026-10-05T11:20:22Z",
+    "updated_at": "2026-10-05T11:40:19Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 3,
-    "queried_events": 23,
-    "signal_unique_events": 3403,
-    "cache_events": 3403,
+    "provider_queries": 1,
+    "queried_events": 3,
+    "signal_unique_events": 3406,
+    "cache_events": 3406,
     "final_events": 3353,
     "void_events": 20,
     "immutable_events": 3373,
-    "retryable_events": 30,
+    "retryable_events": 33,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3353,
-      "INPLAY": 14,
+      "INPLAY": 17,
       "PENDING_PROVIDER_FIX": 15,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -283,8 +283,8 @@
     "S10": {
       "name": "Против live-фаворита при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 39,
-      "pending": 7,
+      "recorded": 40,
+      "pending": 8,
       "void": 7,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -323,8 +323,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1342,
-      "pending": 9,
+      "recorded": 1345,
+      "pending": 12,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -443,8 +443,8 @@
     "T18": {
       "name": "Победитель предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 87,
-      "pending": 7,
+      "recorded": 89,
+      "pending": 9,
       "void": 6,
       "excluded_legacy_attributions": 17,
       "original": {
