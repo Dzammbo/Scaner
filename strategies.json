@@ -547,6 +547,33 @@
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
     },
     {
+      "id": "S35",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "ТБ после гола при ТМ 1,50-1,79 - проверенная цена",
+      "source": "verified_reverse_epoch_20261005",
+      "rule": {
+        "minutes_since_goal_max": 5,
+        "market": "next_goal_over",
+        "trigger_under_odds": [
+          1.5,
+          1.79
+        ],
+        "verified_price_required": true,
+        "quote_max_age_seconds": 30,
+        "confirmation_min_gap_seconds": 5,
+        "one_entry_per_match": true,
+        "entry_epoch": "S35_VERIFIED_V1"
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "status": "FORWARD_HYPOTHESIS",
+      "collection_engine": "scanner.py",
+      "clean_epoch_start": "2026-10-05T06:07:20Z"
+    },
+    {
       "id": "S23",
       "tier": "WATCHLIST",
       "sport": "multi",
@@ -870,7 +897,10 @@
         "total_goals_max": 1,
         "shots_on_target_max": 2,
         "market": "main_full_time_under",
-        "odds": [1.7, 2.2],
+        "odds": [
+          1.7,
+          2.2
+        ],
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
@@ -889,7 +919,10 @@
       "name_ru": "Гол до перерыва при высокой активности",
       "source": "forward_hypotheses_20261004",
       "rule": {
-        "minute": [30, 35],
+        "minute": [
+          30,
+          35
+        ],
         "score": "0-0",
         "shots_on_target_min": 4,
         "pressure10_min": 20,
@@ -913,11 +946,17 @@
       "name_ru": "Без гола после 60-й при счёте 0:0 и низкой активности",
       "source": "forward_hypotheses_20261004",
       "rule": {
-        "minute": [60, 69],
+        "minute": [
+          60,
+          69
+        ],
         "score": "0-0",
         "shots_on_target_max": 2,
         "market": "full_time_under_0_5",
-        "odds": [1.5, 2.2],
+        "odds": [
+          1.5,
+          2.2
+        ],
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
@@ -941,7 +980,10 @@
         "shots_on_target_min": 4,
         "pressure10_min": 20,
         "market": "second_half_goal_over_0_5",
-        "odds": [1.4, 2.0],
+        "odds": [
+          1.4,
+          2
+        ],
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
@@ -962,8 +1004,14 @@
       "rule": {
         "competition": "ITF/World Tennis men singles",
         "market": "live_match_total_under",
-        "line": [14.5, 18.5],
-        "odds": [1.65, 2.05],
+        "line": [
+          14.5,
+          18.5
+        ],
+        "odds": [
+          1.65,
+          2.05
+        ],
         "one_entry_per_match": true
       },
       "user_output": true,
@@ -983,8 +1031,14 @@
       "rule": {
         "competition": "ITF/World Tennis women singles",
         "market": "live_match_total_under",
-        "line": [14.5, 18.5],
-        "odds": [1.65, 2.05],
+        "line": [
+          14.5,
+          18.5
+        ],
+        "odds": [
+          1.65,
+          2.05
+        ],
         "one_entry_per_match": true
       },
       "user_output": true,
@@ -1007,7 +1061,12 @@
         "server": "trailing_player",
         "market": "current_set_total_under",
         "line_formula": "games_played+1.5",
-        "allowed_lines": [7.5, 8.5, 9.5, 10.5],
+        "allowed_lines": [
+          7.5,
+          8.5,
+          9.5,
+          10.5
+        ],
         "one_entry_per_match": true
       },
       "user_output": true,
@@ -1030,7 +1089,12 @@
         "server": "leading_player",
         "market": "current_set_total_over",
         "line_formula": "games_played+1.5",
-        "allowed_lines": [7.5, 8.5, 9.5, 10.5],
+        "allowed_lines": [
+          7.5,
+          8.5,
+          9.5,
+          10.5
+        ],
         "one_entry_per_match": true
       },
       "user_output": true,

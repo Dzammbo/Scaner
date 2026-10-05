@@ -63,6 +63,12 @@ def strategy_snapshot(result, ev, hit, exact):
         "market": hit.get("market"),
         "bet_line": hit.get("bet_line"),
         "features": hit.get("features") or {},
+        "entry_epoch": hit.get("entry_epoch"),
+        "price_verified": hit.get("price_verified"),
+        "quote_at": hit.get("quote_at"),
+        "quote_age_seconds": hit.get("quote_age_seconds"),
+        "quote_score": hit.get("quote_score"),
+        "verification_method": hit.get("verification_method"),
     }
 
 def now_iso():
@@ -125,6 +131,12 @@ def append_forward_log(result):
                 "reverse_bet":hit.get("reverse_bet"),"reverse_odds":hit.get("reverse_odds"),
                 "market":hit.get("market"),"bet_line":hit.get("bet_line"),
                 "features":hit.get("features") or {},
+                "entry_epoch":hit.get("entry_epoch"),
+                "price_verified":hit.get("price_verified"),
+                "quote_at":hit.get("quote_at"),
+                "quote_age_seconds":hit.get("quote_age_seconds"),
+                "quote_score":hit.get("quote_score"),
+                "verification_method":hit.get("verification_method"),
                 "strategy_id":sid,"strategy_ids":[sid] if sid else [],
                 "strategy_names":[sname] if sname else [],
                 "strategy_observations":observations,
@@ -524,6 +536,28 @@ def latest_rows(rows):
         reverse=True,
     )
 
+def quote_is_suspended(row):
+    truthy = {"1", "true", "yes", "on", "suspended", "locked", "closed", "inactive"}
+    for key in ("suspended", "is_suspended", "suspend", "locked", "is_locked"):
+        if str(row.get(key) or "").strip().lower() in truthy:
+            return True
+    status = str(row.get("status") or row.get("market_status") or row.get("state") or "").strip().lower()
+    if status in truthy:
+        return True
+    if "active" in row and str(row.get("active")).strip().lower() in {"0", "false", "no", "off"}:
+        return True
+    return False
+
+
+def valid_two_way_total_quote(row):
+    over = as_float(row.get("over_od"))
+    under = as_float(row.get("under_od"))
+    if over is None or under is None or over <= 1 or under <= 1:
+        return False
+    margin = 1 / over + 1 / under - 1
+    return 0 <= margin <= 0.20 and not quote_is_suspended(row)
+
+
 def total_features(ev, detail):
     odds = detail.get("odds") or {}
     rows = latest_rows(odds.get("1_3"))
@@ -539,6 +573,14 @@ def total_features(ev, detail):
         "plus_one_handicap": None,
         "last_goal_minute": None,
         "drought_min": None,
+        "next_goal_price_verified": False,
+        "next_goal_quote_at": None,
+        "next_goal_quote_age_seconds": None,
+        "next_goal_quote_score": None,
+        "next_goal_confirmation_gap_seconds": None,
+        "next_goal_verification_method": None,
+        "next_goal_initial_quote": None,
+        "next_goal_confirmed_quote": None,
     }
     if not rows:
         return out
@@ -547,6 +589,7 @@ def total_features(ev, detail):
     goals = score_total(cur_score)
 
     matching = [r for r in rows if not r.get("ss") or str(r.get("ss")).replace(":", "-") == cur_score]
+    exact_matching = [r for r in rows if r.get("ss") and str(r.get("ss")).replace(":", "-") == cur_score]
     main = matching[0] if matching else rows[0]
     out["main_over_odds"] = as_float(main.get("over_od"))
     out["main_under_odds"] = as_float(main.get("under_od"))
@@ -555,14 +598,14 @@ def total_features(ev, detail):
     if goals is not None:
         best05 = None
         best10 = None
-        for r in matching or rows:
-            h = handicap_value(r.get("handicap"))
-            if h is None:
+        for row in matching or rows:
+            handicap = handicap_value(row.get("handicap"))
+            if handicap is None:
                 continue
-            if abs(h - (goals + 0.5)) < 0.01 and best05 is None:
-                best05 = r
-            if abs(h - (goals + 1.0)) < 0.01 and best10 is None:
-                best10 = r
+            if abs(handicap - (goals + 0.5)) < 0.01 and best05 is None:
+                best05 = row
+            if abs(handicap - (goals + 1.0)) < 0.01 and best10 is None:
+                best10 = row
         if best05:
             out["next_goal_over_odds"] = as_float(best05.get("over_od"))
             out["next_goal_under_odds"] = as_float(best05.get("under_od"))
@@ -572,21 +615,60 @@ def total_features(ev, detail):
             out["plus_one_under_odds"] = as_float(best10.get("under_od"))
             out["plus_one_handicap"] = handicap_value(best10.get("handicap"))
 
+        now = int(time.time())
+        verified_rows = []
+        for row in exact_matching:
+            handicap = handicap_value(row.get("handicap"))
+            quote_at = as_int(row.get("add_time"))
+            if handicap is None or abs(handicap - (goals + 0.5)) >= 0.01 or quote_at is None:
+                continue
+            age = now - quote_at
+            if age < 0 or age > 60 or not valid_two_way_total_quote(row):
+                continue
+            verified_rows.append(row)
+        if verified_rows:
+            confirmed = verified_rows[0]
+            confirmed_at = as_int(confirmed.get("add_time"))
+            initial = next(
+                (
+                    row for row in verified_rows[1:]
+                    if 5 <= confirmed_at - as_int(row.get("add_time")) <= 60
+                ),
+                None,
+            )
+            confirmed_age = now - confirmed_at
+            if initial is not None and confirmed_age <= 30:
+                initial_at = as_int(initial.get("add_time"))
+                out.update({
+                    "next_goal_over_odds": as_float(confirmed.get("over_od")),
+                    "next_goal_under_odds": as_float(confirmed.get("under_od")),
+                    "next_goal_handicap": handicap_value(confirmed.get("handicap")),
+                    "next_goal_price_verified": True,
+                    "next_goal_quote_at": confirmed_at,
+                    "next_goal_quote_age_seconds": confirmed_age,
+                    "next_goal_quote_score": str(confirmed.get("ss")).replace(":", "-"),
+                    "next_goal_confirmation_gap_seconds": confirmed_at - initial_at,
+                    "next_goal_verification_method": "two_fresh_provider_quotes",
+                    "next_goal_initial_quote": dict(initial),
+                    "next_goal_confirmed_quote": dict(confirmed),
+                })
+
     # Estimate the latest score-change minute from provider odds-history rows.
     asc = list(reversed(rows))
     prev = None
     last_change = None
-    for r in asc:
-        rs = str(r.get("ss") or "").replace(":", "-")
-        tm = as_int(r.get("time_str"))
-        if rs and prev and rs != prev and tm is not None:
-            last_change = tm
-        if rs:
-            prev = rs
+    for row in asc:
+        row_score = str(row.get("ss") or "").replace(":", "-")
+        row_minute = as_int(row.get("time_str"))
+        if row_score and prev and row_score != prev and row_minute is not None:
+            last_change = row_minute
+        if row_score:
+            prev = row_score
     out["last_goal_minute"] = last_change
     if ev.get("minute") is not None and last_change is not None:
         out["drought_min"] = max(0, ev["minute"] - last_change)
     return out
+
 
 def football_evaluate(ev, st, detail):
     r = st["rule"]
@@ -630,7 +712,6 @@ def football_evaluate(ev, st, detail):
         bet = f"ТМ {fmt_line(bet_line)}" if bet_line is not None else None
         reverse_bet = f"ТБ {fmt_line(bet_line)}" if bet_line is not None else None
     elif market == "draw":
-        # draw price lives in 1_1
         rows = latest_rows(((detail or {}).get("odds") or {}).get("1_1"))
         row = rows[0] if rows else {}
         current_odds = as_float(row.get("draw_od"))
@@ -665,13 +746,17 @@ def football_evaluate(ev, st, detail):
         return None
     if "odds" in r and not in_range(current_odds, r["odds"]):
         return None
+    if "trigger_under_odds" in r and not in_range(tf["next_goal_under_odds"], r["trigger_under_odds"]):
+        return None
+    if r.get("verified_price_required") and not tf["next_goal_price_verified"]:
+        return None
     if "odds_min" in r and (current_odds is None or current_odds < r["odds_min"]):
         return None
 
-    # Rules with a price-dependent market are emitted only when that price is available.
     if market in ("next_goal_over", "next_goal_under", "main_over", "main_under", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
         return None
 
+    verified = bool(r.get("verified_price_required") and tf["next_goal_price_verified"])
     return {
         "strategy_id": st["id"],
         "strategy": st["name_ru"],
@@ -683,14 +768,30 @@ def football_evaluate(ev, st, detail):
         "period": r.get("period") or "FT",
         "reverse_bet": reverse_bet,
         "reverse_odds": reverse_odds,
+        "entry_epoch": r.get("entry_epoch"),
+        "price_verified": verified,
+        "quote_at": tf["next_goal_quote_at"] if verified else None,
+        "quote_age_seconds": tf["next_goal_quote_age_seconds"] if verified else None,
+        "quote_score": tf["next_goal_quote_score"] if verified else None,
+        "verification_method": tf["next_goal_verification_method"] if verified else None,
         "features": {
             "drought_min": tf["drought_min"],
             "last_goal_minute": tf["last_goal_minute"],
             "main_total": tf["main_handicap"],
             "selected_total": bet_line,
             "main_ah_line": bet_line if market == "main_ah_away" else None,
+            "entry_epoch": r.get("entry_epoch"),
+            "price_verified": verified,
+            "quote_at": tf["next_goal_quote_at"] if verified else None,
+            "quote_age_seconds": tf["next_goal_quote_age_seconds"] if verified else None,
+            "quote_score": tf["next_goal_quote_score"] if verified else None,
+            "quote_confirmation_gap_seconds": tf["next_goal_confirmation_gap_seconds"] if verified else None,
+            "verification_method": tf["next_goal_verification_method"] if verified else None,
+            "initial_provider_quote": tf["next_goal_initial_quote"] if verified else None,
+            "confirmed_provider_quote": tf["next_goal_confirmed_quote"] if verified else None,
         },
     }
+
 
 def done_set(a, b):
     return (max(a, b) >= 6 and abs(a - b) >= 2) or (max(a, b) == 7 and min(a, b) in (5, 6))
