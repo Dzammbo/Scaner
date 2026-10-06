@@ -16,12 +16,20 @@ ACTIVE_SIGNAL_IDS={
  ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
  ("FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","PRIMARY"):"S34",
 }
+MINING_SIGNAL_IDS={
+ ("FOOTBALL_FH_SOT_NEXT_GOAL_V1","PRIMARY"):"S12",
+ ("FOOTBALL_LATE_HOME_PRESSURE_V1","PRIMARY"):"S13",
+ ("FOOTBALL_LATE_HOME_SOT_V1","PRIMARY"):"S14",
+}
 SIGNAL_NAMES={
  "S26":"High Pressure ТБ 0.5 матча",
  "S31":"ТМ матча в перерыве при низкой активности",
  "S32":"Гол до перерыва при высокой активности",
  "S33":"Без гола после 60-й при 0:0 и низкой активности",
  "S34":"Гол во втором тайме после активного первого без голов",
+ "S12":"ТБ 0.5 первого тайма после 30-й при ударе в створ",
+ "S13":"Поздняя победа хозяев при преимуществе давления",
+ "S14":"Поздняя победа хозяев при ударе в створ",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
@@ -73,6 +81,9 @@ def total(stats,key):
 def delta(cur,pre,key):
  a,b=total(cur,key),total(pre,key)
  return None if a is None or b is None else max(0.,a-b)
+def delta_pair(cur,pre,key):
+ a,b=pair(cur,key) or (None,None);x,y=pair(pre,key) or (None,None)
+ return None if None in (a,b,x,y) else (max(0.,a-x),max(0.,b-y))
 def score(v):
  if isinstance(v,dict):
   try:return int(v["home"]),int(v["away"])
@@ -102,6 +113,14 @@ def main_quote(rows,cur_score):
   if now-at<0 or now-at>180:continue
   choices.append((at,-abs(math.log(over/under)),{"line":line,"over":over,"under":under,"quote_at":at}))
  return None if not choices else max(choices,key=lambda x:(x[0],x[1]))[2]
+def home_quote(rows,cur_score):
+ choices=[]
+ for r in rows or []:
+  home=num(r.get("home_od"));draw=num(r.get("draw_od"));away=num(r.get("away_od"));at=integer(r.get("add_time"));rs=str(r.get("ss") or "").replace(":","-")
+  if None in (home,at) or home<=1 or (rs and rs!=cur_score):continue
+  if now-at<0 or now-at>180:continue
+  choices.append((at,{"line":None,"home":home,"draw":draw,"away":away,"quote_at":at}))
+ return None if not choices else max(choices,key=lambda x:x[0])[1]
 def in_range(value,bounds):return bounds is None or (value is not None and bounds[0]<=value<=bounds[1])
 def is_halftime(ev):
  timer=ev.get("timer") or {};minute=integer(timer.get("tm"));running=str(timer.get("tt") if timer.get("tt") is not None else "");label=str(ev.get("time_str") or ev.get("status") or "").lower()
@@ -114,6 +133,12 @@ def candidate_arms(meta,features,halftime=False):
  s=score(meta.get("score"));minute=meta.get("minute");sot=total(meta.get("stats") or {},"on_target");pressure=None if not features else features.get("pressure10");out=[]
  if not s or minute is None:return out
  goals=sum(s)
+ if 30<=minute<=45 and features and features.get("on_target10") is not None and features["on_target10"]>=1:
+  out.append({"id":"S12","strategy":"FOOTBALL_FH_SOT_NEXT_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":1})
+ if minute>=85 and s[0]==s[1] and features and features.get("pressure_home10") is not None and features.get("pressure_away10") is not None and features["pressure_home10"]>features["pressure_away10"]:
+  out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_PRESSURE_V1","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1})
+ if minute>=85 and s[0]==s[1] and features and features.get("home_on_target10") is not None and features["home_on_target10"]>=1:
+  out.append({"id":"S14","strategy":"FOOTBALL_LATE_HOME_SOT_V1","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1})
  if halftime and goals<=1 and sot is not None and sot<=2:
   out.append({"id":"S31","strategy":"FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","arm":"PRIMARY","market":"FT_MAIN","selection":"UNDER","period":"FT","odds":[1.70,2.20],"interval":300,"priority":0})
  if 30<=minute<=35 and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
@@ -166,10 +191,19 @@ def settle(rows,live_ids):
   status=str(ev.get("time_status") or "")
   for row in event_rows:
    if status=="3":
-    goals=final_period_goals(ev,row["period"])
-    if goals is None:continue
-    outcome=outcome_for(goals,row["selected_line"],row.get("selection") or "OVER")
-    row.update({"settled_at":now,"final_period_goals":goals,"outcome":outcome,"profit":profit_for(outcome,row["selected_odds"])})
+    if row.get("selection")=="HOME":
+     regulation=score((ev.get("scores") or {}).get("2")) if isinstance(ev.get("scores"),dict) else None
+     if regulation is None:
+      if any(str(key) in ("3","4") for key in (ev.get("scores") or {})):continue
+      regulation=score(ev.get("ss"))
+     if regulation is None:continue
+     outcome="WIN" if regulation[0]>regulation[1] else "LOSS"
+     row.update({"settled_at":now,"final_score":f"{regulation[0]}-{regulation[1]}","outcome":outcome,"profit":profit_for(outcome,row["selected_odds"])})
+    else:
+     goals=final_period_goals(ev,row["period"])
+     if goals is None:continue
+     outcome=outcome_for(goals,row["selected_line"],row.get("selection") or "OVER")
+     row.update({"settled_at":now,"final_period_goals":goals,"outcome":outcome,"profit":profit_for(outcome,row["selected_odds"])})
    elif status in ("4","5","6","7","8","9") and now-int(row["entry_at"])>=12*3600:row.update({"settled_at":now,"outcome":"VOID","profit":0})
 def metrics(rows):
  rr=[x for x in rows if x.get("outcome") not in (None,"VOID")];profit=sum(float(x.get("profit") or 0) for x in rr)
@@ -179,11 +213,16 @@ def status_metrics(rows):
  summary=metrics(rows);pending=sum(x.get("outcome") is None for x in rows);void=sum(x.get("outcome")=="VOID" for x in rows)
  return {"signals":len(rows),"pending":pending,"void":void,**summary,"balance_valid":len(rows)==summary["N"]+pending+void}
 
-def signal_id(row):return ACTIVE_SIGNAL_IDS.get((row.get("strategy"),row.get("arm")))
+def signal_id(row):return {**ACTIVE_SIGNAL_IDS,**MINING_SIGNAL_IDS}.get((row.get("strategy"),row.get("arm")))
 def is_active_signal(row):return signal_id(row) is not None
+def is_scanner_signal(row):return (row.get("strategy"),row.get("arm")) in ACTIVE_SIGNAL_IDS
 
 def quote_for_arm(arm,odds,meta):
  goals=sum(score(meta["score"]))
+ if arm["market"]=="HOME_ML":
+  q=home_quote(odds.get("1_1"),meta["score"])
+  if not q:return None
+  return {**q,"selected":q["home"],"reverse":None}
  if arm["market"]=="FT_MAIN":q=main_quote(odds.get("1_3"),meta["score"])
  elif arm["market"]=="FH_NEXT":q=quote(odds.get("1_6"),goals+.5,meta["score"])
  else:q=quote(odds.get("1_3"),goals+.5,meta["score"])
@@ -206,7 +245,11 @@ def main():
   features=None
   if prior:
    dangerous=delta(meta["stats"],prior.get("stats") or {},"dangerous_attacks");ont=delta(meta["stats"],prior.get("stats") or {},"on_target");off=delta(meta["stats"],prior.get("stats") or {},"off_target");corners=delta(meta["stats"],prior.get("stats") or {},"corners");shots=None if ont is None or off is None else ont+off;pressure=None if None in (dangerous,shots,ont) else dangerous+3*shots+5*ont
-   features={"dangerous10":dangerous,"shots10":shots,"on_target10":ont,"corners10":corners,"pressure10":pressure}
+   dangerous_pair=delta_pair(meta["stats"],prior.get("stats") or {},"dangerous_attacks");ont_pair=delta_pair(meta["stats"],prior.get("stats") or {},"on_target");off_pair=delta_pair(meta["stats"],prior.get("stats") or {},"off_target")
+   home_pressure=away_pressure=None
+   if dangerous_pair and ont_pair and off_pair:
+    home_pressure=dangerous_pair[0]+3*(ont_pair[0]+off_pair[0])+5*ont_pair[0];away_pressure=dangerous_pair[1]+3*(ont_pair[1]+off_pair[1])+5*ont_pair[1]
+   features={"dangerous10":dangerous,"shots10":shots,"on_target10":ont,"corners10":corners,"pressure10":pressure,"home_on_target10":None if not ont_pair else ont_pair[0],"away_on_target10":None if not ont_pair else ont_pair[1],"pressure_home10":home_pressure,"pressure_away10":away_pressure}
   old.append({"seen_at":now,"elapsed":meta["elapsed"],"score":meta["score"],"stats":meta["stats"]});history[eid]=old[-10:]
   arms=[]
   for arm in candidate_arms(meta,features,is_halftime(ev)):
@@ -231,7 +274,7 @@ def main():
  settle(signals,live_ids)
  active_signals=[x for x in signals if is_active_signal(x)]
  save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
- sync_scanner_signals(active_signals)
+ sync_scanner_signals([x for x in active_signals if is_scanner_signal(x)])
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
  status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),**status_metrics(v)} for k,v in sorted(arms.items())}}
