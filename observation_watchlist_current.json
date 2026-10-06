@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-06T16:22:23.938215Z",
+  "generated_at": "2026-10-06T17:22:55.651402Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -26,38 +26,38 @@
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
       "recorded": 106,
-      "settled": 105,
-      "pending": 1,
+      "settled": 106,
+      "pending": 0,
       "void": 0,
       "result": {
-        "N": 105,
+        "N": 106,
         "W": 51,
-        "L": 54,
+        "L": 55,
         "P": 0,
-        "profit": -20.225,
-        "ROI": -19.26
+        "profit": -21.225,
+        "ROI": -20.02
       },
       "without_top3": {
-        "N": 102,
+        "N": 103,
         "W": 48,
-        "L": 54,
+        "L": 55,
         "P": 0,
-        "profit": -23.25,
-        "ROI": -22.79
+        "profit": -24.25,
+        "ROI": -23.54
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 618,
-        "settled": 612,
-        "pending": 4,
+        "recorded": 627,
+        "settled": 615,
+        "pending": 10,
         "void": 2,
         "result": {
-          "N": 612,
-          "W": 238,
-          "L": 318,
+          "N": 615,
+          "W": 239,
+          "L": 320,
           "P": 56,
-          "profit": -84.438,
-          "ROI": -13.8
+          "profit": -85.463,
+          "ROI": -13.9
         }
       },
       "review_ready": false
@@ -67,9 +67,9 @@
       "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 45,
+      "recorded": 46,
       "settled": 45,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "result": {
         "N": 45,
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 679,
-        "settled": 672,
-        "pending": 5,
+        "recorded": 687,
+        "settled": 676,
+        "pending": 9,
         "void": 2,
         "result": {
-          "N": 672,
-          "W": 348,
-          "L": 270,
+          "N": 676,
+          "W": 351,
+          "L": 271,
           "P": 54,
-          "profit": 34.377,
-          "ROI": 5.12
+          "profit": 35.803,
+          "ROI": 5.3
         }
       },
       "review_ready": false
