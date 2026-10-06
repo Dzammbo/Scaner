@@ -1,12 +1,12 @@
 {
-  "merged": 6645,
+  "merged": 6650,
   "settled": 6476,
   "void": 126,
-  "pending": 43,
-  "pending_live_or_delayed": 43,
+  "pending": 48,
+  "pending_live_or_delayed": 48,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 18,
+    "INPLAY": 23,
     "PENDING_PROVIDER_FIX": 19,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -16,7 +16,7 @@
     "VOID_TENNIS_WINNER_MISSING": 87
   },
   "settlement_event_reasons": {
-    "INPLAY": 16,
+    "INPLAY": 18,
     "PENDING_PROVIDER_FIX": 13,
     "POSTPONED": 1,
     "VOID_CANCELLED": 1,
@@ -26,21 +26,21 @@
     "VOID_TENNIS_WINNER_MISSING": 65
   },
   "settlement_cache": {
-    "updated_at": "2026-10-06T08:42:07Z",
+    "updated_at": "2026-10-06T09:01:35Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 3,
-    "queried_events": 24,
-    "signal_unique_events": 3582,
-    "cache_events": 3582,
+    "provider_queries": 1,
+    "queried_events": 2,
+    "signal_unique_events": 3584,
+    "cache_events": 3584,
     "final_events": 3530,
     "void_events": 22,
     "immutable_events": 3552,
-    "retryable_events": 30,
+    "retryable_events": 32,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3530,
-      "INPLAY": 16,
+      "INPLAY": 18,
       "PENDING_PROVIDER_FIX": 13,
       "POSTPONED": 1,
       "VOID_CANCELLED": 1,
@@ -83,8 +83,8 @@
     "S01": {
       "name": "ТБ 1.5 при счёте 0:1 на 60-69-й минуте",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 16,
-      "pending": 0,
+      "recorded": 17,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -283,8 +283,8 @@
     "S10": {
       "name": "Против live-фаворита при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 66,
-      "pending": 7,
+      "recorded": 67,
+      "pending": 8,
       "void": 12,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -323,8 +323,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1438,
-      "pending": 3,
+      "recorded": 1440,
+      "pending": 5,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -843,8 +843,8 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1610,
-      "pending": 6,
+      "recorded": 1611,
+      "pending": 7,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
