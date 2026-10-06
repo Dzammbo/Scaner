@@ -19,7 +19,8 @@
       "PUSH": 0,
       "profit": 1.85,
       "ROI": 0.185,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -32,7 +33,8 @@
       "PUSH": 0,
       "profit": -2.15,
       "ROI": -0.358333,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
@@ -45,7 +47,8 @@
       "PUSH": 0,
       "profit": -1.35,
       "ROI": -0.225,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
@@ -58,19 +61,20 @@
       "PUSH": 6,
       "profit": 1.8625,
       "ROI": 0.030533,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 1,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
-      "N": 1,
+      "N": 0,
       "W": 0,
-      "L": 1,
+      "L": 0,
       "PUSH": 0,
-      "profit": -1.0,
-      "ROI": -1.0,
+      "profit": 0.0,
+      "ROI": null,
       "balance_valid": true,
       "activity_segments": {
         "both": {
@@ -85,20 +89,24 @@
           "ROI": -1.0,
           "balance_valid": true
         }
-      }
+      },
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
       "signals": 398,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
-      "N": 398,
+      "N": 397,
       "W": 131,
-      "L": 267,
+      "L": 266,
       "PUSH": 0,
-      "profit": -52.225,
-      "ROI": -0.131219,
-      "balance_valid": true
+      "profit": -51.225,
+      "ROI": -0.12903,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     }
-  }
+  },
+  "settlement_updated_at": "2026-10-06T10:08:58Z",
+  "settlement_source": "betsapi_cache"
 }
