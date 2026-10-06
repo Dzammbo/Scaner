@@ -1,6 +1,57 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-06T12:35:10Z",
-  "signals": 655,
-  "active_last_10m": []
+  "updated_at": "2026-10-06T12:45:12Z",
+  "signals": 657,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-06T12:45:09Z",
+      "sport": "football",
+      "tournament": "China Division 1",
+      "event_id": "11575526",
+      "match": "Changchun Yatai - Yanbian Longding",
+      "minute_score": "87' / '1-1'",
+      "minute": 87,
+      "score": "1-1",
+      "exact_bet_line": "ТБ 2.5",
+      "current_odds": 3.1,
+      "reverse_bet": "ТМ 2.5",
+      "reverse_odds": 1.35,
+      "strategy_id": "S26",
+      "strategy_ids": [
+        "S26"
+      ],
+      "strategy_names": [
+        "High Pressure ТБ 0.5 матча"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 28.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-06T12:45:09Z",
+      "sport": "football",
+      "tournament": "China Division 2",
+      "event_id": "13096301",
+      "match": "Guangdong Mingtu - Dalian Young Boy Reserves",
+      "minute_score": "60' / '0-0'",
+      "minute": 60,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 0.5",
+      "current_odds": 1.875,
+      "reverse_bet": "ТБ 0.5",
+      "reverse_odds": 1.925,
+      "strategy_id": "S33",
+      "strategy_ids": [
+        "S33"
+      ],
+      "strategy_names": [
+        "Без гола после 60-й при 0:0 и низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 9.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
