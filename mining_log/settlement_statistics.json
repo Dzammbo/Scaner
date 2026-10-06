@@ -1,21 +1,22 @@
 {
-  "generated_at_utc": "2026-10-06T06:10:10Z",
+  "generated_at_utc": "2026-10-06T08:09:53Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-06T06:10:10Z",
+    "updated_at": "2026-10-06T08:09:53Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
     "provider_queries": 1,
-    "queried_events": 10,
-    "cache_events": 1804,
-    "signal_unique_events": 1724,
-    "signal_final_events": 1719,
+    "queried_events": 3,
+    "cache_events": 1807,
+    "signal_unique_events": 1727,
+    "signal_final_events": 1721,
     "signal_void_events": 5,
-    "signal_pending_events": 0,
-    "reconciled_stateful_rows": 2250,
+    "signal_pending_events": 1,
+    "reconciled_stateful_rows": 2254,
     "stateful_duplicate_signals": 0,
     "states": {
-      "FINAL": 1783,
+      "FINAL": 1785,
+      "NOT_FINAL_1": 1,
       "NOT_FINAL_2": 8,
       "NOT_FINAL_4": 1,
       "VOID_CANCELLED": 1,
@@ -29,8 +30,8 @@
       "events": 1361
     },
     "stateful": {
-      "rows": 2250,
-      "events": 932
+      "rows": 2256,
+      "events": 935
     },
     "ht_one_goal": {
       "rows": 0,
@@ -436,6 +437,27 @@
           "ROI_pct": 0.42
         }
       },
+      "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
+        "signals": 3,
+        "pending": 1,
+        "void": 0,
+        "direct": {
+          "N": 2,
+          "W": 1,
+          "L": 1,
+          "PUSH": 0,
+          "profit": 0.3,
+          "ROI_pct": 15.0
+        },
+        "opposite": {
+          "N": 2,
+          "W": 1,
+          "L": 1,
+          "PUSH": 0,
+          "profit": -0.885,
+          "ROI_pct": -44.25
+        }
+      },
       "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
         "signals": 60,
         "pending": 0,
@@ -455,6 +477,19 @@
           "PUSH": 6,
           "profit": -5.85,
           "ROI_pct": -9.75
+        }
+      },
+      "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
+        "signals": 1,
+        "pending": 1,
+        "void": 0,
+        "direct": {
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "profit": 0,
+          "ROI_pct": null
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FH": {
@@ -479,24 +514,24 @@
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
-        "signals": 394,
+        "signals": 396,
         "pending": 0,
         "void": 0,
         "direct": {
-          "N": 394,
+          "N": 396,
           "W": 131,
-          "L": 263,
+          "L": 265,
           "PUSH": 0,
-          "profit": -48.225,
-          "ROI_pct": -12.24
+          "profit": -50.225,
+          "ROI_pct": -12.68
         },
         "opposite": {
-          "N": 394,
-          "W": 263,
+          "N": 396,
+          "W": 265,
           "L": 131,
           "PUSH": 0,
-          "profit": -17.225,
-          "ROI_pct": -4.37
+          "profit": -15.8,
+          "ROI_pct": -3.99
         }
       },
       "FOOTBALL_PRESSURE_TOTAL_O05_V1:LOW_PRESSURE_O05_FH": {
