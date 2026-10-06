@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-06T19:16:16Z",
+  "updated_at": "2026-10-06T19:26:24Z",
   "api_calls": 5,
-  "board_n": 87,
-  "observations": 3372,
-  "signals": 604,
+  "board_n": 86,
+  "observations": 3377,
+  "signals": 609,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -23,8 +23,8 @@
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
-      "signals": 10,
-      "pending": 1,
+      "signals": 11,
+      "pending": 2,
       "void": 0,
       "N": 9,
       "W": 2,
@@ -36,15 +36,15 @@
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
-      "signals": 66,
-      "pending": 9,
+      "signals": 70,
+      "pending": 11,
       "void": 0,
-      "N": 57,
+      "N": 59,
       "W": 12,
-      "L": 45,
+      "L": 47,
       "PUSH": 0,
-      "profit": -26.95,
-      "ROI": -0.472807,
+      "profit": -28.95,
+      "ROI": -0.490678,
       "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
