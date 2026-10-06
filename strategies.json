@@ -19,14 +19,17 @@
     "operational_scanner": "TOP_6_PLUS_EXISTING",
     "operational_scanner_count": 20,
     "last_operational_change_at": "2026-10-05T12:00:00Z",
-    "last_operational_change": "Archived S08 from Scanner, S25 from Mining, and the second S30 observation pocket; S26 remains active while its settlement discrepancy is reconciled."
+    "last_operational_change": "Archived S08 from Scanner, S25 from Mining, and the second S30 observation pocket; S26 remains active while its settlement discrepancy is reconciled.",
+    "user_facing_names": "Только поле name_ru",
+    "show_technical_strategy_ids_to_user": false,
+    "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
   },
   "strategies": [
     {
       "id": "S01",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "ТБ 1.5 при счёте 0:1 на 60-69-й минуте",
+      "name_ru": "Ещё один гол при счёте 0:1 на 60-69-й минуте",
       "source": "unified_robust_top6_20261001",
       "rule": {
         "minute": [
@@ -64,7 +67,7 @@
       "id": "S02",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол после 70-й при счёте 0:2",
+      "name_ru": "Гол после 70-й минуты при счёте 0:2",
       "source": "historical_confirmed",
       "rule": {
         "minute": [
@@ -86,7 +89,7 @@
       "id": "S03",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол на 80-84 минуте - Румыния Liga III",
+      "name_ru": "Гол на 80-84-й минуте - третья лига Румынии",
       "source": "historical_confirmed",
       "rule": {
         "minute": [
@@ -111,7 +114,7 @@
       "id": "S04",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол на 80-84 минуте - Норвегия U19",
+      "name_ru": "Гол на 80-84-й минуте - юношеская лига Норвегии",
       "source": "historical_confirmed",
       "rule": {
         "minute": [
@@ -136,7 +139,7 @@
       "id": "S05",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол после 85-й - Норвегия U19",
+      "name_ru": "Гол после 85-й минуты - юношеская лига Норвегии",
       "source": "historical_confirmed",
       "rule": {
         "minute_min": 85,
@@ -158,7 +161,7 @@
       "id": "S06",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Основной тотал больше - Бразилия",
+      "name_ru": "Тотал больше по основной линии - Бразилия",
       "source": "historical_confirmed",
       "rule": {
         "country": "br",
@@ -177,7 +180,7 @@
       "id": "S06W",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Бразилия, женщины - ТМ основного тотала, первый сигнал",
+      "name_ru": "Бразилия, женщины - тотал меньше по основной линии",
       "source": "brazil_split_forward_20261004",
       "rule": {
         "country": "br",
@@ -198,7 +201,7 @@
       "id": "S06Y",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Бразилия, молодёжь и резервы - ТБ основного тотала, первый сигнал",
+      "name_ru": "Бразилия, молодёжь и резервы - тотал больше по основной линии",
       "source": "brazil_split_forward_20261004",
       "rule": {
         "country": "br",
@@ -219,7 +222,7 @@
       "id": "S06A",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Бразилия, взрослые мужчины - ТМ основного тотала, первый сигнал",
+      "name_ru": "Бразилия, взрослые мужчины - тотал меньше по основной линии",
       "source": "brazil_split_forward_20261004",
       "rule": {
         "country": "br",
@@ -240,7 +243,7 @@
       "id": "S07",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Поздняя ничья после 85-й - Бразилия",
+      "name_ru": "Ничья после 85-й минуты - Бразилия",
       "source": "historical_confirmed",
       "rule": {
         "minute_min": 85,
@@ -263,7 +266,7 @@
       "id": "S08",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Тотал больше после 50+ минут без гола",
+      "name_ru": "Тотал больше после 50 минут без гола",
       "source": "historical_confirmed",
       "rule": {
         "minute_min": 50,
@@ -287,7 +290,7 @@
       "id": "S09",
       "tier": "ACTIVE",
       "sport": "tennis",
-      "name_ru": "UTR - против игрока после разгромного сета",
+      "name_ru": "Против игрока после проигранного разгромного сета - турниры UTR",
       "source": "forward_candidate",
       "rule": {
         "tour_contains": "UTR",
@@ -305,7 +308,7 @@
       "id": "S10",
       "tier": "ACTIVE",
       "sport": "tennis",
-      "name_ru": "Против live-фаворита при равном первом сете",
+      "name_ru": "Против фаворита по ходу матча при равном первом сете",
       "source": "unified_robust_top6_20261001",
       "rule": {
         "state": "first_set_tied",
@@ -357,7 +360,7 @@
       "id": "S12",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "ТБ 0.5 первого тайма после 30-й при ударе в створ",
+      "name_ru": "Гол в первом тайме после 30-й минуты при ударе в створ за последние 10 минут",
       "source": "forward_stats",
       "rule": {
         "period": "FH",
@@ -380,7 +383,7 @@
       "id": "S13",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Поздняя победа хозяев при подтверждённой домашней активности",
+      "name_ru": "Победа хозяев после 85-й минуты при подтверждённой домашней активности",
       "source": "forward_stats",
       "rule": {
         "minute_min": 85,
@@ -412,7 +415,7 @@
       "id": "S14",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Поздняя победа хозяев при ударе в створ",
+      "name_ru": "Победа хозяев после 85-й минуты при ударе в створ",
       "source": "forward_stats",
       "rule": {
         "minute_min": 85,
@@ -438,7 +441,7 @@
       "id": "S15",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Гол на 80-84 минуте при кэфе 2.50-2.99",
+      "name_ru": "Гол на 80-84-й минуте при коэффициенте 2,50-2,99",
       "source": "forward_strong",
       "rule": {
         "minute": [
@@ -463,7 +466,7 @@
       "id": "S16",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Гол после 85-й при кэфе 4.00+",
+      "name_ru": "Гол после 85-й минуты при коэффициенте от 4,00",
       "source": "forward_strong",
       "rule": {
         "minute_min": 85,
@@ -482,7 +485,7 @@
       "id": "S17",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Основной тотал больше - England EFL Trophy",
+      "name_ru": "Тотал больше по основной линии - Кубок английской футбольной лиги",
       "source": "historical_confirmed",
       "rule": {
         "league_contains": "England EFL Trophy",
@@ -500,7 +503,7 @@
       "id": "S18",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Тотал больше после 15 минут без гола - EFL Trophy",
+      "name_ru": "Тотал больше после 15 минут без гола - Кубок английской футбольной лиги",
       "source": "historical_confirmed",
       "rule": {
         "league_contains": "England EFL Trophy",
@@ -519,7 +522,7 @@
       "id": "S19",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Тотал больше после 25 минут без гола - EFL Trophy",
+      "name_ru": "Тотал больше после 25 минут без гола - Кубок английской футбольной лиги",
       "source": "historical_confirmed",
       "rule": {
         "league_contains": "England EFL Trophy",
@@ -538,7 +541,7 @@
       "id": "S20",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Рыночный основной тотал больше при счёте 1:1",
+      "name_ru": "Тотал больше по основной линии при счёте 1:1",
       "source": "historical_confirmed",
       "rule": {
         "score": "1-1",
@@ -554,7 +557,7 @@
       "id": "S21",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Тотал меньше после 85-й при счёте 3:2",
+      "name_ru": "Тотал меньше после 85-й минуты при счёте 3:2",
       "source": "historical_confirmed",
       "rule": {
         "minute_min": 85,
@@ -572,7 +575,7 @@
       "id": "S22",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Наблюдение после гола: ТМ/ТБ при цене ТМ 1,50-1,79",
+      "name_ru": "После гола при цене тотала меньше 1,50-1,79 - отдельно тотал меньше и тотал больше",
       "source": "historical_candidate",
       "rule": {
         "minutes_since_goal_max": 5,
@@ -596,7 +599,7 @@
       "id": "S35",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "ТБ после гола при ТМ 1,50-1,79 - единичная котировка",
+      "name_ru": "Тотал больше после гола при цене тотала меньше 1,50-1,79",
       "source": "forward_reverse_epoch_20261005",
       "rule": {
         "minutes_since_goal_max": 5,
@@ -624,7 +627,7 @@
       "id": "S23",
       "tier": "WATCHLIST",
       "sport": "multi",
-      "name_ru": "Следовать за сильным прогрузом линии",
+      "name_ru": "По направлению сильного движения линии",
       "source": "prematch_line_movement_v1",
       "rule": {
         "movement_pp_min": 5,
@@ -642,7 +645,7 @@
       "id": "S24",
       "tier": "WATCHLIST",
       "sport": "multi",
-      "name_ru": "Играть против сильного прогруза линии",
+      "name_ru": "Против направления сильного движения линии",
       "source": "prematch_line_movement_v1",
       "rule": {
         "movement_pp_min": 5,
@@ -660,7 +663,7 @@
       "id": "T13",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "Зеркало разгромного сета - за проигравшего предыдущего сета",
+      "name_ru": "За проигравшего предыдущего разгромного сета",
       "source": "scanner_forward_candidate",
       "rule": {
         "state": "heavy_set_loss",
@@ -679,7 +682,7 @@
       "id": "T14",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "Зеркало плотного сета - за проигравшего предыдущего сета",
+      "name_ru": "За проигравшего предыдущего плотного сета",
       "source": "scanner_forward_candidate",
       "rule": {
         "state": "tight_set_loss",
@@ -699,7 +702,7 @@
       "id": "T16",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "Решающий сет - за победителя второго сета",
+      "name_ru": "В решающем сете - за победителя второго сета",
       "source": "scanner_forward_candidate",
       "rule": {
         "state": "deciding_set",
@@ -717,7 +720,7 @@
       "id": "T17",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "Решающий сет - за проигравшего второго сета",
+      "name_ru": "В решающем сете - за проигравшего второго сета",
       "source": "scanner_forward_candidate",
       "rule": {
         "state": "deciding_set",
@@ -736,7 +739,7 @@
       "id": "S26",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "High Pressure ТБ 0.5 матча",
+      "name_ru": "Ещё один гол до конца матча при высоком давлении",
       "source": "mining_forward_positive",
       "evidence": {
         "n": 219,
@@ -777,7 +780,7 @@
       "id": "S27",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "High Pressure ТБ 0.5 первого тайма",
+      "name_ru": "Гол в первом тайме при высоком давлении",
       "source": "unified_robust_top6_20261001",
       "evidence": {
         "n": 114,
@@ -814,7 +817,7 @@
       "id": "S28",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "ТМ 2.5 после гола при счёте 0:2 с 60-й минуты",
+      "name_ru": "Тотал меньше 2,5 после гола при счёте 0:2 с 60-й минуты",
       "source": "unified_robust_top6_20261001",
       "rule": {
         "minute_min": 60,
@@ -850,7 +853,7 @@
       "id": "T18",
       "tier": "ACTIVE",
       "sport": "tennis",
-      "name_ru": "Победитель предыдущего разгромного сета",
+      "name_ru": "За победителя предыдущего разгромного сета",
       "source": "unified_robust_top6_20261001",
       "rule": {
         "state": "heavy_set_loss",
@@ -890,7 +893,7 @@
       "id": "S29",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "ТМ 2.5 при счёте 2:0 на 85+ минуте",
+      "name_ru": "Тотал меньше 2,5 при счёте 2:0 после 85-й минуты",
       "source": "unified_robust_top6_20261001",
       "rule": {
         "minute_min": 85,
@@ -925,7 +928,7 @@
       "id": "S25",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Фора гостей после первого гола при 0:1",
+      "name_ru": "Фора гостей после первого гола при счёте 0:1",
       "source": "mining_forward_strong",
       "evidence": {
         "n": 18,
@@ -955,7 +958,7 @@
       "id": "S31",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "ТМ матча в перерыве при низкой активности",
+      "name_ru": "Тотал меньше в перерыве при низкой активности",
       "source": "forward_hypotheses_20261004",
       "rule": {
         "entry_state": "halftime",
@@ -1008,7 +1011,7 @@
       "id": "S33",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Без гола после 60-й при счёте 0:0 и низкой активности",
+      "name_ru": "Без гола после 60-й минуты при счёте 0:0 и низкой активности",
       "source": "forward_hypotheses_20261004",
       "rule": {
         "minute": [
@@ -1037,7 +1040,7 @@
       "id": "S34",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Гол во втором тайме после активного первого без голов",
+      "name_ru": "Гол во втором тайме после активного первого тайма без голов",
       "source": "forward_hypotheses_20261004",
       "rule": {
         "entry_state": "halftime",
@@ -1064,7 +1067,7 @@
       "id": "BT01M",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "ITF мужчины - тотал матча меньше 14,5-18,5",
+      "name_ru": "Мужские турниры ITF - тотал матча меньше 14,5-18,5",
       "source": "telegram_reconstruction_20261004",
       "rule": {
         "competition": "ITF/World Tennis men singles",
@@ -1091,7 +1094,7 @@
       "id": "BT01W",
       "tier": "WATCHLIST",
       "sport": "tennis",
-      "name_ru": "ITF женщины - тотал матча меньше 14,5-18,5",
+      "name_ru": "Женские турниры ITF - тотал матча меньше 14,5-18,5",
       "source": "telegram_reconstruction_20261004",
       "rule": {
         "competition": "ITF/World Tennis women singles",
@@ -1174,7 +1177,7 @@
       "id": "S30",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
+      "name_ru": "Тотал меньше текущей линии плюс 0,5 после 85-й минуты - любой счёт",
       "source": "forward_hypothesis_20261002",
       "rule": {
         "minute": [
