@@ -1,12 +1,12 @@
 {
-  "merged": 6604,
-  "settled": 6451,
+  "merged": 6607,
+  "settled": 6452,
   "void": 121,
-  "pending": 32,
-  "pending_live_or_delayed": 32,
+  "pending": 34,
+  "pending_live_or_delayed": 34,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 7,
+    "INPLAY": 9,
     "PENDING_PROVIDER_FIX": 19,
     "POSTPONED": 6,
     "VOID_CANCELLED": 2,
@@ -26,20 +26,20 @@
     "VOID_TENNIS_WINNER_MISSING": 60
   },
   "settlement_cache": {
-    "updated_at": "2026-10-06T03:21:43Z",
+    "updated_at": "2026-10-06T03:41:16Z",
     "bootstrap": false,
     "query_budget": 100,
     "provider_queries": 1,
-    "queried_events": 10,
-    "signal_unique_events": 3552,
-    "cache_events": 3552,
-    "final_events": 3510,
+    "queried_events": 1,
+    "signal_unique_events": 3553,
+    "cache_events": 3553,
+    "final_events": 3511,
     "void_events": 22,
-    "immutable_events": 3532,
+    "immutable_events": 3533,
     "retryable_events": 20,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 3510,
+      "FINAL": 3511,
       "INPLAY": 6,
       "PENDING_PROVIDER_FIX": 13,
       "POSTPONED": 1,
@@ -63,7 +63,7 @@
       "S30": 1
     },
     "settlement_score_sources": {
-      "scores.2": 5146,
+      "scores.2": 5147,
       "ss": 1305
     }
   },
@@ -323,8 +323,8 @@
     "S20": {
       "name": "Рыночный основной тотал больше при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1433,
-      "pending": 2,
+      "recorded": 1435,
+      "pending": 4,
       "void": 4,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -843,41 +843,41 @@
     "S30": {
       "name": "ТМ текущего тотала +0.5 на 85-й минуте - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1603,
+      "recorded": 1604,
       "pending": 6,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
-        "N": 1597,
+        "N": 1598,
         "W": 1081,
-        "L": 516,
+        "L": 517,
         "P": 0,
-        "profit": -76.77,
-        "ROI": -4.81
+        "profit": -77.77,
+        "ROI": -4.87
       },
       "original_without_top3": {
-        "N": 1594,
+        "N": 1595,
         "W": 1078,
-        "L": 516,
+        "L": 517,
         "P": 0,
-        "profit": -79.82,
-        "ROI": -5.01
+        "profit": -80.82,
+        "ROI": -5.07
       },
       "reverse": {
-        "N": 1597,
-        "W": 516,
+        "N": 1598,
+        "W": 517,
         "L": 1081,
         "P": 0,
-        "profit": -136.025,
-        "ROI": -8.52
+        "profit": -133.475,
+        "ROI": -8.35
       },
       "reverse_without_top3": {
-        "N": 1594,
-        "W": 513,
+        "N": 1595,
+        "W": 514,
         "L": 1081,
         "P": 0,
-        "profit": -147.175,
-        "ROI": -9.23
+        "profit": -144.625,
+        "ROI": -9.07
       }
     }
   }
