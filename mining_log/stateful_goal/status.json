@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-06T11:08:27Z",
+  "updated_at": "2026-10-06T11:13:43Z",
   "api_calls": 5,
   "board_n": 13,
-  "observations": 3206,
-  "signals": 510,
+  "observations": 3207,
+  "signals": 511,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -37,14 +37,14 @@
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
       "signals": 19,
-      "pending": 6,
+      "pending": 4,
       "void": 0,
-      "N": 13,
+      "N": 15,
       "W": 4,
-      "L": 9,
+      "L": 11,
       "PUSH": 0,
-      "profit": -2.55,
-      "ROI": -0.196154,
+      "profit": -4.55,
+      "ROI": -0.303333,
       "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
@@ -63,13 +63,13 @@
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 4,
-      "pending": 2,
+      "pending": 1,
       "void": 0,
-      "N": 2,
+      "N": 3,
       "W": 0,
-      "L": 2,
+      "L": 3,
       "PUSH": 0,
-      "profit": -2.0,
+      "profit": -3.0,
       "ROI": -1.0,
       "balance_valid": true,
       "activity_segments": {
@@ -87,13 +87,13 @@
         },
         "both": {
           "signals": 3,
-          "pending": 1,
+          "pending": 0,
           "void": 0,
-          "N": 2,
+          "N": 3,
           "W": 0,
-          "L": 2,
+          "L": 3,
           "PUSH": 0,
-          "profit": -2.0,
+          "profit": -3.0,
           "ROI": -1.0,
           "balance_valid": true
         }
@@ -101,15 +101,15 @@
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
-      "signals": 403,
-      "pending": 2,
+      "signals": 404,
+      "pending": 1,
       "void": 0,
-      "N": 401,
-      "W": 131,
+      "N": 403,
+      "W": 133,
       "L": 270,
       "PUSH": 0,
-      "profit": -55.225,
-      "ROI": -0.137718,
+      "profit": -52.325,
+      "ROI": -0.129839,
       "balance_valid": true
     }
   }
