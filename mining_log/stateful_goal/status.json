@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-06T15:07:27Z",
+  "updated_at": "2026-10-06T15:17:33Z",
   "api_calls": 5,
   "board_n": 17,
-  "observations": 3305,
-  "signals": 569,
+  "observations": 3310,
+  "signals": 571,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -36,15 +36,15 @@
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
-      "signals": 48,
-      "pending": 23,
+      "signals": 49,
+      "pending": 21,
       "void": 0,
-      "N": 25,
+      "N": 28,
       "W": 4,
-      "L": 21,
+      "L": 24,
       "PUSH": 0,
-      "profit": -14.55,
-      "ROI": -0.582,
+      "profit": -17.55,
+      "ROI": -0.626786,
       "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
@@ -63,37 +63,37 @@
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 12,
-      "pending": 5,
+      "pending": 3,
       "void": 0,
-      "N": 7,
+      "N": 9,
       "W": 0,
-      "L": 7,
+      "L": 9,
       "PUSH": 0,
-      "profit": -7.0,
+      "profit": -9.0,
       "ROI": -1.0,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
           "signals": 3,
-          "pending": 2,
+          "pending": 1,
           "void": 0,
-          "N": 1,
+          "N": 2,
           "W": 0,
-          "L": 1,
+          "L": 2,
           "PUSH": 0,
-          "profit": -1.0,
+          "profit": -2.0,
           "ROI": -1.0,
           "balance_valid": true
         },
         "both": {
           "signals": 9,
-          "pending": 3,
+          "pending": 2,
           "void": 0,
-          "N": 6,
+          "N": 7,
           "W": 0,
-          "L": 6,
+          "L": 7,
           "PUSH": 0,
-          "profit": -6.0,
+          "profit": -7.0,
           "ROI": -1.0,
           "balance_valid": true
         }
@@ -101,15 +101,15 @@
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
-      "signals": 414,
+      "signals": 415,
       "pending": 7,
       "void": 0,
-      "N": 407,
+      "N": 408,
       "W": 134,
-      "L": 273,
+      "L": 274,
       "PUSH": 0,
-      "profit": -53.95,
-      "ROI": -0.132555,
+      "profit": -54.95,
+      "ROI": -0.134681,
       "balance_valid": true
     }
   }
