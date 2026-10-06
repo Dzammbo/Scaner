@@ -1,13 +1,13 @@
 {
-  "merged": 6967,
+  "merged": 6994,
   "settled": 6744,
   "void": 142,
-  "pending": 81,
-  "pending_live_or_delayed": 81,
+  "pending": 108,
+  "pending_live_or_delayed": 108,
   "unresolved": 0,
   "settlement_reasons": {
     "DELAYED": 1,
-    "INPLAY": 58,
+    "INPLAY": 85,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -19,7 +19,7 @@
   },
   "settlement_event_reasons": {
     "DELAYED": 1,
-    "INPLAY": 32,
+    "INPLAY": 41,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -30,22 +30,22 @@
     "VOID_TENNIS_WINNER_MISSING": 78
   },
   "settlement_cache": {
-    "updated_at": "2026-10-06T19:23:46Z",
+    "updated_at": "2026-10-06T19:42:12Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 6,
-    "queried_events": 54,
-    "signal_unique_events": 3746,
-    "cache_events": 3746,
+    "provider_queries": 1,
+    "queried_events": 9,
+    "signal_unique_events": 3755,
+    "cache_events": 3755,
     "final_events": 3677,
     "void_events": 23,
     "immutable_events": 3700,
-    "retryable_events": 46,
+    "retryable_events": 55,
     "due_events_remaining": 0,
     "states": {
       "DELAYED": 1,
       "FINAL": 3677,
-      "INPLAY": 32,
+      "INPLAY": 41,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -329,8 +329,8 @@
     "S20": {
       "name": "Тотал больше по основной линии при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1561,
-      "pending": 36,
+      "recorded": 1586,
+      "pending": 61,
       "void": 6,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -529,8 +529,8 @@
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 78,
-      "pending": 3,
+      "recorded": 79,
+      "pending": 4,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -569,8 +569,8 @@
     "S32": {
       "name": "Гол до перерыва при высокой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 10,
-      "pending": 2,
+      "recorded": 11,
+      "pending": 3,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
