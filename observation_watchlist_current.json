@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-06T12:02:41.024458Z",
+  "generated_at": "2026-10-06T13:03:04.018466Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,39 +25,39 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 100,
-      "settled": 99,
+      "recorded": 101,
+      "settled": 100,
       "pending": 1,
       "void": 0,
       "result": {
-        "N": 99,
-        "W": 47,
+        "N": 100,
+        "W": 48,
         "L": 52,
         "P": 0,
-        "profit": -21.3,
-        "ROI": -21.52
+        "profit": -20.325,
+        "ROI": -20.32
       },
       "without_top3": {
-        "N": 96,
-        "W": 44,
+        "N": 97,
+        "W": 45,
         "L": 52,
         "P": 0,
-        "profit": -24.325,
-        "ROI": -25.34
+        "profit": -23.35,
+        "ROI": -24.07
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 573,
-        "settled": 568,
-        "pending": 5,
+        "recorded": 584,
+        "settled": 570,
+        "pending": 14,
         "void": 0,
         "result": {
-          "N": 568,
-          "W": 222,
-          "L": 292,
+          "N": 570,
+          "W": 223,
+          "L": 293,
           "P": 54,
-          "profit": -72.55,
-          "ROI": -12.77
+          "profit": -72.6,
+          "ROI": -12.74
         }
       },
       "review_ready": false
@@ -67,9 +67,9 @@
       "name_ru": "Reverse ТМ при 1:1 - линии 3,5-4,0",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 41,
+      "recorded": 42,
       "settled": 41,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "result": {
         "N": 41,
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 632,
-        "settled": 626,
-        "pending": 6,
+        "recorded": 643,
+        "settled": 629,
+        "pending": 14,
         "void": 0,
         "result": {
-          "N": 626,
-          "W": 322,
-          "L": 252,
+          "N": 629,
+          "W": 323,
+          "L": 254,
           "P": 52,
-          "profit": 30.73,
-          "ROI": 4.91
+          "profit": 28.94,
+          "ROI": 4.6
         }
       },
       "review_ready": false
