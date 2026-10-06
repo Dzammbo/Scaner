@@ -380,13 +380,22 @@
       "id": "S13",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Поздняя победа хозяев при преимуществе давления",
+      "name_ru": "Поздняя победа хозяев при подтверждённой домашней активности",
       "source": "forward_stats",
       "rule": {
         "minute_min": 85,
         "score_state": "draw",
-        "pressure_home_gt_away": true,
-        "market": "home"
+        "activity_confirmation_any": [
+          "pressure_home_gt_away",
+          "home_sot10_min"
+        ],
+        "market": "home",
+        "one_entry_per_match": true,
+        "analysis_segments": [
+          "pressure_only",
+          "shot_on_target_only",
+          "both"
+        ]
       },
       "user_output": true,
       "scanner_enabled": false,
@@ -397,7 +406,7 @@
       "mining_enabled": true,
       "collection_engine": "stateful_goal_mining.py",
       "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T06:00:00Z"
+      "clean_epoch_start": "2026-10-06T05:50:48Z"
     },
     {
       "id": "S14",
@@ -414,13 +423,16 @@
       "user_output": true,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "mining_enabled": true,
+      "mining_enabled": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T06:00:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-06T06:00:00Z",
+      "archived_at": "2026-10-06T05:50:48Z",
+      "merged_into": "S13",
+      "archive_reason": "Объединена с S13 в одну механику с единственным сигналом на матч и разрезом причины входа."
     },
     {
       "id": "S15",
@@ -560,7 +572,7 @@
       "id": "S22",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Тотал меньше сразу после гола",
+      "name_ru": "Наблюдение после гола: ТМ/ТБ при цене ТМ 1,50-1,79",
       "source": "historical_candidate",
       "rule": {
         "minutes_since_goal_max": 5,
@@ -568,7 +580,10 @@
           1.5,
           1.79
         ],
-        "market": "next_goal_under"
+        "market": "next_goal_under",
+        "research_mode": "bidirectional",
+        "primary_direction": "under",
+        "opposite_direction": "over"
       },
       "user_output": true,
       "scanner_enabled": false,
@@ -597,10 +612,13 @@
       "user_output": true,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
-      "status": "FORWARD_HYPOTHESIS",
+      "research_destination": "history",
+      "status": "ARCHIVED",
       "collection_engine": "scanner.py",
-      "clean_epoch_start": "2026-10-05T06:29:00Z"
+      "clean_epoch_start": "2026-10-05T06:29:00Z",
+      "mining_enabled": false,
+      "archived_at": "2026-10-06T05:50:48Z",
+      "archive_reason": "Дублирует ту же ситуацию после гола, которая уже собирается S22 с прямым и обратным направлениями."
     },
     {
       "id": "S23",

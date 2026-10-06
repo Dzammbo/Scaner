@@ -18,8 +18,7 @@ ACTIVE_SIGNAL_IDS={
 }
 MINING_SIGNAL_IDS={
  ("FOOTBALL_FH_SOT_NEXT_GOAL_V1","PRIMARY"):"S12",
- ("FOOTBALL_LATE_HOME_PRESSURE_V1","PRIMARY"):"S13",
- ("FOOTBALL_LATE_HOME_SOT_V1","PRIMARY"):"S14",
+ ("FOOTBALL_LATE_HOME_ACTIVITY_V2","PRIMARY"):"S13",
 }
 SIGNAL_NAMES={
  "S26":"High Pressure ТБ 0.5 матча",
@@ -28,8 +27,7 @@ SIGNAL_NAMES={
  "S33":"Без гола после 60-й при 0:0 и низкой активности",
  "S34":"Гол во втором тайме после активного первого без голов",
  "S12":"ТБ 0.5 первого тайма после 30-й при ударе в створ",
- "S13":"Поздняя победа хозяев при преимуществе давления",
- "S14":"Поздняя победа хозяев при ударе в створ",
+ "S13":"Поздняя победа хозяев при подтверждённой домашней активности",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
@@ -129,16 +127,23 @@ def event_meta(ev):
  league=ev.get("league") or {};home=ev.get("home") or {};away=ev.get("away") or {};timer=ev.get("timer") or {}
  minute=integer(timer.get("tm"));sec=integer(timer.get("ts")) or 0
  return {"event_id":str(ev.get("id") or ""),"league":str(league.get("name") or ""),"country":str(league.get("cc") or ""),"home":str(home.get("name") or ""),"away":str(away.get("name") or ""),"score":str(ev.get("ss") or "").replace(":","-"),"minute":minute,"elapsed":None if minute is None else minute*60+sec,"stats":ev.get("stats") or {}}
+def late_home_activity_segment(features):
+ if not features:return None
+ pressure=features.get("pressure_home10") is not None and features.get("pressure_away10") is not None and features["pressure_home10"]>features["pressure_away10"]
+ shot=features.get("home_on_target10") is not None and features["home_on_target10"]>=1
+ if pressure and shot:return "both"
+ if pressure:return "pressure_only"
+ if shot:return "shot_on_target_only"
+ return None
 def candidate_arms(meta,features,halftime=False):
  s=score(meta.get("score"));minute=meta.get("minute");sot=total(meta.get("stats") or {},"on_target");pressure=None if not features else features.get("pressure10");out=[]
  if not s or minute is None:return out
  goals=sum(s)
  if 30<=minute<=45 and features and features.get("on_target10") is not None and features["on_target10"]>=1:
   out.append({"id":"S12","strategy":"FOOTBALL_FH_SOT_NEXT_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":1})
- if minute>=85 and s[0]==s[1] and features and features.get("pressure_home10") is not None and features.get("pressure_away10") is not None and features["pressure_home10"]>features["pressure_away10"]:
-  out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_PRESSURE_V1","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1})
- if minute>=85 and s[0]==s[1] and features and features.get("home_on_target10") is not None and features["home_on_target10"]>=1:
-  out.append({"id":"S14","strategy":"FOOTBALL_LATE_HOME_SOT_V1","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1})
+ activity_segment=late_home_activity_segment(features)
+ if minute>=85 and s[0]==s[1] and activity_segment:
+  out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_ACTIVITY_V2","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1,"activity_segment":activity_segment})
  if halftime and goals<=1 and sot is not None and sot<=2:
   out.append({"id":"S31","strategy":"FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","arm":"PRIMARY","market":"FT_MAIN","selection":"UNDER","period":"FT","odds":[1.70,2.20],"interval":300,"priority":0})
  if 30<=minute<=35 and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
@@ -212,6 +217,13 @@ def metrics(rows):
 def status_metrics(rows):
  summary=metrics(rows);pending=sum(x.get("outcome") is None for x in rows);void=sum(x.get("outcome")=="VOID" for x in rows)
  return {"signals":len(rows),"pending":pending,"void":void,**summary,"balance_valid":len(rows)==summary["N"]+pending+void}
+def arm_status(rows):
+ out=status_metrics(rows);segments={}
+ for segment in ("pressure_only","shot_on_target_only","both"):
+  selected=[x for x in rows if x.get("activity_segment")==segment]
+  if selected:segments[segment]=status_metrics(selected)
+ if segments:out["activity_segments"]=segments
+ return out
 
 def signal_id(row):return {**ACTIVE_SIGNAL_IDS,**MINING_SIGNAL_IDS}.get((row.get("strategy"),row.get("arm")))
 def is_active_signal(row):return signal_id(row) is not None
@@ -270,14 +282,14 @@ def main():
   for arm in arms:
    q=quote_for_arm(arm,odds,meta);key=(eid,arm["strategy"],arm["arm"])
    if not q or key in sigkeys:continue
-   signals.append({**observation,"strategy_id":arm["id"],"strategy":arm["strategy"],"arm":arm["arm"],"entry_at":now,"selection":arm["selection"],"period":arm["period"],"selected_line":q["line"],"selected_odds":q["selected"],"reverse_odds":q["reverse"],"quote_at":q["quote_at"],"outcome":None});sigkeys.add(key)
+   signals.append({**observation,"strategy_id":arm["id"],"strategy":arm["strategy"],"arm":arm["arm"],"activity_segment":arm.get("activity_segment"),"entry_at":now,"selection":arm["selection"],"period":arm["period"],"selected_line":q["line"],"selected_odds":q["selected"],"reverse_odds":q["reverse"],"quote_at":q["quote_at"],"outcome":None});sigkeys.add(key)
  settle(signals,live_ids)
  active_signals=[x for x in signals if is_active_signal(x)]
  save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
  sync_scanner_signals([x for x in active_signals if is_scanner_signal(x)])
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
- status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),**status_metrics(v)} for k,v in sorted(arms.items())}}
+ status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),**arm_status(v)} for k,v in sorted(arms.items())}}
  STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  with RUNS.open("a",encoding="utf-8") as f:f.write(json.dumps({"timestamp":iso(),"collector":"stateful_goal_mining","api_calls":calls,"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals)},separators=(",",":"))+"\n")
  print(json.dumps(status,ensure_ascii=False))
