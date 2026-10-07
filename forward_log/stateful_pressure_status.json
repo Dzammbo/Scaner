@@ -1,21 +1,46 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-07T13:31:51Z",
-  "signals": 736,
+  "updated_at": "2026-10-07T13:47:13Z",
+  "signals": 740,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-07T13:26:34Z",
+      "timestamp": "2026-10-07T13:41:56Z",
+      "sport": "football",
+      "tournament": "Argentina Reserve League",
+      "event_id": "13254120",
+      "match": "Sportivo Barracas Reserves - Argentino de Rosario Reserves",
+      "minute_score": "30' / '0-0'",
+      "minute": 30,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 0.5",
+      "current_odds": 2.0,
+      "reverse_bet": "ТМ 0.5",
+      "reverse_odds": 1.8,
+      "strategy_id": "S32",
+      "strategy_ids": [
+        "S32"
+      ],
+      "strategy_names": [
+        "Гол до перерыва при высокой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 31.0,
+      "period": "FH",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-07T13:41:56Z",
       "sport": "football",
       "tournament": "Egypt Second Division B",
-      "event_id": "13252781",
-      "match": "Golden Gate SC - Egypt Stars",
+      "event_id": "13252777",
+      "match": "Alexandria Petroleum - Badr",
       "minute_score": "45' / '0-0'",
       "minute": 45,
       "score": "0-0",
       "exact_bet_line": "ТМ 1",
-      "current_odds": 2.05,
+      "current_odds": 1.875,
       "reverse_bet": "ТБ 1",
-      "reverse_odds": 1.75,
+      "reverse_odds": 1.925,
       "strategy_id": "S31",
       "strategy_ids": [
         "S31"
@@ -24,7 +49,57 @@
         "ТМ матча в перерыве при низкой активности"
       ],
       "tier": "WATCHLIST",
-      "pressure10": 16.0,
+      "pressure10": 40.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-07T13:47:01Z",
+      "sport": "football",
+      "tournament": "Uganda Premier League",
+      "event_id": "12477012",
+      "match": "Maroons - Lugazi FC",
+      "minute_score": "45' / '0-0'",
+      "minute": 45,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 1.25",
+      "current_odds": 1.725,
+      "reverse_bet": "ТБ 1.25",
+      "reverse_odds": 2.075,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 45.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-07T13:47:01Z",
+      "sport": "football",
+      "tournament": "Italy Serie D Cup",
+      "event_id": "13109206",
+      "match": "Lentigione - Piacenza",
+      "minute_score": "45' / '0-1'",
+      "minute": 45,
+      "score": "0-1",
+      "exact_bet_line": "ТМ 2.5",
+      "current_odds": 1.875,
+      "reverse_bet": "ТБ 2.5",
+      "reverse_odds": 1.925,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "ТМ матча в перерыве при низкой активности"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 15.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
