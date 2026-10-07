@@ -1,12 +1,12 @@
 {
-  "merged": 7192,
-  "settled": 7022,
+  "merged": 7197,
+  "settled": 7023,
   "void": 146,
-  "pending": 24,
-  "pending_live_or_delayed": 24,
+  "pending": 28,
+  "pending_live_or_delayed": 28,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 2,
+    "INPLAY": 6,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 104
   },
   "settlement_event_reasons": {
-    "INPLAY": 2,
+    "INPLAY": 6,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 81
   },
   "settlement_cache": {
-    "updated_at": "2026-10-07T05:03:14Z",
+    "updated_at": "2026-10-07T06:03:24Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 1,
-    "queried_events": 4,
-    "signal_unique_events": 3849,
-    "cache_events": 3849,
-    "final_events": 3810,
+    "provider_queries": 2,
+    "queried_events": 20,
+    "signal_unique_events": 3854,
+    "cache_events": 3854,
+    "final_events": 3811,
     "void_events": 24,
-    "immutable_events": 3834,
-    "retryable_events": 15,
+    "immutable_events": 3835,
+    "retryable_events": 19,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 3810,
-      "INPLAY": 2,
+      "FINAL": 3811,
+      "INPLAY": 6,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -67,7 +67,7 @@
     },
     "settlement_score_sources": {
       "scores.2": 5647,
-      "ss": 1375
+      "ss": 1376
     }
   },
   "observation_watchlist": {
@@ -286,8 +286,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 90,
-      "pending": 0,
+      "recorded": 92,
+      "pending": 2,
       "void": 17,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -446,41 +446,41 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 167,
-      "pending": 2,
+      "recorded": 170,
+      "pending": 4,
       "void": 31,
       "excluded_legacy_attributions": 17,
       "original": {
-        "N": 134,
+        "N": 135,
         "W": 86,
-        "L": 48,
+        "L": 49,
         "P": 0,
-        "profit": 1.309,
-        "ROI": 0.98
+        "profit": 0.309,
+        "ROI": 0.23
       },
       "original_without_top3": {
-        "N": 131,
+        "N": 132,
         "W": 83,
-        "L": 48,
+        "L": 49,
         "P": 0,
-        "profit": -0.891,
-        "ROI": -0.68
+        "profit": -1.891,
+        "ROI": -1.43
       },
       "reverse": {
-        "N": 134,
-        "W": 48,
+        "N": 135,
+        "W": 49,
         "L": 86,
         "P": 0,
-        "profit": -29.575,
-        "ROI": -22.07
+        "profit": -28.075,
+        "ROI": -20.8
       },
       "reverse_without_top3": {
-        "N": 131,
-        "W": 45,
+        "N": 132,
+        "W": 46,
         "L": 86,
         "P": 0,
-        "profit": -34.075,
-        "ROI": -26.01
+        "profit": -32.575,
+        "ROI": -24.68
       }
     },
     "S29": {
