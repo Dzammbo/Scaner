@@ -1,12 +1,12 @@
 {
-  "merged": 7272,
-  "settled": 7077,
+  "merged": 7287,
+  "settled": 7078,
   "void": 146,
-  "pending": 49,
-  "pending_live_or_delayed": 49,
+  "pending": 63,
+  "pending_live_or_delayed": 63,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 27,
+    "INPLAY": 41,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 104
   },
   "settlement_event_reasons": {
-    "INPLAY": 16,
+    "INPLAY": 25,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 81
   },
   "settlement_cache": {
-    "updated_at": "2026-10-07T11:23:56Z",
+    "updated_at": "2026-10-07T11:43:13Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 3,
-    "queried_events": 21,
-    "signal_unique_events": 3899,
-    "cache_events": 3899,
+    "provider_queries": 1,
+    "queried_events": 9,
+    "signal_unique_events": 3908,
+    "cache_events": 3908,
     "final_events": 3846,
     "void_events": 24,
     "immutable_events": 3870,
-    "retryable_events": 29,
+    "retryable_events": 38,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3846,
-      "INPLAY": 16,
+      "INPLAY": 25,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -66,7 +66,7 @@
       "S30": 1
     },
     "settlement_score_sources": {
-      "scores.2": 5678,
+      "scores.2": 5679,
       "ss": 1399
     }
   },
@@ -286,8 +286,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 101,
-      "pending": 4,
+      "recorded": 102,
+      "pending": 5,
       "void": 17,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -326,8 +326,8 @@
     "S20": {
       "name": "Тотал больше по основной линии при счёте 1:1",
       "start": "2026-09-27T19:42:00+00:00",
-      "recorded": 1656,
-      "pending": 8,
+      "recorded": 1663,
+      "pending": 15,
       "void": 6,
       "excluded_legacy_attributions": 52,
       "original": {
@@ -366,41 +366,41 @@
     "S26": {
       "name": "Ещё один гол до конца матча при высоком давлении",
       "start": "1970-01-01T00:00:00+00:00",
-      "recorded": 454,
+      "recorded": 455,
       "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 452,
+        "N": 453,
         "W": 149,
-        "L": 303,
+        "L": 304,
         "P": 0,
-        "profit": -65.025,
-        "ROI": -14.39
+        "profit": -66.025,
+        "ROI": -14.58
       },
       "original_without_top3": {
-        "N": 449,
+        "N": 450,
         "W": 146,
-        "L": 303,
+        "L": 304,
         "P": 0,
-        "profit": -85.825,
-        "ROI": -19.11
+        "profit": -86.825,
+        "ROI": -19.29
       },
       "reverse": {
-        "N": 452,
-        "W": 303,
+        "N": 453,
+        "W": 304,
         "L": 149,
         "P": 0,
-        "profit": -14.23,
-        "ROI": -3.15
+        "profit": -14.0,
+        "ROI": -3.09
       },
       "reverse_without_top3": {
-        "N": 449,
-        "W": 300,
+        "N": 450,
+        "W": 301,
         "L": 149,
         "P": 0,
-        "profit": -17.73,
-        "ROI": -3.95
+        "profit": -17.5,
+        "ROI": -3.89
       }
     },
     "S28": {
@@ -446,8 +446,8 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 188,
-      "pending": 6,
+      "recorded": 192,
+      "pending": 10,
       "void": 31,
       "excluded_legacy_attributions": 17,
       "original": {
@@ -486,8 +486,8 @@
     "S29": {
       "name": "Тотал меньше 2,5 при счёте 2:0 после 85-й минуты",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 60,
-      "pending": 2,
+      "recorded": 61,
+      "pending": 3,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -566,8 +566,8 @@
     "S32": {
       "name": "Гол до перерыва при высокой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 11,
-      "pending": 0,
+      "recorded": 13,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
