@@ -1,12 +1,12 @@
 {
-  "merged": 7197,
+  "merged": 7198,
   "settled": 7023,
   "void": 146,
-  "pending": 28,
-  "pending_live_or_delayed": 28,
+  "pending": 29,
+  "pending_live_or_delayed": 29,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 6,
+    "INPLAY": 7,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 104
   },
   "settlement_event_reasons": {
-    "INPLAY": 6,
+    "INPLAY": 7,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 81
   },
   "settlement_cache": {
-    "updated_at": "2026-10-07T06:03:24Z",
+    "updated_at": "2026-10-07T06:22:48Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 20,
-    "signal_unique_events": 3854,
-    "cache_events": 3854,
+    "provider_queries": 1,
+    "queried_events": 1,
+    "signal_unique_events": 3855,
+    "cache_events": 3855,
     "final_events": 3811,
     "void_events": 24,
     "immutable_events": 3835,
-    "retryable_events": 19,
+    "retryable_events": 20,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 3811,
-      "INPLAY": 6,
+      "INPLAY": 7,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -446,8 +446,8 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 170,
-      "pending": 4,
+      "recorded": 171,
+      "pending": 5,
       "void": 31,
       "excluded_legacy_attributions": 17,
       "original": {
