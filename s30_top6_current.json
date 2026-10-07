@@ -2,7 +2,7 @@
   "schema_version": 1,
   "name": "S30_FIXED_TOP6_20261004",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-07T16:45:43.433741Z",
+  "generated_at": "2026-10-07T17:03:29.685733Z",
   "policy": {
     "filters_frozen": true,
     "changes_s30_collection": false,
@@ -115,9 +115,9 @@
         "roi_without_top5_pct": 12.9
       },
       "cumulative": {
-        "recorded": 85,
+        "recorded": 86,
         "settled": 85,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 85,
@@ -145,9 +145,9 @@
         }
       },
       "clean_forward": {
-        "recorded": 46,
+        "recorded": 47,
         "settled": 46,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 46,
@@ -359,63 +359,63 @@
         "roi_without_top5_pct": 2.79
       },
       "cumulative": {
-        "recorded": 126,
-        "settled": 126,
-        "pending": 0,
+        "recorded": 128,
+        "settled": 127,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 126,
+          "N": 127,
           "W": 54,
-          "L": 72,
+          "L": 73,
           "P": 0,
-          "profit": 26.025,
-          "ROI": 20.65
+          "profit": 25.025,
+          "ROI": 19.7
         },
         "without_top3": {
-          "N": 123,
+          "N": 124,
           "W": 51,
-          "L": 72,
+          "L": 73,
           "P": 0,
-          "profit": 15.275,
-          "ROI": 12.42
+          "profit": 14.275,
+          "ROI": 11.51
         },
         "without_top5": {
-          "N": 121,
+          "N": 122,
           "W": 49,
-          "L": 72,
+          "L": 73,
           "P": 0,
-          "profit": 9.875,
-          "ROI": 8.16
+          "profit": 8.875,
+          "ROI": 7.27
         }
       },
       "clean_forward": {
-        "recorded": 53,
-        "settled": 53,
-        "pending": 0,
+        "recorded": 55,
+        "settled": 54,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 53,
+          "N": 54,
           "W": 21,
-          "L": 32,
+          "L": 33,
           "P": 0,
-          "profit": 9.525,
-          "ROI": 17.97
+          "profit": 8.525,
+          "ROI": 15.79
         },
         "without_top3": {
-          "N": 50,
+          "N": 51,
           "W": 18,
-          "L": 32,
+          "L": 33,
           "P": 0,
-          "profit": -1.225,
-          "ROI": -2.45
+          "profit": -2.225,
+          "ROI": -4.36
         },
         "without_top5": {
-          "N": 48,
+          "N": 49,
           "W": 16,
-          "L": 32,
+          "L": 33,
           "P": 0,
-          "profit": -6.225,
-          "ROI": -12.97
+          "profit": -7.225,
+          "ROI": -14.74
         }
       },
       "review_ready": false

@@ -1,12 +1,12 @@
 {
-  "merged": 7489,
-  "settled": 7312,
+  "merged": 7495,
+  "settled": 7313,
   "void": 147,
-  "pending": 30,
-  "pending_live_or_delayed": 30,
+  "pending": 35,
+  "pending_live_or_delayed": 35,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 8,
+    "INPLAY": 13,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 105
   },
   "settlement_event_reasons": {
-    "INPLAY": 6,
+    "INPLAY": 7,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 82
   },
   "settlement_cache": {
-    "updated_at": "2026-10-07T16:45:42Z",
+    "updated_at": "2026-10-07T17:03:29Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 4,
-    "queried_events": 37,
-    "signal_unique_events": 4016,
-    "cache_events": 4016,
-    "final_events": 3973,
+    "provider_queries": 1,
+    "queried_events": 2,
+    "signal_unique_events": 4018,
+    "cache_events": 4018,
+    "final_events": 3974,
     "void_events": 24,
-    "immutable_events": 3997,
-    "retryable_events": 19,
+    "immutable_events": 3998,
+    "retryable_events": 20,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 3973,
-      "INPLAY": 6,
+      "FINAL": 3974,
+      "INPLAY": 7,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -66,7 +66,7 @@
       "S30": 1
     },
     "settlement_score_sources": {
-      "scores.2": 5872,
+      "scores.2": 5873,
       "ss": 1440
     }
   },
@@ -526,8 +526,8 @@
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 100,
-      "pending": 2,
+      "recorded": 101,
+      "pending": 3,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -846,41 +846,41 @@
     "S30": {
       "name": "Тотал меньше текущей линии плюс 0,5 после 85-й минуты - любой счёт",
       "start": "2026-10-02T20:38:06+00:00",
-      "recorded": 1923,
-      "pending": 6,
+      "recorded": 1928,
+      "pending": 10,
       "void": 0,
       "excluded_legacy_attributions": 1,
       "original": {
-        "N": 1917,
-        "W": 1305,
+        "N": 1918,
+        "W": 1306,
         "L": 612,
         "P": 0,
-        "profit": -78.115,
-        "ROI": -4.07
+        "profit": -77.665,
+        "ROI": -4.05
       },
       "original_without_top3": {
-        "N": 1914,
-        "W": 1302,
+        "N": 1915,
+        "W": 1303,
         "L": 612,
         "P": 0,
-        "profit": -81.165,
-        "ROI": -4.24
+        "profit": -80.715,
+        "ROI": -4.21
       },
       "reverse": {
-        "N": 1917,
+        "N": 1918,
         "W": 612,
-        "L": 1305,
+        "L": 1306,
         "P": 0,
-        "profit": -196.2,
-        "ROI": -10.23
+        "profit": -197.2,
+        "ROI": -10.28
       },
       "reverse_without_top3": {
-        "N": 1914,
+        "N": 1915,
         "W": 609,
-        "L": 1305,
+        "L": 1306,
         "P": 0,
-        "profit": -207.35,
-        "ROI": -10.83
+        "profit": -208.35,
+        "ROI": -10.88
       }
     }
   }
