@@ -19,58 +19,62 @@
       "PUSH": 0,
       "profit": 0.725,
       "ROI": 0.055769,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
       "signals": 14,
-      "pending": 1,
+      "pending": 3,
       "void": 0,
-      "N": 13,
+      "N": 11,
       "W": 4,
-      "L": 9,
+      "L": 7,
       "PUSH": 0,
-      "profit": -4.35,
-      "ROI": -0.334615,
-      "balance_valid": true
+      "profit": -2.35,
+      "ROI": -0.213636,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
       "signals": 112,
-      "pending": 9,
+      "pending": 18,
       "void": 0,
-      "N": 103,
-      "W": 23,
-      "L": 80,
+      "N": 94,
+      "W": 22,
+      "L": 72,
       "PUSH": 0,
-      "profit": -42.775,
-      "ROI": -0.415291,
-      "balance_valid": true
+      "profit": -37.225,
+      "ROI": -0.396011,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
       "signals": 98,
-      "pending": 9,
+      "pending": 8,
       "void": 0,
-      "N": 89,
-      "W": 47,
+      "N": 90,
+      "W": 48,
       "L": 35,
       "PUSH": 7,
-      "profit": 0.125,
-      "ROI": 0.001404,
-      "balance_valid": true
+      "profit": 0.95,
+      "ROI": 0.010556,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 22,
-      "pending": 0,
+      "pending": 22,
       "void": 0,
-      "N": 22,
-      "W": 3,
-      "L": 19,
+      "N": 0,
+      "W": 0,
+      "L": 0,
       "PUSH": 0,
-      "profit": -4.667,
-      "ROI": -0.212136,
+      "profit": 0.0,
+      "ROI": null,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -109,7 +113,8 @@
           "ROI": 0.155533,
           "balance_valid": true
         }
-      }
+      },
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
@@ -122,7 +127,10 @@
       "PUSH": 0,
       "profit": -68.025,
       "ROI": -0.149505,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     }
-  }
+  },
+  "settlement_updated_at": "2026-10-07T14:09:50Z",
+  "settlement_source": "betsapi_cache"
 }
