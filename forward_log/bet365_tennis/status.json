@@ -1,12 +1,17 @@
 {
-  "timestamp": "2026-10-07T11:46:01.450507+00:00",
+  "timestamp": "2026-10-07T11:58:01.452092+00:00",
   "collector": "BET365_TENNIS_V1",
-  "api_calls": 31,
-  "inplay_events": 69,
+  "api_calls": 64,
+  "inplay_events": 65,
   "eligible_live": 24,
   "details_fetched": 24,
-  "prematch_details": 0,
-  "snapshots_added": 15,
+  "prematch_details": 19,
+  "snapshots_added": 25,
   "signals_added": 0,
-  "errors": []
+  "errors": [
+    {
+      "prematch_fi": "202419050",
+      "error": "HTTPError:HTTP Error 502: Bad Gateway"
+    }
+  ]
 }
