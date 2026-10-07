@@ -1,24 +1,24 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-07T03:42:49Z",
-  "api_calls": 1,
-  "board_n": 3,
-  "observations": 3470,
-  "signals": 653,
+  "updated_at": "2026-10-07T03:52:59Z",
+  "api_calls": 3,
+  "board_n": 2,
+  "observations": 3471,
+  "signals": 655,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
       "id": "S33",
       "signals": 13,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 12,
+      "N": 13,
       "W": 7,
-      "L": 5,
+      "L": 6,
       "PUSH": 0,
-      "profit": 1.725,
-      "ROI": 0.14375,
+      "profit": 0.725,
+      "ROI": 0.055769,
       "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
@@ -50,20 +50,20 @@
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
       "signals": 85,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 84,
+      "N": 85,
       "W": 45,
       "L": 33,
-      "PUSH": 6,
+      "PUSH": 7,
       "profit": 0.65,
-      "ROI": 0.007738,
+      "ROI": 0.007647,
       "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
-      "signals": 18,
-      "pending": 0,
+      "signals": 19,
+      "pending": 1,
       "void": 0,
       "N": 18,
       "W": 2,
@@ -98,8 +98,8 @@
           "balance_valid": true
         },
         "both": {
-          "signals": 13,
-          "pending": 0,
+          "signals": 14,
+          "pending": 1,
           "void": 0,
           "N": 13,
           "W": 2,
@@ -113,15 +113,15 @@
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
-      "signals": 445,
+      "signals": 446,
       "pending": 1,
       "void": 0,
-      "N": 444,
-      "W": 146,
+      "N": 445,
+      "W": 147,
       "L": 298,
       "PUSH": 0,
-      "profit": -66.375,
-      "ROI": -0.149493,
+      "profit": -64.775,
+      "ROI": -0.145562,
       "balance_valid": true
     }
   }
