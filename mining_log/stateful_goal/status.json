@@ -19,7 +19,8 @@
       "PUSH": 0,
       "profit": 0.725,
       "ROI": 0.055769,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -32,7 +33,8 @@
       "PUSH": 0,
       "profit": -3.35,
       "ROI": -0.239286,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
@@ -45,32 +47,34 @@
       "PUSH": 0,
       "profit": -51.275,
       "ROI": -0.434534,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
       "signals": 104,
-      "pending": 2,
+      "pending": 0,
       "void": 0,
-      "N": 102,
-      "W": 54,
+      "N": 104,
+      "W": 56,
       "L": 40,
       "PUSH": 8,
-      "profit": 1.45,
-      "ROI": 0.014216,
-      "balance_valid": true
+      "profit": 3.15,
+      "ROI": 0.030288,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 31,
-      "pending": 1,
+      "pending": 31,
       "void": 0,
-      "N": 30,
-      "W": 5,
-      "L": 25,
+      "N": 0,
+      "W": 0,
+      "L": 0,
       "PUSH": 0,
-      "profit": 1.333,
-      "ROI": 0.044433,
+      "profit": 0.0,
+      "ROI": null,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -109,7 +113,8 @@
           "ROI": 0.492048,
           "balance_valid": true
         }
-      }
+      },
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
@@ -122,7 +127,10 @@
       "PUSH": 0,
       "profit": -64.75,
       "ROI": -0.139247,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     }
-  }
+  },
+  "settlement_updated_at": "2026-10-07T20:08:18Z",
+  "settlement_source": "betsapi_cache"
 }
