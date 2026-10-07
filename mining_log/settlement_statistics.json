@@ -1,22 +1,21 @@
 {
-  "generated_at_utc": "2026-10-07T04:08:45Z",
+  "generated_at_utc": "2026-10-07T06:09:28Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-07T04:08:45Z",
+    "updated_at": "2026-10-07T06:09:28Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
-    "provider_queries": 3,
-    "queried_events": 25,
+    "provider_queries": 1,
+    "queried_events": 10,
     "cache_events": 1954,
     "signal_unique_events": 1874,
-    "signal_final_events": 1866,
+    "signal_final_events": 1867,
     "signal_void_events": 7,
-    "signal_pending_events": 1,
-    "reconciled_stateful_rows": 2415,
+    "signal_pending_events": 0,
+    "reconciled_stateful_rows": 2416,
     "stateful_duplicate_signals": 0,
     "states": {
-      "FINAL": 1930,
-      "NOT_FINAL_1": 1,
+      "FINAL": 1931,
       "NOT_FINAL_2": 8,
       "NOT_FINAL_4": 1,
       "VOID_CANCELLED": 1,
@@ -439,23 +438,23 @@
       },
       "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
         "signals": 81,
-        "pending": 1,
+        "pending": 0,
         "void": 0,
         "direct": {
-          "N": 80,
+          "N": 81,
           "W": 19,
-          "L": 61,
+          "L": 62,
           "PUSH": 0,
-          "profit": -29.65,
-          "ROI_pct": -37.06
+          "profit": -30.65,
+          "ROI_pct": -37.84
         },
         "opposite": {
-          "N": 80,
-          "W": 61,
+          "N": 81,
+          "W": 62,
           "L": 19,
           "PUSH": 0,
-          "profit": 3.995,
-          "ROI_pct": 4.99
+          "profit": 4.395,
+          "ROI_pct": 5.43
         }
       },
       "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
