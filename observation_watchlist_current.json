@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-07T10:23:30.833797Z",
+  "generated_at": "2026-10-07T11:23:57.071983Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -25,39 +25,39 @@
       "name_ru": "Основной ТБ при 1:1 - линии 2,5-2,75",
       "direction": "direct",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 124,
-      "settled": 124,
-      "pending": 0,
+      "recorded": 126,
+      "settled": 125,
+      "pending": 1,
       "void": 0,
       "result": {
-        "N": 124,
+        "N": 125,
         "W": 65,
-        "L": 59,
+        "L": 60,
         "P": 0,
-        "profit": -15.588,
-        "ROI": -12.57
+        "profit": -16.588,
+        "ROI": -13.27
       },
       "without_top3": {
-        "N": 121,
+        "N": 122,
         "W": 62,
-        "L": 59,
+        "L": 60,
         "P": 0,
-        "profit": -18.613,
-        "ROI": -15.38
+        "profit": -19.613,
+        "ROI": -16.08
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 736,
-        "settled": 728,
-        "pending": 6,
+        "recorded": 743,
+        "settled": 734,
+        "pending": 7,
         "void": 2,
         "result": {
-          "N": 728,
-          "W": 295,
-          "L": 363,
+          "N": 734,
+          "W": 299,
+          "L": 365,
           "P": 70,
-          "profit": -81.8,
-          "ROI": -11.24
+          "profit": -80.375,
+          "ROI": -10.95
         }
       },
       "review_ready": false
@@ -89,17 +89,17 @@
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
-        "recorded": 806,
-        "settled": 799,
-        "pending": 5,
+        "recorded": 815,
+        "settled": 806,
+        "pending": 7,
         "void": 2,
         "result": {
-          "N": 799,
-          "W": 395,
-          "L": 337,
+          "N": 806,
+          "W": 398,
+          "L": 341,
           "P": 67,
-          "profit": 15.677,
-          "ROI": 1.96
+          "profit": 14.177,
+          "ROI": 1.76
         }
       },
       "review_ready": false
