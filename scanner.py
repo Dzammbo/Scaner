@@ -755,8 +755,14 @@ def football_evaluate(ev, st, detail):
         return None
     if "odds" in r and not in_range(current_odds, r["odds"]):
         return None
+    if "trigger_over_odds" in r and not in_range(tf["next_goal_over_odds"], r["trigger_over_odds"]):
+        return None
     if "trigger_under_odds" in r and not in_range(tf["next_goal_under_odds"], r["trigger_under_odds"]):
         return None
+    if "allowed_lines" in r:
+        allowed = [float(value) for value in r["allowed_lines"]]
+        if bet_line is None or not any(abs(float(bet_line) - value) < 1e-9 for value in allowed):
+            return None
     if r.get("observed_price_required") and not tf["next_goal_price_observed"]:
         return None
     if r.get("verified_price_required") and not tf["next_goal_price_verified"]:

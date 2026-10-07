@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "name": "SCANNER_PRIORITY_POCKETS_V1",
-  "created_at": "2026-10-01",
+  "created_at": "2026-10-07",
   "policy": {
     "purpose": "Приоритетный порядок наблюдения и статистики; остальные стратегии Scanner продолжают учитываться.",
     "changes_operational_scanner": false,
-    "note": "Каждый пункт соответствует ровно одному разрезу исходных сигналов. Пересечения с другими пунктами возможны; их прибыль нельзя складывать. Обратное направление рассчитано по зафиксированному коэффициенту противоположного исхода."
+    "note": "После атомарного аудита каждый пункт собирается как самостоятельная clean-forward стратегия. Пересечения возможны; их прибыль нельзя складывать."
   },
   "items": [
-    {"rank": 1, "name_ru": "ТБ 2,5 при счёте 1:1", "strategy_id": "S20", "direction": "direct", "dimension": "линия", "value": "2.5"},
-    {"rank": 2, "name_ru": "ТМ при счёте 1:1 на 45-49-й минуте", "strategy_id": "S20", "direction": "reverse", "dimension": "минута", "value": "45-49"},
-    {"rank": 3, "name_ru": "ТБ при счёте 1:1 на 65-69-й минуте при коэффициенте 1,75-1,99", "strategy_id": "S20", "direction": "direct", "dimension": "коэффициент + минута", "value": "1.75-1.99 | 65-69"},
-    {"rank": 4, "name_ru": "ТМ при счёте 1:1 в Honduras Reserve League", "strategy_id": "S20", "direction": "reverse", "dimension": "турнир", "value": "Honduras Reserve League"}
+    {"rank": 1, "name_ru": "Без гола после 70-й минуты при счёте 0:2", "strategy_id": "S02", "direction": "direct", "dimension": "линия", "value": "2.5"},
+    {"rank": 2, "name_ru": "Тотал больше 2,5 после гола при счёте 0:2", "strategy_id": "S28", "direction": "direct", "dimension": "линия", "value": "2.5"},
+    {"rank": 3, "name_ru": "Тотал меньше при счёте 1:1 на 45-49-й минуте", "strategy_id": "S36", "direction": "direct", "dimension": "минута", "value": "45-49"},
+    {"rank": 4, "name_ru": "Тотал больше при счёте 1:1 на 30-34-й минуте", "strategy_id": "S38", "direction": "direct", "dimension": "минута", "value": "30-34"}
   ]
 }

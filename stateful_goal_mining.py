@@ -10,23 +10,21 @@ SCANNER_SIGNALS=Path("forward_log/stateful_pressure_signals.jsonl")
 SCANNER_STATUS=Path("forward_log/stateful_pressure_status.json")
 MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0;NEW_PRESSURE_CUTOFF=20.0
 ACTIVE_SIGNAL_IDS={
- ("FOOTBALL_PRESSURE_TOTAL_O05_V1","HIGH_PRESSURE_O05_FT"):"S26",
+ ("FOOTBALL_PRESSURE_NOGOAL_70_79_V1","PRIMARY"):"S39",
  ("FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","PRIMARY"):"S31",
  ("FOOTBALL_FH_PRESSURE_GOAL_V1","PRIMARY"):"S32",
  ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
  ("FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","PRIMARY"):"S34",
 }
 MINING_SIGNAL_IDS={
- ("FOOTBALL_FH_SOT_NEXT_GOAL_V1","PRIMARY"):"S12",
  ("FOOTBALL_LATE_HOME_ACTIVITY_V2","PRIMARY"):"S13",
 }
 SIGNAL_NAMES={
- "S26":"High Pressure ТБ 0.5 матча",
+ "S39":"Без гола при высоком давлении на 70-79-й минуте",
  "S31":"ТМ матча в перерыве при низкой активности",
  "S32":"Гол до перерыва при высокой активности",
  "S33":"Без гола после 60-й при 0:0 и низкой активности",
  "S34":"Гол во втором тайме после активного первого без голов",
- "S12":"ТБ 0.5 первого тайма после 30-й при ударе в створ",
  "S13":"Поздняя победа хозяев при подтверждённой домашней активности",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
@@ -63,7 +61,7 @@ def sync_scanner_signals(rows):
   if not sid:continue
   line=fmtline(x["selected_line"]);over=x.get("selection","OVER")=="OVER";bet=f"Т{'Б' if over else 'М'} {line}";reverse=f"Т{'М' if over else 'Б'} {line}";key=(str(x["event_id"]),bet,sid)
   if key in by_key:continue
-  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":bet,"current_odds":x.get("selected_odds"),"reverse_bet":reverse,"reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[SIGNAL_NAMES[sid]],"tier":"ACTIVE" if sid=="S26" else "WATCHLIST","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
+  by_key[key]={"timestamp":iso(x.get("entry_at")),"sport":"football","tournament":x.get("league"),"event_id":str(x["event_id"]),"match":f"{x.get('home')} - {x.get('away')}","minute_score":f"{x.get('minute')}' / '{x.get('score')}'","minute":x.get("minute"),"score":x.get("score"),"exact_bet_line":bet,"current_odds":x.get("selected_odds"),"reverse_bet":reverse,"reverse_odds":x.get("reverse_odds"),"strategy_id":sid,"strategy_ids":[sid],"strategy_names":[SIGNAL_NAMES[sid]],"tier":"ACTIVE" if sid=="S39" else "WATCHLIST","pressure10":x.get("pressure10"),"period":x.get("period"),"source":"stateful_goal_mining"}
  save_rows(SCANNER_SIGNALS,sorted(by_key.values(),key=lambda x:str(x.get("timestamp") or "")))
  active=[x for x in by_key.values() if int(time.time())-int(datetime.fromisoformat(str(x["timestamp"]).replace("Z","+00:00")).timestamp())<=600]
  SCANNER_STATUS.write_text(json.dumps({"scanner":"STATEFUL_USER_SIGNALS","updated_at":iso(),"signals":len(by_key),"active_last_10m":active},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -139,8 +137,6 @@ def candidate_arms(meta,features,halftime=False):
  s=score(meta.get("score"));minute=meta.get("minute");sot=total(meta.get("stats") or {},"on_target");pressure=None if not features else features.get("pressure10");out=[]
  if not s or minute is None:return out
  goals=sum(s)
- if 30<=minute<=45 and features and features.get("on_target10") is not None and features["on_target10"]>=1:
-  out.append({"id":"S12","strategy":"FOOTBALL_FH_SOT_NEXT_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":1})
  activity_segment=late_home_activity_segment(features)
  if minute>=85 and s[0]==s[1] and activity_segment:
   out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_ACTIVITY_V2","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1,"activity_segment":activity_segment})
@@ -152,8 +148,8 @@ def candidate_arms(meta,features,halftime=False):
   out.append({"id":"S33","strategy":"FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":[1.50,2.20],"interval":300,"priority":1})
  if halftime and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
   out.append({"id":"S34","strategy":"FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"OVER","period":"FT","odds":[1.40,2.00],"interval":300,"priority":0})
- if minute>45 and pressure is not None and pressure>=PRESSURE_CUTOFF:
-  out.append({"id":"S26","strategy":"FOOTBALL_PRESSURE_TOTAL_O05_V1","arm":"HIGH_PRESSURE_O05_FT","market":"FT_NEXT","selection":"OVER","period":"FT","odds":None,"interval":600,"priority":2})
+ if 70<=minute<=79 and pressure is not None and pressure>=PRESSURE_CUTOFF:
+  out.append({"id":"S39","strategy":"FOOTBALL_PRESSURE_NOGOAL_70_79_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":None,"interval":600,"priority":2})
  return out
 def final_period_goals(ev,period):
  scores=ev.get("scores") or {}
