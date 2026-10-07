@@ -54,7 +54,6 @@ class TopSixRegistryTest(unittest.TestCase):
         expected = {
             "S01": [1.70, 2.00],
             "S10": [2.00, 2.10],
-            "S28": [1.30, 2.075],
             "T18": [1.50, 1.75],
             "S29": [1.30, 1.95],
         }
@@ -65,7 +64,7 @@ class TopSixRegistryTest(unittest.TestCase):
             self.assertEqual(row["clean_epoch_start"], "2026-10-01T19:15:00Z")
 
     def test_retired_negative_rules_are_archived(self):
-        for strategy_id in ("S08", "S11", "T14", "T16", "S27", "S25"):
+        for strategy_id in ("S08", "S11", "T14", "T16", "S27", "S25", "S12", "S20", "S26"):
             row = strategy(strategy_id)
             self.assertFalse(row["scanner_enabled"])
             self.assertFalse(row["user_output"])
@@ -154,15 +153,37 @@ class FootballTopSixTest(unittest.TestCase):
             finally:
                 scanner.LOG_DIR = old_log_dir
 
-    def test_post_goal_under_selects_under_2_5(self):
+    def test_post_goal_reverse_selects_over_2_5(self):
         now = int(time.time())
         detail = totals_detail([
             {"add_time": now, "ss": "0-2", "time_str": "66", "handicap": "2.5", "over_od": "2.20", "under_od": "1.70"},
             {"add_time": now - 120, "ss": "0-1", "time_str": "64", "handicap": "1.5", "over_od": "2.00", "under_od": "1.80"},
         ])
         hit = scanner.football_evaluate(football_event("0-2", 68), strategy("S28"), detail)
+        self.assertEqual(hit["bet"], "ТБ 2.5")
+        self.assertEqual(hit["current_odds"], 2.20)
+
+    def test_zero_two_reverse_selects_under_from_original_over_gate(self):
+        now = int(time.time())
+        detail = totals_detail([
+            {"add_time": now, "ss": "0-2", "time_str": "72", "handicap": "2.5", "over_od": "1.90", "under_od": "2.05"},
+        ])
+        hit = scanner.football_evaluate(football_event("0-2", 72), strategy("S02"), detail)
         self.assertEqual(hit["bet"], "ТМ 2.5")
-        self.assertEqual(hit["current_odds"], 1.70)
+        self.assertEqual(hit["current_odds"], 2.05)
+
+    def test_atomic_one_one_pockets_keep_exact_windows_and_lines(self):
+        now = int(time.time())
+        rows = [
+            {"add_time": now, "ss": "1-1", "time_str": "47", "handicap": "3.5", "over_od": "1.90", "under_od": "1.90"},
+        ]
+        detail = totals_detail(rows)
+        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S36"), detail)["bet"], "ТМ 3.5")
+        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S37"), detail)["bet"], "ТМ 3.5")
+        self.assertIsNone(scanner.football_evaluate(football_event("1-1", 47), strategy("S38"), detail))
+        rows[0].update({"time_str": "32", "handicap": "3.25"})
+        self.assertEqual(scanner.football_evaluate(football_event("1-1", 32), strategy("S38"), detail)["bet"], "ТБ 3.25")
+        self.assertIsNone(scanner.football_evaluate(football_event("1-1", 32), strategy("S37"), detail))
 
     def test_late_two_nil_under_selects_under_2_5(self):
         now = int(time.time())
@@ -216,13 +237,13 @@ class TennisTopSixTest(unittest.TestCase):
 class PressureTopSixTest(unittest.TestCase):
     def test_sync_publishes_all_active_stateful_signals(self):
         base = {
-            "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
-            "arm": "HIGH_PRESSURE_O05_FT",
+            "strategy": "FOOTBALL_PRESSURE_NOGOAL_70_79_V1",
+            "arm": "PRIMARY",
             "entry_at": int(time.time()),
             "league": "Test League",
             "home": "Home",
             "away": "Away",
-            "minute": 60,
+            "minute": 74,
             "score": "0-0",
             "selected_line": 0.5,
             "reverse_odds": 1.80,
@@ -233,7 +254,7 @@ class PressureTopSixTest(unittest.TestCase):
             stateful.SCANNER_SIGNALS = Path(tmp) / "signals.jsonl"
             stateful.SCANNER_STATUS = Path(tmp) / "status.json"
             stateful.sync_scanner_signals([
-                {**base, "event_id": "s26", "selected_odds": 1.95},
+                {**base, "event_id": "s39", "selection": "UNDER", "selected_odds": 1.95},
                 {**base, "event_id": "s31", "strategy": "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.90},
                 {**base, "event_id": "s32", "strategy": "FOOTBALL_FH_PRESSURE_GOAL_V1", "arm": "PRIMARY", "period": "FH", "selection": "OVER", "selected_odds": 2.10},
                 {**base, "event_id": "s33", "strategy": "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.75},
@@ -241,7 +262,7 @@ class PressureTopSixTest(unittest.TestCase):
                 {**base, "event_id": "s27", "arm": "HIGH_PRESSURE_O05_FH", "period": "FH", "selected_odds": 1.95},
             ])
             rows = stateful.load_rows(stateful.SCANNER_SIGNALS)
-        self.assertEqual({row["strategy_id"] for row in rows}, {"S26", "S31", "S32", "S33", "S34"})
+        self.assertEqual({row["strategy_id"] for row in rows}, {"S39", "S31", "S32", "S33", "S34"})
         self.assertNotIn("s27", {row["event_id"] for row in rows})
 
 

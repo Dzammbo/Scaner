@@ -14,34 +14,35 @@ import mining_pending_refresh as refresh
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S09,S21,S22,S35")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S09,S21,S22")
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
     def test_general_pass_has_explicit_allowlist(self, invoke, _budget):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
-        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S09,S21,S22,S35")
+        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S03,S04,S05,S07,S09,S21,S22")
 
     def test_stateful_accepts_only_active_arms(self):
         for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:
             self.assertTrue(stateful.is_active_signal({"strategy": strategy, "arm": arm}))
         self.assertFalse(stateful.is_active_signal({
             "strategy": "FOOTBALL_PRESSURE_TOTAL_O05_V1",
-            "arm": "HIGH_PRESSURE_O05_FH",
+            "arm": "HIGH_PRESSURE_O05_FT",
         }))
         self.assertFalse(stateful.is_active_signal({
             "strategy": "LIVE_GOAL_SELECTION_V3",
             "arm": "PLUS_0_5",
         }))
 
-    def test_four_new_candidate_rules(self):
+    def test_retained_candidate_rules(self):
         base = {"event_id": "1", "league": "Test", "country": "GB", "home": "A", "away": "B"}
         cases = [
             ({**base, "score": "1-0", "minute": 45, "stats": {"on_target": [1, 1]}}, {}, True, "S31"),
             ({**base, "score": "0-0", "minute": 32, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, False, "S32"),
             ({**base, "score": "0-0", "minute": 65, "stats": {"on_target": [1, 1]}}, {}, False, "S33"),
             ({**base, "score": "0-0", "minute": 45, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, True, "S34"),
+            ({**base, "score": "1-1", "minute": 74, "stats": {"on_target": [3, 2]}}, {"pressure10": 28}, False, "S39"),
         ]
         for meta, features, halftime, expected in cases:
             self.assertIn(expected, [x["id"] for x in stateful.candidate_arms(meta, features, halftime)])

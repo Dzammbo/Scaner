@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 20,
-    "last_operational_change_at": "2026-10-05T12:00:00Z",
-    "last_operational_change": "Archived S08 from Scanner, S25 from Mining, and the second S30 observation pocket; S26 remains active while its settlement discrepancy is reconciled.",
+    "operational_scanner_count": 21,
+    "last_operational_change_at": "2026-10-07T20:25:00Z",
+    "last_operational_change": "Archived broad negative rules and retained only agreed positive pockets: no goal at 0:2, narrow 1:1 totals, no goal under high pressure at 70-79, over 2.5 after 0:2, the existing 1.50-1.75 heavy-set tennis rule, and two adult-men late-over S30 pockets.",
     "user_facing_names": "Только поле name_ru",
     "show_technical_strategy_ids_to_user": false,
     "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
@@ -67,23 +67,28 @@
       "id": "S02",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Гол после 70-й минуты при счёте 0:2",
-      "source": "historical_confirmed",
+      "name_ru": "Без гола после 70-й минуты при счёте 0:2",
+      "source": "reverse_pocket_20261007",
       "rule": {
         "minute": [
           70,
           79
         ],
         "score": "0-2",
-        "odds": [
+        "trigger_over_odds": [
           1.8,
           1.99
         ],
-        "market": "next_goal_over"
+        "market": "next_goal_under",
+        "entry_policy": "first_available_quote_in_window",
+        "one_entry_per_match": true
       },
       "user_output": true,
       "scanner_enabled": true,
-      "scanner_core8": true
+      "scanner_core8": true,
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-07T20:25:00Z",
+      "history_note": "The former broad next-goal-over direction was archived at ROI -18.21%. This clean epoch keeps only its reverse no-goal pocket, triggered by the original over quote 1.80-1.99."
     },
     {
       "id": "S03",
@@ -368,16 +373,18 @@
         "on_target10_min": 1,
         "market": "plus_0_5"
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "mining_enabled": true,
+      "mining_enabled": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T06:00:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-06T06:00:00Z",
+      "archived_at": "2026-10-07T20:25:00Z",
+      "archive_reason": "Исключена по согласованному аудиту: N=85, ROI около -36%; слабое обратное направление не оправдывает дальнейший шум. История сохранена."
     },
     {
       "id": "S13",
@@ -547,11 +554,15 @@
         "score": "1-1",
         "market": "main_over"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true,
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
       "clean_epoch_start": "2026-09-27T19:42:00Z",
-      "history_note": "До clean_epoch_start историческая выборка смешивала current_goals+1.0 и fallback main Goal Line; считать exploratory и не объединять с новым однородным forward."
+      "history_note": "До clean_epoch_start историческая выборка смешивала current_goals+1.0 и fallback main Goal Line; считать exploratory и не объединять с новым однородным forward.",
+      "research_destination": "history",
+      "status": "ARCHIVED",
+      "archived_at": "2026-10-07T20:25:00Z",
+      "archive_reason": "Широкий ТБ при 1:1 исключён: N=1732, ROI -11.54%. Согласованные узкие карманы вынесены в отдельные clean-forward стратегии."
     },
     {
       "id": "S21",
@@ -754,10 +765,10 @@
         "pressure10_min": 28,
         "market": "plus_0_5"
       },
-      "user_output": true,
-      "scanner_enabled": true,
-      "scanner_core8": true,
-      "research_destination": "scanner",
+      "user_output": false,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "history",
       "collection_engine": "stateful_goal_mining.py",
       "scanner_activated_at": "2026-10-01",
       "data_quality_status": "RECONCILED",
@@ -774,7 +785,10 @@
         "profit": -27.7,
         "roi_pct": -8.47,
         "source": "mining_log/settlement_statistics.json"
-      }
+      },
+      "status": "ARCHIVED",
+      "archived_at": "2026-10-07T20:25:00Z",
+      "archive_reason": "Широкая механика исключена: N=465, ROI -13.92%. Сохранён отдельный clean-forward карман без гола на 70-79-й минуте."
     },
     {
       "id": "S27",
@@ -817,17 +831,17 @@
       "id": "S28",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Тотал меньше 2,5 после гола при счёте 0:2 с 60-й минуты",
-      "source": "unified_robust_top6_20261001",
+      "name_ru": "Тотал больше 2,5 после гола при счёте 0:2 с 60-й минуты",
+      "source": "reverse_pocket_20261007",
       "rule": {
         "minute_min": 60,
         "score": "0-2",
         "minutes_since_goal_max": 5,
-        "odds": [
+        "trigger_under_odds": [
           1.3,
           2.075
         ],
-        "market": "next_goal_under",
+        "market": "next_goal_over",
         "entry_policy": "first_available_quote_within_5_minutes_after_goal",
         "one_entry_per_match": true
       },
@@ -837,7 +851,8 @@
       "status": "ACTIVE_TOP6",
       "research_destination": "scanner",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
-      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-07T20:25:00Z",
+      "history_note": "The former under direction was archived at ROI -24.24%. This clean epoch keeps only its reverse over-2.5 pocket, triggered by the original under quote 1.30-2.075.",
       "evidence": {
         "n": 44,
         "wins": 35,
@@ -1174,6 +1189,90 @@
       "clean_epoch_start": "2026-10-04T13:30:00Z"
     },
     {
+      "id": "S36",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
+      "source": "atomic_pocket_20261007",
+      "rule": {
+        "score": "1-1",
+        "minute": [45, 49],
+        "market": "main_under",
+        "entry_policy": "first_available_quote_in_window",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "collection_engine": "scanner.py",
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-07T20:25:00Z"
+    },
+    {
+      "id": "S37",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
+      "source": "atomic_pocket_20261007",
+      "rule": {
+        "score": "1-1",
+        "market": "main_under",
+        "allowed_lines": [3.5, 3.75, 4.0],
+        "entry_policy": "first_available_quote",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "collection_engine": "scanner.py",
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-07T20:25:00Z"
+    },
+    {
+      "id": "S38",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Тотал больше при счёте 1:1 на 30-34-й минуте",
+      "source": "atomic_pocket_20261007",
+      "rule": {
+        "score": "1-1",
+        "minute": [30, 34],
+        "market": "main_over",
+        "entry_policy": "first_available_quote_in_window",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "collection_engine": "scanner.py",
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-07T20:25:00Z"
+    },
+    {
+      "id": "S39",
+      "tier": "ACTIVE",
+      "sport": "football",
+      "name_ru": "Без гола при высоком давлении на 70-79-й минуте",
+      "source": "atomic_pocket_20261007",
+      "rule": {
+        "minute": [70, 79],
+        "pressure10_min": 28,
+        "market": "next_goal_under",
+        "entry_policy": "first_fresh_quote",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "research_destination": "scanner",
+      "collection_engine": "stateful_goal_mining.py",
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-07T20:25:00Z"
+    },
+    {
       "id": "S30",
       "tier": "WATCHLIST",
       "sport": "football",
@@ -1190,18 +1289,20 @@
         "score_filter": null,
         "odds_filter": null
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "s30_worker.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
+      "status": "POCKET_SOURCE_ONLY",
+      "research_destination": "pocket_source",
       "scanner_activated_at": "2026-10-02T20:38:06Z",
       "clean_epoch_start": "2026-10-02T20:38:06Z",
       "evidence": {
         "status": "NO_PRIOR_FILTERED_EVIDENCE",
         "note": "Prospective broad 85-minute Under hypothesis; no score or odds filter. Do not merge with score=2-0 S29."
-      }
+      },
+      "archived_at": "2026-10-07T20:25:00Z",
+      "archive_reason": "Широкий пользовательский результат исключён при N=1958 и ROI -3.98%. Нефильтрованный сбор остаётся только техническим источником для двух согласованных взрослых мужских карманов."
     }
   ]
 }

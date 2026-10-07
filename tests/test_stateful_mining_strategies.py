@@ -7,17 +7,25 @@ mining = importlib.import_module("stateful_goal_mining")
 
 
 class StatefulMiningStrategiesTest(unittest.TestCase):
-    def test_s12_uses_ten_minute_shot_on_target_delta(self):
+    def test_archived_first_half_shot_rule_is_not_generated(self):
         meta = {"score": "0-0", "minute": 34, "stats": {}}
         features = {"on_target10": 1, "pressure10": 0}
         arms = mining.candidate_arms(meta, features)
-        self.assertIn("S12", {arm["id"] for arm in arms})
+        self.assertNotIn("S12", {arm["id"] for arm in arms})
 
     def test_s12_does_not_use_cumulative_shots(self):
         meta = {"score": "0-0", "minute": 34, "stats": {"on_target": ["5", "3"]}}
         features = {"on_target10": 0, "pressure10": 0}
         arms = mining.candidate_arms(meta, features)
         self.assertNotIn("S12", {arm["id"] for arm in arms})
+
+    def test_high_pressure_no_goal_uses_only_70_79_window(self):
+        features = {"pressure10": 28}
+        inside = mining.candidate_arms({"score": "1-1", "minute": 74, "stats": {}}, features)
+        outside = mining.candidate_arms({"score": "1-1", "minute": 69, "stats": {}}, features)
+        arm = next(arm for arm in inside if arm["id"] == "S39")
+        self.assertEqual(arm["selection"], "UNDER")
+        self.assertNotIn("S39", {arm["id"] for arm in outside})
 
     def test_s13_combines_pressure_and_shot_into_one_signal(self):
         meta = {"score": "1-1", "minute": 87, "stats": {}}
