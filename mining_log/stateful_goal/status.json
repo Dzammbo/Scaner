@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-07T16:00:27Z",
+  "updated_at": "2026-10-07T16:44:47Z",
   "api_calls": 5,
   "board_n": 16,
-  "observations": 3593,
-  "signals": 734,
+  "observations": 3597,
+  "signals": 736,
   "archived_signals": 1780,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -19,8 +19,7 @@
       "PUSH": 0,
       "profit": 0.725,
       "ROI": 0.055769,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -33,13 +32,12 @@
       "PUSH": 0,
       "profit": -3.35,
       "ROI": -0.239286,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
       "id": "S12",
-      "signals": 115,
-      "pending": 1,
+      "signals": 116,
+      "pending": 2,
       "void": 0,
       "N": 114,
       "W": 25,
@@ -47,13 +45,12 @@
       "PUSH": 0,
       "profit": -47.275,
       "ROI": -0.414693,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
-      "signals": 100,
-      "pending": 2,
+      "signals": 101,
+      "pending": 3,
       "void": 0,
       "N": 98,
       "W": 52,
@@ -61,20 +58,19 @@
       "PUSH": 8,
       "profit": 1.7,
       "ROI": 0.017347,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 29,
-      "pending": 29,
+      "pending": 5,
       "void": 0,
-      "N": 0,
-      "W": 0,
-      "L": 0,
+      "N": 24,
+      "W": 4,
+      "L": 20,
       "PUSH": 0,
-      "profit": 0.0,
-      "ROI": null,
+      "profit": -1.167,
+      "ROI": -0.048625,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -103,18 +99,17 @@
         },
         "both": {
           "signals": 20,
-          "pending": 5,
+          "pending": 3,
           "void": 0,
-          "N": 15,
-          "W": 3,
-          "L": 12,
+          "N": 17,
+          "W": 4,
+          "L": 13,
           "PUSH": 0,
-          "profit": 2.333,
-          "ROI": 0.155533,
+          "profit": 5.833,
+          "ROI": 0.343118,
           "balance_valid": true
         }
-      },
-      "settlement_source": "betsapi_cache"
+      }
     },
     "FOOTBALL_PRESSURE_TOTAL_O05_V1:HIGH_PRESSURE_O05_FT": {
       "id": "S26",
@@ -127,10 +122,7 @@
       "PUSH": 0,
       "profit": -63.65,
       "ROI": -0.137771,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-07T16:12:12Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
