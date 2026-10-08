@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-08T14:59:36Z",
-  "api_calls": 5,
-  "board_n": 34,
-  "observations": 3710,
-  "signals": 217,
+  "updated_at": "2026-10-08T15:09:43Z",
+  "api_calls": 2,
+  "board_n": 27,
+  "observations": 3712,
+  "signals": 218,
   "archived_signals": 2369,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -24,14 +24,14 @@
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
       "signals": 20,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 19,
+      "N": 20,
       "W": 9,
-      "L": 10,
+      "L": 11,
       "PUSH": 0,
-      "profit": 1.925,
-      "ROI": 0.101316,
+      "profit": 0.925,
+      "ROI": 0.04625,
       "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
@@ -49,20 +49,20 @@
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
-      "signals": 49,
+      "signals": 50,
       "pending": 2,
       "void": 0,
-      "N": 47,
-      "W": 8,
+      "N": 48,
+      "W": 9,
       "L": 39,
       "PUSH": 0,
-      "profit": -0.667,
-      "ROI": -0.014191,
+      "profit": 1.333,
+      "ROI": 0.027771,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
-          "signals": 10,
-          "pending": 0,
+          "signals": 11,
+          "pending": 1,
           "void": 0,
           "N": 10,
           "W": 0,
@@ -86,14 +86,14 @@
         },
         "both": {
           "signals": 31,
-          "pending": 2,
+          "pending": 1,
           "void": 0,
-          "N": 29,
-          "W": 8,
+          "N": 30,
+          "W": 9,
           "L": 21,
           "PUSH": 0,
-          "profit": 17.333,
-          "ROI": 0.59769,
+          "profit": 19.333,
+          "ROI": 0.644433,
           "balance_valid": true
         }
       }
@@ -101,14 +101,14 @@
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
       "signals": 21,
-      "pending": 3,
+      "pending": 1,
       "void": 0,
-      "N": 18,
-      "W": 13,
-      "L": 5,
+      "N": 20,
+      "W": 14,
+      "L": 6,
       "PUSH": 0,
-      "profit": 6.9,
-      "ROI": 0.383333,
+      "profit": 6.85,
+      "ROI": 0.3425,
       "balance_valid": true
     }
   }
