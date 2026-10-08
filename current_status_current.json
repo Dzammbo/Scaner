@@ -1,12 +1,12 @@
 {
-  "merged": 7729,
-  "settled": 7538,
+  "merged": 7740,
+  "settled": 7541,
   "void": 151,
-  "pending": 40,
-  "pending_live_or_delayed": 40,
+  "pending": 48,
+  "pending_live_or_delayed": 48,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 18,
+    "INPLAY": 26,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 108
   },
   "settlement_event_reasons": {
-    "INPLAY": 17,
+    "INPLAY": 23,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 85
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T09:23:36Z",
+    "updated_at": "2026-10-08T10:23:51Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 1,
-    "queried_events": 5,
-    "signal_unique_events": 4156,
-    "cache_events": 4156,
-    "final_events": 4101,
+    "provider_queries": 3,
+    "queried_events": 24,
+    "signal_unique_events": 4165,
+    "cache_events": 4165,
+    "final_events": 4104,
     "void_events": 25,
-    "immutable_events": 4126,
-    "retryable_events": 30,
+    "immutable_events": 4129,
+    "retryable_events": 36,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 4101,
-      "INPLAY": 17,
+      "FINAL": 4104,
+      "INPLAY": 23,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -65,7 +65,7 @@
     },
     "settlement_score_sources": {
       "scores.2": 6082,
-      "ss": 1456
+      "ss": 1459
     }
   },
   "observation_watchlist": {
@@ -284,8 +284,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 119,
-      "pending": 6,
+      "recorded": 122,
+      "pending": 9,
       "void": 20,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -364,41 +364,41 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 233,
-      "pending": 12,
+      "recorded": 237,
+      "pending": 13,
       "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
+        "N": 191,
+        "W": 120,
+        "L": 71,
+        "P": 0,
+        "profit": -2.398,
+        "ROI": -1.26
+      },
+      "original_without_top3": {
         "N": 188,
         "W": 117,
         "L": 71,
         "P": 0,
-        "profit": -4.097,
-        "ROI": -2.18
-      },
-      "original_without_top3": {
-        "N": 185,
-        "W": 114,
-        "L": 71,
-        "P": 0,
-        "profit": -6.324,
-        "ROI": -3.42
+        "profit": -4.625,
+        "ROI": -2.46
       },
       "reverse": {
-        "N": 188,
+        "N": 191,
         "W": 71,
-        "L": 117,
+        "L": 120,
         "P": 0,
-        "profit": -31.075,
-        "ROI": -16.53
+        "profit": -34.075,
+        "ROI": -17.84
       },
       "reverse_without_top3": {
-        "N": 185,
+        "N": 188,
         "W": 68,
-        "L": 117,
+        "L": 120,
         "P": 0,
-        "profit": -35.575,
-        "ROI": -19.23
+        "profit": -38.575,
+        "ROI": -20.52
       }
     },
     "S29": {
@@ -444,8 +444,8 @@
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 105,
-      "pending": 0,
+      "recorded": 106,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -564,8 +564,8 @@
     "S36": {
       "name": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 6,
-      "pending": 0,
+      "recorded": 7,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -604,8 +604,8 @@
     "S37": {
       "name": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 7,
-      "pending": 0,
+      "recorded": 8,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -644,8 +644,8 @@
     "S38": {
       "name": "Тотал больше при счёте 1:1 на 30-34-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 2,
-      "pending": 0,
+      "recorded": 3,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
