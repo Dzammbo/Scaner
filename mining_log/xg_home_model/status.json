@@ -1,0 +1,43 @@
+{
+  "strategy": "Победа хозяев по ожидаемым голам",
+  "mode": "FORWARD_RESEARCH",
+  "runtime": "github-actions",
+  "updated_at": "2026-10-08T11:13:13Z",
+  "api_calls": 9,
+  "data_source": "BetsAPI only",
+  "formula": "последние 3 домашних xG хозяев и 3 выездных xG гостей + Пуассон/Скеллам",
+  "calibration": {
+    "ready": false,
+    "reason": "Новая эпоха ещё не накопила историю для out-of-sample isotonic calibration"
+  },
+  "counts": {
+    "completed_matches_with_xg": 11,
+    "all_model_predictions": 0,
+    "primary_home_candidates": 0
+  },
+  "primary_rule": {
+    "competition": "Germany Bundesliga",
+    "outcome": "home_win",
+    "odds": [
+      1.25,
+      3.0
+    ],
+    "minimum_probability_edge": 0.05,
+    "minimum_expected_value": 0.05
+  },
+  "primary_results": {
+    "N": 0,
+    "wins": 0,
+    "losses": 0,
+    "profit": 0,
+    "roi": null,
+    "pending": 0,
+    "void": 0
+  },
+  "diagnostics_last_run": {
+    "final_checked": 8,
+    "history_added": 3,
+    "predictions_added": 0,
+    "no_data": {}
+  }
+}
