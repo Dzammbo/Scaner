@@ -1,12 +1,12 @@
 {
-  "merged": 7724,
+  "merged": 7729,
   "settled": 7538,
   "void": 151,
-  "pending": 35,
-  "pending_live_or_delayed": 35,
+  "pending": 40,
+  "pending_live_or_delayed": 40,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 13,
+    "INPLAY": 18,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 108
   },
   "settlement_event_reasons": {
-    "INPLAY": 12,
+    "INPLAY": 17,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 85
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T09:03:32Z",
+    "updated_at": "2026-10-08T09:23:36Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 12,
-    "signal_unique_events": 4151,
-    "cache_events": 4151,
+    "provider_queries": 1,
+    "queried_events": 5,
+    "signal_unique_events": 4156,
+    "cache_events": 4156,
     "final_events": 4101,
     "void_events": 25,
     "immutable_events": 4126,
-    "retryable_events": 25,
+    "retryable_events": 30,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 4101,
-      "INPLAY": 12,
+      "INPLAY": 17,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -284,8 +284,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 118,
-      "pending": 5,
+      "recorded": 119,
+      "pending": 6,
       "void": 20,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -364,8 +364,8 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 230,
-      "pending": 9,
+      "recorded": 233,
+      "pending": 12,
       "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
@@ -684,8 +684,8 @@
     "S39": {
       "name": "Без гола при высоком давлении на 70-79-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 12,
-      "pending": 0,
+      "recorded": 13,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
