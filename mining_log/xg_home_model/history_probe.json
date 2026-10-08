@@ -1,7 +1,7 @@
 {
   "probe": "BetsAPI historical Bundesliga xG",
-  "checked_at": "2026-10-08T20:19:50.343196Z",
-  "success": false,
+  "checked_at": "2026-10-08T20:22:07.685552Z",
+  "success": true,
   "days": [
     "20260918",
     "20260919",
@@ -12,12 +12,12 @@
     {
       "day": "20260918",
       "germany_events": 36,
-      "bundesliga_events": 3
+      "bundesliga_events": 1
     },
     {
       "day": "20260919",
-      "germany_events": 0,
-      "bundesliga_events": 0
+      "germany_events": 50,
+      "bundesliga_events": 5
     },
     {
       "day": "20260920",
@@ -32,7 +32,7 @@
     },
     {
       "league": "102|Germany Oberliga Rheinland-Pfalz/Saar|de",
-      "events": 3
+      "events": 8
     },
     {
       "league": "104|Germany Oberliga Mittelrhein|de",
@@ -40,11 +40,11 @@
     },
     {
       "league": "1057|Germany Oberliga Hessen|de",
-      "events": 3
+      "events": 6
     },
     {
       "league": "123|Germany Bundesliga I|de",
-      "events": 4
+      "events": 9
     },
     {
       "league": "1555|Germany Oberliga NOFV Sud|de",
@@ -56,47 +56,51 @@
     },
     {
       "league": "2964|Germany Oberliga Bremen|de",
-      "events": 4
+      "events": 5
     },
     {
       "league": "382|Germany Regionalliga West|de",
-      "events": 2
+      "events": 9
     },
     {
       "league": "385|Germany Regionalliga South West|de",
+      "events": 9
+    },
+    {
+      "league": "391|Germany Oberliga Schleswig-Holstein|de",
       "events": 2
     },
     {
       "league": "39645|Germany 3. Liga|de",
-      "events": 4
+      "events": 5
     },
     {
       "league": "428|Germany Oberliga Baden-Wuerttemberg|de",
-      "events": 4
+      "events": 6
     },
     {
       "league": "43|Germany Oberliga Hamburg|de",
-      "events": 6
-    },
-    {
-      "league": "501|Germany Oberliga Bayern North|de",
-      "events": 5
-    },
-    {
-      "league": "514|Germany Oberliga Bayern South|de",
-      "events": 3
-    },
-    {
-      "league": "591|Germany Bundesliga Women|de",
-      "events": 5
-    },
-    {
-      "league": "670|Germany Oberliga Westfalen|de",
       "events": 7
     },
     {
-      "league": "671|Germany Oberliga Niederrhein|de",
+      "league": "501|Germany Oberliga Bayern North|de",
+      "events": 7
+    },
+    {
+      "league": "514|Germany Oberliga Bayern South|de",
+      "events": 5
+    },
+    {
+      "league": "591|Germany Bundesliga Women|de",
       "events": 6
+    },
+    {
+      "league": "670|Germany Oberliga Westfalen|de",
+      "events": 9
+    },
+    {
+      "league": "671|Germany Oberliga Niederrhein|de",
+      "events": 9
     },
     {
       "league": "68|Germany Regionalliga Bayern|de",
@@ -104,24 +108,24 @@
     },
     {
       "league": "72|Germany Bundesliga II|de",
-      "events": 2
+      "events": 3
     },
     {
       "league": "73|Germany Regionalliga North East|de",
-      "events": 2
+      "events": 3
     },
     {
       "league": "88|Germany Regionalliga North|de",
-      "events": 1
+      "events": 5
     },
     {
       "league": "93|Germany Oberliga NOFV Nord|de",
       "events": 2
     }
   ],
-  "bundesliga_events": 6,
-  "xg_in_ended": 6,
-  "xg_after_event_view": 6,
+  "bundesliga_events": 9,
+  "xg_in_ended": 9,
+  "xg_after_event_view": 9,
   "coverage_pct": 100.0,
   "samples": [
     {
@@ -170,18 +174,18 @@
       "view_stats_keys": []
     },
     {
-      "event_id": "12147545",
-      "league_id": "72",
-      "league": "Germany Bundesliga II",
-      "home": "Wolfsburg",
-      "away": "Darmstadt",
+      "event_id": "12153883",
+      "league_id": "123",
+      "league": "Germany Bundesliga I",
+      "home": "VfB Stuttgart",
+      "away": "Borussia Dortmund",
       "xg_in_ended": [
-        1.71,
-        1.23
+        0.86,
+        1.33
       ],
       "xg_after_event_view": [
-        1.71,
-        1.23
+        0.86,
+        1.33
       ],
       "ended_stats_keys": [
         "action_areas",
@@ -215,18 +219,152 @@
       "view_stats_keys": []
     },
     {
-      "event_id": "12145967",
-      "league_id": "72",
-      "league": "Germany Bundesliga II",
-      "home": "Greuther Furth",
-      "away": "Magdeburg",
+      "event_id": "12153881",
+      "league_id": "123",
+      "league": "Germany Bundesliga I",
+      "home": "Eintracht Frankfurt",
+      "away": "SC Freiburg",
       "xg_in_ended": [
-        0.7,
-        0.89
+        1.42,
+        2.73
       ],
       "xg_after_event_view": [
-        0.7,
-        0.89
+        1.42,
+        2.73
+      ],
+      "ended_stats_keys": [
+        "action_areas",
+        "attacks",
+        "ball_safe",
+        "corner_f",
+        "corner_h",
+        "corners",
+        "crosses",
+        "crossing_accuracy",
+        "dangerous_attacks",
+        "fouls",
+        "goalattempts",
+        "goals",
+        "injuries",
+        "key_passes",
+        "off_target",
+        "offsides",
+        "on_target",
+        "passing_accuracy",
+        "penalties",
+        "possession_rt",
+        "redcards",
+        "saves",
+        "shots_blocked",
+        "substitutions",
+        "xg",
+        "yellowcards",
+        "yellowred_cards"
+      ],
+      "view_stats_keys": []
+    },
+    {
+      "event_id": "12153880",
+      "league_id": "123",
+      "league": "Germany Bundesliga I",
+      "home": "Borussia M'gladbach",
+      "away": "Mainz",
+      "xg_in_ended": [
+        2.58,
+        2.58
+      ],
+      "xg_after_event_view": [
+        2.58,
+        2.58
+      ],
+      "ended_stats_keys": [
+        "action_areas",
+        "attacks",
+        "ball_safe",
+        "corner_f",
+        "corner_h",
+        "corners",
+        "crosses",
+        "crossing_accuracy",
+        "dangerous_attacks",
+        "fouls",
+        "goalattempts",
+        "goals",
+        "injuries",
+        "key_passes",
+        "off_target",
+        "offsides",
+        "on_target",
+        "passing_accuracy",
+        "penalties",
+        "possession_rt",
+        "redcards",
+        "saves",
+        "shots_blocked",
+        "substitutions",
+        "xg",
+        "yellowcards",
+        "yellowred_cards"
+      ],
+      "view_stats_keys": []
+    },
+    {
+      "event_id": "12153879",
+      "league_id": "123",
+      "league": "Germany Bundesliga I",
+      "home": "Hamburg",
+      "away": "Cologne",
+      "xg_in_ended": [
+        1.58,
+        1.75
+      ],
+      "xg_after_event_view": [
+        1.58,
+        1.75
+      ],
+      "ended_stats_keys": [
+        "action_areas",
+        "attacks",
+        "ball_safe",
+        "corner_h",
+        "corners",
+        "crosses",
+        "crossing_accuracy",
+        "dangerous_attacks",
+        "fouls",
+        "goalattempts",
+        "goals",
+        "injuries",
+        "key_passes",
+        "off_target",
+        "offsides",
+        "on_target",
+        "passing_accuracy",
+        "penalties",
+        "possession_rt",
+        "redcards",
+        "saves",
+        "shots_blocked",
+        "substitutions",
+        "xg",
+        "yellowcards",
+        "yellowred_cards"
+      ],
+      "view_stats_keys": []
+    },
+    {
+      "event_id": "12153878",
+      "league_id": "123",
+      "league": "Germany Bundesliga I",
+      "home": "Werder Bremen",
+      "away": "Augsburg",
+      "xg_in_ended": [
+        2.09,
+        0.95
+      ],
+      "xg_after_event_view": [
+        2.09,
+        0.95
       ],
       "ended_stats_keys": [
         "action_areas",
@@ -395,11 +533,5 @@
       "view_stats_keys": []
     }
   ],
-  "errors": [
-    {
-      "stage": "ended",
-      "day": "20260919",
-      "error": "HTTPError: HTTP Error 502: Bad Gateway"
-    }
-  ]
+  "errors": []
 }
