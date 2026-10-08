@@ -1,21 +1,21 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-08T14:49:14Z",
-  "signals": 792,
+  "updated_at": "2026-10-08T14:59:36Z",
+  "signals": 794,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-08T14:49:10Z",
+      "timestamp": "2026-10-08T14:54:17Z",
       "sport": "football",
-      "tournament": "Algeria Division 2",
-      "event_id": "13234397",
-      "match": "RC Kouba - USM El Harrach",
+      "tournament": "Egypt League Cup",
+      "event_id": "12404869",
+      "match": "Al Ittihad Al Sakandary - Wadi Degla",
       "minute_score": "45' / '0-0'",
       "minute": 45,
       "score": "0-0",
-      "exact_bet_line": "ТМ 0.75",
-      "current_odds": 2.05,
-      "reverse_bet": "ТБ 0.75",
-      "reverse_odds": 1.75,
+      "exact_bet_line": "ТМ 1",
+      "current_odds": 2.025,
+      "reverse_bet": "ТБ 1",
+      "reverse_odds": 1.775,
       "strategy_id": "S31",
       "strategy_ids": [
         "S31"
@@ -24,7 +24,32 @@
         "ТМ матча в перерыве при низкой активности"
       ],
       "tier": "WATCHLIST",
-      "pressure10": 18.0,
+      "pressure10": 30.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-08T14:59:26Z",
+      "sport": "football",
+      "tournament": "U19 International Women",
+      "event_id": "13256863",
+      "match": "Scotland U19 (W) - Croatia U19 (W)",
+      "minute_score": "72' / '0-0'",
+      "minute": 72,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 0.5",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 0.5",
+      "reverse_odds": 1.8,
+      "strategy_id": "S39",
+      "strategy_ids": [
+        "S39"
+      ],
+      "strategy_names": [
+        "Без гола при высоком давлении на 70-79-й минуте"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 52.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
