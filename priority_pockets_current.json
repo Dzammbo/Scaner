@@ -1,102 +1,102 @@
 [
   {
     "rank": 1,
-    "name_ru": "ТБ 2,5 при счёте 1:1",
-    "strategy_id": "S20",
+    "name_ru": "Без гола после 70-й минуты при счёте 0:2",
+    "strategy_id": "S02",
     "direction": "direct",
     "dimension": "линия",
     "value": "2.5",
-    "recorded": 401,
+    "recorded": 1,
     "result": {
-      "N": 398,
-      "W": 164,
-      "L": 234,
+      "N": 1,
+      "W": 0,
+      "L": 1,
       "P": 0,
-      "profit": -39.25,
-      "ROI": -9.86
+      "profit": -1.0,
+      "ROI": -100.0
     },
     "without_top3": {
-      "N": 395,
-      "W": 161,
-      "L": 234,
+      "N": 0,
+      "W": 0,
+      "L": 0,
       "P": 0,
-      "profit": -54.9,
-      "ROI": -13.9
+      "profit": 0,
+      "ROI": null
     }
   },
   {
     "rank": 2,
-    "name_ru": "ТМ при счёте 1:1 на 45-49-й минуте",
-    "strategy_id": "S20",
-    "direction": "reverse",
-    "dimension": "минута",
-    "value": "45-49",
-    "recorded": 216,
+    "name_ru": "Тотал больше 2,5 после гола при счёте 0:2",
+    "strategy_id": "S28",
+    "direction": "direct",
+    "dimension": "линия",
+    "value": "2.5",
+    "recorded": 1,
     "result": {
-      "N": 209,
-      "W": 119,
-      "L": 79,
-      "P": 11,
-      "profit": 26.8,
-      "ROI": 12.82
+      "N": 1,
+      "W": 0,
+      "L": 1,
+      "P": 0,
+      "profit": -1.0,
+      "ROI": -100.0
     },
     "without_top3": {
-      "N": 206,
-      "W": 116,
-      "L": 79,
-      "P": 11,
-      "profit": 23.6,
-      "ROI": 11.46
+      "N": 0,
+      "W": 0,
+      "L": 0,
+      "P": 0,
+      "profit": 0,
+      "ROI": null
     }
   },
   {
     "rank": 3,
-    "name_ru": "ТБ при счёте 1:1 на 65-69-й минуте при коэффициенте 1,75-1,99",
-    "strategy_id": "S20",
+    "name_ru": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
+    "strategy_id": "S36",
     "direction": "direct",
-    "dimension": "коэффициент + минута",
-    "value": "1.75-1.99 | 65-69",
-    "recorded": 113,
+    "dimension": "минута",
+    "value": "45-49",
+    "recorded": 6,
     "result": {
-      "N": 109,
-      "W": 48,
-      "L": 48,
-      "P": 13,
-      "profit": -13.588,
-      "ROI": -12.47
+      "N": 6,
+      "W": 1,
+      "L": 4,
+      "P": 1,
+      "profit": -2.725,
+      "ROI": -45.42
     },
     "without_top3": {
-      "N": 106,
-      "W": 45,
-      "L": 48,
-      "P": 13,
-      "profit": -16.462,
-      "ROI": -15.53
+      "N": 3,
+      "W": 0,
+      "L": 3,
+      "P": 0,
+      "profit": -3.0,
+      "ROI": -100.0
     }
   },
   {
     "rank": 4,
-    "name_ru": "ТМ при счёте 1:1 в Honduras Reserve League",
-    "strategy_id": "S20",
-    "direction": "reverse",
-    "dimension": "турнир",
-    "value": "Honduras Reserve League",
-    "recorded": 13,
+    "name_ru": "Тотал больше при счёте 1:1 на 30-34-й минуте",
+    "strategy_id": "S38",
+    "direction": "direct",
+    "dimension": "минута",
+    "value": "30-34",
+    "recorded": 2,
     "result": {
-      "N": 13,
-      "W": 11,
-      "L": 1,
-      "P": 1,
-      "profit": 9.05,
-      "ROI": 69.62
+      "N": 2,
+      "W": 2,
+      "L": 0,
+      "P": 0,
+      "profit": 1.312,
+      "ROI": 65.62
     },
     "without_top3": {
-      "N": 10,
-      "W": 8,
-      "L": 1,
-      "P": 1,
-      "profit": 5.9,
-      "ROI": 59.0
+      "N": 0,
+      "W": 0,
+      "L": 0,
+      "P": 0,
+      "profit": 0,
+      "ROI": null
     }
   }
 ]
