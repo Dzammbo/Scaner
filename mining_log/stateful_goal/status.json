@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-08T20:43:14Z",
+  "updated_at": "2026-10-08T20:58:26Z",
   "api_calls": 2,
   "board_n": 12,
-  "observations": 3791,
-  "signals": 271,
+  "observations": 3792,
+  "signals": 272,
   "archived_signals": 2369,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -37,27 +37,27 @@
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
       "signals": 128,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 127,
+      "N": 128,
       "W": 63,
-      "L": 53,
+      "L": 54,
       "PUSH": 11,
-      "profit": -3.375,
-      "ROI": -0.026575,
+      "profit": -4.375,
+      "ROI": -0.03418,
       "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
-      "signals": 61,
+      "signals": 62,
       "pending": 0,
       "void": 0,
-      "N": 61,
+      "N": 62,
       "W": 10,
-      "L": 51,
+      "L": 52,
       "PUSH": 0,
-      "profit": -7.334,
-      "ROI": -0.12023,
+      "profit": -8.334,
+      "ROI": -0.134419,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -85,15 +85,15 @@
           "balance_valid": true
         },
         "both": {
-          "signals": 33,
+          "signals": 34,
           "pending": 0,
           "void": 0,
-          "N": 33,
+          "N": 34,
           "W": 9,
-          "L": 24,
+          "L": 25,
           "PUSH": 0,
-          "profit": 16.333,
-          "ROI": 0.494939,
+          "profit": 15.333,
+          "ROI": 0.450971,
           "balance_valid": true
         }
       }
@@ -101,14 +101,14 @@
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
       "signals": 36,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 35,
+      "N": 36,
       "W": 23,
-      "L": 12,
+      "L": 13,
       "PUSH": 0,
-      "profit": 7.575,
-      "ROI": 0.216429,
+      "profit": 6.575,
+      "ROI": 0.182639,
       "balance_valid": true
     }
   }
