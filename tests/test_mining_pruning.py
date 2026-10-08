@@ -41,11 +41,15 @@ class MiningPruningTest(unittest.TestCase):
             ({**base, "score": "1-0", "minute": 45, "stats": {"on_target": [1, 1]}}, {}, True, "S31"),
             ({**base, "score": "0-0", "minute": 32, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, False, "S32"),
             ({**base, "score": "0-0", "minute": 65, "stats": {"on_target": [1, 1]}}, {}, False, "S33"),
-            ({**base, "score": "0-0", "minute": 45, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, True, "S34"),
             ({**base, "score": "1-1", "minute": 74, "stats": {"on_target": [3, 2]}}, {"pressure10": 28}, False, "S39"),
         ]
         for meta, features, halftime, expected in cases:
             self.assertIn(expected, [x["id"] for x in stateful.candidate_arms(meta, features, halftime)])
+        archived = stateful.candidate_arms(
+            {**base, "score": "0-0", "minute": 45, "stats": {"on_target": [2, 2]}},
+            {"pressure10": 20}, True,
+        )
+        self.assertNotIn("S34", [x["id"] for x in archived])
 
     def test_under_and_over_settlement(self):
         self.assertEqual(stateful.outcome_for(0, 0.5, "UNDER"), "WIN")
