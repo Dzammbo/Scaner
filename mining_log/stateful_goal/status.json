@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-08T12:13:59Z",
+  "updated_at": "2026-10-08T12:24:10Z",
   "api_calls": 1,
   "board_n": 20,
-  "observations": 3678,
-  "signals": 195,
+  "observations": 3679,
+  "signals": 196,
   "archived_signals": 2369,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -19,8 +19,7 @@
       "PUSH": 0,
       "profit": 1.725,
       "ROI": 0.123214,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -33,8 +32,7 @@
       "PUSH": 0,
       "profit": 2.925,
       "ROI": 0.1625,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
@@ -47,20 +45,19 @@
       "PUSH": 8,
       "profit": 4.825,
       "ROI": 0.045519,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
-      "signals": 42,
-      "pending": 42,
+      "signals": 43,
+      "pending": 1,
       "void": 0,
-      "N": 0,
-      "W": 0,
-      "L": 0,
+      "N": 42,
+      "W": 7,
+      "L": 35,
       "PUSH": 0,
-      "profit": 0.0,
-      "ROI": null,
+      "profit": -2.167,
+      "ROI": -0.051595,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -76,8 +73,8 @@
           "balance_valid": true
         },
         "shot_on_target_only": {
-          "signals": 7,
-          "pending": 0,
+          "signals": 8,
+          "pending": 1,
           "void": 0,
           "N": 7,
           "W": 0,
@@ -99,8 +96,7 @@
           "ROI": 0.475296,
           "balance_valid": true
         }
-      },
-      "settlement_source": "betsapi_cache"
+      }
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
@@ -113,10 +109,7 @@
       "PUSH": 0,
       "profit": 5.7,
       "ROI": 0.407143,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-08T12:11:48Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
