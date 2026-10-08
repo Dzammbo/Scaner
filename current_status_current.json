@@ -1,49 +1,49 @@
 {
-  "merged": 7840,
-  "settled": 7646,
-  "void": 151,
-  "pending": 43,
-  "pending_live_or_delayed": 43,
+  "merged": 7875,
+  "settled": 7665,
+  "void": 152,
+  "pending": 58,
+  "pending_live_or_delayed": 58,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 21,
-    "PENDING_PROVIDER_FIX": 16,
+    "INPLAY": 35,
+    "PENDING_PROVIDER_FIX": 17,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
     "VOID_CANCELLED": 2,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
     "VOID_RETIRED": 36,
-    "VOID_TENNIS_WINNER_MISSING": 108
+    "VOID_TENNIS_WINNER_MISSING": 109
   },
   "settlement_event_reasons": {
-    "INPLAY": 14,
-    "PENDING_PROVIDER_FIX": 12,
+    "INPLAY": 29,
+    "PENDING_PROVIDER_FIX": 13,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
     "VOID_CANCELLED": 1,
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
     "VOID_RETIRED": 23,
-    "VOID_TENNIS_WINNER_MISSING": 85
+    "VOID_TENNIS_WINNER_MISSING": 86
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T17:45:19Z",
+    "updated_at": "2026-10-08T18:45:41Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 16,
-    "signal_unique_events": 4241,
-    "cache_events": 4241,
-    "final_events": 4189,
+    "provider_queries": 6,
+    "queried_events": 52,
+    "signal_unique_events": 4271,
+    "cache_events": 4271,
+    "final_events": 4203,
     "void_events": 25,
-    "immutable_events": 4214,
-    "retryable_events": 27,
+    "immutable_events": 4228,
+    "retryable_events": 43,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 4189,
-      "INPLAY": 14,
-      "PENDING_PROVIDER_FIX": 12,
+      "FINAL": 4203,
+      "INPLAY": 29,
+      "PENDING_PROVIDER_FIX": 13,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
       "VOID_CANCELLED": 1,
@@ -64,8 +64,8 @@
       "T18": 17
     },
     "settlement_score_sources": {
-      "scores.2": 6137,
-      "ss": 1509
+      "scores.2": 6152,
+      "ss": 1513
     }
   },
   "observation_watchlist": {
@@ -84,8 +84,8 @@
     "S01": {
       "name": "Ещё один гол при счёте 0:1 на 60-69-й минуте",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 22,
-      "pending": 0,
+      "recorded": 23,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -124,8 +124,8 @@
     "S02": {
       "name": "Без гола после 70-й минуты при счёте 0:2",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 4,
-      "pending": 0,
+      "recorded": 5,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -204,8 +204,8 @@
     "S06Y": {
       "name": "Бразилия, молодёжь и резервы - тотал больше по основной линии",
       "start": "2026-10-04T19:48:00+00:00",
-      "recorded": 16,
-      "pending": 0,
+      "recorded": 22,
+      "pending": 6,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -244,8 +244,8 @@
     "S06A": {
       "name": "Бразилия, взрослые мужчины - тотал меньше по основной линии",
       "start": "2026-10-04T19:48:00+00:00",
-      "recorded": 29,
-      "pending": 0,
+      "recorded": 30,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -284,41 +284,41 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 132,
+      "recorded": 134,
       "pending": 2,
-      "void": 20,
+      "void": 21,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 110,
+        "N": 111,
         "W": 58,
-        "L": 52,
+        "L": 53,
         "P": 0,
-        "profit": 8.55,
-        "ROI": 7.77
+        "profit": 7.55,
+        "ROI": 6.8
       },
       "original_without_top3": {
-        "N": 107,
+        "N": 108,
         "W": 55,
-        "L": 52,
+        "L": 53,
         "P": 0,
-        "profit": 5.25,
-        "ROI": 4.91
+        "profit": 4.25,
+        "ROI": 3.94
       },
       "reverse": {
-        "N": 110,
-        "W": 52,
+        "N": 111,
+        "W": 53,
         "L": 58,
         "P": 0,
-        "profit": -21.094,
-        "ROI": -19.18
+        "profit": -20.394,
+        "ROI": -18.37
       },
       "reverse_without_top3": {
-        "N": 107,
-        "W": 49,
+        "N": 108,
+        "W": 50,
         "L": 58,
         "P": 0,
-        "profit": -23.394,
-        "ROI": -21.86
+        "profit": -22.694,
+        "ROI": -21.01
       }
     },
     "S28": {
@@ -364,41 +364,41 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 261,
-      "pending": 2,
+      "recorded": 264,
+      "pending": 3,
       "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
-        "N": 226,
-        "W": 138,
-        "L": 88,
+        "N": 228,
+        "W": 139,
+        "L": 89,
         "P": 0,
-        "profit": -9.06,
-        "ROI": -4.01
+        "profit": -9.489,
+        "ROI": -4.16
       },
       "original_without_top3": {
-        "N": 223,
-        "W": 135,
-        "L": 88,
+        "N": 225,
+        "W": 136,
+        "L": 89,
         "P": 0,
-        "profit": -11.31,
-        "ROI": -5.07
+        "profit": -11.739,
+        "ROI": -5.22
       },
       "reverse": {
-        "N": 226,
-        "W": 88,
-        "L": 138,
+        "N": 228,
+        "W": 89,
+        "L": 139,
         "P": 0,
-        "profit": -30.825,
-        "ROI": -13.64
+        "profit": -30.325,
+        "ROI": -13.3
       },
       "reverse_without_top3": {
-        "N": 223,
-        "W": 85,
-        "L": 138,
+        "N": 225,
+        "W": 86,
+        "L": 139,
         "P": 0,
-        "profit": -35.45,
-        "ROI": -15.9
+        "profit": -34.95,
+        "ROI": -15.53
       }
     },
     "S29": {
@@ -444,88 +444,88 @@
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 117,
-      "pending": 3,
+      "recorded": 125,
+      "pending": 10,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 114,
-        "W": 59,
+        "N": 115,
+        "W": 60,
         "L": 45,
         "P": 10,
-        "profit": 0.875,
-        "ROI": 0.77
+        "profit": 1.8,
+        "ROI": 1.57
       },
       "original_without_top3": {
-        "N": 111,
-        "W": 56,
+        "N": 112,
+        "W": 57,
         "L": 45,
         "P": 10,
-        "profit": -2.325,
-        "ROI": -2.09
+        "profit": -1.4,
+        "ROI": -1.25
       },
       "reverse": {
-        "N": 114,
+        "N": 115,
         "W": 45,
-        "L": 59,
+        "L": 60,
         "P": 10,
-        "profit": -9.75,
-        "ROI": -8.55
+        "profit": -10.75,
+        "ROI": -9.35
       },
       "reverse_without_top3": {
-        "N": 111,
+        "N": 112,
         "W": 42,
-        "L": 59,
+        "L": 60,
         "P": 10,
-        "profit": -13.0,
-        "ROI": -11.71
+        "profit": -14.0,
+        "ROI": -12.5
       }
     },
     "S32": {
       "name": "Гол до перерыва при высокой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 21,
-      "pending": 1,
+      "recorded": 25,
+      "pending": 4,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 20,
+        "N": 21,
         "W": 9,
-        "L": 11,
+        "L": 12,
         "P": 0,
-        "profit": 0.925,
-        "ROI": 4.62
+        "profit": -0.075,
+        "ROI": -0.36
       },
       "original_without_top3": {
-        "N": 17,
+        "N": 18,
         "W": 6,
-        "L": 11,
+        "L": 12,
         "P": 0,
-        "profit": -4.625,
-        "ROI": -27.21
+        "profit": -5.625,
+        "ROI": -31.25
       },
       "reverse": {
-        "N": 20,
-        "W": 11,
+        "N": 21,
+        "W": 12,
         "L": 9,
         "P": 0,
-        "profit": -3.225,
-        "ROI": -16.12
+        "profit": -2.85,
+        "ROI": -13.57
       },
       "reverse_without_top3": {
-        "N": 17,
-        "W": 8,
+        "N": 18,
+        "W": 9,
         "L": 9,
         "P": 0,
-        "profit": -5.225,
-        "ROI": -30.74
+        "profit": -4.85,
+        "ROI": -26.94
       }
     },
     "S33": {
       "name": "Без гола после 60-й минуты при счёте 0:0 и низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 15,
-      "pending": 1,
+      "recorded": 16,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -564,161 +564,161 @@
     "S36": {
       "name": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 22,
-      "pending": 4,
+      "recorded": 24,
+      "pending": 3,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 18,
+        "N": 21,
         "W": 5,
-        "L": 12,
-        "P": 1,
-        "profit": -7.263,
-        "ROI": -40.35
-      },
-      "original_without_top3": {
-        "N": 15,
-        "W": 2,
-        "L": 12,
+        "L": 15,
         "P": 1,
         "profit": -9.762,
-        "ROI": -65.08
+        "ROI": -46.49
+      },
+      "original_without_top3": {
+        "N": 18,
+        "W": 2,
+        "L": 15,
+        "P": 1,
+        "profit": -12.262,
+        "ROI": -68.12
       },
       "reverse": {
+        "N": 21,
+        "W": 15,
+        "L": 5,
+        "P": 1,
+        "profit": 7.35,
+        "ROI": 35.0
+      },
+      "reverse_without_top3": {
         "N": 18,
         "W": 12,
         "L": 5,
         "P": 1,
-        "profit": 5.15,
-        "ROI": 28.61
-      },
-      "reverse_without_top3": {
-        "N": 15,
-        "W": 9,
-        "L": 5,
-        "P": 1,
-        "profit": 2.225,
-        "ROI": 14.83
+        "profit": 4.35,
+        "ROI": 24.17
       }
     },
     "S37": {
       "name": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 22,
-      "pending": 4,
+      "recorded": 24,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 18,
+        "N": 22,
         "W": 5,
-        "L": 10,
-        "P": 3,
-        "profit": -3.45,
-        "ROI": -19.17
+        "L": 13,
+        "P": 4,
+        "profit": -5.95,
+        "ROI": -27.05
       },
       "original_without_top3": {
-        "N": 15,
+        "N": 19,
         "W": 2,
-        "L": 10,
-        "P": 3,
-        "profit": -6.275,
-        "ROI": -41.83
+        "L": 13,
+        "P": 4,
+        "profit": -8.775,
+        "ROI": -46.18
       },
       "reverse": {
-        "N": 18,
-        "W": 10,
+        "N": 22,
+        "W": 13,
         "L": 5,
-        "P": 3,
-        "profit": 2.162,
-        "ROI": 12.01
+        "P": 4,
+        "profit": 4.1,
+        "ROI": 18.64
       },
       "reverse_without_top3": {
-        "N": 15,
-        "W": 7,
+        "N": 19,
+        "W": 10,
         "L": 5,
-        "P": 3,
-        "profit": -0.738,
-        "ROI": -4.92
+        "P": 4,
+        "profit": 1.2,
+        "ROI": 6.32
       }
     },
     "S38": {
       "name": "Тотал больше при счёте 1:1 на 30-34-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 10,
-      "pending": 4,
+      "recorded": 11,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 6,
-        "W": 5,
-        "L": 1,
+        "N": 10,
+        "W": 8,
+        "L": 2,
         "P": 0,
-        "profit": 2.837,
-        "ROI": 47.29
+        "profit": 4.212,
+        "ROI": 42.12
       },
       "original_without_top3": {
-        "N": 3,
-        "W": 2,
-        "L": 1,
+        "N": 7,
+        "W": 5,
+        "L": 2,
         "P": 0,
-        "profit": 0.162,
-        "ROI": 5.42
+        "profit": 1.362,
+        "ROI": 19.46
       },
       "reverse": {
-        "N": 6,
-        "W": 1,
-        "L": 5,
+        "N": 10,
+        "W": 2,
+        "L": 8,
         "P": 0,
-        "profit": -3.675,
-        "ROI": -61.25
+        "profit": -5.3,
+        "ROI": -53.0
       },
       "reverse_without_top3": {
-        "N": 3,
+        "N": 7,
         "W": 0,
-        "L": 3,
+        "L": 7,
         "P": 0,
-        "profit": -3.0,
-        "ROI": -100.0
+        "profit": -6.5,
+        "ROI": -92.86
       }
     },
     "S39": {
       "name": "Без гола при высоком давлении на 70-79-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 27,
-      "pending": 1,
+      "recorded": 33,
+      "pending": 3,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 26,
-        "W": 18,
-        "L": 8,
+        "N": 30,
+        "W": 19,
+        "L": 11,
         "P": 0,
-        "profit": 7.85,
-        "ROI": 30.19
+        "profit": 5.8,
+        "ROI": 19.33
       },
       "original_without_top3": {
-        "N": 23,
-        "W": 15,
-        "L": 8,
+        "N": 27,
+        "W": 16,
+        "L": 11,
         "P": 0,
-        "profit": 4.55,
-        "ROI": 19.78
+        "profit": 2.5,
+        "ROI": 9.26
       },
       "reverse": {
-        "N": 26,
-        "W": 8,
-        "L": 18,
+        "N": 30,
+        "W": 11,
+        "L": 19,
         "P": 0,
-        "profit": -11.075,
-        "ROI": -42.6
+        "profit": -9.375,
+        "ROI": -31.25
       },
       "reverse_without_top3": {
-        "N": 23,
-        "W": 5,
-        "L": 18,
+        "N": 27,
+        "W": 8,
+        "L": 19,
         "P": 0,
-        "profit": -14.075,
-        "ROI": -61.2
+        "profit": -12.45,
+        "ROI": -46.11
       }
     }
   }
