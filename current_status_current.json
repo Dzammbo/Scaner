@@ -1,12 +1,12 @@
 {
-  "merged": 7797,
+  "merged": 7800,
   "settled": 7593,
   "void": 151,
-  "pending": 53,
-  "pending_live_or_delayed": 53,
+  "pending": 56,
+  "pending_live_or_delayed": 56,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 31,
+    "INPLAY": 34,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 108
   },
   "settlement_event_reasons": {
-    "INPLAY": 23,
+    "INPLAY": 25,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 85
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T14:24:51Z",
+    "updated_at": "2026-10-08T14:44:00Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 4,
-    "queried_events": 37,
-    "signal_unique_events": 4207,
-    "cache_events": 4207,
+    "provider_queries": 1,
+    "queried_events": 2,
+    "signal_unique_events": 4209,
+    "cache_events": 4209,
     "final_events": 4146,
     "void_events": 25,
     "immutable_events": 4171,
-    "retryable_events": 36,
+    "retryable_events": 38,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 4146,
-      "INPLAY": 23,
+      "INPLAY": 25,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -644,8 +644,8 @@
     "S38": {
       "name": "Тотал больше при счёте 1:1 на 30-34-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 5,
-      "pending": 1,
+      "recorded": 6,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -684,8 +684,8 @@
     "S39": {
       "name": "Без гола при высоком давлении на 70-79-й минуте",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 18,
-      "pending": 3,
+      "recorded": 20,
+      "pending": 5,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
