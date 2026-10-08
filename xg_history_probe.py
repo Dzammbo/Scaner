@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import json
 import os
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -20,15 +22,21 @@ calls = 0
 
 def get(path, params):
     global calls
-    calls += 1
     query = dict(params)
     query["token"] = TOKEN
     request = urllib.request.Request(
         BASE + path + "?" + urllib.parse.urlencode(query),
         headers={"User-Agent": "dzam-github-xg-history-probe/1.0"},
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.loads(response.read().decode())
+    for attempt in range(1, 4):
+        calls += 1
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return json.loads(response.read().decode())
+        except urllib.error.HTTPError as error:
+            if error.code not in (429, 500, 502, 503, 504) or attempt == 3:
+                raise
+            time.sleep(attempt * 2)
 
 
 def pair(stats, key="xg"):
@@ -45,7 +53,7 @@ def is_bundesliga(event):
     league = event.get("league") or {}
     name = str(league.get("name") or "").lower()
     country = str(league.get("cc") or "").lower()
-    excluded = ("2. bundesliga", "bundesliga 2", "women", "frauen", "u19", "u17")
+    excluded = ("2. bundesliga", "bundesliga 2", "bundesliga ii", "women", "frauen", "u19", "u17")
     return country == "de" and "bundesliga" in name and not any(value in name for value in excluded)
 
 
