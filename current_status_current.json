@@ -1,12 +1,12 @@
 {
-  "merged": 7890,
-  "settled": 7675,
+  "merged": 7892,
+  "settled": 7676,
   "void": 152,
-  "pending": 63,
-  "pending_live_or_delayed": 63,
+  "pending": 64,
+  "pending_live_or_delayed": 64,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 40,
+    "INPLAY": 41,
     "PENDING_PROVIDER_FIX": 17,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 109
   },
   "settlement_event_reasons": {
-    "INPLAY": 33,
+    "INPLAY": 34,
     "PENDING_PROVIDER_FIX": 13,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 86
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T19:45:52Z",
+    "updated_at": "2026-10-08T20:04:25Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 16,
-    "signal_unique_events": 4282,
-    "cache_events": 4282,
-    "final_events": 4210,
+    "provider_queries": 1,
+    "queried_events": 2,
+    "signal_unique_events": 4284,
+    "cache_events": 4284,
+    "final_events": 4211,
     "void_events": 25,
-    "immutable_events": 4235,
-    "retryable_events": 47,
+    "immutable_events": 4236,
+    "retryable_events": 48,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 4210,
-      "INPLAY": 33,
+      "FINAL": 4211,
+      "INPLAY": 34,
       "PENDING_PROVIDER_FIX": 13,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -64,7 +64,7 @@
       "T18": 17
     },
     "settlement_score_sources": {
-      "scores.2": 6160,
+      "scores.2": 6161,
       "ss": 1515
     }
   },
@@ -124,8 +124,8 @@
     "S02": {
       "name": "Без гола после 70-й минуты при счёте 0:2",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 6,
-      "pending": 1,
+      "recorded": 7,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -324,41 +324,41 @@
     "S28": {
       "name": "Тотал больше 2,5 после гола при счёте 0:2 с 60-й минуты",
       "start": "2026-10-07T20:25:00+00:00",
-      "recorded": 9,
+      "recorded": 10,
       "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 8,
+        "N": 9,
         "W": 3,
-        "L": 5,
+        "L": 6,
         "P": 0,
-        "profit": -0.1,
-        "ROI": -1.25
+        "profit": -1.1,
+        "ROI": -12.22
       },
       "original_without_top3": {
-        "N": 5,
+        "N": 6,
         "W": 0,
-        "L": 5,
+        "L": 6,
         "P": 0,
-        "profit": -5.0,
+        "profit": -6.0,
         "ROI": -100.0
       },
       "reverse": {
-        "N": 8,
-        "W": 5,
+        "N": 9,
+        "W": 6,
         "L": 3,
         "P": 0,
-        "profit": 0.1,
-        "ROI": 1.25
+        "profit": 0.625,
+        "ROI": 6.94
       },
       "reverse_without_top3": {
-        "N": 5,
-        "W": 2,
+        "N": 6,
+        "W": 3,
         "L": 3,
         "P": 0,
-        "profit": -2.1,
-        "ROI": -42.0
+        "profit": -1.575,
+        "ROI": -26.25
       }
     },
     "T18": {
