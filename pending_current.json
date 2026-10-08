@@ -718,68 +718,6 @@
     "settlement_reason": "PENDING_PROVIDER_FIX"
   },
   {
-    "timestamp": "2026-10-08T06:05:21.716312+00:00",
-    "sport": "tennis",
-    "tournament": "Challenger Wuning",
-    "event_id": "13255206",
-    "match": "Evan Zhu - Alibek Kachmazov",
-    "minute_score": "6-6",
-    "minute": null,
-    "score": "6-6",
-    "period": "FT",
-    "exact_bet_line": "Alibek Kachmazov",
-    "current_odds": 2.0,
-    "reverse_bet": "Evan Zhu",
-    "reverse_odds": 1.75,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "6-6,4-2",
-      "live_favorite": "Evan Zhu",
-      "favorite_odds": 1.75
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S10",
-    "strategy_ids": [
-      "S10"
-    ],
-    "strategy_names": [
-      "Против фаворита по ходу матча при равном первом сете"
-    ],
-    "strategy_observations": {
-      "S10": {
-        "timestamp": "2026-10-08T06:05:21.716312+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "6-6",
-        "exact_bet_line": "Alibek Kachmazov",
-        "current_odds": 2.0,
-        "reverse_bet": "Evan Zhu",
-        "reverse_odds": 1.75,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "6-6,4-2",
-          "live_favorite": "Evan Zhu",
-          "favorite_odds": 1.75
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
     "timestamp": "2026-10-08T07:50:17.675797+00:00",
     "sport": "tennis",
     "tournament": "WTA Beijing",
@@ -887,6 +825,700 @@
         "features": {
           "set_score": "2-6,0-0,0-0",
           "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:00:21.464968+00:00",
+    "sport": "tennis",
+    "tournament": "W35 Santa Margherita",
+    "event_id": "13259166",
+    "match": "Beatrise Zeltina - Alessandra Mazzola",
+    "minute_score": "2-2",
+    "minute": null,
+    "score": "2-2",
+    "period": "FT",
+    "exact_bet_line": "Alessandra Mazzola",
+    "current_odds": 2.0,
+    "reverse_bet": "Beatrise Zeltina",
+    "reverse_odds": 1.75,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-2,30-40",
+      "live_favorite": "Beatrise Zeltina",
+      "favorite_odds": 1.75
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10",
+      "T18"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете",
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-08T08:00:21.464968+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-2",
+        "exact_bet_line": "Alessandra Mazzola",
+        "current_odds": 2.0,
+        "reverse_bet": "Beatrise Zeltina",
+        "reverse_odds": 1.75,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-2,30-40",
+          "live_favorite": "Beatrise Zeltina",
+          "favorite_odds": 1.75
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      },
+      "T18": {
+        "timestamp": "2026-10-08T08:50:25.051170+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "3-6,3-1",
+        "exact_bet_line": "Alessandra Mazzola",
+        "current_odds": 1.75,
+        "reverse_bet": "Beatrise Zeltina",
+        "reverse_odds": 2.0,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "3-6,3-1,30-15",
+          "previous_set": "6-3"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:00:21.464968+00:00",
+    "sport": "tennis",
+    "tournament": "W15 Chisinau",
+    "event_id": "13259246",
+    "match": "Sophia Ksandinov - Maria Pankratova",
+    "minute_score": "6-3,0-0",
+    "minute": null,
+    "score": "6-3,0-0",
+    "period": "FT",
+    "exact_bet_line": "Sophia Ksandinov",
+    "current_odds": 1.5,
+    "reverse_bet": "Maria Pankratova",
+    "reverse_odds": 2.5,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "6-3,0-0,0-0",
+      "previous_set": "6-3"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:00:21.464968+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-3,0-0",
+        "exact_bet_line": "Sophia Ksandinov",
+        "current_odds": 1.5,
+        "reverse_bet": "Maria Pankratova",
+        "reverse_odds": 2.5,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-3,0-0,0-0",
+          "previous_set": "6-3"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:00:21.464968+00:00",
+    "sport": "tennis",
+    "tournament": "W50 Burgas",
+    "event_id": "13259300",
+    "match": "Ilinca D Amariei - Jazmin Ortenzi",
+    "minute_score": "5-5",
+    "minute": null,
+    "score": "5-5",
+    "period": "FT",
+    "exact_bet_line": "Ilinca D Amariei",
+    "current_odds": 2.05,
+    "reverse_bet": "Jazmin Ortenzi",
+    "reverse_odds": 1.7,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "5-5,30-30",
+      "live_favorite": "Jazmin Ortenzi",
+      "favorite_odds": 1.7
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-08T08:00:21.464968+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "5-5",
+        "exact_bet_line": "Ilinca D Amariei",
+        "current_odds": 2.05,
+        "reverse_bet": "Jazmin Ortenzi",
+        "reverse_odds": 1.7,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "5-5,30-30",
+          "live_favorite": "Jazmin Ortenzi",
+          "favorite_odds": 1.7
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:15:19.777361+00:00",
+    "sport": "tennis",
+    "tournament": "ATP Shanghai",
+    "event_id": "13247887",
+    "match": "Marcos Giron - Sebastian Baez",
+    "minute_score": "6-1,2-3",
+    "minute": null,
+    "score": "6-1,2-3",
+    "period": "FT",
+    "exact_bet_line": "Marcos Giron",
+    "current_odds": 1.5,
+    "reverse_bet": "Sebastian Baez",
+    "reverse_odds": 2.625,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "6-1,2-3,40-A",
+      "previous_set": "6-1"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:15:19.777361+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-1,2-3",
+        "exact_bet_line": "Marcos Giron",
+        "current_odds": 1.5,
+        "reverse_bet": "Sebastian Baez",
+        "reverse_odds": 2.625,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-1,2-3,40-A",
+          "previous_set": "6-1"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:25:18.464931+00:00",
+    "sport": "tennis",
+    "tournament": "M15 Heraklion",
+    "event_id": "13260263",
+    "match": "Benjamin Pietri - Jordan Hasson",
+    "minute_score": "6-3,2-4",
+    "minute": null,
+    "score": "6-3,2-4",
+    "period": "FT",
+    "exact_bet_line": "Benjamin Pietri",
+    "current_odds": 1.533,
+    "reverse_bet": "Jordan Hasson",
+    "reverse_odds": 2.375,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "6-3,2-4,15-30",
+      "previous_set": "6-3"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:25:18.464931+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-3,2-4",
+        "exact_bet_line": "Benjamin Pietri",
+        "current_odds": 1.533,
+        "reverse_bet": "Jordan Hasson",
+        "reverse_odds": 2.375,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-3,2-4,15-30",
+          "previous_set": "6-3"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:25:18.464931+00:00",
+    "sport": "tennis",
+    "tournament": "W50 Heraklion",
+    "event_id": "13260525",
+    "match": "Ipek Oz - Alice Rame",
+    "minute_score": "2-6,2-1",
+    "minute": null,
+    "score": "2-6,2-1",
+    "period": "FT",
+    "exact_bet_line": "Alice Rame",
+    "current_odds": 1.666,
+    "reverse_bet": "Ipek Oz",
+    "reverse_odds": 2.1,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-6,2-1,0-0",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:25:18.464931+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-6,2-1",
+        "exact_bet_line": "Alice Rame",
+        "current_odds": 1.666,
+        "reverse_bet": "Ipek Oz",
+        "reverse_odds": 2.1,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-6,2-1,0-0",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:35:19.573637+00:00",
+    "sport": "tennis",
+    "tournament": "W35 Santa Margherita",
+    "event_id": "13260522",
+    "match": "Eva Bennemann - Matilde Paoletti",
+    "minute_score": "4-4",
+    "minute": null,
+    "score": "4-4",
+    "period": "FT",
+    "exact_bet_line": "Matilde Paoletti",
+    "current_odds": 2.05,
+    "reverse_bet": "Eva Bennemann",
+    "reverse_odds": 1.7,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "4-4,40-15",
+      "live_favorite": "Eva Bennemann",
+      "favorite_odds": 1.7
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-08T08:35:19.573637+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "4-4",
+        "exact_bet_line": "Matilde Paoletti",
+        "current_odds": 2.05,
+        "reverse_bet": "Eva Bennemann",
+        "reverse_odds": 1.7,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "4-4,40-15",
+          "live_favorite": "Eva Bennemann",
+          "favorite_odds": 1.7
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:40:30.237651+00:00",
+    "sport": "tennis",
+    "tournament": "M25 Darwin",
+    "event_id": "13260023",
+    "match": "Zane Stevens - Derek Pham",
+    "minute_score": "6-2,0-1",
+    "minute": null,
+    "score": "6-2,0-1",
+    "period": "FT",
+    "exact_bet_line": "Zane Stevens",
+    "current_odds": 1.533,
+    "reverse_bet": "Derek Pham",
+    "reverse_odds": 2.375,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "6-2,0-1,0-0",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:40:30.237651+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-2,0-1",
+        "exact_bet_line": "Zane Stevens",
+        "current_odds": 1.533,
+        "reverse_bet": "Derek Pham",
+        "reverse_odds": 2.375,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-2,0-1,0-0",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:40:30.237651+00:00",
+    "sport": "tennis",
+    "tournament": "W35 Santa Margherita",
+    "event_id": "13260522",
+    "match": "Eva Bennemann - Matilde Paoletti",
+    "minute_score": "4-4",
+    "minute": null,
+    "score": "4-4",
+    "period": "FT",
+    "exact_bet_line": "Eva Bennemann",
+    "current_odds": 2.05,
+    "reverse_bet": "Matilde Paoletti",
+    "reverse_odds": 1.7,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "4-4,40-40",
+      "live_favorite": "Matilde Paoletti",
+      "favorite_odds": 1.7
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-08T08:40:30.237651+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "4-4",
+        "exact_bet_line": "Eva Bennemann",
+        "current_odds": 2.05,
+        "reverse_bet": "Matilde Paoletti",
+        "reverse_odds": 1.7,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "4-4,40-40",
+          "live_favorite": "Matilde Paoletti",
+          "favorite_odds": 1.7
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:50:25.051170+00:00",
+    "sport": "tennis",
+    "tournament": "M25 Darwin",
+    "event_id": "13259878",
+    "match": "Moerani Bouzige - Jesse Delaney",
+    "minute_score": "3-6,0-1",
+    "minute": null,
+    "score": "3-6,0-1",
+    "period": "FT",
+    "exact_bet_line": "Jesse Delaney",
+    "current_odds": 1.5,
+    "reverse_bet": "Moerani Bouzige",
+    "reverse_odds": 2.5,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "3-6,0-1,15-15",
+      "previous_set": "6-3"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-08T08:50:25.051170+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "3-6,0-1",
+        "exact_bet_line": "Jesse Delaney",
+        "current_odds": 1.5,
+        "reverse_bet": "Moerani Bouzige",
+        "reverse_odds": 2.5,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "3-6,0-1,15-15",
+          "previous_set": "6-3"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T08:55:21.006050+00:00",
+    "sport": "tennis",
+    "tournament": "W15 Szekesfehervar",
+    "event_id": "13260381",
+    "match": "Lana Virc - Chiara Fornasieri",
+    "minute_score": "3-3",
+    "minute": null,
+    "score": "3-3",
+    "period": "FT",
+    "exact_bet_line": "Chiara Fornasieri",
+    "current_odds": 2.1,
+    "reverse_bet": "Lana Virc",
+    "reverse_odds": 1.666,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "3-3,40-A",
+      "live_favorite": "Lana Virc",
+      "favorite_odds": 1.666
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-08T08:55:21.006050+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "3-3",
+        "exact_bet_line": "Chiara Fornasieri",
+        "current_odds": 2.1,
+        "reverse_bet": "Lana Virc",
+        "reverse_odds": 1.666,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "3-3,40-A",
+          "live_favorite": "Lana Virc",
+          "favorite_odds": 1.666
         },
         "entry_epoch": null,
         "price_verified": null,
