@@ -1283,6 +1283,36 @@
       "clean_epoch_start": "2026-10-07T20:25:00Z"
     },
     {
+      "id": "S40",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Победа хозяев по ожидаемым голам",
+      "source": "wilkens_xg_skellam_replication_20261008",
+      "rule": {
+        "competition": "Germany Bundesliga",
+        "category": "adult_men",
+        "home_xg_lookback": 3,
+        "away_xg_lookback": 3,
+        "venue_specific": true,
+        "model": "independent_poisson_skellam",
+        "market": "home_win",
+        "odds": [1.25, 3.0],
+        "minimum_probability_edge": 0.05,
+        "minimum_expected_value": 0.05,
+        "one_prediction_per_match": true,
+        "missing_xg_policy": "NO_DATA"
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "mining_enabled": true,
+      "collection_engine": "xg_home_model.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-08T11:00:00Z",
+      "history_note": "Новая независимая эпоха. До накопления достаточной истории используется только исходная модель; изотоническая калибровка не имитируется и будет включена только после отдельной проверки данных."
+    },
+    {
       "id": "S30",
       "tier": "WATCHLIST",
       "sport": "football",

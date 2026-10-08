@@ -8,6 +8,7 @@ on:
       - "scaner_mining_worker.py"
       - "scanner.py"
       - "stateful_goal_mining.py"
+      - "xg_home_model.py"
       - ".github/workflows/scaner-mining-continuous.yml"
 
 permissions:
@@ -37,7 +38,7 @@ jobs:
       - name: Validate public Mining worker
         run: |
           test -n "$BETSAPI_KEY"
-          python3 -m py_compile scaner_mining_worker.py scanner.py stateful_goal_mining.py
+          python3 -m py_compile scaner_mining_worker.py scanner.py stateful_goal_mining.py xg_home_model.py
 
       - name: Configure Git identity
         run: |

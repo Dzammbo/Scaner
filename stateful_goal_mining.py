@@ -122,7 +122,7 @@ def is_halftime(ev):
 def event_meta(ev):
  league=ev.get("league") or {};home=ev.get("home") or {};away=ev.get("away") or {};timer=ev.get("timer") or {}
  minute=integer(timer.get("tm"));sec=integer(timer.get("ts")) or 0
- return {"event_id":str(ev.get("id") or ""),"league":str(league.get("name") or ""),"country":str(league.get("cc") or ""),"home":str(home.get("name") or ""),"away":str(away.get("name") or ""),"score":str(ev.get("ss") or "").replace(":","-"),"minute":minute,"elapsed":None if minute is None else minute*60+sec,"stats":ev.get("stats") or {}}
+ return {"event_id":str(ev.get("id") or ""),"start_ts":integer(ev.get("time")),"league_id":str(league.get("id") or ""),"league":str(league.get("name") or ""),"country":str(league.get("cc") or ""),"home_id":str(home.get("id") or ""),"home":str(home.get("name") or ""),"away_id":str(away.get("id") or ""),"away":str(away.get("name") or ""),"score":str(ev.get("ss") or "").replace(":","-"),"minute":minute,"elapsed":None if minute is None else minute*60+sec,"stats":ev.get("stats") or {}}
 def late_home_activity_segment(features):
  if not features:return None
  pressure=features.get("pressure_home10") is not None and features.get("pressure_away10") is not None and features["pressure_home10"]>features["pressure_away10"]
@@ -254,7 +254,7 @@ def main():
    if dangerous_pair and ont_pair and off_pair:
     home_pressure=dangerous_pair[0]+3*(ont_pair[0]+off_pair[0])+5*ont_pair[0];away_pressure=dangerous_pair[1]+3*(ont_pair[1]+off_pair[1])+5*ont_pair[1]
    features={"dangerous10":dangerous,"shots10":shots,"on_target10":ont,"corners10":corners,"pressure10":pressure,"home_on_target10":None if not ont_pair else ont_pair[0],"away_on_target10":None if not ont_pair else ont_pair[1],"pressure_home10":home_pressure,"pressure_away10":away_pressure}
-  old.append({"seen_at":now,"elapsed":meta["elapsed"],"score":meta["score"],"stats":meta["stats"]});history[eid]=old[-10:]
+  old.append({"seen_at":now,**meta});history[eid]=old[-10:]
   arms=[]
   for arm in candidate_arms(meta,features,is_halftime(ev)):
    key=(eid,arm["strategy"],arm["arm"]);query_key=":".join(key)
@@ -277,7 +277,7 @@ def main():
    signals.append({**observation,"strategy_id":arm["id"],"strategy":arm["strategy"],"arm":arm["arm"],"activity_segment":arm.get("activity_segment"),"entry_at":now,"selection":arm["selection"],"period":arm["period"],"selected_line":q["line"],"selected_odds":q["selected"],"reverse_odds":q["reverse"],"quote_at":q["quote_at"],"outcome":None});sigkeys.add(key)
  settle(signals,live_ids)
  active_signals=[x for x in signals if is_active_signal(x)]
- save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
+ save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["live_ids"]=sorted(live_ids);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
  sync_scanner_signals([x for x in active_signals if is_scanner_signal(x)])
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)

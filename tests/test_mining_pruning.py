@@ -13,7 +13,7 @@ import mining_pending_refresh as refresh
 
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "xg_home": 300})
         self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S09,S21,S22")
 
     @patch.object(worker, "budget", return_value=20)
@@ -22,6 +22,13 @@ class MiningPruningTest(unittest.TestCase):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
         self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S03,S04,S05,S07,S09,S21,S22")
+
+    @patch.object(worker, "budget", return_value=10)
+    @patch.object(worker, "invoke")
+    def test_xg_home_pass_is_live_and_budgeted(self, invoke, _budget):
+        self.assertTrue(worker.run_pass("xg_home"))
+        self.assertEqual(invoke.call_args.args[1], ["python3", "xg_home_model.py"])
+        self.assertEqual(invoke.call_args.args[2]["XG_HOME_MODEL_CALL_BUDGET"], "10")
 
     def test_stateful_accepts_only_active_arms(self):
         for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:
