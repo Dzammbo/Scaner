@@ -77,12 +77,19 @@ class TopSixRegistryTest(unittest.TestCase):
         self.assertEqual(registry["policy"]["operational_scanner_count"], enabled)
 
     def test_new_stateful_hypotheses_are_user_visible(self):
-        for strategy_id in ("S31", "S32", "S33", "S34"):
+        for strategy_id in ("S31", "S32", "S33"):
             row = strategy(strategy_id)
             self.assertTrue(row["scanner_enabled"])
             self.assertTrue(row["user_output"])
             self.assertEqual(row["status"], "FORWARD_HYPOTHESIS")
             self.assertEqual(row["collection_engine"], "stateful_goal_mining.py")
+
+    def test_zero_collection_rules_are_disabled(self):
+        for strategy_id in ("S34", "BT01M", "BT01W", "BT02W", "BT03W"):
+            row = strategy(strategy_id)
+            self.assertFalse(row["scanner_enabled"])
+            self.assertFalse(row["user_output"])
+            self.assertEqual(row["research_destination"], "history")
 
 
 class FootballTopSixTest(unittest.TestCase):
@@ -262,7 +269,7 @@ class PressureTopSixTest(unittest.TestCase):
                 {**base, "event_id": "s27", "arm": "HIGH_PRESSURE_O05_FH", "period": "FH", "selected_odds": 1.95},
             ])
             rows = stateful.load_rows(stateful.SCANNER_SIGNALS)
-        self.assertEqual({row["strategy_id"] for row in rows}, {"S39", "S31", "S32", "S33", "S34"})
+        self.assertEqual({row["strategy_id"] for row in rows}, {"S39", "S31", "S32", "S33"})
         self.assertNotIn("s27", {row["event_id"] for row in rows})
 
 
