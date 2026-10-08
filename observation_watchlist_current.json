@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-08T20:04:26.282741Z",
+  "generated_at": "2026-10-08T21:04:48.877797Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -110,24 +110,24 @@
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
       "recorded": 7,
-      "settled": 5,
-      "pending": 2,
+      "settled": 6,
+      "pending": 1,
       "void": 0,
       "result": {
-        "N": 5,
-        "W": 3,
+        "N": 6,
+        "W": 4,
         "L": 2,
         "P": 0,
-        "profit": 0.65,
-        "ROI": 13.0
+        "profit": 1.525,
+        "ROI": 25.42
       },
       "without_top3": {
-        "N": 2,
-        "W": 0,
+        "N": 3,
+        "W": 1,
         "L": 2,
         "P": 0,
-        "profit": -2.0,
-        "ROI": -100.0
+        "profit": -1.175,
+        "ROI": -39.17
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
