@@ -802,656 +802,6 @@
     "settlement_reason": "PENDING_PROVIDER_FIX"
   },
   {
-    "timestamp": "2026-10-08T18:42:58.274180+00:00",
-    "sport": "tennis",
-    "tournament": "Challenger Villena",
-    "event_id": "13259491",
-    "match": "Daniel Rincon - Pedro Martinez",
-    "minute_score": "5-5",
-    "minute": null,
-    "score": "5-5",
-    "period": "FT",
-    "exact_bet_line": "Pedro Martinez",
-    "current_odds": 2.0,
-    "reverse_bet": "Daniel Rincon",
-    "reverse_odds": 1.75,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "5-5,30-40",
-      "live_favorite": "Daniel Rincon",
-      "favorite_odds": 1.75
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S10",
-    "strategy_ids": [
-      "S10"
-    ],
-    "strategy_names": [
-      "Против фаворита по ходу матча при равном первом сете"
-    ],
-    "strategy_observations": {
-      "S10": {
-        "timestamp": "2026-10-08T18:42:58.274180+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "5-5",
-        "exact_bet_line": "Pedro Martinez",
-        "current_odds": 2.0,
-        "reverse_bet": "Daniel Rincon",
-        "reverse_odds": 1.75,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "5-5,30-40",
-          "live_favorite": "Daniel Rincon",
-          "favorite_odds": 1.75
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T18:47:57.741259+00:00",
-    "sport": "football",
-    "tournament": "Guatemala Segunda Division",
-    "event_id": "13264013",
-    "match": "Deportivo Colomba - Deportivo Tacana",
-    "minute_score": "40' / '1-1",
-    "minute": 40,
-    "score": "1-1",
-    "period": "FT",
-    "exact_bet_line": "ТМ 3.75",
-    "current_odds": 1.925,
-    "reverse_bet": "ТБ 3.75",
-    "reverse_odds": 1.875,
-    "market": "main_under",
-    "bet_line": 3.75,
-    "features": {
-      "drought_min": 0,
-      "last_goal_minute": 40,
-      "main_total": 3.75,
-      "selected_total": 3.75,
-      "main_ah_line": null,
-      "entry_epoch": null,
-      "price_verified": false,
-      "quote_at": null,
-      "quote_age_seconds": null,
-      "quote_score": null,
-      "quote_confirmation_gap_seconds": null,
-      "verification_method": null,
-      "initial_provider_quote": null,
-      "confirmed_provider_quote": null
-    },
-    "entry_epoch": null,
-    "price_verified": false,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S37",
-    "strategy_ids": [
-      "S37"
-    ],
-    "strategy_names": [
-      "Тотал меньше при счёте 1:1 и линии 3,5-4,0"
-    ],
-    "strategy_observations": {
-      "S37": {
-        "timestamp": "2026-10-08T18:47:57.741259+00:00",
-        "period": "FT",
-        "minute": 40,
-        "score": "1-1",
-        "exact_bet_line": "ТМ 3.75",
-        "current_odds": 1.925,
-        "reverse_bet": "ТБ 3.75",
-        "reverse_odds": 1.875,
-        "market": "main_under",
-        "bet_line": 3.75,
-        "features": {
-          "drought_min": 0,
-          "last_goal_minute": 40,
-          "main_total": 3.75,
-          "selected_total": 3.75,
-          "main_ah_line": null,
-          "entry_epoch": null,
-          "price_verified": false,
-          "quote_at": null,
-          "quote_age_seconds": null,
-          "quote_score": null,
-          "quote_confirmation_gap_seconds": null,
-          "verification_method": null,
-          "initial_provider_quote": null,
-          "confirmed_provider_quote": null
-        },
-        "entry_epoch": null,
-        "price_verified": false,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:01:15Z",
-    "sport": "football",
-    "tournament": "Norway Interkretsserie U19",
-    "event_id": "13258946",
-    "match": "Grorud U19 - Kjelsas U19",
-    "minute_score": "45' / '0-1'",
-    "minute": 45,
-    "score": "0-1",
-    "exact_bet_line": "ТМ 3.5",
-    "current_odds": 1.8,
-    "reverse_bet": "ТБ 3.5",
-    "reverse_odds": 2.0,
-    "strategy_id": "S31",
-    "strategy_ids": [
-      "S31"
-    ],
-    "strategy_names": [
-      "ТМ матча в перерыве при низкой активности"
-    ],
-    "tier": "WATCHLIST",
-    "pressure10": 45.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S31": {
-        "timestamp": "2026-10-08T19:01:15Z",
-        "period": "FT",
-        "minute": 45,
-        "score": "0-1",
-        "exact_bet_line": "ТМ 3.5",
-        "current_odds": 1.8,
-        "reverse_bet": "ТБ 3.5",
-        "reverse_odds": 2.0
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:02:59.612610+00:00",
-    "sport": "tennis",
-    "tournament": "W35 Las Vegas",
-    "event_id": "13263120",
-    "match": "Francesca Mattioli - Victoria Bosio",
-    "minute_score": "4-4",
-    "minute": null,
-    "score": "4-4",
-    "period": "FT",
-    "exact_bet_line": "Francesca Mattioli",
-    "current_odds": 2.1,
-    "reverse_bet": "Victoria Bosio",
-    "reverse_odds": 1.666,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "4-4,40-30",
-      "live_favorite": "Victoria Bosio",
-      "favorite_odds": 1.666
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S10",
-    "strategy_ids": [
-      "S10"
-    ],
-    "strategy_names": [
-      "Против фаворита по ходу матча при равном первом сете"
-    ],
-    "strategy_observations": {
-      "S10": {
-        "timestamp": "2026-10-08T19:02:59.612610+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "4-4",
-        "exact_bet_line": "Francesca Mattioli",
-        "current_odds": 2.1,
-        "reverse_bet": "Victoria Bosio",
-        "reverse_odds": 1.666,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "4-4,40-30",
-          "live_favorite": "Victoria Bosio",
-          "favorite_odds": 1.666
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:26:50Z",
-    "sport": "football",
-    "tournament": "Argentina Liga Profesional Reserves",
-    "event_id": "13195445",
-    "match": "Godoy Cruz Reserves - Barracas Central Reserves",
-    "minute_score": "65' / '0-0'",
-    "minute": 65,
-    "score": "0-0",
-    "exact_bet_line": "ТМ 0.5",
-    "current_odds": 2.05,
-    "reverse_bet": "ТБ 0.5",
-    "reverse_odds": 1.75,
-    "strategy_id": "S33",
-    "strategy_ids": [
-      "S33"
-    ],
-    "strategy_names": [
-      "Без гола после 60-й при 0:0 и низкой активности"
-    ],
-    "tier": "WATCHLIST",
-    "pressure10": 24.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S33": {
-        "timestamp": "2026-10-08T19:26:50Z",
-        "period": "FT",
-        "minute": 65,
-        "score": "0-0",
-        "exact_bet_line": "ТМ 0.5",
-        "current_odds": 2.05,
-        "reverse_bet": "ТБ 0.5",
-        "reverse_odds": 1.75
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:27:59.041926+00:00",
-    "sport": "football",
-    "tournament": "Womens Olympic Qual",
-    "event_id": "11980131",
-    "match": "Tunisia (W) - Senegal (W)",
-    "minute_score": "65' / '0-1",
-    "minute": 65,
-    "score": "0-1",
-    "period": "FT",
-    "exact_bet_line": "ТБ 1.5",
-    "current_odds": 1.875,
-    "reverse_bet": "ТМ 1.5",
-    "reverse_odds": 1.925,
-    "market": "next_goal_over",
-    "bet_line": 1.5,
-    "features": {
-      "drought_min": 3,
-      "last_goal_minute": 62,
-      "main_total": 1.5,
-      "selected_total": 1.5,
-      "main_ah_line": null,
-      "entry_epoch": null,
-      "price_verified": false,
-      "quote_at": null,
-      "quote_age_seconds": null,
-      "quote_score": null,
-      "quote_confirmation_gap_seconds": null,
-      "verification_method": null,
-      "initial_provider_quote": null,
-      "confirmed_provider_quote": null
-    },
-    "entry_epoch": null,
-    "price_verified": false,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S01",
-    "strategy_ids": [
-      "S01"
-    ],
-    "strategy_names": [
-      "Ещё один гол при счёте 0:1 на 60-69-й минуте"
-    ],
-    "strategy_observations": {
-      "S01": {
-        "timestamp": "2026-10-08T19:27:59.041926+00:00",
-        "period": "FT",
-        "minute": 65,
-        "score": "0-1",
-        "exact_bet_line": "ТБ 1.5",
-        "current_odds": 1.875,
-        "reverse_bet": "ТМ 1.5",
-        "reverse_odds": 1.925,
-        "market": "next_goal_over",
-        "bet_line": 1.5,
-        "features": {
-          "drought_min": 3,
-          "last_goal_minute": 62,
-          "main_total": 1.5,
-          "selected_total": 1.5,
-          "main_ah_line": null,
-          "entry_epoch": null,
-          "price_verified": false,
-          "quote_at": null,
-          "quote_age_seconds": null,
-          "quote_score": null,
-          "quote_confirmation_gap_seconds": null,
-          "verification_method": null,
-          "initial_provider_quote": null,
-          "confirmed_provider_quote": null
-        },
-        "entry_epoch": null,
-        "price_verified": false,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:31:52Z",
-    "sport": "football",
-    "tournament": "Lebanon League",
-    "event_id": "13253878",
-    "match": "Safa Beirut - Reyady Abaseya",
-    "minute_score": "45' / '1-0'",
-    "minute": 45,
-    "score": "1-0",
-    "exact_bet_line": "ТМ 2.25",
-    "current_odds": 1.925,
-    "reverse_bet": "ТБ 2.25",
-    "reverse_odds": 1.875,
-    "strategy_id": "S31",
-    "strategy_ids": [
-      "S31"
-    ],
-    "strategy_names": [
-      "ТМ матча в перерыве при низкой активности"
-    ],
-    "tier": "WATCHLIST",
-    "pressure10": 31.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S31": {
-        "timestamp": "2026-10-08T19:31:52Z",
-        "period": "FT",
-        "minute": 45,
-        "score": "1-0",
-        "exact_bet_line": "ТМ 2.25",
-        "current_odds": 1.925,
-        "reverse_bet": "ТБ 2.25",
-        "reverse_odds": 1.875
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:32:56.497156+00:00",
-    "sport": "football",
-    "tournament": "Copa do Brasil U20",
-    "event_id": "13181595",
-    "match": "Flamengo U20 - Vasco da Gama U20",
-    "minute_score": "2' / '0-0",
-    "minute": 2,
-    "score": "0-0",
-    "period": "FT",
-    "exact_bet_line": "ТБ 2.5",
-    "current_odds": 1.9,
-    "reverse_bet": "ТМ 2.5",
-    "reverse_odds": 1.9,
-    "market": "main_over",
-    "bet_line": 2.5,
-    "features": {
-      "drought_min": null,
-      "last_goal_minute": null,
-      "main_total": 2.5,
-      "selected_total": 2.5,
-      "main_ah_line": null,
-      "entry_epoch": null,
-      "price_verified": false,
-      "quote_at": null,
-      "quote_age_seconds": null,
-      "quote_score": null,
-      "quote_confirmation_gap_seconds": null,
-      "verification_method": null,
-      "initial_provider_quote": null,
-      "confirmed_provider_quote": null
-    },
-    "entry_epoch": null,
-    "price_verified": false,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S06Y",
-    "strategy_ids": [
-      "S06Y"
-    ],
-    "strategy_names": [
-      "Бразилия, молодёжь и резервы - тотал больше по основной линии"
-    ],
-    "strategy_observations": {
-      "S06Y": {
-        "timestamp": "2026-10-08T19:32:56.497156+00:00",
-        "period": "FT",
-        "minute": 2,
-        "score": "0-0",
-        "exact_bet_line": "ТБ 2.5",
-        "current_odds": 1.9,
-        "reverse_bet": "ТМ 2.5",
-        "reverse_odds": 1.9,
-        "market": "main_over",
-        "bet_line": 2.5,
-        "features": {
-          "drought_min": null,
-          "last_goal_minute": null,
-          "main_total": 2.5,
-          "selected_total": 2.5,
-          "main_ah_line": null,
-          "entry_epoch": null,
-          "price_verified": false,
-          "quote_at": null,
-          "quote_age_seconds": null,
-          "quote_score": null,
-          "quote_confirmation_gap_seconds": null,
-          "verification_method": null,
-          "initial_provider_quote": null,
-          "confirmed_provider_quote": null
-        },
-        "entry_epoch": null,
-        "price_verified": false,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "WATCHLIST",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T19:36:56Z",
-    "sport": "football",
-    "tournament": "Womens Olympic Qual",
-    "event_id": "11980126",
-    "match": "Burkina Faso (W) - Equatorial Guinea (W)",
-    "minute_score": "76' / '3-1'",
-    "minute": 76,
-    "score": "3-1",
-    "exact_bet_line": "ТМ 4.5",
-    "current_odds": 1.8,
-    "reverse_bet": "ТБ 4.5",
-    "reverse_odds": 2.0,
-    "strategy_id": "S39",
-    "strategy_ids": [
-      "S39"
-    ],
-    "strategy_names": [
-      "Без гола при высоком давлении на 70-79-й минуте"
-    ],
-    "tier": "ACTIVE",
-    "pressure10": 28.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S39": {
-        "timestamp": "2026-10-08T19:36:56Z",
-        "period": "FT",
-        "minute": 76,
-        "score": "3-1",
-        "exact_bet_line": "ТМ 4.5",
-        "current_odds": 1.8,
-        "reverse_bet": "ТБ 4.5",
-        "reverse_odds": 2.0
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T20:02:59.860779+00:00",
-    "sport": "football",
-    "tournament": "Spain Regional League",
-    "event_id": "13257561",
-    "match": "Onda - Silla CF",
-    "minute_score": "73' / '0-2",
-    "minute": 73,
-    "score": "0-2",
-    "period": "FT",
-    "exact_bet_line": "ТМ 2.5",
-    "current_odds": 1.925,
-    "reverse_bet": "ТБ 2.5",
-    "reverse_odds": 1.875,
-    "market": "next_goal_under",
-    "bet_line": 2.5,
-    "features": {
-      "drought_min": 17,
-      "last_goal_minute": 56,
-      "main_total": 2.5,
-      "selected_total": 2.5,
-      "main_ah_line": null,
-      "entry_epoch": null,
-      "price_verified": false,
-      "quote_at": null,
-      "quote_age_seconds": null,
-      "quote_score": null,
-      "quote_confirmation_gap_seconds": null,
-      "verification_method": null,
-      "initial_provider_quote": null,
-      "confirmed_provider_quote": null
-    },
-    "entry_epoch": null,
-    "price_verified": false,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S02",
-    "strategy_ids": [
-      "S02"
-    ],
-    "strategy_names": [
-      "Без гола после 70-й минуты при счёте 0:2"
-    ],
-    "strategy_observations": {
-      "S02": {
-        "timestamp": "2026-10-08T20:02:59.860779+00:00",
-        "period": "FT",
-        "minute": 73,
-        "score": "0-2",
-        "exact_bet_line": "ТМ 2.5",
-        "current_odds": 1.925,
-        "reverse_bet": "ТБ 2.5",
-        "reverse_odds": 1.875,
-        "market": "next_goal_under",
-        "bet_line": 2.5,
-        "features": {
-          "drought_min": 17,
-          "last_goal_minute": 56,
-          "main_total": 2.5,
-          "selected_total": 2.5,
-          "main_ah_line": null,
-          "entry_epoch": null,
-          "price_verified": false,
-          "quote_at": null,
-          "quote_age_seconds": null,
-          "quote_score": null,
-          "quote_confirmation_gap_seconds": null,
-          "verification_method": null,
-          "initial_provider_quote": null,
-          "confirmed_provider_quote": null
-        },
-        "entry_epoch": null,
-        "price_verified": false,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-08T20:17:44Z",
-    "sport": "football",
-    "tournament": "Lebanon League",
-    "event_id": "13253878",
-    "match": "Safa Beirut - Reyady Abaseya",
-    "minute_score": "75' / '2-0'",
-    "minute": 75,
-    "score": "2-0",
-    "exact_bet_line": "ТМ 2.5",
-    "current_odds": 1.775,
-    "reverse_bet": "ТБ 2.5",
-    "reverse_odds": 2.025,
-    "strategy_id": "S39",
-    "strategy_ids": [
-      "S39"
-    ],
-    "strategy_names": [
-      "Без гола при высоком давлении на 70-79-й минуте"
-    ],
-    "tier": "ACTIVE",
-    "pressure10": 34.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S39": {
-        "timestamp": "2026-10-08T20:17:44Z",
-        "period": "FT",
-        "minute": 75,
-        "score": "2-0",
-        "exact_bet_line": "ТМ 2.5",
-        "current_odds": 1.775,
-        "reverse_bet": "ТБ 2.5",
-        "reverse_odds": 2.025
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
     "timestamp": "2026-10-08T20:27:52.772091+00:00",
     "sport": "football",
     "tournament": "Copa do Brasil U20",
@@ -1693,6 +1043,288 @@
       }
     },
     "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T21:07:54.527399+00:00",
+    "sport": "football",
+    "tournament": "Colombia Primera B",
+    "event_id": "13096789",
+    "match": "Atletico Cali FC - Real Cartagena",
+    "minute_score": "37' / '1-1",
+    "minute": 37,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.5",
+    "current_odds": 1.9,
+    "reverse_bet": "ТБ 3.5",
+    "reverse_odds": 1.9,
+    "market": "main_under",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 4,
+      "last_goal_minute": 33,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S37",
+    "strategy_ids": [
+      "S37"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 и линии 3,5-4,0"
+    ],
+    "strategy_observations": {
+      "S37": {
+        "timestamp": "2026-10-08T21:07:54.527399+00:00",
+        "period": "FT",
+        "minute": 37,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 3.5",
+        "current_odds": 1.9,
+        "reverse_bet": "ТБ 3.5",
+        "reverse_odds": 1.9,
+        "market": "main_under",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 4,
+          "last_goal_minute": 33,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T21:17:55.924234+00:00",
+    "sport": "football",
+    "tournament": "Jamaica Premier League",
+    "event_id": "13181515",
+    "match": "Portmore United - Waterhouse",
+    "minute_score": "46' / '1-1",
+    "minute": 46,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.0",
+    "current_odds": 2.025,
+    "reverse_bet": "ТБ 3.0",
+    "reverse_odds": 1.775,
+    "market": "main_under",
+    "bet_line": 3.0,
+    "features": {
+      "drought_min": 19,
+      "last_goal_minute": 27,
+      "main_total": 3.0,
+      "selected_total": 3.0,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 на 45-49-й минуте"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-08T21:17:55.924234+00:00",
+        "period": "FT",
+        "minute": 46,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 3.0",
+        "current_odds": 2.025,
+        "reverse_bet": "ТБ 3.0",
+        "reverse_odds": 1.775,
+        "market": "main_under",
+        "bet_line": 3.0,
+        "features": {
+          "drought_min": 19,
+          "last_goal_minute": 27,
+          "main_total": 3.0,
+          "selected_total": 3.0,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T21:18:40Z",
+    "sport": "football",
+    "tournament": "Ecuador LigaPro Serie B",
+    "event_id": "13236510",
+    "match": "CD Vargas Torres - LDU Portoviejo",
+    "minute_score": "45' / '0-0'",
+    "minute": 45,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 0.75",
+    "current_odds": 1.925,
+    "reverse_bet": "ТБ 0.75",
+    "reverse_odds": 1.875,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "ТМ матча в перерыве при низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 19.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-08T21:18:40Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 0.75",
+        "current_odds": 1.925,
+        "reverse_bet": "ТБ 0.75",
+        "reverse_odds": 1.875
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T21:45:20Z",
+    "sport": "football",
+    "tournament": "Panama Liga Prom",
+    "event_id": "13260832",
+    "match": "Tauro FC Reserves - Chorrillo",
+    "minute_score": "45' / '0-0'",
+    "minute": 45,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 1.75",
+    "current_odds": 1.95,
+    "reverse_bet": "ТБ 1.75",
+    "reverse_odds": 1.85,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "ТМ матча в перерыве при низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 39.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-08T21:45:20Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 1.75",
+        "current_odds": 1.95,
+        "reverse_bet": "ТБ 1.75",
+        "reverse_odds": 1.85
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-08T21:50:29Z",
+    "sport": "football",
+    "tournament": "Ecuador LigaPro Serie B",
+    "event_id": "13236510",
+    "match": "CD Vargas Torres - LDU Portoviejo",
+    "minute_score": "61' / '0-0'",
+    "minute": 61,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 0.5",
+    "current_odds": 1.775,
+    "reverse_bet": "ТБ 0.5",
+    "reverse_odds": 2.025,
+    "strategy_id": "S33",
+    "strategy_ids": [
+      "S33"
+    ],
+    "strategy_names": [
+      "Без гола после 60-й при 0:0 и низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 29.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S33": {
+        "timestamp": "2026-10-08T21:50:29Z",
+        "period": "FT",
+        "minute": 61,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 0.5",
+        "current_odds": 1.775,
+        "reverse_bet": "ТБ 0.5",
+        "reverse_odds": 2.025
+      }
+    },
     "settlement_reason": "INPLAY"
   }
 ]
