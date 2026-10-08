@@ -14,7 +14,6 @@ ACTIVE_SIGNAL_IDS={
  ("FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","PRIMARY"):"S31",
  ("FOOTBALL_FH_PRESSURE_GOAL_V1","PRIMARY"):"S32",
  ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
- ("FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","PRIMARY"):"S34",
 }
 MINING_SIGNAL_IDS={
  ("FOOTBALL_LATE_HOME_ACTIVITY_V2","PRIMARY"):"S13",
@@ -24,7 +23,6 @@ SIGNAL_NAMES={
  "S31":"ТМ матча в перерыве при низкой активности",
  "S32":"Гол до перерыва при высокой активности",
  "S33":"Без гола после 60-й при 0:0 и низкой активности",
- "S34":"Гол во втором тайме после активного первого без голов",
  "S13":"Поздняя победа хозяев при подтверждённой домашней активности",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
@@ -146,8 +144,6 @@ def candidate_arms(meta,features,halftime=False):
   out.append({"id":"S32","strategy":"FOOTBALL_FH_PRESSURE_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":0})
  if 60<=minute<=69 and s==(0,0) and sot is not None and sot<=2:
   out.append({"id":"S33","strategy":"FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":[1.50,2.20],"interval":300,"priority":1})
- if halftime and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
-  out.append({"id":"S34","strategy":"FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"OVER","period":"FT","odds":[1.40,2.00],"interval":300,"priority":0})
  if 70<=minute<=79 and pressure is not None and pressure>=PRESSURE_CUTOFF:
   out.append({"id":"S39","strategy":"FOOTBALL_PRESSURE_NOGOAL_70_79_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":None,"interval":600,"priority":2})
  return out
