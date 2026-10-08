@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 21,
-    "last_operational_change_at": "2026-10-07T20:25:00Z",
-    "last_operational_change": "Archived broad negative rules and retained only agreed positive pockets: no goal at 0:2, narrow 1:1 totals, no goal under high pressure at 70-79, over 2.5 after 0:2, the existing 1.50-1.75 heavy-set tennis rule, and two adult-men late-over S30 pockets.",
+    "operational_scanner_count": 16,
+    "last_operational_change_at": "2026-10-08T03:55:00Z",
+    "last_operational_change": "Disabled five zero-collection rules: four Bet365 tennis totals after 85 consecutive HTTP 403 failures with zero successful calls, and the second-half goal after active 0:0 first half after zero signals since launch.",
     "user_facing_names": "Только поле name_ru",
     "show_technical_strategy_ids_to_user": false,
     "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
@@ -1070,13 +1070,15 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T08:47:35Z"
+      "status": "ARCHIVED_ZERO_COLLECTION",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T08:47:35Z",
+      "disabled_at": "2026-10-08T03:55:00Z",
+      "disabled_reason": "Отключена: 0 сигналов с 2026-10-04 при исправно работающем общем stateful-сборщике; соседние правила того же движка данные получают."
     },
     {
       "id": "BT01M",
@@ -1097,13 +1099,15 @@
         ],
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "bet365_tennis.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T13:30:00Z"
+      "status": "PAUSED_PROVIDER_403",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T13:30:00Z",
+      "disabled_at": "2026-10-08T03:55:00Z",
+      "disabled_reason": "Отключена: с запуска 0 сигналов; Bet365 tennis worker получил 85 последовательных HTTP 403 и 0 успешных API-вызовов. История и правило сохранены до восстановления доступного источника."
     },
     {
       "id": "BT01W",
@@ -1124,13 +1128,15 @@
         ],
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "bet365_tennis.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T13:30:00Z"
+      "status": "PAUSED_PROVIDER_403",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T13:30:00Z",
+      "disabled_at": "2026-10-08T03:55:00Z",
+      "disabled_reason": "Отключена: с запуска 0 сигналов; Bet365 tennis worker получил 85 последовательных HTTP 403 и 0 успешных API-вызовов. История и правило сохранены до восстановления доступного источника."
     },
     {
       "id": "BT02W",
@@ -1152,13 +1158,15 @@
         ],
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "bet365_tennis.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T13:30:00Z"
+      "status": "PAUSED_PROVIDER_403",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T13:30:00Z",
+      "disabled_at": "2026-10-08T03:55:00Z",
+      "disabled_reason": "Отключена: с запуска 0 сигналов; Bet365 tennis worker получил 85 последовательных HTTP 403 и 0 успешных API-вызовов. История и правило сохранены до восстановления доступного источника."
     },
     {
       "id": "BT03W",
@@ -1180,13 +1188,15 @@
         ],
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "bet365_tennis.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T13:30:00Z"
+      "status": "PAUSED_PROVIDER_403",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T13:30:00Z",
+      "disabled_at": "2026-10-08T03:55:00Z",
+      "disabled_reason": "Отключена: с запуска 0 сигналов; Bet365 tennis worker получил 85 последовательных HTTP 403 и 0 успешных API-вызовов. История и правило сохранены до восстановления доступного источника."
     },
     {
       "id": "S36",
