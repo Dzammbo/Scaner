@@ -19,20 +19,22 @@
       "PUSH": 0,
       "profit": 1.725,
       "ROI": 0.123214,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
       "signals": 20,
-      "pending": 1,
+      "pending": 2,
       "void": 0,
-      "N": 19,
+      "N": 18,
       "W": 9,
-      "L": 10,
+      "L": 9,
       "PUSH": 0,
-      "profit": 1.925,
-      "ROI": 0.101316,
-      "balance_valid": true
+      "profit": 2.925,
+      "ROI": 0.1625,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
@@ -45,19 +47,20 @@
       "PUSH": 8,
       "profit": 3.825,
       "ROI": 0.035748,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 45,
-      "pending": 0,
+      "pending": 45,
       "void": 0,
-      "N": 45,
-      "W": 8,
-      "L": 37,
+      "N": 0,
+      "W": 0,
+      "L": 0,
       "PUSH": 0,
-      "profit": 1.333,
-      "ROI": 0.029622,
+      "profit": 0.0,
+      "ROI": null,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -96,20 +99,24 @@
           "ROI": 0.65475,
           "balance_valid": true
         }
-      }
+      },
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
       "signals": 16,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 15,
-      "W": 11,
+      "N": 16,
+      "W": 12,
       "L": 4,
       "PUSH": 0,
-      "profit": 6.5,
-      "ROI": 0.433333,
-      "balance_valid": true
+      "profit": 7.3,
+      "ROI": 0.45625,
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     }
-  }
+  },
+  "settlement_updated_at": "2026-10-08T14:11:24Z",
+  "settlement_source": "betsapi_cache"
 }
