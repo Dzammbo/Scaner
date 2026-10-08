@@ -1,7 +1,7 @@
 {
-  "merged": 7702,
-  "settled": 7529,
-  "void": 149,
+  "merged": 7706,
+  "settled": 7532,
+  "void": 150,
   "pending": 24,
   "pending_live_or_delayed": 24,
   "unresolved": 0,
@@ -14,7 +14,7 @@
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
     "VOID_RETIRED": 35,
-    "VOID_TENNIS_WINNER_MISSING": 107
+    "VOID_TENNIS_WINNER_MISSING": 108
   },
   "settlement_event_reasons": {
     "INPLAY": 2,
@@ -25,23 +25,23 @@
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
     "VOID_RETIRED": 22,
-    "VOID_TENNIS_WINNER_MISSING": 84
+    "VOID_TENNIS_WINNER_MISSING": 85
   },
   "settlement_cache": {
-    "updated_at": "2026-10-08T05:03:06Z",
+    "updated_at": "2026-10-08T06:03:12Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 0,
-    "queried_events": 0,
-    "signal_unique_events": 4131,
-    "cache_events": 4131,
-    "final_events": 4092,
+    "provider_queries": 2,
+    "queried_events": 19,
+    "signal_unique_events": 4135,
+    "cache_events": 4135,
+    "final_events": 4096,
     "void_events": 24,
-    "immutable_events": 4116,
+    "immutable_events": 4120,
     "retryable_events": 15,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 4092,
+      "FINAL": 4096,
       "INPLAY": 2,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
@@ -65,7 +65,7 @@
     },
     "settlement_score_sources": {
       "scores.2": 6079,
-      "ss": 1450
+      "ss": 1453
     }
   },
   "observation_watchlist": {
@@ -284,41 +284,41 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 109,
-      "pending": 0,
+      "recorded": 111,
+      "pending": 1,
       "void": 19,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 90,
-        "W": 47,
+        "N": 91,
+        "W": 48,
         "L": 43,
         "P": 0,
-        "profit": 6.35,
-        "ROI": 7.06
+        "profit": 7.35,
+        "ROI": 8.08
       },
       "original_without_top3": {
-        "N": 87,
-        "W": 44,
+        "N": 88,
+        "W": 45,
         "L": 43,
         "P": 0,
-        "profit": 3.05,
-        "ROI": 3.51
+        "profit": 4.05,
+        "ROI": 4.6
       },
       "reverse": {
-        "N": 90,
+        "N": 91,
         "W": 43,
-        "L": 47,
+        "L": 48,
         "P": 0,
-        "profit": -16.346,
-        "ROI": -18.16
+        "profit": -17.346,
+        "ROI": -19.06
       },
       "reverse_without_top3": {
-        "N": 87,
+        "N": 88,
         "W": 40,
-        "L": 47,
+        "L": 48,
         "P": 0,
-        "profit": -18.646,
-        "ROI": -21.43
+        "profit": -19.646,
+        "ROI": -22.32
       }
     },
     "S28": {
@@ -364,41 +364,41 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 219,
-      "pending": 2,
-      "void": 32,
+      "recorded": 221,
+      "pending": 1,
+      "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
-        "N": 185,
+        "N": 187,
         "W": 117,
-        "L": 68,
+        "L": 70,
         "P": 0,
-        "profit": -1.097,
-        "ROI": -0.59
+        "profit": -3.097,
+        "ROI": -1.66
       },
       "original_without_top3": {
-        "N": 182,
+        "N": 184,
         "W": 114,
-        "L": 68,
+        "L": 70,
         "P": 0,
-        "profit": -3.324,
-        "ROI": -1.83
+        "profit": -5.324,
+        "ROI": -2.89
       },
       "reverse": {
-        "N": 185,
-        "W": 68,
+        "N": 187,
+        "W": 70,
         "L": 117,
         "P": 0,
-        "profit": -35.075,
-        "ROI": -18.96
+        "profit": -32.45,
+        "ROI": -17.35
       },
       "reverse_without_top3": {
-        "N": 182,
-        "W": 65,
+        "N": 184,
+        "W": 67,
         "L": 117,
         "P": 0,
-        "profit": -39.575,
-        "ROI": -21.74
+        "profit": -36.95,
+        "ROI": -20.08
       }
     },
     "S29": {
