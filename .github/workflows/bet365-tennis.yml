@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   collect:
+    if: ${{ vars.BET365_TENNIS_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 345
     env:
