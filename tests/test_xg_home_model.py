@@ -13,6 +13,14 @@ def history_row(event_id, kickoff, league_id, home_id, away_id, home_xg, away_xg
 
 
 class XgHomeModelTest(unittest.TestCase):
+    def test_history_archives_are_deduplicated_by_event(self):
+        live = [history_row("1", 100, "10", "A", "B", 1.0, 0.5)]
+        archive = [history_row("1", 100, "10", "A", "B", 1.2, 0.6),
+                   history_row("2", 200, "10", "C", "D", 2.0, 0.7)]
+        merged = model.merge_history_rows(live, archive)
+        self.assertEqual([row["event_id"] for row in merged], ["1", "2"])
+        self.assertEqual(merged[0]["home_xg"], 1.2)
+
     def test_probabilities_sum_to_one(self):
         probabilities = model.outcome_probabilities(1.8, 1.1)
         self.assertAlmostEqual(sum(probabilities), 1.0, places=10)

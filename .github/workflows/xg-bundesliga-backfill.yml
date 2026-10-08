@@ -1,0 +1,49 @@
+name: Backfill Bundesliga xG history
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "xg_bundesliga_backfill.py"
+      - ".github/workflows/xg-bundesliga-backfill.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: xg-bundesliga-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Download current-season Bundesliga xG
+        run: |
+          test -n "$BETSAPI_KEY"
+          python3 -m py_compile xg_bundesliga_backfill.py xg_home_model.py
+          python3 xg_bundesliga_backfill.py
+
+      - name: Persist the archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mining_log/xg_home_model/bundesliga_history.jsonl \
+                  mining_log/xg_home_model/bundesliga_backfill_status.json
+          git commit -m "Backfill current-season Bundesliga xG history"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            [ "$attempt" -eq 5 ] && exit 1
+            sleep $((attempt*3))
+          done

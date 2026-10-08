@@ -27,6 +27,7 @@ TOKEN = os.environ["BETSAPI_KEY"]
 ROOT = Path("mining_log/xg_home_model")
 SOURCE_STATE = Path("mining_log/stateful_goal/state.json")
 HISTORY = ROOT / "history.jsonl"
+BUNDESLIGA_HISTORY = ROOT / "bundesliga_history.jsonl"
 PREDICTIONS = ROOT / "predictions.jsonl"
 STATE = ROOT / "state.json"
 STATUS = ROOT / "status.json"
@@ -100,6 +101,17 @@ def save_rows(path, rows):
         "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows),
         encoding="utf-8",
     )
+
+
+def merge_history_rows(*groups):
+    """Merge archives by event id without multiplying the same match."""
+    merged = {}
+    for rows in groups:
+        for row in rows:
+            event_id = str(row.get("event_id") or "")
+            if event_id:
+                merged[event_id] = row
+    return sorted(merged.values(), key=lambda row: int(row.get("kickoff") or 0))
 
 
 def pair(stats, key):
@@ -337,7 +349,10 @@ def main():
     ROOT.mkdir(parents=True, exist_ok=True)
     state = load_json(STATE, {"attempted_final_events": {}, "last_upcoming_query": 0})
     attempted = state.setdefault("attempted_final_events", {})
-    history = load_rows(HISTORY); predictions = load_rows(PREDICTIONS)
+    live_history = load_rows(HISTORY)
+    bundesliga_history = load_rows(BUNDESLIGA_HISTORY)
+    history = merge_history_rows(live_history, bundesliga_history)
+    predictions = load_rows(PREDICTIONS)
     history_ids = {str(row.get("event_id")) for row in history}
     prediction_ids = {str(row.get("event_id")) for row in predictions}
     source_state = load_json(SOURCE_STATE, {"events": {}, "live_ids": []})
@@ -365,7 +380,8 @@ def main():
             settle_prediction(prediction, event)
         history_row = completed_history_row(event)
         if history_row and event_id not in history_ids:
-            history.append(history_row); history_ids.add(event_id); diagnostics["history_added"] += 1
+            history.append(history_row); live_history.append(history_row)
+            history_ids.add(event_id); diagnostics["history_added"] += 1
         if str(event.get("time_status") or "") in ("3", "4", "5", "6", "7", "8", "9"):
             attempted[event_id] = now
 
@@ -405,7 +421,7 @@ def main():
     state["attempted_final_events"] = {key: value for key, value in attempted.items()
                                           if now - int(value or 0) <= 30 * 86400}
     state.update({"updated_at": iso(), "api_calls_last_run": calls})
-    save_rows(HISTORY, sorted(history, key=lambda row: int(row.get("kickoff") or 0)))
+    save_rows(HISTORY, merge_history_rows(live_history))
     save_rows(PREDICTIONS, sorted(predictions, key=lambda row: int(row.get("kickoff") or 0)))
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -416,7 +432,9 @@ def main():
         "data_source": "BetsAPI only",
         "formula": "последние 3 домашних xG хозяев и 3 выездных xG гостей + Пуассон/Скеллам",
         "calibration": {"ready": False, "reason": "Новая эпоха ещё не накопила историю для out-of-sample isotonic calibration"},
-        "counts": {"completed_matches_with_xg": len(history), "all_model_predictions": len(predictions),
+        "counts": {"completed_matches_with_xg": len(history),
+                   "bundesliga_backfill_matches": len(bundesliga_history),
+                   "all_model_predictions": len(predictions),
                    "primary_home_candidates": len(primary)},
         "primary_rule": {"competition": "Germany Bundesliga", "outcome": "home_win",
                          "odds": [MIN_ODDS, MAX_ODDS], "minimum_probability_edge": MIN_EDGE,
