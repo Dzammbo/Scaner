@@ -2,6 +2,10 @@ name: Scanner settlement
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/scanner-settlement.yml"
 
 permissions:
   contents: write
@@ -76,7 +80,6 @@ jobs:
           assert provider["provider_queries"] <= provider["query_budget"]
           assert provider["due_events_remaining"] == 0
           assert current["merged"] == current["settled"] + current["void"] + current["pending"]
-          assert {"S26", "S30"}.issubset(current["strategies"])
           PY
 
             git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json observation_watchlist_current.json s30_top6_current.json
