@@ -138,7 +138,9 @@ def main():
     LOG_ROOT.mkdir(parents=True, exist_ok=True)
     started = now()
     end = time.monotonic() + DURATION_SECONDS
-    next_checkpoint = time.monotonic() + CHECKPOINT_SECONDS
+    # Publish the first completed pass immediately so newly enabled Mining
+    # strategies are visible and auditable without waiting ten minutes.
+    next_checkpoint = time.monotonic()
     intervals = COLLECTOR_INTERVALS
     next_due = {name: 0.0 for name in intervals}
     counts = {name: 0 for name in intervals}
