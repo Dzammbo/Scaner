@@ -1,30 +1,55 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-09T19:57:43Z",
-  "signals": 901,
+  "updated_at": "2026-10-09T20:09:52Z",
+  "signals": 903,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-09T19:52:29Z",
+      "timestamp": "2026-10-09T20:09:44Z",
       "sport": "football",
-      "tournament": "England Championship",
-      "event_id": "12100746",
-      "match": "West Ham - QPR",
-      "minute_score": "45' / '0-1'",
+      "tournament": "Portugal Primeira Liga",
+      "event_id": "12155190",
+      "match": "Braga - Sporting",
+      "minute_score": "45' / '1-0'",
       "minute": 45,
-      "score": "0-1",
-      "exact_bet_line": "ТМ 2.5",
-      "current_odds": 2.0,
-      "reverse_bet": "ТБ 2.5",
-      "reverse_odds": 1.85,
-      "strategy_id": "S31",
+      "score": "1-0",
+      "exact_bet_line": "ТБ 2.25",
+      "current_odds": 2.05,
+      "reverse_bet": "ТМ 2.25",
+      "reverse_odds": 1.8,
+      "strategy_id": "S41",
       "strategy_ids": [
-        "S31"
+        "S41"
       ],
       "strategy_names": [
-        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+        "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24"
       ],
       "tier": "WATCHLIST",
-      "pressure10": 25.0,
+      "pressure10": 23.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-09T20:09:44Z",
+      "sport": "football",
+      "tournament": "Belgium Division 1 Women",
+      "event_id": "13262458",
+      "match": "Westerlo (W) - KV Mechelen (W)",
+      "minute_score": "77' / '1-1'",
+      "minute": 77,
+      "score": "1-1",
+      "exact_bet_line": "ТМ 2.5",
+      "current_odds": 1.9,
+      "reverse_bet": "ТБ 2.5",
+      "reverse_odds": 1.9,
+      "strategy_id": "S39",
+      "strategy_ids": [
+        "S39"
+      ],
+      "strategy_names": [
+        "Без гола при высоком давлении на 70-79-й минуте"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 34.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
