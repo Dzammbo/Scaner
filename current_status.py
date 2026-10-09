@@ -448,6 +448,7 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
     for raw in load_jsonl(S30_LATE_QUOTES_FILE):
         minute = raw.get("minute")
         odds = raw.get("under_odds", raw.get("current_odds"))
+        reverse_odds = raw.get("over_odds", raw.get("reverse_odds"))
         line = raw.get("total_line")
         try:
             minute = int(minute)
@@ -466,6 +467,12 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             "current_odds": odds,
             "exact_bet_line": f"ТМ {line:g}",
         })
+        try:
+            reverse_odds = float(reverse_odds)
+        except (TypeError, ValueError):
+            reverse_odds = None
+        if reverse_odds is not None and reverse_odds > 1:
+            item.update({"reverse_odds": reverse_odds, "reverse_bet": f"ТБ {line:g}"})
         rows.append(item)
 
     def first_per_event(selected):
@@ -474,7 +481,7 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             output.setdefault(str(row.get("event_id")), row)
         return list(output.values())
 
-    def metric(selected):
+    def metric(selected, key="profit"):
         selected = first_per_event(selected)
         settled, voided, pending = settle(selected, cache, overrides)
         return {
@@ -482,8 +489,8 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             "settled": len(settled),
             "pending": len(pending),
             "void": len(voided),
-            "result": aggregate(settled),
-            "without_top3": aggregate_without_top(settled),
+            "result": aggregate(settled, key),
+            "without_top3": aggregate_without_top(settled, key),
         }
 
     periods = {
@@ -497,6 +504,14 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
         "1,20-1,29": lambda row: 1.20 <= row["current_odds"] < 1.30,
         "1,30-1,49": lambda row: 1.30 <= row["current_odds"] < 1.50,
         "1,50 и выше": lambda row: row["current_odds"] >= 1.50,
+    }
+    reverse_odds_groups = {
+        "меньше 1,50": lambda row: row.get("reverse_odds") is not None and row["reverse_odds"] < 1.50,
+        "1,50-1,99": lambda row: row.get("reverse_odds") is not None and 1.50 <= row["reverse_odds"] < 2.00,
+        "2,00-2,99": lambda row: row.get("reverse_odds") is not None and 2.00 <= row["reverse_odds"] < 3.00,
+        "3,00-4,99": lambda row: row.get("reverse_odds") is not None and 3.00 <= row["reverse_odds"] < 5.00,
+        "5,00-6,99": lambda row: row.get("reverse_odds") is not None and 5.00 <= row["reverse_odds"] < 7.00,
+        "7,00 и выше": lambda row: row.get("reverse_odds") is not None and row["reverse_odds"] >= 7.00,
     }
     clean = [row for row in rows if timestamp_at_or_after(row.get("timestamp"), S30_LATE_EPOCH)]
     report = {
@@ -527,6 +542,28 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             period: {
                 odds: metric([row for row in clean if period_filter(row) and odds_filter(row)])
                 for odds, odds_filter in odds_groups.items()
+            }
+            for period, period_filter in periods.items()
+        },
+        "historical_reverse_by_odds": {
+            name: metric([row for row in rows if predicate(row)], "reverse_profit")
+            for name, predicate in reverse_odds_groups.items()
+        },
+        "historical_reverse_matrix": {
+            period: {
+                odds: metric([row for row in rows if period_filter(row) and odds_filter(row)], "reverse_profit")
+                for odds, odds_filter in reverse_odds_groups.items()
+            }
+            for period, period_filter in periods.items()
+        },
+        "clean_reverse_by_odds": {
+            name: metric([row for row in clean if predicate(row)], "reverse_profit")
+            for name, predicate in reverse_odds_groups.items()
+        },
+        "clean_reverse_matrix": {
+            period: {
+                odds: metric([row for row in clean if period_filter(row) and odds_filter(row)], "reverse_profit")
+                for odds, odds_filter in reverse_odds_groups.items()
             }
             for period, period_filter in periods.items()
         },

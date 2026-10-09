@@ -9,9 +9,9 @@ import current_status
 class S30LateUnderReportTest(unittest.TestCase):
     def test_thresholds_use_first_point_per_event(self):
         rows = [
-            {"timestamp": "2026-10-09T21:21:00Z", "event_id": "1", "minute": 88, "score": "1-0", "total_line": 1.5, "under_odds": 1.10},
-            {"timestamp": "2026-10-09T21:22:00Z", "event_id": "1", "minute": 89, "score": "1-0", "total_line": 1.5, "under_odds": 1.08},
-            {"timestamp": "2026-10-09T21:23:00Z", "event_id": "2", "minute": 90, "score": "0-0", "total_line": 0.5, "under_odds": 1.18},
+            {"timestamp": "2026-10-09T21:21:00Z", "event_id": "1", "minute": 88, "score": "1-0", "total_line": 1.5, "under_odds": 1.10, "over_odds": 7.0},
+            {"timestamp": "2026-10-09T21:22:00Z", "event_id": "1", "minute": 89, "score": "1-0", "total_line": 1.5, "under_odds": 1.08, "over_odds": 8.0},
+            {"timestamp": "2026-10-09T21:23:00Z", "event_id": "2", "minute": 90, "score": "0-0", "total_line": 0.5, "under_odds": 1.18, "over_odds": 4.5},
         ]
         cache = {
             "1": {"event_id": "1", "state": "FINAL", "ss": "1-0", "scores": {}},
@@ -37,6 +37,9 @@ class S30LateUnderReportTest(unittest.TestCase):
         self.assertEqual(under_115["settled"], 1)
         self.assertEqual(under_120["settled"], 2)
         self.assertEqual(under_120["result"]["W"], 2)
+        reverse_7 = report["clean_reverse_by_odds"]["7,00 и выше"]
+        self.assertEqual(reverse_7["settled"], 1)
+        self.assertEqual(reverse_7["result"]["L"], 1)
 
 
 if __name__ == "__main__":
