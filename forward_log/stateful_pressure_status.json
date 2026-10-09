@@ -1,46 +1,21 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-09T20:09:52Z",
-  "signals": 903,
+  "updated_at": "2026-10-09T20:20:15Z",
+  "signals": 905,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-09T20:09:44Z",
+      "timestamp": "2026-10-09T20:14:52Z",
       "sport": "football",
-      "tournament": "Portugal Primeira Liga",
-      "event_id": "12155190",
-      "match": "Braga - Sporting",
-      "minute_score": "45' / '1-0'",
-      "minute": 45,
-      "score": "1-0",
-      "exact_bet_line": "ТБ 2.25",
-      "current_odds": 2.05,
-      "reverse_bet": "ТМ 2.25",
-      "reverse_odds": 1.8,
-      "strategy_id": "S41",
-      "strategy_ids": [
-        "S41"
-      ],
-      "strategy_names": [
-        "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24"
-      ],
-      "tier": "WATCHLIST",
-      "pressure10": 23.0,
-      "period": "FT",
-      "source": "stateful_goal_mining"
-    },
-    {
-      "timestamp": "2026-10-09T20:09:44Z",
-      "sport": "football",
-      "tournament": "Belgium Division 1 Women",
-      "event_id": "13262458",
-      "match": "Westerlo (W) - KV Mechelen (W)",
-      "minute_score": "77' / '1-1'",
-      "minute": 77,
-      "score": "1-1",
+      "tournament": "Republic of Ireland First Division",
+      "event_id": "11588183",
+      "match": "Cobh Ramblers - Kerry FC",
+      "minute_score": "73' / '0-2'",
+      "minute": 73,
+      "score": "0-2",
       "exact_bet_line": "ТМ 2.5",
-      "current_odds": 1.9,
+      "current_odds": 2.025,
       "reverse_bet": "ТБ 2.5",
-      "reverse_odds": 1.9,
+      "reverse_odds": 1.775,
       "strategy_id": "S39",
       "strategy_ids": [
         "S39"
@@ -49,7 +24,32 @@
         "Без гола при высоком давлении на 70-79-й минуте"
       ],
       "tier": "ACTIVE",
-      "pressure10": 34.0,
+      "pressure10": 39.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-09T20:19:55Z",
+      "sport": "football",
+      "tournament": "Republic of Ireland First Division",
+      "event_id": "11588184",
+      "match": "Bray Wanderers - Wexford FC",
+      "minute_score": "79' / '1-2'",
+      "minute": 79,
+      "score": "1-2",
+      "exact_bet_line": "ТМ 3.5",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 3.5",
+      "reverse_odds": 1.8,
+      "strategy_id": "S39",
+      "strategy_ids": [
+        "S39"
+      ],
+      "strategy_names": [
+        "Без гола при высоком давлении на 70-79-й минуте"
+      ],
+      "tier": "ACTIVE",
+      "pressure10": 29.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
