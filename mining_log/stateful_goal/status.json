@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-09T08:08:33Z",
-  "api_calls": 1,
+  "updated_at": "2026-10-09T08:18:43Z",
+  "api_calls": 3,
   "board_n": 13,
-  "observations": 3830,
-  "signals": 297,
+  "observations": 3832,
+  "signals": 299,
   "archived_signals": 2369,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -19,8 +19,7 @@
       "PUSH": 0,
       "profit": 5.7,
       "ROI": 0.285,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -33,13 +32,12 @@
       "PUSH": 0,
       "profit": -3.275,
       "ROI": -0.112931,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
-      "signals": 132,
-      "pending": 0,
+      "signals": 134,
+      "pending": 2,
       "void": 0,
       "N": 132,
       "W": 65,
@@ -47,20 +45,19 @@
       "PUSH": 11,
       "profit": -5.1875,
       "ROI": -0.039299,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 75,
-      "pending": 75,
+      "pending": 0,
       "void": 0,
-      "N": 0,
-      "W": 0,
-      "L": 0,
+      "N": 75,
+      "W": 11,
+      "L": 64,
       "PUSH": 0,
-      "profit": 0.0,
-      "ROI": null,
+      "profit": -15.334,
+      "ROI": -0.204453,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -99,8 +96,7 @@
           "ROI": 0.264949,
           "balance_valid": true
         }
-      },
-      "settlement_source": "betsapi_cache"
+      }
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
@@ -113,10 +109,7 @@
       "PUSH": 0,
       "profit": 5.6,
       "ROI": 0.136585,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-09T08:10:02Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
