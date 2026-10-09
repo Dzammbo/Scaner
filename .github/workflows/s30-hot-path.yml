@@ -2,6 +2,13 @@ name: S30 continuous worker
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "s30_worker.py"
+      - "scanner.py"
+      - "strategies.json"
+      - ".github/workflows/s30-hot-path.yml"
 
 permissions:
   contents: write
@@ -9,7 +16,7 @@ permissions:
 
 concurrency:
   group: s30-continuous-worker
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   collect:
