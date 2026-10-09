@@ -1,8 +1,8 @@
 {
-  "pending_signals": 45,
+  "pending_signals": 33,
   "void_signals": 154,
   "signal_reasons": {
-    "INPLAY": 23,
+    "INPLAY": 11,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -13,7 +13,7 @@
     "VOID_TENNIS_WINNER_MISSING": 110
   },
   "unique_event_reasons": {
-    "INPLAY": 17,
+    "INPLAY": 6,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -35,7 +35,7 @@
       "T18": 17
     },
     "settlement_score_sources": {
-      "scores.2": 6422,
+      "scores.2": 6444,
       "ss": 1575
     }
   },
@@ -50,5 +50,23 @@
     "forward_start_at": "2026-10-04T06:27:49Z",
     "items": 2,
     "review_ready": 0
+  },
+  "s30_late_under": {
+    "status": "VISIBLE_FORWARD_COLLECTION",
+    "clean_epoch_start": "2026-10-09T21:20:00Z",
+    "minutes": [
+      85,
+      86,
+      87,
+      88,
+      89,
+      90
+    ],
+    "one_snapshot_per_match_per_minute": true,
+    "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
+    "historical_snapshots": 5552,
+    "historical_events": 2019,
+    "clean_snapshots": 45,
+    "clean_events": 8
   }
 }
