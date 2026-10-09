@@ -9,11 +9,12 @@ import stateful_goal_mining as stateful
 import ht_one_goal_mining as ht
 import prematch_line_movement as prematch
 import mining_pending_refresh as refresh
+import hockey_period_under as hockey
 
 
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "xg_home": 300})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "xg_home": 300, "hockey_period": 1800})
         self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S21")
 
     @patch.object(worker, "budget", return_value=20)
@@ -29,6 +30,35 @@ class MiningPruningTest(unittest.TestCase):
         self.assertTrue(worker.run_pass("xg_home"))
         self.assertEqual(invoke.call_args.args[1], ["python3", "xg_home_model.py"])
         self.assertEqual(invoke.call_args.args[2]["XG_HOME_MODEL_CALL_BUDGET"], "10")
+
+    @patch.object(worker, "budget", return_value=6)
+    @patch.object(worker, "invoke")
+    def test_hockey_period_pass_is_live_and_budgeted(self, invoke, _budget):
+        self.assertTrue(worker.run_pass("hockey_period"))
+        self.assertEqual(invoke.call_args.args[1], ["python3", "hockey_period_under.py"])
+        self.assertEqual(invoke.call_args.args[2]["HOCKEY_PERIOD_CALL_BUDGET"], "6")
+
+    def test_hockey_periods_are_parsed_and_settled_separately(self):
+        event = {
+            "scores": {
+                "2": {"home": "1", "away": "0"},
+                "3": {"home": "1", "away": "1"},
+            }
+        }
+        self.assertEqual(hockey.period_goals(event, 2), 1)
+        self.assertEqual(hockey.period_goals(event, 3), 2)
+        rows = [
+            {"signal_key": "7:P2", "event_id": "7", "period": 2, "result": "PENDING"},
+            {"signal_key": "7:P3", "event_id": "7", "period": 3, "result": "PENDING"},
+        ]
+        settled = hockey.settle(rows, {"7": event})
+        self.assertEqual([row["result"] for row in settled], ["WIN", "LOSS"])
+
+    def test_hockey_excludes_women_and_youth(self):
+        base = {"home": {"id": "1", "name": "A"}, "away": {"id": "2", "name": "B"}}
+        self.assertTrue(hockey.adult_hockey({**base, "league": {"name": "NHL"}}))
+        self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "Sweden Women"}}))
+        self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "Finland U20"}}))
 
     def test_stateful_accepts_only_active_arms(self):
         for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:

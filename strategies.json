@@ -1,4 +1,3 @@
- 1 file changed, 1 insertion(+), 1 deletion(-)
 {
   "schema_version": 1,
   "name": "SCANNER_ACTIVE_STRATEGIES_V1",
@@ -1343,6 +1342,60 @@
       "status": "FORWARD_HYPOTHESIS",
       "clean_epoch_start": "2026-10-08T11:00:00Z",
       "history_note": "Новая независимая эпоха. До накопления достаточной истории используется только исходная модель; изотоническая калибровка не имитируется и будет включена только после отдельной проверки данных."
+    },
+    {
+      "id": "H01",
+      "tier": "WATCHLIST",
+      "sport": "ice_hockey",
+      "name_ru": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
+      "source": "public_strategy_forward_test_20261009",
+      "rule": {
+        "competition": "adult hockey",
+        "period": 2,
+        "market": "period_total_under",
+        "line": 1.5,
+        "entry_policy": "pre_match_observation",
+        "one_entry_per_match": true,
+        "team_history_lookback": 10,
+        "history_filter": null,
+        "missing_price_policy": "TRACK_OUTCOME_AND_BREAK_EVEN_ONLY"
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "mining_enabled": true,
+      "collection_engine": "hockey_period_under.py",
+      "status": "FORWARD_HYPOTHESIS_NO_PRICE",
+      "clean_epoch_start": "2026-10-09T11:30:00Z",
+      "history_note": "Широкий forward-сбор без жёсткого фильтра. Коэффициенты периода недоступны в текущей подписке, поэтому до появления цены считаются проходимость и безубыточный коэффициент, а не ROI."
+    },
+    {
+      "id": "H02",
+      "tier": "WATCHLIST",
+      "sport": "ice_hockey",
+      "name_ru": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
+      "source": "public_strategy_forward_test_20261009",
+      "rule": {
+        "competition": "adult hockey",
+        "period": 3,
+        "market": "period_total_under",
+        "line": 1.5,
+        "entry_policy": "pre_match_observation",
+        "one_entry_per_match": true,
+        "team_history_lookback": 10,
+        "history_filter": null,
+        "missing_price_policy": "TRACK_OUTCOME_AND_BREAK_EVEN_ONLY"
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "research_destination": "mining",
+      "mining_enabled": true,
+      "collection_engine": "hockey_period_under.py",
+      "status": "FORWARD_HYPOTHESIS_NO_PRICE",
+      "clean_epoch_start": "2026-10-09T11:30:00Z",
+      "history_note": "Широкий forward-сбор без жёсткого фильтра. Коэффициенты периода недоступны в текущей подписке, поэтому до появления цены считаются проходимость и безубыточный коэффициент, а не ROI."
     },
     {
       "id": "S30",

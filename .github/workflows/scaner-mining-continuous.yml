@@ -9,6 +9,7 @@ on:
       - "scanner.py"
       - "stateful_goal_mining.py"
       - "xg_home_model.py"
+      - "hockey_period_under.py"
       - "mining_log/xg_home_model/bundesliga_history.jsonl"
       - ".github/workflows/scaner-mining-continuous.yml"
 
@@ -39,7 +40,7 @@ jobs:
       - name: Validate public Mining worker
         run: |
           test -n "$BETSAPI_KEY"
-          python3 -m py_compile scaner_mining_worker.py scanner.py stateful_goal_mining.py xg_home_model.py
+          python3 -m py_compile scaner_mining_worker.py scanner.py stateful_goal_mining.py xg_home_model.py hockey_period_under.py
 
       - name: Configure Git identity
         run: |

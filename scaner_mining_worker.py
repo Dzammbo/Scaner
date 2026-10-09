@@ -21,7 +21,7 @@ CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECON
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
 GENERAL_STRATEGIES = os.environ.get("PUBLIC_MINING_STRATEGIES", "S03,S04,S05,S07,S21")
-COLLECTOR_INTERVALS = {"general": 300, "goal": 300, "xg_home": 300}
+COLLECTOR_INTERVALS = {"general": 300, "goal": 300, "xg_home": 300, "hockey_period": 1800}
 
 
 def now():
@@ -123,6 +123,13 @@ def run_pass(name):
             return False
         invoke("xG home model", ["python3", "xg_home_model.py"], {
             "XG_HOME_MODEL_CALL_BUDGET": str(calls),
+        })
+    elif name == "hockey_period":
+        calls = budget(6, 5)
+        if not calls:
+            return False
+        invoke("hockey period under", ["python3", "hockey_period_under.py"], {
+            "HOCKEY_PERIOD_CALL_BUDGET": str(calls),
         })
     return True
 
