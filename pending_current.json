@@ -718,144 +718,6 @@
     "settlement_reason": "PENDING_PROVIDER_FIX"
   },
   {
-    "timestamp": "2026-10-09T08:13:52.682705+00:00",
-    "sport": "tennis",
-    "tournament": "M25 Darwin",
-    "event_id": "13264752",
-    "match": "Moerani Bouzige - Casey Hoole",
-    "minute_score": "4-4",
-    "minute": null,
-    "score": "4-4",
-    "period": "FT",
-    "exact_bet_line": "Casey Hoole",
-    "current_odds": 2.0,
-    "reverse_bet": "Moerani Bouzige",
-    "reverse_odds": 1.75,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "4-4,30-15",
-      "live_favorite": "Moerani Bouzige",
-      "favorite_odds": 1.75
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "S10",
-    "strategy_ids": [
-      "S10"
-    ],
-    "strategy_names": [
-      "Против фаворита по ходу матча при равном первом сете"
-    ],
-    "strategy_observations": {
-      "S10": {
-        "timestamp": "2026-10-09T08:13:52.682705+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "4-4",
-        "exact_bet_line": "Casey Hoole",
-        "current_odds": 2.0,
-        "reverse_bet": "Moerani Bouzige",
-        "reverse_odds": 1.75,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "4-4,30-15",
-          "live_favorite": "Moerani Bouzige",
-          "favorite_odds": 1.75
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-09T08:18:41Z",
-    "sport": "football",
-    "tournament": "South Korea K League 2",
-    "event_id": "11304624",
-    "match": "Gimpo FC - Seoul E-Land FC",
-    "minute_score": "45' / '0-0'",
-    "minute": 45,
-    "score": "0-0",
-    "exact_bet_line": "ТМ 1.25",
-    "current_odds": 1.9,
-    "reverse_bet": "ТБ 1.25",
-    "reverse_odds": 1.9,
-    "strategy_id": "S31",
-    "strategy_ids": [
-      "S31"
-    ],
-    "strategy_names": [
-      "ТМ матча в перерыве при низкой активности"
-    ],
-    "tier": "WATCHLIST",
-    "pressure10": 25.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S31": {
-        "timestamp": "2026-10-09T08:18:41Z",
-        "period": "FT",
-        "minute": 45,
-        "score": "0-0",
-        "exact_bet_line": "ТМ 1.25",
-        "current_odds": 1.9,
-        "reverse_bet": "ТБ 1.25",
-        "reverse_odds": 1.9
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-09T08:18:41Z",
-    "sport": "football",
-    "tournament": "South Korea K League 2",
-    "event_id": "11304625",
-    "match": "Chungbuk Cheongju - Seongnam FC",
-    "minute_score": "45' / '1-0'",
-    "minute": 45,
-    "score": "1-0",
-    "exact_bet_line": "ТМ 2.25",
-    "current_odds": 1.85,
-    "reverse_bet": "ТБ 2.25",
-    "reverse_odds": 1.95,
-    "strategy_id": "S31",
-    "strategy_ids": [
-      "S31"
-    ],
-    "strategy_names": [
-      "ТМ матча в перерыве при низкой активности"
-    ],
-    "tier": "WATCHLIST",
-    "pressure10": 21.0,
-    "period": "FT",
-    "source": "stateful_goal_mining",
-    "strategy_observations": {
-      "S31": {
-        "timestamp": "2026-10-09T08:18:41Z",
-        "period": "FT",
-        "minute": 45,
-        "score": "1-0",
-        "exact_bet_line": "ТМ 2.25",
-        "current_odds": 1.85,
-        "reverse_bet": "ТБ 2.25",
-        "reverse_odds": 1.95
-      }
-    },
-    "settlement_reason": "INPLAY"
-  },
-  {
     "timestamp": "2026-10-09T08:23:53.502845+00:00",
     "sport": "tennis",
     "tournament": "M15 Heraklion",
@@ -1481,6 +1343,742 @@
         "features": {
           "set_score": "6-1,0-4,0-0",
           "previous_set": "6-1"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:34:20.823703+00:00",
+    "sport": "football",
+    "tournament": "Ukraine Persha Liga",
+    "event_id": "12159180",
+    "match": "FC Metalist Kharkiv - FC Viktoriya Sumy",
+    "minute_score": "33' / '1-1",
+    "minute": 33,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.5",
+    "current_odds": 1.85,
+    "reverse_bet": "ТБ 3.5",
+    "reverse_odds": 1.95,
+    "market": "main_under",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 4,
+      "last_goal_minute": 29,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S37",
+    "strategy_ids": [
+      "S37"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 и линии 3,5-4,0"
+    ],
+    "strategy_observations": {
+      "S37": {
+        "timestamp": "2026-10-09T09:34:20.823703+00:00",
+        "period": "FT",
+        "minute": 33,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 3.5",
+        "current_odds": 1.85,
+        "reverse_bet": "ТБ 3.5",
+        "reverse_odds": 1.95,
+        "market": "main_under",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 4,
+          "last_goal_minute": 29,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:34:20.823703+00:00",
+    "sport": "football",
+    "tournament": "Ukraine Persha Liga",
+    "event_id": "12159180",
+    "match": "FC Metalist Kharkiv - FC Viktoriya Sumy",
+    "minute_score": "33' / '1-1",
+    "minute": 33,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 3.5",
+    "current_odds": 1.95,
+    "reverse_bet": "ТМ 3.5",
+    "reverse_odds": 1.85,
+    "market": "main_over",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 4,
+      "last_goal_minute": 29,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S38",
+    "strategy_ids": [
+      "S38"
+    ],
+    "strategy_names": [
+      "Тотал больше при счёте 1:1 на 30-34-й минуте"
+    ],
+    "strategy_observations": {
+      "S38": {
+        "timestamp": "2026-10-09T09:34:20.823703+00:00",
+        "period": "FT",
+        "minute": 33,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 3.5",
+        "current_odds": 1.95,
+        "reverse_bet": "ТМ 3.5",
+        "reverse_odds": 1.85,
+        "market": "main_over",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 4,
+          "last_goal_minute": 29,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:34:20.823703+00:00",
+    "sport": "football",
+    "tournament": "Bangladesh Premier League",
+    "event_id": "13262332",
+    "match": "Rahmatgonj MFS - PWD Sports Club",
+    "minute_score": "45' / '1-1",
+    "minute": 45,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.25",
+    "current_odds": 1.975,
+    "reverse_bet": "ТБ 3.25",
+    "reverse_odds": 1.725,
+    "market": "main_under",
+    "bet_line": 3.25,
+    "features": {
+      "drought_min": 29,
+      "last_goal_minute": 16,
+      "main_total": 3.25,
+      "selected_total": 3.25,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 на 45-49-й минуте"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-09T09:34:20.823703+00:00",
+        "period": "FT",
+        "minute": 45,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 3.25",
+        "current_odds": 1.975,
+        "reverse_bet": "ТБ 3.25",
+        "reverse_odds": 1.725,
+        "market": "main_under",
+        "bet_line": 3.25,
+        "features": {
+          "drought_min": 29,
+          "last_goal_minute": 16,
+          "main_total": 3.25,
+          "selected_total": 3.25,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:49:18.599186+00:00",
+    "sport": "football",
+    "tournament": "Myanmar National League",
+    "event_id": "12465501",
+    "match": "Mahar United - Chinland FC",
+    "minute_score": "48' / '1-1",
+    "minute": 48,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 4.0",
+    "current_odds": 1.9,
+    "reverse_bet": "ТБ 4.0",
+    "reverse_odds": 1.9,
+    "market": "main_under",
+    "bet_line": 4.0,
+    "features": {
+      "drought_min": 10,
+      "last_goal_minute": 38,
+      "main_total": 4.0,
+      "selected_total": 4.0,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36",
+      "S37"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 на 45-49-й минуте",
+      "Тотал меньше при счёте 1:1 и линии 3,5-4,0"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-09T09:49:18.599186+00:00",
+        "period": "FT",
+        "minute": 48,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 4.0",
+        "current_odds": 1.9,
+        "reverse_bet": "ТБ 4.0",
+        "reverse_odds": 1.9,
+        "market": "main_under",
+        "bet_line": 4.0,
+        "features": {
+          "drought_min": 10,
+          "last_goal_minute": 38,
+          "main_total": 4.0,
+          "selected_total": 4.0,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      },
+      "S37": {
+        "timestamp": "2026-10-09T09:49:18.599186+00:00",
+        "period": "FT",
+        "minute": 48,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 4.0",
+        "current_odds": 1.9,
+        "reverse_bet": "ТБ 4.0",
+        "reverse_odds": 1.9,
+        "market": "main_under",
+        "bet_line": 4.0,
+        "features": {
+          "drought_min": 10,
+          "last_goal_minute": 38,
+          "main_total": 4.0,
+          "selected_total": 4.0,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:49:18.599186+00:00",
+    "sport": "football",
+    "tournament": "Ukraine Persha Liga",
+    "event_id": "12159180",
+    "match": "FC Metalist Kharkiv - FC Viktoriya Sumy",
+    "minute_score": "45' / '1-1",
+    "minute": 45,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТМ 3.0",
+    "current_odds": 2.05,
+    "reverse_bet": "ТБ 3.0",
+    "reverse_odds": 1.675,
+    "market": "main_under",
+    "bet_line": 3.0,
+    "features": {
+      "drought_min": 16,
+      "last_goal_minute": 29,
+      "main_total": 3.0,
+      "selected_total": 3.0,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36"
+    ],
+    "strategy_names": [
+      "Тотал меньше при счёте 1:1 на 45-49-й минуте"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-09T09:49:18.599186+00:00",
+        "period": "FT",
+        "minute": 45,
+        "score": "1-1",
+        "exact_bet_line": "ТМ 3.0",
+        "current_odds": 2.05,
+        "reverse_bet": "ТБ 3.0",
+        "reverse_odds": 1.675,
+        "market": "main_under",
+        "bet_line": 3.0,
+        "features": {
+          "drought_min": 16,
+          "last_goal_minute": 29,
+          "main_total": 3.0,
+          "selected_total": 3.0,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:49:18.599186+00:00",
+    "sport": "tennis",
+    "tournament": "W35 Monastir",
+    "event_id": "13264969",
+    "match": "Zuzanna Pawlikowska - Weronika Ewald",
+    "minute_score": "2-6,1-0",
+    "minute": null,
+    "score": "2-6,1-0",
+    "period": "FT",
+    "exact_bet_line": "Weronika Ewald",
+    "current_odds": 1.615,
+    "reverse_bet": "Zuzanna Pawlikowska",
+    "reverse_odds": 2.2,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-6,2-0,0-0",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T09:49:18.599186+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-6,1-0",
+        "exact_bet_line": "Weronika Ewald",
+        "current_odds": 1.615,
+        "reverse_bet": "Zuzanna Pawlikowska",
+        "reverse_odds": 2.2,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-6,2-0,0-0",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:59:17.354544+00:00",
+    "sport": "tennis",
+    "tournament": "W35 Seville",
+    "event_id": "13265335",
+    "match": "Maria Garcia Cid - Ruth Roura Llaverias",
+    "minute_score": "2-6,0-0",
+    "minute": null,
+    "score": "2-6,0-0",
+    "period": "FT",
+    "exact_bet_line": "Ruth Roura Llaverias",
+    "current_odds": 1.571,
+    "reverse_bet": "Maria Garcia Cid",
+    "reverse_odds": 2.25,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-6,1-0,0-0",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T09:59:17.354544+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-6,0-0",
+        "exact_bet_line": "Ruth Roura Llaverias",
+        "current_odds": 1.571,
+        "reverse_bet": "Maria Garcia Cid",
+        "reverse_odds": 2.25,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-6,1-0,0-0",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T09:59:23Z",
+    "sport": "football",
+    "tournament": "Algeria U20 League",
+    "event_id": "13268098",
+    "match": "JS Kabylie U20 - CR Belouizdad U20",
+    "minute_score": "45' / '1-0'",
+    "minute": 45,
+    "score": "1-0",
+    "exact_bet_line": "ТМ 2.25",
+    "current_odds": 1.95,
+    "reverse_bet": "ТБ 2.25",
+    "reverse_odds": 1.85,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "ТМ матча в перерыве при низкой активности"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 10.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-09T09:59:23Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "1-0",
+        "exact_bet_line": "ТМ 2.25",
+        "current_odds": 1.95,
+        "reverse_bet": "ТБ 2.25",
+        "reverse_odds": 1.85
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T10:09:16.720395+00:00",
+    "sport": "tennis",
+    "tournament": "W15 Chisinau",
+    "event_id": "13264746",
+    "match": "Andreea Prisacariu - Astrid Wanja Brune Olsen",
+    "minute_score": "4-6,6-2,0-0",
+    "minute": null,
+    "score": "4-6,6-2,0-0",
+    "period": "FT",
+    "exact_bet_line": "Andreea Prisacariu",
+    "current_odds": 1.615,
+    "reverse_bet": "Astrid Wanja Brune Olsen",
+    "reverse_odds": 2.2,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "4-6,6-2,0-0,0-30",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T10:09:16.720395+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "4-6,6-2,0-0",
+        "exact_bet_line": "Andreea Prisacariu",
+        "current_odds": 1.615,
+        "reverse_bet": "Astrid Wanja Brune Olsen",
+        "reverse_odds": 2.2,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "4-6,6-2,0-0,0-30",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T10:14:18.836070+00:00",
+    "sport": "tennis",
+    "tournament": "M25 Santa Margherita",
+    "event_id": "13264867",
+    "match": "Laurent Lokoli - Ivan Ivanov",
+    "minute_score": "2-2",
+    "minute": null,
+    "score": "2-2",
+    "period": "FT",
+    "exact_bet_line": "Ivan Ivanov",
+    "current_odds": 2.0,
+    "reverse_bet": "Laurent Lokoli",
+    "reverse_odds": 1.727,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-2,30-40",
+      "live_favorite": "Laurent Lokoli",
+      "favorite_odds": 1.727
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-09T10:14:18.836070+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-2",
+        "exact_bet_line": "Ivan Ivanov",
+        "current_odds": 2.0,
+        "reverse_bet": "Laurent Lokoli",
+        "reverse_odds": 1.727,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-2,30-40",
+          "live_favorite": "Laurent Lokoli",
+          "favorite_odds": 1.727
         },
         "entry_epoch": null,
         "price_verified": null,
