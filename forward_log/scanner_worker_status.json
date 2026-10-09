@@ -1,23 +1,18 @@
 {
-  "updated_at": "2026-10-09T10:49:26.858327+00:00",
-  "started_at": "2026-10-09T08:29:10.450085+00:00",
+  "updated_at": "2026-10-09T11:13:25.679799+00:00",
+  "started_at": "2026-10-09T11:03:25.523846+00:00",
   "duration_seconds": 19200,
   "poll_seconds": 300,
-  "passes": 29,
-  "failures": 0,
-  "consecutive_failures": 0,
+  "passes": 3,
+  "failures": 3,
+  "consecutive_failures": 3,
   "budget_skips": 0,
-  "api_calls_this_job": 386,
-  "new_signals_this_job": 21,
-  "shared_calls_last_hour": 190,
+  "api_calls_this_job": 0,
+  "new_signals_this_job": 0,
+  "shared_calls_last_hour": 149,
   "shared_hourly_cap": 1400,
-  "remaining_before_last_pass": 504,
-  "used_before_last_pass": 190,
-  "last_error": null,
-  "last_checkpoint": {
-    "attempted": true,
-    "ok": true,
-    "changed": true,
-    "attempt": 1
-  }
+  "remaining_before_last_pass": 551,
+  "used_before_last_pass": 149,
+  "last_error": "Traceback (most recent call last):\n  File \"/home/runner/work/Scaner/Scaner/scanner.py\", line 988, in <module>\n    registry = json.loads(Path(\"strategies.json\").read_text(encoding=\"utf-8\"))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 4 (char 3)\n",
+  "last_checkpoint": null
 }
