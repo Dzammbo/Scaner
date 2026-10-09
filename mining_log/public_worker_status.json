@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-09T11:12:14.990709+00:00",
+  "updated_at": "2026-10-09T11:22:24.290447+00:00",
   "started_at": "2026-10-09T11:01:47.256752+00:00",
   "passes": {
     "general": 3,
-    "goal": 3,
-    "xg_home": 3
+    "goal": 5,
+    "xg_home": 5
   },
   "failures": {
-    "general": 0,
+    "general": 2,
     "goal": 0,
     "xg_home": 0
   },
-  "calls_last_hour": 183,
+  "calls_last_hour": 192,
   "hourly_cap": 2300,
   "active_collectors": {
     "general": 300,
@@ -25,6 +25,10 @@
     "S07",
     "S21"
   ],
-  "last_error": null,
-  "last_checkpoint": null
+  "last_error": "general: general Mining exited 1: Traceback (most recent call last):\n  File \"/home/runner/work/Scaner/Scaner/scanner.py\", line 988, in <module>\n    registry = json.loads(Path(\"strategies.json\").read_text(encoding=\"utf-8\"))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 4 (char 3)\n",
+  "last_checkpoint": {
+    "ok": true,
+    "changed": true,
+    "attempt": 1
+  }
 }
