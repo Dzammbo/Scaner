@@ -1,22 +1,21 @@
 {
-  "generated_at_utc": "2026-10-09T04:09:13Z",
+  "generated_at_utc": "2026-10-09T06:11:56Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-09T04:09:13Z",
+    "updated_at": "2026-10-09T06:11:56Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
     "provider_queries": 2,
-    "queried_events": 13,
+    "queried_events": 12,
     "cache_events": 2202,
     "signal_unique_events": 2122,
-    "signal_final_events": 2112,
+    "signal_final_events": 2115,
     "signal_void_events": 7,
-    "signal_pending_events": 3,
-    "reconciled_stateful_rows": 2588,
+    "signal_pending_events": 0,
+    "reconciled_stateful_rows": 2590,
     "stateful_duplicate_signals": 0,
     "states": {
-      "FINAL": 2176,
-      "NOT_FINAL_1": 3,
+      "FINAL": 2179,
       "NOT_FINAL_2": 8,
       "NOT_FINAL_4": 1,
       "VOID_CANCELLED": 1,
@@ -143,23 +142,23 @@
       },
       "S09": {
         "signals": 121,
-        "pending": 1,
+        "pending": 0,
         "void": 2,
         "direct": {
-          "N": 118,
+          "N": 119,
           "W": 97,
-          "L": 21,
+          "L": 22,
           "PUSH": 0,
-          "profit": -1.398,
-          "ROI_pct": -1.18
+          "profit": -2.398,
+          "ROI_pct": -2.02
         },
         "opposite": {
-          "N": 118,
-          "W": 21,
+          "N": 119,
+          "W": 22,
           "L": 97,
           "PUSH": 0,
-          "profit": -20.783,
-          "ROI_pct": -17.61
+          "profit": -19.033,
+          "ROI_pct": -15.99
         }
       },
       "S10": {
@@ -439,23 +438,23 @@
       },
       "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
         "signals": 29,
-        "pending": 2,
+        "pending": 0,
         "void": 0,
         "direct": {
-          "N": 27,
+          "N": 29,
           "W": 11,
-          "L": 16,
+          "L": 18,
           "PUSH": 0,
-          "profit": -1.275,
-          "ROI_pct": -4.72
+          "profit": -3.275,
+          "ROI_pct": -11.29
         },
         "opposite": {
-          "N": 27,
-          "W": 16,
+          "N": 29,
+          "W": 18,
           "L": 11,
           "PUSH": 0,
-          "profit": -3.2,
-          "ROI_pct": -11.85
+          "profit": -1.7,
+          "ROI_pct": -5.86
         }
       },
       "FOOTBALL_FH_SOT_NEXT_GOAL_V1:PRIMARY": {
