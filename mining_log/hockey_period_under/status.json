@@ -1,37 +1,35 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-09T20:11:11.313779Z",
+  "updated_at": "2026-10-09T21:43:22.993029Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
   "market_access": "period prices unavailable; Events scores available",
   "api_calls": 5,
   "upcoming_seen": 100,
-  "history_events": 167,
+  "history_events": 180,
   "strategies": [
     {
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
       "signals": 169,
-      "resolved": 83,
-      "pending": 86,
-      "wins": 30,
-      "losses": 53,
-      "hit_rate_pct": 36.14,
-      "break_even_decimal_price": 2.767,
+      "resolved": 96,
+      "pending": 73,
+      "wins": 34,
+      "losses": 62,
+      "hit_rate_pct": 35.42,
+      "break_even_decimal_price": 2.824,
       "roi_status": "NO_PRICE_DATA"
     },
     {
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
       "signals": 169,
-      "resolved": 83,
-      "pending": 86,
-      "wins": 35,
-      "losses": 48,
-      "hit_rate_pct": 42.17,
-      "break_even_decimal_price": 2.371,
+      "resolved": 96,
+      "pending": 73,
+      "wins": 37,
+      "losses": 59,
+      "hit_rate_pct": 38.54,
+      "break_even_decimal_price": 2.595,
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": [
-    "ended 20261007: TimeoutError: The read operation timed out"
-  ]
+  "errors": []
 }
