@@ -98,10 +98,15 @@ def adult_hockey(event):
     excluded = (
         "women", "woman", "female", "ladies", "frauen", "femen", "жен",
         "youth", "junior", "juniors", "молод", "юниор", "academy",
+        "virtual", "simulated", "esports", "e-hockey", "test",
     )
     if any(word in text for word in excluded):
         return False
-    return re.search(r"(?:^|\W)u(?:1[6-9]|2[0-3])(?:\W|$)", text) is None
+    if re.search(r"(?:^|\W)u(?:1[6-9]|2[0-3])(?:\W|$)", text):
+        return False
+    league_code = str(league.get("name") or "").strip().upper()
+    youth_or_women_codes = {"WHL", "OHL", "QMJHL", "USHL", "MHL", "PWHL", "SDHL"}
+    return league_code not in youth_or_women_codes
 
 
 def period_goals(event, period):

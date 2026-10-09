@@ -59,6 +59,17 @@ class MiningPruningTest(unittest.TestCase):
         self.assertTrue(hockey.adult_hockey({**base, "league": {"name": "NHL"}}))
         self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "Sweden Women"}}))
         self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "Finland U20"}}))
+        self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "OHL"}}))
+        self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "PWHL"}}))
+        self.assertFalse(hockey.adult_hockey({**base, "league": {"name": "NHL Test"}}))
+
+    def test_hockey_form_never_looks_past_kickoff(self):
+        history = [
+            {"kickoff": 90, "home_id": "1", "away_id": "2", "period_2_goals": 1},
+            {"kickoff": 110, "home_id": "1", "away_id": "3", "period_2_goals": 0},
+        ]
+        form = hockey.team_period_form(history, "1", 2, before=100)
+        self.assertEqual(form, {"matches": 1, "under_1_5": 1, "rate": 1.0})
 
     def test_stateful_accepts_only_active_arms(self):
         for strategy, arm in stateful.ACTIVE_SIGNAL_IDS:
