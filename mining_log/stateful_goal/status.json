@@ -1,7 +1,7 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-09T02:11:01Z",
+  "updated_at": "2026-10-09T02:16:21Z",
   "api_calls": 1,
   "board_n": 7,
   "observations": 3821,
@@ -19,8 +19,7 @@
       "PUSH": 0,
       "profit": 5.7,
       "ROI": 0.285,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_FH_PRESSURE_GOAL_V1:PRIMARY": {
       "id": "S32",
@@ -33,34 +32,32 @@
       "PUSH": 0,
       "profit": -1.275,
       "ROI": -0.047222,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
       "id": "S31",
       "signals": 132,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 131,
-      "W": 64,
+      "N": 132,
+      "W": 65,
       "L": 56,
       "PUSH": 11,
-      "profit": -5.55,
-      "ROI": -0.042366,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "profit": -5.1875,
+      "ROI": -0.039299,
+      "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_ACTIVITY_V2:PRIMARY": {
       "id": "S13",
       "signals": 73,
-      "pending": 73,
+      "pending": 0,
       "void": 0,
-      "N": 0,
-      "W": 0,
-      "L": 0,
+      "N": 73,
+      "W": 11,
+      "L": 62,
       "PUSH": 0,
-      "profit": 0.0,
-      "ROI": null,
+      "profit": -13.334,
+      "ROI": -0.182658,
       "balance_valid": true,
       "activity_segments": {
         "pressure_only": {
@@ -99,8 +96,7 @@
           "ROI": 0.264949,
           "balance_valid": true
         }
-      },
-      "settlement_source": "betsapi_cache"
+      }
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
@@ -113,10 +109,7 @@
       "PUSH": 0,
       "profit": 7.6,
       "ROI": 0.194872,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-09T02:09:15Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
