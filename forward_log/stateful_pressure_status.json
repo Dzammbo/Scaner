@@ -1,21 +1,46 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-09T13:20:14Z",
-  "signals": 869,
+  "updated_at": "2026-10-09T13:30:25Z",
+  "signals": 871,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-09T13:14:59Z",
+      "timestamp": "2026-10-09T13:25:13Z",
       "sport": "football",
-      "tournament": "China Super League",
-      "event_id": "11450815",
-      "match": "Shenzhen Xinpengcheng - Henan",
-      "minute_score": "79' / '2-2'",
-      "minute": 79,
-      "score": "2-2",
-      "exact_bet_line": "ТМ 4.5",
-      "current_odds": 1.9,
-      "reverse_bet": "ТБ 4.5",
-      "reverse_odds": 1.9,
+      "tournament": "Egypt Division 2",
+      "event_id": "12328116",
+      "match": "El Entag El Harby - La Viena FC",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТМ 2",
+      "current_odds": 2.05,
+      "reverse_bet": "ТБ 2",
+      "reverse_odds": 1.75,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 34.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-09T13:25:13Z",
+      "sport": "football",
+      "tournament": "Romania Liga III",
+      "event_id": "13018970",
+      "match": "CS Sanatatea Cluj - SCM Zalau",
+      "minute_score": "71' / '1-1'",
+      "minute": 71,
+      "score": "1-1",
+      "exact_bet_line": "ТМ 2.5",
+      "current_odds": 2.05,
+      "reverse_bet": "ТБ 2.5",
+      "reverse_odds": 1.75,
       "strategy_id": "S39",
       "strategy_ids": [
         "S39"
@@ -24,7 +49,7 @@
         "Без гола при высоком давлении на 70-79-й минуте"
       ],
       "tier": "ACTIVE",
-      "pressure10": 32.0,
+      "pressure10": 34.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
