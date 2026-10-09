@@ -1,11 +1,11 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-09T15:33:10Z",
-  "api_calls": 5,
+  "updated_at": "2026-10-09T15:43:22Z",
+  "api_calls": 3,
   "board_n": 50,
-  "observations": 3909,
-  "signals": 94,
+  "observations": 3911,
+  "signals": 96,
   "archived_signals": 2615,
   "arms": {
     "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1:PRIMARY": {
@@ -50,41 +50,41 @@
     "FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3:PRIMARY": {
       "id": "S13",
       "signals": 10,
-      "pending": 2,
+      "pending": 0,
       "void": 0,
-      "N": 8,
+      "N": 10,
       "W": 1,
-      "L": 7,
+      "L": 9,
       "PUSH": 0,
-      "profit": -4.0,
-      "ROI": -0.5,
+      "profit": -6.0,
+      "ROI": -0.6,
       "balance_valid": true,
       "activity_segments": {
         "both": {
           "signals": 10,
-          "pending": 2,
+          "pending": 0,
           "void": 0,
-          "N": 8,
+          "N": 10,
           "W": 1,
-          "L": 7,
+          "L": 9,
           "PUSH": 0,
-          "profit": -4.0,
-          "ROI": -0.5,
+          "profit": -6.0,
+          "ROI": -0.6,
           "balance_valid": true
         }
       }
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
-      "signals": 57,
-      "pending": 2,
+      "signals": 59,
+      "pending": 3,
       "void": 0,
-      "N": 55,
+      "N": 56,
       "W": 32,
-      "L": 23,
+      "L": 24,
       "PUSH": 0,
-      "profit": 5.075,
-      "ROI": 0.092273,
+      "profit": 4.075,
+      "ROI": 0.072768,
       "balance_valid": true
     }
   }
