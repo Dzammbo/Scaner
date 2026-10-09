@@ -14,14 +14,14 @@ import mining_pending_refresh as refresh
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "xg_home": 300})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S09,S21,S22")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S21")
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
     def test_general_pass_has_explicit_allowlist(self, invoke, _budget):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
-        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S03,S04,S05,S07,S09,S21,S22")
+        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S03,S04,S05,S07,S21")
 
     @patch.object(worker, "budget", return_value=10)
     @patch.object(worker, "invoke")
@@ -46,17 +46,19 @@ class MiningPruningTest(unittest.TestCase):
         base = {"event_id": "1", "league": "Test", "country": "GB", "home": "A", "away": "B"}
         cases = [
             ({**base, "score": "1-0", "minute": 45, "stats": {"on_target": [1, 1]}}, {}, True, "S31"),
-            ({**base, "score": "0-0", "minute": 32, "stats": {"on_target": [2, 2]}}, {"pressure10": 20}, False, "S32"),
             ({**base, "score": "0-0", "minute": 65, "stats": {"on_target": [1, 1]}}, {}, False, "S33"),
             ({**base, "score": "1-1", "minute": 74, "stats": {"on_target": [3, 2]}}, {"pressure10": 28}, False, "S39"),
         ]
         for meta, features, halftime, expected in cases:
             self.assertIn(expected, [x["id"] for x in stateful.candidate_arms(meta, features, halftime)])
+        halftime_ids = [x["id"] for x in stateful.candidate_arms(cases[0][0], {}, True)]
+        self.assertIn("S41", halftime_ids)
         archived = stateful.candidate_arms(
             {**base, "score": "0-0", "minute": 45, "stats": {"on_target": [2, 2]}},
             {"pressure10": 20}, True,
         )
         self.assertNotIn("S34", [x["id"] for x in archived])
+        self.assertNotIn("S32", [x["id"] for x in archived])
 
     def test_under_and_over_settlement(self):
         self.assertEqual(stateful.outcome_for(0, 0.5, "UNDER"), "WIN")

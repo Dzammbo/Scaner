@@ -11,19 +11,19 @@ SCANNER_STATUS=Path("forward_log/stateful_pressure_status.json")
 MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0;NEW_PRESSURE_CUTOFF=20.0
 ACTIVE_SIGNAL_IDS={
  ("FOOTBALL_PRESSURE_NOGOAL_70_79_V1","PRIMARY"):"S39",
- ("FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","PRIMARY"):"S31",
- ("FOOTBALL_FH_PRESSURE_GOAL_V1","PRIMARY"):"S32",
+ ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","UNDER_200_224"):"S31",
+ ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","OVER_200_224"):"S41",
  ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
 }
 MINING_SIGNAL_IDS={
- ("FOOTBALL_LATE_HOME_ACTIVITY_V2","PRIMARY"):"S13",
+ ("FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3","PRIMARY"):"S13",
 }
 SIGNAL_NAMES={
  "S39":"Без гола при высоком давлении на 70-79-й минуте",
- "S31":"ТМ матча в перерыве при низкой активности",
- "S32":"Гол до перерыва при высокой активности",
+ "S31":"Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24",
+ "S41":"Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24",
  "S33":"Без гола после 60-й при 0:0 и низкой активности",
- "S13":"Поздняя победа хозяев при подтверждённой домашней активности",
+ "S13":"Победа хозяев после 85-й минуты при давлении и ударе в створ",
 }
 def iso(ts=None):return datetime.fromtimestamp(ts or int(time.time()),timezone.utc).isoformat().replace("+00:00","Z")
 def num(v):
@@ -136,12 +136,11 @@ def candidate_arms(meta,features,halftime=False):
  if not s or minute is None:return out
  goals=sum(s)
  activity_segment=late_home_activity_segment(features)
- if minute>=85 and s[0]==s[1] and activity_segment:
-  out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_ACTIVITY_V2","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1,"activity_segment":activity_segment})
+ if minute>=85 and s[0]==s[1] and activity_segment=="both":
+  out.append({"id":"S13","strategy":"FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3","arm":"PRIMARY","market":"HOME_ML","selection":"HOME","period":"FT","odds":None,"interval":300,"priority":1,"activity_segment":activity_segment})
  if halftime and goals<=1 and sot is not None and sot<=2:
-  out.append({"id":"S31","strategy":"FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1","arm":"PRIMARY","market":"FT_MAIN","selection":"UNDER","period":"FT","odds":[1.70,2.20],"interval":300,"priority":0})
- if 30<=minute<=35 and s==(0,0) and sot is not None and sot>=4 and pressure is not None and pressure>=NEW_PRESSURE_CUTOFF:
-  out.append({"id":"S32","strategy":"FOOTBALL_FH_PRESSURE_GOAL_V1","arm":"PRIMARY","market":"FH_NEXT","selection":"OVER","period":"FH","odds":None,"interval":300,"priority":0})
+  out.append({"id":"S31","strategy":"FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","arm":"UNDER_200_224","market":"FT_MAIN","selection":"UNDER","period":"FT","odds":[2.00,2.24],"interval":300,"priority":0})
+  out.append({"id":"S41","strategy":"FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","arm":"OVER_200_224","market":"FT_MAIN","selection":"OVER","period":"FT","odds":[2.00,2.24],"interval":300,"priority":0})
  if 60<=minute<=69 and s==(0,0) and sot is not None and sot<=2:
   out.append({"id":"S33","strategy":"FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":[1.50,2.20],"interval":300,"priority":1})
  if 70<=minute<=79 and pressure is not None and pressure>=PRESSURE_CUTOFF:

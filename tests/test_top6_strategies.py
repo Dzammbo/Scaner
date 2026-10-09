@@ -52,16 +52,16 @@ def totals_detail(rows):
 class TopSixRegistryTest(unittest.TestCase):
     def test_top_six_are_enabled_with_exact_price_ranges(self):
         expected = {
-            "S01": [1.70, 2.00],
-            "S10": [2.00, 2.10],
-            "T18": [1.50, 1.75],
-            "S29": [1.30, 1.95],
+            "S01": ([1.70, 2.00], "2026-10-01T19:15:00Z"),
+            "S10": ([2.00, 2.10], "2026-10-01T19:15:00Z"),
+            "T18": ([2.00, 2.24], "2026-10-09T10:53:48Z"),
+            "S29": ([1.30, 1.49], "2026-10-09T10:53:48Z"),
         }
-        for strategy_id, odds in expected.items():
+        for strategy_id, (odds, epoch) in expected.items():
             row = strategy(strategy_id)
             self.assertTrue(row["scanner_enabled"])
             self.assertEqual(row["rule"]["odds"], odds)
-            self.assertEqual(row["clean_epoch_start"], "2026-10-01T19:15:00Z")
+            self.assertEqual(row["clean_epoch_start"], epoch)
 
     def test_retired_negative_rules_are_archived(self):
         for strategy_id in ("S08", "S11", "T14", "T16", "S27", "S25", "S12", "S20", "S26"):
@@ -77,12 +77,16 @@ class TopSixRegistryTest(unittest.TestCase):
         self.assertEqual(registry["policy"]["operational_scanner_count"], enabled)
 
     def test_new_stateful_hypotheses_are_user_visible(self):
-        for strategy_id in ("S31", "S32", "S33"):
+        for strategy_id in ("S31", "S41"):
             row = strategy(strategy_id)
             self.assertTrue(row["scanner_enabled"])
             self.assertTrue(row["user_output"])
-            self.assertEqual(row["status"], "FORWARD_HYPOTHESIS")
+            self.assertEqual(row["status"], "FORWARD_POCKET")
             self.assertEqual(row["collection_engine"], "stateful_goal_mining.py")
+        row = strategy("S33")
+        self.assertTrue(row["scanner_enabled"])
+        self.assertTrue(row["user_output"])
+        self.assertEqual(row["status"], "FORWARD_HYPOTHESIS")
 
     def test_zero_collection_rules_are_disabled(self):
         for strategy_id in ("S34", "BT01M", "BT01W", "BT02W", "BT03W"):
@@ -101,7 +105,7 @@ class FootballTopSixTest(unittest.TestCase):
         cases = (
             ("S06W", "Brazil Serie A1 Women", "ТМ 2.5"),
             ("S06Y", "Brazil Campeonato Paulista U20", "ТБ 2.5"),
-            ("S06A", "Brazil Serie A", "ТМ 2.5"),
+            ("S06A", "Brazil Serie A", "ТБ 2.5"),
         )
         for strategy_id, league, expected_bet in cases:
             ev = football_event("0-0", 12)
@@ -185,8 +189,8 @@ class FootballTopSixTest(unittest.TestCase):
             {"add_time": now, "ss": "1-1", "time_str": "47", "handicap": "3.5", "over_od": "1.90", "under_od": "1.90"},
         ]
         detail = totals_detail(rows)
-        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S36"), detail)["bet"], "ТМ 3.5")
-        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S37"), detail)["bet"], "ТМ 3.5")
+        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S36"), detail)["bet"], "ТБ 3.5")
+        self.assertEqual(scanner.football_evaluate(football_event("1-1", 47), strategy("S37"), detail)["bet"], "ТБ 3.5")
         self.assertIsNone(scanner.football_evaluate(football_event("1-1", 47), strategy("S38"), detail))
         rows[0].update({"time_str": "32", "handicap": "3.25"})
         self.assertEqual(scanner.football_evaluate(football_event("1-1", 32), strategy("S38"), detail)["bet"], "ТБ 3.25")
@@ -222,14 +226,14 @@ class TennisTopSixTest(unittest.TestCase):
             "score": None,
         }
 
-    def test_heavy_set_winner_at_qualifying_price(self):
+    def test_heavy_set_loser_at_qualifying_price(self):
         detail = {
             "stats": {"matching_dir": 1},
             "odds": {"13_1": [{"add_time": int(time.time()), "ss": "6-2,0-0", "home_od": "1.65", "away_od": "2.20"}]},
         }
         hit = scanner.tennis_evaluate(self.tennis_event(), strategy("T18"), detail)
-        self.assertEqual(hit["bet"], "Player A")
-        self.assertEqual(hit["current_odds"], 1.65)
+        self.assertEqual(hit["bet"], "Player B")
+        self.assertEqual(hit["current_odds"], 2.20)
 
     def test_tied_first_set_selects_opponent_price(self):
         detail = {
@@ -262,14 +266,15 @@ class PressureTopSixTest(unittest.TestCase):
             stateful.SCANNER_STATUS = Path(tmp) / "status.json"
             stateful.sync_scanner_signals([
                 {**base, "event_id": "s39", "selection": "UNDER", "selected_odds": 1.95},
-                {**base, "event_id": "s31", "strategy": "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.90},
+                {**base, "event_id": "s31", "strategy": "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2", "arm": "UNDER_200_224", "selection": "UNDER", "selected_odds": 2.10},
+                {**base, "event_id": "s41", "strategy": "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2", "arm": "OVER_200_224", "selection": "OVER", "selected_odds": 2.15},
                 {**base, "event_id": "s32", "strategy": "FOOTBALL_FH_PRESSURE_GOAL_V1", "arm": "PRIMARY", "period": "FH", "selection": "OVER", "selected_odds": 2.10},
                 {**base, "event_id": "s33", "strategy": "FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1", "arm": "PRIMARY", "selection": "UNDER", "selected_odds": 1.75},
                 {**base, "event_id": "s34", "strategy": "FOOTBALL_HT00_HIGH_ACTIVITY_SH_GOAL_V1", "arm": "PRIMARY", "selection": "OVER", "selected_odds": 1.60},
                 {**base, "event_id": "s27", "arm": "HIGH_PRESSURE_O05_FH", "period": "FH", "selected_odds": 1.95},
             ])
             rows = stateful.load_rows(stateful.SCANNER_SIGNALS)
-        self.assertEqual({row["strategy_id"] for row in rows}, {"S39", "S31", "S32", "S33"})
+        self.assertEqual({row["strategy_id"] for row in rows}, {"S39", "S31", "S41", "S33"})
         self.assertNotIn("s27", {row["event_id"] for row in rows})
 
 

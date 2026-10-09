@@ -925,7 +925,7 @@ def tennis_evaluate(ev, st, detail):
     wg, lg = rel["winner_games"], rel["loser_games"]
 
     if st["id"] in ("S09", "T18") and wg == 6 and lg in (0, 1, 2, 3):
-        side = rel["winner"]
+        side = rel["loser"] if st["rule"].get("side") == "previous_set_loser" else rel["winner"]
         if "odds" in st["rule"] and not in_range(prices[side], st["rule"]["odds"]):
             return None
         return {

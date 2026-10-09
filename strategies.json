@@ -18,8 +18,8 @@
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
     "operational_scanner_count": 16,
-    "last_operational_change_at": "2026-10-08T03:55:00Z",
-    "last_operational_change": "Disabled five zero-collection rules: four Bet365 tennis totals after 85 consecutive HTTP 403 failures with zero successful calls, and the second-half goal after active 0:0 first half after zero signals since launch.",
+    "last_operational_change_at": "2026-10-09T10:53:48Z",
+    "last_operational_change": "Удалены три минусовых направления; шесть широких правил заменены восемью согласованными плюсовыми карманами с новыми чистыми эпохами.",
     "user_facing_names": "Только поле name_ru",
     "show_technical_strategy_ids_to_user": false,
     "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
@@ -227,12 +227,12 @@
       "id": "S06A",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Бразилия, взрослые мужчины - тотал меньше по основной линии",
-      "source": "brazil_split_forward_20261004",
+      "name_ru": "Бразилия, взрослые мужчины - тотал больше по основной линии",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "country": "br",
         "category": "adult_men",
-        "market": "main_under",
+        "market": "main_over",
         "entry_policy": "first_available_quote",
         "one_entry_per_match": true
       },
@@ -240,9 +240,9 @@
       "scanner_enabled": true,
       "scanner_core8": false,
       "research_destination": "scanner",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-04T19:48:00Z",
-      "history_note": "Control hypothesis only: historical first-entry sample was negative. Retained to measure the category separately."
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Широкий ТМ архивирован при N=37 и ROI -16,35%. Сохранено только противоположное направление: исторический карман N=37, ROI +8,89%, без трёх лучших +0,62%."
     },
     {
       "id": "S07",
@@ -302,12 +302,15 @@
         "state": "heavy_set_loss",
         "side": "previous_set_winner"
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
+      "scanner_retired_reason": "Отключена 2026-10-09: N=119, ROI -2,02%; противоположное направление ROI -15,99%.",
+      "mining_enabled": false,
+      "status": "ARCHIVED",
+      "archived_at": "2026-10-09T10:53:48Z"
     },
     {
       "id": "S10",
@@ -390,22 +393,17 @@
       "id": "S13",
       "tier": "SECONDARY",
       "sport": "football",
-      "name_ru": "Победа хозяев после 85-й минуты при подтверждённой домашней активности",
-      "source": "forward_stats",
+      "name_ru": "Победа хозяев после 85-й минуты при давлении и ударе в створ",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "minute_min": 85,
         "score_state": "draw",
-        "activity_confirmation_any": [
+        "activity_confirmation_all": [
           "pressure_home_gt_away",
           "home_sot10_min"
         ],
         "market": "home",
-        "one_entry_per_match": true,
-        "analysis_segments": [
-          "pressure_only",
-          "shot_on_target_only",
-          "both"
-        ]
+        "one_entry_per_match": true
       },
       "user_output": true,
       "scanner_enabled": false,
@@ -415,8 +413,9 @@
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
       "mining_enabled": true,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T05:50:48Z"
+      "status": "FORWARD_POCKET",
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Широкая механика архивирована при N=75 и ROI -20,45%. Сохранён только сегмент одновременного давления хозяев и их удара в створ: N=39, ROI +26,49%."
     },
     {
       "id": "S14",
@@ -599,12 +598,15 @@
         "primary_direction": "under",
         "opposite_direction": "over"
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
-      "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining."
+      "scanner_retired_reason": "Отключена 2026-10-09: N=232, ROI -11,12%; противоположное направление ROI -0,11%.",
+      "mining_enabled": false,
+      "status": "ARCHIVED",
+      "archived_at": "2026-10-09T10:53:48Z"
     },
     {
       "id": "S35",
@@ -868,8 +870,8 @@
       "id": "T18",
       "tier": "ACTIVE",
       "sport": "tennis",
-      "name_ru": "За победителя предыдущего разгромного сета",
-      "source": "unified_robust_top6_20261001",
+      "name_ru": "Против победителя предыдущего разгромного сета при коэффициенте 2,00-2,24",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "state": "heavy_set_loss",
         "heavy_set_scores": [
@@ -878,10 +880,10 @@
           "6-2",
           "6-3"
         ],
-        "side": "previous_set_winner",
+        "side": "previous_set_loser",
         "odds": [
-          1.5,
-          1.75
+          2.0,
+          2.24
         ],
         "entry_policy": "first_fresh_quote_after_next_set_starts",
         "one_entry_per_match": true
@@ -892,16 +894,12 @@
       "status": "ACTIVE_TOP6",
       "research_destination": "scanner",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
-      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
       "evidence": {
-        "n": 38,
-        "wins": 27,
-        "losses": 11,
-        "profit": 4.787,
-        "roi_pct": 12.6,
-        "roi_without_top3_pct": 7.38,
-        "roi_without_top5_pct": 3.69,
-        "source": "unified_robust_top6_20261001"
+        "n": 103,
+        "roi_pct": 9.56,
+        "roi_without_top3_pct": 6.25,
+        "source": "current_forward_pocket_20261009"
       }
     },
     {
@@ -915,7 +913,7 @@
         "score": "2-0",
         "odds": [
           1.3,
-          1.95
+          1.49
         ],
         "market": "next_goal_under",
         "entry_policy": "first_available_quote_from_minute_85",
@@ -927,7 +925,8 @@
       "status": "ACTIVE_TOP6",
       "research_destination": "scanner",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
-      "clean_epoch_start": "2026-10-01T19:15:00Z",
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Широкий диапазон 1,30-1,95 закрыт. Сохранён карман 1,30-1,49: N=66, ROI +3,52%, без трёх лучших +1,43%.",
       "evidence": {
         "n": 75,
         "wins": 62,
@@ -973,16 +972,16 @@
       "id": "S31",
       "tier": "WATCHLIST",
       "sport": "football",
-      "name_ru": "Тотал меньше в перерыве при низкой активности",
-      "source": "forward_hypotheses_20261004",
+      "name_ru": "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "entry_state": "halftime",
         "total_goals_max": 1,
         "shots_on_target_max": 2,
         "market": "main_full_time_under",
         "odds": [
-          1.7,
-          2.2
+          2.0,
+          2.24
         ],
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
@@ -991,9 +990,37 @@
       "scanner_enabled": true,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
+      "status": "FORWARD_POCKET",
       "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T08:47:35Z"
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Широкая механика архивирована при N=132 и ROI -3,93%. Сохранён ТМ-карман: N=26, ROI +16,68%, без трёх лучших +4,95%."
+    },
+    {
+      "id": "S41",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24",
+      "source": "positive_pocket_pruning_20261009",
+      "rule": {
+        "entry_state": "halftime",
+        "total_goals_max": 1,
+        "shots_on_target_max": 2,
+        "market": "main_full_time_over",
+        "odds": [
+          2.0,
+          2.24
+        ],
+        "entry_policy": "first_fresh_quote",
+        "one_entry_per_match": true
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "collection_engine": "stateful_goal_mining.py",
+      "status": "FORWARD_POCKET",
+      "research_destination": "scanner",
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Сохранено противоположное направление широкой перерывной механики: N=38, ROI +13,42%, без трёх лучших +5,29%."
     },
     {
       "id": "S32",
@@ -1014,13 +1041,15 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T08:47:35Z"
+      "status": "ARCHIVED",
+      "research_destination": "history",
+      "clean_epoch_start": "2026-10-04T08:47:35Z",
+      "archived_at": "2026-10-09T10:53:48Z",
+      "archive_reason": "Отключена после второй отрицательной forward-проверки: новая эпоха N=29, ROI -11,29%; противоположное направление -5,86%."
     },
     {
       "id": "S33",
@@ -1202,12 +1231,12 @@
       "id": "S36",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
-      "source": "atomic_pocket_20261007",
+      "name_ru": "Тотал больше при счёте 1:1 на 45-49-й минуте",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "score": "1-1",
         "minute": [45, 49],
-        "market": "main_under",
+        "market": "main_over",
         "entry_policy": "first_available_quote_in_window",
         "one_entry_per_match": true
       },
@@ -1217,17 +1246,18 @@
       "research_destination": "scanner",
       "collection_engine": "scanner.py",
       "status": "FORWARD_POCKET",
-      "clean_epoch_start": "2026-10-07T20:25:00Z"
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Исходный ТМ архивирован при ROI -34,78%. Сохранено противоположное направление: N=29, ROI +23,19%, без трёх лучших +14,33%."
     },
     {
       "id": "S37",
       "tier": "ACTIVE",
       "sport": "football",
-      "name_ru": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
-      "source": "atomic_pocket_20261007",
+      "name_ru": "Тотал больше при счёте 1:1 и линии 3,5-4,0",
+      "source": "positive_pocket_pruning_20261009",
       "rule": {
         "score": "1-1",
-        "market": "main_under",
+        "market": "main_over",
         "allowed_lines": [3.5, 3.75, 4.0],
         "entry_policy": "first_available_quote",
         "one_entry_per_match": true
@@ -1238,7 +1268,8 @@
       "research_destination": "scanner",
       "collection_engine": "scanner.py",
       "status": "FORWARD_POCKET",
-      "clean_epoch_start": "2026-10-07T20:25:00Z"
+      "clean_epoch_start": "2026-10-09T10:53:48Z",
+      "history_note": "Исходный ТМ архивирован при ROI -30,42%. Сохранено противоположное направление: N=30, ROI +21,88%, без трёх лучших +13,29%."
     },
     {
       "id": "S38",

@@ -41,7 +41,7 @@ class StatefulMiningStrategiesTest(unittest.TestCase):
         self.assertEqual(len(arms), 1)
         self.assertEqual(arms[0]["activity_segment"], "both")
 
-    def test_s13_preserves_separate_activity_segments(self):
+    def test_s13_rejects_single_activity_segments(self):
         meta = {"score": "2-2", "minute": 89, "stats": {}}
         pressure_only = {
             "on_target10": 0,
@@ -59,10 +59,8 @@ class StatefulMiningStrategiesTest(unittest.TestCase):
             "pressure_away10": 8,
             "pressure10": 16,
         }
-        pressure_arm = next(arm for arm in mining.candidate_arms(meta, pressure_only) if arm["id"] == "S13")
-        shot_arm = next(arm for arm in mining.candidate_arms(meta, shot_only) if arm["id"] == "S13")
-        self.assertEqual(pressure_arm["activity_segment"], "pressure_only")
-        self.assertEqual(shot_arm["activity_segment"], "shot_on_target_only")
+        self.assertNotIn("S13", {arm["id"] for arm in mining.candidate_arms(meta, pressure_only)})
+        self.assertNotIn("S13", {arm["id"] for arm in mining.candidate_arms(meta, shot_only)})
 
     def test_s13_requires_at_least_one_home_activity_confirmation(self):
         meta = {"score": "2-2", "minute": 89, "stats": {}}
