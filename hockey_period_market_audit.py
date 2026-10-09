@@ -8,7 +8,7 @@ import os
 import re
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -98,15 +98,24 @@ def parsed_target_fragments(value, path: str = "results") -> list[dict]:
 
 
 def main() -> None:
+    generated_at = datetime.now(timezone.utc)
     audit = {
         "schema": "HOCKEY_PERIOD_MARKET_AUDIT_V1",
-        "generated_at_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "generated_at_utc": generated_at.isoformat().replace("+00:00", "Z"),
         "purpose": "Read-only Bet365 entitlement and schema audit for second/third-period under 1.5.",
         "events": [],
+        "ended_score_samples": [],
         "errors": [],
     }
-    upcoming = get("/v1/bet365/upcoming", {"sport_id": 17, "page": 1})
-    fixtures = [row for row in upcoming.get("results") or [] if isinstance(row, dict)]
+    try:
+        upcoming = get("/v1/bet365/upcoming", {"sport_id": 17, "page": 1})
+        fixtures = [row for row in upcoming.get("results") or [] if isinstance(row, dict)]
+        audit["bet365_entitlement"] = "available"
+    except Exception as exc:
+        fixtures = []
+        audit["bet365_entitlement"] = "unavailable"
+        audit["bet365_error"] = f"{type(exc).__name__}: {exc}"
+        audit["errors"].append({"endpoint": "/v1/bet365/upcoming", "error": audit["bet365_error"]})
     selected = [row for row in fixtures if adult_fixture(row)][:MAX_FIXTURES]
     audit["upcoming_seen"] = len(fixtures)
     audit["adult_selected"] = len(selected)
@@ -127,6 +136,28 @@ def main() -> None:
             audit["errors"].append({"FI": fi, "error": event["error"]})
         audit["events"].append(event)
 
+    for offset in range(3):
+        day = (generated_at - timedelta(days=offset)).strftime("%Y%m%d")
+        try:
+            ended = get("/v3/events/ended", {"sport_id": 17, "day": day, "page": 1})
+        except Exception as exc:
+            audit["errors"].append({"endpoint": "/v3/events/ended", "day": day, "error": f"{type(exc).__name__}: {exc}"})
+            continue
+        for row in ended.get("results") or []:
+            if not isinstance(row, dict) or str(row.get("time_status")) != "3" or not adult_fixture(row):
+                continue
+            audit["ended_score_samples"].append({
+                "event_id": str(row.get("id") or ""),
+                "match": fixture_label(row),
+                "league": league_label(row),
+                "ss": row.get("ss"),
+                "scores": row.get("scores"),
+            })
+            if len(audit["ended_score_samples"]) >= 20:
+                break
+        if len(audit["ended_score_samples"]) >= 20:
+            break
+
     audit["api_calls"] = CALLS
     audit["events_with_target_market"] = sum(
         bool(event.get("raw_target_groups") or event.get("parsed_target_fragments"))
@@ -142,6 +173,8 @@ def main() -> None:
         "upcoming_seen": audit["upcoming_seen"],
         "adult_selected": audit["adult_selected"],
         "events_with_target_market": audit["events_with_target_market"],
+        "ended_score_samples": len(audit["ended_score_samples"]),
+        "bet365_entitlement": audit["bet365_entitlement"],
         "errors": len(audit["errors"]),
     }, ensure_ascii=False))
 
