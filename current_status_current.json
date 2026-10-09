@@ -1,12 +1,12 @@
 {
-  "merged": 7940,
+  "merged": 7944,
   "settled": 7763,
   "void": 152,
-  "pending": 25,
-  "pending_live_or_delayed": 25,
+  "pending": 29,
+  "pending_live_or_delayed": 29,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 3,
+    "INPLAY": 7,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 109
   },
   "settlement_event_reasons": {
-    "INPLAY": 3,
+    "INPLAY": 7,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 86
   },
   "settlement_cache": {
-    "updated_at": "2026-10-09T07:38:54Z",
+    "updated_at": "2026-10-09T08:38:58Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 19,
-    "signal_unique_events": 4319,
-    "cache_events": 4319,
+    "provider_queries": 1,
+    "queried_events": 4,
+    "signal_unique_events": 4323,
+    "cache_events": 4323,
     "final_events": 4278,
     "void_events": 25,
     "immutable_events": 4303,
-    "retryable_events": 16,
+    "retryable_events": 20,
     "due_events_remaining": 0,
     "states": {
       "FINAL": 4278,
-      "INPLAY": 3,
+      "INPLAY": 7,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -284,8 +284,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 138,
-      "pending": 1,
+      "recorded": 139,
+      "pending": 2,
       "void": 21,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -364,8 +364,8 @@
     "T18": {
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 274,
-      "pending": 2,
+      "recorded": 275,
+      "pending": 3,
       "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
@@ -444,8 +444,8 @@
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности",
       "start": "2026-10-04T08:47:35+00:00",
-      "recorded": 132,
-      "pending": 0,
+      "recorded": 134,
+      "pending": 2,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
