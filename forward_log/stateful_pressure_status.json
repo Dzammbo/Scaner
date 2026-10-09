@@ -1,6 +1,32 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-09T19:47:41Z",
-  "signals": 900,
-  "active_last_10m": []
+  "updated_at": "2026-10-09T19:57:43Z",
+  "signals": 901,
+  "active_last_10m": [
+    {
+      "timestamp": "2026-10-09T19:52:29Z",
+      "sport": "football",
+      "tournament": "England Championship",
+      "event_id": "12100746",
+      "match": "West Ham - QPR",
+      "minute_score": "45' / '0-1'",
+      "minute": 45,
+      "score": "0-1",
+      "exact_bet_line": "ТМ 2.5",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 2.5",
+      "reverse_odds": 1.85,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 25.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    }
+  ]
 }
