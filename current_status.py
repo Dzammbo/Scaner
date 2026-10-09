@@ -498,6 +498,10 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
         "87-88": lambda row: 87 <= row["minute"] <= 88,
         "89-90": lambda row: 89 <= row["minute"] <= 90,
     }
+    exact_minutes = {
+        str(minute): (lambda row, minute=minute: row["minute"] == minute)
+        for minute in range(85, 91)
+    }
     odds_groups = {
         "меньше 1,15": lambda row: row["current_odds"] < 1.15,
         "меньше 1,20": lambda row: row["current_odds"] < 1.20,
@@ -537,6 +541,13 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             }
             for period, period_filter in periods.items()
         },
+        "historical_exact_minutes": {
+            minute: {
+                odds: metric([row for row in rows if minute_filter(row) and odds_filter(row)])
+                for odds, odds_filter in odds_groups.items()
+            }
+            for minute, minute_filter in exact_minutes.items()
+        },
         "clean_by_odds": {name: metric([row for row in clean if predicate(row)]) for name, predicate in odds_groups.items()},
         "clean_matrix": {
             period: {
@@ -544,6 +555,13 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
                 for odds, odds_filter in odds_groups.items()
             }
             for period, period_filter in periods.items()
+        },
+        "clean_exact_minutes": {
+            minute: {
+                odds: metric([row for row in clean if minute_filter(row) and odds_filter(row)])
+                for odds, odds_filter in odds_groups.items()
+            }
+            for minute, minute_filter in exact_minutes.items()
         },
         "historical_reverse_by_odds": {
             name: metric([row for row in rows if predicate(row)], "reverse_profit")
@@ -556,6 +574,13 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             }
             for period, period_filter in periods.items()
         },
+        "historical_reverse_exact_minutes": {
+            minute: {
+                odds: metric([row for row in rows if minute_filter(row) and odds_filter(row)], "reverse_profit")
+                for odds, odds_filter in reverse_odds_groups.items()
+            }
+            for minute, minute_filter in exact_minutes.items()
+        },
         "clean_reverse_by_odds": {
             name: metric([row for row in clean if predicate(row)], "reverse_profit")
             for name, predicate in reverse_odds_groups.items()
@@ -566,6 +591,13 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
                 for odds, odds_filter in reverse_odds_groups.items()
             }
             for period, period_filter in periods.items()
+        },
+        "clean_reverse_exact_minutes": {
+            minute: {
+                odds: metric([row for row in clean if minute_filter(row) and odds_filter(row)], "reverse_profit")
+                for odds, odds_filter in reverse_odds_groups.items()
+            }
+            for minute, minute_filter in exact_minutes.items()
         },
     }
     S30_LATE_OUTPUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
