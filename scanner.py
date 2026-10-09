@@ -185,8 +185,9 @@ def append_s30_quote_snapshots(queues, details, timestamp):
             tf = total_features(ev, detail)
             row = {
                 "timestamp": timestamp,
-                "strategy_id": "S30",
+                "strategy_id": "S42",
                 "event_id": str(event_id),
+                "sport": "football",
                 "tournament": ev.get("league"),
                 "home": ev.get("home"),
                 "away": ev.get("away"),
@@ -195,6 +196,11 @@ def append_s30_quote_snapshots(queues, details, timestamp):
                 "total_line": tf.get("next_goal_handicap"),
                 "under_odds": tf.get("next_goal_under_odds"),
                 "over_odds": tf.get("next_goal_over_odds"),
+                "exact_bet_line": f"ТМ {tf.get('next_goal_handicap')}" if tf.get("next_goal_handicap") is not None else None,
+                "current_odds": tf.get("next_goal_under_odds"),
+                "reverse_bet": f"ТБ {tf.get('next_goal_handicap')}" if tf.get("next_goal_handicap") is not None else None,
+                "reverse_odds": tf.get("next_goal_over_odds"),
+                "period": "FT",
             }
             f.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
             existing.add((str(event_id), m))
@@ -1019,12 +1025,21 @@ queues = {"football": {}, "tennis": {}}
 for sport in ("football", "tennis"):
     for ev in boards[sport]["events"]:
         sts = [st for st in strategies if st["sport"] == sport and cheap_core_prefilter(ev, st, previous_state)]
-        if sts:
+        capture_late_under = (
+            S30_CAPTURE
+            and sport == "football"
+            and ev.get("minute") is not None
+            and 85 <= ev["minute"] <= 90
+        )
+        if sts or capture_late_under:
             queues[sport][ev["event_id"]] = {"event": ev, "strategies": sts}
 
 def priority(row):
     if S30_CAPTURE and row["event"].get("sport") == "football":
-        minute_rank = {85: 0, 86: 1, 87: 2, 88: 3, 89: 4, 84: 5, 83: 6, 90: 7}
+        # Late observations disappear first and contain the low-price segment
+        # this collector is intended to measure, so spend scarce detail calls
+        # from minute 90 backwards.
+        minute_rank = {90: 0, 89: 1, 88: 2, 87: 3, 86: 4, 85: 5, 84: 6, 83: 7}
         return (0, minute_rank.get(row["event"].get("minute"), 9), -len(row["strategies"]))
     return (min(rank.get(s["tier"], 9) for s in row["strategies"]), -len(row["strategies"]))
 

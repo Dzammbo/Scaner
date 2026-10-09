@@ -27,6 +27,9 @@ WATCHLIST_FILE = Path("observation_watchlist.json")
 WATCHLIST_OUTPUT_FILE = Path("observation_watchlist_current.json")
 S30_TOP6_FILE = Path("s30_top6.json")
 S30_TOP6_OUTPUT_FILE = Path("s30_top6_current.json")
+S30_LATE_QUOTES_FILE = Path("forward_log/s30/s30_quotes.jsonl")
+S30_LATE_OUTPUT_FILE = Path("s30_late_under_current.json")
+S30_LATE_EPOCH = "2026-10-09T21:20:00Z"
 FIRST_HALF_STRATEGIES = {"S27"}
 
 YOUTH_TOURNAMENT = re.compile(
@@ -440,6 +443,98 @@ def aggregate_without_top(rows: list[dict], key: str = "profit", top: int = 3) -
     return aggregate(eligible, key)
 
 
+def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict:
+    rows = []
+    for raw in load_jsonl(S30_LATE_QUOTES_FILE):
+        minute = raw.get("minute")
+        odds = raw.get("under_odds", raw.get("current_odds"))
+        line = raw.get("total_line")
+        try:
+            minute = int(minute)
+            odds = float(odds)
+            line = float(line)
+        except (TypeError, ValueError):
+            continue
+        if not 85 <= minute <= 90 or odds <= 1:
+            continue
+        item = dict(raw)
+        item.update({
+            "strategy_id": "S42",
+            "sport": "football",
+            "period": "FT",
+            "minute": minute,
+            "current_odds": odds,
+            "exact_bet_line": f"ТМ {line:g}",
+        })
+        rows.append(item)
+
+    def first_per_event(selected):
+        output = {}
+        for row in sorted(selected, key=lambda value: str(value.get("timestamp") or "")):
+            output.setdefault(str(row.get("event_id")), row)
+        return list(output.values())
+
+    def metric(selected):
+        selected = first_per_event(selected)
+        settled, voided, pending = settle(selected, cache, overrides)
+        return {
+            "recorded": len(selected),
+            "settled": len(settled),
+            "pending": len(pending),
+            "void": len(voided),
+            "result": aggregate(settled),
+            "without_top3": aggregate_without_top(settled),
+        }
+
+    periods = {
+        "85-86": lambda row: 85 <= row["minute"] <= 86,
+        "87-88": lambda row: 87 <= row["minute"] <= 88,
+        "89-90": lambda row: 89 <= row["minute"] <= 90,
+    }
+    odds_groups = {
+        "меньше 1,15": lambda row: row["current_odds"] < 1.15,
+        "меньше 1,20": lambda row: row["current_odds"] < 1.20,
+        "1,20-1,29": lambda row: 1.20 <= row["current_odds"] < 1.30,
+        "1,30-1,49": lambda row: 1.30 <= row["current_odds"] < 1.50,
+        "1,50 и выше": lambda row: row["current_odds"] >= 1.50,
+    }
+    clean = [row for row in rows if timestamp_at_or_after(row.get("timestamp"), S30_LATE_EPOCH)]
+    report = {
+        "schema_version": 1,
+        "name_ru": "Тотал меньше текущей линии после 85-й минуты - полный сбор по минутам и коэффициентам",
+        "status": "VISIBLE_FORWARD_COLLECTION",
+        "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "clean_epoch_start": S30_LATE_EPOCH,
+        "collection": {
+            "minutes": [85, 86, 87, 88, 89, 90],
+            "one_snapshot_per_match_per_minute": True,
+            "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
+            "historical_snapshots": len(rows),
+            "historical_events": len({str(row.get('event_id')) for row in rows}),
+            "clean_snapshots": len(clean),
+            "clean_events": len({str(row.get('event_id')) for row in clean}),
+        },
+        "historical_by_odds": {name: metric([row for row in rows if predicate(row)]) for name, predicate in odds_groups.items()},
+        "historical_matrix": {
+            period: {
+                odds: metric([row for row in rows if period_filter(row) and odds_filter(row)])
+                for odds, odds_filter in odds_groups.items()
+            }
+            for period, period_filter in periods.items()
+        },
+        "clean_by_odds": {name: metric([row for row in clean if predicate(row)]) for name, predicate in odds_groups.items()},
+        "clean_matrix": {
+            period: {
+                odds: metric([row for row in clean if period_filter(row) and odds_filter(row)])
+                for odds, odds_filter in odds_groups.items()
+            }
+            for period, period_filter in periods.items()
+        },
+    }
+    S30_LATE_OUTPUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
 def odds_band(value) -> str | None:
     try:
         low = math.floor(float(value) * 4 + 1e-9) / 4
@@ -808,6 +903,7 @@ def build_status() -> dict:
     unresolved = len(pending) - live_or_delayed
     watchlist = build_watchlist_report(signals, cache, overrides)
     s30_top6 = build_s30_top6_report(signals, cache, overrides)
+    s30_late_under = build_s30_late_under_report(cache, overrides)
     legacy_by_strategy = {
         strategy_id: excluded_legacy_attributions(signals, strategy_id)
         for strategy_id in names
@@ -850,6 +946,11 @@ def build_status() -> dict:
             "items": len(s30_top6["items"]),
             "review_ready": sum(item["review_ready"] for item in s30_top6["items"]),
         },
+        "s30_late_under": {
+            "status": s30_late_under["status"],
+            "clean_epoch_start": s30_late_under["clean_epoch_start"],
+            **s30_late_under["collection"],
+        },
         "strategies": strategy_stats,
     }
 
@@ -864,6 +965,7 @@ def build_status() -> dict:
         "data_quality": status["data_quality"],
         "observation_watchlist": status["observation_watchlist"],
         "s30_top6": status["s30_top6"],
+        "s30_late_under": status["s30_late_under"],
     }
     Path("settlement_diagnostics_current.json").write_text(json.dumps(diagnostics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     Path("current_status_current.json").write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

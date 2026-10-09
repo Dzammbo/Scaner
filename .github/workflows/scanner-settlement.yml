@@ -54,6 +54,7 @@ jobs:
               pending_current.json \
               settlement_diagnostics_current.json \
               s30_top6_current.json
+              s30_late_under_current.json
             git pull --rebase origin main
             python3 scanner_settlement.py
             python3 current_status.py
@@ -72,6 +73,7 @@ jobs:
               "settlement_diagnostics_current.json",
               "observation_watchlist_current.json",
               "s30_top6_current.json",
+              "s30_late_under_current.json",
           ]
           for filename in required:
               assert Path(filename).is_file() and Path(filename).stat().st_size > 0, filename
@@ -82,7 +84,7 @@ jobs:
           assert current["merged"] == current["settled"] + current["void"] + current["pending"]
           PY
 
-            git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json observation_watchlist_current.json s30_top6_current.json
+            git add forward_log/settlement/ current_status_current.json priority_pockets_current.json pockets_current.json pending_current.json settlement_diagnostics_current.json observation_watchlist_current.json s30_top6_current.json s30_late_under_current.json
             if ! git diff --cached --quiet; then
               git commit -m "Refresh Scanner settlement cache"
               pushed="0"
@@ -136,3 +138,4 @@ jobs:
             settlement_diagnostics_current.json
             observation_watchlist_current.json
             s30_top6_current.json
+            s30_late_under_current.json

@@ -1398,6 +1398,40 @@
       "history_note": "Широкий forward-сбор без жёсткого фильтра. Коэффициенты периода недоступны в текущей подписке, поэтому до появления цены считаются проходимость и безубыточный коэффициент, а не ROI."
     },
     {
+      "id": "S42",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше текущей линии после 85-й минуты - полный сбор по минутам и коэффициентам",
+      "source": "user_approved_full_late_under_collection_20261010",
+      "rule": {
+        "minute": [
+          85,
+          90
+        ],
+        "market": "next_goal_under",
+        "entry_policy": "one_snapshot_per_match_per_minute",
+        "reporting_policy": "first_point_per_match_inside_each_minute_and_odds_slice",
+        "score_filter": null,
+        "odds_filter": null,
+        "priority_odds_slices": [
+          "<1.15",
+          "<1.20",
+          "1.20-1.29",
+          "1.30-1.49",
+          ">=1.50"
+        ]
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "mining_enabled": true,
+      "research_destination": "mining",
+      "collection_engine": "s30_worker.py",
+      "status": "VISIBLE_FORWARD_COLLECTION",
+      "clean_epoch_start": "2026-10-09T21:20:00Z",
+      "history_note": "Полный видимый сбор 85-90-й минут без фильтра по счёту и коэффициенту. Для анализа одного диапазона учитывается только первая точка матча, чтобы повторные минуты не раздували выборку."
+    },
+    {
       "id": "S30",
       "tier": "WATCHLIST",
       "sport": "football",
