@@ -1,6 +1,6 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-09T12:13:44.291115Z",
+  "updated_at": "2026-10-09T12:43:40.221551Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
   "market_access": "period prices unavailable; Events scores available",
@@ -10,9 +10,9 @@
   "strategies": [
     {
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
-      "signals": 75,
+      "signals": 76,
       "resolved": 0,
-      "pending": 75,
+      "pending": 76,
       "wins": 0,
       "losses": 0,
       "hit_rate_pct": null,
@@ -21,9 +21,9 @@
     },
     {
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
-      "signals": 75,
+      "signals": 76,
       "resolved": 0,
-      "pending": 75,
+      "pending": 76,
       "wins": 0,
       "losses": 0,
       "hit_rate_pct": null,
@@ -31,7 +31,5 @@
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": [
-    "ended 20261008: HTTPError: HTTP Error 502: Bad Gateway"
-  ]
+  "errors": []
 }
