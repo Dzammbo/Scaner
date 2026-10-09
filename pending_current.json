@@ -2096,5 +2096,371 @@
     },
     "tier": "ACTIVE",
     "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:43:50Z",
+    "sport": "football",
+    "tournament": "Romania Liga III",
+    "event_id": "13019081",
+    "match": "CS Metalurgistul Cugir - CSM Deva",
+    "minute_score": "45' / '0-0'",
+    "minute": 45,
+    "score": "0-0",
+    "exact_bet_line": "ТМ 1.5",
+    "current_odds": 2.0,
+    "reverse_bet": "ТБ 1.5",
+    "reverse_odds": 1.8,
+    "strategy_id": "S31",
+    "strategy_ids": [
+      "S31"
+    ],
+    "strategy_names": [
+      "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 36.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S31": {
+        "timestamp": "2026-10-09T12:43:50Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-0",
+        "exact_bet_line": "ТМ 1.5",
+        "current_odds": 2.0,
+        "reverse_bet": "ТБ 1.5",
+        "reverse_odds": 1.8
+      }
+    },
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:45:46.438100+00:00",
+    "sport": "football",
+    "tournament": "Thailand Division 2",
+    "event_id": "12299744",
+    "match": "Phrae United - Kanchanaburi Power",
+    "minute_score": "45' / '1-1",
+    "minute": 45,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 3.5",
+    "current_odds": 1.8,
+    "reverse_bet": "ТМ 3.5",
+    "reverse_odds": 2.0,
+    "market": "main_over",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 23,
+      "last_goal_minute": 22,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36"
+    ],
+    "strategy_names": [
+      "Тотал больше при счёте 1:1 на 45-49-й минуте"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-09T12:45:46.438100+00:00",
+        "period": "FT",
+        "minute": 45,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 3.5",
+        "current_odds": 1.8,
+        "reverse_bet": "ТМ 3.5",
+        "reverse_odds": 2.0,
+        "market": "main_over",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 23,
+          "last_goal_minute": 22,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:45:46.438100+00:00",
+    "sport": "tennis",
+    "tournament": "M15 Burgas",
+    "event_id": "13265860",
+    "match": "Iannis Miletich - Jan Kupcic",
+    "minute_score": "2-6,4-2",
+    "minute": null,
+    "score": "2-6,4-2",
+    "period": "FT",
+    "exact_bet_line": "Iannis Miletich",
+    "current_odds": 2.1,
+    "reverse_bet": "Jan Kupcic",
+    "reverse_odds": 1.666,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "2-6,4-2,0-15",
+      "previous_set": "6-2"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "Против победителя предыдущего разгромного сета при коэффициенте 2,00-2,24"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T12:45:46.438100+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "2-6,4-2",
+        "exact_bet_line": "Iannis Miletich",
+        "current_odds": 2.1,
+        "reverse_bet": "Jan Kupcic",
+        "reverse_odds": 1.666,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "2-6,4-2,0-15",
+          "previous_set": "6-2"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:50:47.291632+00:00",
+    "sport": "football",
+    "tournament": "Lebanon League",
+    "event_id": "13054389",
+    "match": "AC Tripoli - Al Ahed",
+    "minute_score": "49' / '1-1",
+    "minute": 49,
+    "score": "1-1",
+    "period": "FT",
+    "exact_bet_line": "ТБ 3.5",
+    "current_odds": 2.0,
+    "reverse_bet": "ТМ 3.5",
+    "reverse_odds": 1.8,
+    "market": "main_over",
+    "bet_line": 3.5,
+    "features": {
+      "drought_min": 29,
+      "last_goal_minute": 20,
+      "main_total": 3.5,
+      "selected_total": 3.5,
+      "main_ah_line": null,
+      "entry_epoch": null,
+      "price_verified": false,
+      "quote_at": null,
+      "quote_age_seconds": null,
+      "quote_score": null,
+      "quote_confirmation_gap_seconds": null,
+      "verification_method": null,
+      "initial_provider_quote": null,
+      "confirmed_provider_quote": null
+    },
+    "entry_epoch": null,
+    "price_verified": false,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S36",
+    "strategy_ids": [
+      "S36"
+    ],
+    "strategy_names": [
+      "Тотал больше при счёте 1:1 на 45-49-й минуте"
+    ],
+    "strategy_observations": {
+      "S36": {
+        "timestamp": "2026-10-09T12:50:47.291632+00:00",
+        "period": "FT",
+        "minute": 49,
+        "score": "1-1",
+        "exact_bet_line": "ТБ 3.5",
+        "current_odds": 2.0,
+        "reverse_bet": "ТМ 3.5",
+        "reverse_odds": 1.8,
+        "market": "main_over",
+        "bet_line": 3.5,
+        "features": {
+          "drought_min": 29,
+          "last_goal_minute": 20,
+          "main_total": 3.5,
+          "selected_total": 3.5,
+          "main_ah_line": null,
+          "entry_epoch": null,
+          "price_verified": false,
+          "quote_at": null,
+          "quote_age_seconds": null,
+          "quote_score": null,
+          "quote_confirmation_gap_seconds": null,
+          "verification_method": null,
+          "initial_provider_quote": null,
+          "confirmed_provider_quote": null
+        },
+        "entry_epoch": null,
+        "price_verified": false,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:50:47.291632+00:00",
+    "sport": "tennis",
+    "tournament": "M25 Santa Margherita",
+    "event_id": "13266114",
+    "match": "Stefano D'Agostino - Andrey Chepelev",
+    "minute_score": "3-3",
+    "minute": null,
+    "score": "3-3",
+    "period": "FT",
+    "exact_bet_line": "Andrey Chepelev",
+    "current_odds": 2.1,
+    "reverse_bet": "Stefano D'Agostino",
+    "reverse_odds": 1.666,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "3-3,40-0",
+      "live_favorite": "Stefano D'Agostino",
+      "favorite_odds": 1.666
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "S10",
+    "strategy_ids": [
+      "S10"
+    ],
+    "strategy_names": [
+      "Против фаворита по ходу матча при равном первом сете"
+    ],
+    "strategy_observations": {
+      "S10": {
+        "timestamp": "2026-10-09T12:50:47.291632+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "3-3",
+        "exact_bet_line": "Andrey Chepelev",
+        "current_odds": 2.1,
+        "reverse_bet": "Stefano D'Agostino",
+        "reverse_odds": 1.666,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "3-3,40-0",
+          "live_favorite": "Stefano D'Agostino",
+          "favorite_odds": 1.666
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T12:54:01Z",
+    "sport": "football",
+    "tournament": "Indonesia Super League",
+    "event_id": "12392004",
+    "match": "Isenmulang Kalteng FC - Persebaya Surabaya",
+    "minute_score": "45' / '0-1'",
+    "minute": 45,
+    "score": "0-1",
+    "exact_bet_line": "ТБ 2.5",
+    "current_odds": 2.025,
+    "reverse_bet": "ТМ 2.5",
+    "reverse_odds": 1.775,
+    "strategy_id": "S41",
+    "strategy_ids": [
+      "S41"
+    ],
+    "strategy_names": [
+      "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+    ],
+    "tier": "WATCHLIST",
+    "pressure10": 21.0,
+    "period": "FT",
+    "source": "stateful_goal_mining",
+    "strategy_observations": {
+      "S41": {
+        "timestamp": "2026-10-09T12:54:01Z",
+        "period": "FT",
+        "minute": 45,
+        "score": "0-1",
+        "exact_bet_line": "ТБ 2.5",
+        "current_odds": 2.025,
+        "reverse_bet": "ТМ 2.5",
+        "reverse_odds": 1.775
+      }
+    },
+    "settlement_reason": "INPLAY"
   }
 ]
