@@ -1,12 +1,12 @@
 {
   "merged": 7936,
-  "settled": 7759,
+  "settled": 7760,
   "void": 152,
-  "pending": 25,
-  "pending_live_or_delayed": 25,
+  "pending": 24,
+  "pending_live_or_delayed": 24,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 3,
+    "INPLAY": 2,
     "PENDING_PROVIDER_FIX": 16,
     "POSTPONED": 6,
     "VOID_ABANDONED": 2,
@@ -17,7 +17,7 @@
     "VOID_TENNIS_WINNER_MISSING": 109
   },
   "settlement_event_reasons": {
-    "INPLAY": 3,
+    "INPLAY": 2,
     "PENDING_PROVIDER_FIX": 12,
     "POSTPONED": 1,
     "VOID_ABANDONED": 1,
@@ -28,21 +28,21 @@
     "VOID_TENNIS_WINNER_MISSING": 86
   },
   "settlement_cache": {
-    "updated_at": "2026-10-09T05:25:51Z",
+    "updated_at": "2026-10-09T06:25:54Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 2,
-    "queried_events": 17,
+    "provider_queries": 1,
+    "queried_events": 1,
     "signal_unique_events": 4315,
     "cache_events": 4315,
-    "final_events": 4274,
+    "final_events": 4275,
     "void_events": 25,
-    "immutable_events": 4299,
-    "retryable_events": 16,
+    "immutable_events": 4300,
+    "retryable_events": 15,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 4274,
-      "INPLAY": 3,
+      "FINAL": 4275,
+      "INPLAY": 2,
       "PENDING_PROVIDER_FIX": 12,
       "POSTPONED": 1,
       "VOID_ABANDONED": 1,
@@ -65,7 +65,7 @@
     },
     "settlement_score_sources": {
       "scores.2": 6226,
-      "ss": 1533
+      "ss": 1534
     }
   },
   "observation_watchlist": {
@@ -285,40 +285,40 @@
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
       "recorded": 137,
-      "pending": 1,
+      "pending": 0,
       "void": 21,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 115,
-        "W": 60,
+        "N": 116,
+        "W": 61,
         "L": 55,
         "P": 0,
-        "profit": 7.65,
-        "ROI": 6.65
+        "profit": 8.75,
+        "ROI": 7.54
       },
       "original_without_top3": {
-        "N": 112,
-        "W": 57,
+        "N": 113,
+        "W": 58,
         "L": 55,
         "P": 0,
-        "profit": 4.35,
-        "ROI": 3.88
+        "profit": 5.45,
+        "ROI": 4.82
       },
       "reverse": {
-        "N": 115,
+        "N": 116,
         "W": 55,
-        "L": 60,
+        "L": 61,
         "P": 0,
-        "profit": -20.944,
-        "ROI": -18.21
+        "profit": -21.944,
+        "ROI": -18.92
       },
       "reverse_without_top3": {
-        "N": 112,
+        "N": 113,
         "W": 52,
-        "L": 60,
+        "L": 61,
         "P": 0,
-        "profit": -23.244,
-        "ROI": -20.75
+        "profit": -24.244,
+        "ROI": -21.45
       }
     },
     "S28": {
@@ -365,40 +365,40 @@
       "name": "За победителя предыдущего разгромного сета",
       "start": "2026-10-01T19:15:00+00:00",
       "recorded": 272,
-      "pending": 3,
+      "pending": 2,
       "void": 33,
       "excluded_legacy_attributions": 17,
       "original": {
-        "N": 236,
-        "W": 142,
+        "N": 237,
+        "W": 143,
         "L": 94,
         "P": 0,
-        "profit": -12.674,
-        "ROI": -5.37
+        "profit": -12.059,
+        "ROI": -5.09
       },
       "original_without_top3": {
-        "N": 233,
-        "W": 139,
+        "N": 234,
+        "W": 140,
         "L": 94,
         "P": 0,
-        "profit": -14.924,
-        "ROI": -6.41
+        "profit": -14.309,
+        "ROI": -6.11
       },
       "reverse": {
-        "N": 236,
+        "N": 237,
         "W": 94,
-        "L": 142,
+        "L": 143,
         "P": 0,
-        "profit": -27.65,
-        "ROI": -11.72
+        "profit": -28.65,
+        "ROI": -12.09
       },
       "reverse_without_top3": {
-        "N": 233,
+        "N": 234,
         "W": 91,
-        "L": 142,
+        "L": 143,
         "P": 0,
-        "profit": -32.275,
-        "ROI": -13.85
+        "profit": -33.275,
+        "ROI": -14.22
       }
     },
     "S29": {
