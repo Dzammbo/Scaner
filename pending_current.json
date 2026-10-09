@@ -718,126 +718,6 @@
     "settlement_reason": "PENDING_PROVIDER_FIX"
   },
   {
-    "timestamp": "2026-10-09T02:53:20.176989+00:00",
-    "sport": "tennis",
-    "tournament": "W35 Wagga Wagga",
-    "event_id": "13263598",
-    "match": "Himari Sato - Yuno Kitahara",
-    "minute_score": "3-6,5-2",
-    "minute": null,
-    "score": "3-6,5-2",
-    "period": "FT",
-    "exact_bet_line": "Yuno Kitahara",
-    "current_odds": 1.666,
-    "reverse_bet": "Himari Sato",
-    "reverse_odds": 2.1,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "3-6,5-2,A-40",
-      "previous_set": "6-3"
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "T18",
-    "strategy_ids": [
-      "T18"
-    ],
-    "strategy_names": [
-      "За победителя предыдущего разгромного сета"
-    ],
-    "strategy_observations": {
-      "T18": {
-        "timestamp": "2026-10-09T02:53:20.176989+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "3-6,5-2",
-        "exact_bet_line": "Yuno Kitahara",
-        "current_odds": 1.666,
-        "reverse_bet": "Himari Sato",
-        "reverse_odds": 2.1,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "3-6,5-2,A-40",
-          "previous_set": "6-3"
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
-    "timestamp": "2026-10-09T03:13:49.140996+00:00",
-    "sport": "tennis",
-    "tournament": "WTA Suzhou",
-    "event_id": "13263180",
-    "match": "Zhuoxuan Bai - Kyoka Okamura",
-    "minute_score": "1-6,4-4",
-    "minute": null,
-    "score": "1-6,4-4",
-    "period": "FT",
-    "exact_bet_line": "Kyoka Okamura",
-    "current_odds": 1.5,
-    "reverse_bet": "Zhuoxuan Bai",
-    "reverse_odds": 2.5,
-    "market": "match_winner",
-    "bet_line": null,
-    "features": {
-      "set_score": "1-6,4-4,40-30",
-      "previous_set": "6-1"
-    },
-    "entry_epoch": null,
-    "price_verified": null,
-    "quote_at": null,
-    "quote_age_seconds": null,
-    "quote_score": null,
-    "verification_method": null,
-    "strategy_id": "T18",
-    "strategy_ids": [
-      "T18"
-    ],
-    "strategy_names": [
-      "За победителя предыдущего разгромного сета"
-    ],
-    "strategy_observations": {
-      "T18": {
-        "timestamp": "2026-10-09T03:13:49.140996+00:00",
-        "period": "FT",
-        "minute": null,
-        "score": "1-6,4-4",
-        "exact_bet_line": "Kyoka Okamura",
-        "current_odds": 1.5,
-        "reverse_bet": "Zhuoxuan Bai",
-        "reverse_odds": 2.5,
-        "market": "match_winner",
-        "bet_line": null,
-        "features": {
-          "set_score": "1-6,4-4,40-30",
-          "previous_set": "6-1"
-        },
-        "entry_epoch": null,
-        "price_verified": null,
-        "quote_at": null,
-        "quote_age_seconds": null,
-        "quote_score": null,
-        "verification_method": null
-      }
-    },
-    "tier": "ACTIVE",
-    "settlement_reason": "INPLAY"
-  },
-  {
     "timestamp": "2026-10-09T03:48:48.299175+00:00",
     "sport": "tennis",
     "tournament": "Challenger Wuning",
@@ -866,10 +746,12 @@
     "verification_method": null,
     "strategy_id": "S10",
     "strategy_ids": [
-      "S10"
+      "S10",
+      "T18"
     ],
     "strategy_names": [
-      "Против фаворита по ходу матча при равном первом сете"
+      "Против фаворита по ходу матча при равном первом сете",
+      "За победителя предыдущего разгромного сета"
     ],
     "strategy_observations": {
       "S10": {
@@ -887,6 +769,148 @@
           "set_score": "5-5,40-40",
           "live_favorite": "Akira Santillan",
           "favorite_odds": 1.666
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      },
+      "T18": {
+        "timestamp": "2026-10-09T04:28:53.109809+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-7,6-1,0-0",
+        "exact_bet_line": "Keisuke Saitoh",
+        "current_odds": 1.615,
+        "reverse_bet": "Akira Santillan",
+        "reverse_odds": 2.2,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-7,6-1,0-0,30-40",
+          "previous_set": "6-1"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T04:33:52.404748+00:00",
+    "sport": "tennis",
+    "tournament": "WTA Suzhou",
+    "event_id": "13263181",
+    "match": "Aliaksandra Sasnovich - Elvina Kalieva",
+    "minute_score": "3-6,0-0",
+    "minute": null,
+    "score": "3-6,0-0",
+    "period": "FT",
+    "exact_bet_line": "Elvina Kalieva",
+    "current_odds": 1.533,
+    "reverse_bet": "Aliaksandra Sasnovich",
+    "reverse_odds": 2.375,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "3-6,0-0,0-15",
+      "previous_set": "6-3"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T04:33:52.404748+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "3-6,0-0",
+        "exact_bet_line": "Elvina Kalieva",
+        "current_odds": 1.533,
+        "reverse_bet": "Aliaksandra Sasnovich",
+        "reverse_odds": 2.375,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "3-6,0-0,0-15",
+          "previous_set": "6-3"
+        },
+        "entry_epoch": null,
+        "price_verified": null,
+        "quote_at": null,
+        "quote_age_seconds": null,
+        "quote_score": null,
+        "verification_method": null
+      }
+    },
+    "tier": "ACTIVE",
+    "settlement_reason": "INPLAY"
+  },
+  {
+    "timestamp": "2026-10-09T05:03:53.523920+00:00",
+    "sport": "tennis",
+    "tournament": "ATP Shanghai",
+    "event_id": "13258572",
+    "match": "Adrian Mannarino - Flavio Cobolli",
+    "minute_score": "6-1,0-0",
+    "minute": null,
+    "score": "6-1,0-0",
+    "period": "FT",
+    "exact_bet_line": "Adrian Mannarino",
+    "current_odds": 1.5,
+    "reverse_bet": "Flavio Cobolli",
+    "reverse_odds": 2.625,
+    "market": "match_winner",
+    "bet_line": null,
+    "features": {
+      "set_score": "6-1,0-0,0-15",
+      "previous_set": "6-1"
+    },
+    "entry_epoch": null,
+    "price_verified": null,
+    "quote_at": null,
+    "quote_age_seconds": null,
+    "quote_score": null,
+    "verification_method": null,
+    "strategy_id": "T18",
+    "strategy_ids": [
+      "T18"
+    ],
+    "strategy_names": [
+      "За победителя предыдущего разгромного сета"
+    ],
+    "strategy_observations": {
+      "T18": {
+        "timestamp": "2026-10-09T05:03:53.523920+00:00",
+        "period": "FT",
+        "minute": null,
+        "score": "6-1,0-0",
+        "exact_bet_line": "Adrian Mannarino",
+        "current_odds": 1.5,
+        "reverse_bet": "Flavio Cobolli",
+        "reverse_odds": 2.625,
+        "market": "match_winner",
+        "bet_line": null,
+        "features": {
+          "set_score": "6-1,0-0,0-15",
+          "previous_set": "6-1"
         },
         "entry_epoch": null,
         "price_verified": null,
