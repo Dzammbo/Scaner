@@ -1432,6 +1432,32 @@
       "history_note": "Полный видимый сбор 85-90-й минут без фильтра по счёту и коэффициенту. Для анализа одного диапазона учитывается только первая точка матча, чтобы повторные минуты не раздували выборку."
     },
     {
+      "id": "S43",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
+      "source": "user_approved_fixed_late_under_20261010",
+      "rule": {
+        "minute": 90,
+        "market": "next_goal_under",
+        "entry_policy": "first_qualifying_point",
+        "one_entry_per_match": true,
+        "score_filter": null,
+        "competition_filter": null,
+        "odds_min_exclusive": 1.0,
+        "odds_max_exclusive": 1.2
+      },
+      "user_output": true,
+      "scanner_enabled": false,
+      "scanner_core8": false,
+      "mining_enabled": true,
+      "research_destination": "mining",
+      "collection_engine": "s30_worker.py",
+      "status": "ACTIVE_FORWARD_CONFIRMATION",
+      "clean_epoch_start": "2026-10-09T22:30:00Z",
+      "history_note": "Правило зафиксировано до clean-forward оценки. Исторический ориентир: N=626, ROI +4,65%, ROI без трёх лучших +4,58%. История не смешивается с новой эпохой."
+    },
+    {
       "id": "S30",
       "tier": "WATCHLIST",
       "sport": "football",

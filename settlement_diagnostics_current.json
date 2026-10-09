@@ -64,9 +64,64 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 5552,
-    "historical_events": 2019,
-    "clean_snapshots": 45,
-    "clean_events": 8
+    "historical_snapshots": 5558,
+    "historical_events": 2021,
+    "clean_snapshots": 51,
+    "clean_events": 10,
+    "fixed_strategy": {
+      "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
+      "clean_epoch_start": "2026-10-09T22:30:00Z",
+      "rule": {
+        "minute": 90,
+        "score_filter": null,
+        "competition_filter": null,
+        "under_odds_less_than": 1.2,
+        "one_entry_per_match": true
+      },
+      "historical": {
+        "recorded": 642,
+        "settled": 640,
+        "pending": 2,
+        "void": 0,
+        "result": {
+          "N": 640,
+          "W": 598,
+          "L": 42,
+          "P": 0,
+          "profit": 30.63,
+          "ROI": 4.79
+        },
+        "without_top3": {
+          "N": 637,
+          "W": 595,
+          "L": 42,
+          "P": 0,
+          "profit": 30.06,
+          "ROI": 4.72
+        }
+      },
+      "clean_forward": {
+        "recorded": 0,
+        "settled": 0,
+        "pending": 0,
+        "void": 0,
+        "result": {
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "P": 0,
+          "profit": 0,
+          "ROI": null
+        },
+        "without_top3": {
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "P": 0,
+          "profit": 0,
+          "ROI": null
+        }
+      }
+    }
   }
 }

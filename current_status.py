@@ -30,6 +30,7 @@ S30_TOP6_OUTPUT_FILE = Path("s30_top6_current.json")
 S30_LATE_QUOTES_FILE = Path("forward_log/s30/s30_quotes.jsonl")
 S30_LATE_OUTPUT_FILE = Path("s30_late_under_current.json")
 S30_LATE_EPOCH = "2026-10-09T21:20:00Z"
+S43_EPOCH = "2026-10-09T22:30:00Z"
 FIRST_HALF_STRATEGIES = {"S27"}
 
 YOUTH_TOURNAMENT = re.compile(
@@ -518,6 +519,8 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
         "7,00 и выше": lambda row: row.get("reverse_odds") is not None and row["reverse_odds"] >= 7.00,
     }
     clean = [row for row in rows if timestamp_at_or_after(row.get("timestamp"), S30_LATE_EPOCH)]
+    s43_historical = [row for row in rows if row["minute"] == 90 and row["current_odds"] < 1.20]
+    s43_clean = [row for row in s43_historical if timestamp_at_or_after(row.get("timestamp"), S43_EPOCH)]
     report = {
         "schema_version": 1,
         "name_ru": "Тотал меньше текущей линии после 85-й минуты - полный сбор по минутам и коэффициентам",
@@ -532,6 +535,19 @@ def build_s30_late_under_report(cache: dict[str, dict], overrides: dict) -> dict
             "historical_events": len({str(row.get('event_id')) for row in rows}),
             "clean_snapshots": len(clean),
             "clean_events": len({str(row.get('event_id')) for row in clean}),
+        },
+        "fixed_strategy": {
+            "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
+            "clean_epoch_start": S43_EPOCH,
+            "rule": {
+                "minute": 90,
+                "score_filter": None,
+                "competition_filter": None,
+                "under_odds_less_than": 1.20,
+                "one_entry_per_match": True,
+            },
+            "historical": metric(s43_historical),
+            "clean_forward": metric(s43_clean),
         },
         "historical_by_odds": {name: metric([row for row in rows if predicate(row)]) for name, predicate in odds_groups.items()},
         "historical_matrix": {
@@ -1019,6 +1035,7 @@ def build_status() -> dict:
             "status": s30_late_under["status"],
             "clean_epoch_start": s30_late_under["clean_epoch_start"],
             **s30_late_under["collection"],
+            "fixed_strategy": s30_late_under["fixed_strategy"],
         },
         "strategies": strategy_stats,
     }
