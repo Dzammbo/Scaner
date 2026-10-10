@@ -1,10 +1,10 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-10T16:13:49Z",
+  "updated_at": "2026-10-10T16:23:59Z",
   "api_calls": 5,
-  "board_n": 166,
-  "observations": 4141,
+  "board_n": 169,
+  "observations": 4145,
   "signals": 198,
   "archived_signals": 2615,
   "arms": {
@@ -24,14 +24,14 @@
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:OVER_200_224": {
       "id": "S41",
       "signals": 26,
-      "pending": 6,
+      "pending": 5,
       "void": 0,
-      "N": 20,
-      "W": 8,
+      "N": 21,
+      "W": 9,
       "L": 10,
       "PUSH": 2,
-      "profit": -1.8,
-      "ROI": -0.09,
+      "profit": -0.75,
+      "ROI": -0.035714,
       "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:UNDER_200_224": {
@@ -50,26 +50,26 @@
     "FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3:PRIMARY": {
       "id": "S13",
       "signals": 39,
-      "pending": 2,
+      "pending": 1,
       "void": 0,
-      "N": 37,
-      "W": 8,
+      "N": 38,
+      "W": 9,
       "L": 29,
       "PUSH": 0,
-      "profit": 9.708,
-      "ROI": 0.262378,
+      "profit": 13.708,
+      "ROI": 0.360737,
       "balance_valid": true,
       "activity_segments": {
         "both": {
           "signals": 39,
-          "pending": 2,
+          "pending": 1,
           "void": 0,
-          "N": 37,
-          "W": 8,
+          "N": 38,
+          "W": 9,
           "L": 29,
           "PUSH": 0,
-          "profit": 9.708,
-          "ROI": 0.262378,
+          "profit": 13.708,
+          "ROI": 0.360737,
           "balance_valid": true
         }
       }
