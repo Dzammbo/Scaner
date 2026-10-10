@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-10-10T14:15:45.070021+00:00",
+  "updated_at": "2026-10-10T14:25:55.813436+00:00",
   "started_at": "2026-10-10T12:43:21.265923+00:00",
   "passes": {
-    "general": 18,
+    "general": 20,
     "goal": 18,
-    "xg_home": 18,
+    "xg_home": 20,
     "hockey_period": 4
   },
   "failures": {
     "general": 0,
-    "goal": 0,
+    "goal": 2,
     "xg_home": 0,
     "hockey_period": 0
   },
-  "calls_last_hour": 130,
+  "calls_last_hour": 119,
   "hourly_cap": 2300,
   "active_collectors": {
     "general": 300,
@@ -28,7 +28,7 @@
     "S07",
     "S21"
   ],
-  "last_error": null,
+  "last_error": "goal: stateful goal exited 1: begin()\n  File \"/usr/lib/python3.12/http/client.py\", line 336, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/http/client.py\", line 297, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/socket.py\", line 707, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1252, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1104, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out\n",
   "last_checkpoint": {
     "ok": true,
     "changed": true,
