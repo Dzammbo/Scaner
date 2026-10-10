@@ -1,55 +1,80 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-10T16:44:11Z",
-  "signals": 955,
+  "updated_at": "2026-10-10T16:54:29Z",
+  "signals": 958,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-10T16:38:54Z",
+      "timestamp": "2026-10-10T16:49:12Z",
       "sport": "football",
-      "tournament": "Hungary NB II",
-      "event_id": "12133635",
-      "match": "Fehervar FC - Szentlorinc SE",
-      "minute_score": "78' / '2-0'",
-      "minute": 78,
-      "score": "2-0",
-      "exact_bet_line": "ТМ 2.5",
-      "current_odds": 1.65,
-      "reverse_bet": "ТБ 2.5",
-      "reverse_odds": 2.2,
-      "strategy_id": "S39",
+      "tournament": "Georgia First League",
+      "event_id": "11288927",
+      "match": "SFC Shturmi - Kolkheti Poti",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТМ 2.25",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 2.25",
+      "reverse_odds": 1.8,
+      "strategy_id": "S31",
       "strategy_ids": [
-        "S39"
+        "S31"
       ],
       "strategy_names": [
-        "Без гола при высоком давлении на 70-79-й минуте"
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
       ],
-      "tier": "ACTIVE",
-      "pressure10": 64.0,
+      "tier": "WATCHLIST",
+      "pressure10": 27.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     },
     {
-      "timestamp": "2026-10-10T16:44:03Z",
+      "timestamp": "2026-10-10T16:49:12Z",
       "sport": "football",
-      "tournament": "Italy Serie B",
-      "event_id": "12287082",
-      "match": "Vicenza - Pisa",
-      "minute_score": "72' / '0-2'",
-      "minute": 72,
-      "score": "0-2",
-      "exact_bet_line": "ТМ 2.5",
-      "current_odds": 2.05,
-      "reverse_bet": "ТБ 2.5",
-      "reverse_odds": 1.75,
-      "strategy_id": "S39",
+      "tournament": "Slovakia Super Liga",
+      "event_id": "12029960",
+      "match": "MFK Zemplin Michalovce - Dunajska Streda",
+      "minute_score": "45' / '0-1'",
+      "minute": 45,
+      "score": "0-1",
+      "exact_bet_line": "ТМ 2.75",
+      "current_odds": 2.025,
+      "reverse_bet": "ТБ 2.75",
+      "reverse_odds": 1.775,
+      "strategy_id": "S31",
       "strategy_ids": [
-        "S39"
+        "S31"
       ],
       "strategy_names": [
-        "Без гола при высоком давлении на 70-79-й минуте"
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
       ],
-      "tier": "ACTIVE",
+      "tier": "WATCHLIST",
       "pressure10": 33.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-10T16:49:12Z",
+      "sport": "football",
+      "tournament": "Spain Segunda Division RFEF Group 1",
+      "event_id": "12138116",
+      "match": "Amorebieta - Portugalete",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТБ 2.25",
+      "current_odds": 2.0,
+      "reverse_bet": "ТМ 2.25",
+      "reverse_odds": 1.8,
+      "strategy_id": "S41",
+      "strategy_ids": [
+        "S41"
+      ],
+      "strategy_names": [
+        "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 19.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
