@@ -2,7 +2,7 @@
   "strategy": "Победа хозяев по ожидаемым голам",
   "mode": "FORWARD_RESEARCH",
   "runtime": "github-actions",
-  "updated_at": "2026-10-10T12:53:58Z",
+  "updated_at": "2026-10-10T13:04:34Z",
   "api_calls": 3,
   "data_source": "BetsAPI only",
   "formula": "последние 3 домашних xG хозяев и 3 выездных xG гостей + Пуассон/Скеллам",
@@ -11,7 +11,7 @@
     "reason": "Новая эпоха ещё не накопила историю для out-of-sample isotonic calibration"
   },
   "counts": {
-    "completed_matches_with_xg": 355,
+    "completed_matches_with_xg": 357,
     "bundesliga_backfill_matches": 36,
     "all_model_predictions": 0,
     "primary_home_candidates": 0
@@ -37,7 +37,7 @@
   },
   "diagnostics_last_run": {
     "final_checked": 2,
-    "history_added": 2,
+    "history_added": 1,
     "predictions_added": 0,
     "no_data": {}
   }
