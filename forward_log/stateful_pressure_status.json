@@ -1,55 +1,80 @@
 {
   "scanner": "STATEFUL_USER_SIGNALS",
-  "updated_at": "2026-10-10T14:42:15Z",
-  "signals": 942,
+  "updated_at": "2026-10-10T14:52:25Z",
+  "signals": 945,
   "active_last_10m": [
     {
-      "timestamp": "2026-10-10T14:41:52Z",
+      "timestamp": "2026-10-10T14:47:01Z",
       "sport": "football",
-      "tournament": "Slovenia Prva Liga",
-      "event_id": "12087432",
-      "match": "NK Radomlje - FC Koper",
-      "minute_score": "78' / '2-2'",
-      "minute": 78,
-      "score": "2-2",
-      "exact_bet_line": "ТМ 4.5",
-      "current_odds": 2.025,
-      "reverse_bet": "ТБ 4.5",
-      "reverse_odds": 1.775,
-      "strategy_id": "S39",
+      "tournament": "England Premier League",
+      "event_id": "12070917",
+      "match": "Ipswich - Fulham",
+      "minute_score": "45' / '0-0'",
+      "minute": 45,
+      "score": "0-0",
+      "exact_bet_line": "ТБ 1.5",
+      "current_odds": 2.05,
+      "reverse_bet": "ТМ 1.5",
+      "reverse_odds": 1.8,
+      "strategy_id": "S41",
       "strategy_ids": [
-        "S39"
+        "S41"
       ],
       "strategy_names": [
-        "Без гола при высоком давлении на 70-79-й минуте"
+        "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24"
       ],
-      "tier": "ACTIVE",
-      "pressure10": 33.0,
+      "tier": "WATCHLIST",
+      "pressure10": 20.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     },
     {
-      "timestamp": "2026-10-10T14:41:52Z",
+      "timestamp": "2026-10-10T14:52:10Z",
       "sport": "football",
-      "tournament": "Poland III Liga",
-      "event_id": "12148430",
-      "match": "Zabkovia Zabki - Jagiellonia Bialystok II",
-      "minute_score": "78' / '2-1'",
-      "minute": 78,
-      "score": "2-1",
-      "exact_bet_line": "ТМ 3.5",
-      "current_odds": 2.025,
-      "reverse_bet": "ТБ 3.5",
-      "reverse_odds": 1.775,
-      "strategy_id": "S39",
+      "tournament": "England Premier League",
+      "event_id": "12070915",
+      "match": "Sunderland - Brighton",
+      "minute_score": "45' / '0-0'",
+      "minute": 45,
+      "score": "0-0",
+      "exact_bet_line": "ТМ 1.25",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 1.25",
+      "reverse_odds": 1.85,
+      "strategy_id": "S31",
       "strategy_ids": [
-        "S39"
+        "S31"
       ],
       "strategy_names": [
-        "Без гола при высоком давлении на 70-79-й минуте"
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
       ],
-      "tier": "ACTIVE",
-      "pressure10": 64.0,
+      "tier": "WATCHLIST",
+      "pressure10": 40.0,
+      "period": "FT",
+      "source": "stateful_goal_mining"
+    },
+    {
+      "timestamp": "2026-10-10T14:52:10Z",
+      "sport": "football",
+      "tournament": "Slovenia 2. SNL",
+      "event_id": "12088910",
+      "match": "Jadran Dekani - NK Vrhnika",
+      "minute_score": "45' / '1-0'",
+      "minute": 45,
+      "score": "1-0",
+      "exact_bet_line": "ТМ 2.25",
+      "current_odds": 2.0,
+      "reverse_bet": "ТБ 2.25",
+      "reverse_odds": 1.8,
+      "strategy_id": "S31",
+      "strategy_ids": [
+        "S31"
+      ],
+      "strategy_names": [
+        "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24"
+      ],
+      "tier": "WATCHLIST",
+      "pressure10": 27.0,
       "period": "FT",
       "source": "stateful_goal_mining"
     }
