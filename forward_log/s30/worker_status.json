@@ -1,22 +1,16 @@
 {
-  "updated_at": "2026-10-10T14:33:53.614732+00:00",
-  "started_at": "2026-10-10T09:13:52.373027+00:00",
+  "updated_at": "2026-10-10T18:05:10.209781+00:00",
+  "started_at": "2026-10-10T17:55:00.137524+00:00",
   "duration_seconds": 19200,
   "poll_seconds": 55,
-  "passes": 350,
-  "failures": 1,
+  "passes": 12,
+  "failures": 0,
   "budget_skips": 0,
-  "api_calls_this_job": 2897,
+  "api_calls_this_job": 140,
   "new_signals_this_job": 0,
-  "snapshots_this_job": 1340,
-  "shared_calls_last_hour": 924,
+  "snapshots_this_job": 62,
+  "shared_calls_last_hour": 256,
   "shared_hourly_cap": 1400,
-  "last_error": "3, in get_json\n    with urllib.request.urlopen(req, timeout=12) as r:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 215, in urlopen\n    return opener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 521, in open\n    response = meth(req, response)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 630, in http_response\n    response = self.parent.error(\n               ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 559, in error\n    return self._call_chain(*args)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/usr/lib/python3.12/urllib/request.py\", line 639, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 502: Bad Gateway\n",
-  "last_checkpoint": {
-    "attempted": true,
-    "ok": true,
-    "changed": true,
-    "attempt": 1
-  },
-  "finished_at": "2026-10-10T14:33:55.131008+00:00"
+  "last_error": null,
+  "last_checkpoint": null
 }
