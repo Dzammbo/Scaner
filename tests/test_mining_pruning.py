@@ -1,4 +1,6 @@
 import os
+import json
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 
@@ -14,7 +16,7 @@ import hockey_period_under as hockey
 
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "xg_home": 300, "hockey_period": 1800})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "hockey_period": 1800})
         self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S21")
 
     @patch.object(worker, "budget", return_value=20)
@@ -26,10 +28,19 @@ class MiningPruningTest(unittest.TestCase):
 
     @patch.object(worker, "budget", return_value=10)
     @patch.object(worker, "invoke")
-    def test_xg_home_pass_is_live_and_budgeted(self, invoke, _budget):
-        self.assertTrue(worker.run_pass("xg_home"))
-        self.assertEqual(invoke.call_args.args[1], ["python3", "xg_home_model.py"])
-        self.assertEqual(invoke.call_args.args[2]["XG_HOME_MODEL_CALL_BUDGET"], "10")
+    def test_archived_xg_never_invokes_collector_or_budget(self, invoke, mocked_budget):
+        self.assertFalse(worker.run_pass("xg_home"))
+        invoke.assert_not_called()
+        mocked_budget.assert_not_called()
+
+    def test_user_disabled_directions_are_archived(self):
+        registry = json.loads((Path(__file__).resolve().parents[1] / "strategies.json").read_text())
+        by_id = {row["id"]: row for row in registry["strategies"]}
+        for strategy_id in ("S06W", "S06A", "S40", "BT01M", "BT01W", "BT02W", "BT03W"):
+            row = by_id[strategy_id]
+            self.assertEqual(row["status"], "ARCHIVED")
+            self.assertFalse(row["scanner_enabled"])
+            self.assertFalse(row["mining_enabled"])
 
     @patch.object(worker, "budget", return_value=6)
     @patch.object(worker, "invoke")

@@ -346,6 +346,11 @@ def source_candidates(source_state, attempted, history_ids):
 
 
 def main():
+    registry = load_json(Path(__file__).resolve().parent / "strategies.json", {"strategies": []})
+    strategy = next((row for row in registry["strategies"] if row.get("id") == "S40"), {})
+    if not strategy.get("mining_enabled", False):
+        print(json.dumps({"collector": "xg_home_model", "status": "disabled", "api_calls": 0}))
+        return
     ROOT.mkdir(parents=True, exist_ok=True)
     state = load_json(STATE, {"attempted_final_events": {}, "last_upcoming_query": 0})
     attempted = state.setdefault("attempted_final_events", {})

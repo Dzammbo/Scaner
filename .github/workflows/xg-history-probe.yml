@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   probe:
+    if: ${{ false }} # xG model archived by user on 2026-10-10.
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
