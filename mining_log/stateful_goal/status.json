@@ -19,7 +19,8 @@
       "PUSH": 0,
       "profit": 7.6,
       "ROI": 0.345455,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:OVER_200_224": {
       "id": "S41",
@@ -32,7 +33,8 @@
       "PUSH": 1,
       "profit": -2.35,
       "ROI": -0.156667,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:UNDER_200_224": {
       "id": "S31",
@@ -45,19 +47,20 @@
       "PUSH": 2,
       "profit": 4.175,
       "ROI": 0.347917,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3:PRIMARY": {
       "id": "S13",
       "signals": 30,
-      "pending": 0,
+      "pending": 30,
       "void": 0,
-      "N": 30,
-      "W": 6,
-      "L": 24,
+      "N": 0,
+      "W": 0,
+      "L": 0,
       "PUSH": 0,
-      "profit": 7.375,
-      "ROI": 0.245833,
+      "profit": 0.0,
+      "ROI": null,
       "balance_valid": true,
       "activity_segments": {
         "both": {
@@ -72,7 +75,8 @@
           "ROI": 0.245833,
           "balance_valid": true
         }
-      }
+      },
+      "settlement_source": "betsapi_cache"
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
@@ -85,7 +89,10 @@
       "PUSH": 0,
       "profit": -9.3,
       "ROI": -0.10814,
-      "balance_valid": true
+      "balance_valid": true,
+      "settlement_source": "betsapi_cache"
     }
-  }
+  },
+  "settlement_updated_at": "2026-10-10T08:00:24Z",
+  "settlement_source": "betsapi_cache"
 }
