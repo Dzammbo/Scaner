@@ -138,6 +138,25 @@ def main() -> None:
             audit["errors"].append({"FI": fi, "error": event["error"]})
         audit["events"].append(event)
 
+    # Independently inspect the Events odds route: Bet365 endpoint denial does
+    # not imply that odds supplied through Events are unavailable.
+    audit["events_odds_samples"] = []
+    try:
+        board = get("/v3/events/upcoming", {"sport_id": 17, "page": 1})
+        rows = [r for r in board.get("results") or [] if isinstance(r, dict) and adult_fixture(r)][:3]
+        for fixture in rows:
+            eid = str(fixture.get("id") or "")
+            odds = get("/v2/event/odds", {"event_id": eid, "source": "bet365"})
+            result = odds.get("results") or {}
+            markets = result.get("odds") or {} if isinstance(result, dict) else {}
+            audit["events_odds_samples"].append({
+                "event_id": eid, "match": fixture_label(fixture),
+                "success": odds.get("success"), "market_keys": list(markets),
+                "market_samples": {k: v[:1] if isinstance(v, list) else v for k,v in markets.items()},
+            })
+    except Exception as exc:
+        audit["errors"].append({"endpoint": "Events odds fallback", "error": f"{type(exc).__name__}: {exc}"})
+
     for offset in range(3):
         day = (generated_at - timedelta(days=offset)).strftime("%Y%m%d")
         try:
