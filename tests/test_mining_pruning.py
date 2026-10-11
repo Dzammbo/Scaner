@@ -1,5 +1,6 @@
 import os
 import json
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -17,14 +18,50 @@ import hockey_period_under as hockey
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S04,S05,S21")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18")
+
+    def test_all_previous_scanner_strategies_are_now_in_mining(self):
+        registry = json.loads((Path(__file__).resolve().parents[1] / "strategies.json").read_text())
+        moved = {"S01", "S02", "S06Y", "S10", "S28", "T18", "S29", "S31", "S41", "S33", "S44", "S45"}
+        by_id = {row["id"]: row for row in registry["strategies"]}
+        self.assertEqual(registry["policy"]["operational_scanner_count"], 0)
+        self.assertFalse(any(row.get("scanner_enabled") is True for row in registry["strategies"]))
+        for strategy_id in moved:
+            row = by_id[strategy_id]
+            self.assertTrue(row["mining_enabled"])
+            self.assertEqual(row["research_destination"], "mining")
+            self.assertFalse(row["scanner_enabled"])
+
+    def test_stateful_scanner_arms_were_reclassified_as_mining(self):
+        for key in (
+            ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2", "UNDER_200_224"),
+            ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2", "OVER_200_224"),
+            ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1", "PRIMARY"),
+        ):
+            self.assertNotIn(key, stateful.ACTIVE_SIGNAL_IDS)
+            self.assertIn(key, stateful.MINING_SIGNAL_IDS)
+
+    def test_migrated_scanner_history_is_deduplicated_by_strategy_and_match(self):
+        current = [{"event_id": "1", "strategy_id": "S10", "strategy_ids": ["S10"]}]
+        legacy = [
+            {"event_id": "1", "strategy_id": "S10", "strategy_ids": ["S10"]},
+            {"event_id": "2", "strategy_id": "S10", "strategy_ids": ["S10"]},
+            {"event_id": "3", "strategy_id": "S11", "strategy_ids": ["S11"]},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "legacy.jsonl"
+            path.write_text("".join(json.dumps(row) + "\n" for row in legacy))
+            with patch.object(refresh, "LEGACY_SCANNER", path):
+                rows = refresh.migrated_scanner_history(current)
+        self.assertEqual([(row["strategy_id"], row["event_id"]) for row in rows], [("S10", "2")])
+        self.assertTrue(rows[0]["migrated_from_scanner_history"])
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
     def test_general_pass_has_explicit_allowlist(self, invoke, _budget):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
-        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S04,S05,S21")
+        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18")
 
     @patch.object(worker, "budget", return_value=10)
     @patch.object(worker, "invoke")

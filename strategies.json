@@ -16,10 +16,10 @@
       "WATCHLIST"
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
-    "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 12,
-    "last_operational_change_at": "2026-10-11T09:29:39Z",
-    "last_operational_change": "Оптимизация по согласованному разбору: семь направлений архивированы, две независимые проверки ТМ при 1:1 запущены. Перспективные прежние карманы сохранены.",
+    "operational_scanner": "REBUILD_PENDING",
+    "operational_scanner_count": 0,
+    "last_operational_change_at": "2026-10-11T15:36:42.842370Z",
+    "last_operational_change": "Все 12 действующих стратегий прежнего Scanner перенесены в Mining. Старый Scanner остановлен для перестройки под новую модель; архивные стратегии не возобновлены.",
     "user_facing_names": "Только поле name_ru",
     "show_technical_strategy_ids_to_user": false,
     "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
@@ -47,7 +47,7 @@
         "first_goal_time_filter": null
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": true,
       "evidence": {
         "n": 41,
@@ -61,7 +61,11 @@
         "source": "unified_robust_top6_20261001"
       },
       "clean_epoch_start": "2026-10-01T19:15:00Z",
-      "history_note": "Before this epoch S01 had no odds filter; do not merge the old operational sample into the exact 1.70-2.00 rule."
+      "history_note": "Before this epoch S01 had no odds filter; do not merge the old operational sample into the exact 1.70-2.00 rule.",
+      "mining_enabled": true,
+      "research_destination": "mining",
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S02",
@@ -84,11 +88,15 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": true,
       "status": "FORWARD_POCKET",
       "clean_epoch_start": "2026-10-07T20:25:00Z",
-      "history_note": "The former broad next-goal-over direction was archived at ROI -18.21%. This clean epoch keeps only its reverse no-goal pocket, triggered by the original over quote 1.80-1.99."
+      "history_note": "The former broad next-goal-over direction was archived at ROI -18.21%. This clean epoch keeps only its reverse no-goal pocket, triggered by the original over quote 1.80-1.99.",
+      "mining_enabled": true,
+      "research_destination": "mining",
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S03",
@@ -221,12 +229,15 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "status": "FORWARD_HYPOTHESIS",
       "clean_epoch_start": "2026-10-04T19:48:00Z",
-      "history_note": "Exploratory first-entry sample: 30 unique matches. Forward collection starts from zero."
+      "history_note": "Exploratory first-entry sample: 30 unique matches. Forward collection starts from zero.",
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S06A",
@@ -339,10 +350,10 @@
         "side": "opposite"
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "status": "ACTIVE_TOP6",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
       "clean_epoch_start": "2026-10-01T19:15:00Z",
       "evidence": {
@@ -354,7 +365,10 @@
         "roi_without_top3_pct": 4.93,
         "roi_without_top5_pct": 1.93,
         "source": "unified_robust_top6_20261001"
-      }
+      },
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S11",
@@ -860,10 +874,10 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "status": "ACTIVE_TOP6",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
       "clean_epoch_start": "2026-10-07T20:25:00Z",
       "history_note": "The former under direction was archived at ROI -24.24%. This clean epoch keeps only its reverse over-2.5 pocket, triggered by the original under quote 1.30-2.075.",
@@ -876,7 +890,10 @@
         "roi_without_top3_pct": 33.11,
         "roi_without_top5_pct": 29.49,
         "source": "unified_robust_top6_20261001"
-      }
+      },
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "T18",
@@ -901,10 +918,10 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "status": "ACTIVE_TOP6",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
       "evidence": {
@@ -912,7 +929,10 @@
         "roi_pct": 9.56,
         "roi_without_top3_pct": 6.25,
         "source": "current_forward_pocket_20261009"
-      }
+      },
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S29",
@@ -932,10 +952,10 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "status": "ACTIVE_TOP6",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "scanner_activated_at": "2026-10-01T19:15:00Z",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
       "history_note": "Широкий диапазон 1,30-1,95 закрыт. Сохранён карман 1,30-1,49: N=66, ROI +3,52%, без трёх лучших +1,43%.",
@@ -948,7 +968,10 @@
         "roi_without_top3_pct": 13.61,
         "roi_without_top5_pct": 12.25,
         "source": "under_2_5_score_2_0_85plus_odds_breakdown_20261001"
-      }
+      },
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S25",
@@ -999,13 +1022,16 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
       "status": "FORWARD_POCKET",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
-      "history_note": "Широкая механика архивирована при N=132 и ROI -3,93%. Сохранён ТМ-карман: N=26, ROI +16,68%, без трёх лучших +4,95%."
+      "history_note": "Широкая механика архивирована при N=132 и ROI -3,93%. Сохранён ТМ-карман: N=26, ROI +16,68%, без трёх лучших +4,95%.",
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S41",
@@ -1026,13 +1052,16 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
       "status": "FORWARD_POCKET",
-      "research_destination": "scanner",
+      "research_destination": "mining",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
-      "history_note": "Сохранено противоположное направление широкой перерывной механики: N=38, ROI +13,42%, без трёх лучших +5,29%."
+      "history_note": "Сохранено противоположное направление широкой перерывной механики: N=38, ROI +13,42%, без трёх лучших +5,29%.",
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S32",
@@ -1085,12 +1114,15 @@
         "one_entry_per_match": true
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
       "collection_engine": "stateful_goal_mining.py",
       "status": "FORWARD_HYPOTHESIS",
-      "research_destination": "scanner",
-      "clean_epoch_start": "2026-10-04T08:47:35Z"
+      "research_destination": "mining",
+      "clean_epoch_start": "2026-10-04T08:47:35Z",
+      "mining_enabled": true,
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S34",
@@ -1555,14 +1587,16 @@
         "entry_epoch": "2026-10-11T09:29:39Z"
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "mining_enabled": false,
-      "research_destination": "scanner",
+      "mining_enabled": true,
+      "research_destination": "mining",
       "collection_engine": "scanner.py",
       "status": "FORWARD_HYPOTHESIS",
       "clean_epoch_start": "2026-10-11T09:29:39Z",
-      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет."
+      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет.",
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S45",
@@ -1583,14 +1617,16 @@
         "entry_epoch": "2026-10-11T09:29:39Z"
       },
       "user_output": true,
-      "scanner_enabled": true,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "mining_enabled": false,
-      "research_destination": "scanner",
+      "mining_enabled": true,
+      "research_destination": "mining",
       "collection_engine": "scanner.py",
       "status": "FORWARD_HYPOTHESIS",
       "clean_epoch_start": "2026-10-11T09:29:39Z",
-      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет."
+      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет.",
+      "moved_to_mining_at": "2026-10-11T15:36:42.842370Z",
+      "migration_note": "Перенесено из прежнего Scanner в Mining без изменения правила, clean-forward эпохи и исторических данных. Новые наблюдения сохраняются в Mining; прежний forward-log остаётся историческим источником."
     },
     {
       "id": "S46",

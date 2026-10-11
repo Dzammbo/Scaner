@@ -11,12 +11,12 @@ SCANNER_STATUS=Path("forward_log/stateful_pressure_status.json")
 MAX_CALLS=max(3,int(os.environ.get("STATEFUL_GOAL_CALL_BUDGET","10")));calls=0;now=int(time.time());PRESSURE_CUTOFF=28.0;NEW_PRESSURE_CUTOFF=20.0
 ACTIVE_SIGNAL_IDS={
  ("FOOTBALL_PRESSURE_NOGOAL_70_79_V1","PRIMARY"):"S39",
- ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","UNDER_200_224"):"S31",
- ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","OVER_200_224"):"S41",
- ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
 }
 MINING_SIGNAL_IDS={
  ("FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3","PRIMARY"):"S13",
+ ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","UNDER_200_224"):"S31",
+ ("FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2","OVER_200_224"):"S41",
+ ("FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","PRIMARY"):"S33",
 }
 SIGNAL_NAMES={
  "S39":"Без гола при высоком давлении на 70-79-й минуте",
@@ -277,7 +277,7 @@ def main():
  settle(signals,live_ids)
  active_signals=[x for x in signals if is_active_signal(x)]
  save_rows(SIGNALS,signals);save_rows(OBS,observations[-10000:]);state["live_ids"]=sorted(live_ids);state["updated_at"]=iso();state["api_calls_last_run"]=calls;STATE.write_text(json.dumps(state,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
- sync_scanner_signals([x for x in active_signals if is_scanner_signal(x)])
+ # Previous Scanner model is retired. All active observations remain in Mining.
  arms={}
  for x in active_signals:arms.setdefault(x["strategy"]+":"+x["arm"],[]).append(x)
  status={"strategy":"STATEFUL_GOAL_MINING_USER_VISIBLE","runtime":"github-actions","updated_at":iso(),"api_calls":calls,"board_n":len(events),"observations":len(observations),"signals":len(active_signals),"archived_signals":len(signals)-len(active_signals),"arms":{k:{"id":signal_id(v[0]),**arm_status(v)} for k,v in sorted(arms.items())}}

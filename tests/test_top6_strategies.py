@@ -59,7 +59,9 @@ class TopSixRegistryTest(unittest.TestCase):
         }
         for strategy_id, (odds, epoch) in expected.items():
             row = strategy(strategy_id)
-            self.assertTrue(row["scanner_enabled"])
+            self.assertFalse(row["scanner_enabled"])
+            self.assertTrue(row["mining_enabled"])
+            self.assertEqual(row["research_destination"], "mining")
             self.assertEqual(row["rule"]["odds"], odds)
             self.assertEqual(row["clean_epoch_start"], epoch)
 
@@ -79,12 +81,16 @@ class TopSixRegistryTest(unittest.TestCase):
     def test_new_stateful_hypotheses_are_user_visible(self):
         for strategy_id in ("S31", "S41"):
             row = strategy(strategy_id)
-            self.assertTrue(row["scanner_enabled"])
+            self.assertFalse(row["scanner_enabled"])
+            self.assertTrue(row["mining_enabled"])
+            self.assertEqual(row["research_destination"], "mining")
             self.assertTrue(row["user_output"])
             self.assertEqual(row["status"], "FORWARD_POCKET")
             self.assertEqual(row["collection_engine"], "stateful_goal_mining.py")
         row = strategy("S33")
-        self.assertTrue(row["scanner_enabled"])
+        self.assertFalse(row["scanner_enabled"])
+        self.assertTrue(row["mining_enabled"])
+        self.assertEqual(row["research_destination"], "mining")
         self.assertTrue(row["user_output"])
         self.assertEqual(row["status"], "FORWARD_HYPOTHESIS")
 

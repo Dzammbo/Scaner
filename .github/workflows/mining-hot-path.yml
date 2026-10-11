@@ -17,7 +17,7 @@ jobs:
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
       SCANER_MODE: mining
-      SCANER_ONLY_STRATEGIES: S03,S04,S05,S07,S09,S21,S22
+      SCANER_ONLY_STRATEGIES: S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18
     steps:
       - uses: actions/checkout@v4
         with:

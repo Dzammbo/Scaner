@@ -20,7 +20,10 @@ DURATION_SECONDS = max(1, int(os.environ.get("PUBLIC_MINING_DURATION_SECONDS", "
 CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECONDS", "600")))
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
-GENERAL_STRATEGIES = os.environ.get("PUBLIC_MINING_STRATEGIES", "S04,S05,S21")
+GENERAL_STRATEGIES = os.environ.get(
+    "PUBLIC_MINING_STRATEGIES",
+    "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18",
+)
 COLLECTOR_INTERVALS = {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800}
 
 
@@ -72,7 +75,7 @@ def checkpoint():
     if not GIT_CHECKPOINT:
         return {"ok": True, "attempted": False}
     subprocess.run(
-        ["git", "add", "mining_log/", "forward_log/stateful_pressure_signals.jsonl", "forward_log/stateful_pressure_status.json"],
+        ["git", "add", "mining_log/"],
         cwd=ROOT, check=True,
     )
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT, check=False).returncode == 0:
@@ -109,7 +112,7 @@ def run_pass(name):
             "FIRST_HALF_CALL_BUDGET": str(calls),
         }, timeout=180)
     elif name == "general":
-        calls = budget(20 if morning() else 40, 2)
+        calls = budget(50, 2)
         if not calls:
             return False
         invoke("general Mining", ["python3", "scanner.py"], {

@@ -20,6 +20,7 @@ concurrency:
 
 jobs:
   collect:
+    if: ${{ false }} # Previous Scanner model retired; strategies now run in Mining.
     runs-on: ubuntu-latest
     timeout-minutes: 345
     env:
