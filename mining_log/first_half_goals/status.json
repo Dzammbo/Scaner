@@ -1,60 +1,25 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T16:20:08.354300Z",
-  "api_calls": 56,
-  "new_signals": 1,
-  "live_events": 155,
-  "upcoming_events": 100,
+  "updated_at": "2026-10-11T16:33:33.580395Z",
+  "api_calls": 4,
+  "new_signals": 0,
+  "live_events": 150,
+  "upcoming_events": 0,
   "coverage": {
-    "S46": {
-      "eligible_events": 75,
-      "already_recorded": 2,
-      "checked": 43,
-      "EMPTY_MARKET": 9,
-      "DIFFERENT_CURRENT_LINE": 22,
-      "STALE_QUOTE": 11,
-      "API_UNAVAILABLE": 4,
-      "VERIFIED": 1
-    },
-    "S47": {
-      "eligible_events": 75,
-      "already_recorded": 1,
-      "checked": 44,
-      "EMPTY_MARKET": 9,
-      "DIFFERENT_CURRENT_LINE": 34,
-      "STALE_QUOTE": 1,
-      "API_UNAVAILABLE": 4
-    },
+    "S46": {},
+    "S47": {},
     "S48": {
-      "eligible_events": 27,
-      "already_recorded": 5,
+      "eligible_events": 2,
       "checked": 2,
       "DIFFERENT_CURRENT_LINE": 2
     },
-    "S49": {
-      "eligible_events": 13,
-      "already_recorded": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    }
+    "S49": {}
   },
   "errors": [
     {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
-    },
-    {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
-    },
-    {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
-    },
-    {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
+      "path": "/v3/events/upcoming",
+      "error": "TimeoutError"
     }
   ],
   "api_retry_after": null,
@@ -217,212 +182,62 @@
   },
   "market_samples": [
     {
-      "event_id": "12246904",
-      "league": "Spain Youth League",
+      "event_id": "11288818",
+      "league": "Faroe Islands Premier League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192760163",
-        "over_od": "2.000",
+        "id": "192761399",
+        "over_od": "1.775",
         "handicap": "0.75",
-        "under_od": "1.800",
+        "under_od": "2.025",
         "ss": "0-0",
-        "time_str": "19",
-        "add_time": "1791735536"
+        "time_str": "18",
+        "add_time": "1791736378"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791735536,
-          "1_2": 1791735536,
-          "1_3": 1791735536,
-          "1_4": 1791735536,
-          "1_5": 1791735536,
-          "1_6": 1791735536,
-          "1_7": 1791735536,
-          "1_8": 1791735536
+          "1_1": 1791736378,
+          "1_2": 1791736378,
+          "1_3": 1791736378,
+          "1_4": 1791736378,
+          "1_5": 1791736378,
+          "1_6": 1791736378,
+          "1_7": 1791736378,
+          "1_8": 1791736378
         }
       }
     },
     {
-      "event_id": "12256414",
-      "league": "Greece Super League 1",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192760054",
-        "over_od": "1.800",
-        "handicap": "1.75",
-        "under_od": "2.000",
-        "ss": "1-0",
-        "time_str": "13",
-        "add_time": "1791735448"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {}
-      }
-    },
-    {
-      "event_id": "12415818",
-      "league": "Italy Serie D",
+      "event_id": "11288765",
+      "league": "Faroe Islands Premier League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192760183",
-        "over_od": "1.950",
+        "id": "192761408",
+        "over_od": "2.050",
         "handicap": "0.75",
-        "under_od": "1.850",
+        "under_od": "1.750",
         "ss": "0-0",
-        "time_str": "13",
-        "add_time": "1791735549"
+        "time_str": "18",
+        "add_time": "1791736381"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791735549,
-          "1_2": 1791735549,
-          "1_3": 1791735549,
-          "1_4": 1791735549,
-          "1_5": 1791735549,
-          "1_6": 1791735549,
-          "1_7": 1791735549,
-          "1_8": 1791735549
-        }
-      }
-    },
-    {
-      "event_id": "13240728",
-      "league": "Brazil Gaucho Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13261291",
-      "league": "El Salvador Reserves League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192660387",
-        "over_od": "2.025",
-        "handicap": "1.0,1.5",
-        "under_od": "1.775",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791661428"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791735364,
-          "1_2": 1791734468,
-          "1_3": 1791734468,
-          "1_5": 1791712299,
-          "1_6": 1791734765,
-          "1_8": 1791733387
-        }
-      }
-    },
-    {
-      "event_id": "13265689",
-      "league": "Argentina Primera B Metropolitana",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192506941",
-        "over_od": "1.750",
-        "handicap": "0.5,1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791540389"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734875,
-          "1_2": 1791735331,
-          "1_3": 1791735331,
-          "1_4": 1791732319,
-          "1_5": 1791722839,
-          "1_6": 1791724181,
-          "1_7": 1791721738,
-          "1_8": 1791734643
-        }
-      }
-    },
-    {
-      "event_id": "12220099",
-      "league": "Albania Championship",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192575239",
-        "over_od": "2.050",
-        "handicap": "1.0",
-        "under_od": "1.750",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791604472"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791735298,
-          "1_2": 1791612663,
-          "1_3": 1791612663,
-          "1_5": 1791611403,
-          "1_6": 1791610224,
-          "1_8": 1791622041
-        }
-      }
-    },
-    {
-      "event_id": "12220101",
-      "league": "Albania Championship",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192755332",
-        "over_od": "2.050",
-        "handicap": "1.0",
-        "under_od": "1.750",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791732131"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791735298,
-          "1_2": 1791735080,
-          "1_3": 1791735080,
-          "1_5": 1791719370,
-          "1_6": 1791733082,
-          "1_8": 1791735497
+          "1_1": 1791736381,
+          "1_2": 1791736381,
+          "1_3": 1791736381,
+          "1_4": 1791736381,
+          "1_5": 1791736381,
+          "1_6": 1791736381,
+          "1_7": 1791736381,
+          "1_8": 1791736381
         }
       }
     }
