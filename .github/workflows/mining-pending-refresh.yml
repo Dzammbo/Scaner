@@ -3,7 +3,7 @@ name: Mining pending refresh
 on:
   workflow_dispatch:
   schedule:
-    - cron: "2 */2 * * *"
+    - cron: "2 * * * *"
   push:
     branches: [main]
     paths:
@@ -24,7 +24,7 @@ jobs:
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
       MINING_SETTLEMENT_QUERY_BUDGET: "50"
-      MINING_SETTLEMENT_RETRY_SECONDS: "7200"
+      MINING_SETTLEMENT_RETRY_SECONDS: "3600"
     steps:
       - uses: actions/checkout@v4
         with:
