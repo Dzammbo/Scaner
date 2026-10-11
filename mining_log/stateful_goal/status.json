@@ -1,9 +1,9 @@
 {
   "strategy": "STATEFUL_GOAL_MINING_USER_VISIBLE",
   "runtime": "github-actions",
-  "updated_at": "2026-10-11T03:26:29Z",
-  "api_calls": 1,
-  "board_n": 15,
+  "updated_at": "2026-10-11T07:18:49Z",
+  "api_calls": 2,
+  "board_n": 19,
   "observations": 4282,
   "signals": 271,
   "archived_signals": 2615,
@@ -19,8 +19,7 @@
       "PUSH": 0,
       "profit": 8.375,
       "ROI": 0.335,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:OVER_200_224": {
       "id": "S41",
@@ -33,8 +32,7 @@
       "PUSH": 3,
       "profit": 0.025,
       "ROI": 0.000694,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:UNDER_200_224": {
       "id": "S31",
@@ -47,20 +45,19 @@
       "PUSH": 3,
       "profit": 4.7625,
       "ROI": 0.164224,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "balance_valid": true
     },
     "FOOTBALL_LATE_HOME_BOTH_ACTIVITY_V3:PRIMARY": {
       "id": "S13",
       "signals": 61,
-      "pending": 61,
+      "pending": 0,
       "void": 0,
-      "N": 0,
-      "W": 0,
-      "L": 0,
+      "N": 61,
+      "W": 12,
+      "L": 49,
       "PUSH": 0,
-      "profit": 0.0,
-      "ROI": null,
+      "profit": 9.708,
+      "ROI": 0.159148,
       "balance_valid": true,
       "activity_segments": {
         "both": {
@@ -75,24 +72,20 @@
           "ROI": 0.159148,
           "balance_valid": true
         }
-      },
-      "settlement_source": "betsapi_cache"
+      }
     },
     "FOOTBALL_PRESSURE_NOGOAL_70_79_V1:PRIMARY": {
       "id": "S39",
       "signals": 120,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "N": 119,
-      "W": 57,
+      "N": 120,
+      "W": 58,
       "L": 62,
       "PUSH": 0,
-      "profit": -12.55,
-      "ROI": -0.105462,
-      "balance_valid": true,
-      "settlement_source": "betsapi_cache"
+      "profit": -11.6,
+      "ROI": -0.096667,
+      "balance_valid": true
     }
-  },
-  "settlement_updated_at": "2026-10-11T03:32:30Z",
-  "settlement_source": "betsapi_cache"
+  }
 }
