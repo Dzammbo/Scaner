@@ -1,23 +1,26 @@
 {
-  "updated_at": "2026-10-11T14:27:03Z",
+  "updated_at": "2026-10-11T15:43:09Z",
   "query_budget": 50,
   "retry_after_seconds": 7200,
-  "provider_queries": 4,
-  "queried_events": 34,
-  "cache_events": 2502,
-  "signal_unique_events": 2422,
-  "signal_final_events": 2412,
-  "signal_void_events": 7,
-  "signal_pending_events": 3,
-  "reconciled_stateful_rows": 2769,
+  "provider_queries": 3,
+  "queried_events": 21,
+  "cache_events": 3313,
+  "signal_unique_events": 3235,
+  "signal_final_events": 3149,
+  "signal_void_events": 18,
+  "signal_pending_events": 68,
+  "migrated_scanner_history_rows": 1113,
+  "reconciled_stateful_rows": 2770,
   "stateful_duplicate_signals": 0,
   "states": {
-    "FINAL": 2476,
-    "NOT_FINAL_1": 2,
+    "FINAL": 3211,
+    "INPLAY": 41,
+    "NOT_FINAL_1": 17,
     "NOT_FINAL_2": 9,
     "NOT_FINAL_4": 1,
+    "PENDING_PROVIDER_FIX": 9,
     "VOID_CANCELLED": 1,
-    "VOID_RETIRED": 13
+    "VOID_RETIRED": 24
   },
   "errors": []
 }
