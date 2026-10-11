@@ -1,48 +1,70 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T15:28:13.217174Z",
-  "api_calls": 8,
-  "new_signals": 2,
-  "live_events": 203,
-  "upcoming_events": 0,
+  "updated_at": "2026-10-11T15:38:24.192793Z",
+  "api_calls": 20,
+  "new_signals": 1,
+  "live_events": 194,
+  "upcoming_events": 100,
   "coverage": {
-    "S46": {},
-    "S47": {},
+    "S46": {
+      "eligible_events": 59,
+      "already_recorded": 1,
+      "checked": 15,
+      "EMPTY_MARKET": 9,
+      "DIFFERENT_CURRENT_LINE": 2,
+      "STALE_QUOTE": 4
+    },
+    "S47": {
+      "eligible_events": 59,
+      "already_recorded": 1,
+      "checked": 15,
+      "EMPTY_MARKET": 9,
+      "DIFFERENT_CURRENT_LINE": 6
+    },
     "S48": {
-      "eligible_events": 5,
-      "checked": 5,
-      "DIFFERENT_CURRENT_LINE": 4,
-      "VERIFIED": 1
+      "eligible_events": 2,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     },
     "S49": {
-      "eligible_events": 1,
+      "eligible_events": 2,
+      "already_recorded": 1,
       "checked": 1,
       "VERIFIED": 1
     }
   },
-  "errors": [
-    {
-      "path": "/v3/events/upcoming",
-      "error": "TimeoutError"
-    }
-  ],
+  "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 0,
+      "signals": 1,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
       "ROI_without_top3_pct": null,
       "balance_valid": true,
-      "cohorts": {},
+      "cohorts": {
+        "adult_or_unclassified": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
+        }
+      },
       "common_prematch_matches": {
         "signals": 0,
         "N": 0,
@@ -59,18 +81,32 @@
     },
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-      "signals": 0,
+      "signals": 1,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
       "ROI_without_top3_pct": null,
       "balance_valid": true,
-      "cohorts": {},
+      "cohorts": {
+        "adult_or_unclassified": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
+        }
+      },
       "common_prematch_matches": {
         "signals": 0,
         "N": 0,
@@ -116,12 +152,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 6,
+      "signals": 7,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 6,
+      "pending": 7,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -129,12 +165,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 6,
+          "signals": 7,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 6,
+          "pending": 7,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -146,92 +182,6 @@
   },
   "market_samples": [
     {
-      "event_id": "13165091",
-      "league": "Nigeria Premier League",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192755821",
-        "over_od": "2.200",
-        "handicap": "0.5",
-        "under_od": "1.650",
-        "ss": "0-0",
-        "time_str": "20",
-        "add_time": "1791732472"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791732483,
-          "1_2": 1791732483,
-          "1_3": 1791732483,
-          "1_5": 1791732483,
-          "1_6": 1791732483,
-          "1_8": 1791732483
-        }
-      }
-    },
-    {
-      "event_id": "13274253",
-      "league": "Mexico Liga MX U19 Femenil",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192755762",
-        "over_od": "2.000",
-        "handicap": "0.75",
-        "under_od": "1.800",
-        "ss": "0-0",
-        "time_str": "18",
-        "add_time": "1791732423"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791732423,
-          "1_2": 1791732423,
-          "1_3": 1791732423,
-          "1_5": 1791732423,
-          "1_6": 1791732423,
-          "1_8": 1791732423
-        }
-      }
-    },
-    {
-      "event_id": "13145513",
-      "league": "France Ligue 1",
-      "mode": "LIVE",
-      "results": {
-        "S48": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192755825",
-        "over_od": "1.900",
-        "handicap": "1",
-        "under_od": "1.900",
-        "ss": "0-0",
-        "time_str": "12",
-        "add_time": "1791732474"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791732474,
-          "1_2": 1791732474,
-          "1_3": 1791732474,
-          "1_4": 1791732474,
-          "1_5": 1791732474,
-          "1_6": 1791732474,
-          "1_7": 1791732474,
-          "1_8": 1791732474
-        }
-      }
-    },
-    {
       "event_id": "13275248",
       "league": "Niger Super League",
       "mode": "LIVE",
@@ -239,23 +189,23 @@
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192755808",
-        "over_od": "1.825",
+        "id": "192756771",
+        "over_od": "2.200",
         "handicap": "0.5",
-        "under_od": "1.975",
+        "under_od": "1.650",
         "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791732461"
+        "time_str": "20",
+        "add_time": "1791733053"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791732470,
-          "1_2": 1791732470,
-          "1_3": 1791732470,
-          "1_5": 1791732470,
-          "1_6": 1791732470,
-          "1_8": 1791732470
+          "1_1": 1791733061,
+          "1_2": 1791733061,
+          "1_3": 1791733061,
+          "1_5": 1791733061,
+          "1_6": 1791733061,
+          "1_8": 1791733061
         }
       }
     },
@@ -264,59 +214,115 @@
       "league": "Italy Serie B",
       "mode": "LIVE",
       "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
+        "S49": "VERIFIED"
       },
       "latest_first_half_quote": {
-        "id": "192755627",
-        "over_od": "1.750",
-        "handicap": "0.75",
-        "under_od": "2.050",
-        "ss": "0-0",
-        "time_str": "8",
-        "add_time": "1791732343"
+        "id": "192756801",
+        "over_od": "1.850",
+        "handicap": "1.5",
+        "under_od": "1.950",
+        "ss": "0-1",
+        "time_str": "20",
+        "add_time": "1791733064"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791732353,
-          "1_2": 1791732353,
-          "1_3": 1791732353,
-          "1_4": 1791732353,
-          "1_5": 1791732353,
-          "1_6": 1791732353,
-          "1_7": 1791732353,
-          "1_8": 1791732353
+          "1_1": 1791733077,
+          "1_2": 1791733077,
+          "1_3": 1791733077,
+          "1_4": 1791733077,
+          "1_5": 1791733077,
+          "1_6": 1791733077,
+          "1_7": 1791733077,
+          "1_8": 1791733077
         }
       }
     },
     {
-      "event_id": "13279409",
-      "league": "Niger Super League",
-      "mode": "LIVE",
+      "event_id": "12237710",
+      "league": "Türkiye 3.Lig Group 2",
+      "mode": "PREMATCH",
       "results": {
-        "S49": "VERIFIED"
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12238177",
+      "league": "Türkiye 3.Lig Group 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12238264",
+      "league": "Türkiye 2 Lig Beyaz",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12238457",
+      "league": "Türkiye 3.Lig Group 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12241426",
+      "league": "Türkiye 3.Lig Group 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12241717",
+      "league": "Türkiye 3.Lig Group 3",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192755814",
-        "over_od": "1.750",
-        "handicap": "1.5",
-        "under_od": "2.050",
-        "ss": "0-1",
-        "time_str": "10",
-        "add_time": "1791732465"
+        "id": "192651388",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791654637"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791732474,
-          "1_2": 1791732474,
-          "1_3": 1791732474,
-          "1_5": 1791732474,
-          "1_6": 1791732474,
-          "1_8": 1791732474
+          "1_1": 1791732981,
+          "1_2": 1791732861,
+          "1_3": 1791732861,
+          "1_5": 1791715266,
+          "1_6": 1791730572,
+          "1_8": 1791732141
         }
       }
     }
   ],
-  "health": "API_ERRORS"
+  "health": "OK"
 }
