@@ -25,7 +25,10 @@ GENERAL_STRATEGIES = os.environ.get(
     "PUBLIC_MINING_STRATEGIES",
     "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18",
 )
-COLLECTOR_INTERVALS = {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800}
+COLLECTOR_INTERVALS = {"first_half_goals": 300, "general": 300, "goal": 300}
+PAUSED_COLLECTORS = {
+    "hockey_period": "Paused until Bet365 hockey period prices are available",
+}
 
 
 def now():
@@ -126,12 +129,7 @@ def run_pass(name):
     elif name == "xg_home":
         return False  # Archived by user; never consume API budget.
     elif name == "hockey_period":
-        calls = budget(12, 5)
-        if not calls:
-            return False
-        invoke("hockey period under", ["python3", "hockey_period_under.py"], {
-            "HOCKEY_PERIOD_CALL_BUDGET": str(calls),
-        })
+        return False  # Paused by user; preserve history and consume no API calls.
     return True
 
 
@@ -175,9 +173,9 @@ def main():
                 "first_half_goals": FIRST_HALF_PASS_CAP,
                 "general": GENERAL_PASS_CAP,
                 "goal": 5,
-                "hockey_period": 12,
             },
             "active_collectors": intervals,
+            "paused_collectors": PAUSED_COLLECTORS,
             "general_strategies": GENERAL_STRATEGIES.split(","),
             "last_error": last_error,
             "last_checkpoint": last_checkpoint,
