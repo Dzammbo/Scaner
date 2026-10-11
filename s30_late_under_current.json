@@ -2,7 +2,7 @@
   "schema_version": 1,
   "name_ru": "Тотал меньше текущей линии после 85-й минуты - полный сбор по минутам и коэффициентам",
   "status": "VISIBLE_FORWARD_COLLECTION",
-  "generated_at": "2026-10-11T15:02:15.047245Z",
+  "generated_at": "2026-10-11T16:03:58.074287Z",
   "clean_epoch_start": "2026-10-09T21:20:00Z",
   "collection": {
     "minutes": [
@@ -15,10 +15,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 10532,
-    "historical_events": 3186,
-    "clean_snapshots": 5025,
-    "clean_events": 1175
+    "historical_snapshots": 10794,
+    "historical_events": 3275,
+    "clean_snapshots": 5287,
+    "clean_events": 1264
   },
   "fixed_strategy": {
     "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
@@ -31,159 +31,159 @@
       "one_entry_per_match": true
     },
     "historical": {
-      "recorded": 1375,
-      "settled": 1348,
-      "pending": 27,
+      "recorded": 1440,
+      "settled": 1419,
+      "pending": 21,
       "void": 0,
       "result": {
-        "N": 1348,
-        "W": 1208,
-        "L": 140,
+        "N": 1419,
+        "W": 1270,
+        "L": 149,
         "P": 0,
-        "profit": 15.615,
-        "ROI": 1.16
+        "profit": 14.42,
+        "ROI": 1.02
       },
       "without_top3": {
-        "N": 1345,
-        "W": 1205,
-        "L": 140,
+        "N": 1416,
+        "W": 1267,
+        "L": 149,
         "P": 0,
-        "profit": 15.045,
-        "ROI": 1.12
+        "profit": 13.85,
+        "ROI": 0.98
       }
     },
     "clean_forward": {
-      "recorded": 733,
-      "settled": 707,
-      "pending": 26,
+      "recorded": 798,
+      "settled": 778,
+      "pending": 20,
       "void": 0,
       "result": {
-        "N": 707,
-        "W": 609,
-        "L": 98,
+        "N": 778,
+        "W": 671,
+        "L": 107,
         "P": 0,
-        "profit": -15.125,
-        "ROI": -2.14
+        "profit": -16.32,
+        "ROI": -2.1
       },
       "without_top3": {
-        "N": 704,
-        "W": 606,
-        "L": 98,
+        "N": 775,
+        "W": 668,
+        "L": 107,
         "P": 0,
-        "profit": -15.695,
-        "ROI": -2.23
+        "profit": -16.89,
+        "ROI": -2.18
       }
     }
   },
   "historical_by_odds": {
     "меньше 1,15": {
-      "recorded": 872,
-      "settled": 861,
-      "pending": 11,
+      "recorded": 919,
+      "settled": 909,
+      "pending": 10,
       "void": 0,
       "result": {
-        "N": 861,
-        "W": 786,
-        "L": 75,
+        "N": 909,
+        "W": 829,
+        "L": 80,
         "P": 0,
-        "profit": 12.555,
-        "ROI": 1.46
+        "profit": 12.21,
+        "ROI": 1.34
       },
       "without_top3": {
-        "N": 858,
-        "W": 783,
-        "L": 75,
+        "N": 906,
+        "W": 826,
+        "L": 80,
         "P": 0,
-        "profit": 12.135,
-        "ROI": 1.41
+        "profit": 11.79,
+        "ROI": 1.3
       }
     },
     "меньше 1,20": {
-      "recorded": 1424,
-      "settled": 1397,
-      "pending": 27,
+      "recorded": 1489,
+      "settled": 1468,
+      "pending": 21,
       "void": 0,
       "result": {
-        "N": 1397,
-        "W": 1227,
-        "L": 170,
+        "N": 1468,
+        "W": 1288,
+        "L": 180,
         "P": 0,
-        "profit": 11.13,
-        "ROI": 0.8
+        "profit": 9.155,
+        "ROI": 0.62
       },
       "without_top3": {
-        "N": 1394,
-        "W": 1224,
-        "L": 170,
+        "N": 1465,
+        "W": 1285,
+        "L": 180,
         "P": 0,
-        "profit": 10.56,
-        "ROI": 0.76
+        "profit": 8.585,
+        "ROI": 0.59
       }
     },
     "1,20-1,29": {
-      "recorded": 1523,
-      "settled": 1500,
-      "pending": 23,
+      "recorded": 1565,
+      "settled": 1550,
+      "pending": 15,
       "void": 0,
       "result": {
-        "N": 1500,
-        "W": 1148,
-        "L": 352,
+        "N": 1550,
+        "W": 1186,
+        "L": 364,
         "P": 0,
-        "profit": -64.315,
-        "ROI": -4.29
+        "profit": -66.755,
+        "ROI": -4.31
       },
       "without_top3": {
-        "N": 1497,
-        "W": 1145,
-        "L": 352,
+        "N": 1547,
+        "W": 1183,
+        "L": 364,
         "P": 0,
-        "profit": -65.155,
-        "ROI": -4.35
+        "profit": -67.595,
+        "ROI": -4.37
       }
     },
     "1,30-1,49": {
-      "recorded": 2305,
-      "settled": 2278,
-      "pending": 27,
+      "recorded": 2338,
+      "settled": 2321,
+      "pending": 17,
       "void": 0,
       "result": {
-        "N": 2278,
-        "W": 1565,
-        "L": 713,
+        "N": 2321,
+        "W": 1592,
+        "L": 729,
         "P": 0,
-        "profit": -102.975,
-        "ROI": -4.52
+        "profit": -108.75,
+        "ROI": -4.69
       },
       "without_top3": {
-        "N": 2275,
-        "W": 1562,
-        "L": 713,
+        "N": 2318,
+        "W": 1589,
+        "L": 729,
         "P": 0,
-        "profit": -104.4,
-        "ROI": -4.59
+        "profit": -110.175,
+        "ROI": -4.75
       }
     },
     "1,50 и выше": {
-      "recorded": 691,
-      "settled": 684,
-      "pending": 7,
+      "recorded": 702,
+      "settled": 694,
+      "pending": 8,
       "void": 0,
       "result": {
-        "N": 684,
-        "W": 405,
-        "L": 279,
+        "N": 694,
+        "W": 411,
+        "L": 283,
         "P": 0,
-        "profit": -40.95,
-        "ROI": -5.99
+        "profit": -41.825,
+        "ROI": -6.03
       },
       "without_top3": {
-        "N": 681,
-        "W": 402,
-        "L": 279,
+        "N": 691,
+        "W": 408,
+        "L": 283,
         "P": 0,
-        "profit": -44.025,
-        "ROI": -6.46
+        "profit": -44.9,
+        "ROI": -6.5
       }
     }
   },
@@ -234,69 +234,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 370,
-        "settled": 367,
+        "recorded": 379,
+        "settled": 376,
         "pending": 3,
         "void": 0,
         "result": {
-          "N": 367,
-          "W": 281,
-          "L": 86,
+          "N": 376,
+          "W": 287,
+          "L": 89,
           "P": 0,
-          "profit": -13.29,
-          "ROI": -3.62
+          "profit": -14.735,
+          "ROI": -3.92
         },
         "without_top3": {
-          "N": 364,
-          "W": 278,
-          "L": 86,
+          "N": 373,
+          "W": 284,
+          "L": 89,
           "P": 0,
-          "profit": -14.12,
-          "ROI": -3.88
+          "profit": -15.565,
+          "ROI": -4.17
         }
       },
       "1,30-1,49": {
-        "recorded": 2002,
-        "settled": 1983,
-        "pending": 19,
+        "recorded": 2027,
+        "settled": 2015,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 1983,
-          "W": 1362,
-          "L": 621,
+          "N": 2015,
+          "W": 1382,
+          "L": 633,
           "P": 0,
-          "profit": -90.5,
-          "ROI": -4.56
+          "profit": -94.725,
+          "ROI": -4.7
         },
         "without_top3": {
-          "N": 1980,
-          "W": 1359,
-          "L": 621,
+          "N": 2012,
+          "W": 1379,
+          "L": 633,
           "P": 0,
-          "profit": -91.925,
-          "ROI": -4.64
+          "profit": -96.15,
+          "ROI": -4.78
         }
       },
       "1,50 и выше": {
-        "recorded": 672,
-        "settled": 666,
-        "pending": 6,
+        "recorded": 683,
+        "settled": 676,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 666,
-          "W": 392,
-          "L": 274,
+          "N": 676,
+          "W": 398,
+          "L": 278,
           "P": 0,
-          "profit": -46.025,
-          "ROI": -6.91
+          "profit": -46.9,
+          "ROI": -6.94
         },
         "without_top3": {
-          "N": 663,
-          "W": 389,
-          "L": 274,
+          "N": 673,
+          "W": 395,
+          "L": 278,
           "P": 0,
-          "profit": -49.1,
-          "ROI": -7.41
+          "profit": -49.975,
+          "ROI": -7.43
         }
       }
     },
@@ -324,181 +324,181 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 229,
-        "settled": 226,
-        "pending": 3,
+        "recorded": 235,
+        "settled": 231,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 226,
-          "W": 189,
-          "L": 37,
+          "N": 231,
+          "W": 192,
+          "L": 39,
           "P": 0,
-          "profit": -3.93,
-          "ROI": -1.74
+          "profit": -5.36,
+          "ROI": -2.32
         },
         "without_top3": {
-          "N": 223,
-          "W": 186,
-          "L": 37,
+          "N": 228,
+          "W": 189,
+          "L": 39,
           "P": 0,
-          "profit": -4.5,
-          "ROI": -2.02
+          "profit": -5.93,
+          "ROI": -2.6
         }
       },
       "1,20-1,29": {
-        "recorded": 884,
-        "settled": 872,
-        "pending": 12,
+        "recorded": 909,
+        "settled": 901,
+        "pending": 8,
         "void": 0,
         "result": {
-          "N": 872,
-          "W": 659,
-          "L": 213,
+          "N": 901,
+          "W": 681,
+          "L": 220,
           "P": 0,
-          "profit": -49.775,
-          "ROI": -5.71
+          "profit": -51.225,
+          "ROI": -5.69
         },
         "without_top3": {
-          "N": 869,
-          "W": 656,
-          "L": 213,
+          "N": 898,
+          "W": 678,
+          "L": 220,
           "P": 0,
-          "profit": -50.61,
-          "ROI": -5.82
+          "profit": -52.06,
+          "ROI": -5.8
         }
       },
       "1,30-1,49": {
-        "recorded": 931,
-        "settled": 918,
-        "pending": 13,
+        "recorded": 949,
+        "settled": 941,
+        "pending": 8,
         "void": 0,
         "result": {
-          "N": 918,
-          "W": 639,
-          "L": 279,
+          "N": 941,
+          "W": 652,
+          "L": 289,
           "P": 0,
-          "profit": -47.75,
-          "ROI": -5.2
+          "profit": -53.025,
+          "ROI": -5.63
         },
         "without_top3": {
-          "N": 915,
-          "W": 636,
-          "L": 279,
+          "N": 938,
+          "W": 649,
+          "L": 289,
           "P": 0,
-          "profit": -49.175,
-          "ROI": -5.37
+          "profit": -54.45,
+          "ROI": -5.8
         }
       },
       "1,50 и выше": {
-        "recorded": 88,
-        "settled": 86,
-        "pending": 2,
+        "recorded": 90,
+        "settled": 87,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 86,
-          "W": 49,
+          "N": 87,
+          "W": 50,
           "L": 37,
           "P": 0,
-          "profit": -9.45,
-          "ROI": -10.99
+          "profit": -8.9,
+          "ROI": -10.23
         },
         "without_top3": {
-          "N": 83,
-          "W": 46,
+          "N": 84,
+          "W": 47,
           "L": 37,
           "P": 0,
-          "profit": -11.925,
-          "ROI": -14.37
+          "profit": -11.375,
+          "ROI": -13.54
         }
       }
     },
     "89-90": {
       "меньше 1,15": {
-        "recorded": 870,
-        "settled": 859,
-        "pending": 11,
+        "recorded": 917,
+        "settled": 907,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 859,
-          "W": 785,
-          "L": 74,
+          "N": 907,
+          "W": 828,
+          "L": 79,
           "P": 0,
-          "profit": 12.975,
-          "ROI": 1.51
+          "profit": 12.63,
+          "ROI": 1.39
         },
         "without_top3": {
-          "N": 856,
-          "W": 782,
-          "L": 74,
+          "N": 904,
+          "W": 825,
+          "L": 79,
           "P": 0,
-          "profit": 12.555,
-          "ROI": 1.47
+          "profit": 12.21,
+          "ROI": 1.35
         }
       },
       "меньше 1,20": {
-        "recorded": 1414,
-        "settled": 1387,
-        "pending": 27,
+        "recorded": 1479,
+        "settled": 1458,
+        "pending": 21,
         "void": 0,
         "result": {
-          "N": 1387,
-          "W": 1224,
-          "L": 163,
+          "N": 1458,
+          "W": 1286,
+          "L": 172,
           "P": 0,
-          "profit": 10.51,
-          "ROI": 0.76
+          "profit": 9.605,
+          "ROI": 0.66
         },
         "without_top3": {
-          "N": 1384,
-          "W": 1221,
-          "L": 163,
+          "N": 1455,
+          "W": 1283,
+          "L": 172,
           "P": 0,
-          "profit": 9.94,
-          "ROI": 0.72
+          "profit": 9.035,
+          "ROI": 0.62
         }
       },
       "1,20-1,29": {
-        "recorded": 794,
-        "settled": 777,
-        "pending": 17,
+        "recorded": 821,
+        "settled": 811,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 777,
-          "W": 601,
-          "L": 176,
+          "N": 811,
+          "W": 627,
+          "L": 184,
           "P": 0,
-          "profit": -35.14,
-          "ROI": -4.52
+          "profit": -36.805,
+          "ROI": -4.54
         },
         "without_top3": {
-          "N": 774,
-          "W": 598,
-          "L": 176,
+          "N": 808,
+          "W": 624,
+          "L": 184,
           "P": 0,
-          "profit": -35.965,
-          "ROI": -4.65
+          "profit": -37.63,
+          "ROI": -4.66
         }
       },
       "1,30-1,49": {
-        "recorded": 321,
-        "settled": 315,
-        "pending": 6,
+        "recorded": 330,
+        "settled": 327,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 315,
-          "W": 230,
-          "L": 85,
+          "N": 327,
+          "W": 237,
+          "L": 90,
           "P": 0,
-          "profit": -6.7,
-          "ROI": -2.13
+          "profit": -9.45,
+          "ROI": -2.89
         },
         "without_top3": {
-          "N": 312,
-          "W": 227,
-          "L": 85,
+          "N": 324,
+          "W": 234,
+          "L": 90,
           "P": 0,
-          "profit": -8.125,
-          "ROI": -2.6
+          "profit": -10.875,
+          "ROI": -3.36
         }
       },
       "1,50 и выше": {
@@ -572,69 +572,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 177,
-        "settled": 177,
-        "pending": 0,
+        "recorded": 181,
+        "settled": 180,
+        "pending": 1,
         "void": 0,
         "result": {
+          "N": 180,
+          "W": 142,
+          "L": 38,
+          "P": 0,
+          "profit": -1.54,
+          "ROI": -0.86
+        },
+        "without_top3": {
           "N": 177,
           "W": 139,
           "L": 38,
           "P": 0,
-          "profit": -2.34,
-          "ROI": -1.32
-        },
-        "without_top3": {
-          "N": 174,
-          "W": 136,
-          "L": 38,
-          "P": 0,
-          "profit": -3.165,
-          "ROI": -1.82
+          "profit": -2.365,
+          "ROI": -1.34
         }
       },
       "1,30-1,49": {
-        "recorded": 1703,
-        "settled": 1687,
-        "pending": 16,
+        "recorded": 1721,
+        "settled": 1711,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 1687,
-          "W": 1168,
-          "L": 519,
+          "N": 1711,
+          "W": 1182,
+          "L": 529,
           "P": 0,
-          "profit": -68.575,
-          "ROI": -4.06
+          "profit": -73.1,
+          "ROI": -4.27
         },
         "without_top3": {
-          "N": 1684,
-          "W": 1165,
-          "L": 519,
+          "N": 1708,
+          "W": 1179,
+          "L": 529,
           "P": 0,
-          "profit": -70.0,
-          "ROI": -4.16
+          "profit": -74.525,
+          "ROI": -4.36
         }
       },
       "1,50 и выше": {
-        "recorded": 654,
-        "settled": 648,
-        "pending": 6,
+        "recorded": 662,
+        "settled": 655,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 648,
-          "W": 385,
-          "L": 263,
+          "N": 655,
+          "W": 389,
+          "L": 266,
           "P": 0,
-          "profit": -38.875,
-          "ROI": -6.0
+          "profit": -39.8,
+          "ROI": -6.08
         },
         "without_top3": {
-          "N": 645,
-          "W": 382,
-          "L": 263,
+          "N": 652,
+          "W": 386,
+          "L": 266,
           "P": 0,
-          "profit": -41.95,
-          "ROI": -6.5
+          "profit": -42.875,
+          "ROI": -6.58
         }
       }
     },
@@ -684,69 +684,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 271,
-        "settled": 268,
+        "recorded": 280,
+        "settled": 277,
         "pending": 3,
         "void": 0,
         "result": {
-          "N": 268,
-          "W": 205,
-          "L": 63,
+          "N": 277,
+          "W": 211,
+          "L": 66,
           "P": 0,
-          "profit": -11.195,
-          "ROI": -4.18
+          "profit": -12.67,
+          "ROI": -4.57
         },
         "without_top3": {
-          "N": 265,
-          "W": 202,
-          "L": 63,
+          "N": 274,
+          "W": 208,
+          "L": 66,
           "P": 0,
-          "profit": -12.025,
-          "ROI": -4.54
+          "profit": -13.5,
+          "ROI": -4.93
         }
       },
       "1,30-1,49": {
-        "recorded": 1124,
-        "settled": 1111,
-        "pending": 13,
+        "recorded": 1143,
+        "settled": 1135,
+        "pending": 8,
         "void": 0,
         "result": {
-          "N": 1111,
-          "W": 777,
-          "L": 334,
+          "N": 1135,
+          "W": 793,
+          "L": 342,
           "P": 0,
-          "profit": -45.825,
-          "ROI": -4.12
+          "profit": -47.775,
+          "ROI": -4.21
         },
         "without_top3": {
-          "N": 1108,
-          "W": 774,
-          "L": 334,
+          "N": 1132,
+          "W": 790,
+          "L": 342,
           "P": 0,
-          "profit": -47.25,
-          "ROI": -4.26
+          "profit": -49.2,
+          "ROI": -4.35
         }
       },
       "1,50 и выше": {
-        "recorded": 210,
-        "settled": 207,
-        "pending": 3,
+        "recorded": 216,
+        "settled": 211,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 207,
-          "W": 128,
-          "L": 79,
+          "N": 211,
+          "W": 131,
+          "L": 80,
           "P": 0,
-          "profit": -5.9,
-          "ROI": -2.85
+          "profit": -5.35,
+          "ROI": -2.54
         },
         "without_top3": {
-          "N": 204,
-          "W": 125,
-          "L": 79,
+          "N": 208,
+          "W": 128,
+          "L": 80,
           "P": 0,
-          "profit": -8.475,
-          "ROI": -4.15
+          "profit": -7.925,
+          "ROI": -3.81
         }
       }
     },
@@ -774,91 +774,91 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 50,
-        "settled": 50,
-        "pending": 0,
+        "recorded": 52,
+        "settled": 51,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 50,
+          "N": 51,
           "W": 42,
-          "L": 8,
+          "L": 9,
           "P": 0,
-          "profit": -0.69,
-          "ROI": -1.38
+          "profit": -1.69,
+          "ROI": -3.31
         },
         "without_top3": {
-          "N": 47,
+          "N": 48,
           "W": 39,
-          "L": 8,
+          "L": 9,
           "P": 0,
-          "profit": -1.26,
-          "ROI": -2.68
+          "profit": -2.26,
+          "ROI": -4.71
         }
       },
       "1,20-1,29": {
-        "recorded": 513,
-        "settled": 503,
-        "pending": 10,
+        "recorded": 528,
+        "settled": 522,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 503,
-          "W": 380,
-          "L": 123,
+          "N": 522,
+          "W": 395,
+          "L": 127,
           "P": 0,
-          "profit": -29.185,
-          "ROI": -5.8
+          "profit": -29.415,
+          "ROI": -5.64
         },
         "without_top3": {
-          "N": 500,
-          "W": 377,
-          "L": 123,
+          "N": 519,
+          "W": 392,
+          "L": 127,
           "P": 0,
-          "profit": -30.015,
-          "ROI": -6.0
+          "profit": -30.245,
+          "ROI": -5.83
         }
       },
       "1,30-1,49": {
-        "recorded": 826,
-        "settled": 818,
-        "pending": 8,
+        "recorded": 842,
+        "settled": 836,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 818,
-          "W": 573,
-          "L": 245,
+          "N": 836,
+          "W": 584,
+          "L": 252,
           "P": 0,
-          "profit": -38.425,
-          "ROI": -4.7
+          "profit": -41.45,
+          "ROI": -4.96
         },
         "without_top3": {
-          "N": 815,
-          "W": 570,
-          "L": 245,
+          "N": 833,
+          "W": 581,
+          "L": 252,
           "P": 0,
-          "profit": -39.85,
-          "ROI": -4.89
+          "profit": -42.875,
+          "ROI": -5.15
         }
       },
       "1,50 и выше": {
-        "recorded": 82,
-        "settled": 80,
-        "pending": 2,
+        "recorded": 84,
+        "settled": 81,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 80,
-          "W": 45,
+          "N": 81,
+          "W": 46,
           "L": 35,
           "P": 0,
-          "profit": -9.7,
-          "ROI": -12.12
+          "profit": -9.15,
+          "ROI": -11.3
         },
         "without_top3": {
-          "N": 77,
-          "W": 42,
+          "N": 78,
+          "W": 43,
           "L": 35,
           "P": 0,
-          "profit": -12.175,
-          "ROI": -15.81
+          "profit": -11.625,
+          "ROI": -14.9
         }
       }
     },
@@ -886,69 +886,69 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 223,
-        "settled": 220,
-        "pending": 3,
+        "recorded": 229,
+        "settled": 225,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 220,
-          "W": 184,
-          "L": 36,
+          "N": 225,
+          "W": 187,
+          "L": 38,
           "P": 0,
-          "profit": -4.605,
-          "ROI": -2.09
+          "profit": -6.035,
+          "ROI": -2.68
         },
         "without_top3": {
-          "N": 217,
-          "W": 181,
-          "L": 36,
+          "N": 222,
+          "W": 184,
+          "L": 38,
           "P": 0,
-          "profit": -5.175,
-          "ROI": -2.38
+          "profit": -6.605,
+          "ROI": -2.98
         }
       },
       "1,20-1,29": {
-        "recorded": 687,
-        "settled": 677,
-        "pending": 10,
+        "recorded": 704,
+        "settled": 698,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 677,
-          "W": 507,
-          "L": 170,
+          "N": 698,
+          "W": 522,
+          "L": 176,
           "P": 0,
-          "profit": -49.325,
-          "ROI": -7.29
+          "profit": -51.68,
+          "ROI": -7.4
         },
         "without_top3": {
-          "N": 674,
-          "W": 504,
-          "L": 170,
+          "N": 695,
+          "W": 519,
+          "L": 176,
           "P": 0,
-          "profit": -50.155,
-          "ROI": -7.44
+          "profit": -52.51,
+          "ROI": -7.56
         }
       },
       "1,30-1,49": {
-        "recorded": 532,
-        "settled": 522,
-        "pending": 10,
+        "recorded": 542,
+        "settled": 538,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 522,
-          "W": 366,
-          "L": 156,
+          "N": 538,
+          "W": 376,
+          "L": 162,
           "P": 0,
-          "profit": -29.075,
-          "ROI": -5.57
+          "profit": -31.575,
+          "ROI": -5.87
         },
         "without_top3": {
-          "N": 519,
-          "W": 363,
-          "L": 156,
+          "N": 535,
+          "W": 373,
+          "L": 162,
           "P": 0,
-          "profit": -30.5,
-          "ROI": -5.88
+          "profit": -33.0,
+          "ROI": -6.17
         }
       },
       "1,50 и выше": {
@@ -976,91 +976,91 @@
     },
     "89": {
       "меньше 1,15": {
-        "recorded": 157,
-        "settled": 155,
-        "pending": 2,
+        "recorded": 162,
+        "settled": 159,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 155,
-          "W": 134,
+          "N": 159,
+          "W": 138,
           "L": 21,
           "P": 0,
-          "profit": -4.115,
-          "ROI": -2.65
+          "profit": -3.635,
+          "ROI": -2.29
         },
         "without_top3": {
-          "N": 152,
-          "W": 131,
+          "N": 156,
+          "W": 135,
           "L": 21,
           "P": 0,
-          "profit": -4.535,
-          "ROI": -2.98
+          "profit": -4.055,
+          "ROI": -2.6
         }
       },
       "меньше 1,20": {
-        "recorded": 599,
-        "settled": 590,
+        "recorded": 618,
+        "settled": 609,
         "pending": 9,
         "void": 0,
         "result": {
-          "N": 590,
-          "W": 499,
-          "L": 91,
+          "N": 609,
+          "W": 514,
+          "L": 95,
           "P": 0,
-          "profit": -11.35,
-          "ROI": -1.92
+          "profit": -13.05,
+          "ROI": -2.14
         },
         "without_top3": {
-          "N": 587,
-          "W": 496,
-          "L": 91,
+          "N": 606,
+          "W": 511,
+          "L": 95,
           "P": 0,
-          "profit": -11.92,
-          "ROI": -2.03
+          "profit": -13.62,
+          "ROI": -2.25
         }
       },
       "1,20-1,29": {
-        "recorded": 582,
-        "settled": 570,
-        "pending": 12,
-        "void": 0,
-        "result": {
-          "N": 570,
-          "W": 427,
-          "L": 143,
-          "P": 0,
-          "profit": -43.335,
-          "ROI": -7.6
-        },
-        "without_top3": {
-          "N": 567,
-          "W": 424,
-          "L": 143,
-          "P": 0,
-          "profit": -44.16,
-          "ROI": -7.79
-        }
-      },
-      "1,30-1,49": {
-        "recorded": 273,
-        "settled": 267,
+        "recorded": 600,
+        "settled": 594,
         "pending": 6,
         "void": 0,
         "result": {
-          "N": 267,
-          "W": 190,
-          "L": 77,
+          "N": 594,
+          "W": 446,
+          "L": 148,
           "P": 0,
-          "profit": -12.55,
-          "ROI": -4.7
+          "profit": -43.72,
+          "ROI": -7.36
         },
         "without_top3": {
-          "N": 264,
-          "W": 187,
-          "L": 77,
+          "N": 591,
+          "W": 443,
+          "L": 148,
           "P": 0,
-          "profit": -13.975,
-          "ROI": -5.29
+          "profit": -44.545,
+          "ROI": -7.54
+        }
+      },
+      "1,30-1,49": {
+        "recorded": 280,
+        "settled": 277,
+        "pending": 3,
+        "void": 0,
+        "result": {
+          "N": 277,
+          "W": 196,
+          "L": 81,
+          "P": 0,
+          "profit": -14.625,
+          "ROI": -5.28
+        },
+        "without_top3": {
+          "N": 274,
+          "W": 193,
+          "L": 81,
+          "P": 0,
+          "profit": -16.05,
+          "ROI": -5.86
         }
       },
       "1,50 и выше": {
@@ -1088,91 +1088,91 @@
     },
     "90": {
       "меньше 1,15": {
-        "recorded": 851,
-        "settled": 840,
-        "pending": 11,
+        "recorded": 897,
+        "settled": 887,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 840,
-          "W": 773,
-          "L": 67,
+          "N": 887,
+          "W": 815,
+          "L": 72,
           "P": 0,
-          "profit": 15.715,
-          "ROI": 1.87
+          "profit": 15.23,
+          "ROI": 1.72
         },
         "without_top3": {
-          "N": 837,
-          "W": 770,
-          "L": 67,
+          "N": 884,
+          "W": 812,
+          "L": 72,
           "P": 0,
-          "profit": 15.295,
-          "ROI": 1.83
+          "profit": 14.81,
+          "ROI": 1.68
         }
       },
       "меньше 1,20": {
-        "recorded": 1375,
-        "settled": 1348,
-        "pending": 27,
+        "recorded": 1440,
+        "settled": 1419,
+        "pending": 21,
         "void": 0,
         "result": {
-          "N": 1348,
-          "W": 1208,
-          "L": 140,
+          "N": 1419,
+          "W": 1270,
+          "L": 149,
           "P": 0,
-          "profit": 15.615,
-          "ROI": 1.16
+          "profit": 14.42,
+          "ROI": 1.02
         },
         "without_top3": {
-          "N": 1345,
-          "W": 1205,
-          "L": 140,
+          "N": 1416,
+          "W": 1267,
+          "L": 149,
           "P": 0,
-          "profit": 15.045,
-          "ROI": 1.12
+          "profit": 13.85,
+          "ROI": 0.98
         }
       },
       "1,20-1,29": {
-        "recorded": 431,
-        "settled": 420,
-        "pending": 11,
+        "recorded": 446,
+        "settled": 441,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 420,
-          "W": 330,
-          "L": 90,
+          "N": 441,
+          "W": 346,
+          "L": 95,
           "P": 0,
-          "profit": -13.315,
-          "ROI": -3.17
+          "profit": -14.575,
+          "ROI": -3.3
         },
         "without_top3": {
-          "N": 417,
-          "W": 327,
-          "L": 90,
+          "N": 438,
+          "W": 343,
+          "L": 95,
           "P": 0,
-          "profit": -14.14,
-          "ROI": -3.39
+          "profit": -15.4,
+          "ROI": -3.52
         }
       },
       "1,30-1,49": {
-        "recorded": 150,
-        "settled": 146,
-        "pending": 4,
+        "recorded": 156,
+        "settled": 153,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 146,
-          "W": 113,
-          "L": 33,
+          "N": 153,
+          "W": 116,
+          "L": 37,
           "P": 0,
-          "profit": 5.325,
-          "ROI": 3.65
+          "profit": 2.25,
+          "ROI": 1.47
         },
         "without_top3": {
-          "N": 143,
-          "W": 110,
-          "L": 33,
+          "N": 150,
+          "W": 113,
+          "L": 37,
           "P": 0,
-          "profit": 3.9,
-          "ROI": 2.73
+          "profit": 0.825,
+          "ROI": 0.55
         }
       },
       "1,50 и выше": {
@@ -1201,113 +1201,113 @@
   },
   "clean_by_odds": {
     "меньше 1,15": {
-      "recorded": 412,
-      "settled": 402,
-      "pending": 10,
+      "recorded": 459,
+      "settled": 450,
+      "pending": 9,
       "void": 0,
       "result": {
-        "N": 402,
-        "W": 354,
-        "L": 48,
+        "N": 450,
+        "W": 397,
+        "L": 53,
         "P": 0,
-        "profit": -6.425,
-        "ROI": -1.6
+        "profit": -6.77,
+        "ROI": -1.5
       },
       "without_top3": {
-        "N": 399,
-        "W": 351,
-        "L": 48,
+        "N": 447,
+        "W": 394,
+        "L": 53,
         "P": 0,
-        "profit": -6.845,
-        "ROI": -1.72
+        "profit": -7.19,
+        "ROI": -1.61
       }
     },
     "меньше 1,20": {
-      "recorded": 753,
-      "settled": 727,
-      "pending": 26,
+      "recorded": 818,
+      "settled": 798,
+      "pending": 20,
       "void": 0,
       "result": {
-        "N": 727,
-        "W": 621,
-        "L": 106,
+        "N": 798,
+        "W": 682,
+        "L": 116,
         "P": 0,
-        "profit": -9.59,
-        "ROI": -1.32
+        "profit": -11.565,
+        "ROI": -1.45
       },
       "without_top3": {
-        "N": 724,
-        "W": 618,
-        "L": 106,
+        "N": 795,
+        "W": 679,
+        "L": 116,
         "P": 0,
-        "profit": -10.16,
-        "ROI": -1.4
+        "profit": -12.135,
+        "ROI": -1.53
       }
     },
     "1,20-1,29": {
-      "recorded": 788,
-      "settled": 766,
-      "pending": 22,
+      "recorded": 830,
+      "settled": 816,
+      "pending": 14,
       "void": 0,
       "result": {
-        "N": 766,
-        "W": 595,
-        "L": 171,
+        "N": 816,
+        "W": 633,
+        "L": 183,
         "P": 0,
-        "profit": -22.81,
-        "ROI": -2.98
+        "profit": -25.25,
+        "ROI": -3.09
       },
       "without_top3": {
-        "N": 763,
-        "W": 592,
-        "L": 171,
+        "N": 813,
+        "W": 630,
+        "L": 183,
         "P": 0,
-        "profit": -23.65,
-        "ROI": -3.1
+        "profit": -26.09,
+        "ROI": -3.21
       }
     },
     "1,30-1,49": {
-      "recorded": 778,
-      "settled": 754,
-      "pending": 24,
+      "recorded": 811,
+      "settled": 797,
+      "pending": 14,
       "void": 0,
       "result": {
-        "N": 754,
-        "W": 505,
-        "L": 249,
+        "N": 797,
+        "W": 532,
+        "L": 265,
         "P": 0,
-        "profit": -51.975,
-        "ROI": -6.89
+        "profit": -57.75,
+        "ROI": -7.25
       },
       "without_top3": {
-        "N": 751,
-        "W": 502,
-        "L": 249,
+        "N": 794,
+        "W": 529,
+        "L": 265,
         "P": 0,
-        "profit": -53.4,
-        "ROI": -7.11
+        "profit": -59.175,
+        "ROI": -7.45
       }
     },
     "1,50 и выше": {
-      "recorded": 209,
-      "settled": 204,
-      "pending": 5,
+      "recorded": 220,
+      "settled": 214,
+      "pending": 6,
       "void": 0,
       "result": {
-        "N": 204,
-        "W": 122,
-        "L": 82,
+        "N": 214,
+        "W": 128,
+        "L": 86,
         "P": 0,
-        "profit": -11.4,
-        "ROI": -5.59
+        "profit": -12.275,
+        "ROI": -5.74
       },
       "without_top3": {
-        "N": 201,
-        "W": 119,
-        "L": 82,
+        "N": 211,
+        "W": 125,
+        "L": 86,
         "P": 0,
-        "profit": -14.3,
-        "ROI": -7.11
+        "profit": -15.175,
+        "ROI": -7.19
       }
     }
   },
@@ -1358,69 +1358,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 133,
-        "settled": 131,
+        "recorded": 142,
+        "settled": 140,
         "pending": 2,
         "void": 0,
         "result": {
-          "N": 131,
-          "W": 100,
-          "L": 31,
+          "N": 140,
+          "W": 106,
+          "L": 34,
           "P": 0,
-          "profit": -5.005,
-          "ROI": -3.82
+          "profit": -6.45,
+          "ROI": -4.61
         },
         "without_top3": {
-          "N": 128,
-          "W": 97,
-          "L": 31,
+          "N": 137,
+          "W": 103,
+          "L": 34,
           "P": 0,
-          "profit": -5.835,
-          "ROI": -4.56
+          "profit": -7.28,
+          "ROI": -5.31
         }
       },
       "1,30-1,49": {
-        "recorded": 583,
-        "settled": 567,
-        "pending": 16,
+        "recorded": 608,
+        "settled": 599,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 567,
-          "W": 380,
-          "L": 187,
+          "N": 599,
+          "W": 400,
+          "L": 199,
           "P": 0,
-          "profit": -37.75,
-          "ROI": -6.66
+          "profit": -41.975,
+          "ROI": -7.01
         },
         "without_top3": {
-          "N": 564,
-          "W": 377,
-          "L": 187,
+          "N": 596,
+          "W": 397,
+          "L": 199,
           "P": 0,
-          "profit": -39.175,
-          "ROI": -6.95
+          "profit": -43.4,
+          "ROI": -7.28
         }
       },
       "1,50 и выше": {
-        "recorded": 198,
-        "settled": 194,
-        "pending": 4,
+        "recorded": 209,
+        "settled": 204,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 194,
-          "W": 117,
-          "L": 77,
+          "N": 204,
+          "W": 123,
+          "L": 81,
           "P": 0,
-          "profit": -9.525,
-          "ROI": -4.91
+          "profit": -10.4,
+          "ROI": -5.1
         },
         "without_top3": {
-          "N": 191,
-          "W": 114,
-          "L": 77,
+          "N": 201,
+          "W": 120,
+          "L": 81,
           "P": 0,
-          "profit": -12.4,
-          "ROI": -6.49
+          "profit": -13.275,
+          "ROI": -6.6
         }
       }
     },
@@ -1448,181 +1448,181 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 133,
-        "settled": 131,
-        "pending": 2,
+        "recorded": 139,
+        "settled": 136,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 131,
-          "W": 111,
-          "L": 20,
+          "N": 136,
+          "W": 114,
+          "L": 22,
           "P": 0,
-          "profit": -0.605,
-          "ROI": -0.46
+          "profit": -2.035,
+          "ROI": -1.5
         },
         "without_top3": {
-          "N": 128,
-          "W": 108,
-          "L": 20,
+          "N": 133,
+          "W": 111,
+          "L": 22,
           "P": 0,
-          "profit": -1.175,
-          "ROI": -0.92
+          "profit": -2.605,
+          "ROI": -1.96
         }
       },
       "1,20-1,29": {
-        "recorded": 476,
-        "settled": 465,
-        "pending": 11,
+        "recorded": 501,
+        "settled": 494,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 465,
-          "W": 364,
-          "L": 101,
+          "N": 494,
+          "W": 386,
+          "L": 108,
           "P": 0,
-          "profit": -11.135,
-          "ROI": -2.39
+          "profit": -12.585,
+          "ROI": -2.55
         },
         "without_top3": {
-          "N": 462,
-          "W": 361,
-          "L": 101,
+          "N": 491,
+          "W": 383,
+          "L": 108,
           "P": 0,
-          "profit": -11.97,
-          "ROI": -2.59
+          "profit": -13.42,
+          "ROI": -2.73
         }
       },
       "1,30-1,49": {
-        "recorded": 493,
-        "settled": 480,
-        "pending": 13,
+        "recorded": 511,
+        "settled": 503,
+        "pending": 8,
         "void": 0,
         "result": {
-          "N": 480,
-          "W": 323,
-          "L": 157,
+          "N": 503,
+          "W": 336,
+          "L": 167,
           "P": 0,
-          "profit": -40.075,
-          "ROI": -8.35
+          "profit": -45.35,
+          "ROI": -9.02
         },
         "without_top3": {
-          "N": 477,
-          "W": 320,
-          "L": 157,
+          "N": 500,
+          "W": 333,
+          "L": 167,
           "P": 0,
-          "profit": -41.5,
-          "ROI": -8.7
+          "profit": -46.775,
+          "ROI": -9.35
         }
       },
       "1,50 и выше": {
-        "recorded": 48,
-        "settled": 46,
-        "pending": 2,
+        "recorded": 50,
+        "settled": 47,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 46,
-          "W": 26,
+          "N": 47,
+          "W": 27,
           "L": 20,
           "P": 0,
-          "profit": -4.925,
-          "ROI": -10.71
+          "profit": -4.375,
+          "ROI": -9.31
         },
         "without_top3": {
-          "N": 43,
-          "W": 23,
+          "N": 44,
+          "W": 24,
           "L": 20,
           "P": 0,
-          "profit": -7.325,
-          "ROI": -17.03
+          "profit": -6.775,
+          "ROI": -15.4
         }
       }
     },
     "89-90": {
       "меньше 1,15": {
-        "recorded": 412,
-        "settled": 402,
-        "pending": 10,
+        "recorded": 459,
+        "settled": 450,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 402,
-          "W": 354,
-          "L": 48,
+          "N": 450,
+          "W": 397,
+          "L": 53,
           "P": 0,
-          "profit": -6.66,
-          "ROI": -1.66
+          "profit": -7.005,
+          "ROI": -1.56
         },
         "without_top3": {
-          "N": 399,
-          "W": 351,
-          "L": 48,
+          "N": 447,
+          "W": 394,
+          "L": 53,
           "P": 0,
-          "profit": -7.08,
-          "ROI": -1.77
+          "profit": -7.425,
+          "ROI": -1.66
         }
       },
       "меньше 1,20": {
-        "recorded": 751,
-        "settled": 725,
-        "pending": 26,
+        "recorded": 816,
+        "settled": 796,
+        "pending": 20,
         "void": 0,
         "result": {
-          "N": 725,
-          "W": 620,
-          "L": 105,
+          "N": 796,
+          "W": 682,
+          "L": 114,
           "P": 0,
-          "profit": -12.335,
-          "ROI": -1.7
+          "profit": -13.24,
+          "ROI": -1.66
         },
         "without_top3": {
-          "N": 722,
-          "W": 617,
-          "L": 105,
+          "N": 793,
+          "W": 679,
+          "L": 114,
           "P": 0,
-          "profit": -12.905,
-          "ROI": -1.79
+          "profit": -13.81,
+          "ROI": -1.74
         }
       },
       "1,20-1,29": {
-        "recorded": 488,
-        "settled": 471,
-        "pending": 17,
+        "recorded": 515,
+        "settled": 505,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 471,
-          "W": 367,
-          "L": 104,
+          "N": 505,
+          "W": 393,
+          "L": 112,
           "P": 0,
-          "profit": -17.94,
-          "ROI": -3.81
+          "profit": -19.605,
+          "ROI": -3.88
         },
         "without_top3": {
-          "N": 468,
-          "W": 364,
-          "L": 104,
+          "N": 502,
+          "W": 390,
+          "L": 112,
           "P": 0,
-          "profit": -18.765,
-          "ROI": -4.01
+          "profit": -20.43,
+          "ROI": -4.07
         }
       },
       "1,30-1,49": {
-        "recorded": 208,
-        "settled": 202,
-        "pending": 6,
+        "recorded": 217,
+        "settled": 214,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 202,
-          "W": 148,
-          "L": 54,
+          "N": 214,
+          "W": 155,
+          "L": 59,
           "P": 0,
-          "profit": -3.775,
-          "ROI": -1.87
+          "profit": -6.525,
+          "ROI": -3.05
         },
         "without_top3": {
-          "N": 199,
-          "W": 145,
-          "L": 54,
+          "N": 211,
+          "W": 152,
+          "L": 59,
           "P": 0,
-          "profit": -5.175,
-          "ROI": -2.6
+          "profit": -7.925,
+          "ROI": -3.76
         }
       },
       "1,50 и выше": {
@@ -1696,69 +1696,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 38,
-        "settled": 38,
-        "pending": 0,
+        "recorded": 42,
+        "settled": 41,
+        "pending": 1,
         "void": 0,
         "result": {
+          "N": 41,
+          "W": 35,
+          "L": 6,
+          "P": 0,
+          "profit": 3.115,
+          "ROI": 7.6
+        },
+        "without_top3": {
           "N": 38,
           "W": 32,
           "L": 6,
           "P": 0,
-          "profit": 2.315,
-          "ROI": 6.09
-        },
-        "without_top3": {
-          "N": 35,
-          "W": 29,
-          "L": 6,
-          "P": 0,
-          "profit": 1.49,
-          "ROI": 4.26
+          "profit": 2.29,
+          "ROI": 6.03
         }
       },
       "1,30-1,49": {
-        "recorded": 450,
-        "settled": 437,
-        "pending": 13,
+        "recorded": 468,
+        "settled": 461,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 437,
-          "W": 297,
-          "L": 140,
+          "N": 461,
+          "W": 311,
+          "L": 150,
           "P": 0,
-          "profit": -25.375,
-          "ROI": -5.81
+          "profit": -29.9,
+          "ROI": -6.49
         },
         "without_top3": {
-          "N": 434,
-          "W": 294,
-          "L": 140,
+          "N": 458,
+          "W": 308,
+          "L": 150,
           "P": 0,
-          "profit": -26.8,
-          "ROI": -6.18
+          "profit": -31.325,
+          "ROI": -6.84
         }
       },
       "1,50 и выше": {
-        "recorded": 192,
-        "settled": 188,
-        "pending": 4,
+        "recorded": 200,
+        "settled": 195,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 188,
-          "W": 113,
-          "L": 75,
+          "N": 195,
+          "W": 117,
+          "L": 78,
           "P": 0,
-          "profit": -9.575,
-          "ROI": -5.09
+          "profit": -10.5,
+          "ROI": -5.38
         },
         "without_top3": {
-          "N": 185,
-          "W": 110,
-          "L": 75,
+          "N": 192,
+          "W": 114,
+          "L": 78,
           "P": 0,
-          "profit": -12.45,
-          "ROI": -6.73
+          "profit": -13.375,
+          "ROI": -6.97
         }
       }
     },
@@ -1808,69 +1808,69 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 131,
-        "settled": 129,
+        "recorded": 140,
+        "settled": 138,
         "pending": 2,
         "void": 0,
         "result": {
-          "N": 129,
-          "W": 98,
-          "L": 31,
+          "N": 138,
+          "W": 104,
+          "L": 34,
           "P": 0,
-          "profit": -6.19,
-          "ROI": -4.8
+          "profit": -7.665,
+          "ROI": -5.55
         },
         "without_top3": {
-          "N": 126,
-          "W": 95,
-          "L": 31,
+          "N": 135,
+          "W": 101,
+          "L": 34,
           "P": 0,
-          "profit": -7.02,
-          "ROI": -5.57
+          "profit": -8.495,
+          "ROI": -6.29
         }
       },
       "1,30-1,49": {
-        "recorded": 482,
-        "settled": 469,
-        "pending": 13,
+        "recorded": 501,
+        "settled": 493,
+        "pending": 8,
         "void": 0,
         "result": {
-          "N": 469,
-          "W": 315,
-          "L": 154,
+          "N": 493,
+          "W": 331,
+          "L": 162,
           "P": 0,
-          "profit": -36.625,
-          "ROI": -7.81
+          "profit": -38.575,
+          "ROI": -7.82
         },
         "without_top3": {
-          "N": 466,
-          "W": 312,
-          "L": 154,
+          "N": 490,
+          "W": 328,
+          "L": 162,
           "P": 0,
-          "profit": -38.05,
-          "ROI": -8.17
+          "profit": -40.0,
+          "ROI": -8.16
         }
       },
       "1,50 и выше": {
-        "recorded": 99,
-        "settled": 98,
-        "pending": 1,
+        "recorded": 105,
+        "settled": 102,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 98,
-          "W": 62,
-          "L": 36,
+          "N": 102,
+          "W": 65,
+          "L": 37,
           "P": 0,
-          "profit": -0.8,
-          "ROI": -0.82
+          "profit": -0.25,
+          "ROI": -0.25
         },
         "without_top3": {
-          "N": 95,
-          "W": 59,
-          "L": 36,
+          "N": 99,
+          "W": 62,
+          "L": 37,
           "P": 0,
-          "profit": -3.3,
-          "ROI": -3.47
+          "profit": -2.75,
+          "ROI": -2.78
         }
       }
     },
@@ -1898,91 +1898,91 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 29,
-        "settled": 29,
-        "pending": 0,
+        "recorded": 31,
+        "settled": 30,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 29,
+          "N": 30,
           "W": 24,
-          "L": 5,
+          "L": 6,
           "P": 0,
-          "profit": -0.85,
-          "ROI": -2.93
+          "profit": -1.85,
+          "ROI": -6.17
         },
         "without_top3": {
-          "N": 26,
+          "N": 27,
           "W": 21,
-          "L": 5,
+          "L": 6,
           "P": 0,
-          "profit": -1.42,
-          "ROI": -5.46
+          "profit": -2.42,
+          "ROI": -8.96
         }
       },
       "1,20-1,29": {
-        "recorded": 255,
-        "settled": 246,
-        "pending": 9,
+        "recorded": 270,
+        "settled": 265,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 246,
-          "W": 192,
-          "L": 54,
+          "N": 265,
+          "W": 207,
+          "L": 58,
           "P": 0,
-          "profit": -7.015,
-          "ROI": -2.85
+          "profit": -7.245,
+          "ROI": -2.73
         },
         "without_top3": {
-          "N": 243,
-          "W": 189,
-          "L": 54,
+          "N": 262,
+          "W": 204,
+          "L": 58,
           "P": 0,
-          "profit": -7.845,
-          "ROI": -3.23
+          "profit": -8.075,
+          "ROI": -3.08
         }
       },
       "1,30-1,49": {
-        "recorded": 430,
-        "settled": 422,
-        "pending": 8,
+        "recorded": 446,
+        "settled": 440,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 422,
-          "W": 287,
-          "L": 135,
+          "N": 440,
+          "W": 298,
+          "L": 142,
           "P": 0,
-          "profit": -31.175,
-          "ROI": -7.39
+          "profit": -34.2,
+          "ROI": -7.77
         },
         "without_top3": {
-          "N": 419,
-          "W": 284,
-          "L": 135,
+          "N": 437,
+          "W": 295,
+          "L": 142,
           "P": 0,
-          "profit": -32.6,
-          "ROI": -7.78
+          "profit": -35.625,
+          "ROI": -8.15
         }
       },
       "1,50 и выше": {
-        "recorded": 44,
-        "settled": 42,
-        "pending": 2,
+        "recorded": 46,
+        "settled": 43,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 42,
-          "W": 23,
+          "N": 43,
+          "W": 24,
           "L": 19,
           "P": 0,
-          "profit": -5.65,
-          "ROI": -13.45
+          "profit": -5.1,
+          "ROI": -11.86
         },
         "without_top3": {
-          "N": 39,
-          "W": 20,
+          "N": 40,
+          "W": 21,
           "L": 19,
           "P": 0,
-          "profit": -8.05,
-          "ROI": -20.64
+          "profit": -7.5,
+          "ROI": -18.75
         }
       }
     },
@@ -2010,69 +2010,69 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 131,
-        "settled": 129,
-        "pending": 2,
+        "recorded": 137,
+        "settled": 134,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 129,
-          "W": 109,
-          "L": 20,
+          "N": 134,
+          "W": 112,
+          "L": 22,
           "P": 0,
-          "profit": -1.345,
-          "ROI": -1.04
+          "profit": -2.775,
+          "ROI": -2.07
         },
         "without_top3": {
-          "N": 126,
-          "W": 106,
-          "L": 20,
+          "N": 131,
+          "W": 109,
+          "L": 22,
           "P": 0,
-          "profit": -1.915,
-          "ROI": -1.52
+          "profit": -3.345,
+          "ROI": -2.55
         }
       },
       "1,20-1,29": {
-        "recorded": 389,
-        "settled": 379,
-        "pending": 10,
+        "recorded": 406,
+        "settled": 400,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 379,
-          "W": 291,
-          "L": 88,
+          "N": 400,
+          "W": 306,
+          "L": 94,
           "P": 0,
-          "profit": -18.42,
-          "ROI": -4.86
+          "profit": -20.775,
+          "ROI": -5.19
         },
         "without_top3": {
-          "N": 376,
-          "W": 288,
-          "L": 88,
+          "N": 397,
+          "W": 303,
+          "L": 94,
           "P": 0,
-          "profit": -19.25,
-          "ROI": -5.12
+          "profit": -21.605,
+          "ROI": -5.44
         }
       },
       "1,30-1,49": {
-        "recorded": 296,
-        "settled": 286,
-        "pending": 10,
+        "recorded": 306,
+        "settled": 302,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 286,
-          "W": 193,
-          "L": 93,
+          "N": 302,
+          "W": 203,
+          "L": 99,
           "P": 0,
-          "profit": -25.85,
-          "ROI": -9.04
+          "profit": -28.35,
+          "ROI": -9.39
         },
         "without_top3": {
-          "N": 283,
-          "W": 190,
-          "L": 93,
+          "N": 299,
+          "W": 200,
+          "L": 99,
           "P": 0,
-          "profit": -27.275,
-          "ROI": -9.64
+          "profit": -29.775,
+          "ROI": -9.96
         }
       },
       "1,50 и выше": {
@@ -2100,91 +2100,91 @@
     },
     "89": {
       "меньше 1,15": {
-        "recorded": 97,
-        "settled": 96,
-        "pending": 1,
+        "recorded": 102,
+        "settled": 100,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 96,
-          "W": 83,
+          "N": 100,
+          "W": 87,
           "L": 13,
           "P": 0,
-          "profit": -2.365,
-          "ROI": -2.46
+          "profit": -1.885,
+          "ROI": -1.89
         },
         "without_top3": {
-          "N": 93,
-          "W": 80,
+          "N": 97,
+          "W": 84,
           "L": 13,
           "P": 0,
-          "profit": -2.785,
-          "ROI": -2.99
+          "profit": -2.305,
+          "ROI": -2.38
         }
       },
       "меньше 1,20": {
-        "recorded": 360,
-        "settled": 352,
+        "recorded": 379,
+        "settled": 371,
         "pending": 8,
         "void": 0,
         "result": {
-          "N": 352,
-          "W": 295,
-          "L": 57,
+          "N": 371,
+          "W": 310,
+          "L": 61,
           "P": 0,
-          "profit": -9.855,
-          "ROI": -2.8
+          "profit": -11.555,
+          "ROI": -3.11
         },
         "without_top3": {
-          "N": 349,
-          "W": 292,
-          "L": 57,
+          "N": 368,
+          "W": 307,
+          "L": 61,
           "P": 0,
-          "profit": -10.425,
-          "ROI": -2.99
+          "profit": -12.125,
+          "ROI": -3.29
         }
       },
       "1,20-1,29": {
-        "recorded": 351,
-        "settled": 339,
-        "pending": 12,
-        "void": 0,
-        "result": {
-          "N": 339,
-          "W": 257,
-          "L": 82,
-          "P": 0,
-          "profit": -22.085,
-          "ROI": -6.51
-        },
-        "without_top3": {
-          "N": 336,
-          "W": 254,
-          "L": 82,
-          "P": 0,
-          "profit": -22.91,
-          "ROI": -6.82
-        }
-      },
-      "1,30-1,49": {
-        "recorded": 175,
-        "settled": 169,
+        "recorded": 369,
+        "settled": 363,
         "pending": 6,
         "void": 0,
         "result": {
-          "N": 169,
-          "W": 119,
-          "L": 50,
+          "N": 363,
+          "W": 276,
+          "L": 87,
           "P": 0,
-          "profit": -9.625,
-          "ROI": -5.7
+          "profit": -22.47,
+          "ROI": -6.19
         },
         "without_top3": {
-          "N": 166,
-          "W": 116,
-          "L": 50,
+          "N": 360,
+          "W": 273,
+          "L": 87,
           "P": 0,
-          "profit": -11.025,
-          "ROI": -6.64
+          "profit": -23.295,
+          "ROI": -6.47
+        }
+      },
+      "1,30-1,49": {
+        "recorded": 182,
+        "settled": 179,
+        "pending": 3,
+        "void": 0,
+        "result": {
+          "N": 179,
+          "W": 125,
+          "L": 54,
+          "P": 0,
+          "profit": -11.7,
+          "ROI": -6.54
+        },
+        "without_top3": {
+          "N": 176,
+          "W": 122,
+          "L": 54,
+          "P": 0,
+          "profit": -13.1,
+          "ROI": -7.44
         }
       },
       "1,50 и выше": {
@@ -2212,91 +2212,91 @@
     },
     "90": {
       "меньше 1,15": {
-        "recorded": 405,
-        "settled": 395,
-        "pending": 10,
+        "recorded": 451,
+        "settled": 442,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 395,
-          "W": 350,
-          "L": 45,
+          "N": 442,
+          "W": 392,
+          "L": 50,
           "P": 0,
-          "profit": -5.84,
-          "ROI": -1.48
+          "profit": -6.325,
+          "ROI": -1.43
         },
         "without_top3": {
-          "N": 392,
-          "W": 347,
-          "L": 45,
+          "N": 439,
+          "W": 389,
+          "L": 50,
           "P": 0,
-          "profit": -6.26,
-          "ROI": -1.6
+          "profit": -6.745,
+          "ROI": -1.54
         }
       },
       "меньше 1,20": {
-        "recorded": 738,
-        "settled": 712,
-        "pending": 26,
+        "recorded": 803,
+        "settled": 783,
+        "pending": 20,
         "void": 0,
         "result": {
-          "N": 712,
-          "W": 614,
-          "L": 98,
+          "N": 783,
+          "W": 676,
+          "L": 107,
           "P": 0,
-          "profit": -14.5,
-          "ROI": -2.04
+          "profit": -15.695,
+          "ROI": -2.0
         },
         "without_top3": {
-          "N": 709,
-          "W": 611,
-          "L": 98,
+          "N": 780,
+          "W": 673,
+          "L": 107,
           "P": 0,
-          "profit": -15.07,
-          "ROI": -2.13
+          "profit": -16.265,
+          "ROI": -2.09
         }
       },
       "1,20-1,29": {
-        "recorded": 286,
-        "settled": 275,
-        "pending": 11,
+        "recorded": 301,
+        "settled": 296,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 275,
-          "W": 217,
-          "L": 58,
+          "N": 296,
+          "W": 233,
+          "L": 63,
           "P": 0,
-          "profit": -7.46,
-          "ROI": -2.71
+          "profit": -8.72,
+          "ROI": -2.95
         },
         "without_top3": {
-          "N": 272,
-          "W": 214,
-          "L": 58,
+          "N": 293,
+          "W": 230,
+          "L": 63,
           "P": 0,
-          "profit": -8.285,
-          "ROI": -3.05
+          "profit": -9.545,
+          "ROI": -3.26
         }
       },
       "1,30-1,49": {
-        "recorded": 105,
-        "settled": 101,
-        "pending": 4,
+        "recorded": 111,
+        "settled": 108,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 101,
-          "W": 77,
-          "L": 24,
+          "N": 108,
+          "W": 80,
+          "L": 28,
           "P": 0,
-          "profit": 2.025,
-          "ROI": 2.0
+          "profit": -1.05,
+          "ROI": -0.97
         },
         "without_top3": {
-          "N": 98,
-          "W": 74,
-          "L": 24,
+          "N": 105,
+          "W": 77,
+          "L": 28,
           "P": 0,
-          "profit": 0.625,
-          "ROI": 0.64
+          "profit": -2.45,
+          "ROI": -2.33
         }
       },
       "1,50 и выше": {
@@ -2369,91 +2369,91 @@
       }
     },
     "2,00-2,99": {
-      "recorded": 1563,
-      "settled": 1547,
-      "pending": 16,
+      "recorded": 1584,
+      "settled": 1572,
+      "pending": 12,
       "void": 0,
       "result": {
-        "N": 1547,
-        "W": 554,
-        "L": 993,
+        "N": 1572,
+        "W": 565,
+        "L": 1007,
         "P": 0,
-        "profit": -131.525,
-        "ROI": -8.5
+        "profit": -127.55,
+        "ROI": -8.11
       },
       "without_top3": {
-        "N": 1544,
-        "W": 551,
-        "L": 993,
+        "N": 1569,
+        "W": 562,
+        "L": 1007,
         "P": 0,
-        "profit": -137.125,
-        "ROI": -8.88
+        "profit": -133.15,
+        "ROI": -8.49
       }
     },
     "3,00-4,99": {
-      "recorded": 2310,
-      "settled": 2278,
-      "pending": 32,
+      "recorded": 2365,
+      "settled": 2342,
+      "pending": 23,
       "void": 0,
       "result": {
-        "N": 2278,
-        "W": 614,
-        "L": 1664,
+        "N": 2342,
+        "W": 631,
+        "L": 1711,
         "P": 0,
-        "profit": -259.45,
-        "ROI": -11.39
+        "profit": -267.65,
+        "ROI": -11.43
       },
       "without_top3": {
-        "N": 2275,
-        "W": 611,
-        "L": 1664,
+        "N": 2339,
+        "W": 628,
+        "L": 1711,
         "P": 0,
-        "profit": -270.95,
-        "ROI": -11.91
+        "profit": -279.15,
+        "ROI": -11.93
       }
     },
     "5,00-6,99": {
-      "recorded": 979,
-      "settled": 961,
-      "pending": 18,
+      "recorded": 1018,
+      "settled": 1002,
+      "pending": 16,
       "void": 0,
       "result": {
-        "N": 961,
-        "W": 124,
-        "L": 837,
+        "N": 1002,
+        "W": 130,
+        "L": 872,
         "P": 0,
-        "profit": -281.65,
-        "ROI": -29.31
+        "profit": -288.25,
+        "ROI": -28.77
       },
       "without_top3": {
-        "N": 958,
-        "W": 121,
-        "L": 837,
+        "N": 999,
+        "W": 127,
+        "L": 872,
         "P": 0,
-        "profit": -299.05,
-        "ROI": -31.22
+        "profit": -305.65,
+        "ROI": -30.6
       }
     },
     "7,00 и выше": {
-      "recorded": 328,
-      "settled": 324,
-      "pending": 4,
+      "recorded": 347,
+      "settled": 346,
+      "pending": 1,
       "void": 0,
       "result": {
-        "N": 324,
-        "W": 16,
-        "L": 308,
+        "N": 346,
+        "W": 18,
+        "L": 328,
         "P": 0,
-        "profit": -199.4,
-        "ROI": -61.54
+        "profit": -206.6,
+        "ROI": -59.71
       },
       "without_top3": {
-        "N": 321,
-        "W": 13,
-        "L": 308,
+        "N": 343,
+        "W": 15,
+        "L": 328,
         "P": 0,
-        "profit": -223.5,
-        "ROI": -69.63
+        "profit": -230.7,
+        "ROI": -67.26
       }
     }
   },
@@ -2504,47 +2504,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 1519,
-        "settled": 1506,
-        "pending": 13,
+        "recorded": 1540,
+        "settled": 1529,
+        "pending": 11,
         "void": 0,
         "result": {
-          "N": 1506,
-          "W": 537,
-          "L": 969,
+          "N": 1529,
+          "W": 546,
+          "L": 983,
           "P": 0,
-          "profit": -132.8,
-          "ROI": -8.82
+          "profit": -132.425,
+          "ROI": -8.66
         },
         "without_top3": {
-          "N": 1503,
-          "W": 534,
-          "L": 969,
+          "N": 1526,
+          "W": 543,
+          "L": 983,
           "P": 0,
-          "profit": -138.4,
-          "ROI": -9.21
+          "profit": -138.025,
+          "ROI": -9.04
         }
       },
       "3,00-4,99": {
-        "recorded": 1429,
-        "settled": 1416,
-        "pending": 13,
+        "recorded": 1451,
+        "settled": 1441,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 1416,
-          "W": 389,
-          "L": 1027,
+          "N": 1441,
+          "W": 398,
+          "L": 1043,
           "P": 0,
-          "profit": -160.2,
-          "ROI": -11.31
+          "profit": -156.25,
+          "ROI": -10.84
         },
         "without_top3": {
-          "N": 1413,
-          "W": 386,
-          "L": 1027,
+          "N": 1438,
+          "W": 395,
+          "L": 1043,
           "P": 0,
-          "profit": -169.8,
-          "ROI": -12.02
+          "profit": -165.85,
+          "ROI": -11.53
         }
       },
       "5,00-6,99": {
@@ -2638,53 +2638,53 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 354,
-        "settled": 348,
-        "pending": 6,
+        "recorded": 360,
+        "settled": 356,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 348,
-          "W": 123,
-          "L": 225,
+          "N": 356,
+          "W": 127,
+          "L": 229,
           "P": 0,
-          "profit": -23.475,
-          "ROI": -6.75
+          "profit": -20.525,
+          "ROI": -5.77
         },
         "without_top3": {
-          "N": 345,
-          "W": 120,
-          "L": 225,
+          "N": 353,
+          "W": 124,
+          "L": 229,
           "P": 0,
-          "profit": -29.025,
-          "ROI": -8.41
+          "profit": -26.075,
+          "ROI": -7.39
         }
       },
       "3,00-4,99": {
-        "recorded": 1425,
-        "settled": 1405,
-        "pending": 20,
+        "recorded": 1461,
+        "settled": 1448,
+        "pending": 13,
         "void": 0,
         "result": {
-          "N": 1405,
-          "W": 366,
-          "L": 1039,
+          "N": 1448,
+          "W": 378,
+          "L": 1070,
           "P": 0,
-          "profit": -124.1,
-          "ROI": -8.83
+          "profit": -124.15,
+          "ROI": -8.57
         },
         "without_top3": {
-          "N": 1402,
-          "W": 363,
-          "L": 1039,
+          "N": 1445,
+          "W": 375,
+          "L": 1070,
           "P": 0,
-          "profit": -135.35,
-          "ROI": -9.65
+          "profit": -135.4,
+          "ROI": -9.37
         }
       },
       "5,00-6,99": {
-        "recorded": 102,
+        "recorded": 103,
         "settled": 100,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 100,
@@ -2772,91 +2772,91 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 76,
-        "settled": 75,
-        "pending": 1,
+        "recorded": 78,
+        "settled": 76,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 75,
-          "W": 29,
+          "N": 76,
+          "W": 30,
           "L": 46,
           "P": 0,
-          "profit": 2.025,
-          "ROI": 2.7
+          "profit": 3.875,
+          "ROI": 5.1
         },
         "without_top3": {
-          "N": 72,
-          "W": 26,
+          "N": 73,
+          "W": 27,
           "L": 46,
           "P": 0,
-          "profit": -3.525,
-          "ROI": -4.9
+          "profit": -1.675,
+          "ROI": -2.29
         }
       },
       "3,00-4,99": {
-        "recorded": 1233,
-        "settled": 1205,
-        "pending": 28,
+        "recorded": 1275,
+        "settled": 1256,
+        "pending": 19,
         "void": 0,
         "result": {
-          "N": 1205,
-          "W": 269,
-          "L": 936,
+          "N": 1256,
+          "W": 283,
+          "L": 973,
           "P": 0,
-          "profit": -157.3,
-          "ROI": -13.05
+          "profit": -154.9,
+          "ROI": -12.33
         },
         "without_top3": {
-          "N": 1202,
-          "W": 266,
-          "L": 936,
+          "N": 1253,
+          "W": 280,
+          "L": 973,
           "P": 0,
-          "profit": -168.8,
-          "ROI": -14.04
+          "profit": -166.4,
+          "ROI": -13.28
         }
       },
       "5,00-6,99": {
-        "recorded": 961,
-        "settled": 943,
-        "pending": 18,
+        "recorded": 1000,
+        "settled": 984,
+        "pending": 16,
         "void": 0,
         "result": {
-          "N": 943,
-          "W": 120,
-          "L": 823,
+          "N": 984,
+          "W": 126,
+          "L": 858,
           "P": 0,
-          "profit": -278.1,
-          "ROI": -29.49
+          "profit": -284.7,
+          "ROI": -28.93
         },
         "without_top3": {
-          "N": 940,
-          "W": 117,
-          "L": 823,
+          "N": 981,
+          "W": 123,
+          "L": 858,
           "P": 0,
-          "profit": -295.5,
-          "ROI": -31.44
+          "profit": -302.1,
+          "ROI": -30.8
         }
       },
       "7,00 и выше": {
-        "recorded": 328,
-        "settled": 324,
-        "pending": 4,
+        "recorded": 347,
+        "settled": 346,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 324,
-          "W": 16,
-          "L": 308,
+          "N": 346,
+          "W": 18,
+          "L": 328,
           "P": 0,
-          "profit": -199.4,
-          "ROI": -61.54
+          "profit": -206.6,
+          "ROI": -59.71
         },
         "without_top3": {
-          "N": 321,
-          "W": 13,
-          "L": 308,
+          "N": 343,
+          "W": 15,
+          "L": 328,
           "P": 0,
-          "profit": -223.5,
-          "ROI": -69.63
+          "profit": -230.7,
+          "ROI": -67.26
         }
       }
     }
@@ -2908,47 +2908,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 1455,
-        "settled": 1442,
-        "pending": 13,
+        "recorded": 1473,
+        "settled": 1462,
+        "pending": 11,
         "void": 0,
         "result": {
-          "N": 1442,
-          "W": 512,
-          "L": 930,
+          "N": 1462,
+          "W": 520,
+          "L": 942,
           "P": 0,
-          "profit": -132.4,
-          "ROI": -9.18
+          "profit": -131.375,
+          "ROI": -8.99
         },
         "without_top3": {
-          "N": 1439,
-          "W": 509,
-          "L": 930,
+          "N": 1459,
+          "W": 517,
+          "L": 942,
           "P": 0,
-          "profit": -138.0,
-          "ROI": -9.59
+          "profit": -136.975,
+          "ROI": -9.39
         }
       },
       "3,00-4,99": {
-        "recorded": 1045,
-        "settled": 1036,
-        "pending": 9,
+        "recorded": 1057,
+        "settled": 1050,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 1036,
-          "W": 290,
-          "L": 746,
+          "N": 1050,
+          "W": 295,
+          "L": 755,
           "P": 0,
-          "profit": -95.45,
-          "ROI": -9.21
+          "profit": -93.85,
+          "ROI": -8.94
         },
         "without_top3": {
-          "N": 1033,
-          "W": 287,
-          "L": 746,
+          "N": 1047,
+          "W": 292,
+          "L": 755,
           "P": 0,
-          "profit": -105.05,
-          "ROI": -10.17
+          "profit": -103.45,
+          "ROI": -9.88
         }
       },
       "5,00-6,99": {
@@ -3042,47 +3042,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 641,
-        "settled": 635,
+        "recorded": 654,
+        "settled": 648,
         "pending": 6,
         "void": 0,
         "result": {
-          "N": 635,
-          "W": 221,
-          "L": 414,
+          "N": 648,
+          "W": 225,
+          "L": 423,
           "P": 0,
-          "profit": -54.375,
-          "ROI": -8.56
+          "profit": -56.775,
+          "ROI": -8.76
         },
         "without_top3": {
-          "N": 632,
-          "W": 218,
-          "L": 414,
+          "N": 645,
+          "W": 222,
+          "L": 423,
           "P": 0,
-          "profit": -59.975,
-          "ROI": -9.49
+          "profit": -62.375,
+          "ROI": -9.67
         }
       },
       "3,00-4,99": {
-        "recorded": 959,
-        "settled": 946,
-        "pending": 13,
+        "recorded": 980,
+        "settled": 970,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 946,
-          "W": 250,
-          "L": 696,
+          "N": 970,
+          "W": 258,
+          "L": 712,
           "P": 0,
-          "profit": -106.95,
-          "ROI": -11.31
+          "profit": -103.5,
+          "ROI": -10.67
         },
         "without_top3": {
-          "N": 943,
-          "W": 247,
-          "L": 696,
+          "N": 967,
+          "W": 255,
+          "L": 712,
           "P": 0,
-          "profit": -116.95,
-          "ROI": -12.4
+          "profit": -113.5,
+          "ROI": -11.74
         }
       },
       "5,00-6,99": {
@@ -3176,47 +3176,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 335,
-        "settled": 331,
+        "recorded": 341,
+        "settled": 337,
         "pending": 4,
         "void": 0,
         "result": {
-          "N": 331,
-          "W": 114,
-          "L": 217,
+          "N": 337,
+          "W": 116,
+          "L": 221,
           "P": 0,
-          "profit": -30.7,
-          "ROI": -9.27
+          "profit": -31.35,
+          "ROI": -9.3
         },
         "without_top3": {
-          "N": 328,
-          "W": 111,
-          "L": 217,
+          "N": 334,
+          "W": 113,
+          "L": 221,
           "P": 0,
-          "profit": -36.25,
+          "profit": -36.9,
           "ROI": -11.05
         }
       },
       "3,00-4,99": {
-        "recorded": 1118,
-        "settled": 1102,
-        "pending": 16,
+        "recorded": 1147,
+        "settled": 1135,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 1102,
-          "W": 294,
-          "L": 808,
+          "N": 1135,
+          "W": 304,
+          "L": 831,
           "P": 0,
-          "profit": -72.55,
-          "ROI": -6.58
+          "profit": -69.15,
+          "ROI": -6.09
         },
         "without_top3": {
-          "N": 1099,
-          "W": 291,
-          "L": 808,
+          "N": 1132,
+          "W": 301,
+          "L": 831,
           "P": 0,
-          "profit": -83.5,
-          "ROI": -7.6
+          "profit": -80.1,
+          "ROI": -7.08
         }
       },
       "5,00-6,99": {
@@ -3310,53 +3310,53 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 138,
-        "settled": 134,
-        "pending": 4,
+        "recorded": 142,
+        "settled": 139,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 134,
-          "W": 52,
-          "L": 82,
+          "N": 139,
+          "W": 55,
+          "L": 84,
           "P": 0,
-          "profit": 4.85,
-          "ROI": 3.62
+          "profit": 8.2,
+          "ROI": 5.9
         },
         "without_top3": {
-          "N": 131,
-          "W": 49,
-          "L": 82,
+          "N": 136,
+          "W": 52,
+          "L": 84,
           "P": 0,
-          "profit": -0.7,
-          "ROI": -0.53
+          "profit": 2.65,
+          "ROI": 1.95
         }
       },
       "3,00-4,99": {
-        "recorded": 1234,
-        "settled": 1216,
-        "pending": 18,
+        "recorded": 1262,
+        "settled": 1253,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 1216,
-          "W": 308,
-          "L": 908,
+          "N": 1253,
+          "W": 319,
+          "L": 934,
           "P": 0,
-          "profit": -64.9,
-          "ROI": -5.34
+          "profit": -58.95,
+          "ROI": -4.7
         },
         "without_top3": {
-          "N": 1213,
-          "W": 305,
-          "L": 908,
+          "N": 1250,
+          "W": 316,
+          "L": 934,
           "P": 0,
-          "profit": -76.0,
-          "ROI": -6.27
+          "profit": -70.05,
+          "ROI": -5.6
         }
       },
       "5,00-6,99": {
-        "recorded": 100,
+        "recorded": 101,
         "settled": 98,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 98,
@@ -3444,90 +3444,90 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 52,
-        "settled": 51,
-        "pending": 1,
+        "recorded": 54,
+        "settled": 52,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 51,
-          "W": 20,
+          "N": 52,
+          "W": 21,
           "L": 31,
           "P": 0,
-          "profit": 3.55,
-          "ROI": 6.96
+          "profit": 5.4,
+          "ROI": 10.38
         },
         "without_top3": {
-          "N": 48,
-          "W": 17,
+          "N": 49,
+          "W": 18,
           "L": 31,
           "P": 0,
-          "profit": -2.0,
-          "ROI": -4.17
+          "profit": -0.15,
+          "ROI": -0.31
         }
       },
       "3,00-4,99": {
-        "recorded": 1031,
-        "settled": 1010,
-        "pending": 21,
+        "recorded": 1058,
+        "settled": 1048,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 1010,
-          "W": 234,
-          "L": 776,
+          "N": 1048,
+          "W": 245,
+          "L": 803,
           "P": 0,
-          "profit": -95.6,
-          "ROI": -9.47
+          "profit": -90.65,
+          "ROI": -8.65
         },
         "without_top3": {
-          "N": 1007,
-          "W": 231,
-          "L": 776,
+          "N": 1045,
+          "W": 242,
+          "L": 803,
           "P": 0,
-          "profit": -107.1,
-          "ROI": -10.64
+          "profit": -102.15,
+          "ROI": -9.78
         }
       },
       "5,00-6,99": {
-        "recorded": 365,
-        "settled": 360,
-        "pending": 5,
+        "recorded": 379,
+        "settled": 373,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 360,
-          "W": 56,
-          "L": 304,
+          "N": 373,
+          "W": 57,
+          "L": 316,
           "P": 0,
-          "profit": -56.2,
-          "ROI": -15.61
+          "profit": -64.2,
+          "ROI": -17.21
         },
         "without_top3": {
-          "N": 357,
-          "W": 53,
-          "L": 304,
+          "N": 370,
+          "W": 54,
+          "L": 316,
           "P": 0,
-          "profit": -72.25,
-          "ROI": -20.24
+          "profit": -80.25,
+          "ROI": -21.69
         }
       },
       "7,00 и выше": {
-        "recorded": 13,
-        "settled": 13,
+        "recorded": 14,
+        "settled": 14,
         "pending": 0,
         "void": 0,
         "result": {
-          "N": 13,
+          "N": 14,
           "W": 3,
-          "L": 10,
+          "L": 11,
           "P": 0,
-          "profit": 8.8,
-          "ROI": 67.69
+          "profit": 7.8,
+          "ROI": 55.71
         },
         "without_top3": {
-          "N": 10,
+          "N": 11,
           "W": 0,
-          "L": 10,
+          "L": 11,
           "P": 0,
-          "profit": -10.0,
+          "profit": -11.0,
           "ROI": -100.0
         }
       }
@@ -3578,91 +3578,91 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 37,
-        "settled": 36,
+        "recorded": 38,
+        "settled": 37,
         "pending": 1,
         "void": 0,
         "result": {
-          "N": 36,
-          "W": 13,
+          "N": 37,
+          "W": 14,
           "L": 23,
           "P": 0,
-          "profit": -3.025,
-          "ROI": -8.4
+          "profit": -1.175,
+          "ROI": -3.18
         },
         "without_top3": {
-          "N": 33,
-          "W": 10,
+          "N": 34,
+          "W": 11,
           "L": 23,
           "P": 0,
-          "profit": -8.475,
-          "ROI": -25.68
+          "profit": -6.725,
+          "ROI": -19.78
         }
       },
       "3,00-4,99": {
-        "recorded": 750,
-        "settled": 730,
-        "pending": 20,
+        "recorded": 778,
+        "settled": 766,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 730,
-          "W": 142,
-          "L": 588,
+          "N": 766,
+          "W": 151,
+          "L": 615,
           "P": 0,
-          "profit": -159.65,
-          "ROI": -21.87
+          "profit": -162.0,
+          "ROI": -21.15
         },
         "without_top3": {
-          "N": 727,
-          "W": 139,
-          "L": 588,
+          "N": 763,
+          "W": 148,
+          "L": 615,
           "P": 0,
-          "profit": -171.05,
-          "ROI": -23.53
+          "profit": -173.4,
+          "ROI": -22.73
         }
       },
       "5,00-6,99": {
-        "recorded": 851,
-        "settled": 834,
-        "pending": 17,
+        "recorded": 889,
+        "settled": 874,
+        "pending": 15,
         "void": 0,
         "result": {
-          "N": 834,
-          "W": 98,
-          "L": 736,
+          "N": 874,
+          "W": 104,
+          "L": 770,
           "P": 0,
-          "profit": -272.2,
-          "ROI": -32.64
+          "profit": -277.8,
+          "ROI": -31.78
         },
         "without_top3": {
-          "N": 831,
-          "W": 95,
-          "L": 736,
+          "N": 871,
+          "W": 101,
+          "L": 770,
           "P": 0,
-          "profit": -289.6,
-          "ROI": -34.85
+          "profit": -295.2,
+          "ROI": -33.89
         }
       },
       "7,00 и выше": {
-        "recorded": 326,
-        "settled": 322,
-        "pending": 4,
+        "recorded": 345,
+        "settled": 344,
+        "pending": 1,
         "void": 0,
         "result": {
-          "N": 322,
-          "W": 15,
-          "L": 307,
+          "N": 344,
+          "W": 17,
+          "L": 327,
           "P": 0,
-          "profit": -203.7,
-          "ROI": -63.26
+          "profit": -210.9,
+          "ROI": -61.31
         },
         "without_top3": {
-          "N": 319,
-          "W": 12,
-          "L": 307,
+          "N": 341,
+          "W": 14,
+          "L": 327,
           "P": 0,
-          "profit": -227.8,
-          "ROI": -71.41
+          "profit": -235.0,
+          "ROI": -68.91
         }
       }
     }
@@ -3713,91 +3713,91 @@
       }
     },
     "2,00-2,99": {
-      "recorded": 469,
-      "settled": 457,
-      "pending": 12,
+      "recorded": 490,
+      "settled": 482,
+      "pending": 8,
       "void": 0,
       "result": {
-        "N": 457,
-        "W": 166,
-        "L": 291,
+        "N": 482,
+        "W": 177,
+        "L": 305,
         "P": 0,
-        "profit": -33.85,
-        "ROI": -7.41
+        "profit": -29.875,
+        "ROI": -6.2
       },
       "without_top3": {
-        "N": 454,
-        "W": 163,
-        "L": 291,
+        "N": 479,
+        "W": 174,
+        "L": 305,
         "P": 0,
-        "profit": -39.4,
-        "ROI": -8.68
+        "profit": -35.425,
+        "ROI": -7.4
       }
     },
     "3,00-4,99": {
-      "recorded": 984,
-      "settled": 953,
-      "pending": 31,
+      "recorded": 1039,
+      "settled": 1017,
+      "pending": 22,
       "void": 0,
       "result": {
-        "N": 953,
-        "W": 264,
-        "L": 689,
+        "N": 1017,
+        "W": 281,
+        "L": 736,
         "P": 0,
-        "profit": -72.65,
-        "ROI": -7.62
+        "profit": -80.85,
+        "ROI": -7.95
       },
       "without_top3": {
-        "N": 950,
-        "W": 261,
-        "L": 689,
+        "N": 1014,
+        "W": 278,
+        "L": 736,
         "P": 0,
-        "profit": -84.15,
-        "ROI": -8.86
+        "profit": -92.35,
+        "ROI": -9.11
       }
     },
     "5,00-6,99": {
-      "recorded": 541,
-      "settled": 524,
-      "pending": 17,
+      "recorded": 580,
+      "settled": 565,
+      "pending": 15,
       "void": 0,
       "result": {
-        "N": 524,
-        "W": 80,
-        "L": 444,
+        "N": 565,
+        "W": 86,
+        "L": 479,
         "P": 0,
-        "profit": -87.0,
-        "ROI": -16.6
+        "profit": -93.6,
+        "ROI": -16.57
       },
       "without_top3": {
-        "N": 521,
-        "W": 77,
-        "L": 444,
+        "N": 562,
+        "W": 83,
+        "L": 479,
         "P": 0,
-        "profit": -104.0,
-        "ROI": -19.96
+        "profit": -110.6,
+        "ROI": -19.68
       }
     },
     "7,00 и выше": {
-      "recorded": 120,
-      "settled": 117,
-      "pending": 3,
+      "recorded": 139,
+      "settled": 139,
+      "pending": 0,
       "void": 0,
       "result": {
-        "N": 117,
-        "W": 9,
-        "L": 108,
+        "N": 139,
+        "W": 11,
+        "L": 128,
         "P": 0,
-        "profit": -48.2,
-        "ROI": -41.2
+        "profit": -55.4,
+        "ROI": -39.86
       },
       "without_top3": {
-        "N": 114,
-        "W": 6,
-        "L": 108,
+        "N": 136,
+        "W": 8,
+        "L": 128,
         "P": 0,
-        "profit": -70.4,
-        "ROI": -61.75
+        "profit": -77.6,
+        "ROI": -57.06
       }
     }
   },
@@ -3848,47 +3848,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 438,
-        "settled": 429,
-        "pending": 9,
+        "recorded": 459,
+        "settled": 452,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 429,
-          "W": 154,
-          "L": 275,
+          "N": 452,
+          "W": 163,
+          "L": 289,
           "P": 0,
-          "profit": -36.25,
-          "ROI": -8.45
+          "profit": -35.875,
+          "ROI": -7.94
         },
         "without_top3": {
-          "N": 426,
-          "W": 151,
-          "L": 275,
+          "N": 449,
+          "W": 160,
+          "L": 289,
           "P": 0,
-          "profit": -41.8,
-          "ROI": -9.81
+          "profit": -41.425,
+          "ROI": -9.23
         }
       },
       "3,00-4,99": {
-        "recorded": 423,
-        "settled": 411,
-        "pending": 12,
+        "recorded": 445,
+        "settled": 436,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 411,
-          "W": 114,
-          "L": 297,
+          "N": 436,
+          "W": 123,
+          "L": 313,
           "P": 0,
-          "profit": -45.6,
-          "ROI": -11.09
+          "profit": -41.65,
+          "ROI": -9.55
         },
         "without_top3": {
-          "N": 408,
-          "W": 111,
-          "L": 297,
+          "N": 433,
+          "W": 120,
+          "L": 313,
           "P": 0,
-          "profit": -54.4,
-          "ROI": -13.33
+          "profit": -50.45,
+          "ROI": -11.65
         }
       },
       "5,00-6,99": {
@@ -3982,53 +3982,53 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 199,
-        "settled": 193,
-        "pending": 6,
+        "recorded": 205,
+        "settled": 201,
+        "pending": 4,
         "void": 0,
         "result": {
-          "N": 193,
-          "W": 70,
-          "L": 123,
+          "N": 201,
+          "W": 74,
+          "L": 127,
           "P": 0,
-          "profit": -8.025,
-          "ROI": -4.16
+          "profit": -5.075,
+          "ROI": -2.52
         },
         "without_top3": {
-          "N": 190,
-          "W": 67,
-          "L": 123,
+          "N": 198,
+          "W": 71,
+          "L": 127,
           "P": 0,
-          "profit": -13.575,
-          "ROI": -7.14
+          "profit": -10.625,
+          "ROI": -5.37
         }
       },
       "3,00-4,99": {
-        "recorded": 768,
-        "settled": 749,
-        "pending": 19,
+        "recorded": 804,
+        "settled": 792,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 749,
-          "W": 194,
-          "L": 555,
+          "N": 792,
+          "W": 206,
+          "L": 586,
           "P": 0,
-          "profit": -75.3,
-          "ROI": -10.05
+          "profit": -75.35,
+          "ROI": -9.51
         },
         "without_top3": {
-          "N": 746,
-          "W": 191,
-          "L": 555,
+          "N": 789,
+          "W": 203,
+          "L": 586,
           "P": 0,
-          "profit": -86.55,
-          "ROI": -11.6
+          "profit": -86.6,
+          "ROI": -10.98
         }
       },
       "5,00-6,99": {
-        "recorded": 59,
+        "recorded": 60,
         "settled": 58,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 58,
@@ -4116,91 +4116,91 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 52,
-        "settled": 51,
-        "pending": 1,
+        "recorded": 54,
+        "settled": 52,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 51,
-          "W": 21,
+          "N": 52,
+          "W": 22,
           "L": 30,
           "P": 0,
-          "profit": 4.125,
-          "ROI": 8.09
+          "profit": 5.975,
+          "ROI": 11.49
         },
         "without_top3": {
-          "N": 48,
-          "W": 18,
+          "N": 49,
+          "W": 19,
           "L": 30,
           "P": 0,
-          "profit": -1.425,
-          "ROI": -2.97
+          "profit": 0.425,
+          "ROI": 0.87
         }
       },
       "3,00-4,99": {
-        "recorded": 768,
-        "settled": 740,
-        "pending": 28,
+        "recorded": 810,
+        "settled": 791,
+        "pending": 19,
         "void": 0,
         "result": {
-          "N": 740,
-          "W": 169,
-          "L": 571,
+          "N": 791,
+          "W": 183,
+          "L": 608,
           "P": 0,
-          "profit": -85.65,
-          "ROI": -11.57
+          "profit": -83.25,
+          "ROI": -10.52
         },
         "without_top3": {
-          "N": 737,
-          "W": 166,
-          "L": 571,
+          "N": 788,
+          "W": 180,
+          "L": 608,
           "P": 0,
-          "profit": -97.15,
-          "ROI": -13.18
+          "profit": -94.75,
+          "ROI": -12.02
         }
       },
       "5,00-6,99": {
-        "recorded": 535,
-        "settled": 518,
-        "pending": 17,
+        "recorded": 574,
+        "settled": 559,
+        "pending": 15,
         "void": 0,
         "result": {
-          "N": 518,
-          "W": 79,
-          "L": 439,
+          "N": 559,
+          "W": 85,
+          "L": 474,
           "P": 0,
-          "profit": -80.95,
-          "ROI": -15.63
+          "profit": -87.55,
+          "ROI": -15.66
         },
         "without_top3": {
-          "N": 515,
-          "W": 76,
-          "L": 439,
+          "N": 556,
+          "W": 82,
+          "L": 474,
           "P": 0,
-          "profit": -97.95,
-          "ROI": -19.02
+          "profit": -104.55,
+          "ROI": -18.8
         }
       },
       "7,00 и выше": {
-        "recorded": 120,
-        "settled": 117,
-        "pending": 3,
+        "recorded": 139,
+        "settled": 139,
+        "pending": 0,
         "void": 0,
         "result": {
-          "N": 117,
-          "W": 9,
-          "L": 108,
+          "N": 139,
+          "W": 11,
+          "L": 128,
           "P": 0,
-          "profit": -48.2,
-          "ROI": -41.2
+          "profit": -55.4,
+          "ROI": -39.86
         },
         "without_top3": {
-          "N": 114,
-          "W": 6,
-          "L": 108,
+          "N": 136,
+          "W": 8,
+          "L": 128,
           "P": 0,
-          "profit": -70.4,
-          "ROI": -61.75
+          "profit": -77.6,
+          "ROI": -57.06
         }
       }
     }
@@ -4252,47 +4252,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 408,
-        "settled": 399,
-        "pending": 9,
+        "recorded": 426,
+        "settled": 419,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 399,
-          "W": 141,
-          "L": 258,
+          "N": 419,
+          "W": 149,
+          "L": 270,
           "P": 0,
-          "profit": -39.9,
-          "ROI": -10.0
+          "profit": -38.875,
+          "ROI": -9.28
         },
         "without_top3": {
-          "N": 396,
-          "W": 138,
-          "L": 258,
+          "N": 416,
+          "W": 146,
+          "L": 270,
           "P": 0,
-          "profit": -45.45,
-          "ROI": -11.48
+          "profit": -44.425,
+          "ROI": -10.68
         }
       },
       "3,00-4,99": {
-        "recorded": 261,
-        "settled": 253,
-        "pending": 8,
+        "recorded": 273,
+        "settled": 267,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 253,
-          "W": 75,
-          "L": 178,
+          "N": 267,
+          "W": 80,
+          "L": 187,
           "P": 0,
-          "profit": -12.8,
-          "ROI": -5.06
+          "profit": -11.2,
+          "ROI": -4.19
         },
         "without_top3": {
-          "N": 250,
-          "W": 72,
-          "L": 178,
+          "N": 264,
+          "W": 77,
+          "L": 187,
           "P": 0,
-          "profit": -21.05,
-          "ROI": -8.42
+          "profit": -19.45,
+          "ROI": -7.37
         }
       },
       "5,00-6,99": {
@@ -4386,47 +4386,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 297,
-        "settled": 293,
+        "recorded": 310,
+        "settled": 306,
         "pending": 4,
         "void": 0,
         "result": {
-          "N": 293,
-          "W": 112,
-          "L": 181,
+          "N": 306,
+          "W": 116,
+          "L": 190,
           "P": 0,
-          "profit": 2.15,
-          "ROI": 0.73
+          "profit": -0.25,
+          "ROI": -0.08
         },
         "without_top3": {
-          "N": 290,
-          "W": 109,
-          "L": 181,
+          "N": 303,
+          "W": 113,
+          "L": 190,
           "P": 0,
-          "profit": -3.45,
-          "ROI": -1.19
+          "profit": -5.85,
+          "ROI": -1.93
         }
       },
       "3,00-4,99": {
-        "recorded": 411,
-        "settled": 399,
-        "pending": 12,
+        "recorded": 432,
+        "settled": 423,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 399,
-          "W": 107,
-          "L": 292,
+          "N": 423,
+          "W": 115,
+          "L": 308,
           "P": 0,
-          "profit": -40.1,
-          "ROI": -10.05
+          "profit": -36.65,
+          "ROI": -8.66
         },
         "without_top3": {
-          "N": 396,
-          "W": 104,
-          "L": 292,
+          "N": 420,
+          "W": 112,
+          "L": 308,
           "P": 0,
-          "profit": -49.4,
-          "ROI": -12.47
+          "profit": -46.15,
+          "ROI": -10.99
         }
       },
       "5,00-6,99": {
@@ -4520,47 +4520,47 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 185,
-        "settled": 181,
+        "recorded": 191,
+        "settled": 187,
         "pending": 4,
         "void": 0,
         "result": {
-          "N": 181,
-          "W": 63,
-          "L": 118,
+          "N": 187,
+          "W": 65,
+          "L": 122,
           "P": 0,
-          "profit": -15.075,
-          "ROI": -8.33
+          "profit": -15.725,
+          "ROI": -8.41
         },
         "without_top3": {
-          "N": 178,
-          "W": 60,
-          "L": 118,
+          "N": 184,
+          "W": 62,
+          "L": 122,
           "P": 0,
-          "profit": -20.625,
-          "ROI": -11.59
+          "profit": -21.275,
+          "ROI": -11.56
         }
       },
       "3,00-4,99": {
-        "recorded": 561,
-        "settled": 546,
-        "pending": 15,
+        "recorded": 590,
+        "settled": 579,
+        "pending": 11,
         "void": 0,
         "result": {
-          "N": 546,
-          "W": 148,
-          "L": 398,
+          "N": 579,
+          "W": 158,
+          "L": 421,
           "P": 0,
-          "profit": -34.15,
-          "ROI": -6.25
+          "profit": -30.75,
+          "ROI": -5.31
         },
         "without_top3": {
-          "N": 543,
-          "W": 145,
-          "L": 398,
+          "N": 576,
+          "W": 155,
+          "L": 421,
           "P": 0,
-          "profit": -45.1,
-          "ROI": -8.31
+          "profit": -41.7,
+          "ROI": -7.24
         }
       },
       "5,00-6,99": {
@@ -4654,53 +4654,53 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 80,
-        "settled": 76,
-        "pending": 4,
+        "recorded": 84,
+        "settled": 81,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 76,
-          "W": 30,
-          "L": 46,
+          "N": 81,
+          "W": 33,
+          "L": 48,
           "P": 0,
-          "profit": 4.1,
-          "ROI": 5.39
+          "profit": 7.45,
+          "ROI": 9.2
         },
         "without_top3": {
-          "N": 73,
-          "W": 27,
-          "L": 46,
+          "N": 78,
+          "W": 30,
+          "L": 48,
           "P": 0,
-          "profit": -1.45,
-          "ROI": -1.99
+          "profit": 1.9,
+          "ROI": 2.44
         }
       },
       "3,00-4,99": {
-        "recorded": 699,
-        "settled": 681,
-        "pending": 18,
+        "recorded": 727,
+        "settled": 718,
+        "pending": 9,
         "void": 0,
         "result": {
-          "N": 681,
-          "W": 169,
-          "L": 512,
+          "N": 718,
+          "W": 180,
+          "L": 538,
           "P": 0,
-          "profit": -53.0,
-          "ROI": -7.78
+          "profit": -47.05,
+          "ROI": -6.55
         },
         "without_top3": {
-          "N": 678,
-          "W": 166,
-          "L": 512,
+          "N": 715,
+          "W": 177,
+          "L": 538,
           "P": 0,
-          "profit": -64.1,
-          "ROI": -9.45
+          "profit": -58.15,
+          "ROI": -8.13
         }
       },
       "5,00-6,99": {
-        "recorded": 58,
+        "recorded": 59,
         "settled": 57,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 57,
@@ -4788,90 +4788,90 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 34,
-        "settled": 33,
-        "pending": 1,
+        "recorded": 36,
+        "settled": 34,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 33,
-          "W": 14,
+          "N": 34,
+          "W": 15,
           "L": 19,
           "P": 0,
-          "profit": 5.075,
-          "ROI": 15.38
+          "profit": 6.925,
+          "ROI": 20.37
         },
         "without_top3": {
-          "N": 30,
-          "W": 11,
+          "N": 31,
+          "W": 12,
           "L": 19,
           "P": 0,
-          "profit": -0.475,
-          "ROI": -1.58
+          "profit": 1.375,
+          "ROI": 4.44
         }
       },
       "3,00-4,99": {
-        "recorded": 631,
-        "settled": 610,
-        "pending": 21,
+        "recorded": 658,
+        "settled": 648,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 610,
-          "W": 139,
-          "L": 471,
+          "N": 648,
+          "W": 150,
+          "L": 498,
           "P": 0,
-          "profit": -69.85,
-          "ROI": -11.45
+          "profit": -64.9,
+          "ROI": -10.02
         },
         "without_top3": {
-          "N": 607,
-          "W": 136,
-          "L": 471,
+          "N": 645,
+          "W": 147,
+          "L": 498,
           "P": 0,
-          "profit": -81.35,
-          "ROI": -13.4
+          "profit": -76.4,
+          "ROI": -11.84
         }
       },
       "5,00-6,99": {
-        "recorded": 221,
-        "settled": 217,
-        "pending": 4,
+        "recorded": 235,
+        "settled": 230,
+        "pending": 5,
         "void": 0,
         "result": {
-          "N": 217,
-          "W": 36,
-          "L": 181,
+          "N": 230,
+          "W": 37,
+          "L": 193,
           "P": 0,
-          "profit": -21.0,
-          "ROI": -9.68
+          "profit": -29.0,
+          "ROI": -12.61
         },
         "without_top3": {
-          "N": 214,
-          "W": 33,
-          "L": 181,
+          "N": 227,
+          "W": 34,
+          "L": 193,
           "P": 0,
-          "profit": -36.9,
-          "ROI": -17.24
+          "profit": -44.9,
+          "ROI": -19.78
         }
       },
       "7,00 и выше": {
-        "recorded": 6,
-        "settled": 6,
+        "recorded": 7,
+        "settled": 7,
         "pending": 0,
         "void": 0,
         "result": {
-          "N": 6,
+          "N": 7,
           "W": 2,
-          "L": 4,
+          "L": 5,
           "P": 0,
-          "profit": 8.4,
-          "ROI": 140.0
+          "profit": 7.4,
+          "ROI": 105.71
         },
         "without_top3": {
-          "N": 3,
+          "N": 4,
           "W": 0,
-          "L": 3,
+          "L": 4,
           "P": 0,
-          "profit": -3.0,
+          "profit": -4.0,
           "ROI": -100.0
         }
       }
@@ -4922,91 +4922,91 @@
         }
       },
       "2,00-2,99": {
-        "recorded": 27,
-        "settled": 26,
+        "recorded": 28,
+        "settled": 27,
         "pending": 1,
         "void": 0,
         "result": {
-          "N": 26,
-          "W": 10,
+          "N": 27,
+          "W": 11,
           "L": 16,
           "P": 0,
-          "profit": -1.125,
-          "ROI": -4.33
+          "profit": 0.725,
+          "ROI": 2.69
         },
         "without_top3": {
-          "N": 23,
-          "W": 7,
+          "N": 24,
+          "W": 8,
           "L": 16,
           "P": 0,
-          "profit": -6.5,
-          "ROI": -28.26
+          "profit": -4.825,
+          "ROI": -20.1
         }
       },
       "3,00-4,99": {
-        "recorded": 509,
-        "settled": 489,
-        "pending": 20,
+        "recorded": 537,
+        "settled": 525,
+        "pending": 12,
         "void": 0,
         "result": {
-          "N": 489,
-          "W": 98,
-          "L": 391,
+          "N": 525,
+          "W": 107,
+          "L": 418,
           "P": 0,
-          "profit": -98.35,
-          "ROI": -20.11
+          "profit": -100.7,
+          "ROI": -19.18
         },
         "without_top3": {
-          "N": 486,
-          "W": 95,
-          "L": 391,
+          "N": 522,
+          "W": 104,
+          "L": 418,
           "P": 0,
-          "profit": -109.75,
-          "ROI": -22.58
+          "profit": -112.1,
+          "ROI": -21.48
         }
       },
       "5,00-6,99": {
-        "recorded": 480,
-        "settled": 463,
-        "pending": 17,
+        "recorded": 518,
+        "settled": 503,
+        "pending": 15,
         "void": 0,
         "result": {
-          "N": 463,
-          "W": 68,
-          "L": 395,
+          "N": 503,
+          "W": 74,
+          "L": 429,
           "P": 0,
-          "profit": -75.15,
-          "ROI": -16.23
+          "profit": -80.75,
+          "ROI": -16.05
         },
         "without_top3": {
-          "N": 460,
-          "W": 65,
-          "L": 395,
+          "N": 500,
+          "W": 71,
+          "L": 429,
           "P": 0,
-          "profit": -92.55,
-          "ROI": -20.12
+          "profit": -98.15,
+          "ROI": -19.63
         }
       },
       "7,00 и выше": {
-        "recorded": 120,
-        "settled": 117,
-        "pending": 3,
+        "recorded": 139,
+        "settled": 139,
+        "pending": 0,
         "void": 0,
         "result": {
-          "N": 117,
-          "W": 9,
-          "L": 108,
+          "N": 139,
+          "W": 11,
+          "L": 128,
           "P": 0,
-          "profit": -47.1,
-          "ROI": -40.26
+          "profit": -54.3,
+          "ROI": -39.06
         },
         "without_top3": {
-          "N": 114,
-          "W": 6,
-          "L": 108,
+          "N": 136,
+          "W": 8,
+          "L": 128,
           "P": 0,
-          "profit": -69.3,
-          "ROI": -60.79
+          "profit": -76.5,
+          "ROI": -56.25
         }
       }
     }
