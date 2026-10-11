@@ -1021,7 +1021,7 @@ if MODE == "scanner":
         and (bool(ONLY_STRATEGY_IDS) or s.get("collection_engine", "scanner.py") == "scanner.py")
     ]
 else:
-    strategies = [s for s in registry["strategies"] if (s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY") and s.get("mining_enabled", True) and s.get("status") != "ARCHIVED"]
+    strategies = [s for s in registry["strategies"] if (s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY") and s.get("mining_enabled", True) and s.get("status") != "ARCHIVED" and s.get("collection_engine", "scanner.py") == "scanner.py"]
 if ONLY_STRATEGY_IDS:
     strategies = [s for s in strategies if s.get("id") in ONLY_STRATEGY_IDS]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}

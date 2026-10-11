@@ -16,7 +16,7 @@ import hockey_period_under as hockey
 
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "hockey_period": 1800})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800})
         self.assertEqual(worker.GENERAL_STRATEGIES, "S04,S05,S21")
 
     @patch.object(worker, "budget", return_value=20)

@@ -21,7 +21,7 @@ CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECON
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
 GENERAL_STRATEGIES = os.environ.get("PUBLIC_MINING_STRATEGIES", "S04,S05,S21")
-COLLECTOR_INTERVALS = {"general": 300, "goal": 300, "hockey_period": 1800}
+COLLECTOR_INTERVALS = {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800}
 
 
 def now():
@@ -101,7 +101,14 @@ def checkpoint():
 
 
 def run_pass(name):
-    if name == "general":
+    if name == "first_half_goals":
+        calls = budget(10 if morning() else 20, 4)
+        if not calls:
+            return False
+        invoke("first-half goal Mining", ["python3", "first_half_goal_mining.py"], {
+            "FIRST_HALF_CALL_BUDGET": str(calls),
+        }, timeout=180)
+    elif name == "general":
         calls = budget(20 if morning() else 40, 2)
         if not calls:
             return False
