@@ -1,6 +1,6 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T13:36:29.785701Z",
+  "updated_at": "2026-10-11T14:06:26.937835Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
   "market_access": "BACKOFF_AFTER_DENIAL",
@@ -13,7 +13,7 @@
     "retry_after_epoch": 1791727608
   },
   "api_calls": 5,
-  "upcoming_seen": 0,
+  "upcoming_seen": 100,
   "history_events": 395,
   "strategies": [
     {
@@ -21,9 +21,9 @@
       "profit_units": null,
       "roi_pct": null,
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
-      "signals": 445,
+      "signals": 461,
       "resolved": 311,
-      "pending": 134,
+      "pending": 150,
       "wins": 111,
       "losses": 200,
       "hit_rate_pct": 35.69,
@@ -35,9 +35,9 @@
       "profit_units": null,
       "roi_pct": null,
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
-      "signals": 445,
+      "signals": 461,
       "resolved": 311,
-      "pending": 134,
+      "pending": 150,
       "wins": 125,
       "losses": 186,
       "hit_rate_pct": 40.19,
@@ -45,9 +45,5 @@
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": [
-    "ended 20261010: HTTPError: HTTP Error 502: Bad Gateway",
-    "upcoming page 1: HTTPError: HTTP Error 502: Bad Gateway",
-    "upcoming page 2: HTTPError: HTTP Error 502: Bad Gateway"
-  ]
+  "errors": []
 }
