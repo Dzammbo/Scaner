@@ -1,33 +1,33 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T11:06:43.103291Z",
+  "updated_at": "2026-10-11T11:36:48.008625Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
-  "market_access": "BACKOFF_AFTER_DENIAL",
+  "market_access": "HTTP_DENIED",
   "price_collection": {
-    "checked_at": "2026-10-11T10:36:03.521971Z",
-    "state": "BACKOFF_AFTER_DENIAL",
+    "checked_at": "2026-10-11T11:36:44.980572Z",
+    "state": "HTTP_DENIED",
     "fixtures_matched": 0,
     "prices_saved": 0,
     "http_status": 403,
-    "retry_after_epoch": 1791718567
+    "retry_after_epoch": 1791722207
   },
-  "api_calls": 5,
-  "upcoming_seen": 50,
-  "history_events": 388,
+  "api_calls": 6,
+  "upcoming_seen": 100,
+  "history_events": 389,
   "strategies": [
     {
       "priced_resolved": 0,
       "profit_units": null,
       "roi_pct": null,
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
-      "signals": 410,
-      "resolved": 304,
-      "pending": 106,
+      "signals": 424,
+      "resolved": 305,
+      "pending": 119,
       "wins": 109,
-      "losses": 195,
-      "hit_rate_pct": 35.86,
-      "break_even_decimal_price": 2.789,
+      "losses": 196,
+      "hit_rate_pct": 35.74,
+      "break_even_decimal_price": 2.798,
       "roi_status": "NO_PRICE_DATA"
     },
     {
@@ -35,18 +35,15 @@
       "profit_units": null,
       "roi_pct": null,
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
-      "signals": 410,
-      "resolved": 304,
-      "pending": 106,
-      "wins": 120,
+      "signals": 424,
+      "resolved": 305,
+      "pending": 119,
+      "wins": 121,
       "losses": 184,
-      "hit_rate_pct": 39.47,
-      "break_even_decimal_price": 2.533,
+      "hit_rate_pct": 39.67,
+      "break_even_decimal_price": 2.521,
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": [
-    "ended 20261009: TimeoutError: The read operation timed out",
-    "upcoming page 2: TimeoutError: The read operation timed out"
-  ]
+  "errors": []
 }
