@@ -1,51 +1,47 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T18:16:39.191372Z",
-  "api_calls": 47,
-  "new_signals": 1,
-  "live_events": 79,
+  "updated_at": "2026-10-11T18:26:37.868568Z",
+  "api_calls": 35,
+  "new_signals": 2,
+  "live_events": 85,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 94,
-      "already_recorded": 9,
-      "checked": 24,
-      "STALE_QUOTE": 7,
-      "DIFFERENT_CURRENT_LINE": 14,
-      "EMPTY_MARKET": 3
+      "eligible_events": 93,
+      "already_recorded": 11,
+      "checked": 26,
+      "DIFFERENT_CURRENT_LINE": 10,
+      "EMPTY_MARKET": 6,
+      "STALE_QUOTE": 8,
+      "VERIFIED": 2
     },
     "S47": {
-      "eligible_events": 94,
-      "already_recorded": 2,
-      "checked": 24,
-      "DIFFERENT_CURRENT_LINE": 21,
-      "EMPTY_MARKET": 3
+      "eligible_events": 93,
+      "already_recorded": 1,
+      "checked": 28,
+      "DIFFERENT_CURRENT_LINE": 22,
+      "EMPTY_MARKET": 6
     },
     "S48": {
-      "eligible_events": 18,
-      "already_recorded": 2,
-      "checked": 12,
-      "DIFFERENT_CURRENT_LINE": 12
+      "eligible_events": 5,
+      "already_recorded": 1,
+      "checked": 3,
+      "DIFFERENT_CURRENT_LINE": 3
     },
-    "S49": {
-      "eligible_events": 9,
-      "checked": 7,
-      "DIFFERENT_CURRENT_LINE": 6,
-      "VERIFIED": 1
-    }
+    "S49": {}
   },
   "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 22,
+      "signals": 26,
       "N": 2,
       "W": 1,
       "L": 1,
       "PUSH": 0,
-      "pending": 20,
+      "pending": 24,
       "void": 0,
       "profit": -0.1,
       "ROI_pct": -5.0,
@@ -53,12 +49,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 21,
+          "signals": 25,
           "N": 2,
           "W": 1,
           "L": 1,
           "PUSH": 0,
-          "pending": 19,
+          "pending": 23,
           "void": 0,
           "profit": -0.1,
           "ROI_pct": -5.0,
@@ -163,12 +159,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 22,
+      "signals": 23,
       "N": 12,
       "W": 7,
       "L": 1,
       "PUSH": 4,
-      "pending": 10,
+      "pending": 11,
       "void": 0,
       "profit": 5.25,
       "ROI_pct": 43.75,
@@ -189,12 +185,12 @@
           "balance_valid": true
         },
         "youth_reserves": {
-          "signals": 5,
+          "signals": 6,
           "N": 1,
           "W": 0,
           "L": 0,
           "PUSH": 1,
-          "pending": 4,
+          "pending": 5,
           "void": 0,
           "profit": 0,
           "ROI_pct": 0.0,
@@ -205,28 +201,28 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 12,
-      "N": 7,
-      "W": 2,
+      "signals": 14,
+      "N": 8,
+      "W": 3,
       "L": 5,
       "PUSH": 0,
-      "pending": 5,
+      "pending": 6,
       "void": 0,
-      "profit": -2.8,
-      "ROI_pct": -40.0,
+      "profit": -2.025,
+      "ROI_pct": -25.313,
       "ROI_without_top3_pct": -100.0,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 12,
-          "N": 7,
-          "W": 2,
+          "signals": 14,
+          "N": 8,
+          "W": 3,
           "L": 5,
           "PUSH": 0,
-          "pending": 5,
+          "pending": 6,
           "void": 0,
-          "profit": -2.8,
-          "ROI_pct": -40.0,
+          "profit": -2.025,
+          "ROI_pct": -25.313,
           "ROI_without_top3_pct": -100.0,
           "balance_valid": true
         }
@@ -235,232 +231,223 @@
   },
   "market_samples": [
     {
-      "event_id": "13273429",
-      "league": "Bermuda Premier League",
+      "event_id": "13104793",
+      "league": "Guatemala Primera Division",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192768369",
-        "over_od": "2.100",
-        "handicap": "1.25",
-        "under_od": "1.700",
-        "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791742541"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791742541,
-          "1_2": 1791742541,
-          "1_3": 1791742541,
-          "1_5": 1791742541,
-          "1_6": 1791742541,
-          "1_8": 1791742541
-        }
-      }
-    },
-    {
-      "event_id": "13276107",
-      "league": "Brazil Campeonato Sergipano U20",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192768379",
-        "over_od": "1.825",
-        "handicap": "0.75",
-        "under_od": "1.975",
-        "ss": "0-0",
-        "time_str": "15",
-        "add_time": "1791742545"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791742545,
-          "1_2": 1791742545,
-          "1_3": 1791742545,
-          "1_5": 1791742545,
-          "1_6": 1791742545,
-          "1_8": 1791742545
-        }
-      }
-    },
-    {
-      "event_id": "13261291",
-      "league": "El Salvador Reserves League",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192768358",
-        "over_od": "1.750",
-        "handicap": "1.75",
-        "under_od": "2.050",
-        "ss": "1-0",
-        "time_str": "14",
-        "add_time": "1791742531"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791742540,
-          "1_2": 1791742540,
-          "1_3": 1791742540,
-          "1_5": 1791742540,
-          "1_6": 1791742540,
-          "1_8": 1791742540
-        }
-      }
-    },
-    {
-      "event_id": "12354956",
-      "league": "Brazil Campeonato Carioca B2",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192768395",
+        "id": "192769604",
         "over_od": "1.975",
-        "handicap": "2.25",
+        "handicap": "0.75",
         "under_od": "1.825",
-        "ss": "1-0",
-        "time_str": "15",
-        "add_time": "1791742555"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791742555,
-          "1_2": 1791742555,
-          "1_3": 1791742555,
-          "1_5": 1791742555,
-          "1_6": 1791742555,
-          "1_8": 1791742555
-        }
-      }
-    },
-    {
-      "event_id": "13217474",
-      "league": "Brazil Campeonato Gaucho 2",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192768365",
-        "over_od": "2.025",
-        "handicap": "0.5",
-        "under_od": "1.775",
         "ss": "0-0",
         "time_str": "14",
-        "add_time": "1791742537"
+        "add_time": "1791743138"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791742555,
-          "1_2": 1791742555,
-          "1_3": 1791742555,
-          "1_5": 1791742555,
-          "1_6": 1791742555,
-          "1_8": 1791742555
+          "1_1": 1791743151,
+          "1_2": 1791743151,
+          "1_3": 1791743151,
+          "1_4": 1791743151,
+          "1_5": 1791743151,
+          "1_6": 1791743151,
+          "1_7": 1791743151,
+          "1_8": 1791743151
         }
       }
     },
     {
-      "event_id": "13185446",
-      "league": "Argentina Torneo A",
-      "mode": "LIVE",
-      "results": {
-        "S49": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192768388",
-        "over_od": "2.050",
-        "handicap": "1.5",
-        "under_od": "1.750",
-        "ss": "1-0",
-        "time_str": "15",
-        "add_time": "1791742551"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791742551,
-          "1_2": 1791742551,
-          "1_3": 1791742551,
-          "1_4": 1791742551,
-          "1_5": 1791742551,
-          "1_6": 1791742551,
-          "1_7": 1791742551,
-          "1_8": 1791742551
-        }
-      }
-    },
-    {
-      "event_id": "12384017",
-      "league": "Andorra Premier Division",
+      "event_id": "12074523",
+      "league": "Poland I Liga",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192768271",
-        "over_od": "1.700",
+        "id": "192769630",
+        "over_od": "1.725",
         "handicap": "0.75",
-        "under_od": "2.100",
+        "under_od": "2.075",
         "ss": "0-0",
-        "time_str": "13",
-        "add_time": "1791742489"
+        "time_str": "10",
+        "add_time": "1791743149"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791742541,
-          "1_2": 1791742541,
-          "1_3": 1791742541,
-          "1_4": 1791742541,
-          "1_5": 1791742541,
-          "1_6": 1791742541,
-          "1_7": 1791742541,
-          "1_8": 1791742541
+          "1_1": 1791743149,
+          "1_2": 1791743149,
+          "1_3": 1791743149,
+          "1_4": 1791743149,
+          "1_5": 1791743149,
+          "1_6": 1791743149,
+          "1_7": 1791743149,
+          "1_8": 1791743149
         }
       }
     },
     {
-      "event_id": "11311753",
-      "league": "Chile Primera B",
+      "event_id": "12026475",
+      "league": "Poland Ekstraklasa",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192768410",
+        "id": "192769587",
         "over_od": "1.850",
         "handicap": "0.75",
         "under_od": "1.950",
         "ss": "0-0",
-        "time_str": "13",
-        "add_time": "1791742560"
+        "time_str": "9",
+        "add_time": "1791743132"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791742560,
-          "1_2": 1791742560,
-          "1_3": 1791742560,
-          "1_4": 1791742560,
-          "1_5": 1791742560,
-          "1_6": 1791742560,
-          "1_7": 1791742560,
-          "1_8": 1791742560
+          "1_1": 1791743157,
+          "1_2": 1791743157,
+          "1_3": 1791743157,
+          "1_4": 1791743157,
+          "1_5": 1791743157,
+          "1_6": 1791743157,
+          "1_7": 1791743157,
+          "1_8": 1791743157
+        }
+      }
+    },
+    {
+      "event_id": "13185447",
+      "league": "Argentina Torneo A",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192700444",
+        "over_od": "1.825",
+        "handicap": "0.5,1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791704679"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791743063,
+          "1_2": 1791742996,
+          "1_3": 1791742996,
+          "1_5": 1791743110,
+          "1_6": 1791707932,
+          "1_8": 1791741021
+        }
+      }
+    },
+    {
+      "event_id": "13263804",
+      "league": "Honduras Liga de Ascenso",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12132204",
+      "league": "Guatemala Liga Nacional",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192688143",
+        "over_od": "1.700",
+        "handicap": "0.5,1.0",
+        "under_od": "2.100",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791689030"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791742955,
+          "1_2": 1791742441,
+          "1_3": 1791742441,
+          "1_4": 1791741115,
+          "1_5": 1791702368,
+          "1_6": 1791726250,
+          "1_7": 1791740226,
+          "1_8": 1791742488
+        }
+      }
+    },
+    {
+      "event_id": "12183753",
+      "league": "Panama LPF",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192648700",
+        "over_od": "1.950",
+        "handicap": "1.0",
+        "under_od": "1.850",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791651647"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791690108,
+          "1_2": 1791681682,
+          "1_3": 1791681682,
+          "1_5": 1791674840,
+          "1_6": 1791681221,
+          "1_8": 1791685985
+        }
+      }
+    },
+    {
+      "event_id": "12289791",
+      "league": "El Salvador Apertura",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192759462",
+        "over_od": "2.075",
+        "handicap": "1.0",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791735074"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791743116,
+          "1_2": 1791742361,
+          "1_3": 1791742361,
+          "1_4": 1791742243,
+          "1_5": 1791736629,
+          "1_6": 1791735074,
+          "1_7": 1791742192,
+          "1_8": 1791742307
         }
       }
     }
