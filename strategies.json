@@ -17,9 +17,9 @@
     ],
     "note": "Not a real-money execution list. Rules are forward/research candidates.",
     "operational_scanner": "TOP_6_PLUS_EXISTING",
-    "operational_scanner_count": 14,
-    "last_operational_change_at": "2026-10-10T19:09:34Z",
-    "last_operational_change": "Отключены два направления Бразилии и модель ожидаемых голов. Четыре ранее остановленных теннисных направления окончательно архивированы. Второй гол после одного гола в первом тайме остаётся отключённым.",
+    "operational_scanner_count": 12,
+    "last_operational_change_at": "2026-10-11T09:29:39Z",
+    "last_operational_change": "Оптимизация по согласованному разбору: семь направлений архивированы, две независимые проверки ТМ при 1:1 запущены. Перспективные прежние карманы сохранены.",
     "user_facing_names": "Только поле name_ru",
     "show_technical_strategy_ids_to_user": false,
     "technical_strategy_ids": "Только для внутренних связей, журналов и расчётов"
@@ -104,16 +104,18 @@
         "league_contains": "Romania Liga III",
         "market": "next_goal_over"
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "mining_enabled": true,
+      "mining_enabled": false,
       "collection_engine": "scanner.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T06:00:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-06T06:00:00Z",
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "Гол в третьей лиге Румынии: N=22, ROI -29,77%; обратное направление теряет плюс без трёх лучших."
     },
     {
       "id": "S04",
@@ -262,16 +264,18 @@
         "country": "br",
         "market": "draw"
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "mining_enabled": true,
+      "mining_enabled": false,
       "collection_engine": "scanner.py",
-      "status": "FORWARD_HYPOTHESIS",
-      "clean_epoch_start": "2026-10-06T06:00:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-06T06:00:00Z",
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "Поздняя ничья в Бразилии: плюс зависит от неподтверждённой цены 17,00; без неё ROI +1,27%, без трёх лучших отрицательный."
     },
     {
       "id": "S08",
@@ -411,17 +415,19 @@
         "market": "home",
         "one_entry_per_match": true
       },
-      "user_output": true,
+      "user_output": false,
       "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "mining",
+      "research_destination": "history",
       "scanner_retired_at": "2026-09-26",
       "scanner_retired_reason": "Outside agreed Core 8 operational Scanner; continue accumulating/researching in Mining.",
-      "mining_enabled": true,
+      "mining_enabled": false,
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_POCKET",
+      "status": "ARCHIVED",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
-      "history_note": "Широкая механика архивирована при N=75 и ROI -20,45%. Сохранён только сегмент одновременного давления хозяев и их удара в створ: N=39, ROI +26,49%."
+      "history_note": "Широкая механика архивирована при N=75 и ROI -20,45%. Сохранён только сегмент одновременного давления хозяев и их удара в створ: N=39, ROI +26,49%.",
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "Поздняя победа хозяев с давлением и ударом в створ: N=61, ROI +15,91%, без трёх лучших -19,47%."
     },
     {
       "id": "S14",
@@ -1253,14 +1259,17 @@
         "entry_policy": "first_available_quote_in_window",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "scanner",
+      "research_destination": "history",
       "collection_engine": "scanner.py",
-      "status": "FORWARD_POCKET",
+      "status": "ARCHIVED",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
-      "history_note": "Исходный ТМ архивирован при ROI -34,78%. Сохранено противоположное направление: N=29, ROI +23,19%, без трёх лучших +14,33%."
+      "history_note": "Исходный ТМ архивирован при ROI -34,78%. Сохранено противоположное направление: N=29, ROI +23,19%, без трёх лучших +14,33%.",
+      "mining_enabled": false,
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "ТБ при 1:1 на 45-49-й минуте: N=182, ROI -14,65%. Новая независимая проверка ТМ выделена отдельно."
     },
     {
       "id": "S37",
@@ -1279,14 +1288,17 @@
         "entry_policy": "first_available_quote",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "scanner",
+      "research_destination": "history",
       "collection_engine": "scanner.py",
-      "status": "FORWARD_POCKET",
+      "status": "ARCHIVED",
       "clean_epoch_start": "2026-10-09T10:53:48Z",
-      "history_note": "Исходный ТМ архивирован при ROI -30,42%. Сохранено противоположное направление: N=30, ROI +21,88%, без трёх лучших +13,29%."
+      "history_note": "Исходный ТМ архивирован при ROI -30,42%. Сохранено противоположное направление: N=30, ROI +21,88%, без трёх лучших +13,29%.",
+      "mining_enabled": false,
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "ТБ при 1:1 и линии 3,5-4,0: N=228, ROI -19,03%. Новая независимая проверка ТМ выделена отдельно."
     },
     {
       "id": "S38",
@@ -1304,13 +1316,16 @@
         "entry_policy": "first_available_quote_in_window",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "scanner",
+      "research_destination": "history",
       "collection_engine": "scanner.py",
-      "status": "FORWARD_POCKET",
-      "clean_epoch_start": "2026-10-07T20:25:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-07T20:25:00Z",
+      "mining_enabled": false,
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "ТБ при 1:1 на 30-34-й минуте: N=122, ROI -12,73%; обратный плюс слабый, отдельный запуск не оправдан."
     },
     {
       "id": "S39",
@@ -1328,13 +1343,16 @@
         "entry_policy": "first_fresh_quote",
         "one_entry_per_match": true
       },
-      "user_output": true,
-      "scanner_enabled": true,
+      "user_output": false,
+      "scanner_enabled": false,
       "scanner_core8": false,
-      "research_destination": "scanner",
+      "research_destination": "history",
       "collection_engine": "stateful_goal_mining.py",
-      "status": "FORWARD_POCKET",
-      "clean_epoch_start": "2026-10-07T20:25:00Z"
+      "status": "ARCHIVED",
+      "clean_epoch_start": "2026-10-07T20:25:00Z",
+      "mining_enabled": false,
+      "archived_at": "2026-10-11T09:29:39Z",
+      "archive_reason": "Без гола при высоком давлении: N=120, ROI -9,67%; узкий положительный сегмент неустойчив во второй половине."
     },
     {
       "id": "S40",
@@ -1516,6 +1534,63 @@
       },
       "archived_at": "2026-10-07T20:25:00Z",
       "archive_reason": "Широкий пользовательский результат исключён при N=1958 и ROI -3.98%. Нефильтрованный сбор остаётся только техническим источником для двух согласованных взрослых мужских карманов."
+    },
+    {
+      "id": "S44",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
+      "source": "reverse_pocket_review_20261011",
+      "rule": {
+        "score": "1-1",
+        "market": "main_under",
+        "allowed_lines": [
+          3.5,
+          3.75,
+          4.0
+        ],
+        "entry_policy": "first_available_quote_in_window",
+        "one_entry_per_match": true,
+        "single_main_quote_required": true,
+        "entry_epoch": "2026-10-11T09:29:39Z"
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "mining_enabled": false,
+      "research_destination": "scanner",
+      "collection_engine": "scanner.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-11T09:29:39Z",
+      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет."
+    },
+    {
+      "id": "S45",
+      "tier": "WATCHLIST",
+      "sport": "football",
+      "name_ru": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
+      "source": "reverse_pocket_review_20261011",
+      "rule": {
+        "score": "1-1",
+        "market": "main_under",
+        "minute": [
+          45,
+          49
+        ],
+        "entry_policy": "first_available_quote_in_window",
+        "one_entry_per_match": true,
+        "single_main_quote_required": true,
+        "entry_epoch": "2026-10-11T09:29:39Z"
+      },
+      "user_output": true,
+      "scanner_enabled": true,
+      "scanner_core8": false,
+      "mining_enabled": false,
+      "research_destination": "scanner",
+      "collection_engine": "scanner.py",
+      "status": "FORWARD_HYPOTHESIS",
+      "clean_epoch_start": "2026-10-11T09:29:39Z",
+      "history_note": "Новая независимая эпоха. Исторический обратный результат не включается в forward. Один вход на матч на каждую механику; пересечения между двумя механиками не считать независимыми матчами. Разбивки по линии и цене исследовательские, дополнительных ограничений нет."
     }
   ]
 }

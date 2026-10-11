@@ -17,14 +17,14 @@ import hockey_period_under as hockey
 class MiningPruningTest(unittest.TestCase):
     def test_only_retained_collectors_are_scheduled(self):
         self.assertEqual(worker.COLLECTOR_INTERVALS, {"general": 300, "goal": 300, "hockey_period": 1800})
-        self.assertEqual(worker.GENERAL_STRATEGIES, "S03,S04,S05,S07,S21")
+        self.assertEqual(worker.GENERAL_STRATEGIES, "S04,S05,S21")
 
     @patch.object(worker, "budget", return_value=20)
     @patch.object(worker, "invoke")
     def test_general_pass_has_explicit_allowlist(self, invoke, _budget):
         worker.run_pass("general")
         env = invoke.call_args.args[2]
-        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S03,S04,S05,S07,S21")
+        self.assertEqual(env["SCANER_ONLY_STRATEGIES"], "S04,S05,S21")
 
     @patch.object(worker, "budget", return_value=10)
     @patch.object(worker, "invoke")
@@ -99,7 +99,6 @@ class MiningPruningTest(unittest.TestCase):
         cases = [
             ({**base, "score": "1-0", "minute": 45, "stats": {"on_target": [1, 1]}}, {}, True, "S31"),
             ({**base, "score": "0-0", "minute": 65, "stats": {"on_target": [1, 1]}}, {}, False, "S33"),
-            ({**base, "score": "1-1", "minute": 74, "stats": {"on_target": [3, 2]}}, {"pressure10": 28}, False, "S39"),
         ]
         for meta, features, halftime, expected in cases:
             self.assertIn(expected, [x["id"] for x in stateful.candidate_arms(meta, features, halftime)])

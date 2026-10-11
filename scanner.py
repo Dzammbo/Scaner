@@ -696,6 +696,21 @@ def football_evaluate(ev, st, detail):
 
     tf = total_features(ev, detail or {})
     market = r.get("market")
+    main_quote = None
+    if r.get("single_main_quote_required"):
+        # One genuine provider quote is enough for our five-minute collector.
+        for row in latest_rows(((detail or {}).get("odds") or {}).get("1_3")):
+            quote_at = as_int(row.get("add_time"))
+            quote_score = str(row.get("ss") or "").replace(":", "-")
+            age = int(time.time()) - quote_at if quote_at is not None else None
+            if quote_score == ev.get("score") and age is not None and 0 <= age <= 180 and valid_two_way_total_quote(row):
+                main_quote = row
+                break
+        if main_quote is None:
+            return None
+        tf.update(main_under_odds=as_float(main_quote.get("under_od")),
+                  main_over_odds=as_float(main_quote.get("over_od")),
+                  main_handicap=handicap_value(main_quote.get("handicap")))
     current_odds = None
     bet = None
     bet_line = None
@@ -779,7 +794,14 @@ def football_evaluate(ev, st, detail):
     if market in ("next_goal_over", "next_goal_under", "main_over", "main_under", "over", "draw", "home", "plus_0_5", "main_ah_away") and current_odds is None:
         return None
 
-    price_observed = bool(r.get("observed_price_required") and tf["next_goal_price_observed"])
+    if main_quote is not None:
+        tf.update(next_goal_price_observed=True,
+                  next_goal_quote_at=as_int(main_quote.get("add_time")),
+                  next_goal_quote_age_seconds=int(time.time())-as_int(main_quote.get("add_time")),
+                  next_goal_quote_score=ev.get("score"),
+                  next_goal_verification_method="single_fresh_main_total_provider_quote",
+                  next_goal_confirmed_quote=dict(main_quote))
+    price_observed = bool(main_quote is not None or (r.get("observed_price_required") and tf["next_goal_price_observed"]))
     verified = bool(r.get("verified_price_required") and tf["next_goal_price_verified"])
     price_quality = "observed" if price_observed else ("verified" if verified else None)
     return {
@@ -999,7 +1021,7 @@ if MODE == "scanner":
         and (bool(ONLY_STRATEGY_IDS) or s.get("collection_engine", "scanner.py") == "scanner.py")
     ]
 else:
-    strategies = [s for s in registry["strategies"] if s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY"]
+    strategies = [s for s in registry["strategies"] if (s.get("research_destination") == "mining" or s.get("status") == "MINING_ONLY") and s.get("mining_enabled", True) and s.get("status") != "ARCHIVED"]
 if ONLY_STRATEGY_IDS:
     strategies = [s for s in strategies if s.get("id") in ONLY_STRATEGY_IDS]
 rank = {"ACTIVE": 0, "SECONDARY": 1, "WATCHLIST": 2}

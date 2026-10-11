@@ -19,15 +19,14 @@ class StatefulMiningStrategiesTest(unittest.TestCase):
         arms = mining.candidate_arms(meta, features)
         self.assertNotIn("S12", {arm["id"] for arm in arms})
 
-    def test_high_pressure_no_goal_uses_only_70_79_window(self):
+    def test_archived_high_pressure_no_goal_never_generates(self):
         features = {"pressure10": 28}
         inside = mining.candidate_arms({"score": "1-1", "minute": 74, "stats": {}}, features)
         outside = mining.candidate_arms({"score": "1-1", "minute": 69, "stats": {}}, features)
-        arm = next(arm for arm in inside if arm["id"] == "S39")
-        self.assertEqual(arm["selection"], "UNDER")
+        self.assertNotIn("S39", {arm["id"] for arm in inside})
         self.assertNotIn("S39", {arm["id"] for arm in outside})
 
-    def test_s13_combines_pressure_and_shot_into_one_signal(self):
+    def test_archived_s13_rejects_even_combined_activity(self):
         meta = {"score": "1-1", "minute": 87, "stats": {}}
         features = {
             "on_target10": 1,
@@ -38,8 +37,7 @@ class StatefulMiningStrategiesTest(unittest.TestCase):
             "pressure10": 24,
         }
         arms = [arm for arm in mining.candidate_arms(meta, features) if arm["id"] == "S13"]
-        self.assertEqual(len(arms), 1)
-        self.assertEqual(arms[0]["activity_segment"], "both")
+        self.assertEqual(arms, [])
 
     def test_s13_rejects_single_activity_segments(self):
         meta = {"score": "2-2", "minute": 89, "stats": {}}

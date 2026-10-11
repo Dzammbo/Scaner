@@ -45,6 +45,8 @@ WOMEN_TOURNAMENT = re.compile(
 # Clean-forward boundaries documented in README. Strategies without a boundary
 # intentionally retain their full Scanner sample.
 STRATEGY_STARTS = {
+    "S44": '2026-10-11T09:29:39Z',
+    "S45": '2026-10-11T09:29:39Z',
     "S01": "2026-10-01T19:15:00+00:00",
     "S02": "2026-10-07T20:25:00+00:00",
     "S06": "1970-01-01T00:00:00+00:00",

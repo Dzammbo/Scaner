@@ -145,7 +145,7 @@ def candidate_arms(meta,features,halftime=False):
   out.append({"id":"S33","strategy":"FOOTBALL_60_69_LOW_ACTIVITY_NOGOAL_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":[1.50,2.20],"interval":300,"priority":1})
  if 70<=minute<=79 and pressure is not None and pressure>=PRESSURE_CUTOFF:
   out.append({"id":"S39","strategy":"FOOTBALL_PRESSURE_NOGOAL_70_79_V1","arm":"PRIMARY","market":"FT_NEXT","selection":"UNDER","period":"FT","odds":None,"interval":600,"priority":2})
- return out
+ return [arm for arm in out if arm["id"] not in {"S13", "S39"}]
 def final_period_goals(ev,period):
  scores=ev.get("scores") or {}
  if period=="FT":
