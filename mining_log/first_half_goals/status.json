@@ -1,60 +1,50 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T23:28:20.954293Z",
-  "api_calls": 5,
+  "updated_at": "2026-10-11T23:38:23.197739Z",
+  "api_calls": 3,
   "new_signals": 0,
-  "live_events": 43,
+  "live_events": 34,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 9,
-      "already_recorded": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "already_recorded": 2
     },
     "S47": {
-      "eligible_events": 9,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "eligible_events": 9
     },
-    "S48": {
-      "eligible_events": 3,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    },
-    "S49": {
-      "eligible_events": 2
-    }
+    "S48": {},
+    "S49": {}
   },
   "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 49,
-      "N": 36,
+      "signals": 50,
+      "N": 38,
       "W": 13,
       "L": 9,
-      "PUSH": 14,
-      "pending": 13,
+      "PUSH": 16,
+      "pending": 12,
       "void": 0,
       "profit": 3.475,
-      "ROI_pct": 9.653,
-      "ROI_without_top3_pct": 0.606,
+      "ROI_pct": 9.145,
+      "ROI_without_top3_pct": 0.571,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 47,
-          "N": 35,
+          "signals": 48,
+          "N": 37,
           "W": 13,
           "L": 9,
-          "PUSH": 13,
-          "pending": 12,
+          "PUSH": 15,
+          "pending": 11,
           "void": 0,
           "profit": 3.475,
-          "ROI_pct": 9.929,
-          "ROI_without_top3_pct": 0.625,
+          "ROI_pct": 9.392,
+          "ROI_without_top3_pct": 0.588,
           "balance_valid": true
         },
         "women": {
@@ -251,68 +241,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "13100077",
-      "league": "Honduras Liga Nacional",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192794465",
-        "over_od": "1.675",
-        "handicap": "0.75",
-        "under_od": "2.050",
-        "ss": "0-0",
-        "time_str": "13",
-        "add_time": "1791761292"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791761297,
-          "1_2": 1791761297,
-          "1_3": 1791761297,
-          "1_4": 1791761297,
-          "1_5": 1791761297,
-          "1_6": 1791761297,
-          "1_7": 1791761297,
-          "1_8": 1791761297
-        }
-      }
-    },
-    {
-      "event_id": "12132205",
-      "league": "Guatemala Liga Nacional",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192700055",
-        "over_od": "2.075",
-        "handicap": "1.0,1.5",
-        "under_od": "1.725",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791704408"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791760952,
-          "1_2": 1791761203,
-          "1_3": 1791761203,
-          "1_4": 1791758637,
-          "1_5": 1791761160,
-          "1_6": 1791760992,
-          "1_7": 1791748249,
-          "1_8": 1791761215
-        }
-      }
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
