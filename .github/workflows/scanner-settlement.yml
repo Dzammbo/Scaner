@@ -53,7 +53,7 @@ jobs:
               pockets_current.json \
               pending_current.json \
               settlement_diagnostics_current.json \
-              s30_top6_current.json
+              s30_top6_current.json \
               s30_late_under_current.json
             git pull --rebase origin main
             python3 scanner_settlement.py
