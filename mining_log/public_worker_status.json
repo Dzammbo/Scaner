@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-11T15:40:10.921508+00:00",
-  "started_at": "2026-10-11T14:26:52.106642+00:00",
+  "updated_at": "2026-10-11T15:42:04.204408+00:00",
+  "started_at": "2026-10-11T15:40:57.794349+00:00",
   "passes": {
-    "first_half_goals": 15,
-    "general": 15,
-    "goal": 15,
-    "hockey_period": 3
+    "first_half_goals": 1,
+    "general": 1,
+    "goal": 1,
+    "hockey_period": 1
   },
   "failures": {
     "first_half_goals": 0,
@@ -13,7 +13,7 @@
     "goal": 0,
     "hockey_period": 0
   },
-  "calls_last_hour": 283,
+  "calls_last_hour": 335,
   "hourly_cap": 2300,
   "active_collectors": {
     "first_half_goals": 300,
@@ -22,14 +22,19 @@
     "hockey_period": 1800
   },
   "general_strategies": [
+    "S01",
+    "S02",
     "S04",
     "S05",
-    "S21"
+    "S06Y",
+    "S10",
+    "S21",
+    "S28",
+    "S29",
+    "S44",
+    "S45",
+    "T18"
   ],
   "last_error": null,
-  "last_checkpoint": {
-    "ok": true,
-    "changed": true,
-    "attempt": 1
-  }
+  "last_checkpoint": null
 }
