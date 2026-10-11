@@ -1,19 +1,23 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T14:37:13.022891Z",
-  "api_calls": 3,
+  "updated_at": "2026-10-11T14:47:29.204611Z",
+  "api_calls": 5,
   "new_signals": 0,
-  "live_events": 285,
-  "upcoming_events": 50,
+  "live_events": 284,
+  "upcoming_events": 0,
   "coverage": {
     "S46": {},
     "S47": {},
     "S48": {
-      "eligible_events": 2
+      "eligible_events": 9,
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S49": {
-      "eligible_events": 1
+      "eligible_events": 4,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     }
   },
   "errors": [
@@ -125,6 +129,88 @@
       }
     }
   },
-  "market_samples": [],
+  "market_samples": [
+    {
+      "event_id": "11175994",
+      "league": "Sweden Allsvenskan",
+      "mode": "LIVE",
+      "results": {
+        "S49": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192752949",
+        "over_od": "1.975",
+        "handicap": "2",
+        "under_od": "1.825",
+        "ss": "1-0",
+        "time_str": "16",
+        "add_time": "1791730022"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791730022,
+          "1_2": 1791730022,
+          "1_3": 1791730022,
+          "1_4": 1791730022,
+          "1_5": 1791730022,
+          "1_6": 1791730022,
+          "1_7": 1791730022,
+          "1_8": 1791730022
+        }
+      }
+    },
+    {
+      "event_id": "12158050",
+      "league": "Spain Primera Division RFEF Group 1",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192752934",
+        "over_od": "1.775",
+        "handicap": "0.5",
+        "under_od": "2.025",
+        "ss": "0-0",
+        "time_str": "12",
+        "add_time": "1791729987"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791730040,
+          "1_2": 1791730040,
+          "1_3": 1791730040,
+          "1_4": 1791730040,
+          "1_5": 1791730040,
+          "1_6": 1791730040,
+          "1_7": 1791730040,
+          "1_8": 1791730040
+        }
+      }
+    },
+    {
+      "event_id": "12155184",
+      "league": "Portugal Primeira Liga",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192752613",
+        "over_od": "1.700",
+        "handicap": "0.75",
+        "under_od": "2.100",
+        "ss": "0-0",
+        "time_str": "8",
+        "add_time": "1791729761"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {}
+      }
+    }
+  ],
   "health": "API_ERRORS"
 }
