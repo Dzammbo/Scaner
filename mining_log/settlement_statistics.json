@@ -1,27 +1,27 @@
 {
-  "generated_at_utc": "2026-10-11T15:43:09Z",
+  "generated_at_utc": "2026-10-11T16:28:36Z",
   "scope": "GitHub Mining journals joined to persistent BetsAPI results",
   "settlement_status": {
-    "updated_at": "2026-10-11T15:43:09Z",
+    "updated_at": "2026-10-11T16:28:36Z",
     "query_budget": 50,
     "retry_after_seconds": 7200,
-    "provider_queries": 3,
-    "queried_events": 21,
-    "cache_events": 3313,
-    "signal_unique_events": 3235,
-    "signal_final_events": 3149,
+    "provider_queries": 6,
+    "queried_events": 56,
+    "cache_events": 3328,
+    "signal_unique_events": 3250,
+    "signal_final_events": 3182,
     "signal_void_events": 18,
-    "signal_pending_events": 68,
+    "signal_pending_events": 50,
     "migrated_scanner_history_rows": 1113,
-    "reconciled_stateful_rows": 2770,
+    "reconciled_stateful_rows": 2773,
     "stateful_duplicate_signals": 0,
     "states": {
-      "FINAL": 3211,
-      "INPLAY": 41,
-      "NOT_FINAL_1": 17,
-      "NOT_FINAL_2": 9,
+      "FINAL": 3244,
+      "INPLAY": 17,
+      "NOT_FINAL_1": 26,
+      "NOT_FINAL_2": 11,
       "NOT_FINAL_4": 1,
-      "PENDING_PROVIDER_FIX": 9,
+      "PENDING_PROVIDER_FIX": 4,
       "VOID_CANCELLED": 1,
       "VOID_RETIRED": 24
     },
@@ -29,12 +29,12 @@
   },
   "journals": {
     "native": {
-      "rows": 3169,
-      "events": 2472
+      "rows": 3191,
+      "events": 2487
     },
     "stateful": {
-      "rows": 2920,
-      "events": 1457
+      "rows": 2921,
+      "events": 1458
     },
     "ht_one_goal": {
       "rows": 0,
@@ -48,8 +48,8 @@
   "strategies": {
     "native": {
       "S01": {
-        "signals": 45,
-        "pending": 0,
+        "signals": 46,
+        "pending": 1,
         "void": 0,
         "direct": {
           "N": 45,
@@ -69,24 +69,24 @@
         }
       },
       "S02": {
-        "signals": 136,
-        "pending": 5,
+        "signals": 137,
+        "pending": 4,
         "void": 0,
         "direct": {
-          "N": 131,
-          "W": 67,
+          "N": 133,
+          "W": 69,
           "L": 64,
           "PUSH": 0,
-          "profit": -2.975,
-          "ROI_pct": -2.27
+          "profit": -1.175,
+          "ROI_pct": -0.88
         },
         "opposite": {
-          "N": 131,
+          "N": 133,
           "W": 64,
-          "L": 67,
+          "L": 69,
           "PUSH": 0,
-          "profit": -8.55,
-          "ROI_pct": -6.53
+          "profit": -10.55,
+          "ROI_pct": -7.93
         }
       },
       "S03": {
@@ -175,23 +175,23 @@
       },
       "S06Y": {
         "signals": 45,
-        "pending": 3,
+        "pending": 1,
         "void": 0,
         "direct": {
-          "N": 42,
-          "W": 22,
-          "L": 19,
+          "N": 44,
+          "W": 23,
+          "L": 20,
           "PUSH": 1,
-          "profit": -0.8375,
-          "ROI_pct": -1.99
+          "profit": -0.8625,
+          "ROI_pct": -1.96
         },
         "opposite": {
-          "N": 42,
-          "W": 19,
-          "L": 22,
+          "N": 44,
+          "W": 20,
+          "L": 23,
           "PUSH": 1,
-          "profit": -2.7,
-          "ROI_pct": -6.43
+          "profit": -2.825,
+          "ROI_pct": -6.42
         }
       },
       "S07": {
@@ -230,23 +230,23 @@
       },
       "S10": {
         "signals": 194,
-        "pending": 4,
+        "pending": 2,
         "void": 23,
         "direct": {
-          "N": 167,
+          "N": 169,
           "W": 93,
-          "L": 74,
+          "L": 76,
           "PUSH": 0,
-          "profit": 26.25,
-          "ROI_pct": 15.72
+          "profit": 24.25,
+          "ROI_pct": 14.35
         },
         "opposite": {
-          "N": 165,
-          "W": 73,
+          "N": 167,
+          "W": 75,
           "L": 92,
           "PUSH": 0,
-          "profit": -41.725,
-          "ROI_pct": -25.29
+          "profit": -40.225,
+          "ROI_pct": -24.09
         }
       },
       "S15": {
@@ -313,24 +313,24 @@
         }
       },
       "S21": {
-        "signals": 116,
-        "pending": 1,
+        "signals": 120,
+        "pending": 2,
         "void": 0,
         "direct": {
-          "N": 115,
-          "W": 99,
-          "L": 16,
+          "N": 118,
+          "W": 101,
+          "L": 17,
           "PUSH": 0,
-          "profit": 10.03,
-          "ROI_pct": 8.72
+          "profit": 9.68,
+          "ROI_pct": 8.2
         },
         "opposite": {
-          "N": 115,
-          "W": 16,
-          "L": 99,
+          "N": 118,
+          "W": 17,
+          "L": 101,
           "PUSH": 0,
-          "profit": -67.225,
-          "ROI_pct": -58.46
+          "profit": -66.075,
+          "ROI_pct": -56.0
         }
       },
       "S22": {
@@ -376,45 +376,45 @@
         }
       },
       "S28": {
-        "signals": 115,
-        "pending": 2,
+        "signals": 117,
+        "pending": 3,
         "void": 0,
         "direct": {
-          "N": 113,
+          "N": 114,
           "W": 51,
-          "L": 62,
+          "L": 63,
           "PUSH": 0,
-          "profit": -13.0,
-          "ROI_pct": -11.5
+          "profit": -14.0,
+          "ROI_pct": -12.28
         },
         "opposite": {
-          "N": 113,
-          "W": 62,
+          "N": 114,
+          "W": 63,
           "L": 51,
           "PUSH": 0,
-          "profit": 1.675,
-          "ROI_pct": 1.48
+          "profit": 2.55,
+          "ROI_pct": 2.24
         }
       },
       "S29": {
-        "signals": 151,
-        "pending": 4,
+        "signals": 153,
+        "pending": 3,
         "void": 0,
         "direct": {
-          "N": 147,
-          "W": 104,
-          "L": 43,
+          "N": 150,
+          "W": 105,
+          "L": 45,
           "PUSH": 0,
-          "profit": -4.325,
-          "ROI_pct": -2.94
+          "profit": -5.95,
+          "ROI_pct": -3.97
         },
         "opposite": {
-          "N": 147,
-          "W": 43,
-          "L": 104,
+          "N": 150,
+          "W": 45,
+          "L": 105,
           "PUSH": 0,
-          "profit": -16.825,
-          "ROI_pct": -11.45
+          "profit": -13.075,
+          "ROI_pct": -8.72
         }
       },
       "S35": {
@@ -439,45 +439,45 @@
         }
       },
       "S44": {
-        "signals": 70,
-        "pending": 39,
+        "signals": 76,
+        "pending": 28,
         "void": 0,
         "direct": {
-          "N": 31,
-          "W": 13,
-          "L": 15,
-          "PUSH": 3,
-          "profit": -3.125,
-          "ROI_pct": -10.08
+          "N": 48,
+          "W": 23,
+          "L": 21,
+          "PUSH": 4,
+          "profit": 1.175,
+          "ROI_pct": 2.45
         },
         "opposite": {
-          "N": 31,
-          "W": 15,
-          "L": 13,
-          "PUSH": 3,
-          "profit": 0.475,
-          "ROI_pct": 1.53
+          "N": 48,
+          "W": 21,
+          "L": 23,
+          "PUSH": 4,
+          "profit": -5.3125,
+          "ROI_pct": -11.07
         }
       },
       "S45": {
-        "signals": 58,
-        "pending": 34,
+        "signals": 65,
+        "pending": 24,
         "void": 0,
         "direct": {
-          "N": 24,
-          "W": 11,
-          "L": 12,
+          "N": 41,
+          "W": 24,
+          "L": 16,
           "PUSH": 1,
-          "profit": -3.675,
-          "ROI_pct": -15.31
+          "profit": 3.4625,
+          "ROI_pct": 8.45
         },
         "opposite": {
-          "N": 24,
-          "W": 12,
-          "L": 11,
+          "N": 41,
+          "W": 16,
+          "L": 24,
           "PUSH": 1,
-          "profit": 1.025,
-          "ROI_pct": 4.27
+          "profit": -7.525,
+          "ROI_pct": -18.35
         }
       },
       "T13": {
@@ -565,24 +565,24 @@
         }
       },
       "T18": {
-        "signals": 319,
-        "pending": 3,
-        "void": 38,
+        "signals": 320,
+        "pending": 2,
+        "void": 39,
         "direct": {
-          "N": 278,
+          "N": 279,
           "W": 161,
-          "L": 117,
+          "L": 118,
           "PUSH": 0,
-          "profit": -16.348,
-          "ROI_pct": -5.88
+          "profit": -17.348,
+          "ROI_pct": -6.22
         },
         "opposite": {
-          "N": 278,
-          "W": 117,
+          "N": 279,
+          "W": 118,
           "L": 161,
           "PUSH": 0,
-          "profit": -31.2,
-          "ROI_pct": -11.22
+          "profit": -30.45,
+          "ROI_pct": -10.91
         }
       }
     },
@@ -652,44 +652,44 @@
       },
       "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:OVER_200_224": {
         "signals": 51,
-        "pending": 4,
+        "pending": 2,
         "void": 0,
         "direct": {
-          "N": 47,
-          "W": 20,
+          "N": 49,
+          "W": 22,
           "L": 24,
           "PUSH": 3,
-          "profit": -2.85,
-          "ROI_pct": -6.06
+          "profit": -0.825,
+          "ROI_pct": -1.68
         },
         "opposite": {
-          "N": 47,
+          "N": 49,
           "W": 24,
-          "L": 20,
+          "L": 22,
           "PUSH": 3,
-          "profit": -1.6625,
-          "ROI_pct": -3.54
+          "profit": -3.6625,
+          "ROI_pct": -7.47
         }
       },
       "FOOTBALL_HT_LOW_ACTIVITY_TOTAL_V2:UNDER_200_224": {
-        "signals": 41,
+        "signals": 42,
         "pending": 3,
         "void": 0,
         "direct": {
-          "N": 38,
+          "N": 39,
           "W": 18,
-          "L": 16,
+          "L": 17,
           "PUSH": 4,
-          "profit": 1.7875,
-          "ROI_pct": 4.7
+          "profit": 0.7875,
+          "ROI_pct": 2.02
         },
         "opposite": {
-          "N": 38,
-          "W": 16,
+          "N": 39,
+          "W": 17,
           "L": 18,
           "PUSH": 4,
-          "profit": -4.5875,
-          "ROI_pct": -12.07
+          "profit": -3.8125,
+          "ROI_pct": -9.78
         }
       },
       "FOOTBALL_HT_LOW_ACTIVITY_UNDER_V1:PRIMARY": {
@@ -892,31 +892,50 @@
   },
   "first_half_goals": {
     "source": "mining_log/first_half_goals/status.json",
-    "updated_at": "2026-10-11T15:41:09.938588Z",
+    "updated_at": "2026-10-11T16:20:08.354300Z",
     "health": "API_ERRORS",
     "coverage": {
-      "S46": {},
-      "S47": {},
+      "S46": {
+        "eligible_events": 75,
+        "already_recorded": 2,
+        "checked": 43,
+        "EMPTY_MARKET": 9,
+        "DIFFERENT_CURRENT_LINE": 22,
+        "STALE_QUOTE": 11,
+        "API_UNAVAILABLE": 4,
+        "VERIFIED": 1
+      },
+      "S47": {
+        "eligible_events": 75,
+        "already_recorded": 1,
+        "checked": 44,
+        "EMPTY_MARKET": 9,
+        "DIFFERENT_CURRENT_LINE": 34,
+        "STALE_QUOTE": 1,
+        "API_UNAVAILABLE": 4
+      },
       "S48": {
-        "eligible_events": 8,
-        "API_UNAVAILABLE": 2,
-        "checked": 6,
-        "DIFFERENT_CURRENT_LINE": 6
+        "eligible_events": 27,
+        "already_recorded": 5,
+        "checked": 2,
+        "DIFFERENT_CURRENT_LINE": 2
       },
       "S49": {
-        "eligible_events": 1,
-        "API_UNAVAILABLE": 1
+        "eligible_events": 13,
+        "already_recorded": 1,
+        "checked": 1,
+        "DIFFERENT_CURRENT_LINE": 1
       }
     },
     "strategies": {
       "S46": {
         "name_ru": "Прематч: тотал больше 1 первого тайма",
-        "signals": 1,
+        "signals": 5,
         "N": 0,
         "W": 0,
         "L": 0,
         "PUSH": 0,
-        "pending": 1,
+        "pending": 5,
         "void": 0,
         "profit": 0,
         "ROI_pct": null,
@@ -924,12 +943,12 @@
         "balance_valid": true,
         "cohorts": {
           "adult_or_unclassified": {
-            "signals": 1,
+            "signals": 5,
             "N": 0,
             "W": 0,
             "L": 0,
             "PUSH": 0,
-            "pending": 1,
+            "pending": 5,
             "void": 0,
             "profit": 0,
             "ROI_pct": null,
@@ -953,12 +972,12 @@
       },
       "S47": {
         "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-        "signals": 1,
+        "signals": 2,
         "N": 0,
         "W": 0,
         "L": 0,
         "PUSH": 0,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "profit": 0,
         "ROI_pct": null,
@@ -966,12 +985,12 @@
         "balance_valid": true,
         "cohorts": {
           "adult_or_unclassified": {
-            "signals": 1,
+            "signals": 2,
             "N": 0,
             "W": 0,
             "L": 0,
             "PUSH": 0,
-            "pending": 1,
+            "pending": 2,
             "void": 0,
             "profit": 0,
             "ROI_pct": null,
@@ -995,12 +1014,12 @@
       },
       "S48": {
         "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-        "signals": 6,
+        "signals": 12,
         "N": 0,
         "W": 0,
         "L": 0,
         "PUSH": 0,
-        "pending": 6,
+        "pending": 12,
         "void": 0,
         "profit": 0,
         "ROI_pct": null,
@@ -1008,12 +1027,25 @@
         "balance_valid": true,
         "cohorts": {
           "adult_or_unclassified": {
-            "signals": 6,
+            "signals": 11,
             "N": 0,
             "W": 0,
             "L": 0,
             "PUSH": 0,
-            "pending": 6,
+            "pending": 11,
+            "void": 0,
+            "profit": 0,
+            "ROI_pct": null,
+            "ROI_without_top3_pct": null,
+            "balance_valid": true
+          },
+          "youth_reserves": {
+            "signals": 1,
+            "N": 0,
+            "W": 0,
+            "L": 0,
+            "PUSH": 0,
+            "pending": 1,
             "void": 0,
             "profit": 0,
             "ROI_pct": null,
@@ -1024,28 +1056,28 @@
       },
       "S49": {
         "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-        "signals": 7,
-        "N": 0,
+        "signals": 8,
+        "N": 1,
         "W": 0,
-        "L": 0,
+        "L": 1,
         "PUSH": 0,
         "pending": 7,
         "void": 0,
-        "profit": 0,
-        "ROI_pct": null,
+        "profit": -1,
+        "ROI_pct": -100.0,
         "ROI_without_top3_pct": null,
         "balance_valid": true,
         "cohorts": {
           "adult_or_unclassified": {
-            "signals": 7,
-            "N": 0,
+            "signals": 8,
+            "N": 1,
             "W": 0,
-            "L": 0,
+            "L": 1,
             "PUSH": 0,
             "pending": 7,
             "void": 0,
-            "profit": 0,
-            "ROI_pct": null,
+            "profit": -1,
+            "ROI_pct": -100.0,
             "ROI_without_top3_pct": null,
             "balance_valid": true
           }
