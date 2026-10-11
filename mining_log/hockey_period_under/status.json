@@ -1,20 +1,20 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T18:03:54.796563Z",
+  "updated_at": "2026-10-11T18:34:02.981952Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
-  "market_access": "BACKOFF_AFTER_DENIAL",
+  "market_access": "HTTP_DENIED",
   "price_collection": {
-    "checked_at": "2026-10-11T17:04:15.668784Z",
-    "state": "BACKOFF_AFTER_DENIAL",
+    "checked_at": "2026-10-11T18:34:02.153757Z",
+    "state": "HTTP_DENIED",
     "fixtures_matched": 0,
     "prices_saved": 0,
     "http_status": 403,
-    "retry_after_epoch": 1791741855
+    "retry_after_epoch": 1791747242
   },
-  "api_calls": 5,
+  "api_calls": 6,
   "upcoming_seen": 100,
-  "history_events": 462,
+  "history_events": 463,
   "strategies": [
     {
       "priced_resolved": 0,
@@ -22,12 +22,12 @@
       "roi_pct": null,
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
       "signals": 505,
-      "resolved": 378,
-      "pending": 127,
-      "wins": 143,
+      "resolved": 379,
+      "pending": 126,
+      "wins": 144,
       "losses": 235,
-      "hit_rate_pct": 37.83,
-      "break_even_decimal_price": 2.643,
+      "hit_rate_pct": 37.99,
+      "break_even_decimal_price": 2.632,
       "roi_status": "NO_PRICE_DATA"
     },
     {
@@ -36,16 +36,14 @@
       "roi_pct": null,
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
       "signals": 505,
-      "resolved": 378,
-      "pending": 127,
+      "resolved": 379,
+      "pending": 126,
       "wins": 160,
-      "losses": 218,
-      "hit_rate_pct": 42.33,
-      "break_even_decimal_price": 2.363,
+      "losses": 219,
+      "hit_rate_pct": 42.22,
+      "break_even_decimal_price": 2.369,
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": [
-    "ended 20261009: HTTPError: HTTP Error 502: Bad Gateway"
-  ]
+  "errors": []
 }
