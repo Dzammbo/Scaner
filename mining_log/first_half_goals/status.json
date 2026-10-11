@@ -1,32 +1,27 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T16:00:13.339668Z",
-  "api_calls": 59,
-  "new_signals": 3,
-  "live_events": 181,
-  "upcoming_events": 100,
+  "updated_at": "2026-10-11T16:09:23.796277Z",
+  "api_calls": 3,
+  "new_signals": 0,
+  "live_events": 151,
+  "upcoming_events": 0,
   "coverage": {
-    "S46": {
-      "eligible_events": 60,
-      "checked": 50,
-      "DIFFERENT_CURRENT_LINE": 22,
-      "STALE_QUOTE": 14,
-      "EMPTY_MARKET": 12,
-      "VERIFIED": 2
+    "S46": {},
+    "S47": {},
+    "S48": {
+      "eligible_events": 1,
+      "checked": 1,
+      "QUOTE_MINUTE_MISMATCH": 1
     },
-    "S47": {
-      "eligible_events": 60,
-      "checked": 50,
-      "DIFFERENT_CURRENT_LINE": 36,
-      "EMPTY_MARKET": 12,
-      "STALE_QUOTE": 1,
-      "VERIFIED": 1
-    },
-    "S48": {},
     "S49": {}
   },
-  "errors": [],
+  "errors": [
+    {
+      "path": "/v3/events/upcoming",
+      "error": "TimeoutError"
+    }
+  ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -145,27 +140,27 @@
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
       "signals": 7,
-      "N": 0,
+      "N": 1,
       "W": 0,
-      "L": 0,
+      "L": 1,
       "PUSH": 0,
-      "pending": 7,
+      "pending": 6,
       "void": 0,
-      "profit": 0,
-      "ROI_pct": null,
+      "profit": -1,
+      "ROI_pct": -100.0,
       "ROI_without_top3_pct": null,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 7,
-          "N": 0,
+          "N": 1,
           "W": 0,
-          "L": 0,
+          "L": 1,
           "PUSH": 0,
-          "pending": 7,
+          "pending": 6,
           "void": 0,
-          "profit": 0,
-          "ROI_pct": null,
+          "profit": -1,
+          "ROI_pct": -100.0,
           "ROI_without_top3_pct": null,
           "balance_valid": true
         }
@@ -174,231 +169,35 @@
   },
   "market_samples": [
     {
-      "event_id": "11288765",
-      "league": "Faroe Islands Premier League",
-      "mode": "PREMATCH",
+      "event_id": "12246904",
+      "league": "Spain Youth League",
+      "mode": "LIVE",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "QUOTE_MINUTE_MISMATCH"
       },
       "latest_first_half_quote": {
-        "id": "192607672",
-        "over_od": "1.975",
-        "handicap": "1.0,1.5",
-        "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791629292"
+        "id": "192759168",
+        "over_od": "1.950",
+        "handicap": "1",
+        "under_od": "1.850",
+        "ss": "0-0",
+        "time_str": "9",
+        "add_time": "1791734925"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791734254,
-          "1_2": 1791733680,
-          "1_3": 1791733680,
-          "1_4": 1791725283,
-          "1_5": 1791726802,
-          "1_6": 1791685165,
-          "1_7": 1791728351,
-          "1_8": 1791731750
-        }
-      }
-    },
-    {
-      "event_id": "11288818",
-      "league": "Faroe Islands Premier League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192745339",
-        "over_od": "1.975",
-        "handicap": "1.0,1.5",
-        "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791725786"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734307,
-          "1_2": 1791734026,
-          "1_3": 1791734026,
-          "1_4": 1791732227,
-          "1_5": 1791728201,
-          "1_6": 1791734181,
-          "1_7": 1791729434,
-          "1_8": 1791734102
-        }
-      }
-    },
-    {
-      "event_id": "12281081",
-      "league": "Spain Primera Division RFEF Group 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192737481",
-        "over_od": "2.075",
-        "handicap": "1.0",
-        "under_od": "1.725",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791723419"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734307,
-          "1_2": 1791734277,
-          "1_3": 1791734277,
-          "1_4": 1791731665,
-          "1_5": 1791730657,
-          "1_6": 1791729983,
-          "1_7": 1791733542,
-          "1_8": 1791732893
-        }
-      }
-    },
-    {
-      "event_id": "12101914",
-      "league": "Russia Premier League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12107364",
-      "league": "Belgium First Division A",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192753563",
-        "over_od": "1.825",
-        "handicap": "1.0,1.5",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791730901"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734057,
-          "1_2": 1791734224,
-          "1_3": 1791734224,
-          "1_4": 1791729057,
-          "1_5": 1791725497,
-          "1_6": 1791730901,
-          "1_7": 1791687573,
-          "1_8": 1791733992
-        }
-      }
-    },
-    {
-      "event_id": "12130542",
-      "league": "Spain Segunda",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192738031",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791723782"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791733862,
-          "1_2": 1791734126,
-          "1_3": 1791734126,
-          "1_4": 1791709222,
-          "1_5": 1791714207,
-          "1_6": 1791733157,
-          "1_7": 1791721621,
-          "1_8": 1791734085
-        }
-      }
-    },
-    {
-      "event_id": "12131004",
-      "league": "Spain La Liga",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192703958",
-        "over_od": "2.075",
-        "handicap": "1.0,1.5",
-        "under_od": "1.725",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791707435"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734081,
-          "1_2": 1791734049,
-          "1_3": 1791734049,
-          "1_4": 1791734208,
-          "1_5": 1791733828,
-          "1_6": 1791707435,
-          "1_7": 1791724980,
-          "1_8": 1791734123
-        }
-      }
-    },
-    {
-      "event_id": "12220099",
-      "league": "Albania Championship",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192575239",
-        "over_od": "2.050",
-        "handicap": "1.0",
-        "under_od": "1.750",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791604472"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791734011,
-          "1_2": 1791612663,
-          "1_3": 1791612663,
-          "1_5": 1791611403,
-          "1_6": 1791610224,
-          "1_8": 1791622041
+          "1_1": 1791734927,
+          "1_2": 1791734927,
+          "1_3": 1791734927,
+          "1_4": 1791734927,
+          "1_5": 1791734927,
+          "1_6": 1791734927,
+          "1_7": 1791734927,
+          "1_8": 1791734927
         }
       }
     }
   ],
-  "health": "OK"
+  "health": "API_ERRORS"
 }
