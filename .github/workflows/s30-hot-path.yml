@@ -24,6 +24,7 @@ jobs:
     timeout-minutes: 345
     env:
       BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+      S30_HOURLY_CAP: "750"
       S30_DURATION_SECONDS: "19200"
       S30_POLL_SECONDS: "55"
       S30_CHECKPOINT_SECONDS: "600"

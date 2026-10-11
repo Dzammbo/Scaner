@@ -4,11 +4,11 @@ from datetime import datetime, timezone
 import scanner_worker
 
 
-def test_hourly_cap_uses_moscow_morning_window():
-    assert scanner_worker.hourly_cap(datetime(2026, 10, 3, 5, 0, tzinfo=timezone.utc)) == 700
-    assert scanner_worker.hourly_cap(datetime(2026, 10, 3, 9, 0, tzinfo=timezone.utc)) == 1400
-    assert scanner_worker.scanner_cap(datetime(2026, 10, 3, 5, 0, tzinfo=timezone.utc)) == 325
-    assert scanner_worker.scanner_cap(datetime(2026, 10, 3, 9, 0, tzinfo=timezone.utc)) == 650
+def test_retired_scanner_has_zero_budget():
+    assert scanner_worker.hourly_cap(datetime(2026, 10, 3, 5, 0, tzinfo=timezone.utc)) == 0
+    assert scanner_worker.hourly_cap(datetime(2026, 10, 3, 9, 0, tzinfo=timezone.utc)) == 0
+    assert scanner_worker.scanner_cap(datetime(2026, 10, 3, 5, 0, tzinfo=timezone.utc)) == 0
+    assert scanner_worker.scanner_cap(datetime(2026, 10, 3, 9, 0, tzinfo=timezone.utc)) == 0
 
 
 def test_pass_budget_counts_scanner_and_s30_calls(tmp_path, monkeypatch):
@@ -22,7 +22,7 @@ def test_pass_budget_counts_scanner_and_s30_calls(tmp_path, monkeypatch):
 
     detail, remaining, used, cap = scanner_worker.pass_budget(now)
 
-    assert (detail, remaining, used, cap) == (23, 25, 1375, 1400)
+    assert (detail, remaining, used, cap) == (0, 0, 1375, 0)
 
 
 def test_pass_budget_skips_when_board_budget_is_unavailable(tmp_path, monkeypatch):
@@ -34,4 +34,4 @@ def test_pass_budget_skips_when_board_budget_is_unavailable(tmp_path, monkeypatc
 
     detail, remaining, used, cap = scanner_worker.pass_budget(now)
 
-    assert (detail, remaining, used, cap) == (0, 1, 649, 1400)
+    assert (detail, remaining, used, cap) == (0, 0, 649, 0)

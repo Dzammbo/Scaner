@@ -6,7 +6,6 @@ import subprocess
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 LOG_DIR = ROOT / "forward_log" / "s30"
@@ -17,7 +16,7 @@ POLL_SECONDS = max(30, int(os.environ.get("S30_POLL_SECONDS", "55")))
 DURATION_SECONDS = max(1, int(os.environ.get("S30_DURATION_SECONDS", "19200")))
 CHECKPOINT_SECONDS = max(120, int(os.environ.get("S30_CHECKPOINT_SECONDS", "600")))
 GIT_CHECKPOINT = os.environ.get("S30_GIT_CHECKPOINT", "0") == "1"
-MSK = ZoneInfo("Europe/Moscow")
+HOURLY_CAP = max(100, int(os.environ.get("S30_HOURLY_CAP", "750")))
 
 
 def now_utc():
@@ -25,13 +24,11 @@ def now_utc():
 
 
 def hourly_cap(at=None):
-    local = (at or now_utc()).astimezone(MSK)
-    return 700 if 7 <= local.hour < 12 else 1400
+    return HOURLY_CAP
 
 
 def s30_cap(at=None):
-    local = (at or now_utc()).astimezone(MSK)
-    return 375 if 7 <= local.hour < 12 else 750
+    return HOURLY_CAP
 
 
 def calls_for_path(path, at=None):
@@ -62,7 +59,7 @@ def detail_budget(at=None):
     used = recent_calls(at)
     own_remaining = max(0, s30_cap(at) - calls_for_path(RUNS_PATH, at))
     remaining = min(max(0, cap - used), own_remaining)
-    per_poll = 7 if cap == 700 else 14
+    per_poll = 14
     return max(0, min(per_poll, remaining - 1)), remaining
 
 

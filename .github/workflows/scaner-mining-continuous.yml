@@ -32,6 +32,9 @@ jobs:
       PUBLIC_MINING_CHECKPOINT_SECONDS: '600'
       PUBLIC_MINING_GIT_CHECKPOINT: '1'
       PUBLIC_MINING_MAX_FAILURES: '3'
+      PUBLIC_MINING_HOURLY_CAP: '2450'
+      PUBLIC_MINING_FIRST_HALF_PASS_CAP: '70'
+      PUBLIC_MINING_GENERAL_PASS_CAP: '70'
     steps:
       - uses: actions/checkout@v4
         with:

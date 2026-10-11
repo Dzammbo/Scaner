@@ -5,7 +5,6 @@ import subprocess
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 LOG_DIR = ROOT / "forward_log"
@@ -17,7 +16,6 @@ DURATION_SECONDS = max(1, int(os.environ.get("SCANNER_DURATION_SECONDS", "19200"
 CHECKPOINT_SECONDS = max(120, int(os.environ.get("SCANNER_CHECKPOINT_SECONDS", "600")))
 GIT_CHECKPOINT = os.environ.get("SCANNER_GIT_CHECKPOINT", "0") == "1"
 MAX_CONSECUTIVE_FAILURES = max(1, int(os.environ.get("SCANNER_MAX_CONSECUTIVE_FAILURES", "3")))
-MSK = ZoneInfo("Europe/Moscow")
 
 
 def now_utc():
@@ -25,13 +23,11 @@ def now_utc():
 
 
 def hourly_cap(at=None):
-    local = (at or now_utc()).astimezone(MSK)
-    return 700 if 7 <= local.hour < 12 else 1400
+    return 0
 
 
 def scanner_cap(at=None):
-    local = (at or now_utc()).astimezone(MSK)
-    return 325 if 7 <= local.hour < 12 else 650
+    return 0
 
 
 def calls_for_path(path, at=None):

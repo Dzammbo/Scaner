@@ -9,17 +9,18 @@ import subprocess
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parent
 LOG_ROOT = ROOT / "mining_log"
 STATUS_PATH = LOG_ROOT / "public_worker_status.json"
-MSK = ZoneInfo("Europe/Moscow")
 DURATION_SECONDS = max(1, int(os.environ.get("PUBLIC_MINING_DURATION_SECONDS", "19200")))
 CHECKPOINT_SECONDS = max(120, int(os.environ.get("PUBLIC_MINING_CHECKPOINT_SECONDS", "600")))
 GIT_CHECKPOINT = os.environ.get("PUBLIC_MINING_GIT_CHECKPOINT", "0") == "1"
 MAX_FAILURES = max(1, int(os.environ.get("PUBLIC_MINING_MAX_FAILURES", "3")))
+HOURLY_CAP = max(100, int(os.environ.get("PUBLIC_MINING_HOURLY_CAP", "2450")))
+FIRST_HALF_PASS_CAP = max(4, int(os.environ.get("PUBLIC_MINING_FIRST_HALF_PASS_CAP", "70")))
+GENERAL_PASS_CAP = max(2, int(os.environ.get("PUBLIC_MINING_GENERAL_PASS_CAP", "70")))
 GENERAL_STRATEGIES = os.environ.get(
     "PUBLIC_MINING_STRATEGIES",
     "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18",
@@ -29,11 +30,6 @@ COLLECTOR_INTERVALS = {"first_half_goals": 300, "general": 300, "goal": 300, "ho
 
 def now():
     return datetime.now(timezone.utc)
-
-
-def morning(at=None):
-    hour = (at or now()).astimezone(MSK).hour
-    return 7 <= hour < 12
 
 
 def recent_calls(at=None):
@@ -53,7 +49,7 @@ def recent_calls(at=None):
 
 
 def budget(cap, minimum):
-    remaining = max(0, (1150 if morning() else 2300) - recent_calls())
+    remaining = max(0, HOURLY_CAP - recent_calls())
     amount = min(cap, remaining)
     return amount if amount >= minimum else 0
 
@@ -105,14 +101,14 @@ def checkpoint():
 
 def run_pass(name):
     if name == "first_half_goals":
-        calls = budget(10 if morning() else 20, 4)
+        calls = budget(FIRST_HALF_PASS_CAP, 4)
         if not calls:
             return False
         invoke("first-half goal Mining", ["python3", "first_half_goal_mining.py"], {
             "FIRST_HALF_CALL_BUDGET": str(calls),
         }, timeout=180)
     elif name == "general":
-        calls = budget(50, 2)
+        calls = budget(GENERAL_PASS_CAP, 2)
         if not calls:
             return False
         invoke("general Mining", ["python3", "scanner.py"], {
@@ -174,7 +170,13 @@ def main():
             "passes": counts,
             "failures": failures,
             "calls_last_hour": recent_calls(),
-            "hourly_cap": 1150 if morning() else 2300,
+            "hourly_cap": HOURLY_CAP,
+            "pass_caps": {
+                "first_half_goals": FIRST_HALF_PASS_CAP,
+                "general": GENERAL_PASS_CAP,
+                "goal": 5,
+                "hockey_period": 12,
+            },
             "active_collectors": intervals,
             "general_strategies": GENERAL_STRATEGIES.split(","),
             "last_error": last_error,
