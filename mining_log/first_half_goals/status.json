@@ -1,39 +1,54 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T16:53:55.262064Z",
-  "api_calls": 3,
-  "new_signals": 0,
-  "live_events": 143,
+  "updated_at": "2026-10-11T17:05:35.957883Z",
+  "api_calls": 80,
+  "new_signals": 3,
+  "live_events": 118,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 71,
-      "already_recorded": 5
+      "eligible_events": 89,
+      "already_recorded": 2,
+      "checked": 71,
+      "EMPTY_MARKET": 16,
+      "DIFFERENT_CURRENT_LINE": 34,
+      "STALE_QUOTE": 19,
+      "VERIFIED": 2,
+      "API_UNAVAILABLE": 1
     },
     "S47": {
-      "eligible_events": 71,
-      "already_recorded": 2
+      "eligible_events": 89,
+      "already_recorded": 1,
+      "checked": 73,
+      "EMPTY_MARKET": 16,
+      "DIFFERENT_CURRENT_LINE": 56,
+      "STALE_QUOTE": 1,
+      "API_UNAVAILABLE": 1
     },
-    "S48": {
-      "eligible_events": 2,
-      "already_recorded": 1
-    },
+    "S48": {},
     "S49": {
-      "eligible_events": 1
+      "eligible_events": 1,
+      "checked": 1,
+      "VERIFIED": 1
     }
   },
-  "errors": [],
+  "errors": [
+    {
+      "path": "/v2/event/odds",
+      "error": "HTTP_502"
+    }
+  ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 8,
+      "signals": 10,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 8,
+      "pending": 10,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -41,12 +56,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 7,
+          "signals": 9,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 7,
+          "pending": 9,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -139,28 +154,28 @@
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
       "signals": 14,
-      "N": 0,
-      "W": 0,
-      "L": 0,
-      "PUSH": 0,
-      "pending": 14,
+      "N": 5,
+      "W": 2,
+      "L": 1,
+      "PUSH": 2,
+      "pending": 9,
       "void": 0,
-      "profit": 0,
-      "ROI_pct": null,
-      "ROI_without_top3_pct": null,
+      "profit": 1.125,
+      "ROI_pct": 22.5,
+      "ROI_without_top3_pct": -50.0,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 12,
-          "N": 0,
-          "W": 0,
-          "L": 0,
-          "PUSH": 0,
-          "pending": 12,
+          "N": 5,
+          "W": 2,
+          "L": 1,
+          "PUSH": 2,
+          "pending": 7,
           "void": 0,
-          "profit": 0,
-          "ROI_pct": null,
-          "ROI_without_top3_pct": null,
+          "profit": 1.125,
+          "ROI_pct": 22.5,
+          "ROI_without_top3_pct": -50.0,
           "balance_valid": true
         },
         "youth_reserves": {
@@ -180,12 +195,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 8,
+      "signals": 9,
       "N": 2,
       "W": 1,
       "L": 1,
       "PUSH": 0,
-      "pending": 6,
+      "pending": 7,
       "void": 0,
       "profit": 0.15,
       "ROI_pct": 7.5,
@@ -193,12 +208,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 8,
+          "signals": 9,
           "N": 2,
           "W": 1,
           "L": 1,
           "PUSH": 0,
-          "pending": 6,
+          "pending": 7,
           "void": 0,
           "profit": 0.15,
           "ROI_pct": 7.5,
@@ -208,6 +223,192 @@
       }
     }
   },
-  "market_samples": [],
-  "health": "OK"
+  "market_samples": [
+    {
+      "event_id": "12281078",
+      "league": "Spain Primera Division RFEF Group 2",
+      "mode": "LIVE",
+      "results": {
+        "S49": "VERIFIED"
+      },
+      "latest_first_half_quote": {
+        "id": "192763434",
+        "over_od": "1.775",
+        "handicap": "1.5",
+        "under_od": "2.025",
+        "ss": "0-1",
+        "time_str": "19",
+        "add_time": "1791738274"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791738275,
+          "1_2": 1791738275,
+          "1_3": 1791738275,
+          "1_4": 1791738275,
+          "1_5": 1791738275,
+          "1_6": 1791738275,
+          "1_7": 1791738275,
+          "1_8": 1791738275
+        }
+      }
+    },
+    {
+      "event_id": "13104792",
+      "league": "Guatemala Primera Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "11523878",
+      "league": "Argentina Nacional B",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192747533",
+        "over_od": "1.725",
+        "handicap": "0.5,1.0",
+        "under_od": "2.075",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791726395"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791738000,
+          "1_2": 1791738136,
+          "1_3": 1791738136,
+          "1_4": 1791727540,
+          "1_5": 1791719569,
+          "1_6": 1791737731,
+          "1_7": 1791734785,
+          "1_8": 1791736847
+        }
+      }
+    },
+    {
+      "event_id": "11523879",
+      "league": "Argentina Nacional B",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192695034",
+        "over_od": "2.000",
+        "handicap": "0.5,1.0",
+        "under_od": "1.800",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791697113"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737905,
+          "1_2": 1791738094,
+          "1_3": 1791738094,
+          "1_4": 1791731332,
+          "1_5": 1791737527,
+          "1_6": 1791724404,
+          "1_7": 1791716041,
+          "1_8": 1791737836
+        }
+      }
+    },
+    {
+      "event_id": "12059168",
+      "league": "Brazil Campeonato Goiano 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192675747",
+        "over_od": "1.750",
+        "handicap": "0.5,1.0",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791675922"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791738133,
+          "1_2": 1791737981,
+          "1_3": 1791737981,
+          "1_4": 1791732406,
+          "1_5": 1791738257,
+          "1_6": 1791735538,
+          "1_7": 1791728898,
+          "1_8": 1791736028
+        }
+      }
+    },
+    {
+      "event_id": "12294362",
+      "league": "Brazil Copa Parana",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192662091",
+        "over_od": "2.100",
+        "handicap": "1.0",
+        "under_od": "1.700",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791663570"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737935,
+          "1_2": 1791738164,
+          "1_3": 1791738164,
+          "1_5": 1791718250,
+          "1_6": 1791719700,
+          "1_8": 1791737725
+        }
+      }
+    },
+    {
+      "event_id": "13092632",
+      "league": "Brazil Campeonato Goiano 3",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13092718",
+      "league": "Brazil Campeonato Goiano 3",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    }
+  ],
+  "health": "API_ERRORS"
 }
