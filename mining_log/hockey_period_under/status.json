@@ -1,20 +1,20 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T13:06:48.840038Z",
+  "updated_at": "2026-10-11T13:36:29.785701Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
-  "market_access": "HTTP_DENIED",
+  "market_access": "BACKOFF_AFTER_DENIAL",
   "price_collection": {
     "checked_at": "2026-10-11T13:06:48.332692Z",
-    "state": "HTTP_DENIED",
+    "state": "BACKOFF_AFTER_DENIAL",
     "fixtures_matched": 0,
     "prices_saved": 0,
     "http_status": 403,
     "retry_after_epoch": 1791727608
   },
-  "api_calls": 6,
-  "upcoming_seen": 100,
-  "history_events": 392,
+  "api_calls": 5,
+  "upcoming_seen": 0,
+  "history_events": 395,
   "strategies": [
     {
       "priced_resolved": 0,
@@ -22,12 +22,12 @@
       "roi_pct": null,
       "name": "Тотал меньше 1,5 во втором периоде взрослого хоккейного матча",
       "signals": 445,
-      "resolved": 308,
-      "pending": 137,
-      "wins": 110,
-      "losses": 198,
-      "hit_rate_pct": 35.71,
-      "break_even_decimal_price": 2.8,
+      "resolved": 311,
+      "pending": 134,
+      "wins": 111,
+      "losses": 200,
+      "hit_rate_pct": 35.69,
+      "break_even_decimal_price": 2.802,
       "roi_status": "NO_PRICE_DATA"
     },
     {
@@ -36,14 +36,18 @@
       "roi_pct": null,
       "name": "Тотал меньше 1,5 в третьем периоде взрослого хоккейного матча",
       "signals": 445,
-      "resolved": 308,
-      "pending": 137,
-      "wins": 123,
-      "losses": 185,
-      "hit_rate_pct": 39.94,
-      "break_even_decimal_price": 2.504,
+      "resolved": 311,
+      "pending": 134,
+      "wins": 125,
+      "losses": 186,
+      "hit_rate_pct": 40.19,
+      "break_even_decimal_price": 2.488,
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": []
+  "errors": [
+    "ended 20261010: HTTPError: HTTP Error 502: Bad Gateway",
+    "upcoming page 1: HTTPError: HTTP Error 502: Bad Gateway",
+    "upcoming page 2: HTTPError: HTTP Error 502: Bad Gateway"
+  ]
 }
