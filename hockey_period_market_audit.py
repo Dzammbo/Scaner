@@ -109,11 +109,13 @@ def main() -> None:
     }
     try:
         upcoming = get("/v1/bet365/upcoming", {"sport_id": 17, "page": 1})
+        if str(upcoming.get("success")) != "1":
+            raise RuntimeError("API application error: " + str(upcoming.get("error") or upcoming.get("error_detail") or "unknown"))
         fixtures = [row for row in upcoming.get("results") or [] if isinstance(row, dict)]
         audit["bet365_entitlement"] = "available"
     except Exception as exc:
         fixtures = []
-        audit["bet365_entitlement"] = "unavailable"
+        audit["bet365_entitlement"] = "request_denied_or_failed"
         audit["bet365_error"] = f"{type(exc).__name__}: {exc}"
         audit["errors"].append({"endpoint": "/v1/bet365/upcoming", "error": audit["bet365_error"]})
     selected = [row for row in fixtures if adult_fixture(row)][:MAX_FIXTURES]
