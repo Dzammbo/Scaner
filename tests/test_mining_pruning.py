@@ -16,8 +16,14 @@ import hockey_period_under as hockey
 
 
 class MiningPruningTest(unittest.TestCase):
+    def test_pending_refresh_runs_hourly_with_hourly_retry(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/mining-pending-refresh.yml").read_text()
+        self.assertIn('cron: "2 * * * *"', workflow)
+        self.assertIn('MINING_SETTLEMENT_RETRY_SECONDS: "3600"', workflow)
+
     def test_only_retained_collectors_are_scheduled(self):
-        self.assertEqual(worker.COLLECTOR_INTERVALS, {"first_half_goals": 300, "general": 300, "goal": 300, "hockey_period": 1800})
+        self.assertEqual(worker.COLLECTOR_INTERVALS, {"first_half_goals": 300, "general": 300, "goal": 300})
+        self.assertIn("hockey_period", worker.PAUSED_COLLECTORS)
         self.assertEqual(worker.GENERAL_STRATEGIES, "S01,S02,S04,S05,S06Y,S10,S21,S28,S29,S44,S45,T18")
 
     def test_all_previous_scanner_strategies_are_now_in_mining(self):
@@ -81,10 +87,17 @@ class MiningPruningTest(unittest.TestCase):
 
     @patch.object(worker, "budget", return_value=6)
     @patch.object(worker, "invoke")
-    def test_hockey_period_pass_is_live_and_budgeted(self, invoke, _budget):
-        self.assertTrue(worker.run_pass("hockey_period"))
-        self.assertEqual(invoke.call_args.args[1], ["python3", "hockey_period_under.py"])
-        self.assertEqual(invoke.call_args.args[2]["HOCKEY_PERIOD_CALL_BUDGET"], "6")
+    def test_hockey_period_pass_is_paused_without_budget(self, invoke, mocked_budget):
+        self.assertFalse(worker.run_pass("hockey_period"))
+        invoke.assert_not_called()
+        mocked_budget.assert_not_called()
+
+    def test_hockey_period_registry_entries_are_paused(self):
+        registry = json.loads((Path(__file__).resolve().parents[1] / "strategies.json").read_text())
+        by_id = {row["id"]: row for row in registry["strategies"]}
+        for strategy_id in ("H01", "H02"):
+            self.assertFalse(by_id[strategy_id]["mining_enabled"])
+            self.assertEqual(by_id[strategy_id]["status"], "PAUSED_NO_PRICE_ACCESS")
 
     def test_hockey_periods_are_parsed_and_settled_separately(self):
         event = {
