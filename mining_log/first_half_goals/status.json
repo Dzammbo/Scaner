@@ -1,31 +1,34 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T18:46:55.181908Z",
-  "api_calls": 34,
-  "new_signals": 0,
-  "live_events": 85,
+  "updated_at": "2026-10-11T18:56:59.872648Z",
+  "api_calls": 35,
+  "new_signals": 3,
+  "live_events": 102,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 90,
-      "already_recorded": 14,
-      "checked": 20,
-      "EMPTY_MARKET": 7,
-      "STALE_QUOTE": 7,
-      "DIFFERENT_CURRENT_LINE": 6
+      "eligible_events": 80,
+      "already_recorded": 8,
+      "checked": 27,
+      "DIFFERENT_CURRENT_LINE": 10,
+      "STALE_QUOTE": 8,
+      "VERIFIED": 3,
+      "EMPTY_MARKET": 6
     },
     "S47": {
-      "eligible_events": 90,
+      "eligible_events": 80,
       "already_recorded": 2,
-      "checked": 25,
-      "EMPTY_MARKET": 7,
-      "DIFFERENT_CURRENT_LINE": 18
+      "checked": 29,
+      "DIFFERENT_CURRENT_LINE": 22,
+      "EMPTY_MARKET": 6,
+      "STALE_QUOTE": 1
     },
     "S48": {
-      "eligible_events": 10,
-      "checked": 5,
-      "DIFFERENT_CURRENT_LINE": 5
+      "eligible_events": 3,
+      "already_recorded": 1,
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S49": {}
   },
@@ -34,12 +37,12 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 28,
+      "signals": 31,
       "N": 3,
       "W": 1,
       "L": 1,
       "PUSH": 1,
-      "pending": 25,
+      "pending": 28,
       "void": 0,
       "profit": -0.1,
       "ROI_pct": -3.333,
@@ -47,12 +50,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 27,
+          "signals": 30,
           "N": 3,
           "W": 1,
           "L": 1,
           "PUSH": 1,
-          "pending": 24,
+          "pending": 27,
           "void": 0,
           "profit": -0.1,
           "ROI_pct": -3.333,
@@ -157,12 +160,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 23,
+      "signals": 24,
       "N": 14,
       "W": 8,
       "L": 2,
       "PUSH": 4,
-      "pending": 9,
+      "pending": 10,
       "void": 0,
       "profit": 5.15,
       "ROI_pct": 36.786,
@@ -180,6 +183,19 @@
           "profit": 6.15,
           "ROI_pct": 51.25,
           "ROI_without_top3_pct": 34.444,
+          "balance_valid": true
+        },
+        "women": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
           "balance_valid": true
         },
         "youth_reserves": {
@@ -229,198 +245,242 @@
   },
   "market_samples": [
     {
-      "event_id": "13254452",
-      "league": "Argentina Torneo A",
+      "event_id": "13145585",
+      "league": "France Ligue 1",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192772219",
+        "id": "192772850",
         "over_od": "-",
         "handicap": "0.5",
         "under_od": "-",
         "ss": "0-0",
-        "time_str": "13",
-        "add_time": "1791744363"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791744375,
-          "1_2": 1791744375,
-          "1_3": 1791744375,
-          "1_5": 1791744375,
-          "1_6": 1791744375,
-          "1_8": 1791744375
-        }
-      }
-    },
-    {
-      "event_id": "13246085",
-      "league": "Argentina Nacional B",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192772179",
-        "over_od": "2.100",
-        "handicap": "0.5",
-        "under_od": "1.700",
-        "ss": "0-0",
-        "time_str": "12",
-        "add_time": "1791744349"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791744368,
-          "1_2": 1791744368,
-          "1_3": 1791744368,
-          "1_4": 1791744368,
-          "1_5": 1791744368,
-          "1_6": 1791744368,
-          "1_7": 1791744368,
-          "1_8": 1791744368
-        }
-      }
-    },
-    {
-      "event_id": "13263103",
-      "league": "Argentina Torneo A",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192772127",
-        "over_od": "2.050",
-        "handicap": "0.5",
-        "under_od": "1.750",
-        "ss": "0-0",
         "time_str": "11",
-        "add_time": "1791744327"
+        "add_time": "1791744993"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791744367,
-          "1_2": 1791744367,
-          "1_3": 1791744367,
-          "1_5": 1791744367,
-          "1_6": 1791744367,
-          "1_8": 1791744367
+          "1_1": 1791744993,
+          "1_2": 1791744993,
+          "1_3": 1791744993,
+          "1_4": 1791744993,
+          "1_5": 1791744993,
+          "1_6": 1791744993,
+          "1_7": 1791744993,
+          "1_8": 1791744993
         }
       }
     },
     {
-      "event_id": "13185443",
-      "league": "Argentina Torneo A",
+      "event_id": "13134472",
+      "league": "Ecuador LigaPro Serie A",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192772242",
-        "over_od": "1.800",
-        "handicap": "0.5",
-        "under_od": "2.000",
+        "id": "192772806",
+        "over_od": "1.975",
+        "handicap": "0.75",
+        "under_od": "1.825",
         "ss": "0-0",
-        "time_str": "11",
-        "add_time": "1791744376"
+        "time_str": "10",
+        "add_time": "1791744948"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791744376,
-          "1_2": 1791744376,
-          "1_3": 1791744376,
-          "1_4": 1791744376,
-          "1_5": 1791744376,
-          "1_6": 1791744376,
-          "1_7": 1791744376,
-          "1_8": 1791744376
+          "1_1": 1791744991,
+          "1_2": 1791744991,
+          "1_3": 1791744991,
+          "1_4": 1791744991,
+          "1_5": 1791744991,
+          "1_6": 1791744991,
+          "1_7": 1791744991,
+          "1_8": 1791744991
         }
       }
     },
     {
-      "event_id": "13268755",
-      "league": "Uruguay League Women",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192772204",
-        "over_od": "1.950",
-        "handicap": "1.25",
-        "under_od": "1.850",
-        "ss": "0-0",
-        "time_str": "9",
-        "add_time": "1791744359"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791744361,
-          "1_2": 1791744361,
-          "1_3": 1791744361,
-          "1_4": 1791744361,
-          "1_5": 1791744361,
-          "1_6": 1791744361,
-          "1_7": 1791744361,
-          "1_8": 1791744361
-        }
-      }
-    },
-    {
-      "event_id": "13262869",
-      "league": "Honduras Liga de Ascenso",
+      "event_id": "13273736",
+      "league": "Saint Kitts & Nevis Premier League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13263795",
-      "league": "Honduras Liga de Ascenso",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13104756",
-      "league": "Guatemala Primera Division",
-      "mode": "PREMATCH",
-      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192660178",
-        "over_od": "2.050",
-        "handicap": "1.0",
-        "under_od": "1.750",
+        "id": "192649849",
+        "over_od": "1.825",
+        "handicap": "1.0,1.5",
+        "under_od": "1.975",
         "ss": null,
         "time_str": null,
-        "add_time": "1791661250"
+        "add_time": "1791652896"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791743661,
-          "1_2": 1791743534,
-          "1_3": 1791743534,
-          "1_5": 1791743337,
-          "1_6": 1791743831,
-          "1_8": 1791744142
+          "1_1": 1791744526,
+          "1_2": 1791743974,
+          "1_3": 1791743974,
+          "1_5": 1791727759,
+          "1_6": 1791724625,
+          "1_8": 1791743904
+        }
+      }
+    },
+    {
+      "event_id": "13274255",
+      "league": "Mexico Liga TDP",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192660227",
+        "over_od": "2.025",
+        "handicap": "1.0,1.5",
+        "under_od": "1.775",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791661287"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791744859,
+          "1_2": 1791744783,
+          "1_3": 1791744783,
+          "1_5": 1791712361,
+          "1_6": 1791737210,
+          "1_8": 1791744353
+        }
+      }
+    },
+    {
+      "event_id": "13274977",
+      "league": "Guatemala Segunda Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192675867",
+        "over_od": "1.900",
+        "handicap": "1.0,1.5",
+        "under_od": "1.900",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791675997"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791744879,
+          "1_2": 1791744309,
+          "1_3": 1791744309,
+          "1_5": 1791738338,
+          "1_6": 1791736710,
+          "1_8": 1791742678
+        }
+      }
+    },
+    {
+      "event_id": "12099614",
+      "league": "Colombia Primera A",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192697433",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791700211"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791744904,
+          "1_2": 1791744891,
+          "1_3": 1791744891,
+          "1_4": 1791737680,
+          "1_5": 1791743593,
+          "1_6": 1791729768,
+          "1_7": 1791742501,
+          "1_8": 1791743758
+        }
+      }
+    },
+    {
+      "event_id": "13246638",
+      "league": "Bolivia Primera Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192312497",
+        "over_od": "1.975",
+        "handicap": "1.0,1.5",
+        "under_od": "1.825",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791230401"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791744435,
+          "1_2": 1791744786,
+          "1_3": 1791744786,
+          "1_4": 1791739868,
+          "1_5": 1791740768,
+          "1_6": 1791733786,
+          "1_7": 1791740387,
+          "1_8": 1791744821
+        }
+      }
+    },
+    {
+      "event_id": "11752520",
+      "league": "Brazil Serie B",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192761176",
+        "over_od": "2.075",
+        "handicap": "1.0",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791736214"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791744614,
+          "1_2": 1791742581,
+          "1_3": 1791742581,
+          "1_4": 1791735037,
+          "1_5": 1791729460,
+          "1_6": 1791741291,
+          "1_7": 1791737794,
+          "1_8": 1791736912
         }
       }
     }
