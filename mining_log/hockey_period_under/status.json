@@ -1,18 +1,18 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T09:22:46.529251Z",
+  "updated_at": "2026-10-11T09:32:50.534876Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
-  "market_access": "HTTP_DENIED",
+  "market_access": "BACKOFF_AFTER_DENIAL",
   "price_collection": {
     "checked_at": "2026-10-11T09:22:45.871392Z",
-    "state": "HTTP_DENIED",
+    "state": "BACKOFF_AFTER_DENIAL",
     "fixtures_matched": 0,
     "prices_saved": 0,
     "http_status": 403,
     "retry_after_epoch": 1791714166
   },
-  "api_calls": 6,
+  "api_calls": 5,
   "upcoming_seen": 100,
   "history_events": 388,
   "strategies": [
