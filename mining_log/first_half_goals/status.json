@@ -1,40 +1,53 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T17:25:04.919377Z",
-  "api_calls": 3,
+  "updated_at": "2026-10-11T17:35:25.473526Z",
+  "api_calls": 24,
   "new_signals": 0,
-  "live_events": 111,
-  "upcoming_events": 0,
+  "live_events": 95,
+  "upcoming_events": 100,
   "coverage": {
-    "S46": {},
-    "S47": {},
+    "S46": {
+      "eligible_events": 88,
+      "already_recorded": 8,
+      "checked": 15,
+      "EMPTY_MARKET": 4,
+      "DIFFERENT_CURRENT_LINE": 9,
+      "STALE_QUOTE": 2
+    },
+    "S47": {
+      "eligible_events": 88,
+      "checked": 16,
+      "DIFFERENT_CURRENT_LINE": 12,
+      "EMPTY_MARKET": 4
+    },
     "S48": {
       "eligible_events": 1,
-      "already_recorded": 1
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     },
     "S49": {
       "eligible_events": 3,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "checked": 3,
+      "DIFFERENT_CURRENT_LINE": 3
     }
   },
   "errors": [
     {
-      "path": "/v3/events/upcoming",
-      "error": "TimeoutError"
+      "path": "/v1/event/view",
+      "error": "HTTP_502"
     }
   ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 11,
+      "signals": 15,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 11,
+      "pending": 15,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -42,12 +55,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 10,
+          "signals": 14,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 10,
+          "pending": 14,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -211,34 +224,185 @@
   },
   "market_samples": [
     {
-      "event_id": "13239787",
-      "league": "Kuwait League",
+      "event_id": "13273839",
+      "league": "Israel Liga Bet North",
       "mode": "LIVE",
       "results": {
         "S49": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192764684",
-        "over_od": "1.750",
+        "id": "192765443",
+        "over_od": "1.825",
         "handicap": "1.75",
-        "under_od": "2.050",
-        "ss": "1-0",
-        "time_str": "13",
-        "add_time": "1791739427"
+        "under_od": "1.975",
+        "ss": "0-1",
+        "time_str": "19",
+        "add_time": "1791740108"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791739501,
-          "1_2": 1791739501,
-          "1_3": 1791739501,
-          "1_4": 1791739501,
-          "1_5": 1791739501,
-          "1_6": 1791739501,
-          "1_7": 1791739501,
-          "1_8": 1791739501
+          "1_1": 1791740108,
+          "1_2": 1791740108,
+          "1_3": 1791740108,
+          "1_5": 1791740108,
+          "1_6": 1791740108,
+          "1_8": 1791740108
         }
       }
+    },
+    {
+      "event_id": "12096258",
+      "league": "Belgium First Division B",
+      "mode": "LIVE",
+      "results": {
+        "S49": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192765429",
+        "over_od": "1.725",
+        "handicap": "2.5",
+        "under_od": "2.075",
+        "ss": "1-1",
+        "time_str": "19",
+        "add_time": "1791740092"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791740106,
+          "1_2": 1791740106,
+          "1_3": 1791740106,
+          "1_4": 1791740106,
+          "1_5": 1791740106,
+          "1_6": 1791740106,
+          "1_7": 1791740106,
+          "1_8": 1791740106
+        }
+      }
+    },
+    {
+      "event_id": "12107302",
+      "league": "Belgium First Division A",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192765410",
+        "over_od": "1.975",
+        "handicap": "0.75",
+        "under_od": "1.825",
+        "ss": "0-0",
+        "time_str": "18",
+        "add_time": "1791740080"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791740088,
+          "1_2": 1791740088,
+          "1_3": 1791740088,
+          "1_4": 1791740088,
+          "1_5": 1791740088,
+          "1_6": 1791740088,
+          "1_7": 1791740088,
+          "1_8": 1791740088
+        }
+      }
+    },
+    {
+      "event_id": "12076768",
+      "league": "Israel Premier League",
+      "mode": "LIVE",
+      "results": {
+        "S49": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192765442",
+        "over_od": "1.675",
+        "handicap": "1.75",
+        "under_od": "2.150",
+        "ss": "0-1",
+        "time_str": "18",
+        "add_time": "1791740109"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791740109,
+          "1_2": 1791740109,
+          "1_3": 1791740109,
+          "1_4": 1791740109,
+          "1_5": 1791740109,
+          "1_6": 1791740109,
+          "1_7": 1791740109,
+          "1_8": 1791740109
+        }
+      }
+    },
+    {
+      "event_id": "13104793",
+      "league": "Guatemala Primera Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192747675",
+        "over_od": "1.875",
+        "handicap": "1.0",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791726421"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791740017,
+          "1_2": 1791739982,
+          "1_3": 1791739982,
+          "1_4": 1791730597,
+          "1_5": 1791738894,
+          "1_6": 1791738312,
+          "1_7": 1791738955,
+          "1_8": 1791739324
+        }
+      }
+    },
+    {
+      "event_id": "13150666",
+      "league": "USA College Championship",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13150980",
+      "league": "USA College Championship",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13151331",
+      "league": "USA College Championship",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
     }
   ],
   "health": "API_ERRORS"
