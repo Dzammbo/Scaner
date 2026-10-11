@@ -1,36 +1,47 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T14:57:47.315040Z",
+  "updated_at": "2026-10-11T15:07:54.326494Z",
   "api_calls": 20,
   "new_signals": 0,
-  "live_events": 271,
+  "live_events": 195,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 50,
-      "checked": 15,
-      "EMPTY_MARKET": 14,
-      "STALE_QUOTE": 1
+      "eligible_events": 68,
+      "checked": 14,
+      "STALE_QUOTE": 3,
+      "DIFFERENT_CURRENT_LINE": 6,
+      "API_UNAVAILABLE": 3,
+      "EMPTY_MARKET": 5
     },
     "S47": {
-      "eligible_events": 50,
-      "checked": 15,
-      "EMPTY_MARKET": 14,
-      "DIFFERENT_CURRENT_LINE": 1
+      "eligible_events": 68,
+      "checked": 14,
+      "DIFFERENT_CURRENT_LINE": 8,
+      "API_UNAVAILABLE": 3,
+      "EMPTY_MARKET": 5,
+      "STALE_QUOTE": 1
     },
     "S48": {
-      "eligible_events": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "eligible_events": 1
     },
-    "S49": {
-      "eligible_events": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    }
+    "S49": {}
   },
-  "errors": [],
+  "errors": [
+    {
+      "path": "/v2/event/odds",
+      "error": "HTTP_502"
+    },
+    {
+      "path": "/v2/event/odds",
+      "error": "HTTP_502"
+    },
+    {
+      "path": "/v2/event/odds",
+      "error": "HTTP_502"
+    }
+  ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -136,68 +147,99 @@
   },
   "market_samples": [
     {
-      "event_id": "12026902",
-      "league": "Netherlands Eredivisie",
-      "mode": "LIVE",
+      "event_id": "12336849",
+      "league": "Italy Serie C Group B",
+      "mode": "PREMATCH",
       "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192753304",
-        "over_od": "1.900",
-        "handicap": "2",
-        "under_od": "1.900",
-        "ss": "0-1",
-        "time_str": "11",
-        "add_time": "1791730591"
+        "id": "192513276",
+        "over_od": "2.050",
+        "handicap": "1.0",
+        "under_od": "1.750",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791546926"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791730628,
-          "1_2": 1791730628,
-          "1_3": 1791730628,
-          "1_4": 1791730628,
-          "1_5": 1791730628,
-          "1_6": 1791730628,
-          "1_7": 1791730628,
-          "1_8": 1791730628
+          "1_1": 1791731251,
+          "1_2": 1791731115,
+          "1_3": 1791731115,
+          "1_4": 1791722325,
+          "1_5": 1791726535,
+          "1_6": 1791729386,
+          "1_7": 1791723436,
+          "1_8": 1791730887
         }
       }
     },
     {
-      "event_id": "12095787",
-      "league": "Hungary NB I",
-      "mode": "LIVE",
+      "event_id": "12337483",
+      "league": "Italy Serie C Group B",
+      "mode": "PREMATCH",
       "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192753321",
-        "over_od": "1.725",
-        "handicap": "0.75",
-        "under_od": "2.075",
-        "ss": "0-0",
-        "time_str": "11",
-        "add_time": "1791730610"
+        "id": "192750448",
+        "over_od": "2.075",
+        "handicap": "1.0",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791728555"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791730623,
-          "1_2": 1791730623,
-          "1_3": 1791730623,
-          "1_4": 1791730623,
-          "1_5": 1791730623,
-          "1_6": 1791730623,
-          "1_7": 1791730623,
-          "1_8": 1791730623
+          "1_1": 1791731251,
+          "1_2": 1791731089,
+          "1_3": 1791731089,
+          "1_4": 1791729943,
+          "1_5": 1791728845,
+          "1_6": 1791728555,
+          "1_7": 1791724664,
+          "1_8": 1791730139
         }
       }
     },
     {
-      "event_id": "12158052",
-      "league": "Spain Primera Division RFEF Group 1",
+      "event_id": "12370448",
+      "league": "Bosnia & Herzegovina 1st League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192644771",
+        "over_od": "2.000",
+        "handicap": "1.0,1.5",
+        "under_od": "1.800",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791648791"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791731251,
+          "1_2": 1791731098,
+          "1_3": 1791731098,
+          "1_5": 1791730224,
+          "1_6": 1791709010,
+          "1_8": 1791730868
+        }
+      }
+    },
+    {
+      "event_id": "12409025",
+      "league": "Spain Tercera Group 14",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
@@ -207,8 +249,8 @@
       "stats": {}
     },
     {
-      "event_id": "12371524",
-      "league": "Spain Segunda Division RFEF Group 2",
+      "event_id": "12414727",
+      "league": "Spain Tercera Group 1",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
@@ -218,8 +260,8 @@
       "stats": {}
     },
     {
-      "event_id": "12387383",
-      "league": "Spain Tercera Group 18",
+      "event_id": "12418531",
+      "league": "Spain Tercera Group 1",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
@@ -229,38 +271,63 @@
       "stats": {}
     },
     {
-      "event_id": "12387677",
-      "league": "Spain Tercera Group 16",
+      "event_id": "13018538",
+      "league": "Malta Challenge League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "latest_first_half_quote": {
+        "id": "192546833",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791567878"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791731251,
+          "1_2": 1791731177,
+          "1_3": 1791731177,
+          "1_5": 1791730045,
+          "1_6": 1791719558,
+          "1_8": 1791730368
+        }
+      }
     },
     {
-      "event_id": "12387679",
-      "league": "Spain Tercera Group 16",
+      "event_id": "13267442",
+      "league": "Israel Youth League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12393700",
-      "league": "Spain Tercera Group 18",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+      "latest_first_half_quote": {
+        "id": "192752990",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791730073"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791731251,
+          "1_2": 1791730807,
+          "1_3": 1791730807,
+          "1_5": 1791705746,
+          "1_6": 1791730073,
+          "1_8": 1791730767
+        }
+      }
     }
   ],
-  "health": "OK"
+  "health": "API_ERRORS"
 }
