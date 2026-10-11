@@ -20,51 +20,8 @@ concurrency:
 
 jobs:
   collect:
-    if: ${{ false }} # Previous Scanner model retired; strategies now run in Mining.
     runs-on: ubuntu-latest
-    timeout-minutes: 345
-    env:
-      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-      SCANNER_DURATION_SECONDS: "19200"
-      SCANNER_POLL_SECONDS: "300"
-      SCANNER_CHECKPOINT_SECONDS: "600"
-      SCANNER_GIT_CHECKPOINT: "1"
-      SCANNER_MAX_CONSECUTIVE_FAILURES: "3"
+    timeout-minutes: 2
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: main
-
-      - name: Configure Git identity
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Run continuous Scanner collector
-        run: python3 scanner_worker.py
-
-      - name: Show worker status
-        if: always()
-        run: |
-          test -f forward_log/scanner_worker_status.json
-          cat forward_log/scanner_worker_status.json
-
-      - name: Hand off to the next Scanner worker
-        if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          other_run="$(gh run list \
-            --workflow scaner-hot-path.yml \
-            --limit 30 \
-            --json databaseId,status \
-            --jq '[.[] | select(.databaseId != '"$GITHUB_RUN_ID"' and (.status == "in_progress" or .status == "queued" or .status == "waiting" or .status == "pending" or .status == "requested"))] | length')"
-
-          if [ "$other_run" = "0" ]; then
-            gh workflow run scaner-hot-path.yml --ref main
-          fi
+      - name: Previous Scanner model is retired
+        run: echo "All previous Scanner strategies now run in Mining."
