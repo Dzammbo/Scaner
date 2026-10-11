@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Forward Mining collector for adult hockey period totals under 1.5.
 
-Events API exposes fixtures and period scores, but the current subscription does
-not expose Bet365 period-total prices.  This collector therefore stores only
-pre-match observations and objective outcomes.  It never fabricates profit or
-ROI; the status reports the observed hit rate and its break-even decimal price.
+Fixtures and period outcomes come from Events. Actual pre-match period prices
+are captured separately from Bet365, with market evidence and observation time.
+Unpriced observations never enter profit or ROI calculations.
 """
 
 from __future__ import annotations
@@ -16,6 +15,8 @@ import re
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
+from fractions import Fraction
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -191,10 +192,130 @@ def signal_rows(event, history, observed_at=None):
             "home_form": team_period_form(history, home_id, period, kickoff),
             "away_form": team_period_form(history, away_id, period, kickoff),
             "price": None,
-            "price_status": "NO_PERIOD_MARKET_ACCESS",
+            "price_status": "NOT_YET_QUOTED",
             "result": "PENDING",
         })
     return output
+
+
+def raw_nodes(value):
+    if isinstance(value, dict):
+        if value.get("type"):
+            yield value
+        for child in value.values():
+            if isinstance(child, (dict, list)):
+                yield from raw_nodes(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from raw_nodes(child)
+
+
+def period_prices(payload):
+    """Only explicit whole-period goals totals, Under 1.5, unsuspended."""
+    group, market = {}, {}
+    found = {}
+    for node in raw_nodes(payload.get("results") or []):
+        kind = node.get("type")
+        if kind == "MG":
+            group, market = node, {}
+        elif kind == "MA":
+            market = node
+        elif kind == "PA":
+            title = str(group.get("NA") or "") + " " + str(market.get("NA") or "")
+            match = re.search(r"\b(2nd|second|3rd|third)\s+period\b", title, re.I)
+            if not match or not re.search(r"total|goals|over/under", title, re.I):
+                continue
+            if re.search(r"team|home|away|shots|penalt|minute|remaining", title, re.I):
+                continue
+            if any(str(row.get("SU") or "0") == "1" for row in (group, market, node)):
+                continue
+            if not re.search(r"\bunder\b", str(node.get("NA") or ""), re.I):
+                continue
+            line = node.get("HA") or node.get("HD") or market.get("HA") or market.get("HD")
+            if line is None:
+                m = re.search(r"under\s+(\d+(?:\.\d+)?)", str(node.get("NA") or ""), re.I)
+                line = m.group(1) if m else None
+            try:
+                if float(line) != 1.5:
+                    continue
+                raw = str(node.get("OD") or "")
+                price = 1 + float(Fraction(raw)) if "/" in raw else float(raw)
+                if not math.isfinite(price) or price <= 1:
+                    continue
+            except (ValueError, TypeError, ZeroDivisionError):
+                continue
+            period = 2 if match.group(1).lower() in ("2nd", "second") else 3
+            evidence = {"group": group, "market": market, "selection": node}
+            found.setdefault(period, {"price": price, "evidence": evidence})
+    return found
+
+
+def match_fixture(fixture, signals):
+    future = [s for s in signals if integer(s.get("kickoff")) and integer(s["kickoff"]) > time.time()]
+    mapped = str(fixture.get("our_event_id") or "")
+    if mapped:
+        return [s for s in future if s["event_id"] == mapped]
+    # No fuzzy team matching: ambiguous identities must never acquire a price.
+    _, home = entity(fixture, "home")
+    _, away = entity(fixture, "away")
+    kickoff = integer(fixture.get("time"))
+    candidates = [s for s in future if kickoff and abs(s["kickoff"]-kickoff) <= 300
+                  and s["home"].casefold() == home.casefold() and s["away"].casefold() == away.casefold()]
+    return candidates if len({s["event_id"] for s in candidates}) == 1 else []
+
+
+def capture_prices(signals, previous_status):
+    diagnostic = {"checked_at": utc_iso(), "state": "NOT_CHECKED", "fixtures_matched": 0, "prices_saved": 0}
+    retry = previous_status.get("price_collection", {}).get("retry_after_epoch", 0)
+    if retry > time.time():
+        return {**previous_status["price_collection"], "state": "BACKOFF_AFTER_DENIAL"}
+    if calls >= MAX_CALLS:
+        return diagnostic
+    try:
+        payload = api_get("/v1/bet365/upcoming", {"sport_id": 17, "page": 1})
+        if str(payload.get("success")) != "1":
+            raise RuntimeError("API application error: " + str(payload.get("error") or "unknown"))
+        diagnostic["state"] = "ACCESS_OK"
+        candidates = []
+        for fixture in result_rows(payload):
+            rows = [r for r in match_fixture(fixture, signals) if r.get("price") is None]
+            if rows:
+                candidates.append((fixture, rows))
+        candidates.sort(key=lambda item: item[1][0]["kickoff"])
+        diagnostic["fixtures_matched"] = len(candidates)
+        for fixture, rows in candidates:
+            if calls >= MAX_CALLS:
+                break
+            fi = str(fixture.get("FI") or fixture.get("id") or "")
+            if not fi:
+                continue
+            try:
+                market = api_get("/v4/bet365/prematch", {"FI": fi, "raw": 1})
+                if str(market.get("success")) != "1":
+                    raise RuntimeError("Market API application error: " + str(market.get("error") or "unknown"))
+                quoted = period_prices(market)
+                observed = time.time()
+                for row in rows:
+                    quote = quoted.get(row["period"])
+                    if quote and observed < row["kickoff"]:
+                        row.update(price=quote["price"], price_status="VERIFIED_PREMATCH",
+                                   price_observed_at=utc_iso(observed), price_source="bet365/prematch",
+                                   bet365_fixture_id=fi, price_evidence=quote["evidence"])
+                        diagnostic["prices_saved"] += 1
+                    elif row.get("price") is None:
+                        row["price_status"] = "TARGET_MARKET_NOT_FOUND"
+            except urllib.error.HTTPError as exc:
+                if exc.code in (401, 403, 429):
+                    raise
+                diagnostic.setdefault("market_errors", []).append({"fixture_id": fi, "http_status": exc.code})
+            except Exception as exc:
+                diagnostic.setdefault("market_errors", []).append({"fixture_id": fi, "error_type": type(exc).__name__})
+    except urllib.error.HTTPError as exc:
+        diagnostic.update(state="HTTP_DENIED" if exc.code in (401, 403) else "HTTP_ERROR",
+                          http_status=exc.code, retry_after_epoch=int(time.time()) + 3600)
+    except Exception as exc:
+        diagnostic.update(state="REQUEST_FAILED", error_type=type(exc).__name__, retry_after_epoch=int(time.time()) + 3600)
+    return diagnostic
 
 
 def settle(signals, ended_by_id):
@@ -217,7 +338,12 @@ def strategy_statistics(signals, period):
     wins = sum(row.get("result") == "WIN" for row in resolved)
     count = len(resolved)
     rate = wins / count if count else None
+    priced = [r for r in resolved if r.get("price_status") == "VERIFIED_PREMATCH" and r.get("price")]
+    profit = sum(r["price"] - 1 if r["result"] == "WIN" else -1 for r in priced)
     return {
+        "priced_resolved": len(priced),
+        "profit_units": round(profit, 4) if priced else None,
+        "roi_pct": round(100 * profit / len(priced), 2) if priced else None,
         "name": STRATEGIES[period],
         "signals": len(subset),
         "resolved": count,
@@ -226,7 +352,7 @@ def strategy_statistics(signals, period):
         "losses": count - wins,
         "hit_rate_pct": round(rate * 100, 2) if rate is not None else None,
         "break_even_decimal_price": round(1 / rate, 3) if rate else None,
-        "roi_status": "NO_PRICE_DATA",
+        "roi_status": "PRICED_SUBSET_ONLY" if priced else "NO_PRICE_DATA",
     }
 
 
@@ -262,6 +388,8 @@ def main():
         except Exception as exc:
             errors.append(f"upcoming page {page}: {type(exc).__name__}: {exc}")
 
+    previous_status = json.loads(STATUS.read_text()) if STATUS.exists() else {}
+    price_collection = capture_prices(list(signals.values()), previous_status)
     settled = settle(list(signals.values()), ended_events)
     settled.sort(key=lambda row: (integer(row.get("kickoff")) or 0, integer(row.get("period")) or 0))
     save_rows(HISTORY, ordered_history)
@@ -272,7 +400,8 @@ def main():
         "updated_at": utc_iso(),
         "scope": "Mining, adult hockey only",
         "collection_mode": "visible forward observation",
-        "market_access": "period prices unavailable; Events scores available",
+        "market_access": price_collection["state"],
+        "price_collection": price_collection,
         "api_calls": calls,
         "upcoming_seen": upcoming_seen,
         "history_events": len(ordered_history),

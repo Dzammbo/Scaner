@@ -120,7 +120,7 @@ def run_pass(name):
     elif name == "xg_home":
         return False  # Archived by user; never consume API budget.
     elif name == "hockey_period":
-        calls = budget(6, 5)
+        calls = budget(12, 5)
         if not calls:
             return False
         invoke("hockey period under", ["python3", "hockey_period_under.py"], {
