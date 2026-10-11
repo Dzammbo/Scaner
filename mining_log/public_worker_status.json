@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-10-11T16:45:05.907146+00:00",
+  "updated_at": "2026-10-11T16:55:17.528328+00:00",
   "started_at": "2026-10-11T16:33:18.856486+00:00",
   "passes": {
-    "first_half_goals": 3,
-    "general": 3,
-    "goal": 3,
+    "first_half_goals": 5,
+    "general": 5,
+    "goal": 4,
     "hockey_period": 1
   },
   "failures": {
     "first_half_goals": 0,
     "general": 0,
-    "goal": 0,
+    "goal": 1,
     "hockey_period": 0
   },
-  "calls_last_hour": 576,
+  "calls_last_hour": 546,
   "hourly_cap": 2450,
   "pass_caps": {
     "first_half_goals": 80,
@@ -41,7 +41,7 @@
     "S45",
     "T18"
   ],
-  "last_error": null,
+  "last_error": "goal: stateful goal exited 1: begin()\n  File \"/usr/lib/python3.12/http/client.py\", line 336, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/http/client.py\", line 297, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/socket.py\", line 707, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1252, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ssl.py\", line 1104, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out\n",
   "last_checkpoint": {
     "ok": true,
     "changed": true,
