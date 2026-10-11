@@ -60,10 +60,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 12089,
-    "historical_events": 3576,
-    "clean_snapshots": 6582,
-    "clean_events": 1565,
+    "historical_snapshots": 12197,
+    "historical_events": 3597,
+    "clean_snapshots": 6690,
+    "clean_events": 1586,
     "fixed_strategy": {
       "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
       "clean_epoch_start": "2026-10-09T22:30:00Z",
@@ -75,47 +75,47 @@
         "one_entry_per_match": true
       },
       "historical": {
-        "recorded": 1658,
-        "settled": 1654,
-        "pending": 4,
+        "recorded": 1669,
+        "settled": 1662,
+        "pending": 7,
         "void": 0,
         "result": {
-          "N": 1654,
-          "W": 1470,
-          "L": 184,
+          "N": 1662,
+          "W": 1475,
+          "L": 187,
           "P": 0,
-          "profit": 6.035,
-          "ROI": 0.36
+          "profit": 3.835,
+          "ROI": 0.23
         },
         "without_top3": {
-          "N": 1651,
-          "W": 1467,
-          "L": 184,
+          "N": 1659,
+          "W": 1472,
+          "L": 187,
           "P": 0,
-          "profit": 5.465,
-          "ROI": 0.33
+          "profit": 3.265,
+          "ROI": 0.2
         }
       },
       "clean_forward": {
-        "recorded": 1016,
-        "settled": 1013,
-        "pending": 3,
+        "recorded": 1027,
+        "settled": 1021,
+        "pending": 6,
         "void": 0,
         "result": {
-          "N": 1013,
-          "W": 871,
-          "L": 142,
+          "N": 1021,
+          "W": 876,
+          "L": 145,
           "P": 0,
-          "profit": -24.705,
-          "ROI": -2.44
+          "profit": -26.905,
+          "ROI": -2.64
         },
         "without_top3": {
-          "N": 1010,
-          "W": 868,
-          "L": 142,
+          "N": 1018,
+          "W": 873,
+          "L": 145,
           "P": 0,
-          "profit": -25.275,
-          "ROI": -2.5
+          "profit": -27.475,
+          "ROI": -2.7
         }
       }
     }
