@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "SCANNER_FIXED_OBSERVATION_WATCHLIST_V2",
   "status": "OBSERVATION_ONLY",
-  "generated_at": "2026-10-11T12:43:52.347501Z",
+  "generated_at": "2026-10-11T12:58:34.006217Z",
   "policy": {
     "filters_frozen": true,
     "changes_operational_scanner": false,
@@ -109,25 +109,25 @@
       "name_ru": "Reverse ТМ 2,5 после 70-й при счёте 0:2",
       "direction": "reverse",
       "forward_start_at": "2026-10-04T04:40:08Z",
-      "recorded": 64,
-      "settled": 62,
+      "recorded": 66,
+      "settled": 64,
       "pending": 2,
       "void": 0,
       "result": {
-        "N": 62,
+        "N": 64,
         "W": 28,
-        "L": 34,
+        "L": 36,
         "P": 0,
-        "profit": -9.25,
-        "ROI": -14.92
+        "profit": -11.25,
+        "ROI": -17.58
       },
       "without_top3": {
-        "N": 59,
+        "N": 61,
         "W": 25,
-        "L": 34,
+        "L": 36,
         "P": 0,
-        "profit": -12.175,
-        "ROI": -20.64
+        "profit": -14.175,
+        "ROI": -23.24
       },
       "control_group": {
         "definition": "Та же стратегия и направление вне замороженного фильтра кармана",
