@@ -1,6 +1,6 @@
 {
   "schema": "HOCKEY_PERIOD_MARKET_AUDIT_V1",
-  "generated_at_utc": "2026-10-11T09:20:29.476441Z",
+  "generated_at_utc": "2026-10-11T09:23:06.038862Z",
   "purpose": "Read-only Bet365 entitlement and schema audit for second/third-period under 1.5.",
   "events": [],
   "ended_score_samples": [
@@ -511,6 +511,29 @@
   "bet365_error": "HTTPError: HTTP Error 403: Forbidden",
   "upcoming_seen": 0,
   "adult_selected": 0,
-  "api_calls": 3,
+  "events_odds_samples": [
+    {
+      "event_id": "13054302",
+      "match": "HC Baranovichi - HK Vitebsk",
+      "success": 1,
+      "market_keys": [],
+      "market_samples": {}
+    },
+    {
+      "event_id": "13054303",
+      "match": "Khimik-SKA Novopolotsk - Dynamo Maladzyencha",
+      "success": 1,
+      "market_keys": [],
+      "market_samples": {}
+    },
+    {
+      "event_id": "13054304",
+      "match": "HC Lokomotiv Orsha - HK Neman Grodno",
+      "success": 1,
+      "market_keys": [],
+      "market_samples": {}
+    }
+  ],
+  "api_calls": 7,
   "events_with_target_market": 0
 }
