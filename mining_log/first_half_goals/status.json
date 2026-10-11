@@ -1,32 +1,34 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T22:37:30.777851Z",
-  "api_calls": 21,
+  "updated_at": "2026-10-11T22:47:37.487299Z",
+  "api_calls": 11,
   "new_signals": 0,
-  "live_events": 39,
+  "live_events": 36,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 29,
+      "eligible_events": 27,
       "already_recorded": 4,
-      "checked": 15,
-      "DIFFERENT_CURRENT_LINE": 8,
-      "STALE_QUOTE": 3,
-      "EMPTY_MARKET": 4
+      "checked": 6,
+      "DIFFERENT_CURRENT_LINE": 4,
+      "STALE_QUOTE": 1,
+      "EMPTY_MARKET": 1
     },
     "S47": {
-      "eligible_events": 29,
-      "already_recorded": 2,
-      "checked": 18,
-      "DIFFERENT_CURRENT_LINE": 13,
-      "EMPTY_MARKET": 4,
-      "STALE_QUOTE": 1
+      "eligible_events": 27,
+      "already_recorded": 1,
+      "checked": 5,
+      "DIFFERENT_CURRENT_LINE": 4,
+      "EMPTY_MARKET": 1
     },
-    "S48": {},
-    "S49": {
-      "eligible_events": 1
-    }
+    "S48": {
+      "eligible_events": 2,
+      "already_recorded": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
+    "S49": {}
   },
   "errors": [],
   "api_retry_after": null,
@@ -34,28 +36,28 @@
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
       "signals": 48,
-      "N": 31,
-      "W": 12,
+      "N": 33,
+      "W": 13,
       "L": 8,
-      "PUSH": 11,
-      "pending": 17,
+      "PUSH": 12,
+      "pending": 15,
       "void": 0,
-      "profit": 3.4,
-      "ROI_pct": 10.968,
-      "ROI_without_top3_pct": 0.446,
+      "profit": 4.475,
+      "ROI_pct": 13.561,
+      "ROI_without_top3_pct": 4.0,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 46,
-          "N": 30,
-          "W": 12,
+          "N": 32,
+          "W": 13,
           "L": 8,
-          "PUSH": 10,
-          "pending": 16,
+          "PUSH": 11,
+          "pending": 14,
           "void": 0,
-          "profit": 3.4,
-          "ROI_pct": 11.333,
-          "ROI_without_top3_pct": 0.463,
+          "profit": 4.475,
+          "ROI_pct": 13.984,
+          "ROI_without_top3_pct": 4.138,
           "balance_valid": true
         },
         "women": {
@@ -169,12 +171,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 31,
+      "signals": 32,
       "N": 28,
       "W": 12,
       "L": 5,
       "PUSH": 11,
-      "pending": 3,
+      "pending": 4,
       "void": 0,
       "profit": 5.8,
       "ROI_pct": 20.714,
@@ -182,12 +184,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 23,
+          "signals": 24,
           "N": 20,
           "W": 11,
           "L": 3,
           "PUSH": 6,
-          "pending": 3,
+          "pending": 4,
           "void": 0,
           "profit": 6.975,
           "ROI_pct": 34.875,
@@ -254,130 +256,37 @@
   },
   "market_samples": [
     {
-      "event_id": "12027323",
-      "league": "Mexico Liga MX",
-      "mode": "PREMATCH",
+      "event_id": "11504203",
+      "league": "Argentina Nacional B",
+      "mode": "LIVE",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192758466",
-        "over_od": "2.025",
-        "handicap": "1.0,1.5",
-        "under_od": "1.775",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791734348"
+        "id": "192791799",
+        "over_od": "1.825",
+        "handicap": "0.5",
+        "under_od": "1.975",
+        "ss": "0-0",
+        "time_str": "13",
+        "add_time": "1791758853"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791758154,
-          "1_2": 1791757207,
-          "1_3": 1791757207,
-          "1_4": 1791758106,
-          "1_5": 1791750415,
-          "1_6": 1791751502,
-          "1_7": 1791758032,
-          "1_8": 1791758096
+          "1_1": 1791758853,
+          "1_2": 1791758853,
+          "1_3": 1791758853,
+          "1_4": 1791758853,
+          "1_5": 1791758853,
+          "1_6": 1791758853,
+          "1_7": 1791758853,
+          "1_8": 1791758853
         }
       }
     },
     {
-      "event_id": "12100165",
-      "league": "USA USL Super League Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192765764",
-        "over_od": "1.700",
-        "handicap": "1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791740381"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791758154,
-          "1_2": 1791757941,
-          "1_3": 1791757941,
-          "1_4": 1791755990,
-          "1_5": 1791754648,
-          "1_6": 1791755578,
-          "1_7": 1791735807,
-          "1_8": 1791757779
-        }
-      }
-    },
-    {
-      "event_id": "12132203",
-      "league": "Guatemala Liga Nacional",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192759703",
-        "over_od": "1.725",
-        "handicap": "1.0",
-        "under_od": "2.075",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791735181"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791758154,
-          "1_2": 1791758099,
-          "1_3": 1791758099,
-          "1_4": 1791758106,
-          "1_5": 1791748299,
-          "1_6": 1791735181,
-          "1_7": 1791757804,
-          "1_8": 1791757597
-        }
-      }
-    },
-    {
-      "event_id": "12286517",
-      "league": "Costa Rica Primera Division",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192786137",
-        "over_od": "2.000",
-        "handicap": "1.0,1.5",
-        "under_od": "1.800",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791754160"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791758154,
-          "1_2": 1791757982,
-          "1_3": 1791757982,
-          "1_4": 1791742130,
-          "1_5": 1791757905,
-          "1_6": 1791756962,
-          "1_7": 1791753702,
-          "1_8": 1791758239
-        }
-      }
-    },
-    {
-      "event_id": "13072764",
+      "event_id": "13072763",
       "league": "Nicaragua Apertura",
       "mode": "PREMATCH",
       "results": {
@@ -385,51 +294,150 @@
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192730080",
+        "id": "192707068",
         "over_od": "2.100",
         "handicap": "1.0,1.5",
         "under_od": "1.700",
         "ss": null,
         "time_str": null,
-        "add_time": "1791719365"
+        "add_time": "1791708782"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791758154,
-          "1_2": 1791758131,
-          "1_3": 1791758131,
-          "1_4": 1791751338,
-          "1_5": 1791756004,
-          "1_6": 1791754171,
-          "1_8": 1791757544
+          "1_1": 1791757593,
+          "1_2": 1791758789,
+          "1_3": 1791758789,
+          "1_4": 1791755419,
+          "1_5": 1791758626,
+          "1_6": 1791753276,
+          "1_8": 1791758788
         }
       }
     },
     {
-      "event_id": "13150972",
-      "league": "USA College Championship",
+      "event_id": "12025925",
+      "league": "Mexico Liga MX",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "latest_first_half_quote": {
+        "id": "192720911",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791714812"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791758787,
+          "1_2": 1791757586,
+          "1_3": 1791757586,
+          "1_4": 1791753347,
+          "1_5": 1791743910,
+          "1_6": 1791751262,
+          "1_7": 1791749168,
+          "1_8": 1791758428
+        }
+      }
     },
     {
-      "event_id": "13150973",
-      "league": "USA College Championship",
+      "event_id": "12099613",
+      "league": "Colombia Primera A",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "latest_first_half_quote": {
+        "id": "192766203",
+        "over_od": "1.850",
+        "handicap": "1.0",
+        "under_od": "1.950",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791740701"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791758594,
+          "1_2": 1791756681,
+          "1_3": 1791756681,
+          "1_4": 1791757779,
+          "1_5": 1791748002,
+          "1_6": 1791753932,
+          "1_7": 1791756782,
+          "1_8": 1791757007
+        }
+      }
     },
     {
-      "event_id": "13150981",
+      "event_id": "11257807",
+      "league": "Chile Liga de Primera",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192559068",
+        "over_od": "1.975",
+        "handicap": "1.0,1.5",
+        "under_od": "1.825",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791576944"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791758773,
+          "1_2": 1791758765,
+          "1_3": 1791758765,
+          "1_4": 1791757560,
+          "1_5": 1791749199,
+          "1_6": 1791755595,
+          "1_7": 1791753677,
+          "1_8": 1791758741
+        }
+      }
+    },
+    {
+      "event_id": "11419936",
+      "league": "Canada Premier League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192697796",
+        "over_od": "1.975",
+        "handicap": "1.5",
+        "under_od": "1.825",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791700955"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791758749,
+          "1_2": 1791758783,
+          "1_3": 1791758783,
+          "1_5": 1791752669,
+          "1_6": 1791756258,
+          "1_8": 1791758799
+        }
+      }
+    },
+    {
+      "event_id": "13151158",
       "league": "USA College Championship",
       "mode": "PREMATCH",
       "results": {
