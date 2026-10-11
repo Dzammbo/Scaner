@@ -1,7 +1,7 @@
 {
-  "merged": 8892,
-  "settled": 8663,
-  "void": 160,
+  "merged": 8917,
+  "settled": 8687,
+  "void": 161,
   "pending": 69,
   "pending_live_or_delayed": 69,
   "unresolved": 0,
@@ -14,10 +14,10 @@
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 2,
     "VOID_RETIRED": 41,
-    "VOID_TENNIS_WINNER_MISSING": 112
+    "VOID_TENNIS_WINNER_MISSING": 113
   },
   "settlement_event_reasons": {
-    "INPLAY": 35,
+    "INPLAY": 34,
     "PENDING_PROVIDER_FIX": 14,
     "POSTPONED": 2,
     "VOID_ABANDONED": 1,
@@ -25,24 +25,24 @@
     "VOID_INVALID_SCORE_DELTA": 1,
     "VOID_MANUAL": 1,
     "VOID_RETIRED": 27,
-    "VOID_TENNIS_WINNER_MISSING": 89
+    "VOID_TENNIS_WINNER_MISSING": 90
   },
   "settlement_cache": {
-    "updated_at": "2026-10-11T11:42:26Z",
+    "updated_at": "2026-10-11T12:43:51Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 9,
-    "queried_events": 84,
-    "signal_unique_events": 5638,
-    "cache_events": 5638,
-    "final_events": 5551,
+    "provider_queries": 10,
+    "queried_events": 95,
+    "signal_unique_events": 5715,
+    "cache_events": 5715,
+    "final_events": 5626,
     "void_events": 29,
-    "immutable_events": 5580,
-    "retryable_events": 58,
+    "immutable_events": 5655,
+    "retryable_events": 60,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 5551,
-      "INPLAY": 40,
+      "FINAL": 5626,
+      "INPLAY": 42,
       "PENDING_PROVIDER_FIX": 16,
       "POSTPONED": 2,
       "VOID_ABANDONED": 1,
@@ -64,7 +64,7 @@
       "T18": 17
     },
     "settlement_score_sources": {
-      "scores.2": 7053,
+      "scores.2": 7077,
       "ss": 1610
     }
   },
@@ -93,10 +93,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 9547,
-    "historical_events": 2887,
-    "clean_snapshots": 4040,
-    "clean_events": 876,
+    "historical_snapshots": 9812,
+    "historical_events": 2966,
+    "clean_snapshots": 4305,
+    "clean_events": 955,
     "fixed_strategy": {
       "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
       "clean_epoch_start": "2026-10-09T22:30:00Z",
@@ -108,47 +108,47 @@
         "one_entry_per_match": true
       },
       "historical": {
-        "recorded": 1159,
-        "settled": 1149,
-        "pending": 10,
+        "recorded": 1204,
+        "settled": 1193,
+        "pending": 11,
         "void": 0,
         "result": {
-          "N": 1149,
-          "W": 1030,
-          "L": 119,
+          "N": 1193,
+          "W": 1070,
+          "L": 123,
           "P": 0,
-          "profit": 12.605,
-          "ROI": 1.1
+          "profit": 14.29,
+          "ROI": 1.2
         },
         "without_top3": {
-          "N": 1146,
-          "W": 1027,
-          "L": 119,
+          "N": 1190,
+          "W": 1067,
+          "L": 123,
           "P": 0,
-          "profit": 12.035,
-          "ROI": 1.05
+          "profit": 13.72,
+          "ROI": 1.15
         }
       },
       "clean_forward": {
-        "recorded": 517,
-        "settled": 508,
-        "pending": 9,
+        "recorded": 562,
+        "settled": 552,
+        "pending": 10,
         "void": 0,
         "result": {
-          "N": 508,
-          "W": 431,
-          "L": 77,
+          "N": 552,
+          "W": 471,
+          "L": 81,
           "P": 0,
-          "profit": -18.135,
-          "ROI": -3.57
+          "profit": -16.45,
+          "ROI": -2.98
         },
         "without_top3": {
-          "N": 505,
-          "W": 428,
-          "L": 77,
+          "N": 549,
+          "W": 468,
+          "L": 81,
           "P": 0,
-          "profit": -18.705,
-          "ROI": -3.7
+          "profit": -17.02,
+          "ROI": -3.1
         }
       }
     }
@@ -157,8 +157,8 @@
     "S01": {
       "name": "Ещё один гол при счёте 0:1 на 60-69-й минуте",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 36,
-      "pending": 0,
+      "recorded": 37,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -277,8 +277,8 @@
     "S10": {
       "name": "Против фаворита по ходу матча при равном первом сете",
       "start": "2026-10-01T19:15:00+00:00",
-      "recorded": 177,
-      "pending": 4,
+      "recorded": 178,
+      "pending": 5,
       "void": 26,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -318,48 +318,48 @@
       "name": "Тотал больше 2,5 после гола при счёте 0:2 с 60-й минуты",
       "start": "2026-10-07T20:25:00+00:00",
       "recorded": 59,
-      "pending": 2,
+      "pending": 1,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 57,
-        "W": 27,
+        "N": 58,
+        "W": 28,
         "L": 30,
         "P": 0,
-        "profit": 0.325,
-        "ROI": 0.57
+        "profit": 1.15,
+        "ROI": 1.98
       },
       "original_without_top3": {
-        "N": 54,
-        "W": 24,
+        "N": 55,
+        "W": 25,
         "L": 30,
         "P": 0,
-        "profit": -5.2,
-        "ROI": -9.63
+        "profit": -4.375,
+        "ROI": -7.95
       },
       "reverse": {
-        "N": 57,
+        "N": 58,
         "W": 30,
-        "L": 27,
+        "L": 28,
         "P": 0,
-        "profit": -7.525,
-        "ROI": -13.2
+        "profit": -8.525,
+        "ROI": -14.7
       },
       "reverse_without_top3": {
-        "N": 54,
+        "N": 55,
         "W": 27,
-        "L": 27,
+        "L": 28,
         "P": 0,
-        "profit": -10.575,
-        "ROI": -19.58
+        "profit": -11.575,
+        "ROI": -21.05
       }
     },
     "T18": {
       "name": "Против победителя предыдущего разгромного сета при коэффициенте 2,00-2,24",
       "start": "2026-10-09T10:53:48+00:00",
-      "recorded": 42,
-      "pending": 2,
-      "void": 3,
+      "recorded": 45,
+      "pending": 4,
+      "void": 4,
       "excluded_legacy_attributions": 17,
       "original": {
         "N": 37,
@@ -397,48 +397,48 @@
     "S29": {
       "name": "Тотал меньше 2,5 при счёте 2:0 после 85-й минуты",
       "start": "2026-10-09T10:53:48+00:00",
-      "recorded": 64,
-      "pending": 1,
+      "recorded": 65,
+      "pending": 0,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 63,
-        "W": 40,
+        "N": 65,
+        "W": 42,
         "L": 23,
         "P": 0,
-        "profit": -8.6,
-        "ROI": -13.65
+        "profit": -7.9,
+        "ROI": -12.15
       },
       "original_without_top3": {
-        "N": 60,
-        "W": 37,
+        "N": 62,
+        "W": 39,
         "L": 23,
         "P": 0,
-        "profit": -10.025,
-        "ROI": -16.71
+        "profit": -9.325,
+        "ROI": -15.04
       },
       "reverse": {
-        "N": 63,
+        "N": 65,
         "W": 23,
-        "L": 40,
+        "L": 42,
         "P": 0,
-        "profit": 5.325,
-        "ROI": 8.45
+        "profit": 3.325,
+        "ROI": 5.12
       },
       "reverse_without_top3": {
-        "N": 60,
+        "N": 62,
         "W": 20,
-        "L": 40,
+        "L": 42,
         "P": 0,
-        "profit": -2.025,
-        "ROI": -3.38
+        "profit": -4.025,
+        "ROI": -6.49
       }
     },
     "S31": {
       "name": "Тотал меньше в перерыве при низкой активности и коэффициенте 2,00-2,24",
       "start": "2026-10-09T10:53:48+00:00",
-      "recorded": 37,
-      "pending": 3,
+      "recorded": 40,
+      "pending": 6,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
@@ -477,41 +477,41 @@
     "S41": {
       "name": "Тотал больше в перерыве при низкой активности и коэффициенте 2,00-2,24",
       "start": "2026-10-09T10:53:48+00:00",
-      "recorded": 41,
-      "pending": 2,
+      "recorded": 44,
+      "pending": 4,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 39,
+        "N": 40,
         "W": 18,
-        "L": 18,
+        "L": 19,
         "P": 3,
-        "profit": 1.1,
-        "ROI": 2.82
+        "profit": 0.6,
+        "ROI": 1.5
       },
       "original_without_top3": {
-        "N": 36,
+        "N": 37,
         "W": 15,
-        "L": 18,
+        "L": 19,
         "P": 3,
-        "profit": -2.125,
-        "ROI": -5.9
+        "profit": -2.625,
+        "ROI": -7.09
       },
       "reverse": {
-        "N": 39,
-        "W": 18,
+        "N": 40,
+        "W": 19,
         "L": 18,
         "P": 3,
-        "profit": -4.287,
-        "ROI": -10.99
+        "profit": -3.913,
+        "ROI": -9.78
       },
       "reverse_without_top3": {
-        "N": 36,
-        "W": 15,
+        "N": 37,
+        "W": 16,
         "L": 18,
         "P": 3,
-        "profit": -6.713,
-        "ROI": -18.65
+        "profit": -6.338,
+        "ROI": -17.13
       }
     },
     "S33": {
@@ -557,81 +557,81 @@
     "S44": {
       "name": "Тотал меньше при счёте 1:1 и линии 3,5-4,0",
       "start": "2026-10-11T09:29:39Z",
-      "recorded": 21,
-      "pending": 18,
+      "recorded": 30,
+      "pending": 13,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 3,
-        "W": 2,
-        "L": 1,
-        "P": 0,
-        "profit": 0.725,
-        "ROI": 24.17
+        "N": 17,
+        "W": 8,
+        "L": 8,
+        "P": 1,
+        "profit": -0.6,
+        "ROI": -3.53
       },
       "original_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
-        "P": 0,
-        "profit": 0,
-        "ROI": null
+        "N": 14,
+        "W": 5,
+        "L": 8,
+        "P": 1,
+        "profit": -3.625,
+        "ROI": -25.89
       },
       "reverse": {
-        "N": 3,
-        "W": 1,
-        "L": 2,
-        "P": 0,
-        "profit": -1.025,
-        "ROI": -34.17
+        "N": 17,
+        "W": 8,
+        "L": 8,
+        "P": 1,
+        "profit": -0.825,
+        "ROI": -4.85
       },
       "reverse_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
-        "P": 0,
-        "profit": 0,
-        "ROI": null
+        "N": 14,
+        "W": 5,
+        "L": 8,
+        "P": 1,
+        "profit": -3.725,
+        "ROI": -26.61
       }
     },
     "S45": {
       "name": "Тотал меньше при счёте 1:1 на 45-49-й минуте",
       "start": "2026-10-11T09:29:39Z",
-      "recorded": 16,
-      "pending": 14,
+      "recorded": 24,
+      "pending": 13,
       "void": 0,
       "excluded_legacy_attributions": 0,
       "original": {
-        "N": 2,
-        "W": 0,
-        "L": 2,
+        "N": 11,
+        "W": 6,
+        "L": 5,
         "P": 0,
-        "profit": -2.0,
-        "ROI": -100.0
+        "profit": -0.338,
+        "ROI": -3.07
       },
       "original_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 8,
+        "W": 3,
+        "L": 5,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -3.013,
+        "ROI": -37.66
       },
       "reverse": {
-        "N": 2,
-        "W": 2,
-        "L": 0,
+        "N": 11,
+        "W": 5,
+        "L": 6,
         "P": 0,
-        "profit": 1.925,
-        "ROI": 96.25
+        "profit": -0.675,
+        "ROI": -6.14
       },
       "reverse_without_top3": {
-        "N": 0,
-        "W": 0,
-        "L": 0,
+        "N": 8,
+        "W": 2,
+        "L": 6,
         "P": 0,
-        "profit": 0,
-        "ROI": null
+        "profit": -3.625,
+        "ROI": -45.31
       }
     }
   }
