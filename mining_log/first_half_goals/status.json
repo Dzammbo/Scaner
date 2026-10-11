@@ -1,39 +1,27 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T14:27:41.899855Z",
-  "api_calls": 20,
-  "new_signals": 1,
-  "live_events": 300,
-  "upcoming_events": 100,
+  "updated_at": "2026-10-11T14:37:13.022891Z",
+  "api_calls": 3,
+  "new_signals": 0,
+  "live_events": 285,
+  "upcoming_events": 50,
   "coverage": {
-    "S46": {
-      "eligible_events": 53,
-      "checked": 12,
-      "EMPTY_MARKET": 4,
-      "DIFFERENT_CURRENT_LINE": 7,
-      "STALE_QUOTE": 1
-    },
-    "S47": {
-      "eligible_events": 53,
-      "checked": 12,
-      "EMPTY_MARKET": 4,
-      "DIFFERENT_CURRENT_LINE": 6,
-      "STALE_QUOTE": 2
-    },
+    "S46": {},
+    "S47": {},
     "S48": {
-      "eligible_events": 3,
-      "checked": 3,
-      "DIFFERENT_CURRENT_LINE": 3
+      "eligible_events": 2
     },
     "S49": {
-      "eligible_events": 2,
-      "checked": 2,
-      "VERIFIED": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "eligible_events": 1
     }
   },
-  "errors": [],
+  "errors": [
+    {
+      "path": "/v3/events/upcoming",
+      "error": "TimeoutError"
+    }
+  ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -137,184 +125,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "12324443",
-      "league": "Portugal Campeonato Nacional",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192750828",
-        "over_od": "1.900",
-        "handicap": "0.5",
-        "under_od": "1.900",
-        "ss": "0-0",
-        "time_str": "21",
-        "add_time": "1791728811"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791728811,
-          "1_2": 1791728811,
-          "1_3": 1791728811,
-          "1_4": 1791728811,
-          "1_5": 1791728811,
-          "1_6": 1791728811,
-          "1_7": 1791728811,
-          "1_8": 1791728811
-        }
-      }
-    },
-    {
-      "event_id": "12247430",
-      "league": "Spain Youth League",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192750773",
-        "over_od": "1.825",
-        "handicap": "0.5",
-        "under_od": "1.975",
-        "ss": "0-0",
-        "time_str": "19",
-        "add_time": "1791728767"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791728767,
-          "1_2": 1791728767,
-          "1_3": 1791728767,
-          "1_5": 1791728767,
-          "1_6": 1791728767,
-          "1_8": 1791728767
-        }
-      }
-    },
-    {
-      "event_id": "12416012",
-      "league": "Italy Serie D",
-      "mode": "LIVE",
-      "results": {
-        "S49": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192750602",
-        "over_od": "1.775",
-        "handicap": "1.5",
-        "under_od": "2.025",
-        "ss": "1-0",
-        "time_str": "17",
-        "add_time": "1791728682"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791728723,
-          "1_2": 1791728723,
-          "1_3": 1791728723,
-          "1_5": 1791728723,
-          "1_6": 1791728723,
-          "1_8": 1791728723
-        }
-      }
-    },
-    {
-      "event_id": "12417122",
-      "league": "Italy Serie D",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192750800",
-        "over_od": "1.975",
-        "handicap": "1.75",
-        "under_od": "1.825",
-        "ss": "1-0",
-        "time_str": "15",
-        "add_time": "1791728787"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791728787,
-          "1_2": 1791728787,
-          "1_3": 1791728787,
-          "1_5": 1791728787,
-          "1_6": 1791728787,
-          "1_8": 1791728787
-        }
-      }
-    },
-    {
-      "event_id": "12130548",
-      "league": "Spain Segunda",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192750821",
-        "over_od": "1.850",
-        "handicap": "0.75",
-        "under_od": "1.950",
-        "ss": "0-0",
-        "time_str": "11",
-        "add_time": "1791728806"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791728836,
-          "1_2": 1791728836,
-          "1_3": 1791728836,
-          "1_4": 1791728836,
-          "1_5": 1791728836,
-          "1_6": 1791728836,
-          "1_7": 1791728836,
-          "1_8": 1791728836
-        }
-      }
-    },
-    {
-      "event_id": "12390764",
-      "league": "Spain Tercera Group 5",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12424769",
-      "league": "Gibraltar National League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13096623",
-      "league": "Angola Girabola",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    }
-  ],
-  "health": "OK"
+  "market_samples": [],
+  "health": "API_ERRORS"
 }
