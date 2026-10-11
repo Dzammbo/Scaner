@@ -1,37 +1,58 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T16:33:33.580395Z",
-  "api_calls": 4,
-  "new_signals": 0,
-  "live_events": 150,
-  "upcoming_events": 0,
+  "updated_at": "2026-10-11T16:44:53.615193Z",
+  "api_calls": 63,
+  "new_signals": 3,
+  "live_events": 146,
+  "upcoming_events": 100,
   "coverage": {
-    "S46": {},
-    "S47": {},
-    "S48": {
-      "eligible_events": 2,
-      "checked": 2,
-      "DIFFERENT_CURRENT_LINE": 2
+    "S46": {
+      "eligible_events": 71,
+      "already_recorded": 3,
+      "checked": 50,
+      "DIFFERENT_CURRENT_LINE": 29,
+      "VERIFIED": 2,
+      "STALE_QUOTE": 13,
+      "EMPTY_MARKET": 6,
+      "API_UNAVAILABLE": 1
     },
-    "S49": {}
+    "S47": {
+      "eligible_events": 71,
+      "already_recorded": 2,
+      "checked": 49,
+      "DIFFERENT_CURRENT_LINE": 43,
+      "EMPTY_MARKET": 6,
+      "API_UNAVAILABLE": 1
+    },
+    "S48": {
+      "eligible_events": 8,
+      "checked": 8,
+      "DIFFERENT_CURRENT_LINE": 7,
+      "VERIFIED": 1
+    },
+    "S49": {
+      "eligible_events": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    }
   },
   "errors": [
     {
-      "path": "/v3/events/upcoming",
-      "error": "TimeoutError"
+      "path": "/v2/event/odds",
+      "error": "HTTP_502"
     }
   ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 5,
+      "signals": 8,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 5,
+      "pending": 8,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -39,12 +60,25 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 5,
+          "signals": 7,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 5,
+          "pending": 7,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
+        },
+        "youth_reserves": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -68,12 +102,12 @@
     },
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-      "signals": 2,
+      "signals": 3,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 2,
+      "pending": 3,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -87,6 +121,19 @@
           "L": 0,
           "PUSH": 0,
           "pending": 2,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
+        },
+        "youth_reserves": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -110,12 +157,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 12,
+      "signals": 13,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 12,
+      "pending": 13,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -123,12 +170,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 11,
+          "signals": 12,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 11,
+          "pending": 12,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -153,27 +200,27 @@
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
       "signals": 8,
-      "N": 1,
-      "W": 0,
+      "N": 2,
+      "W": 1,
       "L": 1,
       "PUSH": 0,
-      "pending": 7,
+      "pending": 6,
       "void": 0,
-      "profit": -1,
-      "ROI_pct": -100.0,
+      "profit": 0.15,
+      "ROI_pct": 7.5,
       "ROI_without_top3_pct": null,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 8,
-          "N": 1,
-          "W": 0,
+          "N": 2,
+          "W": 1,
           "L": 1,
           "PUSH": 0,
-          "pending": 7,
+          "pending": 6,
           "void": 0,
-          "profit": -1,
-          "ROI_pct": -100.0,
+          "profit": 0.15,
+          "ROI_pct": 7.5,
           "ROI_without_top3_pct": null,
           "balance_valid": true
         }
@@ -182,62 +229,236 @@
   },
   "market_samples": [
     {
-      "event_id": "11288818",
-      "league": "Faroe Islands Premier League",
+      "event_id": "13274008",
+      "league": "Sierra Leone Premier League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192761399",
-        "over_od": "1.775",
-        "handicap": "0.75",
-        "under_od": "2.025",
+        "id": "192762488",
+        "over_od": "2.000",
+        "handicap": "0.5",
+        "under_od": "1.800",
         "ss": "0-0",
-        "time_str": "18",
-        "add_time": "1791736378"
+        "time_str": "13",
+        "add_time": "1791737008"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791736378,
-          "1_2": 1791736378,
-          "1_3": 1791736378,
-          "1_4": 1791736378,
-          "1_5": 1791736378,
-          "1_6": 1791736378,
-          "1_7": 1791736378,
-          "1_8": 1791736378
+          "1_1": 1791737008,
+          "1_2": 1791737008,
+          "1_3": 1791737008,
+          "1_5": 1791737008,
+          "1_6": 1791737008,
+          "1_8": 1791737008
         }
       }
     },
     {
-      "event_id": "11288765",
-      "league": "Faroe Islands Premier League",
+      "event_id": "13277643",
+      "league": "Sierra Leone Premier League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192761408",
-        "over_od": "2.050",
-        "handicap": "0.75",
-        "under_od": "1.750",
+        "id": "192762496",
+        "over_od": "1.775",
+        "handicap": "0.5",
+        "under_od": "2.025",
         "ss": "0-0",
-        "time_str": "18",
-        "add_time": "1791736381"
+        "time_str": "12",
+        "add_time": "1791737011"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791736381,
-          "1_2": 1791736381,
-          "1_3": 1791736381,
-          "1_4": 1791736381,
-          "1_5": 1791736381,
-          "1_6": 1791736381,
-          "1_7": 1791736381,
-          "1_8": 1791736381
+          "1_1": 1791737011,
+          "1_2": 1791737011,
+          "1_3": 1791737011,
+          "1_5": 1791737011,
+          "1_6": 1791737011,
+          "1_8": 1791737011
+        }
+      }
+    },
+    {
+      "event_id": "12130542",
+      "league": "Spain Segunda",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762471",
+        "over_od": "1.800",
+        "handicap": "0.75",
+        "under_od": "2.000",
+        "ss": "0-0",
+        "time_str": "11",
+        "add_time": "1791737001"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737001,
+          "1_2": 1791737001,
+          "1_3": 1791737001,
+          "1_4": 1791737001,
+          "1_5": 1791737001,
+          "1_6": 1791737001,
+          "1_7": 1791737001,
+          "1_8": 1791737001
+        }
+      }
+    },
+    {
+      "event_id": "13134225",
+      "league": "Ecuador LigaPro Serie A",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762455",
+        "over_od": "1.900",
+        "handicap": "0.75",
+        "under_od": "1.900",
+        "ss": "0-0",
+        "time_str": "12",
+        "add_time": "1791736993"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791736997,
+          "1_2": 1791736997,
+          "1_3": 1791736997,
+          "1_4": 1791736997,
+          "1_5": 1791736997,
+          "1_6": 1791736997,
+          "1_7": 1791736997,
+          "1_8": 1791736997
+        }
+      }
+    },
+    {
+      "event_id": "13249011",
+      "league": "Bosnia & Herzegovina Premier Liga",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762492",
+        "over_od": "1.775",
+        "handicap": "0.5",
+        "under_od": "2.025",
+        "ss": "0-0",
+        "time_str": "11",
+        "add_time": "1791737009"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737009,
+          "1_2": 1791737009,
+          "1_3": 1791737009,
+          "1_4": 1791737009,
+          "1_5": 1791737009,
+          "1_6": 1791737009,
+          "1_7": 1791737009,
+          "1_8": 1791737009
+        }
+      }
+    },
+    {
+      "event_id": "13274005",
+      "league": "Sierra Leone Premier League",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762511",
+        "over_od": "1.800",
+        "handicap": "0.5",
+        "under_od": "2.000",
+        "ss": "0-0",
+        "time_str": "11",
+        "add_time": "1791737019"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737019,
+          "1_2": 1791737019,
+          "1_3": 1791737019,
+          "1_5": 1791737019,
+          "1_6": 1791737019,
+          "1_8": 1791737019
+        }
+      }
+    },
+    {
+      "event_id": "12107364",
+      "league": "Belgium First Division A",
+      "mode": "LIVE",
+      "results": {
+        "S48": "VERIFIED"
+      },
+      "latest_first_half_quote": {
+        "id": "192762506",
+        "over_od": "1.900",
+        "handicap": "1",
+        "under_od": "1.900",
+        "ss": "0-0",
+        "time_str": "10",
+        "add_time": "1791737016"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737016,
+          "1_2": 1791737016,
+          "1_3": 1791737016,
+          "1_4": 1791737016,
+          "1_5": 1791737016,
+          "1_6": 1791737016,
+          "1_7": 1791737016,
+          "1_8": 1791737016
+        }
+      }
+    },
+    {
+      "event_id": "13272383",
+      "league": "Jordan Shield Cup",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762457",
+        "over_od": "2.050",
+        "handicap": "1.25",
+        "under_od": "1.750",
+        "ss": "0-0",
+        "time_str": "9",
+        "add_time": "1791736994"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791737014,
+          "1_2": 1791737014,
+          "1_3": 1791737014,
+          "1_4": 1791737014,
+          "1_5": 1791737014,
+          "1_6": 1791737014,
+          "1_7": 1791737014,
+          "1_8": 1791737014
         }
       }
     }
