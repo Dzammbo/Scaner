@@ -1,31 +1,36 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T14:47:29.204611Z",
-  "api_calls": 5,
+  "updated_at": "2026-10-11T14:57:47.315040Z",
+  "api_calls": 20,
   "new_signals": 0,
-  "live_events": 284,
-  "upcoming_events": 0,
+  "live_events": 271,
+  "upcoming_events": 100,
   "coverage": {
-    "S46": {},
-    "S47": {},
+    "S46": {
+      "eligible_events": 50,
+      "checked": 15,
+      "EMPTY_MARKET": 14,
+      "STALE_QUOTE": 1
+    },
+    "S47": {
+      "eligible_events": 50,
+      "checked": 15,
+      "EMPTY_MARKET": 14,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
     "S48": {
-      "eligible_events": 9,
-      "checked": 2,
-      "DIFFERENT_CURRENT_LINE": 2
+      "eligible_events": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     },
     "S49": {
-      "eligible_events": 4,
+      "eligible_events": 1,
       "checked": 1,
       "DIFFERENT_CURRENT_LINE": 1
     }
   },
-  "errors": [
-    {
-      "path": "/v3/events/upcoming",
-      "error": "TimeoutError"
-    }
-  ],
+  "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -101,12 +106,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 1,
+      "signals": 2,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 1,
+      "pending": 2,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -114,12 +119,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 1,
+          "signals": 2,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 1,
+          "pending": 2,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -131,86 +136,131 @@
   },
   "market_samples": [
     {
-      "event_id": "11175994",
-      "league": "Sweden Allsvenskan",
+      "event_id": "12026902",
+      "league": "Netherlands Eredivisie",
       "mode": "LIVE",
       "results": {
         "S49": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192752949",
-        "over_od": "1.975",
+        "id": "192753304",
+        "over_od": "1.900",
         "handicap": "2",
-        "under_od": "1.825",
-        "ss": "1-0",
-        "time_str": "16",
-        "add_time": "1791730022"
+        "under_od": "1.900",
+        "ss": "0-1",
+        "time_str": "11",
+        "add_time": "1791730591"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791730022,
-          "1_2": 1791730022,
-          "1_3": 1791730022,
-          "1_4": 1791730022,
-          "1_5": 1791730022,
-          "1_6": 1791730022,
-          "1_7": 1791730022,
-          "1_8": 1791730022
+          "1_1": 1791730628,
+          "1_2": 1791730628,
+          "1_3": 1791730628,
+          "1_4": 1791730628,
+          "1_5": 1791730628,
+          "1_6": 1791730628,
+          "1_7": 1791730628,
+          "1_8": 1791730628
         }
       }
     },
     {
-      "event_id": "12158050",
-      "league": "Spain Primera Division RFEF Group 1",
+      "event_id": "12095787",
+      "league": "Hungary NB I",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192752934",
-        "over_od": "1.775",
-        "handicap": "0.5",
-        "under_od": "2.025",
-        "ss": "0-0",
-        "time_str": "12",
-        "add_time": "1791729987"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791730040,
-          "1_2": 1791730040,
-          "1_3": 1791730040,
-          "1_4": 1791730040,
-          "1_5": 1791730040,
-          "1_6": 1791730040,
-          "1_7": 1791730040,
-          "1_8": 1791730040
-        }
-      }
-    },
-    {
-      "event_id": "12155184",
-      "league": "Portugal Primeira Liga",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192752613",
-        "over_od": "1.700",
+        "id": "192753321",
+        "over_od": "1.725",
         "handicap": "0.75",
-        "under_od": "2.100",
+        "under_od": "2.075",
         "ss": "0-0",
-        "time_str": "8",
-        "add_time": "1791729761"
+        "time_str": "11",
+        "add_time": "1791730610"
       },
       "stats": {
         "matching_dir": 1,
-        "odds_update": {}
+        "odds_update": {
+          "1_1": 1791730623,
+          "1_2": 1791730623,
+          "1_3": 1791730623,
+          "1_4": 1791730623,
+          "1_5": 1791730623,
+          "1_6": 1791730623,
+          "1_7": 1791730623,
+          "1_8": 1791730623
+        }
       }
+    },
+    {
+      "event_id": "12158052",
+      "league": "Spain Primera Division RFEF Group 1",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12371524",
+      "league": "Spain Segunda Division RFEF Group 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12387383",
+      "league": "Spain Tercera Group 18",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12387677",
+      "league": "Spain Tercera Group 16",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12387679",
+      "league": "Spain Tercera Group 16",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12393700",
+      "league": "Spain Tercera Group 18",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
     }
   ],
-  "health": "API_ERRORS"
+  "health": "OK"
 }
