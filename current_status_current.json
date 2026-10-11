@@ -1,13 +1,13 @@
 {
   "merged": 9036,
-  "settled": 8805,
+  "settled": 8835,
   "void": 163,
-  "pending": 68,
-  "pending_live_or_delayed": 68,
+  "pending": 38,
+  "pending_live_or_delayed": 38,
   "unresolved": 0,
   "settlement_reasons": {
-    "INPLAY": 36,
-    "PENDING_PROVIDER_FIX": 25,
+    "INPLAY": 8,
+    "PENDING_PROVIDER_FIX": 23,
     "POSTPONED": 7,
     "VOID_ABANDONED": 2,
     "VOID_CANCELLED": 2,
@@ -17,8 +17,8 @@
     "VOID_TENNIS_WINNER_MISSING": 114
   },
   "settlement_event_reasons": {
-    "INPLAY": 25,
-    "PENDING_PROVIDER_FIX": 18,
+    "INPLAY": 6,
+    "PENDING_PROVIDER_FIX": 17,
     "POSTPONED": 2,
     "VOID_ABANDONED": 1,
     "VOID_CANCELLED": 1,
@@ -28,22 +28,22 @@
     "VOID_TENNIS_WINNER_MISSING": 91
   },
   "settlement_cache": {
-    "updated_at": "2026-10-11T16:03:57Z",
+    "updated_at": "2026-10-11T17:05:07Z",
     "bootstrap": false,
     "query_budget": 100,
-    "provider_queries": 15,
-    "queried_events": 143,
-    "signal_unique_events": 6049,
-    "cache_events": 6049,
-    "final_events": 5958,
+    "provider_queries": 12,
+    "queried_events": 120,
+    "signal_unique_events": 6133,
+    "cache_events": 6133,
+    "final_events": 6065,
     "void_events": 30,
-    "immutable_events": 5988,
-    "retryable_events": 61,
+    "immutable_events": 6095,
+    "retryable_events": 38,
     "due_events_remaining": 0,
     "states": {
-      "FINAL": 5958,
-      "INPLAY": 27,
-      "PENDING_PROVIDER_FIX": 32,
+      "FINAL": 6065,
+      "INPLAY": 11,
+      "PENDING_PROVIDER_FIX": 25,
       "POSTPONED": 2,
       "VOID_ABANDONED": 1,
       "VOID_CANCELLED": 1,
@@ -62,8 +62,8 @@
     "excluded_legacy_attributions": 0,
     "excluded_legacy_attributions_by_strategy": {},
     "settlement_score_sources": {
-      "scores.2": 7184,
-      "ss": 1621
+      "scores.2": 7211,
+      "ss": 1624
     }
   },
   "observation_watchlist": {
@@ -91,10 +91,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 10794,
-    "historical_events": 3275,
-    "clean_snapshots": 5287,
-    "clean_events": 1264,
+    "historical_snapshots": 11065,
+    "historical_events": 3366,
+    "clean_snapshots": 5558,
+    "clean_events": 1355,
     "fixed_strategy": {
       "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
       "clean_epoch_start": "2026-10-09T22:30:00Z",
@@ -106,47 +106,47 @@
         "one_entry_per_match": true
       },
       "historical": {
-        "recorded": 1440,
-        "settled": 1419,
-        "pending": 21,
+        "recorded": 1510,
+        "settled": 1495,
+        "pending": 15,
         "void": 0,
         "result": {
-          "N": 1419,
-          "W": 1270,
-          "L": 149,
+          "N": 1495,
+          "W": 1332,
+          "L": 163,
           "P": 0,
-          "profit": 14.42,
-          "ROI": 1.02
+          "profit": 8.385,
+          "ROI": 0.56
         },
         "without_top3": {
-          "N": 1416,
-          "W": 1267,
-          "L": 149,
+          "N": 1492,
+          "W": 1329,
+          "L": 163,
           "P": 0,
-          "profit": 13.85,
-          "ROI": 0.98
+          "profit": 7.815,
+          "ROI": 0.52
         }
       },
       "clean_forward": {
-        "recorded": 798,
-        "settled": 778,
-        "pending": 20,
+        "recorded": 868,
+        "settled": 854,
+        "pending": 14,
         "void": 0,
         "result": {
-          "N": 778,
-          "W": 671,
-          "L": 107,
+          "N": 854,
+          "W": 733,
+          "L": 121,
           "P": 0,
-          "profit": -16.32,
-          "ROI": -2.1
+          "profit": -22.355,
+          "ROI": -2.62
         },
         "without_top3": {
-          "N": 775,
-          "W": 668,
-          "L": 107,
+          "N": 851,
+          "W": 730,
+          "L": 121,
           "P": 0,
-          "profit": -16.89,
-          "ROI": -2.18
+          "profit": -22.925,
+          "ROI": -2.69
         }
       }
     }
