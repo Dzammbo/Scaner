@@ -1,38 +1,42 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T15:41:09.938588Z",
-  "api_calls": 11,
-  "new_signals": 0,
-  "live_events": 194,
-  "upcoming_events": 0,
+  "updated_at": "2026-10-11T15:51:33.979376Z",
+  "api_calls": 20,
+  "new_signals": 1,
+  "live_events": 191,
+  "upcoming_events": 100,
   "coverage": {
-    "S46": {},
-    "S47": {},
+    "S46": {
+      "eligible_events": 60,
+      "already_recorded": 1,
+      "checked": 12,
+      "EMPTY_MARKET": 3,
+      "STALE_QUOTE": 7,
+      "API_UNAVAILABLE": 1,
+      "DIFFERENT_CURRENT_LINE": 1,
+      "VERIFIED": 1
+    },
+    "S47": {
+      "eligible_events": 60,
+      "checked": 12,
+      "EMPTY_MARKET": 3,
+      "DIFFERENT_CURRENT_LINE": 9,
+      "API_UNAVAILABLE": 1
+    },
     "S48": {
-      "eligible_events": 8,
-      "API_UNAVAILABLE": 2,
-      "checked": 6,
-      "DIFFERENT_CURRENT_LINE": 6
+      "eligible_events": 14,
+      "already_recorded": 1,
+      "checked": 3,
+      "DIFFERENT_CURRENT_LINE": 3
     },
     "S49": {
-      "eligible_events": 1,
-      "API_UNAVAILABLE": 1
+      "eligible_events": 3,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     }
   },
   "errors": [
-    {
-      "path": "/v3/events/upcoming",
-      "error": "HTTP_502"
-    },
-    {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
-    },
-    {
-      "path": "/v2/event/odds",
-      "error": "HTTP_502"
-    },
     {
       "path": "/v2/event/odds",
       "error": "HTTP_502"
@@ -42,12 +46,12 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 1,
+      "signals": 2,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 1,
+      "pending": 2,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -55,12 +59,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 1,
+          "signals": 2,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 1,
+          "pending": 2,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -126,12 +130,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 6,
+      "signals": 7,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 6,
+      "pending": 7,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -139,12 +143,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 6,
+          "signals": 7,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 6,
+          "pending": 7,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -185,60 +189,30 @@
   },
   "market_samples": [
     {
-      "event_id": "12370448",
-      "league": "Bosnia & Herzegovina 1st League",
+      "event_id": "13275215",
+      "league": "Liberia Super Cup",
       "mode": "LIVE",
       "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
+        "S49": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192757190",
+        "id": "192758021",
         "over_od": "1.800",
-        "handicap": "0.75",
+        "handicap": "1.75",
         "under_od": "2.000",
-        "ss": "0-0",
-        "time_str": "11",
-        "add_time": "1791733258"
+        "ss": "0-1",
+        "time_str": "20",
+        "add_time": "1791733844"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791733258,
-          "1_2": 1791733258,
-          "1_3": 1791733258,
-          "1_5": 1791733258,
-          "1_6": 1791733258,
-          "1_8": 1791733258
-        }
-      }
-    },
-    {
-      "event_id": "12256555",
-      "league": "Portugal Liga 3",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192757157",
-        "over_od": "1.975",
-        "handicap": "0.75",
-        "under_od": "1.825",
-        "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791733244"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791733251,
-          "1_2": 1791733251,
-          "1_3": 1791733251,
-          "1_4": 1791733251,
-          "1_5": 1791733251,
-          "1_6": 1791733251,
-          "1_7": 1791733251,
-          "1_8": 1791733251
+          "1_1": 1791733844,
+          "1_2": 1791733844,
+          "1_3": 1791733844,
+          "1_5": 1791733844,
+          "1_6": 1791733844,
+          "1_8": 1791733844
         }
       }
     },
@@ -250,79 +224,23 @@
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192757188",
-        "over_od": "1.800",
-        "handicap": "0.75",
-        "under_od": "2.000",
+        "id": "192757945",
+        "over_od": "1.850",
+        "handicap": "0.5",
+        "under_od": "1.950",
         "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791733258"
+        "time_str": "18",
+        "add_time": "1791733760"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791733258,
-          "1_2": 1791733258,
-          "1_3": 1791733258,
-          "1_5": 1791733258,
-          "1_6": 1791733258,
-          "1_8": 1791733258
-        }
-      }
-    },
-    {
-      "event_id": "13275215",
-      "league": "Liberia Super Cup",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192757149",
-        "over_od": "2.100",
-        "handicap": "1.25",
-        "under_od": "1.700",
-        "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791733241"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791733250,
-          "1_2": 1791733250,
-          "1_3": 1791733250,
-          "1_5": 1791733250,
-          "1_6": 1791733250,
-          "1_8": 1791733250
-        }
-      }
-    },
-    {
-      "event_id": "13267442",
-      "league": "Israel Youth League",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192757167",
-        "over_od": "1.800",
-        "handicap": "0.75",
-        "under_od": "2.000",
-        "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791733248"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791733248,
-          "1_2": 1791733248,
-          "1_3": 1791733248,
-          "1_5": 1791733248,
-          "1_6": 1791733248,
-          "1_8": 1791733248
+          "1_1": 1791733829,
+          "1_2": 1791733829,
+          "1_3": 1791733829,
+          "1_5": 1791733829,
+          "1_6": 1791733829,
+          "1_8": 1791733829
         }
       }
     },
@@ -334,25 +252,153 @@
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192757213",
+        "id": "192757964",
         "over_od": "1.825",
-        "handicap": "0.75",
+        "handicap": "0.5",
         "under_od": "1.975",
         "ss": "0-0",
-        "time_str": "10",
-        "add_time": "1791733267"
+        "time_str": "19",
+        "add_time": "1791733774"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791733267,
-          "1_2": 1791733267,
-          "1_3": 1791733267,
-          "1_4": 1791733267,
-          "1_5": 1791733267,
-          "1_6": 1791733267,
-          "1_7": 1791733267,
-          "1_8": 1791733267
+          "1_1": 1791733774,
+          "1_2": 1791733774,
+          "1_3": 1791733774,
+          "1_4": 1791733774,
+          "1_5": 1791733774,
+          "1_6": 1791733774,
+          "1_7": 1791733774,
+          "1_8": 1791733774
+        }
+      }
+    },
+    {
+      "event_id": "12330312",
+      "league": "Italy Serie C Group A",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192758054",
+        "over_od": "1.875",
+        "handicap": "0.5",
+        "under_od": "1.925",
+        "ss": "0-0",
+        "time_str": "20",
+        "add_time": "1791733877"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791733877,
+          "1_2": 1791733877,
+          "1_3": 1791733877,
+          "1_4": 1791733100,
+          "1_5": 1791733877,
+          "1_6": 1791733877,
+          "1_7": 1791733100,
+          "1_8": 1791733877
+        }
+      }
+    },
+    {
+      "event_id": "12393044",
+      "league": "Spain Tercera Group 9",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12393046",
+      "league": "Spain Tercera Group 9",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192711389",
+        "over_od": "1.875",
+        "handicap": "1.0",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791710564"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791733838,
+          "1_2": 1791733797,
+          "1_3": 1791733797,
+          "1_5": 1791726890,
+          "1_6": 1791724076,
+          "1_8": 1791733188
+        }
+      }
+    },
+    {
+      "event_id": "12393098",
+      "league": "Spain Tercera Group 9",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192750639",
+        "over_od": "1.725",
+        "handicap": "1.0",
+        "under_od": "2.075",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791728698"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791733838,
+          "1_2": 1791733658,
+          "1_3": 1791733658,
+          "1_5": 1791729708,
+          "1_6": 1791728917,
+          "1_8": 1791730299
+        }
+      }
+    },
+    {
+      "event_id": "12397430",
+      "league": "Spain Tercera Group 13",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192733264",
+        "over_od": "2.100",
+        "handicap": "1.0",
+        "under_od": "1.700",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791721210"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791733838,
+          "1_2": 1791733779,
+          "1_3": 1791733779,
+          "1_5": 1791722203,
+          "1_6": 1791729819,
+          "1_8": 1791733871
         }
       }
     }
