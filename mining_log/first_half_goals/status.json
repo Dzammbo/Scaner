@@ -1,25 +1,23 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-11T15:18:41.740826Z",
-  "api_calls": 20,
-  "new_signals": 3,
-  "live_events": 196,
+  "updated_at": "2026-10-11T15:28:13.217174Z",
+  "api_calls": 8,
+  "new_signals": 2,
+  "live_events": 203,
   "upcoming_events": 0,
   "coverage": {
     "S46": {},
     "S47": {},
     "S48": {
-      "eligible_events": 37,
-      "already_recorded": 3,
-      "checked": 13,
-      "DIFFERENT_CURRENT_LINE": 11,
-      "VERIFIED": 2
-    },
-    "S49": {
-      "eligible_events": 11,
+      "eligible_events": 5,
       "checked": 5,
       "DIFFERENT_CURRENT_LINE": 4,
+      "VERIFIED": 1
+    },
+    "S49": {
+      "eligible_events": 1,
+      "checked": 1,
       "VERIFIED": 1
     }
   },
@@ -89,12 +87,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 5,
+      "signals": 6,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 5,
+      "pending": 6,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -102,12 +100,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 5,
+          "signals": 6,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 5,
+          "pending": 6,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -118,12 +116,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 3,
+      "signals": 6,
       "N": 0,
       "W": 0,
       "L": 0,
       "PUSH": 0,
-      "pending": 3,
+      "pending": 6,
       "void": 0,
       "profit": 0,
       "ROI_pct": null,
@@ -131,12 +129,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 3,
+          "signals": 6,
           "N": 0,
           "W": 0,
           "L": 0,
           "PUSH": 0,
-          "pending": 3,
+          "pending": 6,
           "void": 0,
           "profit": 0,
           "ROI_pct": null,
@@ -148,234 +146,174 @@
   },
   "market_samples": [
     {
-      "event_id": "11163390",
-      "league": "Norway Division 1",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192754939",
-        "over_od": "1.950",
-        "handicap": "2",
-        "under_od": "1.850",
-        "ss": "0-1",
-        "time_str": "16",
-        "add_time": "1791731843"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791731843,
-          "1_2": 1791731843,
-          "1_3": 1791731843,
-          "1_4": 1791731843,
-          "1_5": 1791731843,
-          "1_6": 1791731843,
-          "1_7": 1791731843,
-          "1_8": 1791731843
-        }
-      }
-    },
-    {
-      "event_id": "11163259",
-      "league": "Norway Division 1",
+      "event_id": "13165091",
+      "league": "Nigeria Premier League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192754943",
-        "over_od": "1.850",
-        "handicap": "0.75",
-        "under_od": "1.950",
+        "id": "192755821",
+        "over_od": "2.200",
+        "handicap": "0.5",
+        "under_od": "1.650",
         "ss": "0-0",
-        "time_str": "17",
-        "add_time": "1791731844"
+        "time_str": "20",
+        "add_time": "1791732472"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791731844,
-          "1_2": 1791731844,
-          "1_3": 1791731844,
-          "1_4": 1791731844,
-          "1_5": 1791731844,
-          "1_6": 1791731844,
-          "1_7": 1791731844,
-          "1_8": 1791731844
+          "1_1": 1791732483,
+          "1_2": 1791732483,
+          "1_3": 1791732483,
+          "1_5": 1791732483,
+          "1_6": 1791732483,
+          "1_8": 1791732483
         }
       }
     },
     {
-      "event_id": "12386200",
-      "league": "Andorra Premier Division",
+      "event_id": "13274253",
+      "league": "Mexico Liga MX U19 Femenil",
       "mode": "LIVE",
       "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
+        "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192755000",
-        "over_od": "1.700",
-        "handicap": "1.75",
-        "under_od": "2.100",
-        "ss": "1-0",
+        "id": "192755762",
+        "over_od": "2.000",
+        "handicap": "0.75",
+        "under_od": "1.800",
+        "ss": "0-0",
         "time_str": "18",
-        "add_time": "1791731887"
+        "add_time": "1791732423"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791731887,
-          "1_2": 1791731887,
-          "1_3": 1791731887,
-          "1_4": 1791731887,
-          "1_5": 1791731887,
-          "1_6": 1791731887,
-          "1_7": 1791731887,
-          "1_8": 1791731887
+          "1_1": 1791732423,
+          "1_2": 1791732423,
+          "1_3": 1791732423,
+          "1_5": 1791732423,
+          "1_6": 1791732423,
+          "1_8": 1791732423
         }
       }
     },
     {
-      "event_id": "13247553",
-      "league": "Greece Super League 2",
-      "mode": "LIVE",
-      "results": {
-        "S49": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192754971",
-        "over_od": "1.800",
-        "handicap": "1.5",
-        "under_od": "2.000",
-        "ss": "0-1",
-        "time_str": "16",
-        "add_time": "1791731865"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791731865,
-          "1_2": 1791731865,
-          "1_3": 1791731865,
-          "1_5": 1791731865,
-          "1_6": 1791731865,
-          "1_8": 1791731865
-        }
-      }
-    },
-    {
-      "event_id": "12139030",
-      "league": "Spain Segunda Division RFEF Group 3",
-      "mode": "LIVE",
-      "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192754984",
-        "over_od": "2.025",
-        "handicap": "1.75",
-        "under_od": "1.775",
-        "ss": "1-0",
-        "time_str": "17",
-        "add_time": "1791731872"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791731887,
-          "1_2": 1791731887,
-          "1_3": 1791731887,
-          "1_5": 1791731887,
-          "1_6": 1791731887,
-          "1_8": 1791731887
-        }
-      }
-    },
-    {
-      "event_id": "12037609",
-      "league": "Serbia Super Liga",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192755001",
-        "over_od": "1.800",
-        "handicap": "0.75",
-        "under_od": "2.000",
-        "ss": "0-0",
-        "time_str": "16",
-        "add_time": "1791731888"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791731888,
-          "1_2": 1791731888,
-          "1_3": 1791731888,
-          "1_4": 1791731888,
-          "1_5": 1791731888,
-          "1_6": 1791731888,
-          "1_7": 1791731888,
-          "1_8": 1791731888
-        }
-      }
-    },
-    {
-      "event_id": "11307892",
-      "league": "Norway Division 2 Group 2",
+      "event_id": "13145513",
+      "league": "France Ligue 1",
       "mode": "LIVE",
       "results": {
         "S48": "VERIFIED"
       },
       "latest_first_half_quote": {
-        "id": "192754949",
-        "over_od": "1.950",
+        "id": "192755825",
+        "over_od": "1.900",
         "handicap": "1",
-        "under_od": "1.850",
+        "under_od": "1.900",
         "ss": "0-0",
-        "time_str": "16",
-        "add_time": "1791731849"
+        "time_str": "12",
+        "add_time": "1791732474"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791731849,
-          "1_2": 1791731849,
-          "1_3": 1791731849,
-          "1_5": 1791731849,
-          "1_6": 1791731849,
-          "1_8": 1791731849
+          "1_1": 1791732474,
+          "1_2": 1791732474,
+          "1_3": 1791732474,
+          "1_4": 1791732474,
+          "1_5": 1791732474,
+          "1_6": 1791732474,
+          "1_7": 1791732474,
+          "1_8": 1791732474
         }
       }
     },
     {
-      "event_id": "12138120",
-      "league": "Spain Segunda Division RFEF Group 1",
+      "event_id": "13275248",
+      "league": "Niger Super League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192754999",
-        "over_od": "1.900",
+        "id": "192755808",
+        "over_od": "1.825",
         "handicap": "0.5",
-        "under_od": "1.900",
+        "under_od": "1.975",
         "ss": "0-0",
-        "time_str": "17",
-        "add_time": "1791731887"
+        "time_str": "10",
+        "add_time": "1791732461"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791731891,
-          "1_2": 1791731891,
-          "1_3": 1791731891,
-          "1_5": 1791731891,
-          "1_6": 1791731891,
-          "1_8": 1791731891
+          "1_1": 1791732470,
+          "1_2": 1791732470,
+          "1_3": 1791732470,
+          "1_5": 1791732470,
+          "1_6": 1791732470,
+          "1_8": 1791732470
+        }
+      }
+    },
+    {
+      "event_id": "12287155",
+      "league": "Italy Serie B",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192755627",
+        "over_od": "1.750",
+        "handicap": "0.75",
+        "under_od": "2.050",
+        "ss": "0-0",
+        "time_str": "8",
+        "add_time": "1791732343"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791732353,
+          "1_2": 1791732353,
+          "1_3": 1791732353,
+          "1_4": 1791732353,
+          "1_5": 1791732353,
+          "1_6": 1791732353,
+          "1_7": 1791732353,
+          "1_8": 1791732353
+        }
+      }
+    },
+    {
+      "event_id": "13279409",
+      "league": "Niger Super League",
+      "mode": "LIVE",
+      "results": {
+        "S49": "VERIFIED"
+      },
+      "latest_first_half_quote": {
+        "id": "192755814",
+        "over_od": "1.750",
+        "handicap": "1.5",
+        "under_od": "2.050",
+        "ss": "0-1",
+        "time_str": "10",
+        "add_time": "1791732465"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791732474,
+          "1_2": 1791732474,
+          "1_3": 1791732474,
+          "1_5": 1791732474,
+          "1_6": 1791732474,
+          "1_8": 1791732474
         }
       }
     }
