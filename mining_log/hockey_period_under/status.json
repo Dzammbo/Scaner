@@ -1,18 +1,18 @@
 {
   "schema": "HOCKEY_PERIOD_UNDER_FORWARD_V1",
-  "updated_at": "2026-10-11T19:04:07.540027Z",
+  "updated_at": "2026-10-11T19:34:52.863705Z",
   "scope": "Mining, adult hockey only",
   "collection_mode": "visible forward observation",
-  "market_access": "BACKOFF_AFTER_DENIAL",
+  "market_access": "HTTP_DENIED",
   "price_collection": {
-    "checked_at": "2026-10-11T18:34:02.153757Z",
-    "state": "BACKOFF_AFTER_DENIAL",
+    "checked_at": "2026-10-11T19:34:52.749314Z",
+    "state": "HTTP_DENIED",
     "fixtures_matched": 0,
     "prices_saved": 0,
     "http_status": 403,
-    "retry_after_epoch": 1791747242
+    "retry_after_epoch": 1791750892
   },
-  "api_calls": 5,
+  "api_calls": 6,
   "upcoming_seen": 100,
   "history_events": 470,
   "strategies": [
@@ -45,5 +45,7 @@
       "roi_status": "NO_PRICE_DATA"
     }
   ],
-  "errors": []
+  "errors": [
+    "ended 20261011: TimeoutError: The read operation timed out"
+  ]
 }
