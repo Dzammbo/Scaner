@@ -1,37 +1,30 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T12:26:16.736991Z",
-  "api_calls": 43,
+  "updated_at": "2026-10-12T12:36:11.020833Z",
+  "api_calls": 7,
   "new_signals": 0,
-  "live_events": 34,
-  "upcoming_events": 50,
+  "live_events": 31,
+  "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 46,
-      "already_recorded": 5,
-      "checked": 35,
-      "EMPTY_MARKET": 8,
-      "STALE_QUOTE": 5,
-      "DIFFERENT_CURRENT_LINE": 22
+      "eligible_events": 71,
+      "already_recorded": 6,
+      "checked": 4,
+      "EMPTY_MARKET": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S47": {
-      "eligible_events": 46,
+      "eligible_events": 71,
       "already_recorded": 5,
-      "checked": 36,
-      "EMPTY_MARKET": 8,
-      "DIFFERENT_CURRENT_LINE": 25,
-      "STALE_QUOTE": 3
+      "checked": 4,
+      "EMPTY_MARKET": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S48": {},
     "S49": {}
   },
-  "errors": [
-    {
-      "path": "/v3/events/upcoming",
-      "error": "TimeoutError"
-    }
-  ],
+  "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -283,7 +276,7 @@
   },
   "market_samples": [
     {
-      "event_id": "13139141",
+      "event_id": "13139097",
       "league": "Iran Div 1",
       "mode": "PREMATCH",
       "results": {
@@ -294,98 +287,8 @@
       "stats": {}
     },
     {
-      "event_id": "12325136",
-      "league": "Saudi Arabia Division 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192809760",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791795272"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791807835,
-          "1_2": 1791807370,
-          "1_3": 1791807370,
-          "1_4": 1791805886,
-          "1_5": 1791806495,
-          "1_6": 1791803996,
-          "1_7": 1791797445,
-          "1_8": 1791807923
-        }
-      }
-    },
-    {
-      "event_id": "12025205",
-      "league": "North Macedonia First League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192792565",
-        "over_od": "1.750",
-        "handicap": "1.0,1.5",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791759888"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791807935,
-          "1_2": 1791807762,
-          "1_3": 1791807762,
-          "1_4": 1791805622,
-          "1_5": 1791787195,
-          "1_6": 1791781647,
-          "1_7": 1791804950,
-          "1_8": 1791807733
-        }
-      }
-    },
-    {
-      "event_id": "12123855",
-      "league": "Italy Campionato Primavera 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192805933",
-        "over_od": "1.825",
-        "handicap": "1.0",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791785639"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791807935,
-          "1_2": 1791807847,
-          "1_3": 1791807847,
-          "1_5": 1791807040,
-          "1_6": 1791804008,
-          "1_8": 1791805166
-        }
-      }
-    },
-    {
-      "event_id": "12125097",
-      "league": "Italy Campionato Primavera 1",
+      "event_id": "13139112",
+      "league": "Iran Div 1",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
@@ -395,55 +298,63 @@
       "stats": {}
     },
     {
-      "event_id": "13095974",
-      "league": "Brazil Campeonato Goiano 3",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13190395",
-      "league": "Lebanon League",
+      "event_id": "13003618",
+      "league": "Saudi Arabia U21 League",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192814355",
+        "id": "192763449",
         "over_od": "2.075",
         "handicap": "1.0,1.5",
         "under_od": "1.725",
         "ss": null,
         "time_str": null,
-        "add_time": "1791804116"
+        "add_time": "1791738286"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791807935,
-          "1_2": 1791807373,
-          "1_3": 1791807373,
-          "1_6": 1791804116,
-          "1_8": 1791807676
+          "1_1": 1791808191,
+          "1_2": 1791808285,
+          "1_3": 1791808285,
+          "1_5": 1791790700,
+          "1_6": 1791800071,
+          "1_8": 1791807398
         }
       }
     },
     {
-      "event_id": "13236405",
-      "league": "Mozambique Mocambola",
+      "event_id": "13009653",
+      "league": "Saudi Arabia U21 League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "latest_first_half_quote": {
+        "id": "192756014",
+        "over_od": "1.875",
+        "handicap": "1.0,1.5",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791732594"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791808030,
+          "1_2": 1791808156,
+          "1_3": 1791808156,
+          "1_5": 1791808247,
+          "1_6": 1791797526,
+          "1_8": 1791807434
+        }
+      }
     }
   ],
-  "health": "API_ERRORS"
+  "health": "OK"
 }
