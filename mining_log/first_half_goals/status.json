@@ -1,42 +1,50 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T15:39:53.369177Z",
-  "api_calls": 33,
-  "new_signals": 1,
-  "live_events": 51,
+  "updated_at": "2026-10-12T15:50:12.171025Z",
+  "api_calls": 35,
+  "new_signals": 3,
+  "live_events": 48,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 91,
-      "already_recorded": 5,
-      "checked": 29,
-      "DIFFERENT_CURRENT_LINE": 18,
-      "EMPTY_MARKET": 3,
-      "STALE_QUOTE": 8
+      "eligible_events": 90,
+      "already_recorded": 6,
+      "checked": 23,
+      "DIFFERENT_CURRENT_LINE": 16,
+      "VERIFIED": 2,
+      "EMPTY_MARKET": 4,
+      "STALE_QUOTE": 1
     },
     "S47": {
-      "eligible_events": 91,
-      "checked": 30,
-      "DIFFERENT_CURRENT_LINE": 25,
-      "EMPTY_MARKET": 3,
-      "STALE_QUOTE": 1,
-      "VERIFIED": 1
+      "eligible_events": 90,
+      "already_recorded": 2,
+      "checked": 26,
+      "DIFFERENT_CURRENT_LINE": 22,
+      "EMPTY_MARKET": 4
     },
-    "S48": {},
-    "S49": {}
+    "S48": {
+      "eligible_events": 3,
+      "checked": 3,
+      "DIFFERENT_CURRENT_LINE": 3
+    },
+    "S49": {
+      "eligible_events": 1,
+      "checked": 1,
+      "VERIFIED": 1
+    }
   },
   "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 72,
+      "signals": 75,
       "N": 60,
       "W": 21,
       "L": 16,
       "PUSH": 23,
-      "pending": 12,
+      "pending": 15,
       "void": 0,
       "profit": 3.925,
       "ROI_pct": 6.542,
@@ -44,12 +52,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 65,
+          "signals": 68,
           "N": 55,
           "W": 21,
           "L": 13,
           "PUSH": 21,
-          "pending": 10,
+          "pending": 13,
           "void": 0,
           "profit": 6.925,
           "ROI_pct": 12.591,
@@ -112,25 +120,25 @@
     },
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-      "signals": 24,
-      "N": 16,
+      "signals": 25,
+      "N": 17,
       "W": 10,
-      "L": 6,
+      "L": 7,
       "PUSH": 0,
       "pending": 8,
       "void": 0,
-      "profit": 3.55,
-      "ROI_pct": 22.188,
-      "ROI_without_top3_pct": 3.654,
+      "profit": 2.55,
+      "ROI_pct": 15.0,
+      "ROI_without_top3_pct": -3.75,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 11,
+          "signals": 12,
           "N": 9,
           "W": 5,
           "L": 4,
           "PUSH": 0,
-          "pending": 2,
+          "pending": 3,
           "void": 0,
           "profit": 1.025,
           "ROI_pct": 11.389,
@@ -152,15 +160,15 @@
         },
         "youth_reserves": {
           "signals": 11,
-          "N": 6,
+          "N": 7,
           "W": 5,
-          "L": 1,
+          "L": 2,
           "PUSH": 0,
-          "pending": 5,
+          "pending": 4,
           "void": 0,
-          "profit": 3.525,
-          "ROI_pct": 58.75,
-          "ROI_without_top3_pct": 20.833,
+          "profit": 2.525,
+          "ROI_pct": 36.071,
+          "ROI_without_top3_pct": -9.375,
           "balance_valid": true
         }
       },
@@ -181,28 +189,28 @@
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
       "signals": 52,
-      "N": 38,
+      "N": 41,
       "W": 16,
-      "L": 8,
-      "PUSH": 14,
-      "pending": 14,
+      "L": 9,
+      "PUSH": 16,
+      "pending": 11,
       "void": 0,
-      "profit": 6.4,
-      "ROI_pct": 16.842,
-      "ROI_without_top3_pct": 9.071,
+      "profit": 5.4,
+      "ROI_pct": 13.171,
+      "ROI_without_top3_pct": 5.724,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 33,
-          "N": 28,
+          "N": 29,
           "W": 14,
           "L": 5,
-          "PUSH": 9,
-          "pending": 5,
+          "PUSH": 10,
+          "pending": 4,
           "void": 0,
           "profit": 7.775,
-          "ROI_pct": 27.768,
-          "ROI_without_top3_pct": 18.2,
+          "ROI_pct": 26.81,
+          "ROI_without_top3_pct": 17.5,
           "balance_valid": true
         },
         "women": {
@@ -220,14 +228,14 @@
         },
         "youth_reserves": {
           "signals": 17,
-          "N": 9,
+          "N": 11,
           "W": 2,
-          "L": 3,
-          "PUSH": 4,
-          "pending": 8,
+          "L": 4,
+          "PUSH": 5,
+          "pending": 6,
           "void": 0,
-          "profit": -1.375,
-          "ROI_pct": -15.278,
+          "profit": -2.375,
+          "ROI_pct": -21.591,
           "ROI_without_top3_pct": -50.0,
           "balance_valid": true
         }
@@ -235,12 +243,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 27,
+      "signals": 28,
       "N": 27,
       "W": 13,
       "L": 14,
       "PUSH": 0,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "profit": -2.3,
       "ROI_pct": -8.519,
@@ -248,12 +256,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 25,
+          "signals": 26,
           "N": 25,
           "W": 12,
           "L": 13,
           "PUSH": 0,
-          "pending": 0,
+          "pending": 1,
           "void": 0,
           "profit": -2.05,
           "ROI_pct": -8.2,
@@ -291,204 +299,211 @@
   },
   "market_samples": [
     {
-      "event_id": "11181174",
-      "league": "Argentina Primera C Metropolitana",
+      "event_id": "11311752",
+      "league": "Chile Primera B",
+      "mode": "LIVE",
+      "results": {
+        "S49": "VERIFIED"
+      },
+      "latest_first_half_quote": {
+        "id": "192830084",
+        "over_od": "1.775",
+        "handicap": "1.5",
+        "under_od": "2.025",
+        "ss": "0-1",
+        "time_str": "18",
+        "add_time": "1791820194"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791820194,
+          "1_2": 1791820194,
+          "1_3": 1791820194,
+          "1_4": 1791820194,
+          "1_5": 1791820194,
+          "1_6": 1791820194,
+          "1_7": 1791820194,
+          "1_8": 1791820194
+        }
+      }
+    },
+    {
+      "event_id": "13277552",
+      "league": "Burkina Faso League",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192830068",
+        "over_od": "2.150",
+        "handicap": "0.5",
+        "under_od": "1.675",
+        "ss": "0-0",
+        "time_str": "18",
+        "add_time": "1791820179"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791820189,
+          "1_2": 1791820189,
+          "1_3": 1791820189,
+          "1_5": 1791820189,
+          "1_6": 1791820189,
+          "1_8": 1791820189
+        }
+      }
+    },
+    {
+      "event_id": "13279334",
+      "league": "Ivory Coast Ligue 2",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192830085",
+        "over_od": "2.025",
+        "handicap": "0.5",
+        "under_od": "1.775",
+        "ss": "0-0",
+        "time_str": "16",
+        "add_time": "1791820196"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791820196,
+          "1_2": 1791820196,
+          "1_3": 1791820196,
+          "1_5": 1791820196,
+          "1_6": 1791820196,
+          "1_8": 1791820196
+        }
+      }
+    },
+    {
+      "event_id": "13277553",
+      "league": "Burkina Faso League",
+      "mode": "LIVE",
+      "results": {
+        "S48": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192830057",
+        "over_od": "2.100",
+        "handicap": "0.5",
+        "under_od": "1.700",
+        "ss": "0-0",
+        "time_str": "15",
+        "add_time": "1791820166"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791820192,
+          "1_2": 1791820192,
+          "1_3": 1791820192,
+          "1_5": 1791820192,
+          "1_6": 1791820192,
+          "1_8": 1791820192
+        }
+      }
+    },
+    {
+      "event_id": "11287175",
+      "league": "Norway Division 3 Group 2",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192812354",
+        "id": "192815419",
         "over_od": "2.000",
-        "handicap": "0.5,1.0",
+        "handicap": "2.0",
         "under_od": "1.800",
         "ss": null,
         "time_str": null,
-        "add_time": "1791801055"
+        "add_time": "1791805793"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791819322,
-          "1_2": 1791819425,
-          "1_3": 1791819425,
-          "1_4": 1791816878,
-          "1_5": 1791803128,
-          "1_6": 1791818996,
-          "1_7": 1791807509,
-          "1_8": 1791819413
+          "1_1": 1791819967,
+          "1_2": 1791820052,
+          "1_3": 1791820052,
+          "1_4": 1791796083,
+          "1_5": 1791815241,
+          "1_6": 1791812922,
+          "1_7": 1791818829,
+          "1_8": 1791820114
         }
       }
     },
     {
-      "event_id": "11181175",
-      "league": "Argentina Primera C Metropolitana",
+      "event_id": "13278109",
+      "league": "Jordan Youth League",
       "mode": "PREMATCH",
       "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192814061",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791803748"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791819203,
-          "1_2": 1791818851,
-          "1_3": 1791818851,
-          "1_4": 1791808995,
-          "1_5": 1791810556,
-          "1_6": 1791816823,
-          "1_7": 1791800726,
-          "1_8": 1791819390
-        }
-      }
-    },
-    {
-      "event_id": "11181176",
-      "league": "Argentina Primera C Metropolitana",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11181177",
-      "league": "Argentina Primera C Metropolitana",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192812182",
+        "id": "192713247",
         "over_od": "1.850",
-        "handicap": "1.0",
+        "handicap": "1.0,1.5",
         "under_od": "1.950",
         "ss": null,
         "time_str": null,
-        "add_time": "1791800674"
+        "add_time": "1791711523"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791819104,
-          "1_2": 1791819417,
-          "1_3": 1791819417,
-          "1_4": 1791818449,
-          "1_5": 1791816768,
-          "1_6": 1791809001,
-          "1_7": 1791813442,
-          "1_8": 1791818102
+          "1_1": 1791820022,
+          "1_2": 1791820117,
+          "1_3": 1791820117,
+          "1_5": 1791805599,
+          "1_6": 1791817284,
+          "1_8": 1791819899
         }
       }
     },
     {
-      "event_id": "11181193",
-      "league": "Argentina Primera C Metropolitana",
+      "event_id": "13279475",
+      "league": "Israel Cup",
       "mode": "PREMATCH",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
+        "S46": "VERIFIED",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192807192",
-        "over_od": "1.800",
-        "handicap": "0.5,1.0",
-        "under_od": "2.000",
+        "id": "192758341",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
         "ss": null,
         "time_str": null,
-        "add_time": "1791790155"
+        "add_time": "1791734229"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791819082,
-          "1_2": 1791819342,
-          "1_3": 1791819342,
-          "1_4": 1791817106,
-          "1_5": 1791819242,
-          "1_6": 1791814960,
-          "1_7": 1791815019,
-          "1_8": 1791819288
+          "1_1": 1791819448,
+          "1_2": 1791819695,
+          "1_3": 1791819695,
+          "1_5": 1791818083,
+          "1_6": 1791819661,
+          "1_8": 1791819560
         }
       }
     },
     {
-      "event_id": "11181194",
-      "league": "Argentina Primera C Metropolitana",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192661313",
-        "over_od": "1.950",
-        "handicap": "0.5,1.0",
-        "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791662811"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791818747,
-          "1_2": 1791818985,
-          "1_3": 1791818985,
-          "1_4": 1791775305,
-          "1_5": 1791813777,
-          "1_6": 1791816261,
-          "1_7": 1791749634,
-          "1_8": 1791819515
-        }
-      }
-    },
-    {
-      "event_id": "11181205",
-      "league": "Argentina Primera C Metropolitana",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192817560",
-        "over_od": "1.725",
-        "handicap": "0.5,1.0",
-        "under_od": "2.075",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791808182"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791819434,
-          "1_2": 1791818112,
-          "1_3": 1791818112,
-          "1_4": 1791815238,
-          "1_5": 1791813929,
-          "1_6": 1791814714,
-          "1_7": 1791818237,
-          "1_8": 1791819480
-        }
-      }
-    },
-    {
-      "event_id": "11181206",
-      "league": "Argentina Primera C Metropolitana",
+      "event_id": "11287295",
+      "league": "Norway Division 3 Group 4",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
