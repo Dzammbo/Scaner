@@ -1,47 +1,48 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T11:14:46.332642Z",
-  "api_calls": 7,
-  "new_signals": 1,
-  "live_events": 25,
+  "updated_at": "2026-10-12T11:25:00.821794Z",
+  "api_calls": 44,
+  "new_signals": 3,
+  "live_events": 26,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 59,
-      "already_recorded": 1,
-      "checked": 1,
-      "EMPTY_MARKET": 1
+      "eligible_events": 60,
+      "already_recorded": 4,
+      "checked": 39,
+      "DIFFERENT_CURRENT_LINE": 25,
+      "VERIFIED": 2,
+      "EMPTY_MARKET": 7,
+      "STALE_QUOTE": 5
     },
     "S47": {
-      "eligible_events": 59,
-      "already_recorded": 2,
-      "checked": 1,
-      "EMPTY_MARKET": 1
+      "eligible_events": 60,
+      "already_recorded": 3,
+      "checked": 38,
+      "DIFFERENT_CURRENT_LINE": 25,
+      "EMPTY_MARKET": 7,
+      "STALE_QUOTE": 5,
+      "VERIFIED": 1
     },
     "S48": {
-      "eligible_events": 2,
-      "checked": 2,
-      "VERIFIED": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    },
-    "S49": {
       "eligible_events": 1,
       "checked": 1,
       "DIFFERENT_CURRENT_LINE": 1
-    }
+    },
+    "S49": {}
   },
   "errors": [],
   "api_retry_after": null,
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 56,
+      "signals": 61,
       "N": 55,
       "W": 19,
       "L": 14,
       "PUSH": 22,
-      "pending": 1,
+      "pending": 6,
       "void": 0,
       "profit": 4.05,
       "ROI_pct": 7.364,
@@ -49,12 +50,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 52,
+          "signals": 56,
           "N": 51,
           "W": 19,
           "L": 12,
           "PUSH": 20,
-          "pending": 1,
+          "pending": 5,
           "void": 0,
           "profit": 6.05,
           "ROI_pct": 11.863,
@@ -88,12 +89,12 @@
           "balance_valid": true
         },
         "youth_reserves": {
-          "signals": 1,
+          "signals": 2,
           "N": 1,
           "W": 0,
           "L": 0,
           "PUSH": 1,
-          "pending": 0,
+          "pending": 1,
           "void": 0,
           "profit": 0,
           "ROI_pct": 0.0,
@@ -117,12 +118,12 @@
     },
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-      "signals": 14,
+      "signals": 16,
       "N": 11,
       "W": 7,
       "L": 4,
       "PUSH": 0,
-      "pending": 3,
+      "pending": 5,
       "void": 0,
       "profit": 2.9,
       "ROI_pct": 26.364,
@@ -156,12 +157,12 @@
           "balance_valid": true
         },
         "youth_reserves": {
-          "signals": 4,
+          "signals": 6,
           "N": 2,
           "W": 2,
           "L": 0,
           "PUSH": 0,
-          "pending": 2,
+          "pending": 4,
           "void": 0,
           "profit": 1.875,
           "ROI_pct": 93.75,
@@ -240,12 +241,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 22,
+      "signals": 23,
       "N": 22,
       "W": 9,
       "L": 13,
       "PUSH": 0,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "profit": -4.475,
       "ROI_pct": -20.341,
@@ -264,112 +265,183 @@
           "ROI_pct": -20.341,
           "ROI_without_top3_pct": -41.711,
           "balance_valid": true
+        },
+        "women": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
         }
       }
     }
   },
   "market_samples": [
     {
-      "event_id": "12068674",
-      "league": "Uzbekistan 1st Division",
-      "mode": "LIVE",
-      "results": {
-        "S48": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192814011",
-        "over_od": "1.975",
-        "handicap": "1",
-        "under_od": "1.825",
-        "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791803672"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791803672,
-          "1_2": 1791803672,
-          "1_3": 1791803672,
-          "1_5": 1791803672,
-          "1_6": 1791803672,
-          "1_8": 1791803672
-        }
-      }
-    },
-    {
-      "event_id": "13277911",
-      "league": "Kosovo U19 League",
+      "event_id": "12346061",
+      "league": "Serbia U19 League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192814013",
-        "over_od": "1.800",
-        "handicap": "0.75",
-        "under_od": "2.000",
+        "id": "192814416",
+        "over_od": "2.050",
+        "handicap": "1.25",
+        "under_od": "1.750",
         "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791803676"
+        "time_str": "16",
+        "add_time": "1791804274"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791803676,
-          "1_2": 1791803676,
-          "1_3": 1791803676,
-          "1_5": 1791803676,
-          "1_6": 1791803676,
-          "1_8": 1791803676
+          "1_1": 1791804274,
+          "1_2": 1791804274,
+          "1_3": 1791804274,
+          "1_5": 1791804274,
+          "1_6": 1791804274,
+          "1_8": 1791804274
         }
       }
     },
     {
-      "event_id": "13279826",
-      "league": "Vietnam Championship Women",
-      "mode": "LIVE",
+      "event_id": "12025205",
+      "league": "North Macedonia First League",
+      "mode": "PREMATCH",
       "results": {
-        "S49": "DIFFERENT_CURRENT_LINE"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192814003",
-        "over_od": "1.950",
-        "handicap": "1.75",
-        "under_od": "1.850",
-        "ss": "0-1",
-        "time_str": "13",
-        "add_time": "1791803648"
+        "id": "192792565",
+        "over_od": "1.750",
+        "handicap": "1.0,1.5",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791759888"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791803672,
-          "1_2": 1791803672,
-          "1_3": 1791803672,
-          "1_4": 1791803672,
-          "1_5": 1791803672,
-          "1_6": 1791803672,
-          "1_7": 1791803672,
-          "1_8": 1791803672
+          "1_1": 1791804175,
+          "1_2": 1791804215,
+          "1_3": 1791804215,
+          "1_4": 1791803842,
+          "1_5": 1791787195,
+          "1_6": 1791781647,
+          "1_7": 1791800877,
+          "1_8": 1791801556
         }
       }
     },
     {
-      "event_id": "13284332",
-      "league": "Lebanon League",
+      "event_id": "12123855",
+      "league": "Italy Campionato Primavera 1",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "VERIFIED",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192805933",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791785639"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791803101,
+          "1_2": 1791804094,
+          "1_3": 1791804094,
+          "1_5": 1791787991,
+          "1_6": 1791804008,
+          "1_8": 1791799300
+        }
+      }
+    },
+    {
+      "event_id": "12125097",
+      "league": "Italy Campionato Primavera 1",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
         "S47": "EMPTY_MARKET"
       },
       "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13095974",
+      "league": "Brazil Campeonato Goiano 3",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13190395",
+      "league": "Lebanon League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192814355",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791804116"
+      },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791803378
+          "1_1": 1791804228,
+          "1_2": 1791802579,
+          "1_3": 1791802579,
+          "1_6": 1791804116,
+          "1_8": 1791803850
         }
       }
+    },
+    {
+      "event_id": "13236405",
+      "league": "Mozambique Mocambola",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13268096",
+      "league": "Tanzania First Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
     }
   ],
   "health": "OK"
