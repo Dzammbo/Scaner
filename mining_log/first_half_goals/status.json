@@ -1,25 +1,21 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T07:14:57.344827Z",
-  "api_calls": 4,
+  "updated_at": "2026-10-12T07:25:09.747883Z",
+  "api_calls": 3,
   "new_signals": 0,
-  "live_events": 9,
+  "live_events": 7,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 19,
-      "already_recorded": 3
+      "eligible_events": 20,
+      "already_recorded": 4
     },
     "S47": {
-      "eligible_events": 19,
+      "eligible_events": 20,
       "already_recorded": 2
     },
-    "S48": {
-      "eligible_events": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    },
+    "S48": {},
     "S49": {}
   },
   "errors": [],
@@ -27,12 +23,12 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 54,
+      "signals": 55,
       "N": 51,
       "W": 18,
       "L": 13,
       "PUSH": 20,
-      "pending": 3,
+      "pending": 4,
       "void": 0,
       "profit": 3.95,
       "ROI_pct": 7.745,
@@ -40,12 +36,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 50,
+          "signals": 51,
           "N": 48,
           "W": 18,
           "L": 12,
           "PUSH": 18,
-          "pending": 2,
+          "pending": 3,
           "void": 0,
           "profit": 4.95,
           "ROI_pct": 10.312,
@@ -259,37 +255,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "13096330",
-      "league": "China Division 2",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192806925",
-        "over_od": "-",
-        "handicap": "0.5",
-        "under_od": "-",
-        "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791789258"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791789291,
-          "1_2": 1791789291,
-          "1_3": 1791789291,
-          "1_4": 1791789291,
-          "1_5": 1791789291,
-          "1_6": 1791789291,
-          "1_7": 1791789291,
-          "1_8": 1791789291
-        }
-      }
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
