@@ -1,28 +1,23 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T11:55:40.802756Z",
-  "api_calls": 52,
-  "new_signals": 1,
-  "live_events": 32,
+  "updated_at": "2026-10-12T12:05:38.394273Z",
+  "api_calls": 5,
+  "new_signals": 0,
+  "live_events": 35,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 52,
-      "already_recorded": 4,
-      "checked": 45,
-      "STALE_QUOTE": 7,
-      "EMPTY_MARKET": 10,
-      "VERIFIED": 1,
-      "DIFFERENT_CURRENT_LINE": 27
+      "eligible_events": 64,
+      "already_recorded": 6,
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S47": {
-      "eligible_events": 52,
+      "eligible_events": 64,
       "already_recorded": 5,
-      "checked": 44,
-      "DIFFERENT_CURRENT_LINE": 30,
-      "EMPTY_MARKET": 10,
-      "STALE_QUOTE": 4
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S48": {},
     "S49": {}
@@ -32,12 +27,12 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 63,
+      "signals": 64,
       "N": 55,
       "W": 19,
       "L": 14,
       "PUSH": 22,
-      "pending": 8,
+      "pending": 9,
       "void": 0,
       "profit": 4.05,
       "ROI_pct": 7.364,
@@ -45,12 +40,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 58,
+          "signals": 59,
           "N": 51,
           "W": 19,
           "L": 12,
           "PUSH": 20,
-          "pending": 7,
+          "pending": 8,
           "void": 0,
           "profit": 6.05,
           "ROI_pct": 11.863,
@@ -114,28 +109,28 @@
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
       "signals": 17,
-      "N": 11,
+      "N": 12,
       "W": 7,
-      "L": 4,
+      "L": 5,
       "PUSH": 0,
-      "pending": 6,
+      "pending": 5,
       "void": 0,
-      "profit": 2.9,
-      "ROI_pct": 26.364,
-      "ROI_without_top3_pct": -2.187,
+      "profit": 1.9,
+      "ROI_pct": 15.833,
+      "ROI_without_top3_pct": -13.056,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 9,
-          "N": 8,
+          "N": 9,
           "W": 5,
-          "L": 3,
+          "L": 4,
           "PUSH": 0,
-          "pending": 1,
+          "pending": 0,
           "void": 0,
-          "profit": 2.025,
-          "ROI_pct": 25.312,
-          "ROI_without_top3_pct": -20.5,
+          "profit": 1.025,
+          "ROI_pct": 11.389,
+          "ROI_without_top3_pct": -33.75,
           "balance_valid": true
         },
         "women": {
@@ -279,184 +274,60 @@
   },
   "market_samples": [
     {
-      "event_id": "12325136",
-      "league": "Saudi Arabia Division 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192809760",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791795272"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791805702,
-          "1_2": 1791805971,
-          "1_3": 1791805971,
-          "1_4": 1791805886,
-          "1_5": 1791804989,
-          "1_6": 1791803996,
-          "1_7": 1791797445,
-          "1_8": 1791805711
-        }
-      }
-    },
-    {
-      "event_id": "13003619",
+      "event_id": "13003618",
       "league": "Saudi Arabia U21 League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192767503",
-        "over_od": "1.700",
-        "handicap": "1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791742044"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791805972,
-          "1_2": 1791806064,
-          "1_3": 1791806064,
-          "1_5": 1791783842,
-          "1_6": 1791782059,
-          "1_8": 1791805813
-        }
-      }
-    },
-    {
-      "event_id": "11426599",
-      "league": "Other Match",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11980116",
-      "league": "Womens Olympic Qual",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13247551",
-      "league": "Greece Super League 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192780738",
-        "over_od": "1.875",
-        "handicap": "1.0",
-        "under_od": "1.925",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791750130"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791806066,
-          "1_2": 1791805975,
-          "1_3": 1791805975,
-          "1_5": 1791799083,
-          "1_6": 1791784849,
-          "1_8": 1791806007
-        }
-      }
-    },
-    {
-      "event_id": "12130546",
-      "league": "Spain Segunda",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "VERIFIED",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192396657",
-        "over_od": "2.075",
-        "handicap": "1.0",
-        "under_od": "1.725",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791376711"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791805884,
-          "1_2": 1791805821,
-          "1_3": 1791805821,
-          "1_4": 1791802565,
-          "1_5": 1791802707,
-          "1_6": 1791805637,
-          "1_7": 1791805172,
-          "1_8": 1791806098
-        }
-      }
-    },
-    {
-      "event_id": "13139141",
-      "league": "Iran Div 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13267603",
-      "league": "U23 International Women",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192810220",
-        "over_od": "2.025",
+        "id": "192763449",
+        "over_od": "2.075",
         "handicap": "1.0,1.5",
-        "under_od": "1.775",
+        "under_od": "1.725",
         "ss": null,
         "time_str": null,
-        "add_time": "1791796599"
+        "add_time": "1791738286"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791806009,
-          "1_2": 1791805906,
-          "1_3": 1791805906,
-          "1_5": 1791789404,
-          "1_6": 1791801069,
-          "1_8": 1791806115
+          "1_1": 1791806353,
+          "1_2": 1791806568,
+          "1_3": 1791806568,
+          "1_5": 1791790700,
+          "1_6": 1791800071,
+          "1_8": 1791806451
+        }
+      }
+    },
+    {
+      "event_id": "13009653",
+      "league": "Saudi Arabia U21 League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192756014",
+        "over_od": "1.875",
+        "handicap": "1.0,1.5",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791732594"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791806520,
+          "1_2": 1791806520,
+          "1_3": 1791806520,
+          "1_5": 1791805817,
+          "1_6": 1791797526,
+          "1_8": 1791806708
         }
       }
     }
