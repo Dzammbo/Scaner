@@ -1,18 +1,22 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T04:21:46.242999Z",
-  "api_calls": 3,
+  "updated_at": "2026-10-12T04:31:58.890347Z",
+  "api_calls": 5,
   "new_signals": 0,
-  "live_events": 10,
+  "live_events": 8,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 2,
-      "already_recorded": 1
+      "already_recorded": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
     },
     "S47": {
-      "eligible_events": 2
+      "eligible_events": 2,
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 2
     },
     "S48": {},
     "S49": {}
@@ -241,6 +245,68 @@
       }
     }
   },
-  "market_samples": [],
+  "market_samples": [
+    {
+      "event_id": "12099730",
+      "league": "Japan League Cup Women",
+      "mode": "PREMATCH",
+      "results": {
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192760729",
+        "over_od": "1.775",
+        "handicap": "1.0",
+        "under_od": "2.025",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791735906"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791779344,
+          "1_2": 1791779067,
+          "1_3": 1791779067,
+          "1_4": 1791779366,
+          "1_5": 1791779206,
+          "1_6": 1791778629,
+          "1_7": 1791776898,
+          "1_8": 1791779473
+        }
+      }
+    },
+    {
+      "event_id": "13096330",
+      "league": "China Division 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192799939",
+        "over_od": "1.750",
+        "handicap": "0.5,1.0",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791767870"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791779310,
+          "1_2": 1791778263,
+          "1_3": 1791778263,
+          "1_4": 1791756643,
+          "1_5": 1791778466,
+          "1_6": 1791767870,
+          "1_7": 1791767159,
+          "1_8": 1791779154
+        }
+      }
+    }
+  ],
   "health": "OK"
 }
