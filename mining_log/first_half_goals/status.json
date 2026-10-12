@@ -1,11 +1,11 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T04:42:09.361010Z",
+  "updated_at": "2026-10-12T04:52:34.824600Z",
   "api_calls": 3,
   "new_signals": 0,
-  "live_events": 7,
-  "upcoming_events": 100,
+  "live_events": 9,
+  "upcoming_events": 50,
   "coverage": {
     "S46": {
       "eligible_events": 2,
@@ -17,7 +17,12 @@
     "S48": {},
     "S49": {}
   },
-  "errors": [],
+  "errors": [
+    {
+      "path": "/v3/events/upcoming",
+      "error": "TimeoutError"
+    }
+  ],
   "api_retry_after": null,
   "strategies": {
     "S46": {
@@ -242,5 +247,5 @@
     }
   },
   "market_samples": [],
-  "health": "OK"
+  "health": "API_ERRORS"
 }
