@@ -1,29 +1,33 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T14:59:03.281354Z",
-  "api_calls": 31,
+  "updated_at": "2026-10-12T15:09:19.436331Z",
+  "api_calls": 23,
   "new_signals": 1,
-  "live_events": 52,
+  "live_events": 49,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 68,
-      "already_recorded": 3,
-      "checked": 26,
-      "DIFFERENT_CURRENT_LINE": 18,
-      "STALE_QUOTE": 3,
-      "EMPTY_MARKET": 4,
-      "VERIFIED": 1
+      "eligible_events": 92,
+      "already_recorded": 5,
+      "checked": 16,
+      "EMPTY_MARKET": 5,
+      "DIFFERENT_CURRENT_LINE": 7,
+      "STALE_QUOTE": 4
     },
     "S47": {
-      "eligible_events": 68,
+      "eligible_events": 92,
       "already_recorded": 1,
-      "checked": 27,
-      "DIFFERENT_CURRENT_LINE": 23,
-      "EMPTY_MARKET": 4
+      "checked": 17,
+      "EMPTY_MARKET": 5,
+      "DIFFERENT_CURRENT_LINE": 12
     },
-    "S48": {},
+    "S48": {
+      "eligible_events": 2,
+      "checked": 2,
+      "DIFFERENT_CURRENT_LINE": 1,
+      "VERIFIED": 1
+    },
     "S49": {}
   },
   "errors": [],
@@ -31,29 +35,29 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 70,
-      "N": 58,
+      "signals": 71,
+      "N": 60,
       "W": 21,
-      "L": 15,
-      "PUSH": 22,
-      "pending": 12,
+      "L": 16,
+      "PUSH": 23,
+      "pending": 11,
       "void": 0,
-      "profit": 4.925,
-      "ROI_pct": 8.491,
-      "ROI_without_top3_pct": 2.955,
+      "profit": 3.925,
+      "ROI_pct": 6.542,
+      "ROI_without_top3_pct": 1.096,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 63,
-          "N": 54,
+          "signals": 64,
+          "N": 55,
           "W": 21,
           "L": 13,
-          "PUSH": 20,
+          "PUSH": 21,
           "pending": 9,
           "void": 0,
           "profit": 6.925,
-          "ROI_pct": 12.824,
-          "ROI_without_top3_pct": 7.108,
+          "ROI_pct": 12.591,
+          "ROI_without_top3_pct": 6.971,
           "balance_valid": true
         },
         "women": {
@@ -84,14 +88,14 @@
         },
         "youth_reserves": {
           "signals": 4,
-          "N": 1,
+          "N": 2,
           "W": 0,
-          "L": 0,
+          "L": 1,
           "PUSH": 1,
-          "pending": 3,
+          "pending": 2,
           "void": 0,
-          "profit": 0,
-          "ROI_pct": 0.0,
+          "profit": -1,
+          "ROI_pct": -50.0,
           "ROI_without_top3_pct": null,
           "balance_valid": true
         }
@@ -113,15 +117,15 @@
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
       "signals": 23,
-      "N": 13,
-      "W": 7,
+      "N": 15,
+      "W": 9,
       "L": 6,
       "PUSH": 0,
-      "pending": 10,
+      "pending": 8,
       "void": 0,
-      "profit": 0.9,
-      "ROI_pct": 6.923,
-      "ROI_without_top3_pct": -21.75,
+      "profit": 2.75,
+      "ROI_pct": 18.333,
+      "ROI_without_top3_pct": -2.708,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
@@ -152,15 +156,15 @@
         },
         "youth_reserves": {
           "signals": 10,
-          "N": 3,
-          "W": 2,
+          "N": 5,
+          "W": 4,
           "L": 1,
           "PUSH": 0,
-          "pending": 7,
+          "pending": 5,
           "void": 0,
-          "profit": 0.875,
-          "ROI_pct": 29.167,
-          "ROI_without_top3_pct": null,
+          "profit": 2.725,
+          "ROI_pct": 54.5,
+          "ROI_without_top3_pct": -8.75,
           "balance_valid": true
         }
       },
@@ -180,29 +184,29 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 48,
-      "N": 36,
-      "W": 14,
+      "signals": 49,
+      "N": 38,
+      "W": 16,
       "L": 8,
       "PUSH": 14,
-      "pending": 12,
+      "pending": 11,
       "void": 0,
-      "profit": 4.6,
-      "ROI_pct": 12.778,
-      "ROI_without_top3_pct": 4.167,
+      "profit": 6.4,
+      "ROI_pct": 16.842,
+      "ROI_without_top3_pct": 9.071,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 30,
-          "N": 27,
-          "W": 13,
+          "signals": 31,
+          "N": 28,
+          "W": 14,
           "L": 5,
           "PUSH": 9,
           "pending": 3,
           "void": 0,
-          "profit": 6.775,
-          "ROI_pct": 25.093,
-          "ROI_without_top3_pct": 14.792,
+          "profit": 7.775,
+          "ROI_pct": 27.768,
+          "ROI_without_top3_pct": 18.2,
           "balance_valid": true
         },
         "women": {
@@ -220,15 +224,15 @@
         },
         "youth_reserves": {
           "signals": 17,
-          "N": 8,
-          "W": 1,
+          "N": 9,
+          "W": 2,
           "L": 3,
           "PUSH": 4,
-          "pending": 9,
+          "pending": 8,
           "void": 0,
-          "profit": -2.175,
-          "ROI_pct": -27.187,
-          "ROI_without_top3_pct": -60.0,
+          "profit": -1.375,
+          "ROI_pct": -15.278,
+          "ROI_without_top3_pct": -50.0,
           "balance_valid": true
         }
       }
@@ -236,28 +240,28 @@
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
       "signals": 27,
-      "N": 26,
-      "W": 12,
+      "N": 27,
+      "W": 13,
       "L": 14,
       "PUSH": 0,
-      "pending": 1,
+      "pending": 0,
       "void": 0,
-      "profit": -3.125,
-      "ROI_pct": -12.019,
-      "ROI_without_top3_pct": -28.587,
+      "profit": -2.3,
+      "ROI_pct": -8.519,
+      "ROI_without_top3_pct": -23.958,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 25,
-          "N": 24,
-          "W": 11,
+          "N": 25,
+          "W": 12,
           "L": 13,
           "PUSH": 0,
-          "pending": 1,
+          "pending": 0,
           "void": 0,
-          "profit": -2.875,
-          "ROI_pct": -11.979,
-          "ROI_without_top3_pct": -30.119,
+          "profit": -2.05,
+          "ROI_pct": -8.2,
+          "ROI_without_top3_pct": -25.0,
           "balance_valid": true
         },
         "women": {
@@ -291,149 +295,65 @@
   },
   "market_samples": [
     {
-      "event_id": "13278109",
-      "league": "Jordan Youth League",
-      "mode": "PREMATCH",
+      "event_id": "12325136",
+      "league": "Saudi Arabia Division 1",
+      "mode": "LIVE",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192713247",
-        "over_od": "1.850",
-        "handicap": "1.0,1.5",
-        "under_od": "1.950",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791711523"
+        "id": "192827496",
+        "over_od": "1.950",
+        "handicap": "0.75",
+        "under_od": "1.850",
+        "ss": "0-0",
+        "time_str": "14",
+        "add_time": "1791817747"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791816989,
-          "1_2": 1791816989,
-          "1_3": 1791816989,
-          "1_5": 1791805599,
-          "1_6": 1791807337,
-          "1_8": 1791816586
+          "1_1": 1791817747,
+          "1_2": 1791817747,
+          "1_3": 1791817747,
+          "1_4": 1791817747,
+          "1_5": 1791817747,
+          "1_6": 1791817747,
+          "1_7": 1791817747,
+          "1_8": 1791817747
         }
       }
     },
     {
-      "event_id": "13279475",
+      "event_id": "13279472",
       "league": "Israel Cup",
-      "mode": "PREMATCH",
+      "mode": "LIVE",
       "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "VERIFIED"
       },
       "latest_first_half_quote": {
-        "id": "192758341",
-        "over_od": "1.825",
-        "handicap": "1.0",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791734229"
+        "id": "192827486",
+        "over_od": "1.800",
+        "handicap": "1",
+        "under_od": "2.000",
+        "ss": "0-0",
+        "time_str": "11",
+        "add_time": "1791817728"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791816627,
-          "1_2": 1791816653,
-          "1_3": 1791816653,
-          "1_5": 1791798424,
-          "1_6": 1791786367,
-          "1_8": 1791815391
+          "1_1": 1791817753,
+          "1_2": 1791817753,
+          "1_3": 1791817753,
+          "1_5": 1791817753,
+          "1_6": 1791817753,
+          "1_8": 1791817753
         }
       }
     },
     {
-      "event_id": "11287175",
-      "league": "Norway Division 3 Group 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192815419",
-        "over_od": "2.000",
-        "handicap": "2.0",
-        "under_od": "1.800",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791805793"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791816644,
-          "1_2": 1791816993,
-          "1_3": 1791816993,
-          "1_4": 1791796083,
-          "1_5": 1791815241,
-          "1_6": 1791812922,
-          "1_7": 1791808861,
-          "1_8": 1791816893
-        }
-      }
-    },
-    {
-      "event_id": "11287295",
-      "league": "Norway Division 3 Group 4",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11997991",
-      "league": "Italy Serie A",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192800603",
-        "over_od": "1.850",
-        "handicap": "1.0,1.5",
-        "under_od": "1.950",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791769067"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791816767,
-          "1_2": 1791816829,
-          "1_3": 1791816829,
-          "1_4": 1791810528,
-          "1_5": 1791816821,
-          "1_6": 1791811526,
-          "1_7": 1791810346,
-          "1_8": 1791817132
-        }
-      }
-    },
-    {
-      "event_id": "11287373",
-      "league": "Norway Division 3 Group 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11287451",
+      "event_id": "11287973",
       "league": "Norway Division 3 Group 6",
       "mode": "PREMATCH",
       "results": {
@@ -444,33 +364,117 @@
       "stats": {}
     },
     {
-      "event_id": "12130541",
-      "league": "Spain Segunda",
+      "event_id": "11338831",
+      "league": "Sweden 1.div Södra",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192808772",
-        "over_od": "1.700",
-        "handicap": "0.5,1.0",
-        "under_od": "2.100",
+        "id": "192802841",
+        "over_od": "1.975",
+        "handicap": "1.0,1.5",
+        "under_od": "1.825",
         "ss": null,
         "time_str": null,
-        "add_time": "1791793423"
+        "add_time": "1791775530"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791817114,
-          "1_2": 1791816866,
-          "1_3": 1791816866,
-          "1_4": 1791809223,
-          "1_5": 1791815911,
-          "1_6": 1791812531,
-          "1_7": 1791813571,
-          "1_8": 1791816730
+          "1_1": 1791817288,
+          "1_2": 1791817195,
+          "1_3": 1791817195,
+          "1_4": 1791812327,
+          "1_5": 1791817422,
+          "1_6": 1791814266,
+          "1_7": 1791793603,
+          "1_8": 1791817557
+        }
+      }
+    },
+    {
+      "event_id": "11344097",
+      "league": "Sweden 2.div Södra Götaland",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "11419935",
+      "league": "Canada Premier League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192817648",
+        "over_od": "1.750",
+        "handicap": "1.0,1.5",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791808281"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791817279,
+          "1_2": 1791817277,
+          "1_3": 1791817277,
+          "1_4": 1791801650,
+          "1_5": 1791813278,
+          "1_6": 1791809958,
+          "1_7": 1791812179,
+          "1_8": 1791816817
+        }
+      }
+    },
+    {
+      "event_id": "11426602",
+      "league": "Other Match",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12011582",
+      "league": "Bulgaria First League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192642198",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791646386"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791817592,
+          "1_2": 1791817592,
+          "1_3": 1791817592,
+          "1_4": 1791796881,
+          "1_5": 1791812549,
+          "1_6": 1791793696,
+          "1_7": 1791815319,
+          "1_8": 1791816257
         }
       }
     }
