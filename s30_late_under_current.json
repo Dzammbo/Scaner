@@ -2,7 +2,7 @@
   "schema_version": 1,
   "name_ru": "Тотал меньше текущей линии после 85-й минуты - полный сбор по минутам и коэффициентам",
   "status": "VISIBLE_FORWARD_COLLECTION",
-  "generated_at": "2026-10-12T15:21:21.236727Z",
+  "generated_at": "2026-10-12T15:41:28.991306Z",
   "clean_epoch_start": "2026-10-09T21:20:00Z",
   "collection": {
     "minutes": [
@@ -15,10 +15,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 12710,
-    "historical_events": 3685,
-    "clean_snapshots": 7203,
-    "clean_events": 1674
+    "historical_snapshots": 12720,
+    "historical_events": 3686,
+    "clean_snapshots": 7213,
+    "clean_events": 1675
   },
   "fixed_strategy": {
     "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
@@ -31,9 +31,9 @@
       "one_entry_per_match": true
     },
     "historical": {
-      "recorded": 1721,
+      "recorded": 1723,
       "settled": 1717,
-      "pending": 4,
+      "pending": 6,
       "void": 0,
       "result": {
         "N": 1717,
@@ -53,9 +53,9 @@
       }
     },
     "clean_forward": {
-      "recorded": 1079,
+      "recorded": 1081,
       "settled": 1076,
-      "pending": 3,
+      "pending": 5,
       "void": 0,
       "result": {
         "N": 1076,
@@ -77,9 +77,9 @@
   },
   "historical_by_odds": {
     "меньше 1,15": {
-      "recorded": 1090,
+      "recorded": 1092,
       "settled": 1088,
-      "pending": 2,
+      "pending": 4,
       "void": 0,
       "result": {
         "N": 1088,
@@ -99,9 +99,9 @@
       }
     },
     "меньше 1,20": {
-      "recorded": 1784,
+      "recorded": 1786,
       "settled": 1780,
-      "pending": 4,
+      "pending": 6,
       "void": 0,
       "result": {
         "N": 1780,
@@ -143,9 +143,9 @@
       }
     },
     "1,30-1,49": {
-      "recorded": 2618,
+      "recorded": 2619,
       "settled": 2610,
-      "pending": 8,
+      "pending": 9,
       "void": 0,
       "result": {
         "N": 2610,
@@ -302,9 +302,9 @@
     },
     "87-88": {
       "меньше 1,15": {
-        "recorded": 27,
+        "recorded": 28,
         "settled": 27,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 27,
@@ -324,9 +324,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 300,
+        "recorded": 302,
         "settled": 299,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 299,
@@ -346,9 +346,9 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 1117,
+        "recorded": 1118,
         "settled": 1114,
-        "pending": 3,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 1114,
@@ -414,9 +414,9 @@
     },
     "89-90": {
       "меньше 1,15": {
-        "recorded": 1088,
+        "recorded": 1090,
         "settled": 1086,
-        "pending": 2,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 1086,
@@ -436,9 +436,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 1773,
+        "recorded": 1775,
         "settled": 1769,
-        "pending": 4,
+        "pending": 6,
         "void": 0,
         "result": {
           "N": 1769,
@@ -480,9 +480,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 371,
+        "recorded": 372,
         "settled": 371,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 371,
@@ -774,9 +774,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 72,
+        "recorded": 73,
         "settled": 72,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 72,
@@ -796,9 +796,9 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 651,
+        "recorded": 652,
         "settled": 650,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 650,
@@ -864,9 +864,9 @@
     },
     "88": {
       "меньше 1,15": {
-        "recorded": 26,
+        "recorded": 27,
         "settled": 26,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 26,
@@ -886,9 +886,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 294,
+        "recorded": 296,
         "settled": 293,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 293,
@@ -976,9 +976,9 @@
     },
     "89": {
       "меньше 1,15": {
-        "recorded": 205,
+        "recorded": 207,
         "settled": 204,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 204,
@@ -998,9 +998,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 765,
+        "recorded": 767,
         "settled": 764,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 764,
@@ -1042,9 +1042,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 317,
+        "recorded": 318,
         "settled": 317,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 317,
@@ -1088,9 +1088,9 @@
     },
     "90": {
       "меньше 1,15": {
-        "recorded": 1060,
+        "recorded": 1062,
         "settled": 1058,
-        "pending": 2,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 1058,
@@ -1110,9 +1110,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 1721,
+        "recorded": 1723,
         "settled": 1717,
-        "pending": 4,
+        "pending": 6,
         "void": 0,
         "result": {
           "N": 1717,
@@ -1154,9 +1154,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 174,
+        "recorded": 175,
         "settled": 174,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 174,
@@ -1201,9 +1201,9 @@
   },
   "clean_by_odds": {
     "меньше 1,15": {
-      "recorded": 630,
+      "recorded": 632,
       "settled": 629,
-      "pending": 1,
+      "pending": 3,
       "void": 0,
       "result": {
         "N": 629,
@@ -1223,9 +1223,9 @@
       }
     },
     "меньше 1,20": {
-      "recorded": 1113,
+      "recorded": 1115,
       "settled": 1110,
-      "pending": 3,
+      "pending": 5,
       "void": 0,
       "result": {
         "N": 1110,
@@ -1267,9 +1267,9 @@
       }
     },
     "1,30-1,49": {
-      "recorded": 1091,
+      "recorded": 1092,
       "settled": 1086,
-      "pending": 5,
+      "pending": 6,
       "void": 0,
       "result": {
         "N": 1086,
@@ -1426,9 +1426,9 @@
     },
     "87-88": {
       "меньше 1,15": {
-        "recorded": 19,
+        "recorded": 20,
         "settled": 19,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 19,
@@ -1448,9 +1448,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 204,
+        "recorded": 206,
         "settled": 204,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 204,
@@ -1470,9 +1470,9 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 709,
+        "recorded": 710,
         "settled": 707,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 707,
@@ -1538,9 +1538,9 @@
     },
     "89-90": {
       "меньше 1,15": {
-        "recorded": 630,
+        "recorded": 632,
         "settled": 629,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 629,
@@ -1560,9 +1560,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 1110,
+        "recorded": 1112,
         "settled": 1107,
-        "pending": 3,
+        "pending": 5,
         "void": 0,
         "result": {
           "N": 1107,
@@ -1604,9 +1604,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 258,
+        "recorded": 259,
         "settled": 258,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 258,
@@ -1898,9 +1898,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 51,
+        "recorded": 52,
         "settled": 51,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 51,
@@ -1920,9 +1920,9 @@
         }
       },
       "1,20-1,29": {
-        "recorded": 393,
+        "recorded": 394,
         "settled": 393,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 393,
@@ -1988,9 +1988,9 @@
     },
     "88": {
       "меньше 1,15": {
-        "recorded": 18,
+        "recorded": 19,
         "settled": 18,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 18,
@@ -2010,9 +2010,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 202,
+        "recorded": 204,
         "settled": 202,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 202,
@@ -2100,9 +2100,9 @@
     },
     "89": {
       "меньше 1,15": {
-        "recorded": 145,
+        "recorded": 147,
         "settled": 145,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 145,
@@ -2122,9 +2122,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 526,
+        "recorded": 528,
         "settled": 526,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 526,
@@ -2166,9 +2166,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 219,
+        "recorded": 220,
         "settled": 219,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 219,
@@ -2212,9 +2212,9 @@
     },
     "90": {
       "меньше 1,15": {
-        "recorded": 614,
+        "recorded": 616,
         "settled": 613,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 613,
@@ -2234,9 +2234,9 @@
         }
       },
       "меньше 1,20": {
-        "recorded": 1084,
+        "recorded": 1086,
         "settled": 1081,
-        "pending": 3,
+        "pending": 5,
         "void": 0,
         "result": {
           "N": 1081,
@@ -2278,9 +2278,9 @@
         }
       },
       "1,30-1,49": {
-        "recorded": 129,
+        "recorded": 130,
         "settled": 129,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 129,
@@ -2391,9 +2391,9 @@
       }
     },
     "3,00-4,99": {
-      "recorded": 2722,
+      "recorded": 2723,
       "settled": 2716,
-      "pending": 6,
+      "pending": 7,
       "void": 0,
       "result": {
         "N": 2716,
@@ -2413,9 +2413,9 @@
       }
     },
     "5,00-6,99": {
-      "recorded": 1230,
+      "recorded": 1232,
       "settled": 1227,
-      "pending": 3,
+      "pending": 5,
       "void": 0,
       "result": {
         "N": 1227,
@@ -2435,9 +2435,9 @@
       }
     },
     "7,00 и выше": {
-      "recorded": 405,
+      "recorded": 406,
       "settled": 404,
-      "pending": 1,
+      "pending": 2,
       "void": 0,
       "result": {
         "N": 404,
@@ -2660,9 +2660,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1767,
+        "recorded": 1769,
         "settled": 1763,
-        "pending": 4,
+        "pending": 6,
         "void": 0,
         "result": {
           "N": 1763,
@@ -2682,9 +2682,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 137,
+        "recorded": 139,
         "settled": 136,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 136,
@@ -2794,9 +2794,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1528,
+        "recorded": 1529,
         "settled": 1525,
-        "pending": 3,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 1525,
@@ -2816,9 +2816,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 1207,
+        "recorded": 1209,
         "settled": 1204,
-        "pending": 3,
+        "pending": 5,
         "void": 0,
         "result": {
           "N": 1204,
@@ -2838,9 +2838,9 @@
         }
       },
       "7,00 и выше": {
-        "recorded": 405,
+        "recorded": 406,
         "settled": 404,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 404,
@@ -3198,9 +3198,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1392,
+        "recorded": 1394,
         "settled": 1388,
-        "pending": 4,
+        "pending": 6,
         "void": 0,
         "result": {
           "N": 1388,
@@ -3354,9 +3354,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 135,
+        "recorded": 137,
         "settled": 134,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 134,
@@ -3466,9 +3466,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1283,
+        "recorded": 1284,
         "settled": 1281,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 1281,
@@ -3488,9 +3488,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 471,
+        "recorded": 473,
         "settled": 470,
-        "pending": 1,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 470,
@@ -3600,9 +3600,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 928,
+        "recorded": 929,
         "settled": 926,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 926,
@@ -3622,9 +3622,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 1063,
+        "recorded": 1064,
         "settled": 1061,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 1061,
@@ -3644,9 +3644,9 @@
         }
       },
       "7,00 и выше": {
-        "recorded": 401,
+        "recorded": 402,
         "settled": 400,
-        "pending": 1,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 400,
@@ -3735,9 +3735,9 @@
       }
     },
     "3,00-4,99": {
-      "recorded": 1396,
+      "recorded": 1397,
       "settled": 1391,
-      "pending": 5,
+      "pending": 6,
       "void": 0,
       "result": {
         "N": 1391,
@@ -3757,9 +3757,9 @@
       }
     },
     "5,00-6,99": {
-      "recorded": 792,
+      "recorded": 794,
       "settled": 790,
-      "pending": 2,
+      "pending": 4,
       "void": 0,
       "result": {
         "N": 790,
@@ -3779,9 +3779,9 @@
       }
     },
     "7,00 и выше": {
-      "recorded": 197,
+      "recorded": 198,
       "settled": 197,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "result": {
         "N": 197,
@@ -4004,9 +4004,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1110,
+        "recorded": 1112,
         "settled": 1107,
-        "pending": 3,
+        "pending": 5,
         "void": 0,
         "result": {
           "N": 1107,
@@ -4026,9 +4026,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 94,
+        "recorded": 96,
         "settled": 94,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 94,
@@ -4138,9 +4138,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 1063,
+        "recorded": 1064,
         "settled": 1060,
-        "pending": 3,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 1060,
@@ -4160,9 +4160,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 781,
+        "recorded": 783,
         "settled": 779,
-        "pending": 2,
+        "pending": 4,
         "void": 0,
         "result": {
           "N": 779,
@@ -4182,9 +4182,9 @@
         }
       },
       "7,00 и выше": {
-        "recorded": 197,
+        "recorded": 198,
         "settled": 197,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 197,
@@ -4542,9 +4542,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 835,
+        "recorded": 837,
         "settled": 832,
-        "pending": 3,
+        "pending": 5,
         "void": 0,
         "result": {
           "N": 832,
@@ -4698,9 +4698,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 93,
+        "recorded": 95,
         "settled": 93,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 93,
@@ -4810,9 +4810,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 883,
+        "recorded": 884,
         "settled": 881,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 881,
@@ -4832,9 +4832,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 327,
+        "recorded": 329,
         "settled": 327,
-        "pending": 0,
+        "pending": 2,
         "void": 0,
         "result": {
           "N": 327,
@@ -4944,9 +4944,9 @@
         }
       },
       "3,00-4,99": {
-        "recorded": 687,
+        "recorded": 688,
         "settled": 685,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 685,
@@ -4966,9 +4966,9 @@
         }
       },
       "5,00-6,99": {
-        "recorded": 692,
+        "recorded": 693,
         "settled": 690,
-        "pending": 2,
+        "pending": 3,
         "void": 0,
         "result": {
           "N": 690,
@@ -4988,9 +4988,9 @@
         }
       },
       "7,00 и выше": {
-        "recorded": 195,
+        "recorded": 196,
         "settled": 195,
-        "pending": 0,
+        "pending": 1,
         "void": 0,
         "result": {
           "N": 195,
