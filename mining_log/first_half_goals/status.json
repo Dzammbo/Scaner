@@ -1,25 +1,24 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T00:49:44.849020Z",
-  "api_calls": 6,
-  "new_signals": 1,
-  "live_events": 28,
+  "updated_at": "2026-10-12T00:59:56.505087Z",
+  "api_calls": 5,
+  "new_signals": 0,
+  "live_events": 27,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 5,
-      "already_recorded": 1
-    },
-    "S47": {
-      "eligible_events": 5
-    },
-    "S48": {
-      "eligible_events": 2,
-      "checked": 2,
-      "VERIFIED": 1,
+      "eligible_events": 4,
+      "already_recorded": 1,
+      "checked": 1,
       "DIFFERENT_CURRENT_LINE": 1
     },
+    "S47": {
+      "eligible_events": 4,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
+    "S48": {},
     "S49": {}
   },
   "errors": [],
@@ -248,60 +247,33 @@
   },
   "market_samples": [
     {
-      "event_id": "13260686",
-      "league": "Puerto Rico League",
-      "mode": "LIVE",
+      "event_id": "12132205",
+      "league": "Guatemala Liga Nacional",
+      "mode": "PREMATCH",
       "results": {
-        "S48": "VERIFIED"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192799066",
-        "over_od": "1.800",
-        "handicap": "1",
-        "under_od": "2.000",
-        "ss": "0-0",
-        "time_str": "19",
-        "add_time": "1791766180"
+        "id": "192700055",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791704408"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791766180,
-          "1_2": 1791766180,
-          "1_3": 1791766180,
-          "1_5": 1791766180,
-          "1_6": 1791766180,
-          "1_8": 1791766180
-        }
-      }
-    },
-    {
-      "event_id": "12322429",
-      "league": "Argentina Liga Profesional",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192799057",
-        "over_od": "2.025",
-        "handicap": "0.5",
-        "under_od": "1.775",
-        "ss": "0-0",
-        "time_str": "18",
-        "add_time": "1791766162"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791766174,
-          "1_2": 1791766174,
-          "1_3": 1791766174,
-          "1_4": 1791766174,
-          "1_5": 1791766174,
-          "1_6": 1791766174,
-          "1_7": 1791766174,
-          "1_8": 1791766174
+          "1_1": 1791766561,
+          "1_2": 1791766597,
+          "1_3": 1791766597,
+          "1_4": 1791758637,
+          "1_5": 1791761160,
+          "1_6": 1791760992,
+          "1_7": 1791765675,
+          "1_8": 1791766630
         }
       }
     }
