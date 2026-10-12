@@ -1,24 +1,18 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T05:33:09.648711Z",
-  "api_calls": 10,
+  "updated_at": "2026-10-12T05:43:25.349974Z",
+  "api_calls": 3,
   "new_signals": 0,
-  "live_events": 8,
+  "live_events": 9,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 7,
-      "already_recorded": 1,
-      "checked": 6,
-      "STALE_QUOTE": 2,
-      "DIFFERENT_CURRENT_LINE": 4
+      "already_recorded": 1
     },
     "S47": {
-      "eligible_events": 7,
-      "checked": 7,
-      "DIFFERENT_CURRENT_LINE": 6,
-      "STALE_QUOTE": 1
+      "eligible_events": 7
     },
     "S48": {},
     "S49": {}
@@ -260,219 +254,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "13269234",
-      "league": "Thailand Division 3",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192548357",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791569099"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791783034,
-          "1_2": 1791782743,
-          "1_3": 1791782743,
-          "1_4": 1791779638,
-          "1_5": 1791772892,
-          "1_6": 1791760611,
-          "1_7": 1791781812,
-          "1_8": 1791783067
-        }
-      }
-    },
-    {
-      "event_id": "13096330",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192799939",
-        "over_od": "1.750",
-        "handicap": "0.5,1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791767870"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791783027,
-          "1_2": 1791783021,
-          "1_3": 1791783021,
-          "1_4": 1791756643,
-          "1_5": 1791783121,
-          "1_6": 1791781570,
-          "1_7": 1791780696,
-          "1_8": 1791783125
-        }
-      }
-    },
-    {
-      "event_id": "13096298",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192804562",
-        "over_od": "1.700",
-        "handicap": "0.5,1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791781379"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791782327,
-          "1_2": 1791782797,
-          "1_3": 1791782797,
-          "1_4": 1791779104,
-          "1_5": 1791782663,
-          "1_6": 1791781982,
-          "1_7": 1791778248,
-          "1_8": 1791782991
-        }
-      }
-    },
-    {
-      "event_id": "13096329",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192804179",
-        "over_od": "1.950",
-        "handicap": "1.0",
-        "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791780339"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791782767,
-          "1_2": 1791783072,
-          "1_3": 1791783072,
-          "1_4": 1791775557,
-          "1_5": 1791780150,
-          "1_6": 1791780339,
-          "1_7": 1791773871,
-          "1_8": 1791782822
-        }
-      }
-    },
-    {
-      "event_id": "13277778",
-      "league": "India Bangalore Super Division",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "STALE_QUOTE"
-      },
-      "latest_first_half_quote": {
-        "id": "192704519",
-        "over_od": "1.975",
-        "handicap": "1.5",
-        "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791707700"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791782686,
-          "1_2": 1791782766,
-          "1_3": 1791782766,
-          "1_5": 1791779586,
-          "1_6": 1791777035,
-          "1_8": 1791783069
-        }
-      }
-    },
-    {
-      "event_id": "13277799",
-      "league": "U19 International Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192704247",
-        "over_od": "2.000",
-        "handicap": "1.0",
-        "under_od": "1.800",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791707580"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791783098,
-          "1_2": 1791782917,
-          "1_3": 1791782917,
-          "1_5": 1791778404,
-          "1_6": 1791782760,
-          "1_8": 1791782176
-        }
-      }
-    },
-    {
-      "event_id": "13279827",
-      "league": "Vietnam Championship Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192767780",
-        "over_od": "1.925",
-        "handicap": "1.5,2.0",
-        "under_od": "1.875",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791742196"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791782474,
-          "1_2": 1791783010,
-          "1_3": 1791783010,
-          "1_4": 1791783058,
-          "1_5": 1791772891,
-          "1_6": 1791782768,
-          "1_7": 1791779903,
-          "1_8": 1791782708
-        }
-      }
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
