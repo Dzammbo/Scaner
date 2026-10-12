@@ -1,25 +1,29 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T13:57:43.100406Z",
-  "api_calls": 4,
+  "updated_at": "2026-10-12T14:07:57.259487Z",
+  "api_calls": 36,
   "new_signals": 1,
-  "live_events": 49,
+  "live_events": 46,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 58,
-      "already_recorded": 5
+      "eligible_events": 79,
+      "already_recorded": 4,
+      "checked": 30,
+      "DIFFERENT_CURRENT_LINE": 18,
+      "STALE_QUOTE": 4,
+      "EMPTY_MARKET": 8
     },
     "S47": {
-      "eligible_events": 58,
-      "already_recorded": 2
-    },
-    "S48": {
-      "eligible_events": 1,
-      "checked": 1,
+      "eligible_events": 79,
+      "already_recorded": 2,
+      "checked": 31,
+      "DIFFERENT_CURRENT_LINE": 22,
+      "EMPTY_MARKET": 8,
       "VERIFIED": 1
     },
+    "S48": {},
     "S49": {}
   },
   "errors": [],
@@ -28,28 +32,28 @@
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
       "signals": 68,
-      "N": 56,
-      "W": 20,
+      "N": 57,
+      "W": 21,
       "L": 14,
       "PUSH": 22,
-      "pending": 12,
+      "pending": 11,
       "void": 0,
-      "profit": 5.1,
-      "ROI_pct": 9.107,
-      "ROI_without_top3_pct": 3.396,
+      "profit": 5.925,
+      "ROI_pct": 10.395,
+      "ROI_without_top3_pct": 4.861,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 61,
-          "N": 52,
-          "W": 20,
+          "N": 53,
+          "W": 21,
           "L": 12,
           "PUSH": 20,
-          "pending": 9,
+          "pending": 8,
           "void": 0,
-          "profit": 7.1,
-          "ROI_pct": 13.654,
-          "ROI_without_top3_pct": 7.755,
+          "profit": 7.925,
+          "ROI_pct": 14.953,
+          "ROI_without_top3_pct": 9.25,
           "balance_valid": true
         },
         "women": {
@@ -108,12 +112,12 @@
     },
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
-      "signals": 22,
+      "signals": 23,
       "N": 12,
       "W": 7,
       "L": 5,
       "PUSH": 0,
-      "pending": 10,
+      "pending": 11,
       "void": 0,
       "profit": 1.9,
       "ROI_pct": 15.833,
@@ -134,12 +138,12 @@
           "balance_valid": true
         },
         "women": {
-          "signals": 1,
+          "signals": 2,
           "N": 1,
           "W": 0,
           "L": 1,
           "PUSH": 0,
-          "pending": 0,
+          "pending": 1,
           "void": 0,
           "profit": -1,
           "ROI_pct": -100.0,
@@ -177,15 +181,15 @@
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
       "signals": 39,
-      "N": 35,
+      "N": 36,
       "W": 14,
-      "L": 7,
+      "L": 8,
       "PUSH": 14,
-      "pending": 4,
+      "pending": 3,
       "void": 0,
-      "profit": 5.6,
-      "ROI_pct": 16.0,
-      "ROI_without_top3_pct": 7.422,
+      "profit": 4.6,
+      "ROI_pct": 12.778,
+      "ROI_without_top3_pct": 4.167,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
@@ -216,15 +220,15 @@
         },
         "youth_reserves": {
           "signals": 9,
-          "N": 7,
+          "N": 8,
           "W": 1,
-          "L": 2,
+          "L": 3,
           "PUSH": 4,
-          "pending": 2,
+          "pending": 1,
           "void": 0,
-          "profit": -1.175,
-          "ROI_pct": -16.786,
-          "ROI_without_top3_pct": -50.0,
+          "profit": -2.175,
+          "ROI_pct": -27.187,
+          "ROI_without_top3_pct": -60.0,
           "balance_valid": true
         }
       }
@@ -232,28 +236,28 @@
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
       "signals": 27,
-      "N": 23,
-      "W": 9,
+      "N": 25,
+      "W": 11,
       "L": 14,
       "PUSH": 0,
-      "pending": 4,
+      "pending": 2,
       "void": 0,
-      "profit": -5.475,
-      "ROI_pct": -23.804,
-      "ROI_without_top3_pct": -44.625,
+      "profit": -3.875,
+      "ROI_pct": -15.5,
+      "ROI_without_top3_pct": -33.295,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
           "signals": 25,
-          "N": 22,
-          "W": 9,
+          "N": 24,
+          "W": 11,
           "L": 13,
           "PUSH": 0,
-          "pending": 3,
+          "pending": 1,
           "void": 0,
-          "profit": -4.475,
-          "ROI_pct": -20.341,
-          "ROI_without_top3_pct": -41.711,
+          "profit": -2.875,
+          "ROI_pct": -11.979,
+          "ROI_without_top3_pct": -30.119,
           "balance_valid": true
         },
         "women": {
@@ -287,32 +291,220 @@
   },
   "market_samples": [
     {
-      "event_id": "12457227",
-      "league": "AFC Champions League Elite",
-      "mode": "LIVE",
+      "event_id": "13284256",
+      "league": "Baller League UK - 30 mins play",
+      "mode": "PREMATCH",
       "results": {
-        "S48": "VERIFIED"
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192822575",
-        "over_od": "2.075",
-        "handicap": "1",
-        "under_od": "1.725",
-        "ss": "0-0",
-        "time_str": "12",
-        "add_time": "1791813461"
+        "id": "192819133",
+        "over_od": "1.775",
+        "handicap": "3.0,3.5",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791809595"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791813461,
-          "1_2": 1791813461,
-          "1_3": 1791813461,
-          "1_4": 1791813461,
-          "1_5": 1791813461,
-          "1_6": 1791813461,
-          "1_7": 1791813461,
-          "1_8": 1791813461
+          "1_1": 1791813973,
+          "1_2": 1791813379,
+          "1_3": 1791813379,
+          "1_6": 1791813937,
+          "1_8": 1791812887
+        }
+      }
+    },
+    {
+      "event_id": "12325136",
+      "league": "Saudi Arabia Division 1",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192809760",
+        "over_od": "1.750",
+        "handicap": "1.0",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791795272"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791813775,
+          "1_2": 1791813946,
+          "1_3": 1791813946,
+          "1_4": 1791809649,
+          "1_5": 1791806495,
+          "1_6": 1791803996,
+          "1_7": 1791797445,
+          "1_8": 1791813779
+        }
+      }
+    },
+    {
+      "event_id": "11287503",
+      "league": "Norway Division 3 Group 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13263988",
+      "league": "Israel Leumit Liga",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192775448",
+        "over_od": "1.850",
+        "handicap": "1.0,1.5",
+        "under_od": "1.950",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791746466"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791813317,
+          "1_2": 1791813569,
+          "1_3": 1791813569,
+          "1_4": 1791811437,
+          "1_5": 1791812947,
+          "1_6": 1791811025,
+          "1_7": 1791811987,
+          "1_8": 1791812467
+        }
+      }
+    },
+    {
+      "event_id": "13279474",
+      "league": "Israel Cup",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192762356",
+        "over_od": "1.750",
+        "handicap": "1.0",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791736930"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791813272,
+          "1_2": 1791813457,
+          "1_3": 1791813457,
+          "1_5": 1791803126,
+          "1_6": 1791803974,
+          "1_8": 1791814057
+        }
+      }
+    },
+    {
+      "event_id": "13279863",
+      "league": "Qatar U20 League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192769718",
+        "over_od": "2.050",
+        "handicap": "1.0,1.5",
+        "under_od": "1.750",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791743210"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791812759,
+          "1_2": 1791813395,
+          "1_3": 1791813395,
+          "1_5": 1791806972,
+          "1_6": 1791807586,
+          "1_8": 1791812866
+        }
+      }
+    },
+    {
+      "event_id": "11311752",
+      "league": "Chile Primera B",
+      "mode": "PREMATCH",
+      "results": {
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192819176",
+        "over_od": "1.850",
+        "handicap": "1.0",
+        "under_od": "1.950",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791809665"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791813721,
+          "1_2": 1791813950,
+          "1_3": 1791813950,
+          "1_4": 1791808608,
+          "1_5": 1791812637,
+          "1_6": 1791812375,
+          "1_7": 1791813111,
+          "1_8": 1791814038
+        }
+      }
+    },
+    {
+      "event_id": "13003619",
+      "league": "Saudi Arabia U21 League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192767503",
+        "over_od": "1.700",
+        "handicap": "1.0",
+        "under_od": "2.100",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791742044"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791813784,
+          "1_2": 1791813718,
+          "1_3": 1791813718,
+          "1_5": 1791810292,
+          "1_6": 1791782059,
+          "1_8": 1791814002
         }
       }
     }
