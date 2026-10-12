@@ -1,27 +1,26 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T07:35:25.645028Z",
-  "api_calls": 23,
+  "updated_at": "2026-10-12T07:45:38.807683Z",
+  "api_calls": 11,
   "new_signals": 0,
-  "live_events": 9,
+  "live_events": 12,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 28,
       "already_recorded": 4,
-      "checked": 16,
-      "DIFFERENT_CURRENT_LINE": 11,
-      "EMPTY_MARKET": 4,
-      "STALE_QUOTE": 1
+      "checked": 8,
+      "EMPTY_MARKET": 3,
+      "DIFFERENT_CURRENT_LINE": 3,
+      "STALE_QUOTE": 2
     },
     "S47": {
       "eligible_events": 28,
       "already_recorded": 2,
-      "checked": 18,
-      "DIFFERENT_CURRENT_LINE": 13,
-      "EMPTY_MARKET": 4,
-      "STALE_QUOTE": 1
+      "checked": 8,
+      "EMPTY_MARKET": 3,
+      "DIFFERENT_CURRENT_LINE": 5
     },
     "S48": {},
     "S49": {}
@@ -265,125 +264,8 @@
   },
   "market_samples": [
     {
-      "event_id": "13096298",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192806280",
-        "over_od": "1.700",
-        "handicap": "0.5,1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791786521"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791790386,
-          "1_2": 1791790393,
-          "1_3": 1791790393,
-          "1_4": 1791783443,
-          "1_5": 1791787965,
-          "1_6": 1791788143,
-          "1_7": 1791778248,
-          "1_8": 1791790346
-        }
-      }
-    },
-    {
-      "event_id": "13096329",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192804179",
-        "over_od": "1.950",
-        "handicap": "1.0",
-        "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791780339"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791790389,
-          "1_2": 1791790267,
-          "1_3": 1791790267,
-          "1_4": 1791789500,
-          "1_5": 1791780150,
-          "1_6": 1791786976,
-          "1_7": 1791790127,
-          "1_8": 1791790434
-        }
-      }
-    },
-    {
-      "event_id": "12068676",
-      "league": "Uzbekistan 1st Division",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192776218",
-        "over_od": "2.000",
-        "handicap": "1.0,1.5",
-        "under_od": "1.800",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791746883"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791790380,
-          "1_2": 1791790226,
-          "1_3": 1791790226,
-          "1_5": 1791789240,
-          "1_6": 1791786847,
-          "1_8": 1791789361
-        }
-      }
-    },
-    {
-      "event_id": "13277778",
-      "league": "India Bangalore Super Division",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192806680",
-        "over_od": "2.025",
-        "handicap": "1.5",
-        "under_od": "1.775",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791788216"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791790395,
-          "1_2": 1791790403,
-          "1_3": 1791790403,
-          "1_5": 1791790429,
-          "1_6": 1791790201,
-          "1_8": 1791790039
-        }
-      }
-    },
-    {
-      "event_id": "12335639",
-      "league": "Ukraine Reserve League",
+      "event_id": "12399263",
+      "league": "U17 Euro W Ch.ship, QF",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
@@ -393,75 +275,175 @@
       "stats": {}
     },
     {
-      "event_id": "13277800",
-      "league": "U19 International Women",
+      "event_id": "12420015",
+      "league": "U19 Euro Championship Qual Women",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12420016",
+      "league": "U19 Euro Championship Qual Women",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13011712",
+      "league": "Greece Gamma Ethniki",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192701125",
-        "over_od": "1.850",
+        "id": "192804659",
+        "over_od": "2.050",
         "handicap": "1.0,1.5",
-        "under_od": "1.950",
+        "under_od": "1.750",
         "ss": null,
         "time_str": null,
-        "add_time": "1791705293"
+        "add_time": "1791781558"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791790239,
-          "1_2": 1791790077,
-          "1_3": 1791790077,
-          "1_5": 1791788471,
-          "1_6": 1791788832,
-          "1_8": 1791790447
+          "1_1": 1791790665,
+          "1_2": 1791790904,
+          "1_3": 1791790904,
+          "1_5": 1791788857,
+          "1_6": 1791790711,
+          "1_8": 1791789893
         }
       }
     },
     {
-      "event_id": "12127216",
-      "league": "Ukraine Vyscha Liga",
+      "event_id": "13277779",
+      "league": "India Bangalore Super Division",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192703273",
+        "over_od": "1.925",
+        "handicap": "1.0,1.5",
+        "under_od": "1.875",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791706870"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791791014,
+          "1_2": 1791790770,
+          "1_3": 1791790770,
+          "1_5": 1791789552,
+          "1_6": 1791788264,
+          "1_8": 1791791060
+        }
+      }
+    },
+    {
+      "event_id": "13279395",
+      "league": "Paraguay Reserve League",
       "mode": "PREMATCH",
       "results": {
         "S46": "STALE_QUOTE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192781035",
-        "over_od": "1.950",
+        "id": "192761548",
+        "over_od": "1.700",
         "handicap": "1.0",
-        "under_od": "1.850",
+        "under_od": "2.100",
         "ss": null,
         "time_str": null,
-        "add_time": "1791750427"
+        "add_time": "1791736472"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791789463,
-          "1_2": 1791790226,
-          "1_3": 1791790226,
-          "1_4": 1791758546,
-          "1_5": 1791788644,
-          "1_6": 1791762389,
-          "1_7": 1791777866,
-          "1_8": 1791789037
+          "1_1": 1791790744,
+          "1_2": 1791791088,
+          "1_3": 1791791088,
+          "1_4": 1791782080,
+          "1_5": 1791787982,
+          "1_6": 1791785955,
+          "1_7": 1791773674,
+          "1_8": 1791789350
         }
       }
     },
     {
-      "event_id": "12177170",
-      "league": "U17 European Ch.ship QF",
+      "event_id": "13279397",
+      "league": "Paraguay Reserve League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
+      "latest_first_half_quote": {
+        "id": "192747898",
+        "over_od": "1.700",
+        "handicap": "1.0",
+        "under_od": "2.100",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791726761"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791790075,
+          "1_2": 1791788574,
+          "1_3": 1791788574,
+          "1_4": 1791788719,
+          "1_5": 1791788577,
+          "1_6": 1791783370,
+          "1_7": 1791786951,
+          "1_8": 1791789442
+        }
+      }
+    },
+    {
+      "event_id": "13281655",
+      "league": "U23 International Women",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192807019",
+        "over_od": "2.050",
+        "handicap": "1.0,1.5",
+        "under_od": "1.750",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791789579"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791790833,
+          "1_2": 1791790152,
+          "1_3": 1791790152,
+          "1_5": 1791783761,
+          "1_6": 1791789579,
+          "1_8": 1791789439
+        }
+      }
     }
   ],
   "health": "OK"
