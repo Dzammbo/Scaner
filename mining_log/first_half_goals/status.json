@@ -1,33 +1,22 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T12:46:29.927369Z",
-  "api_calls": 72,
-  "new_signals": 1,
-  "live_events": 33,
+  "updated_at": "2026-10-12T12:56:29.979083Z",
+  "api_calls": 3,
+  "new_signals": 0,
+  "live_events": 35,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 72,
-      "already_recorded": 6,
-      "checked": 62,
-      "EMPTY_MARKET": 13,
-      "DIFFERENT_CURRENT_LINE": 40,
-      "STALE_QUOTE": 8,
-      "VERIFIED": 1
+      "eligible_events": 64,
+      "already_recorded": 5
     },
     "S47": {
-      "eligible_events": 72,
-      "already_recorded": 5,
-      "checked": 63,
-      "EMPTY_MARKET": 13,
-      "DIFFERENT_CURRENT_LINE": 44,
-      "STALE_QUOTE": 6
+      "eligible_events": 64,
+      "already_recorded": 4
     },
     "S48": {},
-    "S49": {
-      "eligible_events": 2
-    }
+    "S49": {}
   },
   "errors": [],
   "api_retry_after": null,
@@ -238,12 +227,12 @@
     },
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
-      "signals": 25,
+      "signals": 26,
       "N": 22,
       "W": 9,
       "L": 13,
       "PUSH": 0,
-      "pending": 3,
+      "pending": 4,
       "void": 0,
       "profit": -4.475,
       "ROI_pct": -20.341,
@@ -275,173 +264,23 @@
           "ROI_pct": null,
           "ROI_without_top3_pct": null,
           "balance_valid": true
+        },
+        "women_youth": {
+          "signals": 1,
+          "N": 0,
+          "W": 0,
+          "L": 0,
+          "PUSH": 0,
+          "pending": 1,
+          "void": 0,
+          "profit": 0,
+          "ROI_pct": null,
+          "ROI_without_top3_pct": null,
+          "balance_valid": true
         }
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "11287503",
-      "league": "Norway Division 3 Group 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12025205",
-      "league": "North Macedonia First League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192817526",
-        "over_od": "1.925",
-        "handicap": "1.0,1.5",
-        "under_od": "1.875",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791808142"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791809167,
-          "1_2": 1791809040,
-          "1_3": 1791809040,
-          "1_4": 1791805622,
-          "1_5": 1791787195,
-          "1_6": 1791808142,
-          "1_7": 1791808044,
-          "1_8": 1791807733
-        }
-      }
-    },
-    {
-      "event_id": "12123855",
-      "league": "Italy Campionato Primavera 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192805933",
-        "over_od": "1.825",
-        "handicap": "1.0",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791785639"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791809167,
-          "1_2": 1791808942,
-          "1_3": 1791808942,
-          "1_5": 1791807040,
-          "1_6": 1791804008,
-          "1_8": 1791805166
-        }
-      }
-    },
-    {
-      "event_id": "12325136",
-      "league": "Saudi Arabia Division 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192809760",
-        "over_od": "1.750",
-        "handicap": "1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791795272"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791808649,
-          "1_2": 1791807370,
-          "1_3": 1791807370,
-          "1_4": 1791808179,
-          "1_5": 1791806495,
-          "1_6": 1791803996,
-          "1_7": 1791797445,
-          "1_8": 1791807923
-        }
-      }
-    },
-    {
-      "event_id": "12125097",
-      "league": "Italy Campionato Primavera 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13095974",
-      "league": "Brazil Campeonato Goiano 3",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13190395",
-      "league": "Lebanon League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192814355",
-        "over_od": "2.075",
-        "handicap": "1.0,1.5",
-        "under_od": "1.725",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791804116"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791809167,
-          "1_2": 1791809014,
-          "1_3": 1791809014,
-          "1_6": 1791808422,
-          "1_8": 1791809133
-        }
-      }
-    },
-    {
-      "event_id": "13236405",
-      "league": "Mozambique Mocambola",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
