@@ -1,29 +1,28 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T14:28:19.332131Z",
-  "api_calls": 6,
+  "updated_at": "2026-10-12T14:38:48.880130Z",
+  "api_calls": 20,
   "new_signals": 0,
-  "live_events": 44,
+  "live_events": 45,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 78,
       "already_recorded": 3,
-      "checked": 2,
-      "DIFFERENT_CURRENT_LINE": 2
+      "checked": 17,
+      "EMPTY_MARKET": 5,
+      "DIFFERENT_CURRENT_LINE": 8,
+      "STALE_QUOTE": 4
     },
     "S47": {
       "eligible_events": 78,
       "already_recorded": 3,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "checked": 17,
+      "EMPTY_MARKET": 5,
+      "DIFFERENT_CURRENT_LINE": 12
     },
-    "S48": {
-      "eligible_events": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
-    },
+    "S48": {},
     "S49": {}
   },
   "errors": [],
@@ -113,15 +112,15 @@
     "S47": {
       "name_ru": "Прематч: тотал больше 1,5 первого тайма",
       "signals": 23,
-      "N": 12,
+      "N": 13,
       "W": 7,
-      "L": 5,
+      "L": 6,
       "PUSH": 0,
-      "pending": 11,
+      "pending": 10,
       "void": 0,
-      "profit": 1.9,
-      "ROI_pct": 15.833,
-      "ROI_without_top3_pct": -13.056,
+      "profit": 0.9,
+      "ROI_pct": 6.923,
+      "ROI_without_top3_pct": -21.75,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
@@ -152,14 +151,14 @@
         },
         "youth_reserves": {
           "signals": 10,
-          "N": 2,
+          "N": 3,
           "W": 2,
-          "L": 0,
+          "L": 1,
           "PUSH": 0,
-          "pending": 8,
+          "pending": 7,
           "void": 0,
-          "profit": 1.875,
-          "ROI_pct": 93.75,
+          "profit": 0.875,
+          "ROI_pct": 29.167,
           "ROI_without_top3_pct": null,
           "balance_valid": true
         }
@@ -236,15 +235,15 @@
     "S49": {
       "name_ru": "Тотал больше 1,5 первого тайма при 1:0 или 0:1 на 10-20-й минуте",
       "signals": 27,
-      "N": 25,
-      "W": 11,
+      "N": 26,
+      "W": 12,
       "L": 14,
       "PUSH": 0,
-      "pending": 2,
+      "pending": 1,
       "void": 0,
-      "profit": -3.875,
-      "ROI_pct": -15.5,
-      "ROI_without_top3_pct": -33.295,
+      "profit": -3.125,
+      "ROI_pct": -12.019,
+      "ROI_without_top3_pct": -28.587,
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
@@ -275,14 +274,14 @@
         },
         "women_youth": {
           "signals": 1,
-          "N": 0,
-          "W": 0,
+          "N": 1,
+          "W": 1,
           "L": 0,
           "PUSH": 0,
-          "pending": 1,
+          "pending": 0,
           "void": 0,
-          "profit": 0,
-          "ROI_pct": null,
+          "profit": 0.75,
+          "ROI_pct": 75.0,
           "ROI_without_top3_pct": null,
           "balance_valid": true
         }
@@ -291,89 +290,190 @@
   },
   "market_samples": [
     {
-      "event_id": "12130546",
-      "league": "Spain Segunda",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192824941",
-        "over_od": "1.750",
-        "handicap": "0.5",
-        "under_od": "2.050",
-        "ss": "0-0",
-        "time_str": "12",
-        "add_time": "1791815293"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791815297,
-          "1_2": 1791815297,
-          "1_3": 1791815297,
-          "1_4": 1791815297,
-          "1_5": 1791815297,
-          "1_6": 1791815297,
-          "1_7": 1791815297,
-          "1_8": 1791815297
-        }
-      }
-    },
-    {
-      "event_id": "13279472",
-      "league": "Israel Cup",
+      "event_id": "11287973",
+      "league": "Norway Division 3 Group 6",
       "mode": "PREMATCH",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE"
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
       },
-      "latest_first_half_quote": {
-        "id": "192763388",
-        "over_od": "2.000",
-        "handicap": "1.5",
-        "under_od": "1.800",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791738203"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791815083,
-          "1_2": 1791814848,
-          "1_3": 1791814848,
-          "1_5": 1791790176,
-          "1_6": 1791812836,
-          "1_8": 1791814889
-        }
-      }
+      "latest_first_half_quote": null,
+      "stats": {}
     },
     {
-      "event_id": "13282467",
-      "league": "U20 Africa Cup of Nations Qual",
+      "event_id": "11338831",
+      "league": "Sweden 1.div Södra",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192804253",
+        "id": "192802841",
+        "over_od": "1.975",
+        "handicap": "1.0,1.5",
+        "under_od": "1.825",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791775530"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791815819,
+          "1_2": 1791815416,
+          "1_3": 1791815416,
+          "1_4": 1791812327,
+          "1_5": 1791811707,
+          "1_6": 1791814266,
+          "1_7": 1791793603,
+          "1_8": 1791815303
+        }
+      }
+    },
+    {
+      "event_id": "11344097",
+      "league": "Sweden 2.div Södra Götaland",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "11419935",
+      "league": "Canada Premier League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192817648",
+        "over_od": "1.750",
+        "handicap": "1.0,1.5",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791808281"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791815661,
+          "1_2": 1791815789,
+          "1_3": 1791815789,
+          "1_4": 1791801650,
+          "1_5": 1791813278,
+          "1_6": 1791809958,
+          "1_7": 1791812179,
+          "1_8": 1791813773
+        }
+      }
+    },
+    {
+      "event_id": "11426602",
+      "league": "Other Match",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "12011582",
+      "league": "Bulgaria First League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192642198",
+        "over_od": "1.825",
+        "handicap": "1.0",
+        "under_od": "1.975",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791646386"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791815370,
+          "1_2": 1791815373,
+          "1_3": 1791815373,
+          "1_4": 1791796881,
+          "1_5": 1791812549,
+          "1_6": 1791793696,
+          "1_7": 1791815319,
+          "1_8": 1791813946
+        }
+      }
+    },
+    {
+      "event_id": "12114217",
+      "league": "Poland II Liga",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192809214",
         "over_od": "2.000",
         "handicap": "1.0,1.5",
         "under_od": "1.800",
         "ss": null,
         "time_str": null,
-        "add_time": "1791780441"
+        "add_time": "1791794184"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791815204,
-          "1_2": 1791815114,
-          "1_3": 1791815114,
-          "1_5": 1791809065,
-          "1_6": 1791812501,
-          "1_8": 1791815279
+          "1_1": 1791815114,
+          "1_2": 1791815537,
+          "1_3": 1791815537,
+          "1_4": 1791795737,
+          "1_5": 1791815351,
+          "1_6": 1791814328,
+          "1_7": 1791814067,
+          "1_8": 1791815527
+        }
+      }
+    },
+    {
+      "event_id": "12205880",
+      "league": "Türkiye Super Lig",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192822685",
+        "over_od": "2.100",
+        "handicap": "1.0,1.5",
+        "under_od": "1.700",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791813675"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791815374,
+          "1_2": 1791815419,
+          "1_3": 1791815419,
+          "1_4": 1791810702,
+          "1_5": 1791812724,
+          "1_6": 1791813675,
+          "1_7": 1791811165,
+          "1_8": 1791815835
         }
       }
     }
