@@ -1,34 +1,35 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T11:04:58.461953Z",
-  "api_calls": 63,
-  "new_signals": 3,
-  "live_events": 26,
+  "updated_at": "2026-10-12T11:14:46.332642Z",
+  "api_calls": 7,
+  "new_signals": 1,
+  "live_events": 25,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 58,
-      "checked": 58,
-      "DIFFERENT_CURRENT_LINE": 32,
-      "STALE_QUOTE": 12,
-      "EMPTY_MARKET": 13,
-      "VERIFIED": 1
+      "eligible_events": 59,
+      "already_recorded": 1,
+      "checked": 1,
+      "EMPTY_MARKET": 1
     },
     "S47": {
-      "eligible_events": 58,
-      "checked": 58,
-      "STALE_QUOTE": 9,
-      "DIFFERENT_CURRENT_LINE": 34,
-      "EMPTY_MARKET": 13,
-      "VERIFIED": 2
+      "eligible_events": 59,
+      "already_recorded": 2,
+      "checked": 1,
+      "EMPTY_MARKET": 1
     },
     "S48": {
+      "eligible_events": 2,
+      "checked": 2,
+      "VERIFIED": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
+    "S49": {
       "eligible_events": 1,
       "checked": 1,
       "DIFFERENT_CURRENT_LINE": 1
-    },
-    "S49": {}
+    }
   },
   "errors": [],
   "api_retry_after": null,
@@ -184,12 +185,12 @@
     },
     "S48": {
       "name_ru": "Тотал больше 1 первого тайма при 0:0 на 10-20-й минуте",
-      "signals": 34,
+      "signals": 35,
       "N": 34,
       "W": 14,
       "L": 7,
       "PUSH": 13,
-      "pending": 0,
+      "pending": 1,
       "void": 0,
       "profit": 5.6,
       "ROI_pct": 16.471,
@@ -197,12 +198,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 26,
+          "signals": 27,
           "N": 26,
           "W": 13,
           "L": 5,
           "PUSH": 8,
-          "pending": 0,
+          "pending": 1,
           "void": 0,
           "profit": 6.775,
           "ROI_pct": 26.058,
@@ -269,189 +270,106 @@
   },
   "market_samples": [
     {
-      "event_id": "12127216",
-      "league": "Ukraine Vyscha Liga",
+      "event_id": "12068674",
+      "league": "Uzbekistan 1st Division",
+      "mode": "LIVE",
+      "results": {
+        "S48": "VERIFIED"
+      },
+      "latest_first_half_quote": {
+        "id": "192814011",
+        "over_od": "1.975",
+        "handicap": "1",
+        "under_od": "1.825",
+        "ss": "0-0",
+        "time_str": "14",
+        "add_time": "1791803672"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791803672,
+          "1_2": 1791803672,
+          "1_3": 1791803672,
+          "1_5": 1791803672,
+          "1_6": 1791803672,
+          "1_8": 1791803672
+        }
+      }
+    },
+    {
+      "event_id": "13277911",
+      "league": "Kosovo U19 League",
       "mode": "LIVE",
       "results": {
         "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192813577",
-        "over_od": "1.975",
+        "id": "192814013",
+        "over_od": "1.800",
         "handicap": "0.75",
-        "under_od": "1.825",
+        "under_od": "2.000",
         "ss": "0-0",
-        "time_str": "11",
-        "add_time": "1791803051"
+        "time_str": "14",
+        "add_time": "1791803676"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791803080,
-          "1_2": 1791803080,
-          "1_3": 1791803080,
-          "1_4": 1791803080,
-          "1_5": 1791803080,
-          "1_6": 1791803080,
-          "1_7": 1791803080,
-          "1_8": 1791803080
+          "1_1": 1791803676,
+          "1_2": 1791803676,
+          "1_3": 1791803676,
+          "1_5": 1791803676,
+          "1_6": 1791803676,
+          "1_8": 1791803676
         }
       }
     },
     {
-      "event_id": "12413977",
-      "league": "Singapore Premier League",
-      "mode": "PREMATCH",
+      "event_id": "13279826",
+      "league": "Vietnam Championship Women",
+      "mode": "LIVE",
       "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "STALE_QUOTE"
+        "S49": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192766306",
+        "id": "192814003",
         "over_od": "1.950",
-        "handicap": "1.5",
+        "handicap": "1.75",
         "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791740795"
+        "ss": "0-1",
+        "time_str": "13",
+        "add_time": "1791803648"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791802913,
-          "1_2": 1791802707,
-          "1_3": 1791802707,
-          "1_4": 1791790241,
-          "1_5": 1791800007,
-          "1_6": 1791793764,
-          "1_7": 1791787516,
-          "1_8": 1791803066
+          "1_1": 1791803672,
+          "1_2": 1791803672,
+          "1_3": 1791803672,
+          "1_4": 1791803672,
+          "1_5": 1791803672,
+          "1_6": 1791803672,
+          "1_7": 1791803672,
+          "1_8": 1791803672
         }
       }
     },
     {
-      "event_id": "13096264",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192813021",
-        "over_od": "2.050",
-        "handicap": "1.0",
-        "under_od": "1.750",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791801975"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791802795,
-          "1_2": 1791802881,
-          "1_3": 1791802881,
-          "1_4": 1791798395,
-          "1_5": 1791783875,
-          "1_6": 1791801975,
-          "1_7": 1791799160,
-          "1_8": 1791800847
-        }
-      }
-    },
-    {
-      "event_id": "13096297",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192687970",
-        "over_od": "1.925",
-        "handicap": "0.5,1.0",
-        "under_od": "1.875",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791688726"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791802686,
-          "1_2": 1791802700,
-          "1_3": 1791802700,
-          "1_4": 1791775386,
-          "1_5": 1791802365,
-          "1_6": 1791786503,
-          "1_7": 1791787643,
-          "1_8": 1791801738
-        }
-      }
-    },
-    {
-      "event_id": "13139142",
-      "league": "Iran Div 1",
+      "event_id": "13284332",
+      "league": "Lebanon League",
       "mode": "PREMATCH",
       "results": {
         "S46": "EMPTY_MARKET",
         "S47": "EMPTY_MARKET"
       },
       "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13247554",
-      "league": "Greece Super League 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192780152",
-        "over_od": "1.975",
-        "handicap": "1.0",
-        "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791749695"
-      },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791802908,
-          "1_2": 1791803015,
-          "1_3": 1791803015,
-          "1_5": 1791802820,
-          "1_6": 1791800610,
-          "1_8": 1791803071
+          "1_1": 1791803378
         }
       }
-    },
-    {
-      "event_id": "11426599",
-      "league": "Other Match",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11980116",
-      "league": "Womens Olympic Qual",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
     }
   ],
   "health": "OK"
