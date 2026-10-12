@@ -1,31 +1,30 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T11:45:17.483419Z",
-  "api_calls": 10,
-  "new_signals": 0,
-  "live_events": 33,
+  "updated_at": "2026-10-12T11:55:40.802756Z",
+  "api_calls": 52,
+  "new_signals": 1,
+  "live_events": 32,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 58,
-      "already_recorded": 6,
-      "checked": 4,
-      "STALE_QUOTE": 1,
-      "EMPTY_MARKET": 3
+      "eligible_events": 52,
+      "already_recorded": 4,
+      "checked": 45,
+      "STALE_QUOTE": 7,
+      "EMPTY_MARKET": 10,
+      "VERIFIED": 1,
+      "DIFFERENT_CURRENT_LINE": 27
     },
     "S47": {
-      "eligible_events": 58,
+      "eligible_events": 52,
       "already_recorded": 5,
-      "checked": 4,
-      "DIFFERENT_CURRENT_LINE": 1,
-      "EMPTY_MARKET": 3
+      "checked": 44,
+      "DIFFERENT_CURRENT_LINE": 30,
+      "EMPTY_MARKET": 10,
+      "STALE_QUOTE": 4
     },
-    "S48": {
-      "eligible_events": 2,
-      "checked": 2,
-      "DIFFERENT_CURRENT_LINE": 2
-    },
+    "S48": {},
     "S49": {}
   },
   "errors": [],
@@ -33,12 +32,12 @@
   "strategies": {
     "S46": {
       "name_ru": "Прематч: тотал больше 1 первого тайма",
-      "signals": 62,
+      "signals": 63,
       "N": 55,
       "W": 19,
       "L": 14,
       "PUSH": 22,
-      "pending": 7,
+      "pending": 8,
       "void": 0,
       "profit": 4.05,
       "ROI_pct": 7.364,
@@ -46,12 +45,12 @@
       "balance_valid": true,
       "cohorts": {
         "adult_or_unclassified": {
-          "signals": 57,
+          "signals": 58,
           "N": 51,
           "W": 19,
           "L": 12,
           "PUSH": 20,
-          "pending": 6,
+          "pending": 7,
           "void": 0,
           "profit": 6.05,
           "ROI_pct": 11.863,
@@ -280,131 +279,184 @@
   },
   "market_samples": [
     {
-      "event_id": "13096297",
-      "league": "China Division 2",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192815197",
-        "over_od": "2.000",
-        "handicap": "0.5",
-        "under_od": "1.800",
-        "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791805457"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791805514,
-          "1_2": 1791805514,
-          "1_3": 1791805514,
-          "1_4": 1791805514,
-          "1_5": 1791805514,
-          "1_6": 1791805514,
-          "1_7": 1791805514,
-          "1_8": 1791805514
-        }
-      }
-    },
-    {
-      "event_id": "13096264",
-      "league": "China Division 2",
-      "mode": "LIVE",
-      "results": {
-        "S48": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192815227",
-        "over_od": "1.825",
-        "handicap": "0.5",
-        "under_od": "1.975",
-        "ss": "0-0",
-        "time_str": "14",
-        "add_time": "1791805511"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791805515,
-          "1_2": 1791805515,
-          "1_3": 1791805515,
-          "1_4": 1791805515,
-          "1_5": 1791805515,
-          "1_6": 1791805515,
-          "1_7": 1791805515,
-          "1_8": 1791805515
-        }
-      }
-    },
-    {
-      "event_id": "13279864",
-      "league": "Qatar U20 League",
+      "event_id": "12325136",
+      "league": "Saudi Arabia Division 1",
       "mode": "PREMATCH",
       "results": {
         "S46": "STALE_QUOTE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192765762",
-        "over_od": "1.725",
+        "id": "192809760",
+        "over_od": "1.750",
         "handicap": "1.0",
-        "under_od": "2.075",
+        "under_od": "2.050",
         "ss": null,
         "time_str": null,
-        "add_time": "1791740378"
+        "add_time": "1791795272"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791804958,
-          "1_2": 1791803737,
-          "1_3": 1791803737,
-          "1_5": 1791803539,
-          "1_6": 1791796897,
-          "1_8": 1791803209
+          "1_1": 1791805702,
+          "1_2": 1791805971,
+          "1_3": 1791805971,
+          "1_4": 1791805886,
+          "1_5": 1791804989,
+          "1_6": 1791803996,
+          "1_7": 1791797445,
+          "1_8": 1791805711
         }
       }
     },
     {
-      "event_id": "13139097",
-      "league": "Iran Div 1",
+      "event_id": "13003619",
+      "league": "Saudi Arabia U21 League",
       "mode": "PREMATCH",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13139112",
-      "league": "Iran Div 1",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
+      "latest_first_half_quote": {
+        "id": "192767503",
+        "over_od": "1.700",
+        "handicap": "1.0",
+        "under_od": "2.100",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791742044"
       },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13284332",
-      "league": "Lebanon League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791805468,
-          "1_2": 1791804936,
-          "1_3": 1791804936
+          "1_1": 1791805972,
+          "1_2": 1791806064,
+          "1_3": 1791806064,
+          "1_5": 1791783842,
+          "1_6": 1791782059,
+          "1_8": 1791805813
+        }
+      }
+    },
+    {
+      "event_id": "11426599",
+      "league": "Other Match",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "11980116",
+      "league": "Womens Olympic Qual",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13247551",
+      "league": "Greece Super League 2",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "STALE_QUOTE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192780738",
+        "over_od": "1.875",
+        "handicap": "1.0",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791750130"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791806066,
+          "1_2": 1791805975,
+          "1_3": 1791805975,
+          "1_5": 1791799083,
+          "1_6": 1791784849,
+          "1_8": 1791806007
+        }
+      }
+    },
+    {
+      "event_id": "12130546",
+      "league": "Spain Segunda",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "VERIFIED",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192396657",
+        "over_od": "2.075",
+        "handicap": "1.0",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791376711"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791805884,
+          "1_2": 1791805821,
+          "1_3": 1791805821,
+          "1_4": 1791802565,
+          "1_5": 1791802707,
+          "1_6": 1791805637,
+          "1_7": 1791805172,
+          "1_8": 1791806098
+        }
+      }
+    },
+    {
+      "event_id": "13139141",
+      "league": "Iran Div 1",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "EMPTY_MARKET",
+        "S47": "EMPTY_MARKET"
+      },
+      "latest_first_half_quote": null,
+      "stats": {}
+    },
+    {
+      "event_id": "13267603",
+      "league": "U23 International Women",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192810220",
+        "over_od": "2.025",
+        "handicap": "1.0,1.5",
+        "under_od": "1.775",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791796599"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791806009,
+          "1_2": 1791805906,
+          "1_3": 1791805906,
+          "1_5": 1791789404,
+          "1_6": 1791801069,
+          "1_8": 1791806115
         }
       }
     }
