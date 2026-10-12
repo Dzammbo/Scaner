@@ -60,10 +60,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 12403,
-    "historical_events": 3630,
-    "clean_snapshots": 6896,
-    "clean_events": 1619,
+    "historical_snapshots": 12427,
+    "historical_events": 3634,
+    "clean_snapshots": 6920,
+    "clean_events": 1623,
     "fixed_strategy": {
       "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
       "clean_epoch_start": "2026-10-09T22:30:00Z",
@@ -75,47 +75,47 @@
         "one_entry_per_match": true
       },
       "historical": {
-        "recorded": 1693,
-        "settled": 1690,
+        "recorded": 1694,
+        "settled": 1691,
         "pending": 3,
         "void": 0,
         "result": {
-          "N": 1690,
+          "N": 1691,
           "W": 1496,
-          "L": 194,
+          "L": 195,
           "P": 0,
-          "profit": -0.165,
-          "ROI": -0.01
+          "profit": -1.165,
+          "ROI": -0.07
         },
         "without_top3": {
-          "N": 1687,
+          "N": 1688,
           "W": 1493,
-          "L": 194,
+          "L": 195,
           "P": 0,
-          "profit": -0.735,
-          "ROI": -0.04
+          "profit": -1.735,
+          "ROI": -0.1
         }
       },
       "clean_forward": {
-        "recorded": 1051,
-        "settled": 1049,
+        "recorded": 1052,
+        "settled": 1050,
         "pending": 2,
         "void": 0,
         "result": {
-          "N": 1049,
+          "N": 1050,
           "W": 897,
-          "L": 152,
+          "L": 153,
           "P": 0,
-          "profit": -30.905,
-          "ROI": -2.95
+          "profit": -31.905,
+          "ROI": -3.04
         },
         "without_top3": {
-          "N": 1046,
+          "N": 1047,
           "W": 894,
-          "L": 152,
+          "L": 153,
           "P": 0,
-          "profit": -31.475,
-          "ROI": -3.01
+          "profit": -32.475,
+          "ROI": -3.1
         }
       }
     }
