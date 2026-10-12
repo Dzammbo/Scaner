@@ -1,8 +1,8 @@
 {
-  "pending_signals": 30,
+  "pending_signals": 28,
   "void_signals": 163,
   "signal_reasons": {
-    "PENDING_PROVIDER_FIX": 23,
+    "PENDING_PROVIDER_FIX": 21,
     "POSTPONED": 7,
     "VOID_ABANDONED": 2,
     "VOID_CANCELLED": 2,
@@ -12,7 +12,7 @@
     "VOID_TENNIS_WINNER_MISSING": 114
   },
   "unique_event_reasons": {
-    "PENDING_PROVIDER_FIX": 17,
+    "PENDING_PROVIDER_FIX": 15,
     "POSTPONED": 2,
     "VOID_ABANDONED": 1,
     "VOID_CANCELLED": 1,
@@ -31,7 +31,7 @@
     "excluded_legacy_attributions": 0,
     "excluded_legacy_attributions_by_strategy": {},
     "settlement_score_sources": {
-      "scores.2": 7219,
+      "scores.2": 7221,
       "ss": 1624
     }
   },
@@ -60,10 +60,10 @@
     ],
     "one_snapshot_per_match_per_minute": true,
     "reporting_rule": "первая точка матча внутри каждого анализируемого диапазона",
-    "historical_snapshots": 12290,
-    "historical_events": 3610,
-    "clean_snapshots": 6783,
-    "clean_events": 1599,
+    "historical_snapshots": 12381,
+    "historical_events": 3626,
+    "clean_snapshots": 6874,
+    "clean_events": 1615,
     "fixed_strategy": {
       "name_ru": "Тотал меньше текущей линии на 90-й минуте при коэффициенте ниже 1,20",
       "clean_epoch_start": "2026-10-09T22:30:00Z",
@@ -75,47 +75,47 @@
         "one_entry_per_match": true
       },
       "historical": {
-        "recorded": 1681,
-        "settled": 1674,
-        "pending": 7,
+        "recorded": 1690,
+        "settled": 1687,
+        "pending": 3,
         "void": 0,
         "result": {
-          "N": 1674,
-          "W": 1483,
-          "L": 191,
+          "N": 1687,
+          "W": 1495,
+          "L": 192,
           "P": 0,
-          "profit": 0.96,
-          "ROI": 0.06
+          "profit": 1.735,
+          "ROI": 0.1
         },
         "without_top3": {
-          "N": 1671,
-          "W": 1480,
-          "L": 191,
+          "N": 1684,
+          "W": 1492,
+          "L": 192,
           "P": 0,
-          "profit": 0.39,
-          "ROI": 0.02
+          "profit": 1.165,
+          "ROI": 0.07
         }
       },
       "clean_forward": {
-        "recorded": 1039,
-        "settled": 1033,
-        "pending": 6,
+        "recorded": 1048,
+        "settled": 1046,
+        "pending": 2,
         "void": 0,
         "result": {
-          "N": 1033,
-          "W": 884,
-          "L": 149,
+          "N": 1046,
+          "W": 896,
+          "L": 150,
           "P": 0,
-          "profit": -29.78,
-          "ROI": -2.88
+          "profit": -29.005,
+          "ROI": -2.77
         },
         "without_top3": {
-          "N": 1030,
-          "W": 881,
-          "L": 149,
+          "N": 1043,
+          "W": 893,
+          "L": 150,
           "P": 0,
-          "profit": -30.35,
-          "ROI": -2.95
+          "profit": -29.575,
+          "ROI": -2.84
         }
       }
     }
