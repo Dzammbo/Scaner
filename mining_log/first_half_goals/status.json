@@ -1,29 +1,25 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T07:04:55.414170Z",
-  "api_calls": 23,
-  "new_signals": 2,
-  "live_events": 8,
+  "updated_at": "2026-10-12T07:14:57.344827Z",
+  "api_calls": 4,
+  "new_signals": 0,
+  "live_events": 9,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 19,
-      "already_recorded": 3,
-      "checked": 16,
-      "STALE_QUOTE": 2,
-      "EMPTY_MARKET": 4,
-      "DIFFERENT_CURRENT_LINE": 10
+      "already_recorded": 3
     },
     "S47": {
       "eligible_events": 19,
-      "checked": 19,
-      "DIFFERENT_CURRENT_LINE": 12,
-      "EMPTY_MARKET": 4,
-      "VERIFIED": 2,
-      "STALE_QUOTE": 1
+      "already_recorded": 2
     },
-    "S48": {},
+    "S48": {
+      "eligible_events": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
     "S49": {}
   },
   "errors": [],
@@ -265,183 +261,32 @@
   },
   "market_samples": [
     {
-      "event_id": "12127216",
-      "league": "Ukraine Vyscha Liga",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192781035",
-        "over_od": "1.950",
-        "handicap": "1.0",
-        "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791750427"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791787933,
-          "1_2": 1791788190,
-          "1_3": 1791788190,
-          "1_4": 1791758546,
-          "1_5": 1791788602,
-          "1_6": 1791762389,
-          "1_7": 1791777866,
-          "1_8": 1791788312
-        }
-      }
-    },
-    {
-      "event_id": "12177170",
-      "league": "U17 European Ch.ship QF",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12331817",
-      "league": "Ukraine Reserve League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12335638",
-      "league": "Ukraine Reserve League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13279473",
-      "league": "Israel Cup",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192764784",
-        "over_od": "1.900",
-        "handicap": "1.0,1.5",
-        "under_od": "1.900",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791739504"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791788219,
-          "1_2": 1791788613,
-          "1_3": 1791788613,
-          "1_5": 1791788133,
-          "1_6": 1791786453,
-          "1_8": 1791787862
-        }
-      }
-    },
-    {
-      "event_id": "13281660",
-      "league": "Spain Regional League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "VERIFIED"
-      },
-      "latest_first_half_quote": {
-        "id": "192797162",
-        "over_od": "1.800",
-        "handicap": "1.5",
-        "under_od": "2.000",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791763082"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791788358,
-          "1_2": 1791788342,
-          "1_3": 1791788342,
-          "1_5": 1791784737,
-          "1_6": 1791788459,
-          "1_8": 1791787613
-        }
-      }
-    },
-    {
-      "event_id": "13281661",
-      "league": "Spain Regional League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192787065",
-        "over_od": "1.975",
-        "handicap": "1.0,1.5",
-        "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791754896"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791788378,
-          "1_2": 1791788022,
-          "1_3": 1791788022,
-          "1_5": 1791788506,
-          "1_6": 1791783688,
-          "1_8": 1791788549
-        }
-      }
-    },
-    {
-      "event_id": "13096298",
+      "event_id": "13096330",
       "league": "China Division 2",
-      "mode": "PREMATCH",
+      "mode": "LIVE",
       "results": {
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192806280",
-        "over_od": "1.700",
-        "handicap": "0.5,1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791786521"
+        "id": "192806925",
+        "over_od": "-",
+        "handicap": "0.5",
+        "under_od": "-",
+        "ss": "0-0",
+        "time_str": "14",
+        "add_time": "1791789258"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791788624,
-          "1_2": 1791788382,
-          "1_3": 1791788382,
-          "1_4": 1791783443,
-          "1_5": 1791787965,
-          "1_6": 1791788143,
-          "1_7": 1791778248,
-          "1_8": 1791788604
+          "1_1": 1791789291,
+          "1_2": 1791789291,
+          "1_3": 1791789291,
+          "1_4": 1791789291,
+          "1_5": 1791789291,
+          "1_6": 1791789291,
+          "1_7": 1791789291,
+          "1_8": 1791789291
         }
       }
     }
