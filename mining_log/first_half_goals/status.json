@@ -1,26 +1,18 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T06:03:50.557727Z",
-  "api_calls": 16,
+  "updated_at": "2026-10-12T06:14:01.998850Z",
+  "api_calls": 3,
   "new_signals": 0,
   "live_events": 9,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
       "eligible_events": 13,
-      "already_recorded": 1,
-      "checked": 12,
-      "EMPTY_MARKET": 1,
-      "DIFFERENT_CURRENT_LINE": 9,
-      "STALE_QUOTE": 2
+      "already_recorded": 1
     },
     "S47": {
-      "eligible_events": 13,
-      "checked": 13,
-      "EMPTY_MARKET": 1,
-      "DIFFERENT_CURRENT_LINE": 10,
-      "STALE_QUOTE": 2
+      "eligible_events": 13
     },
     "S48": {},
     "S49": {}
@@ -262,227 +254,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "12335639",
-      "league": "Ukraine Reserve League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "13277800",
-      "league": "U19 International Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192701125",
-        "over_od": "1.850",
-        "handicap": "1.0,1.5",
-        "under_od": "1.950",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791705293"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784963,
-          "1_2": 1791784607,
-          "1_3": 1791784607,
-          "1_5": 1791780527,
-          "1_6": 1791782497,
-          "1_8": 1791784654
-        }
-      }
-    },
-    {
-      "event_id": "13277801",
-      "league": "U19 International Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192712396",
-        "over_od": "1.825",
-        "handicap": "1.0,1.5",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791711159"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784776,
-          "1_2": 1791784882,
-          "1_3": 1791784882,
-          "1_5": 1791775799,
-          "1_6": 1791774020,
-          "1_8": 1791784457
-        }
-      }
-    },
-    {
-      "event_id": "13279825",
-      "league": "Vietnam Championship Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192755419",
-        "over_od": "1.825",
-        "handicap": "1.5,2.0",
-        "under_od": "1.975",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791732196"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784959,
-          "1_2": 1791784451,
-          "1_3": 1791784451,
-          "1_4": 1791781271,
-          "1_5": 1791767192,
-          "1_6": 1791773892,
-          "1_7": 1791783297,
-          "1_8": 1791784012
-        }
-      }
-    },
-    {
-      "event_id": "13281889",
-      "league": "Myanmar U20 League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "STALE_QUOTE"
-      },
-      "latest_first_half_quote": {
-        "id": "192797469",
-        "over_od": "1.900",
-        "handicap": "1.5",
-        "under_od": "1.900",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791763487"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784656,
-          "1_2": 1791784544,
-          "1_3": 1791784544,
-          "1_5": 1791781821,
-          "1_6": 1791775435,
-          "1_8": 1791784095
-        }
-      }
-    },
-    {
-      "event_id": "13281890",
-      "league": "Myanmar U20 League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192798924",
-        "over_od": "1.950",
-        "handicap": "2.0,2.5",
-        "under_od": "1.850",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791765901"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784534,
-          "1_2": 1791784164,
-          "1_3": 1791784164,
-          "1_5": 1791778231,
-          "1_6": 1791765982,
-          "1_8": 1791784409
-        }
-      }
-    },
-    {
-      "event_id": "13096330",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192799939",
-        "over_od": "1.750",
-        "handicap": "0.5,1.0",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791767870"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784820,
-          "1_2": 1791784819,
-          "1_3": 1791784819,
-          "1_4": 1791784989,
-          "1_5": 1791783121,
-          "1_6": 1791781570,
-          "1_7": 1791780696,
-          "1_8": 1791784884
-        }
-      }
-    },
-    {
-      "event_id": "13096298",
-      "league": "China Division 2",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192804562",
-        "over_od": "1.700",
-        "handicap": "0.5,1.0",
-        "under_od": "2.100",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791781379"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791784779,
-          "1_2": 1791784892,
-          "1_3": 1791784892,
-          "1_4": 1791783443,
-          "1_5": 1791783519,
-          "1_6": 1791784354,
-          "1_7": 1791778248,
-          "1_8": 1791784186
-        }
-      }
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
