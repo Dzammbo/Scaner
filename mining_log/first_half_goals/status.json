@@ -1,28 +1,30 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T14:38:48.880130Z",
-  "api_calls": 20,
+  "updated_at": "2026-10-12T14:49:00.222229Z",
+  "api_calls": 15,
   "new_signals": 0,
-  "live_events": 45,
+  "live_events": 43,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 78,
+      "eligible_events": 82,
       "already_recorded": 3,
-      "checked": 17,
-      "EMPTY_MARKET": 5,
-      "DIFFERENT_CURRENT_LINE": 8,
-      "STALE_QUOTE": 4
+      "checked": 10,
+      "STALE_QUOTE": 1,
+      "DIFFERENT_CURRENT_LINE": 9
     },
     "S47": {
-      "eligible_events": 78,
+      "eligible_events": 82,
       "already_recorded": 3,
-      "checked": 17,
-      "EMPTY_MARKET": 5,
-      "DIFFERENT_CURRENT_LINE": 12
+      "checked": 10,
+      "DIFFERENT_CURRENT_LINE": 10
     },
-    "S48": {},
+    "S48": {
+      "eligible_events": 1,
+      "checked": 1,
+      "DIFFERENT_CURRENT_LINE": 1
+    },
     "S49": {}
   },
   "errors": [],
@@ -290,190 +292,238 @@
   },
   "market_samples": [
     {
-      "event_id": "11287973",
-      "league": "Norway Division 3 Group 6",
-      "mode": "PREMATCH",
+      "event_id": "13279864",
+      "league": "Qatar U20 League",
+      "mode": "LIVE",
       "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11338831",
-      "league": "Sweden 1.div Södra",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
+        "S48": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192802841",
+        "id": "192826519",
         "over_od": "1.975",
-        "handicap": "1.0,1.5",
+        "handicap": "0.75",
         "under_od": "1.825",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791775530"
+        "ss": "0-0",
+        "time_str": "16",
+        "add_time": "1791816529"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791815819,
-          "1_2": 1791815416,
-          "1_3": 1791815416,
-          "1_4": 1791812327,
-          "1_5": 1791811707,
-          "1_6": 1791814266,
-          "1_7": 1791793603,
-          "1_8": 1791815303
+          "1_1": 1791816533,
+          "1_2": 1791816533,
+          "1_3": 1791816533,
+          "1_5": 1791816533,
+          "1_6": 1791816533,
+          "1_8": 1791816533
         }
       }
     },
     {
-      "event_id": "11344097",
-      "league": "Sweden 2.div Södra Götaland",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "11419935",
-      "league": "Canada Premier League",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "DIFFERENT_CURRENT_LINE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192817648",
-        "over_od": "1.750",
-        "handicap": "1.0,1.5",
-        "under_od": "2.050",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791808281"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791815661,
-          "1_2": 1791815789,
-          "1_3": 1791815789,
-          "1_4": 1791801650,
-          "1_5": 1791813278,
-          "1_6": 1791809958,
-          "1_7": 1791812179,
-          "1_8": 1791813773
-        }
-      }
-    },
-    {
-      "event_id": "11426602",
-      "league": "Other Match",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "EMPTY_MARKET",
-        "S47": "EMPTY_MARKET"
-      },
-      "latest_first_half_quote": null,
-      "stats": {}
-    },
-    {
-      "event_id": "12011582",
-      "league": "Bulgaria First League",
+      "event_id": "12133634",
+      "league": "Hungary NB II",
       "mode": "PREMATCH",
       "results": {
         "S46": "STALE_QUOTE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192642198",
-        "over_od": "1.825",
+        "id": "192820734",
+        "over_od": "2.075",
         "handicap": "1.0",
-        "under_od": "1.975",
+        "under_od": "1.725",
         "ss": null,
         "time_str": null,
-        "add_time": "1791646386"
+        "add_time": "1791811581"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791815370,
-          "1_2": 1791815373,
-          "1_3": 1791815373,
-          "1_4": 1791796881,
-          "1_5": 1791812549,
-          "1_6": 1791793696,
-          "1_7": 1791815319,
-          "1_8": 1791813946
+          "1_1": 1791816471,
+          "1_2": 1791816399,
+          "1_3": 1791816399,
+          "1_4": 1791791677,
+          "1_5": 1791805601,
+          "1_6": 1791811581,
+          "1_7": 1791807558,
+          "1_8": 1791815786
         }
       }
     },
     {
-      "event_id": "12114217",
-      "league": "Poland II Liga",
+      "event_id": "13003617",
+      "league": "Saudi Arabia U21 League",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192809214",
+        "id": "192821791",
         "over_od": "2.000",
         "handicap": "1.0,1.5",
         "under_od": "1.800",
         "ss": null,
         "time_str": null,
-        "add_time": "1791794184"
+        "add_time": "1791812552"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791815114,
-          "1_2": 1791815537,
-          "1_3": 1791815537,
-          "1_4": 1791795737,
-          "1_5": 1791815351,
-          "1_6": 1791814328,
-          "1_7": 1791814067,
-          "1_8": 1791815527
+          "1_1": 1791815675,
+          "1_2": 1791815785,
+          "1_3": 1791815785,
+          "1_5": 1791808962,
+          "1_6": 1791812552,
+          "1_8": 1791812796
         }
       }
     },
     {
-      "event_id": "12205880",
-      "league": "Türkiye Super Lig",
+      "event_id": "12077143",
+      "league": "Israel Premier League",
       "mode": "PREMATCH",
       "results": {
         "S46": "DIFFERENT_CURRENT_LINE",
         "S47": "DIFFERENT_CURRENT_LINE"
       },
       "latest_first_half_quote": {
-        "id": "192822685",
-        "over_od": "2.100",
+        "id": "192822631",
+        "over_od": "1.950",
         "handicap": "1.0,1.5",
-        "under_od": "1.700",
+        "under_od": "1.850",
         "ss": null,
         "time_str": null,
-        "add_time": "1791813675"
+        "add_time": "1791813599"
       },
       "stats": {
         "matching_dir": 1,
         "odds_update": {
-          "1_1": 1791815374,
-          "1_2": 1791815419,
-          "1_3": 1791815419,
-          "1_4": 1791810702,
-          "1_5": 1791812724,
-          "1_6": 1791813675,
-          "1_7": 1791811165,
-          "1_8": 1791815835
+          "1_1": 1791815947,
+          "1_2": 1791816154,
+          "1_3": 1791816154,
+          "1_4": 1791811017,
+          "1_5": 1791813509,
+          "1_6": 1791815767,
+          "1_7": 1791814138,
+          "1_8": 1791816461
+        }
+      }
+    },
+    {
+      "event_id": "13009653",
+      "league": "Saudi Arabia U21 League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192756014",
+        "over_od": "1.875",
+        "handicap": "1.0,1.5",
+        "under_od": "1.925",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791732594"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791816465,
+          "1_2": 1791816161,
+          "1_3": 1791816161,
+          "1_5": 1791814102,
+          "1_6": 1791813205,
+          "1_8": 1791816479
+        }
+      }
+    },
+    {
+      "event_id": "13284173",
+      "league": "Mauritania Division 1",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192814910",
+        "over_od": "1.750",
+        "handicap": "0.5,1.0",
+        "under_od": "2.050",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791805027"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791816463,
+          "1_2": 1791815771,
+          "1_3": 1791815771,
+          "1_6": 1791812230,
+          "1_8": 1791815850
+        }
+      }
+    },
+    {
+      "event_id": "13003618",
+      "league": "Saudi Arabia U21 League",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192763449",
+        "over_od": "2.075",
+        "handicap": "1.0,1.5",
+        "under_od": "1.725",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791738286"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791816455,
+          "1_2": 1791816174,
+          "1_3": 1791816174,
+          "1_5": 1791812649,
+          "1_6": 1791815030,
+          "1_8": 1791816311
+        }
+      }
+    },
+    {
+      "event_id": "11162948",
+      "league": "Norway Eliteserien",
+      "mode": "PREMATCH",
+      "results": {
+        "S46": "DIFFERENT_CURRENT_LINE",
+        "S47": "DIFFERENT_CURRENT_LINE"
+      },
+      "latest_first_half_quote": {
+        "id": "192822399",
+        "over_od": "1.900",
+        "handicap": "1.0,1.5",
+        "under_od": "1.900",
+        "ss": null,
+        "time_str": null,
+        "add_time": "1791813154"
+      },
+      "stats": {
+        "matching_dir": 1,
+        "odds_update": {
+          "1_1": 1791816295,
+          "1_2": 1791816260,
+          "1_3": 1791816260,
+          "1_4": 1791808203,
+          "1_5": 1791788867,
+          "1_6": 1791815719,
+          "1_7": 1791807301,
+          "1_8": 1791815831
         }
       }
     }
