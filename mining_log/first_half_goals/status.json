@@ -1,21 +1,17 @@
 {
   "collector": "first_half_goals",
   "mode": "VISIBLE_FORWARD",
-  "updated_at": "2026-10-12T03:00:14.235281Z",
-  "api_calls": 5,
+  "updated_at": "2026-10-12T03:10:26.979643Z",
+  "api_calls": 3,
   "new_signals": 0,
   "live_events": 12,
   "upcoming_events": 100,
   "coverage": {
     "S46": {
-      "eligible_events": 1,
-      "checked": 1,
-      "STALE_QUOTE": 1
+      "eligible_events": 1
     },
     "S47": {
-      "eligible_events": 1,
-      "checked": 1,
-      "DIFFERENT_CURRENT_LINE": 1
+      "eligible_events": 1
     },
     "S48": {},
     "S49": {}
@@ -244,38 +240,6 @@
       }
     }
   },
-  "market_samples": [
-    {
-      "event_id": "12099730",
-      "league": "Japan League Cup Women",
-      "mode": "PREMATCH",
-      "results": {
-        "S46": "STALE_QUOTE",
-        "S47": "DIFFERENT_CURRENT_LINE"
-      },
-      "latest_first_half_quote": {
-        "id": "192760729",
-        "over_od": "1.775",
-        "handicap": "1.0",
-        "under_od": "2.025",
-        "ss": null,
-        "time_str": null,
-        "add_time": "1791735906"
-      },
-      "stats": {
-        "matching_dir": 1,
-        "odds_update": {
-          "1_1": 1791773903,
-          "1_2": 1791773806,
-          "1_3": 1791773806,
-          "1_4": 1791773439,
-          "1_5": 1791772492,
-          "1_6": 1791760258,
-          "1_7": 1791754501,
-          "1_8": 1791773948
-        }
-      }
-    }
-  ],
+  "market_samples": [],
   "health": "OK"
 }
