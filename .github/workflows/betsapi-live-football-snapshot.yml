@@ -29,8 +29,8 @@ jobs:
           TOKEN = os.environ["BETSAPI_KEY"]
           EXCLUDE = re.compile(
               r"virtual|esoccer|e-soccer|esports|simulated|cyber|"
-              r"women|woman|ladies|femenil|feminina|female|\\(w\\)|"
-              r"\\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\\b|youth|reserves?|development|juniors?",
+              r"women|woman|ladies|femenil|feminina|female|\(w\)|"
+              r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|youth|reserves?|development|juniors?",
               re.I,
           )
 
@@ -79,7 +79,7 @@ jobs:
               label = " ".join((league, home, away))
               minute = integer((r.get("timer") or {}).get("tm"))
               score = str(r.get("ss") or "").replace(":", "-")
-              if EXCLUDE.search(label) or minute is None or not (8 <= minute <= 84) or not re.fullmatch(r"\\d+-\\d+", score):
+              if EXCLUDE.search(label) or minute is None or not (8 <= minute <= 84) or not re.fullmatch(r"\d+-\d+", score):
                   continue
               events.append({
                   "event_id": str(r.get("id")),
