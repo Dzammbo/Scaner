@@ -7,11 +7,15 @@ on:
     paths:
       - '.github/workflows/betsapi-prematch-football-snapshot.yml'
 
+permissions:
+  contents: write
+
 jobs:
   snapshot:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v4
       - name: Fetch upcoming football and Bet365 totals
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
@@ -117,5 +121,16 @@ jobs:
               "with_totals_count": sum(1 for e in detailed if e.get("totals")),
               "events": detailed
           }
-          print("PREMATCH_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+          compact = json.dumps(result, ensure_ascii=False, separators=(",", ":"))
+          print("PREMATCH_SNAPSHOT_JSON=" + compact)
+          os.makedirs("snapshots", exist_ok=True)
+          with open("snapshots/prematch-latest.json", "w", encoding="utf-8") as fh:
+              json.dump(result, fh, ensure_ascii=False, indent=2)
           PY
+      - name: Save latest snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add snapshots/prematch-latest.json
+          git diff --cached --quiet || git commit -m "Обновить прематч-срез"
+          git push
