@@ -1,0 +1,121 @@
+name: BetsAPI prematch football snapshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/betsapi-prematch-football-snapshot.yml'
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch upcoming football and Bet365 totals
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, time, urllib.parse, urllib.request
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from datetime import datetime, timezone
+
+          BASE = "https://api.b365api.com"
+          TOKEN = os.environ["BETSAPI_KEY"]
+          NOW = int(time.time())
+          HORIZON = NOW + 3 * 3600
+          EXCLUDE = re.compile(r"virtual|esoccer|e-soccer|esports|simulated|cyber", re.I)
+
+          def get(path, **params):
+              params["token"] = TOKEN
+              url = BASE + path + "?" + urllib.parse.urlencode(params)
+              req = urllib.request.Request(url, headers={"User-Agent": "dzam-prematch-tb/1.0"})
+              with urllib.request.urlopen(req, timeout=25) as r:
+                  return json.load(r)
+
+          def name(x):
+              return x.get("name") if isinstance(x, dict) else x
+
+          def num(x):
+              try: return float(x)
+              except Exception: return None
+
+          def integer(x):
+              try: return int(float(x))
+              except Exception: return None
+
+          def handicap(x):
+              vals = [num(v.strip()) for v in str(x or "").replace("/", ",").split(",")]
+              vals = [v for v in vals if v is not None]
+              return sum(vals) / len(vals) if vals else None
+
+          events, seen = [], set()
+          for page in range(1, 9):
+              payload = get("/v3/events/upcoming", sport_id=1, page=page)
+              rows = [r for r in (payload.get("results") or []) if isinstance(r, dict)]
+              if not rows: break
+              page_times = []
+              for r in rows:
+                  ts = integer(r.get("time"))
+                  if ts is not None: page_times.append(ts)
+                  league = name(r.get("league")) or ""
+                  home = name(r.get("home")) or ""
+                  away = name(r.get("away")) or ""
+                  label = " ".join((league, home, away))
+                  eid = str(r.get("id") or "")
+                  if not eid or eid in seen or EXCLUDE.search(label) or ts is None or not (NOW <= ts <= HORIZON):
+                      continue
+                  seen.add(eid)
+                  events.append({
+                      "event_id": eid,
+                      "start_utc": datetime.fromtimestamp(ts, timezone.utc).isoformat(),
+                      "league": league,
+                      "country": (r.get("league") or {}).get("cc") if isinstance(r.get("league"), dict) else None,
+                      "home": home, "away": away
+                  })
+              if page_times and min(page_times) > HORIZON: break
+
+          def detail(ev):
+              try:
+                  p = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,2,3")
+                  odds = (p.get("results") or {}).get("odds") or {}
+                  totals, seen_lines = [], set()
+                  for row in sorted([x for x in (odds.get("1_3") or []) if isinstance(x, dict)], key=lambda x: integer(x.get("add_time")) or 0, reverse=True):
+                      line = handicap(row.get("handicap"))
+                      over, under = num(row.get("over_od")), num(row.get("under_od"))
+                      if line is None or over is None or under is None: continue
+                      key = round(line, 3)
+                      if key in seen_lines: continue
+                      seen_lines.add(key)
+                      totals.append({"line": line, "over": over, "under": under, "add_time": integer(row.get("add_time"))})
+                      if len(totals) >= 8: break
+                  one_x_two = None
+                  for row in sorted([x for x in (odds.get("1_1") or []) if isinstance(x, dict)], key=lambda x: integer(x.get("add_time")) or 0, reverse=True):
+                      vals = [num(row.get(k)) for k in ("home_od","draw_od","away_od")]
+                      if all(v is not None for v in vals):
+                          one_x_two = {"home": vals[0], "draw": vals[1], "away": vals[2], "add_time": integer(row.get("add_time"))}
+                          break
+                  out = dict(ev)
+                  out.update({"detail_ok": bool(p.get("success")), "totals": totals, "one_x_two": one_x_two})
+                  return out
+              except Exception as exc:
+                  out = dict(ev); out.update({"detail_ok": False, "error": type(exc).__name__ + ": " + str(exc)[:160]})
+                  return out
+
+          detailed = []
+          with ThreadPoolExecutor(max_workers=12) as pool:
+              futures = [pool.submit(detail, e) for e in events]
+              for f in as_completed(futures): detailed.append(f.result())
+          detailed.sort(key=lambda x: x["start_utc"])
+
+          result = {
+              "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+              "window_end_utc": datetime.fromtimestamp(HORIZON, timezone.utc).isoformat(),
+              "source": "BetsAPI / Bet365",
+              "upcoming_in_window_count": len(events),
+              "with_totals_count": sum(1 for e in detailed if e.get("totals")),
+              "events": detailed
+          }
+          print("PREMATCH_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+          PY
