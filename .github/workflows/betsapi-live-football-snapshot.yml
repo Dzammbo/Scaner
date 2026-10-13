@@ -103,8 +103,15 @@ jobs:
                   "board_stats": r.get("stats"),
               })
 
-          # Keep coverage broad but bound provider usage. Prefer matches with more time left.
-          events = sorted(events, key=lambda e: (e["minute"], e["league"], e["home"]))[:30]
+          eligible_in_window_count = len(events)
+          category_counts = {
+              cat: sum(1 for e in events if e["category"] == cat)
+              for cat in sorted({e["category"] for e in events})
+          }
+
+          # Technical provider-protection limit only. It is not an analytical top.
+          TECHNICAL_EVENT_CAP = 100
+          events = sorted(events, key=lambda e: (e["minute"], e["league"], e["home"]))[:TECHNICAL_EVENT_CAP]
 
           def detail(ev):
               try:
@@ -174,11 +181,11 @@ jobs:
               "source": "BetsAPI / Bet365",
               "board_http": board_meta,
               "raw_live_count": len(raw),
-              "eligible_football_count": len(events),
-              "category_counts": {
-                  cat: sum(1 for e in events if e["category"] == cat)
-                  for cat in sorted({e["category"] for e in events})
-              },
+              "eligible_in_window_count": eligible_in_window_count,
+              "detailed_event_count": len(events),
+              "technical_event_cap": TECHNICAL_EVENT_CAP,
+              "technical_cap_reached": eligible_in_window_count > TECHNICAL_EVENT_CAP,
+              "category_counts": category_counts,
               "detail_calls": len(events),
               "raw_sample": [{"id": x.get("id"), "league": name(x.get("league")), "home": name(x.get("home")), "away": name(x.get("away")), "timer": x.get("timer"), "ss": x.get("ss"), "time_status": x.get("time_status")} for x in raw[:15]],
               "events": detailed,
