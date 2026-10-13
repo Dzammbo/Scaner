@@ -115,7 +115,7 @@ jobs:
 
           def detail(ev):
               try:
-                  p, meta = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,2,3")
+                  p, meta = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,2,3,6")
                   rr = p.get("results") or {}
                   odds = rr.get("odds") or {}
                   score = ev["score"]
@@ -142,6 +142,28 @@ jobs:
                       if len(totals) >= 6:
                           break
 
+                  first_half_totals = []
+                  if ev["minute"] <= 45:
+                      seen_first_half = set()
+                      for row in latest(odds.get("1_6")):
+                          row_score = str(row.get("ss") or "").replace(":", "-")
+                          age = now - integer(row.get("add_time")) if integer(row.get("add_time")) is not None else None
+                          line = handicap(row.get("handicap"))
+                          over, under = num(row.get("over_od")), num(row.get("under_od"))
+                          if row_score and row_score != score:
+                              continue
+                          if age is not None and not (0 <= age <= 240):
+                              continue
+                          if line is None or over is None or under is None:
+                              continue
+                          key = round(line, 3)
+                          if key in seen_first_half:
+                              continue
+                          seen_first_half.add(key)
+                          first_half_totals.append({"line": line, "over": over, "under": under, "age_s": age, "quote_score": row_score or score})
+                          if len(first_half_totals) >= 6:
+                              break
+
                   one_x_two = None
                   for row in latest(odds.get("1_1")):
                       row_score = str(row.get("ss") or "").replace(":", "-")
@@ -160,6 +182,7 @@ jobs:
                       "detail_ok": bool(p.get("success")),
                       "detail_stats": rr.get("stats"),
                       "totals": totals,
+                      "first_half_totals": first_half_totals,
                       "one_x_two": one_x_two,
                       "api_remaining": meta.get("remaining"),
                   })
