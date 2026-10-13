@@ -165,6 +165,7 @@ jobs:
               "raw_live_count": len(raw),
               "eligible_adult_men_count": len(events),
               "detail_calls": len(events),
+              "raw_sample": [{"id": x.get("id"), "league": name(x.get("league")), "home": name(x.get("home")), "away": name(x.get("away")), "timer": x.get("timer"), "ss": x.get("ss"), "time_status": x.get("time_status")} for x in raw[:15]],
               "events": detailed,
           }
           print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")))
