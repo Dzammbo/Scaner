@@ -28,11 +28,21 @@ jobs:
           BASE = "https://api.b365api.com"
           TOKEN = os.environ["BETSAPI_KEY"]
           EXCLUDE = re.compile(
-              r"virtual|esoccer|e-soccer|esports|simulated|cyber|"
-              r"women|woman|ladies|femenil|feminina|female|\(w\)|"
-              r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|youth|reserves?|development|juniors?",
+              r"virtual|esoccer|e-soccer|esports|simulated|cyber",
               re.I,
           )
+          WOMEN = re.compile(r"women|woman|ladies|femenil|feminina|female|\(w\)", re.I)
+          YOUTH = re.compile(r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|youth|development|juniors?", re.I)
+          RESERVE = re.compile(r"reserves?", re.I)
+
+          def category(label):
+              if WOMEN.search(label):
+                  return "Женский"
+              if YOUTH.search(label):
+                  return "Молодёжный/юниорский"
+              if RESERVE.search(label):
+                  return "Резервный"
+              return "Взрослый мужской"
 
           def get(path, **params):
               params["token"] = TOKEN
@@ -79,12 +89,13 @@ jobs:
               label = " ".join((league, home, away))
               minute = integer((r.get("timer") or {}).get("tm"))
               score = str(r.get("ss") or "").replace(":", "-")
-              if EXCLUDE.search(label) or minute is None or not (8 <= minute <= 84) or not re.fullmatch(r"\d+-\d+", score):
+              if EXCLUDE.search(label) or minute is None or not (8 <= minute <= 60) or not re.fullmatch(r"\d+-\d+", score):
                   continue
               events.append({
                   "event_id": str(r.get("id")),
                   "league": league,
                   "country": (r.get("league") or {}).get("cc") if isinstance(r.get("league"), dict) else None,
+                  "category": category(label),
                   "home": home,
                   "away": away,
                   "minute": minute,
@@ -163,7 +174,11 @@ jobs:
               "source": "BetsAPI / Bet365",
               "board_http": board_meta,
               "raw_live_count": len(raw),
-              "eligible_adult_men_count": len(events),
+              "eligible_football_count": len(events),
+              "category_counts": {
+                  cat: sum(1 for e in events if e["category"] == cat)
+                  for cat in sorted({e["category"] for e in events})
+              },
               "detail_calls": len(events),
               "raw_sample": [{"id": x.get("id"), "league": name(x.get("league")), "home": name(x.get("home")), "away": name(x.get("away")), "timer": x.get("timer"), "ss": x.get("ss"), "time_status": x.get("time_status")} for x in raw[:15]],
               "events": detailed,
