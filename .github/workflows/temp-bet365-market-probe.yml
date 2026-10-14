@@ -1,0 +1,47 @@
+name: Temporary Bet365 market probe
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/temp-bet365-market-probe.yml"
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+    steps:
+      - name: Probe Bet365 totals
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          BASE="https://api.b365api.com"
+          TOKEN=os.environ["BETSAPI_KEY"]
+          def get(path, **params):
+              params["token"]=TOKEN
+              url=BASE+path+"?"+urllib.parse.urlencode(params)
+              req=urllib.request.Request(url,headers={"User-Agent":"dzam-bet365-probe/1.0"})
+              with urllib.request.urlopen(req,timeout=20) as r:
+                  return json.load(r)
+          board=get("/v3/events/inplay",sport_id=1)
+          rows=[x for x in (board.get("results") or []) if isinstance(x,dict)]
+          if not rows:
+              print("BET365_PROBE="+json.dumps({"ok":False,"reason":"no_live_events"}))
+              raise SystemExit
+          ev=rows[0]
+          event_id=str(ev.get("id"))
+          data=get("/v2/event/odds",event_id=event_id,source="bet365",odds_market="1,2,3,4,5,6")
+          odds=((data.get("results") or {}).get("odds") or {})
+          out={"ok":bool(data.get("success")),"event_id":event_id,
+               "league":(ev.get("league") or {}).get("name") if isinstance(ev.get("league"),dict) else ev.get("league"),
+               "home":(ev.get("home") or {}).get("name") if isinstance(ev.get("home"),dict) else ev.get("home"),
+               "away":(ev.get("away") or {}).get("name") if isinstance(ev.get("away"),dict) else ev.get("away"),
+               "market_keys":sorted(odds.keys()),
+               "market_counts":{k:len(v) if isinstance(v,list) else None for k,v in odds.items()},
+               "full_match_totals_sample":(odds.get("1_3") or [])[:12],
+               "first_half_totals_sample":(odds.get("1_6") or [])[:12]}
+          print("BET365_PROBE="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
+          PY
