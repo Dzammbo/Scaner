@@ -2,22 +2,41 @@ name: Manual BetsAPI live football snapshot
 
 on:
   workflow_dispatch:
+    inputs:
+      event_ids:
+        description: 'Empty: full scan. Otherwise 1-3 comma-separated IDs for refresh.'
+        required: false
+        default: ''
   push:
     branches: [main]
     paths:
-      - ".github/workflows/betsapi-live-football-snapshot.yml"
-      - "scripts/live_snapshot.py"
+      - '.github/live-request.json'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   snapshot:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - name: Fetch compact live football snapshot
-        run: python3 scripts/live_snapshot.py
+        id: live
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          EVENT_IDS: ${{ inputs.event_ids }}
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            python3 scripts/live_snapshot.py --request-file .github/live-request.json
+          else
+            python3 scripts/live_snapshot.py --event-ids "$EVENT_IDS"
+          fi
+      - name: Save snapshot after publishing compact result
+        env:
+          SNAPSHOT_PATH: ${{ steps.live.outputs.snapshot_path }}
+        run: python3 scripts/save_live_snapshot.py
+

@@ -1,6 +1,10 @@
 import json, os, re, time, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from live_history import read_request, read_history, compare_event, save_snapshot
+
+MODE, REQUESTED_IDS = read_request()
+HISTORY_DIR = os.environ.get('LIVE_HISTORY_DIR', 'snapshots/live')
 
 BASE = "https://api.b365api.com"
 TOKEN = os.environ["BETSAPI_KEY"]
@@ -177,6 +181,8 @@ bet365_by_names = {
 }
 
 board, board_meta = get("/v3/events/inplay", sport_id=1)
+board_observed_at = datetime.now(timezone.utc).isoformat()
+history, history_warnings = read_history(HISTORY_DIR, board_observed_at)
 raw = [r for r in (board.get("results") or []) if isinstance(r, dict)]
 events = []
 for r in raw:
@@ -186,7 +192,9 @@ for r in raw:
     label = " ".join((league, home, away))
     minute = integer((r.get("timer") or {}).get("tm"))
     score = str(r.get("ss") or "").replace(":", "-")
-    if EXCLUDE.search(label) or minute is None or not (8 <= minute <= 60) or not re.fullmatch(r"\d+-\d+", score):
+    event_id = str(r.get("id"))
+    in_scope = (event_id in REQUESTED_IDS) if MODE == 'refresh' else (minute is not None and 8 <= minute <= 60)
+    if EXCLUDE.search(label) or minute is None or not in_scope or not re.fullmatch(r"\d+-\d+", score):
         continue
     event_id = str(r.get("id"))
     bet365_fi = bet365_by_our_event.get(event_id)
@@ -203,6 +211,8 @@ for r in raw:
         "minute": minute,
         "score": score,
         "board_stats": r.get("stats"),
+        "timer": r.get("timer"),
+        "board_observed_at_utc": board_observed_at,
     })
 
 eligible_in_window_count = len(events)
@@ -328,9 +338,16 @@ with ThreadPoolExecutor(max_workers=8) as pool:
     for f in as_completed(futures):
         detailed.append(f.result())
 detailed.sort(key=lambda e: (e["minute"], e["league"], e["home"]))
+for event in detailed:
+    event['dynamics'] = compare_event(event, history.get(event['event_id']), board_observed_at)
 
 result = {
     "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+    "board_observed_at_utc": board_observed_at,
+    "mode": MODE,
+    "requested_event_ids": REQUESTED_IDS,
+    "missing_requested_event_ids": sorted(set(REQUESTED_IDS) - {e['event_id'] for e in detailed}),
+    "history_read_warnings": history_warnings,
     "source": "BetsAPI / Bet365",
     "board_http": board_meta,
     "bet365_filter_http": bet365_filter_meta,
@@ -346,4 +363,10 @@ result = {
     "detail_calls": len(events),
     "events": detailed,
 }
-print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
+snapshot_id = os.environ.get('GITHUB_RUN_ID', str(time.time_ns())) + '-' + os.environ.get('GITHUB_RUN_ATTEMPT', '1')
+path = save_snapshot(result, HISTORY_DIR, snapshot_id)
+if os.environ.get('GITHUB_OUTPUT'):
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+        output.write('snapshot_path=' + path + '\n')
+
