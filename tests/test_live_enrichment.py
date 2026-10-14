@@ -101,6 +101,33 @@ class LiveEnrichmentTests(unittest.TestCase):
         self.assertEqual(result["windows"]["10"]["stats"]["on_target"]["home"], 0)
         self.assertTrue(result["windows"]["10"]["coverage"]["on_target"]["home"]["endpoint_confirmed"])
 
+    def test_partial_sports_interval_remains_available_with_true_bounds(self):
+        result = summarize_stats_trend({"success": 1, "results": {
+            "on_target": {"home": [{"time_str": "30", "val": "1"}, {"time_str": "44", "val": "2"}]},
+            "attacks": {"away": [{"time_str": "48", "val": "40"}]}}},
+            event={"minute": 45, "timer": {"tt": "0"}})
+        interval = result["windows"]["10"]["partial_intervals"]["on_target"]["home"]
+        self.assertEqual(interval, {"from_minute": 38, "to_minute": 44, "actual_duration_minutes": 6, "change": 1})
+        self.assertTrue(result["available"])
+        self.assertTrue(result["partial_counter_intervals_available"])
+        self.assertEqual(result["time_context"]["phase"], "before_halftime")
+
+    def test_point_before_window_does_not_invent_zero_partial_interval(self):
+        result = summarize_stats_trend({"success": 1, "results": {
+            "on_target": {"home": [{"time_str": "4", "val": "1"}]},
+            "possession": {"home": [{"time_str": "48", "val": "50"}]}}})
+        window = result["windows"]["10"]
+        self.assertEqual(window["partial_intervals"], {})
+        self.assertIsNone(window["coverage"]["on_target"]["home"]["supported_change"])
+        self.assertFalse(result["available"])
+
+    def test_later_matching_board_counter_confirms_sparse_endpoint(self):
+        result = summarize_stats_trend({"success": 1, "results": {
+            "on_target": {"home": [{"time_str": "20", "val": "2"}]},
+            "possession": {"home": [{"time_str": "29", "val": "50"}]}}},
+            event={"minute": 30, "board_stats": {"on_target": [2, 0]}})
+        self.assertEqual(result["windows"]["5"]["stats"]["on_target"]["home"], 0)
+
     def test_provider_failure_and_nonfinite_values_are_not_data(self):
         self.assertFalse(summarize_stats_trend({"success": 0, "results": {"on_target": {}}})["available"])
         self.assertFalse(self.trend([(30, "NaN"), (40, "Infinity")])["available"])

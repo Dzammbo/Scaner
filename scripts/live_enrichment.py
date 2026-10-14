@@ -117,10 +117,12 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
     board_minute = number(event.get("minute"))
     summaries = {}
     has_deltas = False
+    has_partial_deltas = False
     for window in windows:
         start = max(0, latest_minute - window)
         fields = {}
         coverage = {}
+        partial_intervals = {}
         for field in COUNTER_FIELDS:
             sides = parsed.get(field, {})
             if not any(sides.values()):
@@ -148,9 +150,21 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
                 board_value = (number(board_values[0 if side == "home" else 1])
                                if isinstance(board_values, (list, tuple)) and len(board_values) == 2 else None)
                 endpoint_confirmed = last_point == latest_minute or (
-                    board_minute == latest_minute and points and board_value == points[-1][1])
+                    board_minute is not None and board_minute >= latest_minute
+                    and points and board_value == points[-1][1])
                 if reason is None and not endpoint_confirmed:
                     reason = "window_endpoint_unconfirmed"
+                    if last_point > start:
+                        partial_intervals.setdefault(field, {})[side] = {
+                            "from_minute": _clean_number(start), "to_minute": _clean_number(last_point),
+                            "actual_duration_minutes": _clean_number(last_point - start),
+                            "change": supported_change,
+                        }
+                        has_partial_deltas = True
+                    else:
+                        # A point before the window proves neither zero activity
+                        # nor an interval with its end earlier than its start.
+                        supported_change = None
                 values[side] = None if reason else supported_change
                 coverage[field][side] = {
                     "reason": reason, "baseline_observed": baseline is not None,
@@ -171,10 +185,13 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
             "full_requested_duration": latest_minute - start == window,
             "coverage": coverage,
             "stats": fields,
+            "partial_intervals": partial_intervals,
         }
 
     return {
-        "available": has_deltas,
+        "available": has_deltas or has_partial_deltas,
+        "complete_counter_intervals_available": has_deltas,
+        "partial_counter_intervals_available": has_partial_deltas,
         "has_numeric_series": True,
         "source": "betsapi_event_stats_trend",
         "latest_minute": _clean_number(latest_minute),
