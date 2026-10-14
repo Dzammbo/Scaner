@@ -29,16 +29,11 @@ jobs:
                   for x in v: out.extend(flat(x))
               elif isinstance(v,dict): out.append(v)
               return out
-          ip=get("/v1/bet365/inplay")
-          soccer_rows=[]
-          for group in (ip.get("results") or []):
-              grows=flat(group)
-              if any(x.get("type")=="CL" and (str(x.get("ID"))=="1" or str(x.get("NA")).lower()=="soccer") for x in grows):
-                  soccer_rows.extend(grows)
-          events=[x for x in soccer_rows if x.get("type")=="EV" and str(x.get("C3") or "") not in ("","0")]
-          real=[x for x in events if not re.search(r"esoccer|esports|virtual|simulated",str(x.get("CT",""))+" "+str(x.get("NA","")),re.I)]
+          ip=get("/v1/bet365/inplay_filter",sport_id=1)
+          events=[x for x in (ip.get("results") or []) if isinstance(x,dict) and str(x.get("sport_id"))=="1"]
+          real=[x for x in events if not re.search(r"esoccer|esports|virtual|simulated",str((x.get("league") or {}).get("name",""))+" "+str((x.get("home") or {}).get("name",""))+" "+str((x.get("away") or {}).get("name","")),re.I)]
           ev=(real or events)[0]
-          fi=str(ev.get("C3"))
+          fi=str(ev.get("id"))
           data=get("/v1/bet365/event",FI=fi)
           erows=flat(data.get("results") or [])
           markets=[]; current=None
@@ -49,6 +44,6 @@ jobs:
                   else: current=None
               elif x.get("type")=="PA" and current is not None and len(current["selections"])<20:
                   current["selections"].append({k:x.get(k) for k in ("NA","HA","OD","SU","ID")})
-          out={"ok":bool(data.get("success")),"used_real_event":bool(real),"event":{"FI":fi,"league":ev.get("CT"),"name":ev.get("NA"),"score":ev.get("SS"),"minute":ev.get("LM")},"all_market_count":sum(1 for x in erows if x.get("type")=="MA"),"total_related_market_count":len(markets),"total_related_markets":markets[:60]}
+          out={"ok":bool(data.get("success")),"used_real_event":bool(real),"event":{"FI":fi,"league":(ev.get("league") or {}).get("name"),"name":str((ev.get("home") or {}).get("name"))+" v "+str((ev.get("away") or {}).get("name")),"score":ev.get("ss"),"minute":None},"all_market_count":sum(1 for x in erows if x.get("type")=="MA"),"total_related_market_count":len(markets),"total_related_markets":markets[:60]}
           print("BET365_FULL_PROBE="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
           PY
