@@ -36,14 +36,18 @@ jobs:
           fi=str(ev.get("id"))
           data=get("/v1/bet365/event",FI=fi)
           erows=flat(data.get("results") or [])
-          markets=[]; current=None
+          markets=[]; current=None; side=None
           for x in erows:
-              if x.get("type")=="MA":
-                  current={"name":x.get("NA"),"id":x.get("ID"),"suspended":x.get("SU"),"selections":[]}
-                  if re.search(r"goal|total|over.?under",str(x.get("NA","")),re.I): markets.append(current)
+              if x.get("type")=="MG":
+                  side=None
+                  if re.search(r"goal|total|over.?under",str(x.get("NA","")),re.I):
+                      current={"name":x.get("NA"),"id":x.get("ID"),"suspended":x.get("SU"),"selections":[]}
+                      markets.append(current)
                   else: current=None
-              elif x.get("type")=="PA" and current is not None and len(current["selections"])<20:
-                  current["selections"].append({k:x.get(k) for k in ("NA","HA","OD","SU","ID")})
-          out={"ok":bool(data.get("success")),"used_real_event":bool(real),"event":{"FI":fi,"league":(ev.get("league") or {}).get("name"),"name":str((ev.get("home") or {}).get("name"))+" v "+str((ev.get("away") or {}).get("name")),"score":ev.get("ss"),"minute":None},"all_market_count":sum(1 for x in erows if x.get("type")=="MA"),"total_related_market_count":len(markets),"total_related_markets":markets[:60]}
+              elif x.get("type")=="MA":
+                  side=x.get("NA")
+              elif x.get("type")=="PA" and current is not None and len(current["selections"])<40:
+                  current["selections"].append({"side":side,**{k:x.get(k) for k in ("NA","HA","OD","SU","ID")}})
+          out={"ok":bool(data.get("success")),"used_real_event":bool(real),"event":{"FI":fi,"league":(ev.get("league") or {}).get("name"),"name":str((ev.get("home") or {}).get("name"))+" v "+str((ev.get("away") or {}).get("name")),"score":ev.get("ss"),"minute":None},"all_market_count":sum(1 for x in erows if x.get("type")=="MG"),"total_related_market_count":len(markets),"total_related_markets":markets[:60]}
           print("BET365_FULL_PROBE="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
           PY
