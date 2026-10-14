@@ -23,9 +23,11 @@ class Response:
     def read(self):return json.dumps(self.data).encode()
 
 class SnapshotIntegrationTests(unittest.TestCase):
-    def test_shortlists_only_events_with_main_eligible_total_and_loads_trend(self):
+    def test_sports_shortlist_is_independent_of_main_total_and_loads_trend(self):
+        calls=[]
         def get(request,timeout):
             url=urlparse(request.full_url);params=parse_qs(url.query)
+            calls.append(url.path)
             if url.path.endswith('inplay_filter'):
                 return Response({'success':1,'results':[]})
             if url.path.endswith('/events/inplay'):
@@ -42,7 +44,6 @@ class SnapshotIntegrationTests(unittest.TestCase):
                      'over_od':'1.9','under_od':'1.9'}
                 ]}}})
             if url.path.endswith('/event/stats_trend'):
-                self.assertEqual(params['event_id'],['123'])
                 return Response({'success':1,'results':{'on_target':{
                     'home':[{'time_str':'20','val':'1'},{'time_str':'30','val':'3'}],
                     'away':[{'time_str':'30','val':'2'}],
@@ -56,10 +57,14 @@ class SnapshotIntegrationTests(unittest.TestCase):
                 runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
             result=json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             by_id={event['event_id']:event for event in result['events']}
-            self.assertEqual(result['main_eligible_event_count'],1)
-            self.assertEqual(result['stats_trend_shortlisted_count'],1)
+            self.assertEqual(result['events_main_total_count'],2)
+            self.assertEqual(result['main_total_within_two_goal_limit_count'],1)
+            self.assertEqual(result['stats_trend_shortlisted_count'],2)
             self.assertTrue(by_id['123']['stats_trend']['available'])
-            self.assertFalse(by_id['456']['stats_trend_shortlisted'])
+            self.assertTrue(by_id['456']['stats_trend_shortlisted'])
+            self.assertFalse(by_id['456']['main_total_within_two_goal_limit'])
+            self.assertEqual(by_id['123']['events_main_total']['source'],'events_odds_main')
+            self.assertFalse(any('/v1/bet365/' in path for path in calls))
 
     def test_full_refresh_and_history(self):
         calls=[]

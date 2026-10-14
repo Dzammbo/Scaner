@@ -136,8 +136,6 @@ def summarize_stats_trend(payload, windows=(5, 10, 15)):
 
 def preliminary_priority(event):
     """Ordering for costly enrichment only, not a pass score or final selection."""
-    eligible = event.get("eligible_full_time_totals") or []
-    best_needed = min((row.get("additional_goals_for_full_win", 99) for row in eligible), default=99)
     stats = event.get("board_stats") if isinstance(event.get("board_stats"), dict) else {}
 
     def total(field):
@@ -146,15 +144,14 @@ def preliminary_priority(event):
             return 0.0
         return sum(value for value in (number(item) for item in values) if value is not None)
 
-    # Direct attempts and pressure determine enrichment priority. Required goals
-    # break otherwise comparable cases; they are not an analytical pass score.
+    # This ordering is deliberately independent of line and price.
     minute = max(event.get("minute", 0), 1)
     return (
-        -total("on_target"),
-        -(total("on_target") + total("off_target")),
+        -(total("on_target") / minute),
+        -((total("on_target") + total("off_target")) / minute),
+        -(total("xg") / minute),
         -(total("dangerous_attacks") / minute),
-        -total("corners"),
-        best_needed,
+        -(total("corners") / minute),
         -event.get("minute", 0),
         event.get("event_id", ""),
     )

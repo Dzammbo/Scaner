@@ -65,126 +65,6 @@ def latest(rows):
     rows = [r for r in (rows or []) if isinstance(r, dict)]
     return sorted(rows, key=lambda r: integer(r.get("add_time")) or 0, reverse=True)
 
-def flatten(value):
-    out = []
-    if isinstance(value, list):
-        for item in value:
-            out.extend(flatten(item))
-    elif isinstance(value, dict):
-        out.append(value)
-    return out
-
-def normalized(value):
-    return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
-
-def decimal_odds(value):
-    text = str(value or "").strip()
-    if not text:
-        return None
-    try:
-        if "/" in text:
-            left, right = text.split("/", 1)
-            denominator = float(right)
-            return 1.0 + float(left) / denominator if denominator else None
-        return float(text)
-    except Exception:
-        return None
-
-def parse_bet365_totals(payload):
-    rows = flatten(payload.get("results") or [])
-    groups = []
-    current = None
-    side = None
-    excluded = re.compile(r"next goal|\d+(?:st|nd|rd|th) goal|exact|odd.?even|race to|winning margin", re.I)
-
-    for row in rows:
-        row_type = row.get("type")
-        if row_type == "MG":
-            market = str(row.get("NA") or "").strip()
-            low = market.lower()
-            relevant = (
-                "match goals" in low
-                or "goal line" in low
-                or "total goals" in low
-                or (("1st half" in low or "first half" in low) and "goals" in low)
-            )
-            if relevant and not excluded.search(low):
-                period = "first_half" if ("1st half" in low or "first half" in low) else "full_time"
-                current = {
-                    "market": market,
-                    "period": period,
-                    "group_suspended": str(row.get("SU") or "0") == "1",
-                    "selections": [],
-                }
-                groups.append(current)
-            else:
-                current = None
-            side = None
-        elif row_type == "MA":
-            side = str(row.get("NA") or "").strip().lower()
-        elif row_type == "PA" and current is not None:
-            line = num(row.get("HA"))
-            price = decimal_odds(row.get("OD"))
-            if line is None or price is None or side not in ("over", "under"):
-                continue
-            current["selections"].append({
-                "side": side,
-                "line": line,
-                "odds": round(price, 4),
-                "suspended": current["group_suspended"] or str(row.get("SU") or "0") == "1",
-            })
-
-    def lines(period):
-        combined = {}
-        for group in groups:
-            if group["period"] != period:
-                continue
-            for selection in group["selections"]:
-                line = selection["line"]
-                row = combined.setdefault(line, {
-                    "line": line,
-                    "over": None,
-                    "under": None,
-                    "market": group["market"],
-                    "source": "bet365_full_markets",
-                })
-                if not selection["suspended"]:
-                    row[selection["side"]] = selection["odds"]
-                    row["market"] = group["market"]
-        return [
-            row for _, row in sorted(combined.items())
-            if row.get("over") is not None
-        ][:20]
-
-    return {
-        "full_time": lines("full_time"),
-        "first_half": lines("first_half"),
-        "market_names": [g["market"] for g in groups],
-    }
-
-bet365_filter_error = None
-bet365_filter_meta = None
-try:
-    bet365_filter, bet365_filter_meta = get("/v1/bet365/inplay_filter", sport_id=1)
-    bet365_rows = [r for r in (bet365_filter.get("results") or []) if isinstance(r, dict)]
-except Exception as exc:
-    bet365_rows = []
-    bet365_filter_error = type(exc).__name__ + ": " + str(exc)[:180]
-
-bet365_by_our_event = {
-    str(row.get("our_event_id")): str(row.get("id"))
-    for row in bet365_rows
-    if row.get("our_event_id") and row.get("id")
-}
-bet365_by_names = {
-    (
-        normalized(name(row.get("home"))),
-        normalized(name(row.get("away"))),
-    ): str(row.get("id"))
-    for row in bet365_rows
-    if row.get("id") and name(row.get("home")) and name(row.get("away"))
-}
-
 board, board_meta = get("/v3/events/inplay", sport_id=1)
 board_observed_at = datetime.now(timezone.utc).isoformat()
 history, history_warnings = read_history(HISTORY_DIR, board_observed_at)
@@ -210,12 +90,8 @@ for r in raw:
         previously_selected_skipped_ids.append(event_id)
         continue
     event_id = str(r.get("id"))
-    bet365_fi = bet365_by_our_event.get(event_id)
-    if not bet365_fi:
-        bet365_fi = bet365_by_names.get((normalized(home), normalized(away)))
     events.append({
         "event_id": event_id,
-        "bet365_fi": bet365_fi,
         "league": league,
         "country": (r.get("league") or {}).get("cc") if isinstance(r.get("league"), dict) else None,
         "category": category(label),
@@ -240,14 +116,13 @@ events = sorted(events, key=lambda e: (e["minute"], e["league"], e["home"]))[:TE
 
 def detail(ev):
     try:
-        p, meta = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,2,3,6")
+        p, meta = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,3")
         rr = p.get("results") or {}
         odds = rr.get("odds") or {}
         score = ev["score"]
         now = int(time.time())
 
-        totals = []
-        seen = set()
+        events_main_total = None
         for row in latest(odds.get("1_3")):
             row_score = str(row.get("ss") or "").replace(":", "-")
             age = now - integer(row.get("add_time")) if integer(row.get("add_time")) is not None else None
@@ -259,35 +134,15 @@ def detail(ev):
                 continue
             if line is None or over is None or under is None:
                 continue
-            key = round(line, 3)
-            if key in seen:
-                continue
-            seen.add(key)
-            totals.append({"line": line, "over": over, "under": under, "age_s": age, "quote_score": row_score or score})
-            if len(totals) >= 6:
-                break
-
-        first_half_totals = []
-        if ev["minute"] <= 45:
-            seen_first_half = set()
-            for row in latest(odds.get("1_6")):
-                row_score = str(row.get("ss") or "").replace(":", "-")
-                age = now - integer(row.get("add_time")) if integer(row.get("add_time")) is not None else None
-                line = handicap(row.get("handicap"))
-                over, under = num(row.get("over_od")), num(row.get("under_od"))
-                if row_score and row_score != score:
-                    continue
-                if age is not None and not (0 <= age <= 240):
-                    continue
-                if line is None or over is None or under is None:
-                    continue
-                key = round(line, 3)
-                if key in seen_first_half:
-                    continue
-                seen_first_half.add(key)
-                first_half_totals.append({"line": line, "over": over, "under": under, "age_s": age, "quote_score": row_score or score})
-                if len(first_half_totals) >= 6:
-                    break
+            events_main_total = {
+                "line": line,
+                "over": over,
+                "under": under,
+                "age_s": age,
+                "quote_score": row_score or score,
+                "source": "events_odds_main",
+            }
+            break
 
         one_x_two = None
         for row in latest(odds.get("1_1")):
@@ -302,44 +157,20 @@ def detail(ev):
                 one_x_two = {"home": vals[0], "draw": vals[1], "away": vals[2], "age_s": age}
                 break
 
-        bet365_full_time_totals = []
-        bet365_first_half_totals = []
-        bet365_full_market_ok = False
-        bet365_full_market_error = None
-        bet365_fi = ev.get("bet365_fi")
-        if bet365_fi:
-            try:
-                bp, _ = get("/v1/bet365/event", FI=bet365_fi)
-                parsed = parse_bet365_totals(bp)
-                bet365_full_time_totals = parsed["full_time"]
-                bet365_first_half_totals = parsed["first_half"] if ev["minute"] <= 45 else []
-                bet365_full_market_ok = bool(bp.get("success"))
-            except Exception as exc:
-                bet365_full_market_error = type(exc).__name__ + ": " + str(exc)[:180]
-        else:
-            bet365_full_market_error = "FI not matched"
-
-        preferred_totals = bet365_full_time_totals or totals
-        preferred_first_half_totals = bet365_first_half_totals or first_half_totals
-        totals_source = "bet365_full_markets" if bet365_full_time_totals else "events_odds_fallback"
-        first_half_totals_source = (
-            "bet365_full_markets"
-            if bet365_first_half_totals
-            else "events_odds_fallback"
+        annotated_totals, eligible_full_time_totals = annotate_total_lines(
+            [events_main_total] if events_main_total else [], score
         )
-
-        preferred_totals, eligible_full_time_totals = annotate_total_lines(preferred_totals, score)
+        events_main_total = annotated_totals[0] if annotated_totals else None
 
         out = dict(ev)
         out.update({
             "detail_ok": bool(p.get("success")),
-            "totals": preferred_totals,
+            "events_main_total": events_main_total,
+            "totals": annotated_totals,
             "eligible_full_time_totals": eligible_full_time_totals,
-            "first_half_totals": preferred_first_half_totals,
-            "totals_source": totals_source,
-            "first_half_totals_source": first_half_totals_source,
-            "bet365_full_market_ok": bet365_full_market_ok,
-            "bet365_full_market_error": bet365_full_market_error,
+            "main_total_within_two_goal_limit": bool(eligible_full_time_totals),
+            "totals_source": "events_odds_main",
+            "odds_http": meta,
             "one_x_two": one_x_two,
         })
         return out
@@ -362,7 +193,7 @@ for event in detailed:
 # real 5/10/15-minute dynamics even on the first snapshot of an event.
 STATS_TREND_SHORTLIST_LIMIT = 15
 trend_candidates = sorted(
-    [event for event in detailed if event.get("eligible_full_time_totals")],
+    detailed,
     key=preliminary_priority,
 )[:STATS_TREND_SHORTLIST_LIMIT]
 trend_candidate_ids = {event["event_id"] for event in trend_candidates}
@@ -404,12 +235,8 @@ result = {
     "missing_requested_event_ids": sorted(set(REQUESTED_IDS) - {e['event_id'] for e in detailed}),
     "history_read_warnings": history_warnings,
     "selected_events_read_warnings": selected_events_warnings,
-    "source": "BetsAPI / Bet365",
+    "source": "BetsAPI Events API",
     "board_http": board_meta,
-    "bet365_filter_http": bet365_filter_meta,
-    "bet365_filter_error": bet365_filter_error,
-    "bet365_filter_event_count": len(bet365_rows),
-    "bet365_fi_matched_count": sum(1 for e in events if e.get("bet365_fi")),
     "raw_live_count": len(raw),
     "eligible_before_selected_count": eligible_before_selected_count,
     "previously_selected_skipped_count": len(previously_selected_skipped_ids),
@@ -421,7 +248,10 @@ result = {
     "category_counts": category_counts,
     "detail_calls": len(events),
     "maximum_additional_goals_for_main": 2,
-    "main_eligible_event_count": sum(1 for event in detailed if event.get("eligible_full_time_totals")),
+    "events_main_total_count": sum(1 for event in detailed if event.get("events_main_total")),
+    "main_total_within_two_goal_limit_count": sum(
+        1 for event in detailed if event.get("main_total_within_two_goal_limit")
+    ),
     "stats_trend_shortlist_limit": STATS_TREND_SHORTLIST_LIMIT,
     "stats_trend_shortlisted_count": len(trend_candidates),
     "stats_trend_available_count": sum(
