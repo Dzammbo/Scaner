@@ -1,10 +1,14 @@
 import json, os, re, time, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
-from live_history import read_request, read_history, compare_event, save_snapshot
+from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
 
 MODE, REQUESTED_IDS = read_request()
 HISTORY_DIR = os.environ.get('LIVE_HISTORY_DIR', 'snapshots/live')
+SELECTED_EVENTS_FILE = os.environ.get('LIVE_SELECTED_EVENTS_FILE', '.github/live-selected-events.json')
+SELECTED_EVENT_IDS, selected_events_warnings = read_selected_events(SELECTED_EVENTS_FILE)
+if MODE == 'full' and selected_events_warnings:
+    raise RuntimeError('Cannot safely run full scan without selected-events ledger: ' + '; '.join(selected_events_warnings))
 
 BASE = "https://api.b365api.com"
 TOKEN = os.environ["BETSAPI_KEY"]
@@ -185,6 +189,8 @@ board_observed_at = datetime.now(timezone.utc).isoformat()
 history, history_warnings = read_history(HISTORY_DIR, board_observed_at)
 raw = [r for r in (board.get("results") or []) if isinstance(r, dict)]
 events = []
+eligible_before_selected_count = 0
+previously_selected_skipped_ids = []
 for r in raw:
     league = name(r.get("league")) or ""
     home = name(r.get("home")) or ""
@@ -195,6 +201,12 @@ for r in raw:
     event_id = str(r.get("id"))
     in_scope = (event_id in REQUESTED_IDS) if MODE == 'refresh' else (minute is not None and 8 <= minute <= 60)
     if EXCLUDE.search(label) or minute is None or not in_scope or not re.fullmatch(r"\d+-\d+", score):
+        continue
+    eligible_before_selected_count += 1
+    # A direct refresh is an explicit repeat analysis and therefore bypasses
+    # the ordinary one-match-one-forecast exclusion.
+    if MODE == 'full' and event_id in SELECTED_EVENT_IDS:
+        previously_selected_skipped_ids.append(event_id)
         continue
     event_id = str(r.get("id"))
     bet365_fi = bet365_by_our_event.get(event_id)
@@ -348,6 +360,7 @@ result = {
     "requested_event_ids": REQUESTED_IDS,
     "missing_requested_event_ids": sorted(set(REQUESTED_IDS) - {e['event_id'] for e in detailed}),
     "history_read_warnings": history_warnings,
+    "selected_events_read_warnings": selected_events_warnings,
     "source": "BetsAPI / Bet365",
     "board_http": board_meta,
     "bet365_filter_http": bet365_filter_meta,
@@ -355,6 +368,9 @@ result = {
     "bet365_filter_event_count": len(bet365_rows),
     "bet365_fi_matched_count": sum(1 for e in events if e.get("bet365_fi")),
     "raw_live_count": len(raw),
+    "eligible_before_selected_count": eligible_before_selected_count,
+    "previously_selected_skipped_count": len(previously_selected_skipped_ids),
+    "previously_selected_skipped_event_ids": sorted(previously_selected_skipped_ids),
     "eligible_in_window_count": eligible_in_window_count,
     "detailed_event_count": len(events),
     "technical_event_cap": TECHNICAL_EVENT_CAP,

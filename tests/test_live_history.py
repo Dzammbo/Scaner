@@ -5,7 +5,7 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from live_history import compare_event, read_request, read_history, save_snapshot
+from live_history import compare_event, read_request, read_history, read_selected_events, save_snapshot
 
 class LiveHistoryTests(unittest.TestCase):
     def event(self, minute=30, score='0-0', shots=('2', '1')):
@@ -53,5 +53,23 @@ class LiveHistoryTests(unittest.TestCase):
             self.assertEqual(read_request(['--request-file',str(p)]),('refresh',['123']))
             p.write_text(json.dumps(dict(mode='full',requested_at_utc='2000-01-01T00:00:00Z')))
             with self.assertRaises(ValueError):read_request(['--request-file',str(p)])
+
+    def test_selected_events_ledger(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'selected.json'
+            ids,warnings=read_selected_events(p)
+            self.assertEqual(ids,set())
+            self.assertTrue(warnings)
+            p.write_text(json.dumps({
+                'schema_version':1,
+                'events':[{'event_id':'123'},{'event_id':456},{'event_id':'123'}],
+            }))
+            ids,warnings=read_selected_events(p)
+            self.assertEqual(ids,{'123','456'})
+            self.assertFalse(warnings)
+            p.write_text(json.dumps({'schema_version':2,'events':[]}))
+            ids,warnings=read_selected_events(p)
+            self.assertEqual(ids,set())
+            self.assertTrue(warnings)
 
 if __name__=='__main__':unittest.main()

@@ -7,6 +7,26 @@ from pathlib import Path
 
 COUNTERS = ('on_target', 'off_target', 'corners', 'dangerous_attacks', 'xg', 'goals', 'redcards')
 
+def read_selected_events(path):
+    """Read event IDs that already received an Основной live forecast."""
+    try:
+        payload = json.loads(Path(path).read_text())
+    except FileNotFoundError:
+        return set(), ['selected-events file missing']
+    except (json.JSONDecodeError, OSError) as exc:
+        return set(), [type(exc).__name__ + ': ' + str(exc)[:180]]
+    try:
+        if payload.get('schema_version') != 1 or not isinstance(payload.get('events'), list):
+            raise ValueError('unsupported selected-events schema')
+        ids = {
+            str(row['event_id']).strip()
+            for row in payload['events']
+            if isinstance(row, dict) and str(row.get('event_id') or '').strip()
+        }
+        return ids, []
+    except (TypeError, ValueError) as exc:
+        return set(), [type(exc).__name__ + ': ' + str(exc)[:180]]
+
 def timestamp(value):
     return datetime.fromisoformat(value.replace('Z', '+00:00')).timestamp()
 
