@@ -6,6 +6,7 @@ from pathlib import Path
 import runpy
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs
@@ -22,6 +23,44 @@ class Response:
     def read(self):return json.dumps(self.data).encode()
 
 class SnapshotIntegrationTests(unittest.TestCase):
+    def test_shortlists_only_events_with_main_eligible_total_and_loads_trend(self):
+        def get(request,timeout):
+            url=urlparse(request.full_url);params=parse_qs(url.query)
+            if url.path.endswith('inplay_filter'):
+                return Response({'success':1,'results':[]})
+            if url.path.endswith('/events/inplay'):
+                return Response({'success':1,'results':[
+                    {'id':'123','home':{'name':'A'},'away':{'name':'B'},'league':{'name':'Test'},
+                     'timer':{'tm':30},'ss':'0-0','stats':{'on_target':['2','1']}},
+                    {'id':'456','home':{'name':'C'},'away':{'name':'D'},'league':{'name':'Test'},
+                     'timer':{'tm':31},'ss':'0-0','stats':{'on_target':['4','3']}},
+                ]})
+            if url.path.endswith('/event/odds'):
+                line = '1.5' if params['event_id'][0] == '123' else '2.5'
+                return Response({'success':1,'results':{'odds':{'1_3':[
+                    {'ss':'0-0','add_time':str(int(time.time())),'handicap':line,
+                     'over_od':'1.9','under_od':'1.9'}
+                ]}}})
+            if url.path.endswith('/event/stats_trend'):
+                self.assertEqual(params['event_id'],['123'])
+                return Response({'success':1,'results':{'on_target':{
+                    'home':[{'time_str':'20','val':'1'},{'time_str':'30','val':'3'}],
+                    'away':[{'time_str':'30','val':'2'}],
+                }}})
+            raise AssertionError(url.path)
+        with tempfile.TemporaryDirectory() as directory:
+            output=io.StringIO()
+            env={'BETSAPI_KEY':'test','LIVE_HISTORY_DIR':directory,
+                 'GITHUB_RUN_ID':'789','GITHUB_RUN_ATTEMPT':'1'}
+            with patch.dict(os.environ,env,clear=True),patch.object(sys,'argv',['live_snapshot.py']),patch('urllib.request.urlopen',get),contextlib.redirect_stdout(output):
+                runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
+            result=json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
+            by_id={event['event_id']:event for event in result['events']}
+            self.assertEqual(result['main_eligible_event_count'],1)
+            self.assertEqual(result['stats_trend_shortlisted_count'],1)
+            self.assertTrue(by_id['123']['stats_trend']['available'])
+            self.assertFalse(by_id['456']['stats_trend_shortlisted'])
+
     def test_full_refresh_and_history(self):
         calls=[]
         def get(request,timeout):

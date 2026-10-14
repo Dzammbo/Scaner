@@ -2,6 +2,7 @@ import json, os, re, time, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
+from live_enrichment import annotate_total_lines, preliminary_priority, summarize_stats_trend
 
 MODE, REQUESTED_IDS = read_request()
 HISTORY_DIR = os.environ.get('LIVE_HISTORY_DIR', 'snapshots/live')
@@ -327,10 +328,13 @@ def detail(ev):
             else "events_odds_fallback"
         )
 
+        preferred_totals, eligible_full_time_totals = annotate_total_lines(preferred_totals, score)
+
         out = dict(ev)
         out.update({
             "detail_ok": bool(p.get("success")),
             "totals": preferred_totals,
+            "eligible_full_time_totals": eligible_full_time_totals,
             "first_half_totals": preferred_first_half_totals,
             "totals_source": totals_source,
             "first_half_totals_source": first_half_totals_source,
@@ -352,6 +356,45 @@ with ThreadPoolExecutor(max_workers=8) as pool:
 detailed.sort(key=lambda e: (e["minute"], e["league"], e["home"]))
 for event in detailed:
     event['dynamics'] = compare_event(event, history.get(event['event_id']), board_observed_at)
+
+# The expensive minute-by-minute endpoint is called only for a preliminary
+# shortlist. This keeps the full pass fast while giving the final manual Top-5
+# real 5/10/15-minute dynamics even on the first snapshot of an event.
+STATS_TREND_SHORTLIST_LIMIT = 15
+trend_candidates = sorted(
+    [event for event in detailed if event.get("eligible_full_time_totals")],
+    key=preliminary_priority,
+)[:STATS_TREND_SHORTLIST_LIMIT]
+trend_candidate_ids = {event["event_id"] for event in trend_candidates}
+for event in detailed:
+    event["stats_trend_shortlisted"] = event["event_id"] in trend_candidate_ids
+
+def enrich_stats_trend(event):
+    try:
+        payload, meta = get("/v1/event/stats_trend", event_id=event["event_id"])
+        summary = summarize_stats_trend(payload)
+        summary["http"] = meta
+        return event["event_id"], summary
+    except Exception as exc:
+        return event["event_id"], {
+            "available": False,
+            "source": "betsapi_event_stats_trend",
+            "reason": type(exc).__name__ + ": " + str(exc)[:180],
+        }
+
+trend_by_event = {}
+with ThreadPoolExecutor(max_workers=8) as pool:
+    futures = [pool.submit(enrich_stats_trend, event) for event in trend_candidates]
+    for future in as_completed(futures):
+        event_id, summary = future.result()
+        trend_by_event[event_id] = summary
+for event in detailed:
+    if event["stats_trend_shortlisted"]:
+        event["stats_trend"] = trend_by_event.get(event["event_id"], {
+            "available": False,
+            "source": "betsapi_event_stats_trend",
+            "reason": "trend request did not complete",
+        })
 
 result = {
     "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -377,6 +420,13 @@ result = {
     "technical_cap_reached": eligible_in_window_count > TECHNICAL_EVENT_CAP,
     "category_counts": category_counts,
     "detail_calls": len(events),
+    "maximum_additional_goals_for_main": 2,
+    "main_eligible_event_count": sum(1 for event in detailed if event.get("eligible_full_time_totals")),
+    "stats_trend_shortlist_limit": STATS_TREND_SHORTLIST_LIMIT,
+    "stats_trend_shortlisted_count": len(trend_candidates),
+    "stats_trend_available_count": sum(
+        1 for summary in trend_by_event.values() if summary.get("available")
+    ),
     "events": detailed,
 }
 print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
