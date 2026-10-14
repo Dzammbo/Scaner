@@ -30,8 +30,12 @@ jobs:
               elif isinstance(v,dict): out.append(v)
               return out
           ip=get("/v1/bet365/inplay")
-          rows=flat(ip.get("results") or [])
-          events=[x for x in rows if x.get("type")=="EV" and x.get("C3")]
+          soccer_rows=[]
+          for group in (ip.get("results") or []):
+              grows=flat(group)
+              if any(x.get("type")=="CL" and (str(x.get("ID"))=="1" or str(x.get("NA")).lower()=="soccer") for x in grows):
+                  soccer_rows.extend(grows)
+          events=[x for x in soccer_rows if x.get("type")=="EV" and str(x.get("C3") or "") not in ("","0")]
           real=[x for x in events if not re.search(r"esoccer|esports|virtual|simulated",str(x.get("CT",""))+" "+str(x.get("NA","")),re.I)]
           ev=(real or events)[0]
           fi=str(ev.get("C3"))
