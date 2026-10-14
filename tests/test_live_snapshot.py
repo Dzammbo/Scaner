@@ -7,6 +7,7 @@ import runpy
 import sys
 import tempfile
 import time
+import threading
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlparse, parse_qs
@@ -23,6 +24,85 @@ class Response:
     def read(self):return json.dumps(self.data).encode()
 
 class SnapshotIntegrationTests(unittest.TestCase):
+    def test_large_pool_is_not_capped_and_enrichment_is_bounded(self):
+        from live_snapshot import collect
+        calls = []
+        active = 0
+        peak = 0
+        lock = threading.Lock()
+        parallel = threading.Event()
+        rows = [{"id": str(900000+i), "home": {"name": "A"}, "away": {"name": "B"},
+                 "league": {"name": ["Women", "U21", "Reserves", "Test"][i % 4]},
+                 "timer": {"tm": 8+i % 53}, "ss": "0-0", "stats": {}}
+                for i in range(250)]
+        def fake_get(path, **params):
+            nonlocal active, peak
+            calls.append((path, params))
+            if path.endswith("/events/inplay"):
+                return {"success": 1, "results": rows}, {}
+            with lock:
+                active += 1
+                peak = max(peak, active)
+                if active >= 8:
+                    parallel.set()
+            parallel.wait(1)
+            time.sleep(.005)
+            with lock:
+                active -= 1
+            if path.endswith("/event/odds"):
+                self.assertEqual(params["odds_market"], "3")
+                return {"success": 1, "results": {"odds": {}}}, {}
+            return {"success": 1, "results": {}}, {}
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get', fake_get):
+            result = collect("full", [], directory, str(ROOT/'.github/live-selected-events.json'))
+        self.assertEqual(len(result["events"]), 250)
+        self.assertEqual(result["sports_review_event_count"], 250)
+        self.assertFalse(result["technical_cap_reached"])
+        self.assertEqual(result["total_api_calls"], 31)
+        self.assertEqual(len(calls), 31)
+        self.assertEqual(result["stats_trend_shortlisted_count"], 15)
+        self.assertEqual(len(result["category_counts"]), 4)
+        self.assertGreaterEqual(peak, 8)
+        self.assertLessEqual(peak, 16)
+        odds_ids = {params['event_id'] for path, params in calls if path.endswith('/event/odds')}
+        trend_ids = {params['event_id'] for path, params in calls if path.endswith('/event/stats_trend')}
+        self.assertEqual(odds_ids, trend_ids)
+        self.assertEqual(len(odds_ids), 15)
+        self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 235)
+
+    def test_odds_does_not_block_trend_and_failures_do_not_remove_match(self):
+        from live_snapshot import collect
+        trend_started = threading.Event()
+        def fake_get(path, **params):
+            if path.endswith('/events/inplay'):
+                return {'success': 1, 'results': [
+                    {'id': '900001', 'home': {'name': 'A'}, 'away': {'name': 'B'},
+                     'league': {'name': 'Test'}, 'timer': {'tm': 30}, 'ss': '0-0'}]}, {}
+            if path.endswith('/event/stats_trend'):
+                trend_started.set()
+                raise TimeoutError('synthetic trend timeout')
+            self.assertTrue(trend_started.wait(1), 'Odds blocked the trend stage')
+            raise TimeoutError('synthetic odds timeout')
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get', fake_get), patch.dict(os.environ, {'BETSAPI_KEY': 'test'}):
+            result = collect('full', [], directory, str(ROOT/'.github/live-selected-events.json'))
+        self.assertEqual(len(result['events']), 1)
+        self.assertEqual(result['events'][0]['main_total_status'], 'unavailable')
+        self.assertFalse(result['events'][0]['stats_trend']['available'])
+
+    def test_empty_board_calls_no_enrichment(self):
+        from live_snapshot import collect
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get', return_value=({'success': 1, 'results': []}, {})) as mocked:
+            result = collect('full', [], directory, str(ROOT/'.github/live-selected-events.json'))
+        self.assertEqual(mocked.call_count, 1)
+        self.assertEqual(result['total_api_calls'], 1)
+        self.assertEqual(result['events'], [])
+
+    def test_board_api_failure_is_not_reported_as_zero_candidates(self):
+        from live_snapshot import collect
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get', return_value=({'success': 0, 'results': []}, {})):
+            with self.assertRaisesRegex(RuntimeError, 'API failure'):
+                collect('full', [], directory, str(ROOT/'.github/live-selected-events.json'))
+
     def test_sports_shortlist_is_independent_of_main_total_and_loads_trend(self):
         calls=[]
         def get(request,timeout):

@@ -1,25 +1,26 @@
-import json, os, re, time, urllib.parse, urllib.request
+"""One on-demand Events snapshot. Full sports pool, bounded parallel enrichment."""
+import json
+import os
+import re
+import time
+import urllib.parse
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
-from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
-from live_enrichment import annotate_total_lines, preliminary_priority, summarize_stats_trend
 
-MODE, REQUESTED_IDS = read_request()
-HISTORY_DIR = os.environ.get('LIVE_HISTORY_DIR', 'snapshots/live')
-SELECTED_EVENTS_FILE = os.environ.get('LIVE_SELECTED_EVENTS_FILE', '.github/live-selected-events.json')
-SELECTED_EVENT_IDS, selected_events_warnings = read_selected_events(SELECTED_EVENTS_FILE)
-if MODE == 'full' and selected_events_warnings:
-    raise RuntimeError('Cannot safely run full scan without selected-events ledger: ' + '; '.join(selected_events_warnings))
+from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
+from live_enrichment import number, summarize_stats_trend
+from live_odds import current_main_total
+from live_ranking import RULES_VERSION, RANKING_METHOD, rank_candidates
 
 BASE = "https://api.b365api.com"
-TOKEN = os.environ["BETSAPI_KEY"]
-EXCLUDE = re.compile(
-    r"virtual|esoccer|e-soccer|esports|simulated|cyber",
-    re.I,
-)
+SHORTLIST_LIMIT = 15
+MAX_WORKERS = 16
+EXCLUDE = re.compile(r"virtual|esoccer|e-soccer|esports|simulated|cyber", re.I)
 WOMEN = re.compile(r"women|woman|ladies|femenil|feminina|female|\(w\)", re.I)
 YOUTH = re.compile(r"\bu[- ]?(?:15|16|17|18|19|20|21|22|23)\b|youth|development|juniors?", re.I)
 RESERVE = re.compile(r"reserves?", re.I)
+
 
 def category(label):
     if WOMEN.search(label):
@@ -30,239 +31,151 @@ def category(label):
         return "Резервный"
     return "Взрослый мужской"
 
+
+def name(value):
+    return value.get("name") if isinstance(value, dict) else value
+
+
+def integer(value):
+    parsed = number(value)
+    return int(parsed) if parsed is not None else None
+
+
 def get(path, **params):
-    params["token"] = TOKEN
+    params["token"] = os.environ["BETSAPI_KEY"]
     url = BASE + path + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "dzam-live-tb/1.0"})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return json.load(r), {
-            "status": r.status,
-            "limit": r.headers.get("X-RateLimit-Limit"),
-            "remaining": r.headers.get("X-RateLimit-Remaining"),
+    request = urllib.request.Request(url, headers={"User-Agent": "dzam-live-tb/2.0"})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.load(response), {
+            "status": response.status,
+            "limit": response.headers.get("X-RateLimit-Limit"),
+            "remaining": response.headers.get("X-RateLimit-Remaining"),
         }
 
-def name(x):
-    return x.get("name") if isinstance(x, dict) else x
 
-def num(x):
-    try:
-        return float(x)
-    except Exception:
-        return None
-
-def integer(x):
-    try:
-        return int(float(x))
-    except Exception:
-        return None
-
-def handicap(x):
-    vals = [num(v.strip()) for v in str(x or "").replace("/", ",").split(",")]
-    vals = [v for v in vals if v is not None]
-    return sum(vals) / len(vals) if vals else None
-
-def latest(rows):
-    rows = [r for r in (rows or []) if isinstance(r, dict)]
-    return sorted(rows, key=lambda r: integer(r.get("add_time")) or 0, reverse=True)
-
-board, board_meta = get("/v3/events/inplay", sport_id=1)
-board_observed_at = datetime.now(timezone.utc).isoformat()
-history, history_warnings = read_history(HISTORY_DIR, board_observed_at)
-raw = [r for r in (board.get("results") or []) if isinstance(r, dict)]
-events = []
-eligible_before_selected_count = 0
-previously_selected_skipped_ids = []
-for r in raw:
-    league = name(r.get("league")) or ""
-    home = name(r.get("home")) or ""
-    away = name(r.get("away")) or ""
-    label = " ".join((league, home, away))
-    minute = integer((r.get("timer") or {}).get("tm"))
-    score = str(r.get("ss") or "").replace(":", "-")
-    event_id = str(r.get("id"))
-    in_scope = (event_id in REQUESTED_IDS) if MODE == 'refresh' else (minute is not None and 8 <= minute <= 60)
-    if EXCLUDE.search(label) or minute is None or not in_scope or not re.fullmatch(r"\d+-\d+", score):
-        continue
-    eligible_before_selected_count += 1
-    # A direct refresh is an explicit repeat analysis and therefore bypasses
-    # the ordinary one-match-one-forecast exclusion.
-    if MODE == 'full' and event_id in SELECTED_EVENT_IDS:
-        previously_selected_skipped_ids.append(event_id)
-        continue
-    event_id = str(r.get("id"))
-    events.append({
-        "event_id": event_id,
-        "league": league,
-        "country": (r.get("league") or {}).get("cc") if isinstance(r.get("league"), dict) else None,
-        "category": category(label),
-        "home": home,
-        "away": away,
-        "minute": minute,
-        "score": score,
-        "board_stats": r.get("stats"),
-        "timer": r.get("timer"),
-        "board_observed_at_utc": board_observed_at,
-    })
-
-eligible_in_window_count = len(events)
-category_counts = {
-    cat: sum(1 for e in events if e["category"] == cat)
-    for cat in sorted({e["category"] for e in events})
-}
-
-# Technical provider-protection limit only. It is not an analytical top.
-TECHNICAL_EVENT_CAP = 100
-events = sorted(events, key=lambda e: (e["minute"], e["league"], e["home"]))[:TECHNICAL_EVENT_CAP]
-
-def detail(ev):
-    try:
-        p, meta = get("/v2/event/odds", event_id=ev["event_id"], source="bet365", odds_market="1,3")
-        rr = p.get("results") or {}
-        odds = rr.get("odds") or {}
-        score = ev["score"]
-        now = int(time.time())
-
-        events_main_total = None
-        for row in latest(odds.get("1_3")):
-            row_score = str(row.get("ss") or "").replace(":", "-")
-            age = now - integer(row.get("add_time")) if integer(row.get("add_time")) is not None else None
-            line = handicap(row.get("handicap"))
-            over, under = num(row.get("over_od")), num(row.get("under_od"))
-            if row_score and row_score != score:
-                continue
-            if age is not None and not (0 <= age <= 240):
-                continue
-            if line is None or over is None or under is None:
-                continue
-            events_main_total = {
-                "line": line,
-                "over": over,
-                "under": under,
-                "age_s": age,
-                "quote_score": row_score or score,
-                "source": "events_odds_main",
-            }
-            break
-
-        one_x_two = None
-        for row in latest(odds.get("1_1")):
-            row_score = str(row.get("ss") or "").replace(":", "-")
-            age = now - integer(row.get("add_time")) if integer(row.get("add_time")) is not None else None
-            if row_score and row_score != score:
-                continue
-            if age is not None and not (0 <= age <= 240):
-                continue
-            vals = [num(row.get(k)) for k in ("home_od", "draw_od", "away_od")]
-            if all(v is not None for v in vals):
-                one_x_two = {"home": vals[0], "draw": vals[1], "away": vals[2], "age_s": age}
-                break
-
-        annotated_totals, eligible_full_time_totals = annotate_total_lines(
-            [events_main_total] if events_main_total else [], score
-        )
-        events_main_total = annotated_totals[0] if annotated_totals else None
-
-        out = dict(ev)
-        out.update({
-            "detail_ok": bool(p.get("success")),
-            "events_main_total": events_main_total,
-            "totals": annotated_totals,
-            "eligible_full_time_totals": eligible_full_time_totals,
-            "main_total_within_two_goal_limit": bool(eligible_full_time_totals),
-            "totals_source": "events_odds_main",
-            "odds_http": meta,
-            "one_x_two": one_x_two,
-        })
-        return out
-    except Exception as exc:
-        out = dict(ev)
-        out.update({"detail_ok": False, "error": type(exc).__name__ + ": " + str(exc)[:180]})
-        return out
-
-detailed = []
-with ThreadPoolExecutor(max_workers=8) as pool:
-    futures = [pool.submit(detail, ev) for ev in events]
-    for f in as_completed(futures):
-        detailed.append(f.result())
-detailed.sort(key=lambda e: (e["minute"], e["league"], e["home"]))
-for event in detailed:
-    event['dynamics'] = compare_event(event, history.get(event['event_id']), board_observed_at)
-
-# The expensive minute-by-minute endpoint is called only for a preliminary
-# shortlist. This keeps the full pass fast while giving the final manual Top-5
-# real 5/10/15-minute dynamics even on the first snapshot of an event.
-STATS_TREND_SHORTLIST_LIMIT = 15
-trend_candidates = sorted(
-    detailed,
-    key=preliminary_priority,
-)[:STATS_TREND_SHORTLIST_LIMIT]
-trend_candidate_ids = {event["event_id"] for event in trend_candidates}
-for event in detailed:
-    event["stats_trend_shortlisted"] = event["event_id"] in trend_candidate_ids
-
-def enrich_stats_trend(event):
-    try:
-        payload, meta = get("/v1/event/stats_trend", event_id=event["event_id"])
-        summary = summarize_stats_trend(payload)
-        summary["http"] = meta
-        return event["event_id"], summary
-    except Exception as exc:
-        return event["event_id"], {
-            "available": False,
-            "source": "betsapi_event_stats_trend",
-            "reason": type(exc).__name__ + ": " + str(exc)[:180],
+def collect(mode, requested_ids, history_dir, selected_file):
+    started = time.monotonic()
+    selected_ids, selected_warnings = read_selected_events(selected_file)
+    if mode == "full" and selected_warnings:
+        raise RuntimeError("Cannot safely run full scan without selected-events ledger: " + "; ".join(selected_warnings))
+    board, board_meta = get("/v3/events/inplay", sport_id=1)
+    if board.get("success") not in (1, True) or not isinstance(board.get("results"), list):
+        raise RuntimeError("Events board unavailable; an API failure is not an empty sports pool")
+    observed_at = datetime.now(timezone.utc).isoformat()
+    history, history_warnings = read_history(history_dir, observed_at)
+    raw = [row for row in board["results"] if isinstance(row, dict)]
+    events, skipped = [], []
+    eligible_before_selected_count = 0
+    seen = set()
+    for row in raw:
+        league, home, away = [name(row.get(key)) or "" for key in ("league", "home", "away")]
+        label = " ".join((league, home, away))
+        minute = integer((row.get("timer") or {}).get("tm"))
+        score = str(row.get("ss") or "").replace(":", "-")
+        event_id = str(row.get("id") or "")
+        in_scope = event_id in requested_ids if mode == "refresh" else minute is not None and 8 <= minute <= 60
+        if (EXCLUDE.search(label) or minute is None or not in_scope or
+                not re.fullmatch(r"\d+-\d+", score) or not event_id or event_id in seen):
+            continue
+        seen.add(event_id)
+        eligible_before_selected_count += 1
+        if mode == "full" and event_id in selected_ids:
+            skipped.append(event_id)
+            continue
+        event = {
+            "event_id": event_id, "league": league,
+            "country": (row.get("league") or {}).get("cc") if isinstance(row.get("league"), dict) else None,
+            "category": category(label), "home": home, "away": away,
+            "minute": minute, "score": score,
+            "board_stats": row.get("stats") if isinstance(row.get("stats"), dict) else {},
+            "timer": row.get("timer"), "board_observed_at_utc": observed_at,
         }
+        event["dynamics"] = compare_event(event, history.get(event_id), observed_at)
+        events.append(event)
 
-trend_by_event = {}
-with ThreadPoolExecutor(max_workers=8) as pool:
-    futures = [pool.submit(enrich_stats_trend, event) for event in trend_candidates]
-    for future in as_completed(futures):
-        event_id, summary = future.result()
-        trend_by_event[event_id] = summary
-for event in detailed:
-    if event["stats_trend_shortlisted"]:
-        event["stats_trend"] = trend_by_event.get(event["event_id"], {
-            "available": False,
-            "source": "betsapi_event_stats_trend",
-            "reason": "trend request did not complete",
+    # No technical 100-event truncation. All board candidates remain visible.
+    ranked = rank_candidates(events)
+    shortlist = ranked[:SHORTLIST_LIMIT]
+    shortlisted_ids = {event["event_id"] for event in shortlist}
+    by_id = {event["event_id"]: event for event in ranked}
+    for event in ranked:
+        event.update({
+            "stats_trend_shortlisted": event["event_id"] in shortlisted_ids,
+            "events_main_total": None, "main_total_status": "not_requested",
+            "main_total_reason": "outside_enrichment_shortlist",
+            "main_total_within_two_goal_limit": None,
         })
 
-result = {
-    "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-    "board_observed_at_utc": board_observed_at,
-    "mode": MODE,
-    "requested_event_ids": REQUESTED_IDS,
-    "missing_requested_event_ids": sorted(set(REQUESTED_IDS) - {e['event_id'] for e in detailed}),
-    "history_read_warnings": history_warnings,
-    "selected_events_read_warnings": selected_events_warnings,
-    "source": "BetsAPI Events API",
-    "board_http": board_meta,
-    "raw_live_count": len(raw),
-    "eligible_before_selected_count": eligible_before_selected_count,
-    "previously_selected_skipped_count": len(previously_selected_skipped_ids),
-    "previously_selected_skipped_event_ids": sorted(previously_selected_skipped_ids),
-    "eligible_in_window_count": eligible_in_window_count,
-    "detailed_event_count": len(events),
-    "technical_event_cap": TECHNICAL_EVENT_CAP,
-    "technical_cap_reached": eligible_in_window_count > TECHNICAL_EVENT_CAP,
-    "category_counts": category_counts,
-    "detail_calls": len(events),
-    "maximum_additional_goals_for_main": 2,
-    "events_main_total_count": sum(1 for event in detailed if event.get("events_main_total")),
-    "main_total_within_two_goal_limit_count": sum(
-        1 for event in detailed if event.get("main_total_within_two_goal_limit")
-    ),
-    "stats_trend_shortlist_limit": STATS_TREND_SHORTLIST_LIMIT,
-    "stats_trend_shortlisted_count": len(trend_candidates),
-    "stats_trend_available_count": sum(
-        1 for summary in trend_by_event.values() if summary.get("available")
-    ),
-    "events": detailed,
-}
-print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
-snapshot_id = os.environ.get('GITHUB_RUN_ID', str(time.time_ns())) + '-' + os.environ.get('GITHUB_RUN_ATTEMPT', '1')
-path = save_snapshot(result, HISTORY_DIR, snapshot_id)
-if os.environ.get('GITHUB_OUTPUT'):
-    with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-        output.write('snapshot_path=' + path + '\n')
+    def enrich(event, kind):
+        called_at = time.monotonic()
+        try:
+            if kind == "odds":
+                payload, meta = get("/v2/event/odds", event_id=event["event_id"], source="bet365", odds_market="3")
+                data = current_main_total(payload, event, int(time.time()))
+                data.update(odds_http=meta, detail_ok=bool(payload.get("success")))
+            else:
+                payload, meta = get("/v1/event/stats_trend", event_id=event["event_id"])
+                data = {"stats_trend": summarize_stats_trend(payload, event=event, observed_at=time.time())}
+                data["stats_trend"]["http"] = meta
+            return event["event_id"], kind, data, time.monotonic() - called_at
+        except Exception as exc:
+            error = (type(exc).__name__ + ": " + str(exc)).replace(os.environ["BETSAPI_KEY"], "[redacted]")[:180]
+            if kind == "odds":
+                data = {"detail_ok": False, "main_total_status": "unavailable", "main_total_reason": error}
+            else:
+                data = {"stats_trend": {"available": False, "source": "betsapi_event_stats_trend", "reason": error}}
+            return event["event_id"], kind, data, time.monotonic() - called_at
+
+    calls_started = time.monotonic()
+    # Interleaved submission: neither endpoint must finish for ALL events first.
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+        futures = [pool.submit(enrich, event, kind) for event in shortlist for kind in ("trend", "odds")]
+        for future in as_completed(futures):
+            event_id, kind, data, elapsed = future.result()
+            by_id[event_id].update(data)
+            by_id[event_id].setdefault("request_elapsed_seconds", {})[kind] = round(elapsed, 3)
+    events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
+    snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
+    return {
+        "schema_version": 2, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
+        "snapshot_id": snapshot_id, "code_revision": os.environ.get("GITHUB_SHA"),
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(), "board_observed_at_utc": observed_at,
+        "mode": mode, "requested_event_ids": requested_ids,
+        "missing_requested_event_ids": sorted(set(requested_ids) - set(by_id)),
+        "history_read_warnings": history_warnings, "selected_events_read_warnings": selected_warnings,
+        "source": "BetsAPI Events API", "board_http": board_meta,
+        "raw_live_count": len(raw), "eligible_before_selected_count": eligible_before_selected_count,
+        "previously_selected_skipped_count": len(skipped), "previously_selected_skipped_event_ids": sorted(skipped),
+        "eligible_in_window_count": len(events), "sports_review_event_count": len(events),
+        "technical_event_cap": None, "technical_cap_reached": False,
+        "category_counts": {cat: sum(event["category"] == cat for event in events)
+                            for cat in sorted({event["category"] for event in events})},
+        "detail_calls": len(shortlist), "stats_trend_calls": len(shortlist),
+        "total_api_calls": 1 + 2 * len(shortlist), "maximum_parallel_requests": MAX_WORKERS,
+        "maximum_additional_goals_for_recommendation": 2,
+        "events_main_total_count": sum(bool(event.get("events_main_total")) for event in events),
+        "main_total_within_two_goal_limit_count": sum(event.get("main_total_within_two_goal_limit") is True for event in events),
+        "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
+        "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
+        "stats_trend_available_count": sum(bool(event.get("stats_trend", {}).get("available")) for event in events),
+        "timing_seconds": {"enrichment": round(time.monotonic() - calls_started, 3),
+                           "collection": round(time.monotonic() - started, 3)},
+        "events": events,
+    }
+
+
+def main():
+    mode, requested_ids = read_request()
+    directory = os.environ.get("LIVE_HISTORY_DIR", "snapshots/live")
+    result = collect(mode, requested_ids, directory,
+                     os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"))
+    print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
+    path = save_snapshot(result, directory, result["snapshot_id"])
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+            output.write("snapshot_path=" + path + "\n")
+
+
+if __name__ == "__main__":
+    main()
 
