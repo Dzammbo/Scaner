@@ -35,7 +35,10 @@ jobs:
           else
             python3 scripts/live_snapshot.py --event-ids "$EVENT_IDS"
           fi
-      - name: Save snapshot after publishing compact result
+      # Post-output operation. The LIVE_SNAPSHOT_JSON line is the delivery boundary:
+      # clients must publish candidates before waiting for this step or doing refresh/ledger work.
+      - name: Post-output save of already published snapshot
+        continue-on-error: true
         env:
           SNAPSHOT_PATH: ${{ steps.live.outputs.snapshot_path }}
         run: python3 scripts/save_live_snapshot.py
