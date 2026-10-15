@@ -8,14 +8,17 @@ import tempfile
 from datetime import datetime, timezone
 
 from live_history import read_request
-from live_ranking import RULES_VERSION
+from live_ranking import RULES_VERSION, rank_final_candidates
 from live_snapshot import collect, enrich_events, MAX_WORKERS, SHORTLIST_LIMIT
 
 
 def stage_summary(events, limit, elapsed):
+    final = rank_final_candidates(events)
+    odds_elapsed = enrich_events(final, kinds=("odds",)) if final else 0
     return {
         "requested_limit": limit, "actual_events": len(events),
-        "enrichment_seconds": elapsed, "api_calls": 2 * len(events),
+        "enrichment_seconds": elapsed, "odds_seconds": odds_elapsed,
+        "api_calls": len(events) + len(final), "odds_calls": len(final),
         "event_ids": [event["event_id"] for event in events],
         "trend_available": sum(bool(event.get("stats_trend", {}).get("available")) for event in events),
         "odds_responses_ok": sum(bool(event.get("detail_ok")) for event in events),
@@ -30,12 +33,14 @@ def projected_stage(samples, count, odds=True):
     """Queue replay, not a real 30-event measurement or a latency guarantee."""
     if not samples:
         return None
-    workers = [0.0] * MAX_WORKERS
-    for i in range(count):
-        sample = samples[i % len(samples)]
-        for kind in (("trend", "odds") if odds else ("trend",)):
+    stage_times = []
+    for kind, size in (("trend", count), ("odds", min(count, 10))) if odds else (("trend", count),):
+        workers = [0.0] * MAX_WORKERS
+        for i in range(size):
+            sample = samples[i % len(samples)]
             heapq.heapreplace(workers, workers[0] + sample[kind])
-    return round(max(workers), 3)
+        stage_times.append(max(workers))
+    return round(sum(stage_times), 3)
 
 
 def run_benchmark(selected_file):
@@ -70,8 +75,8 @@ def run_benchmark(selected_file):
         "cases": cases, "median_enrichment_seconds_by_requested_limit": medians,
         "measured_median_difference_seconds": round(medians["30"] - medians["15"], 3) if len(ranked) >= 30 else None,
         "projection_only_repeating_observed_request_durations": {
-            "trend_and_odds_15": projected_stage(samples, 15),
-            "trend_and_odds_30": projected_stage(samples, 30),
+            "trend_15_then_at_most_10_odds": projected_stage(samples, 15),
+            "trend_30_then_at_most_10_odds": projected_stage(samples, 30),
             "trend_only_15": projected_stage(samples, 15, odds=False),
             "trend_only_30": projected_stage(samples, 30, odds=False),
         },
