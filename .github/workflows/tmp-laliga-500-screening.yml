@@ -107,7 +107,12 @@ jobs:
 
           def norm(s): return re.sub(r"[^a-z0-9]","",(s or "").lower())
           def belongs(a,b):
-              a,b=norm(a),norm(b); return bool(a and b and (a in b or b in a))
+              a,b=norm(a),norm(b)
+              aliases={
+                  "athleticbilbao":{"athleticclub"},
+                  "oviedo":{"realoviedo"},
+              }
+              return bool(a and b and (a in b or b in a or a in aliases.get(b,set())))
           def score(row,base):
               m=re.match(r"\s*(\d+)\s*[-:]\s*(\d+)\s*$",str(row.get("ss") or base.get("ss") or ""))
               return (int(m.group(1)),int(m.group(2))) if m else (None,None)
