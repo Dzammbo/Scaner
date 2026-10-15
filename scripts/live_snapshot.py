@@ -11,7 +11,9 @@ from datetime import datetime, timezone
 from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
 from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
-from live_ranking import RULES_VERSION, RANKING_METHOD, rank_candidates
+from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
+                          RULES_VERSION, RANKING_METHOD, rank_candidates,
+                          rank_final_candidates)
 
 BASE = "https://api.b365api.com"
 SHORTLIST_LIMIT = 30
@@ -138,14 +140,19 @@ def collect(mode, requested_ids, history_dir, selected_file):
             "stats_trend_shortlisted": event["event_id"] in shortlisted_ids,
             "events_main_total": None, "main_total_status": "not_requested",
             "main_total_reason": "outside_enrichment_shortlist",
-            "main_total_within_two_goal_limit": None,
+            "final_sports_selected": False,
         })
 
     enrichment_elapsed = enrich_events(shortlist)
+    final = rank_final_candidates(shortlist)
+    final_ids = [event["event_id"] for event in final]
+    for event in final:
+        event["final_sports_selected"] = True
     events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
     snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     return {
-        "schema_version": 2, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
+        "schema_version": 3, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
+        "final_ranking_method": FINAL_RANKING_METHOD,
         "snapshot_id": snapshot_id, "code_revision": os.environ.get("GITHUB_SHA"),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(), "board_observed_at_utc": observed_at,
         "mode": mode, "requested_event_ids": requested_ids,
@@ -168,12 +175,13 @@ def collect(mode, requested_ids, history_dir, selected_file):
                             for cat in sorted({event["category"] for event in events})},
         "detail_calls": len(shortlist), "stats_trend_calls": len(shortlist),
         "total_api_calls": 1 + 2 * len(shortlist), "maximum_parallel_requests": MAX_WORKERS,
-        "maximum_additional_goals_for_recommendation": 2,
         "events_main_total_count": sum(bool(event.get("events_main_total")) for event in events),
-        "main_total_within_two_goal_limit_count": sum(event.get("main_total_within_two_goal_limit") is True for event in events),
         "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
         "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
         "stats_trend_available_count": sum(bool(event.get("stats_trend", {}).get("available")) for event in events),
+        "final_sports_selection_limit": FINAL_SELECTION_LIMIT,
+        "final_sports_selection_count": len(final_ids),
+        "final_sports_selection_event_ids": final_ids,
         "timing_seconds": {"enrichment": enrichment_elapsed,
                            "collection": round(time.monotonic() - started, 3)},
         "events": events,

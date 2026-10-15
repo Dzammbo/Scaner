@@ -16,12 +16,10 @@ class LiveEnrichmentTests(unittest.TestCase):
         self.assertEqual(full_win_total(2.25), 3)
         self.assertEqual(full_win_total(2.75), 4)
 
-    def test_only_lines_requiring_at_most_two_more_goals_are_eligible(self):
-        rows, eligible = annotate_total_lines(
-            [{"line": 1.5}, {"line": 1.75}, {"line": 2.75}], "0-0"
-        )
+    def test_lines_report_goal_requirements_without_sports_eligibility(self):
+        rows = annotate_total_lines([{"line": 1.5}, {"line": 1.75}, {"line": 2.75}], "0-0")
         self.assertEqual([row["additional_goals_for_full_win"] for row in rows], [2, 3, 4])
-        self.assertEqual([row["line"] for row in eligible], [1.5])
+        self.assertTrue(all("within_two_goal_recommendation_limit" not in row for row in rows))
 
     def test_stats_trend_builds_rolling_counter_deltas_and_possession(self):
         payload = {"success": 1, "results": {

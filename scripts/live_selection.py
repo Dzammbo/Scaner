@@ -1,4 +1,4 @@
-"""Explicit final-choice ledger. No API calls, Excel work or automatic Top-5."""
+"""Explicit sports-choice ledger. No API calls, Excel work or total advice."""
 import argparse
 import json
 import os
@@ -6,18 +6,16 @@ import tempfile
 from copy import deepcopy
 from pathlib import Path
 
-from live_enrichment import annotate_total_lines, number, score_goals
+from live_enrichment import number, score_goals
 from live_history import timestamp
-
-ASSESSMENTS = {"main_suitable", "lower_total", "line_unavailable"}
 
 
 def record_choices(ledger, snapshot, choices, selected_at):
     """Append exactly the choices actually shown, preserving historical entries."""
     if ledger.get("schema_version") != 1 or not isinstance(ledger.get("events"), list):
         raise ValueError("Invalid selected-events ledger")
-    if not isinstance(choices, list) or not 1 <= len(choices) <= 5:
-        raise ValueError("Record only the 1-5 final choices actually shown")
+    if not isinstance(choices, list) or not 1 <= len(choices) <= 10:
+        raise ValueError("Record only the 1-10 final sports choices actually shown")
     if not snapshot.get("snapshot_id") or not snapshot.get("rules_version"):
         raise ValueError("Snapshot ID and rules version required; do not reconstruct history")
     if timestamp(selected_at) < timestamp(snapshot["generated_at_utc"]):
@@ -34,29 +32,12 @@ def record_choices(ledger, snapshot, choices, selected_at):
             raise ValueError("Unknown or duplicate event ID in final choices")
         seen.add(event_id)
         event = by_id[event_id]
-        assessment = choice.get("line_assessment")
-        if assessment not in ASSESSMENTS:
-            raise ValueError("Unknown line assessment")
+        if not event.get("final_sports_selected") or not event.get("final_sports_selection"):
+            raise ValueError("Choice is not in the deterministic final sports selection")
         for key in ("sports_reason", "expected_scenario"):
             if not isinstance(choice.get(key), str) or not choice[key].strip():
                 raise ValueError("Sports reason and expected scenario required")
         reference = deepcopy(event.get("events_main_total"))
-        recommendation = None
-        if assessment == "main_suitable":
-            if not reference or not reference.get("within_two_goal_recommendation_limit"):
-                raise ValueError("Main total unavailable or requires more than two further goals")
-            recommendation = deepcopy(reference)
-        elif assessment == "lower_total":
-            if not reference:
-                raise ValueError("Use line_unavailable when there is no current main total")
-            proposed = number(choice.get("suggested_total"))
-            if proposed is not None:
-                annotated, valid = annotate_total_lines([{"line": proposed}], event["score"])
-                if not valid or proposed >= reference["line"]:
-                    raise ValueError("Suggested lower total must require 1-2 more goals and be below main")
-                recommendation = dict(annotated[0], over=None, source="sports_suggestion_unpriced")
-        elif reference is not None:
-            raise ValueError("Current main total exists; do not label it unavailable")
         record = {
             "snapshot_id": snapshot["snapshot_id"], "event_id": event_id,
             "rules_version": snapshot["rules_version"], "ranking_method": snapshot.get("ranking_method"),
@@ -65,10 +46,10 @@ def record_choices(ledger, snapshot, choices, selected_at):
             **{key: event.get(key) for key in ("home", "away", "league", "country", "category", "minute", "score")},
             "sports_reason": choice["sports_reason"].strip(),
             "expected_scenario": choice["expected_scenario"].strip(),
-            "reference_main_total": reference, "line_assessment": assessment,
+            "final_sports_selection": deepcopy(event["final_sports_selection"]),
+            "reference_main_total": reference,
             "reference_line_status": event.get("main_total_status"),
             "reference_line_reason": event.get("main_total_reason"),
-            "recommended_total": recommendation,
             "is_user_choice": False,
         }
         identity = (snapshot["snapshot_id"], event_id)

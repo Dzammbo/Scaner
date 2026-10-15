@@ -69,6 +69,8 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(odds_ids, trend_ids)
         self.assertEqual(len(odds_ids), 30)
         self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 220)
+        self.assertEqual(result['final_sports_selection_count'], 0)
+        self.assertEqual(result['final_sports_selection_limit'], 10)
 
     def test_odds_does_not_block_trend_and_failures_do_not_remove_match(self):
         from live_snapshot import collect
@@ -96,6 +98,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(mocked.call_count, 1)
         self.assertEqual(result['total_api_calls'], 1)
         self.assertEqual(result['events'], [])
+        self.assertEqual(result['final_sports_selection_event_ids'], [])
         self.assertEqual(result["delivery_policy"]["primary_output"],
                          "immediate_after_live_snapshot_json")
         self.assertTrue(result["delivery_policy"]["postprocessing_may_not_delay_primary_output"])
@@ -130,7 +133,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
             if url.path.endswith('/event/stats_trend'):
                 return Response({'success':1,'results':{'on_target':{
                     'home':[{'time_str':'20','val':'1'},{'time_str':'30','val':'3'}],
-                    'away':[{'time_str':'30','val':'2'}],
+                    'away':[{'time_str':'20','val':'0'},{'time_str':'30','val':'2'}],
                 }}})
             raise AssertionError(url.path)
         with tempfile.TemporaryDirectory() as directory:
@@ -142,11 +145,13 @@ class SnapshotIntegrationTests(unittest.TestCase):
             result=json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             by_id={event['event_id']:event for event in result['events']}
             self.assertEqual(result['events_main_total_count'],2)
-            self.assertEqual(result['main_total_within_two_goal_limit_count'],1)
             self.assertEqual(result['stats_trend_shortlisted_count'],2)
             self.assertTrue(by_id['123']['stats_trend']['available'])
             self.assertTrue(by_id['456']['stats_trend_shortlisted'])
-            self.assertFalse(by_id['456']['main_total_within_two_goal_limit'])
+            self.assertTrue(by_id['456']['final_sports_selected'])
+            self.assertEqual(result['final_sports_selection_count'],2)
+            self.assertEqual(set(result['final_sports_selection_event_ids']),{'123','456'})
+            self.assertNotIn('main_total_within_two_goal_limit',by_id['456'])
             self.assertEqual(by_id['123']['events_main_total']['source'],'events_odds_main')
             self.assertFalse(any('/v1/bet365/' in path for path in calls))
 

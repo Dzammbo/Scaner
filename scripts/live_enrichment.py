@@ -37,21 +37,18 @@ def full_win_total(line):
     return math.floor(value + 0.25) + 1 if value is not None else None
 
 
-def annotate_total_lines(lines, score, maximum_additional_goals=2):
+def annotate_total_lines(lines, score):
+    """Attach factual goal requirements; never decide sports eligibility."""
     current = score_goals(score)
     annotated = []
-    eligible = []
     for source in lines or []:
         row = dict(source)
         target = full_win_total(row.get("line"))
         needed = None if current is None or target is None else max(0, target - current)
         row["full_win_total"] = target
         row["additional_goals_for_full_win"] = needed
-        row["within_two_goal_recommendation_limit"] = needed is not None and 1 <= needed <= maximum_additional_goals
         annotated.append(row)
-        if row["within_two_goal_recommendation_limit"]:
-            eligible.append(row)
-    return annotated, eligible
+    return annotated
 
 
 def _series(raw):

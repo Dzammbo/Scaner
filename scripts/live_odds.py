@@ -10,8 +10,7 @@ def parse_line(value):
 
 def current_main_total(payload, event, now):
     output = {"events_main_total": None, "main_total_status": "unavailable",
-              "main_total_reason": None, "historical_main_total": None,
-              "main_total_within_two_goal_limit": None}
+              "main_total_reason": None, "historical_main_total": None}
     if not isinstance(payload, dict) or payload.get("success") not in (1, True):
         return dict(output, main_total_reason="provider_unsuccessful")
     result = payload.get("results") or {}
@@ -57,7 +56,6 @@ def current_main_total(payload, event, now):
         # Never substitute a numeric row from further back in the history.
         output.update(main_total_reason=reason, historical_main_total=quote)
         return output
-    annotated, within_limit = annotate_total_lines([quote], event["score"])
-    output.update(events_main_total=annotated[0], main_total_status="available",
-                  main_total_within_two_goal_limit=bool(within_limit))
+    annotated = annotate_total_lines([quote], event["score"])
+    output.update(events_main_total=annotated[0], main_total_status="available")
     return output

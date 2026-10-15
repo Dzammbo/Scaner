@@ -46,11 +46,12 @@ class OddsTests(unittest.TestCase):
         result = self.parse([self.row(ss="0-1", handicap="2.5")], {"matching_dir": -1}, score="1-0")
         self.assertEqual(result["events_main_total"]["quote_score"], "1-0")
 
-    def test_three_more_goals_marks_only_line_not_sports_eligibility(self):
+    def test_three_more_goals_is_factual_market_context_only(self):
         result = self.parse([self.row(handicap="2.5")])
         self.assertEqual(result["main_total_status"], "available")
-        self.assertFalse(result["main_total_within_two_goal_limit"])
-        self.assertNotIn("eligible_main", result["events_main_total"])
+        self.assertEqual(result["events_main_total"]["additional_goals_for_full_win"], 3)
+        self.assertNotIn("within_two_goal_recommendation_limit", result["events_main_total"])
+        self.assertNotIn("main_total_within_two_goal_limit", result)
 
     def test_conflicting_latest_rows_are_explicit(self):
         result = self.parse([self.row(), self.row(over_od="2.0")])

@@ -3,7 +3,8 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from live_ranking import rank_candidates, sports_features
+from live_ranking import (FINAL_SELECTION_LIMIT, fresh_sports_features,
+                          rank_candidates, rank_final_candidates, sports_features)
 
 
 class RankingTests(unittest.TestCase):
@@ -74,6 +75,62 @@ class RankingTests(unittest.TestCase):
         original = copy.deepcopy(events)
         self.assertEqual(rank_candidates(events), rank_candidates(list(reversed(events))))
         self.assertEqual(events, original)
+
+    def test_dangerous_attacks_have_a_preliminary_route(self):
+        quiet = [self.event(i, on_target=[1, 0], off_target=[0, 0],
+                            dangerous_attacks=[1, 0], corners=[0, 0]) for i in range(40)]
+        pressure = self.event(99, on_target=[0, 0], off_target=[0, 0],
+                              dangerous_attacks=[40, 20], corners=[5, 1])
+        top = rank_candidates(quiet + [pressure])[:30]
+        selected = next(event for event in top if event['event_id'] == '99')
+        self.assertIn(selected['preliminary_selection']['route'],
+                      {'territorial_pressure', 'two_sided_pressure'})
+
+    def trend_event(self, i, line=1.5, over=1.9):
+        def window(minutes, on, off, dangerous, corners):
+            return {'actual_duration_minutes': minutes, 'stats': {
+                'on_target': {'home': on[0], 'away': on[1]},
+                'off_target': {'home': off[0], 'away': off[1]},
+                'dangerous_attacks': {'home': dangerous[0], 'away': dangerous[1]},
+                'corners': {'home': corners[0], 'away': corners[1]},
+            }}
+        return {'event_id': str(i), 'minute': 35, 'score': '0-0',
+                'events_main_total': {'line': line, 'over': over},
+                'stats_trend': {'available': True, 'windows': {
+                    '5': window(5, [1, 0], [0, 0], [6, 2], [1, 0]),
+                    '10': window(10, [1, 0], [1, 0], [12, 4], [1, 0]),
+                    '15': window(15, [1, 1], [1, 0], [18, 7], [2, 0]),
+                }}}
+
+    def test_final_ranking_is_reproducible_market_independent_and_capped(self):
+        events = [self.trend_event(i, line=i + .5, over=1.01 + i / 100) for i in range(15)]
+        first = rank_final_candidates(copy.deepcopy(events))
+        changed = copy.deepcopy(events)
+        for event in changed:
+            event['events_main_total'] = {'line': 99, 'over': 9.99}
+        second = rank_final_candidates(changed)
+        self.assertEqual([e['event_id'] for e in first], [e['event_id'] for e in second])
+        self.assertEqual(len(first), FINAL_SELECTION_LIMIT)
+        self.assertTrue(all(not e['final_sports_selection']['market_used'] for e in first))
+
+    def test_final_ranking_does_not_fill_without_reproducible_evidence(self):
+        qualified = self.trend_event(1)
+        empty = {'event_id': '2', 'minute': 35, 'stats_trend': {'available': True, 'windows': {}}}
+        result = rank_final_candidates([qualified, empty])
+        self.assertEqual([event['event_id'] for event in result], ['1'])
+        features = fresh_sports_features(qualified)
+        self.assertTrue(features['persistent_dangerous_pressure'])
+        self.assertTrue(features['quality_chance_available'])
+
+    def test_sustained_dangerous_pressure_pattern_is_reproducibly_selected(self):
+        pressure = self.trend_event(77)
+        for window in pressure['stats_trend']['windows'].values():
+            window['stats']['on_target'] = {'home': 0, 'away': 0}
+        result = rank_final_candidates([pressure])
+        self.assertEqual([event['event_id'] for event in result], ['77'])
+        selection = result[0]['final_sports_selection']
+        self.assertEqual(selection['route'], 'sustained_pressure')
+        self.assertFalse(selection['market_used'])
 
     def test_measured_zero_does_not_get_quality_bonus_over_unknown(self):
         events = [self.event(i, on_target=[5, 5], off_target=[5, 5]) for i in range(20)]
