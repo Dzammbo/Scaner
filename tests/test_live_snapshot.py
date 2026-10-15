@@ -96,6 +96,10 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(mocked.call_count, 1)
         self.assertEqual(result['total_api_calls'], 1)
         self.assertEqual(result['events'], [])
+        self.assertEqual(result["delivery_policy"]["primary_output"],
+                         "immediate_after_live_snapshot_json")
+        self.assertTrue(result["delivery_policy"]["postprocessing_may_not_delay_primary_output"])
+        self.assertIn("selection_ledger", result["delivery_policy"]["user_output_precedes"])
 
     def test_board_api_failure_is_not_reported_as_zero_candidates(self):
         from live_snapshot import collect
