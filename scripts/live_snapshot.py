@@ -2,18 +2,19 @@
 import json
 import os
 import re
+from pathlib import Path
 import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 
-from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot
+from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot, timestamp
 from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
 from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
-                          rank_final_candidates)
+                          rank_final_candidates, display_candidates)
 
 BASE = "https://api.b365api.com"
 SHORTLIST_LIMIT = 30
@@ -55,8 +56,10 @@ def get(path, **params):
         }
 
 
-def enrich_events(events):
-    """Shared parallel stage for live and explicit latency diagnostics only."""
+def enrich_events(events, kinds=("trend",)):
+    """Bounded parallel endpoint stage; production sports stage uses trends only."""
+    if not set(kinds) <= {"trend", "odds"}:
+        raise ValueError("Unknown enrichment endpoint")
     by_id = {event["event_id"]: event for event in events}
 
     def enrich(event, kind):
@@ -72,7 +75,7 @@ def enrich_events(events):
                 data["stats_trend"]["http"] = meta
             return event["event_id"], kind, data, time.monotonic() - called_at
         except Exception as exc:
-            error = (type(exc).__name__ + ": " + str(exc)).replace(os.environ["BETSAPI_KEY"], "[redacted]")[:180]
+            error = (type(exc).__name__ + ": " + str(exc)).replace(os.environ.get("BETSAPI_KEY") or "__no_secret__", "[redacted]")[:180]
             if kind == "odds":
                 data = {"detail_ok": False, "main_total_status": "unavailable", "main_total_reason": error}
             else:
@@ -80,14 +83,31 @@ def enrich_events(events):
             return event["event_id"], kind, data, time.monotonic() - called_at
 
     calls_started = time.monotonic()
-    # Interleaved submission: neither endpoint must finish for ALL events first.
+    # Each stage is bounded independently. Sports collection never requests odds.
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = [pool.submit(enrich, event, kind) for event in events for kind in ("trend", "odds")]
+        futures = [pool.submit(enrich, event, kind) for event in events for kind in kinds]
         for future in as_completed(futures):
             event_id, kind, data, elapsed = future.result()
             by_id[event_id].update(data)
             by_id[event_id].setdefault("request_elapsed_seconds", {})[kind] = round(elapsed, 3)
     return round(time.monotonic() - calls_started, 3)
+
+
+def prematch_context(path, observed_at):
+    try:
+        payload = json.loads(Path(path).read_text())
+        age = timestamp(observed_at) - timestamp(payload["generated_at_utc"])
+        if not 0 <= age <= 86400:
+            return {}, ["prematch_cache_outside_one_day_context"]
+        return {str(e["event_id"]): {"source": payload.get("source"),
+                "generated_at_utc": payload["generated_at_utc"], "start_utc": e.get("start_utc"),
+                "home": e.get("home"), "away": e.get("away"),
+                "scope": "cached_context_only_no_rank_bonus", "totals": e.get("totals")}
+                for e in payload.get("events", [])}, []
+    except FileNotFoundError:
+        return {}, []
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return {}, ["invalid_optional_prematch_cache"]
 
 
 def collect(mode, requested_ids, history_dir, selected_file):
@@ -100,6 +120,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
         raise RuntimeError("Events board unavailable; an API failure is not an empty sports pool")
     observed_at = datetime.now(timezone.utc).isoformat()
     history, history_warnings = read_history(history_dir, observed_at)
+    prematch, prematch_warnings = prematch_context(os.environ.get("LIVE_PREMATCH_FILE", "snapshots/prematch-latest.json"), observed_at)
     raw = [row for row in board["results"] if isinstance(row, dict)]
     events, skipped = [], []
     eligible_before_selected_count = 0
@@ -127,6 +148,9 @@ def collect(mode, requested_ids, history_dir, selected_file):
             "board_stats": row.get("stats") if isinstance(row.get("stats"), dict) else {},
             "timer": row.get("timer"), "board_observed_at_utc": observed_at,
         }
+        context = prematch.get(event_id)
+        if context and (context["home"], context["away"]) == (home, away):
+            event["prematch_context"] = context
         event["dynamics"] = compare_event(event, history.get(event_id), observed_at)
         events.append(event)
 
@@ -139,30 +163,35 @@ def collect(mode, requested_ids, history_dir, selected_file):
         event.update({
             "stats_trend_shortlisted": event["event_id"] in shortlisted_ids,
             "events_main_total": None, "main_total_status": "not_requested",
-            "main_total_reason": "outside_enrichment_shortlist",
+            "main_total_reason": "sports_stage_prices_not_requested",
             "final_sports_selected": False,
         })
 
-    enrichment_elapsed = enrich_events(shortlist)
+    # Inspect cached prematch matches first within the SAME sports shortlist.
+    request_order = sorted(shortlist, key=lambda event: not bool(event.get("prematch_context")))
+    enrichment_elapsed = enrich_events(request_order)
     final = rank_final_candidates(shortlist)
     final_ids = [event["event_id"] for event in final]
+    display_ids = [event["event_id"] for event in display_candidates(final)]
     for event in final:
         event["final_sports_selected"] = True
     events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
     snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     return {
-        "schema_version": 3, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
+        "schema_version": 4, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
         "final_ranking_method": FINAL_RANKING_METHOD,
         "snapshot_id": snapshot_id, "code_revision": os.environ.get("GITHUB_SHA"),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(), "board_observed_at_utc": observed_at,
         "mode": mode, "requested_event_ids": requested_ids,
         "missing_requested_event_ids": sorted(set(requested_ids) - set(by_id)),
+        "prematch_context_warnings": prematch_warnings,
+        "prematch_in_window_event_ids": [e["event_id"] for e in ranked if e.get("prematch_context")],
         "history_read_warnings": history_warnings, "selected_events_read_warnings": selected_warnings,
         "source": "BetsAPI Events API", "board_http": board_meta,
         "delivery_policy": {
             "primary_output": "immediate_after_live_snapshot_json",
             "user_output_precedes": [
-                "refresh", "external_checks", "selection_ledger",
+                "odds", "refresh", "external_checks", "selection_ledger",
                 "history_verification", "diary_updates",
             ],
             "postprocessing_may_not_delay_primary_output": True,
@@ -173,8 +202,8 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "technical_event_cap": None, "technical_cap_reached": False,
         "category_counts": {cat: sum(event["category"] == cat for event in events)
                             for cat in sorted({event["category"] for event in events})},
-        "detail_calls": len(shortlist), "stats_trend_calls": len(shortlist),
-        "total_api_calls": 1 + 2 * len(shortlist), "maximum_parallel_requests": MAX_WORKERS,
+        "detail_calls": 0, "stats_trend_calls": len(shortlist),
+        "total_api_calls": 1 + len(shortlist), "maximum_parallel_requests": MAX_WORKERS,
         "events_main_total_count": sum(bool(event.get("events_main_total")) for event in events),
         "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
         "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
@@ -182,10 +211,37 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "final_sports_selection_limit": FINAL_SELECTION_LIMIT,
         "final_sports_selection_count": len(final_ids),
         "final_sports_selection_event_ids": final_ids,
+        "display_event_ids": display_ids,
+        "outside_shortlist_event_ids": [event["event_id"] for event in ranked[SHORTLIST_LIMIT:]],
+        "stage": "sports_ready",
         "timing_seconds": {"enrichment": enrichment_elapsed,
                            "collection": round(time.monotonic() - started, 3)},
         "events": events,
     }
+
+
+def complete_odds(snapshot):
+    """Enrich immutable sports membership; no ranking or selection-ledger writes."""
+    ids = set(snapshot["final_sports_selection_event_ids"])
+    events = [event for event in snapshot["events"] if event["event_id"] in ids]
+    elapsed = enrich_events(events, kinds=("odds",))
+    snapshot["detail_calls"] = len(events)
+    snapshot["total_api_calls"] = 1 + snapshot["stats_trend_calls"] + len(events)
+    snapshot["events_main_total_count"] = sum(bool(e.get("events_main_total")) for e in events)
+    snapshot["timing_seconds"]["odds"] = elapsed
+    snapshot["odds_checked_at_utc"] = datetime.now(timezone.utc).isoformat()
+    snapshot["stage"] = "odds_completed"
+    return snapshot
+
+
+def odds_main(path):
+    snapshot = complete_odds(json.loads(Path(path).read_text()))
+    print("LIVE_ODDS_JSON=" + json.dumps({
+        "snapshot_id": snapshot["snapshot_id"], "odds_checked_at_utc": snapshot["odds_checked_at_utc"],
+        "events": [{key: event.get(key) for key in ("event_id", "events_main_total", "main_total_status", "main_total_reason")}
+                   for event in snapshot["events"] if event["final_sports_selected"]],
+    }, ensure_ascii=False, separators=(",", ":")), flush=True)
+    save_snapshot(snapshot, str(Path(path).parent), snapshot["snapshot_id"])
 
 
 def main():
@@ -201,5 +257,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if len(sys.argv) == 3 and sys.argv[1] == "--odds-snapshot":
+        odds_main(sys.argv[2])
+    else:
+        main()
 
