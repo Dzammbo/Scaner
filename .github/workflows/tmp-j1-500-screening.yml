@@ -43,25 +43,12 @@ jobs:
                       if attempt==retries-1: raise
                       time.sleep(1.5*(attempt+1))
 
-          # Resolve the current Events API league id from recent real events.
-          probes=Counter(); probe_names={}
-          for page in range(1,61):
-              payload=get("/v3/events/ended",sport_id=1,page=page)
-              rows=payload.get("results") or []
-              if isinstance(rows,dict): rows=rows.get("events") or rows.get("results") or []
-              if not rows: break
-              for r in rows:
-                  league=r.get("league") or {}
-                  lid=str(league.get("id") or "")
-                  name=str(league.get("name") or "")
-                  low=name.lower()
-                  if lid and "europa league" in low and "conference" not in low and not any(z in low for z in ("women","femen","u19","u20","u21","youth","qualif")):
-                      probes[lid]+=1; probe_names[lid]=name
-              if probes and page>=15: break
-          ranked=probes.most_common()
-          print("LEAGUE_CANDIDATES_JSON="+json.dumps([{"id":lid,"name":probe_names[lid],"recent_events":n} for lid,n in ranked],ensure_ascii=False))
-          if not ranked: raise RuntimeError("Could not resolve Europa League from recent ended events")
-          LEAGUE_ID=ranked[0][0]
+          # Resolve from a known real Europa League event, then query the league history.
+          seed=(get("/v1/event/view",event_id="9834863").get("results") or [{}])[0]
+          seed_league=seed.get("league") or {}
+          LEAGUE_ID=str(seed_league.get("id") or "")
+          print("LEAGUE_CANDIDATES_JSON="+json.dumps([{"id":LEAGUE_ID,"name":seed_league.get("name"),"seed_event":"9834863"}],ensure_ascii=False))
+          if not LEAGUE_ID: raise RuntimeError("Could not resolve Europa League from seed event")
           base_rows=[]; seen=set()
           for page in range(1,18):
               payload=get("/v3/events/ended",sport_id=1,league_id=LEAGUE_ID,page=page)
