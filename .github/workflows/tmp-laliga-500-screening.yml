@@ -27,7 +27,7 @@ jobs:
           from concurrent.futures import ThreadPoolExecutor, as_completed
           from datetime import datetime, timezone
 
-          BASE="https://api.b365api.com"; TOKEN=os.environ["BETSAPI_KEY"]; LEAGUE_ID="207"
+          BASE="https://api.b365api.com"; TOKEN=os.environ["BETSAPI_KEY"]; LEAGUE_ID=None
           YELLOW_RE=re.compile(r"(?i)\bYellow Card\b")
           TEAM_RE=re.compile(r"~\(([^()]*)\)\s*$")
           MINUTE_RE=re.compile(r"(?<!\d)(\d{1,3})(?:\+(\d{1,2}))?['’]?")
@@ -42,6 +42,46 @@ jobs:
                   except Exception:
                       if attempt==retries-1: raise
                       time.sleep(1.5*(attempt+1))
+
+          # Resolve the current Events API league id from the provider catalog.
+          leagues=[]; max_id=None
+          for _ in range(60):
+              params={"sport_id":1,"cc":"es"}
+              if max_id is not None: params["max_id"]=max_id
+              payload=get("/v3/league",**params)
+              rows=payload.get("results") or []
+              if isinstance(rows,dict): rows=rows.get("leagues") or rows.get("results") or []
+              if not rows: break
+              leagues.extend(rows)
+              pager=payload.get("pager") or {}
+              nxt=pager.get("min_id")
+              if nxt is None:
+                  ids0=[int(x.get("id")) for x in rows if str(x.get("id") or "").isdigit()]
+                  nxt=min(ids0) if ids0 else None
+              if nxt is None or nxt==max_id or int(nxt)<=0: break
+              max_id=int(nxt)
+          candidates=[]
+          for league in leagues:
+              names=league.get("names") or {}
+              name=str(league.get("name") or names.get("en") or "")
+              low=name.lower()
+              if ("la liga" in low or "primera" in low) and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
+                  candidates.append({"id":str(league.get("id")),"name":name})
+          probes=[]
+          for cand in candidates:
+              payload=get("/v3/events/ended",sport_id=1,league_id=cand["id"],page=1)
+              rows=payload.get("results") or []
+              if isinstance(rows,dict): rows=rows.get("events") or rows.get("results") or []
+              teams=[]
+              for r in rows:
+                  teams.extend([(r.get("home") or {}).get("name",""),(r.get("away") or {}).get("name","")])
+              score=sum(norm(t) in ("realmadrid","barcelona","atleticomadrid") for t in teams)
+              probes.append({**cand,"events":len(rows),"top_team_hits":score})
+          probes.sort(key=lambda x:(x["top_team_hits"],x["events"]),reverse=True)
+          print("LEAGUE_CANDIDATES_JSON="+json.dumps(probes,ensure_ascii=False,separators=(",",":")))
+          if not probes or probes[0]["top_team_hits"]<1:
+              raise RuntimeError(f"Could not resolve La Liga: {probes[:20]}")
+          LEAGUE_ID=probes[0]["id"]
 
           base_rows=[]; seen=set()
           for page in range(1,18):
