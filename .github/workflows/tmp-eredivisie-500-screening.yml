@@ -1,0 +1,307 @@
+name: Temporary Eredivisie 500 card screening
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tmp-eredivisie-500-screening.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Screen last 500 Eredivisie matches
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, re, time, urllib.parse, urllib.request
+          from collections import Counter, defaultdict
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from datetime import datetime, timezone
+
+          BASE="https://api.b365api.com"; TOKEN=os.environ["BETSAPI_KEY"]; LEAGUE_ID=None
+          YELLOW_RE=re.compile(r"(?i)\bYellow Card\b")
+          TEAM_RE=re.compile(r"~\(([^()]*)\)\s*$")
+          MINUTE_RE=re.compile(r"(?<!\d)(\d{1,3})(?:\+(\d{1,2}))?['’]?")
+
+          def get(path,retries=5,**params):
+              params["token"]=TOKEN
+              url=BASE+path+"?"+urllib.parse.urlencode(params)
+              req=urllib.request.Request(url,headers={"User-Agent":"dzam-eredivisie-500-screening/1.0"})
+              for attempt in range(retries):
+                  try:
+                      with urllib.request.urlopen(req,timeout=40) as response: return json.load(response)
+                  except Exception:
+                      if attempt==retries-1: raise
+                      time.sleep(1.5*(attempt+1))
+
+          # Resolve the current Events API league id from the provider catalog.
+          leagues=[]; max_id=None
+          for _ in range(60):
+              params={"sport_id":1,"cc":"nl"}
+              if max_id is not None: params["max_id"]=max_id
+              payload=get("/v3/league",**params)
+              rows=payload.get("results") or []
+              if isinstance(rows,dict): rows=rows.get("leagues") or rows.get("results") or []
+              if not rows: break
+              leagues.extend(rows)
+              pager=payload.get("pager") or {}
+              nxt=pager.get("min_id")
+              if nxt is None:
+                  ids0=[int(x.get("id")) for x in rows if str(x.get("id") or "").isdigit()]
+                  nxt=min(ids0) if ids0 else None
+              if nxt is None or nxt==max_id or int(nxt)<=0: break
+              max_id=int(nxt)
+          candidates=[]
+          for league in leagues:
+              names=league.get("names") or {}
+              name=str(league.get("name") or names.get("en") or "")
+              low=name.lower()
+              if ("eredivisie" in low) and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
+                  candidates.append({"id":str(league.get("id")),"name":name})
+          probes=[]
+          for cand in candidates:
+              payload=get("/v3/events/ended",sport_id=1,league_id=cand["id"],page=1)
+              rows=payload.get("results") or []
+              if isinstance(rows,dict): rows=rows.get("events") or rows.get("results") or []
+              teams=[]
+              for r in rows:
+                  teams.extend([(r.get("home") or {}).get("name",""),(r.get("away") or {}).get("name","")])
+              score=sum(re.sub(r"[^a-z0-9]","",str(t).lower()) in ("ajax","psveindhoven","feyenoord") for t in teams)
+              probes.append({**cand,"events":len(rows),"top_team_hits":score})
+          probes.sort(key=lambda x:(x["top_team_hits"],x["events"]),reverse=True)
+          print("LEAGUE_CANDIDATES_JSON="+json.dumps(probes,ensure_ascii=False,separators=(",",":")))
+          if not probes or probes[0]["top_team_hits"]<1:
+              raise RuntimeError(f"Could not resolve Eredivisie: {probes[:20]}")
+          LEAGUE_ID=probes[0]["id"]
+
+          base_rows=[]; seen=set()
+          for page in range(1,18):
+              payload=get("/v3/events/ended",sport_id=1,league_id=LEAGUE_ID,page=page)
+              rows=payload.get("results") or []
+              if isinstance(rows,dict): rows=rows.get("events") or rows.get("results") or []
+              for r in rows:
+                  eid=str(r.get("id") or "")
+                  if eid and eid not in seen and str(r.get("time_status"))=="3":
+                      seen.add(eid); base_rows.append(r)
+              if len(base_rows)>=550 or not rows: break
+          base_rows.sort(key=lambda r:(int(r.get("time") or 0),int(r.get("id") or 0)),reverse=True)
+          base_rows=base_rows[:500]
+          if len(base_rows)!=500: raise RuntimeError(f"Expected 500, got {len(base_rows)}")
+
+          ids=[str(r["id"]) for r in base_rows]
+          def view(batch): return get("/v1/event/view",event_id=",".join(batch)).get("results") or []
+          details={}
+          with ThreadPoolExecutor(max_workers=10) as pool:
+              fs=[pool.submit(view,ids[i:i+10]) for i in range(0,500,10)]
+              for f in as_completed(fs):
+                  for r in f.result(): details[str(r.get("id"))]=r
+
+          def norm(s): return re.sub(r"[^a-z0-9]","",(s or "").lower())
+          def belongs(a,b):
+              a,b=norm(a),norm(b)
+              aliases={
+                  "athleticbilbao":{"athleticclub"},
+                  "oviedo":{"realoviedo"},
+              }
+              return bool(a and b and (a in b or b in a or a in aliases.get(b,set())))
+          def score(row,base):
+              m=re.match(r"\s*(\d+)\s*[-:]\s*(\d+)\s*$",str(row.get("ss") or base.get("ss") or ""))
+              return (int(m.group(1)),int(m.group(2))) if m else (None,None)
+          def referee(row):
+              vals=[]
+              for k in ("referee","referee_name"):
+                  if row.get(k): vals.append(row[k])
+              extra=row.get("extra")
+              if isinstance(extra,dict):
+                  for k,v in extra.items():
+                      if "referee" in str(k).lower() and v: vals.append(v)
+              for v in vals:
+                  if isinstance(v,dict): v=v.get("name") or v.get("value")
+                  if isinstance(v,str) and v.strip(): return v.strip()
+              return None
+
+          matches=[]; unresolved=[]; uncertain=[]
+          for base in base_rows:
+              eid=str(base["id"]); row=details.get(eid) or {}
+              home=(row.get("home") or base.get("home") or {}).get("name") or "UNKNOWN_HOME"
+              away=(row.get("away") or base.get("away") or {}).get("name") or "UNKNOWN_AWAY"
+              ts=int(row.get("time") or base.get("time") or 0)
+              dt=datetime.fromtimestamp(ts,timezone.utc)
+              events=row.get("events")
+              if not isinstance(events,list):
+                  unresolved.append({"id":eid,"date":dt.date().isoformat(),"home":home,"away":away})
+                  continue
+              marker=next((i for i,e in enumerate(events) if "Score After First Half" in str(e.get("text") or "")),None)
+              yellow=[]
+              for i,e in enumerate(events):
+                  txt=str(e.get("text") or "")
+                  if not YELLOW_RE.search(txt): continue
+                  if marker is not None and i<marker: yellow.append(txt)
+                  elif marker is None:
+                      mm=MINUTE_RE.search(txt)
+                      if mm and int(mm.group(1))<=45: yellow.append(txt)
+              hyc=ayc=unknown=0
+              for txt in yellow:
+                  mm=TEAM_RE.search(txt); label=mm.group(1).strip() if mm else ""
+                  if belongs(label,home): hyc+=1
+                  elif belongs(label,away): ayc+=1
+                  else: unknown+=1
+              if unknown:
+                  uncertain.append({"id":eid,"date":dt.date().isoformat(),"home":home,"away":away,"unknown":unknown,"yellow":yellow})
+              hs,as_=score(row,base)
+              matches.append({"id":eid,"date":dt.date().isoformat(),"dow":dt.weekday(),"hour":dt.hour,
+                  "home":home,"away":away,"hyc":hyc,"ayc":ayc,"unknown":unknown,
+                  "yc":len(yellow),"under":len(yellow)<=1,"hs":hs,"as":as_,"referee":referee(row)})
+
+          if len(matches)!=500: raise RuntimeError(f"Resolved {len(matches)}, unresolved {len(unresolved)}")
+          newest=matches[:250]; older=matches[250:]
+
+          def stat(rows):
+              n=len(rows); w=sum(x["under"] for x in rows); l=n-w
+              dist=Counter(x["yc"] for x in rows)
+              return {"n":n,"wins":w,"losses":l,"hit":w/n if n else None,
+                      "roi":(w*.5-l)/n if n else None,"fair_odds":n/w if w else None,
+                      "avg_yc":sum(x["yc"] for x in rows)/n if n else None,
+                      "distribution":dict(sorted(dist.items()))}
+
+          def learn(rows):
+              d=defaultdict(lambda:{"n":0,"own":0,"under":0,"pts":0,"games":0,"home_n":0,"home_own":0,"away_n":0,"away_own":0})
+              for x in rows:
+                  for team,own,side in ((x["home"],x["hyc"],"home"),(x["away"],x["ayc"],"away")):
+                      d[team]["n"]+=1; d[team]["own"]+=own; d[team]["under"]+=x["under"]
+                      d[team][side+"_n"]+=1; d[team][side+"_own"]+=own
+                  if x["hs"] is not None:
+                      d[x["home"]]["games"]+=1; d[x["away"]]["games"]+=1
+                      if x["hs"]>x["as"]: d[x["home"]]["pts"]+=3
+                      elif x["hs"]<x["as"]: d[x["away"]]["pts"]+=3
+                      else: d[x["home"]]["pts"]+=1; d[x["away"]]["pts"]+=1
+              out={}
+              for t,v in d.items():
+                  out[t]={**v,"own_avg":v["own"]/v["n"],"under_rate":v["under"]/v["n"],
+                          "ppg":v["pts"]/v["games"] if v["games"] else None,
+                          "home_own_avg":v["home_own"]/v["home_n"] if v["home_n"] else None,
+                          "away_own_avg":v["away_own"]/v["away_n"] if v["away_n"] else None}
+              return out
+
+          old=learn(older)
+
+          def split_rule(teamset,rows=newest):
+              cats={
+                  "both":[x for x in rows if x["home"] in teamset and x["away"] in teamset],
+                  "one":[x for x in rows if (x["home"] in teamset) ^ (x["away"] in teamset)],
+                  "none":[x for x in rows if x["home"] not in teamset and x["away"] not in teamset],
+                  "any":[x for x in rows if x["home"] in teamset or x["away"] in teamset],
+              }
+              return {k:stat(v) for k,v in cats.items()}
+
+          names=set(x["home"] for x in matches)|set(x["away"] for x in matches)
+          def team_by_tokens(*tokens):
+              wanted=set(tokens)
+              return {t for t in names if norm(t) in wanted}
+          fixed_sets={
+              "core2":team_by_tokens("ajax","psveindhoven"),
+              "core3":team_by_tokens("ajax","psveindhoven","feyenoord"),
+              "core4":team_by_tokens("ajax","psveindhoven","feyenoord","azalkmaar"),
+          }
+          fixed={k:{"teams":sorted(v),"all":split_rule(v,matches),"validation":split_rule(v,newest)} for k,v in fixed_sets.items()}
+
+          eligible=[t for t,v in old.items() if v["n"]>=15 and v["unknown"]==0] if False else [t for t,v in old.items() if v["n"]>=15]
+          ranked_under=sorted(eligible,key=lambda t:(old[t]["under_rate"],-old[t]["n"]),reverse=True)
+          ranked_own=sorted(eligible,key=lambda t:(old[t]["own_avg"],-old[t]["n"]))
+          learned={}
+          for k in (3,4,5,6,8,10):
+              s=set(ranked_under[:k])
+              learned[f"highest_under_top{k}"]={"teams":[{"team":t,"n":old[t]["n"],"under_rate":old[t]["under_rate"]} for t in ranked_under[:k]],"validation":split_rule(s)}
+              s=set(ranked_own[:k])
+              learned[f"lowest_own_top{k}"]={"teams":[{"team":t,"n":old[t]["n"],"own_avg":old[t]["own_avg"]} for t in ranked_own[:k]],"validation":split_rule(s)}
+
+          high_own=sorted(eligible,key=lambda t:old[t]["own_avg"],reverse=True)
+          exclusions={}
+          for k in (3,4,5,6):
+              bad=set(high_own[:k])
+              clean=[x for x in newest if x["home"] not in bad and x["away"] not in bad]
+              dirty=[x for x in newest if x["home"] in bad or x["away"] in bad]
+              exclusions[f"exclude_high_own_top{k}"]={"excluded_teams":[{"team":t,"own_avg":old[t]["own_avg"]} for t in high_own[:k]],"clean":stat(clean),"dirty":stat(dirty)}
+
+          scored=[]
+          for x in newest:
+              h=old.get(x["home"]); a=old.get(x["away"])
+              if not h or not a or h["n"]<15 or a["n"]<15: continue
+              y=dict(x)
+              y["expected"]=h["own_avg"]+a["own_avg"]
+              y["side_expected"]=(h["home_own_avg"]+a["away_own_avg"]) if h["home_n"]>=6 and a["away_n"]>=6 else None
+              y["under_prior"]=(h["under_rate"]+a["under_rate"])/2
+              y["ppg_gap"]=abs(h["ppg"]-a["ppg"]) if h["ppg"] is not None and a["ppg"] is not None else None
+              y["home_stronger"]=(h["ppg"]-a["ppg"]) if h["ppg"] is not None and a["ppg"] is not None else None
+              scored.append(y)
+
+          bins={
+              "expected_le_1_0":[x for x in scored if x["expected"]<=1.0],
+              "expected_1_0_1_3":[x for x in scored if 1.0<x["expected"]<=1.3],
+              "expected_gt_1_3":[x for x in scored if x["expected"]>1.3],
+              "side_expected_le_0_9":[x for x in scored if x["side_expected"] is not None and x["side_expected"]<=.9],
+              "side_expected_0_9_1_2":[x for x in scored if x["side_expected"] is not None and .9<x["side_expected"]<=1.2],
+              "side_expected_gt_1_2":[x for x in scored if x["side_expected"] is not None and x["side_expected"]>1.2],
+              "under_prior_ge_0_70":[x for x in scored if x["under_prior"]>=.70],
+              "under_prior_0_60_0_70":[x for x in scored if .60<=x["under_prior"]<.70],
+              "under_prior_lt_0_60":[x for x in scored if x["under_prior"]<.60],
+              "ppg_gap_ge_0_8":[x for x in scored if x["ppg_gap"] is not None and x["ppg_gap"]>=.8],
+              "ppg_gap_lt_0_3":[x for x in scored if x["ppg_gap"] is not None and x["ppg_gap"]<.3],
+              "strong_home_gap_ge_0_6":[x for x in scored if x["home_stronger"] is not None and x["home_stronger"]>=.6],
+              "strong_away_gap_ge_0_6":[x for x in scored if x["home_stronger"] is not None and x["home_stronger"]<=-.6],
+          }
+
+          simple={
+              "weekend":[x for x in newest if x["dow"]>=5],
+              "weekday":[x for x in newest if x["dow"]<5],
+              "early_utc_before_15":[x for x in newest if x["hour"]<15],
+              "late_utc_19_or_later":[x for x in newest if x["hour"]>=19],
+          }
+
+          old_refs=defaultdict(list)
+          for x in older:
+              if x["referee"]: old_refs[x["referee"]].append(x)
+          low_refs={r for r,rows in old_refs.items() if len(rows)>=8 and stat(rows)["hit"]>=.75}
+          high_refs={r for r,rows in old_refs.items() if len(rows)>=8 and stat(rows)["hit"]<=.55}
+          refout={"coverage_old":sum(bool(x["referee"]) for x in older),"coverage_new":sum(bool(x["referee"]) for x in newest),
+              "low_training":[{"referee":r,**stat(old_refs[r])} for r in sorted(low_refs)],
+              "high_training":[{"referee":r,**stat(old_refs[r])} for r in sorted(high_refs)],
+              "low_validation":stat([x for x in newest if x["referee"] in low_refs]),
+              "high_validation":stat([x for x in newest if x["referee"] in high_refs])}
+
+          per_team=[]
+          apps=Counter()
+          for x in matches: apps[x["home"]]+=1; apps[x["away"]]+=1
+          for team,n in apps.most_common():
+              rows=[x for x in matches if x["home"]==team or x["away"]==team]
+              if len(rows)<20: continue
+              mid=len(rows)//2
+              ownvals=[x["hyc"] if x["home"]==team else x["ayc"] for x in rows]
+              per_team.append({"team":team,"n":len(rows),"all":stat(rows),"latest_half":stat(rows[:mid]),"older_half":stat(rows[mid:]),
+                  "own_avg":sum(ownvals)/len(ownvals),"own_zero":sum(v==0 for v in ownvals)/len(ownvals),"own_two_plus":sum(v>=2 for v in ownvals)/len(ownvals)})
+          stable=[x for x in per_team if x["n"]>=30 and x["all"]["hit"]>2/3 and x["latest_half"]["hit"]>2/3 and x["older_half"]["hit"]>2/3]
+          stable.sort(key=lambda x:(x["all"]["roi"],x["n"]),reverse=True)
+
+          blocks=[{"range":f"{i+1}-{i+100}",**stat(matches[i:i+100])} for i in range(0,500,100)]
+          print("BASE_JSON="+json.dumps({"all":stat(matches),"old250":stat(older),"new250":stat(newest),"blocks":blocks,
+              "date_from":matches[-1]["date"],"date_to":matches[0]["date"],"details":len(details),
+              "unresolved":unresolved,"uncertain_count":len(uncertain)},ensure_ascii=False,separators=(",",":")))
+          print("FIXED_JSON="+json.dumps(fixed,ensure_ascii=False,separators=(",",":")))
+          print("LEARNED_JSON="+json.dumps(learned,ensure_ascii=False,separators=(",",":")))
+          print("EXCLUSIONS_JSON="+json.dumps(exclusions,ensure_ascii=False,separators=(",",":")))
+          print("BINS_JSON="+json.dumps({k:stat(v) for k,v in bins.items()},ensure_ascii=False,separators=(",",":")))
+          print("SIMPLE_JSON="+json.dumps({k:stat(v) for k,v in simple.items()},ensure_ascii=False,separators=(",",":")))
+          print("REFEREE_JSON="+json.dumps(refout,ensure_ascii=False,separators=(",",":")))
+          print("TEAMS_JSON="+json.dumps(per_team,ensure_ascii=False,separators=(",",":")))
+          print("STABLE_JSON="+json.dumps(stable,ensure_ascii=False,separators=(",",":")))
+          print("UNCERTAIN_JSON="+json.dumps(uncertain,ensure_ascii=False,separators=(",",":")))
+          PY
