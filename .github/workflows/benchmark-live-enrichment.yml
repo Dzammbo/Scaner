@@ -1,0 +1,31 @@
+name: Explicit live enrichment latency comparison
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/live-benchmark-request.json'
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Compare 15 and 30 without selecting or recording matches
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            python3 scripts/benchmark_live_enrichment.py --request-file .github/live-benchmark-request.json
+          else
+            python3 scripts/benchmark_live_enrichment.py
+          fi

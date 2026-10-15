@@ -53,6 +53,41 @@ def get(path, **params):
         }
 
 
+def enrich_events(events):
+    """Shared parallel stage for live and explicit latency diagnostics only."""
+    by_id = {event["event_id"]: event for event in events}
+
+    def enrich(event, kind):
+        called_at = time.monotonic()
+        try:
+            if kind == "odds":
+                payload, meta = get("/v2/event/odds", event_id=event["event_id"], source="bet365", odds_market="3")
+                data = current_main_total(payload, event, int(time.time()))
+                data.update(odds_http=meta, detail_ok=bool(payload.get("success")))
+            else:
+                payload, meta = get("/v1/event/stats_trend", event_id=event["event_id"])
+                data = {"stats_trend": summarize_stats_trend(payload, event=event, observed_at=time.time())}
+                data["stats_trend"]["http"] = meta
+            return event["event_id"], kind, data, time.monotonic() - called_at
+        except Exception as exc:
+            error = (type(exc).__name__ + ": " + str(exc)).replace(os.environ["BETSAPI_KEY"], "[redacted]")[:180]
+            if kind == "odds":
+                data = {"detail_ok": False, "main_total_status": "unavailable", "main_total_reason": error}
+            else:
+                data = {"stats_trend": {"available": False, "source": "betsapi_event_stats_trend", "reason": error}}
+            return event["event_id"], kind, data, time.monotonic() - called_at
+
+    calls_started = time.monotonic()
+    # Interleaved submission: neither endpoint must finish for ALL events first.
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+        futures = [pool.submit(enrich, event, kind) for event in events for kind in ("trend", "odds")]
+        for future in as_completed(futures):
+            event_id, kind, data, elapsed = future.result()
+            by_id[event_id].update(data)
+            by_id[event_id].setdefault("request_elapsed_seconds", {})[kind] = round(elapsed, 3)
+    return round(time.monotonic() - calls_started, 3)
+
+
 def collect(mode, requested_ids, history_dir, selected_file):
     started = time.monotonic()
     selected_ids, selected_warnings = read_selected_events(selected_file)
@@ -106,34 +141,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
             "main_total_within_two_goal_limit": None,
         })
 
-    def enrich(event, kind):
-        called_at = time.monotonic()
-        try:
-            if kind == "odds":
-                payload, meta = get("/v2/event/odds", event_id=event["event_id"], source="bet365", odds_market="3")
-                data = current_main_total(payload, event, int(time.time()))
-                data.update(odds_http=meta, detail_ok=bool(payload.get("success")))
-            else:
-                payload, meta = get("/v1/event/stats_trend", event_id=event["event_id"])
-                data = {"stats_trend": summarize_stats_trend(payload, event=event, observed_at=time.time())}
-                data["stats_trend"]["http"] = meta
-            return event["event_id"], kind, data, time.monotonic() - called_at
-        except Exception as exc:
-            error = (type(exc).__name__ + ": " + str(exc)).replace(os.environ["BETSAPI_KEY"], "[redacted]")[:180]
-            if kind == "odds":
-                data = {"detail_ok": False, "main_total_status": "unavailable", "main_total_reason": error}
-            else:
-                data = {"stats_trend": {"available": False, "source": "betsapi_event_stats_trend", "reason": error}}
-            return event["event_id"], kind, data, time.monotonic() - called_at
-
-    calls_started = time.monotonic()
-    # Interleaved submission: neither endpoint must finish for ALL events first.
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = [pool.submit(enrich, event, kind) for event in shortlist for kind in ("trend", "odds")]
-        for future in as_completed(futures):
-            event_id, kind, data, elapsed = future.result()
-            by_id[event_id].update(data)
-            by_id[event_id].setdefault("request_elapsed_seconds", {})[kind] = round(elapsed, 3)
+    enrichment_elapsed = enrich_events(shortlist)
     events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
     snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     return {
@@ -158,7 +166,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
         "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
         "stats_trend_available_count": sum(bool(event.get("stats_trend", {}).get("available")) for event in events),
-        "timing_seconds": {"enrichment": round(time.monotonic() - calls_started, 3),
+        "timing_seconds": {"enrichment": enrichment_elapsed,
                            "collection": round(time.monotonic() - started, 3)},
         "events": events,
     }
