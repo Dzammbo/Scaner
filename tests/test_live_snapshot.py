@@ -58,17 +58,17 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(len(result["events"]), 250)
         self.assertEqual(result["sports_review_event_count"], 250)
         self.assertFalse(result["technical_cap_reached"])
-        self.assertEqual(result["total_api_calls"], 31)
-        self.assertEqual(len(calls), 31)
-        self.assertEqual(result["stats_trend_shortlisted_count"], 15)
+        self.assertEqual(result["total_api_calls"], 61)
+        self.assertEqual(len(calls), 61)
+        self.assertEqual(result["stats_trend_shortlisted_count"], 30)
         self.assertEqual(len(result["category_counts"]), 4)
         self.assertGreaterEqual(peak, 8)
         self.assertLessEqual(peak, 16)
         odds_ids = {params['event_id'] for path, params in calls if path.endswith('/event/odds')}
         trend_ids = {params['event_id'] for path, params in calls if path.endswith('/event/stats_trend')}
         self.assertEqual(odds_ids, trend_ids)
-        self.assertEqual(len(odds_ids), 15)
-        self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 235)
+        self.assertEqual(len(odds_ids), 30)
+        self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 220)
 
     def test_odds_does_not_block_trend_and_failures_do_not_remove_match(self):
         from live_snapshot import collect

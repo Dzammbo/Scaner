@@ -31,16 +31,16 @@ class BenchmarkTests(unittest.TestCase):
         self.assertFalse(result['full_15_vs_30_measured'])
         self.assertIsNone(result['measured_median_difference_seconds'])
         self.assertEqual(result['total_api_calls'], 57)
-        self.assertEqual([case['requested_limit'] for case in result['cases']], [15, 30, 30, 15])
-        self.assertEqual(SHORTLIST_LIMIT, 15)
+        self.assertEqual([case['requested_limit'] for case in result['cases']], [30, 15, 15, 30])
+        self.assertEqual(SHORTLIST_LIMIT, 30)
 
     def test_full_pool_experiment_uses_181_calls_and_measures_both_sizes(self):
         events = [{'event_id': str(i), 'preliminary_selection': {'rank': i+1, 'uses_previous_snapshots': False},
                    'request_elapsed_seconds': {'trend': .1, 'odds': .2}} for i in range(40)]
-        snapshot = {'events': events, 'timing_seconds': {'collection': 1, 'enrichment': 2}, 'board_http': {}}
-        with patch('benchmark_live_enrichment.collect', return_value=snapshot), patch('benchmark_live_enrichment.enrich_events', side_effect=[4, 4, 2]):
+        snapshot = {'events': events, 'timing_seconds': {'collection': 5, 'enrichment': 4}, 'board_http': {}}
+        with patch('benchmark_live_enrichment.collect', return_value=snapshot), patch('benchmark_live_enrichment.enrich_events', side_effect=[2, 2, 4]):
             result = run_benchmark('unused')
         self.assertTrue(result['full_15_vs_30_measured'])
-        self.assertEqual([case['actual_events'] for case in result['cases']], [15, 30, 30, 15])
+        self.assertEqual([case['actual_events'] for case in result['cases']], [30, 15, 15, 30])
         self.assertEqual(result['measured_median_difference_seconds'], 2)
         self.assertEqual(result['total_api_calls'], 181)

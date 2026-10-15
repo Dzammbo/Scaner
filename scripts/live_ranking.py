@@ -2,7 +2,7 @@
 from collections import deque
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-15-v3"
+RULES_VERSION = "sports-only-2026-10-15-v4"
 RANKING_METHOD = "single_snapshot_sports_queues_v2"
 
 
@@ -69,7 +69,7 @@ def interleave(queues):
 
 
 def rank_candidates(events):
-    """Return ALL events. Top-15 limits requests, never the sporting review pool.
+    """Return ALL events. The enrichment limit never truncates the review pool.
 
     Only the current board matters: intensity, xG and two-sided threat. Each
     route alternates cumulative volume and per-minute pace. History remains

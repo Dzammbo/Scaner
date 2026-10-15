@@ -47,7 +47,7 @@ def run_benchmark(selected_file):
     cases = [stage_summary(first, SHORTLIST_LIMIT, snapshot["timing_seconds"]["enrichment"])]
     # Fixed cohort and ABBA order reduce changing-pool/order effects. Cache and
     # provider load may still differ; two passes are not a reliability study.
-    for limit in (30, 30, 15) if ranked else ():
+    for limit in (15, 15, 30) if ranked else ():
         fields = ("event_id", "minute", "score", "board_stats", "timer", "home", "away")
         events = [{key: event.get(key) for key in fields} for event in ranked[:limit]]
         elapsed = enrich_events(events)

@@ -14,7 +14,7 @@ from live_odds import current_main_total
 from live_ranking import RULES_VERSION, RANKING_METHOD, rank_candidates
 
 BASE = "https://api.b365api.com"
-SHORTLIST_LIMIT = 15
+SHORTLIST_LIMIT = 30
 MAX_WORKERS = 16
 EXCLUDE = re.compile(r"virtual|esoccer|e-soccer|esports|simulated|cyber", re.I)
 WOMEN = re.compile(r"women|woman|ladies|femenil|feminina|female|\(w\)", re.I)
