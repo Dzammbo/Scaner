@@ -1,0 +1,24 @@
+name: Temporary Bet365 future fields diagnostic
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/bet365-future-fields-request.json'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Inspect Bet365 trial without changing Scaner
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 scripts/diagnose_bet365_future_fields.py
