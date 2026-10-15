@@ -75,7 +75,7 @@ jobs:
               teams=[]
               for r in rows:
                   teams.extend([(r.get("home") or {}).get("name",""),(r.get("away") or {}).get("name","")])
-              score=sum(norm(t) in ("realmadrid","barcelona","atleticomadrid") for t in teams)
+              score=sum(re.sub(r"[^a-z0-9]","",str(t).lower()) in ("realmadrid","barcelona","atleticomadrid") for t in teams)
               probes.append({**cand,"events":len(rows),"top_team_hits":score})
           probes.sort(key=lambda x:(x["top_team_hits"],x["events"]),reverse=True)
           print("LEAGUE_CANDIDATES_JSON="+json.dumps(probes,ensure_ascii=False,separators=(",",":")))
