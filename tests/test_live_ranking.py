@@ -88,7 +88,7 @@ class RankingTests(unittest.TestCase):
 
     def trend_event(self, i, line=1.5, over=1.9):
         def window(minutes, on, off, dangerous, corners):
-            return {'actual_duration_minutes': minutes, 'stats': {
+            return {'from_minute': 35-minutes, 'to_minute': 35, 'actual_duration_minutes': minutes, 'stats': {
                 'on_target': {'home': on[0], 'away': on[1]},
                 'off_target': {'home': off[0], 'away': off[1]},
                 'dangerous_attacks': {'home': dangerous[0], 'away': dangerous[1]},

@@ -58,17 +58,17 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(len(result["events"]), 250)
         self.assertEqual(result["sports_review_event_count"], 250)
         self.assertFalse(result["technical_cap_reached"])
-        self.assertEqual(result["total_api_calls"], 61)
-        self.assertEqual(len(calls), 61)
+        self.assertEqual(result["total_api_calls"], 31)
+        self.assertEqual(len(calls), 31)
         self.assertEqual(result["stats_trend_shortlisted_count"], 30)
         self.assertEqual(len(result["category_counts"]), 4)
         self.assertGreaterEqual(peak, 8)
         self.assertLessEqual(peak, 16)
         odds_ids = {params['event_id'] for path, params in calls if path.endswith('/event/odds')}
         trend_ids = {params['event_id'] for path, params in calls if path.endswith('/event/stats_trend')}
-        self.assertEqual(odds_ids, trend_ids)
-        self.assertEqual(len(odds_ids), 30)
-        self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 220)
+        self.assertEqual(len(trend_ids), 30)
+        self.assertEqual(len(odds_ids), 0)
+        self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 250)
         self.assertEqual(result['final_sports_selection_count'], 0)
         self.assertEqual(result['final_sports_selection_limit'], 10)
 
@@ -88,7 +88,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get', fake_get), patch.dict(os.environ, {'BETSAPI_KEY': 'test'}):
             result = collect('full', [], directory, str(ROOT/'.github/live-selected-events.json'))
         self.assertEqual(len(result['events']), 1)
-        self.assertEqual(result['events'][0]['main_total_status'], 'unavailable')
+        self.assertEqual(result['events'][0]['main_total_status'], 'not_requested')
         self.assertFalse(result['events'][0]['stats_trend']['available'])
 
     def test_empty_board_calls_no_enrichment(self):
@@ -144,7 +144,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
                 runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
             result=json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             by_id={event['event_id']:event for event in result['events']}
-            self.assertEqual(result['events_main_total_count'],2)
+            self.assertEqual(result['events_main_total_count'],0)
             self.assertEqual(result['stats_trend_shortlisted_count'],2)
             self.assertTrue(by_id['123']['stats_trend']['available'])
             self.assertTrue(by_id['456']['stats_trend_shortlisted'])
@@ -152,7 +152,8 @@ class SnapshotIntegrationTests(unittest.TestCase):
             self.assertEqual(result['final_sports_selection_count'],2)
             self.assertEqual(set(result['final_sports_selection_event_ids']),{'123','456'})
             self.assertNotIn('main_total_within_two_goal_limit',by_id['456'])
-            self.assertEqual(by_id['123']['events_main_total']['source'],'events_odds_main')
+            self.assertIsNone(by_id['123']['events_main_total'])
+            self.assertNotIn('/v2/event/odds', calls)
             self.assertFalse(any('/v1/bet365/' in path for path in calls))
 
     def test_full_refresh_and_history(self):
@@ -182,7 +183,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
             self.assertEqual([e['event_id'] for e in refreshed['events']],['123','456'])
             self.assertEqual(refreshed['missing_requested_event_ids'],['789'])
             self.assertTrue(refreshed['events'][0]['dynamics']['available'])
-            self.assertEqual(len([x for x in calls if x[0].endswith('/event/odds')]),3)
+            self.assertEqual(len([x for x in calls if x[0].endswith('/event/odds')]),0)
 
     def test_full_excludes_selected_but_refresh_allows_it(self):
         def get(request,timeout):

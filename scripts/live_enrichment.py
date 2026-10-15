@@ -75,7 +75,7 @@ def _clean_number(value):
     return int(rounded) if rounded.is_integer() else rounded
 
 
-def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=None):
+def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=None, _start_floor=None):
     """Describe supported intervals, never invent a zero baseline or freshness.
 
     Sparse provider counters may be carried forward, but their actual last point
@@ -116,7 +116,8 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
     has_deltas = False
     has_partial_deltas = False
     for window in windows:
-        start = max(0, latest_minute - window)
+        start = max(0, latest_minute - window, _start_floor or 0)
+        start = min(start, latest_minute)
         fields = {}
         coverage = {}
         partial_intervals = {}
@@ -185,7 +186,7 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
             "partial_intervals": partial_intervals,
         }
 
-    return {
+    result = {
         "available": has_deltas or has_partial_deltas,
         "complete_counter_intervals_available": has_deltas,
         "partial_counter_intervals_available": has_partial_deltas,
@@ -207,3 +208,35 @@ def summarize_stats_trend(payload, windows=(5, 10, 15), event=None, observed_at=
         },
         "windows": summaries,
     }
+
+    if _start_floor is not None:
+        return result
+    boundaries = []
+    for field in ("goals", "redcards"):
+        for side, points in parsed.get(field, {}).items():
+            for (before, old), (after, new) in zip(points, points[1:]):
+                if new > old:
+                    boundaries.append({"kind": field, "side": side,
+                                       "observed_from_minute": before, "observed_by_minute": after,
+                                       "exact_event_time_known": False})
+    # Clock alone is ambiguous in first-half stoppage time. Provider period, when
+    # supplied, wins. Otherwise record the second-half inference explicitly.
+    period = str(timer.get("period", event.get("period", ""))).lower()
+    second_half = period in ("2", "2h", "second_half") or (not period and board_minute is not None and board_minute > 45)
+    floor = max((b["observed_by_minute"] for b in boundaries), default=0)
+    if second_half:
+        floor = max(floor, 45)
+    result["context_boundaries"] = boundaries
+    result["time_context"]["second_half_clock_inferred"] = bool(second_half and not period)
+    result["time_context"]["phase"] = "halftime" if halftime else "second_half" if second_half else "match_clock"
+    result["time_context"]["current_evidence_from_minute"] = floor
+    result["series"] = {field: {side: [{"minute": m, "value": v} for m, v in points]
+                               for side, points in sides.items()} for field, sides in parsed.items()}
+    if halftime:
+        result["current_windows"] = {}
+    elif floor:
+        result["current_windows"] = summarize_stats_trend(
+            payload, windows, event, observed_at, _start_floor=floor)["windows"]
+    else:
+        result["current_windows"] = summaries
+    return result
