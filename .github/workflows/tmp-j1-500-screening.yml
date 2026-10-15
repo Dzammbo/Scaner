@@ -65,7 +65,7 @@ jobs:
               names=league.get("names") or {}
               name=str(league.get("name") or names.get("en") or "")
               low=name.lower()
-              if ("j1 league" in low or low.strip()=="j league") and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
+              if any(z in low for z in ("j1","j-league","j league")) and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
                   candidates.append({"id":str(league.get("id")),"name":name})
           probes=[]
           for cand in candidates:
