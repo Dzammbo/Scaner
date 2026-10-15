@@ -12,7 +12,7 @@ class BenchmarkTests(unittest.TestCase):
     def test_queue_projection_is_distinct_from_live_latency(self):
         sample = [{'trend': 1.0, 'odds': 1.0}]
         self.assertEqual(projected_stage(sample, 15), 2.0)
-        self.assertEqual(projected_stage(sample, 30), 4.0)
+        self.assertEqual(projected_stage(sample, 30), 3.0)
         self.assertEqual(projected_stage(sample, 15, odds=False), 1.0)
         self.assertEqual(projected_stage(sample, 30, odds=False), 2.0)
         self.assertIsNone(projected_stage([], 30))
@@ -30,11 +30,11 @@ class BenchmarkTests(unittest.TestCase):
             result = run_benchmark('unused')
         self.assertFalse(result['full_15_vs_30_measured'])
         self.assertIsNone(result['measured_median_difference_seconds'])
-        self.assertEqual(result['total_api_calls'], 57)
+        self.assertEqual(result['total_api_calls'], 29)
         self.assertEqual([case['requested_limit'] for case in result['cases']], [30, 15, 15, 30])
         self.assertEqual(SHORTLIST_LIMIT, 30)
 
-    def test_full_pool_experiment_uses_181_calls_and_measures_both_sizes(self):
+    def test_full_pool_experiment_uses_91_trend_calls_without_finalists_and_measures_both_sizes(self):
         events = [{'event_id': str(i), 'preliminary_selection': {'rank': i+1, 'uses_previous_snapshots': False},
                    'request_elapsed_seconds': {'trend': .1, 'odds': .2}} for i in range(40)]
         snapshot = {'events': events, 'timing_seconds': {'collection': 5, 'enrichment': 4}, 'board_http': {}}
@@ -43,4 +43,4 @@ class BenchmarkTests(unittest.TestCase):
         self.assertTrue(result['full_15_vs_30_measured'])
         self.assertEqual([case['actual_events'] for case in result['cases']], [30, 15, 15, 30])
         self.assertEqual(result['measured_median_difference_seconds'], 2)
-        self.assertEqual(result['total_api_calls'], 181)
+        self.assertEqual(result['total_api_calls'], 91)
