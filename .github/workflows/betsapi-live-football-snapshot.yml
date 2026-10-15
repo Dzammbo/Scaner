@@ -35,6 +35,12 @@ jobs:
           else
             python3 scripts/live_snapshot.py --event-ids "$EVENT_IDS"
           fi
+      - name: Optional prices after sports-ready output
+        continue-on-error: true
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          SNAPSHOT_PATH: ${{ steps.live.outputs.snapshot_path }}
+        run: python3 scripts/live_snapshot.py --odds-snapshot "$SNAPSHOT_PATH"
       # Post-output operation. The LIVE_SNAPSHOT_JSON line is the delivery boundary:
       # clients must publish candidates before waiting for this step or doing refresh/ledger work.
       - name: Post-output save of already published snapshot
