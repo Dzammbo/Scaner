@@ -57,6 +57,22 @@ def recursive_hits(value, path=""):
     return hits
 
 
+def matching_objects(value, path=""):
+    matches = []
+    if isinstance(value, dict):
+        scalars = {str(key): child for key, child in value.items()
+                   if child is None or isinstance(child, (str, int, float, bool))}
+        if any(TARGET.search(str(key)) or (isinstance(child, str) and TARGET.search(child))
+               for key, child in scalars.items()):
+            matches.append({"path": path, "fields": scalars})
+        for key, child in value.items():
+            matches.extend(matching_objects(child, path + "." + str(key) if path else str(key)))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            matches.extend(matching_objects(child, path + "[" + str(index) + "]"))
+    return matches
+
+
 def trend_field_summary(value):
     if not isinstance(value, dict):
         return {"raw": value}
@@ -133,6 +149,7 @@ def inspect_bet365_event(row):
         "fi": fi, "home": label(row.get("home")), "away": label(row.get("away")),
         "http": http, "success": payload.get("success") if isinstance(payload, dict) else None,
         "target_hits": hits,
+        "target_objects": matching_objects(results),
         "matching_names": sorted({name for name in names if TARGET.search(name)}),
         "all_name_count": len(names),
     }
