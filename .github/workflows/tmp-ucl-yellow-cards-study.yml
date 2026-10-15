@@ -12,163 +12,61 @@ permissions:
 jobs:
   study:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Query last 100 completed UEFA Champions League matches
+      - name: Cross-check two provider inconsistencies
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-          PYTHONDONTWRITEBYTECODE: '1'
         shell: bash
         run: |
           python3 - <<'PY'
-          import json, os, re, time, urllib.parse, urllib.request
-          from collections import Counter
-          from datetime import datetime, timezone
-
+          import json, os, urllib.parse, urllib.request
           BASE = "https://api.b365api.com"
           TOKEN = os.environ["BETSAPI_KEY"]
-          ANCHOR_EVENT_ID = "13041971"
+          IDS = ["13041838", "10580528"]
 
           def get(path, **params):
               params["token"] = TOKEN
               url = BASE + path + "?" + urllib.parse.urlencode(params)
-              req = urllib.request.Request(url, headers={"User-Agent": "dzam-ucl-yellow-study/1.0"})
+              req = urllib.request.Request(url, headers={"User-Agent":"dzam-ucl-yellow-crosscheck/1.0"})
               with urllib.request.urlopen(req, timeout=30) as response:
                   return json.load(response)
 
-          anchor_payload = get("/v1/event/view", event_id=ANCHOR_EVENT_ID)
-          anchor_rows = anchor_payload.get("results") or []
-          if not anchor_rows:
-              raise RuntimeError("Anchor UEFA Champions League event unavailable")
-          anchor = anchor_rows[0]
-          league = anchor.get("league") or {}
-          league_id = str(league.get("id") or "")
-          league_name = str(league.get("name") or "")
-          if not league_id or league_name != "UEFA Champions League":
-              raise RuntimeError("Unexpected anchor league: " + json.dumps(league, ensure_ascii=False))
-
-          base_rows = []
-          seen = set()
-          for page in range(1, 6):
-              payload = get("/v3/events/ended", sport_id=1, league_id=league_id, page=page)
-              rows = payload.get("results") or []
-              if isinstance(rows, dict):
-                  rows = rows.get("events") or rows.get("results") or []
-              for row in rows:
-                  eid = str(row.get("id") or "")
-                  if not eid or eid in seen or str(row.get("time_status")) != "3":
-                      continue
-                  seen.add(eid)
-                  base_rows.append(row)
-              if len(base_rows) >= 130 or not rows:
-                  break
-
-          base_rows.sort(key=lambda row: (int(row.get("time") or 0), int(row.get("id") or 0)), reverse=True)
-          base_rows = base_rows[:100]
-          if len(base_rows) != 100:
-              raise RuntimeError(f"Expected 100 ended matches, got {len(base_rows)}")
-
-          details = {}
-          ids = [str(row["id"]) for row in base_rows]
-          for start in range(0, len(ids), 10):
-              payload = get("/v1/event/view", event_id=",".join(ids[start:start+10]))
-              for row in payload.get("results") or []:
-                  details[str(row.get("id"))] = row
-
-          yellow_re = re.compile(r"(?i)\bYellow Card\b")
-          minute_re = re.compile(r"^(\d+)(?:\+(\d+))?'")
-          rows_out = []
-          exact_count = 0
-
-          for base in base_rows:
-              eid = str(base["id"])
-              row = details.get(eid) or {}
-              events = row.get("events") or []
-              marker_positions = [
-                  i for i, event in enumerate(events)
-                  if "Score After First Half" in str(event.get("text") or "")
-              ]
-              marker_index = marker_positions[0] if marker_positions else None
-              yellow_events = [
-                  (i, str(event.get("text") or ""))
-                  for i, event in enumerate(events)
-                  if yellow_re.search(str(event.get("text") or ""))
-              ]
-              stats = row.get("stats") or {}
-              full_pair = stats.get("yellowcards")
-              try:
-                  full_stats_total = int(full_pair[0]) + int(full_pair[1])
-              except Exception:
-                  full_stats_total = None
-              full_events_total = len(yellow_events)
-              full_match_consistent = full_stats_total is not None and full_stats_total == full_events_total
-
-              method = None
-              first_half_texts = []
-              if marker_index is not None and full_match_consistent:
-                  first_half_texts = [text for idx, text in yellow_events if idx < marker_index]
-                  method = "event_timeline_before_halftime_marker"
-                  exact_count += 1
-              else:
-                  for idx, text in yellow_events:
-                      match = minute_re.search(text)
-                      if not match:
+          output = []
+          for event_id in IDS:
+              view = (get("/v1/event/view", event_id=event_id).get("results") or [{}])[0]
+              trend = get("/v1/event/stats_trend", event_id=event_id).get("results") or {}
+              yc = trend.get("yellowcards") or {}
+              at_45 = {}
+              for side in ("home", "away"):
+                  points = yc.get(side) or []
+                  eligible = []
+                  for point in points:
+                      try:
+                          minute = int(float(point.get("time_str")))
+                          value = int(float(point.get("val")))
+                      except Exception:
                           continue
-                      minute = int(match.group(1))
-                      if minute < 45 or minute == 45:
-                          first_half_texts.append(text)
-                  method = "minute_fallback_unverified"
-
-              fh_yellows = len(first_half_texts)
-              home = (row.get("home") or base.get("home") or {}).get("name")
-              away = (row.get("away") or base.get("away") or {}).get("name")
-              ts = int(row.get("time") or base.get("time") or 0)
-              rows_out.append({
-                  "event_id": eid,
-                  "date_utc": datetime.fromtimestamp(ts, timezone.utc).date().isoformat(),
-                  "home": home,
-                  "away": away,
-                  "fh_yellows": fh_yellows,
-                  "under_1_5": fh_yellows <= 1,
-                  "method": method,
-                  "halftime_marker": marker_index is not None,
-                  "full_stats_total": full_stats_total,
-                  "full_events_total": full_events_total,
-                  "first_half_events": first_half_texts,
+                      if minute <= 45:
+                          eligible.append((minute, value))
+                  at_45[side] = max(eligible)[1] if eligible else 0
+              marker = next((i for i,e in enumerate(view.get("events") or []) if "Score After First Half" in str(e.get("text") or "")), None)
+              yellow_events = [
+                  {"index":i,"text":str(e.get("text") or "")}
+                  for i,e in enumerate(view.get("events") or [])
+                  if "Yellow Card" in str(e.get("text") or "")
+              ]
+              output.append({
+                  "event_id":event_id,
+                  "home":(view.get("home") or {}).get("name"),
+                  "away":(view.get("away") or {}).get("name"),
+                  "trend_at_45":at_45,
+                  "trend_total_at_45":sum(at_45.values()),
+                  "halftime_marker_index":marker,
+                  "timeline_yellow_events":yellow_events,
+                  "timeline_before_marker":[x for x in yellow_events if marker is not None and x["index"] < marker],
+                  "full_stats_yellowcards":(view.get("stats") or {}).get("yellowcards"),
               })
-
-          verified = [row for row in rows_out if row["method"] == "event_timeline_before_halftime_marker"]
-          wins = sum(row["under_1_5"] for row in verified)
-          losses = len(verified) - wins
-          distribution = Counter(row["fh_yellows"] for row in verified)
-          n = len(verified)
-          hit_rate = wins / n if n else None
-          odds = 1.5
-          profit_units = wins * (odds - 1) - losses if n else None
-          roi = profit_units / n if n else None
-
-          summary = {
-              "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-              "source": "BetsAPI Events API",
-              "league_id": league_id,
-              "league_name": league_name,
-              "requested_matches": 100,
-              "ended_matches_found": len(base_rows),
-              "details_found": len(details),
-              "exact_verified_matches": n,
-              "unverified_matches": len(rows_out) - n,
-              "wins_under_1_5": wins,
-              "losses_under_1_5": losses,
-              "hit_rate": hit_rate,
-              "break_even_rate_at_1_50": 1 / odds,
-              "profit_units_flat_1": profit_units,
-              "roi_at_1_50": roi,
-              "distribution": {str(k): distribution[k] for k in sorted(distribution)},
-              "date_from_utc": rows_out[-1]["date_utc"],
-              "date_to_utc": rows_out[0]["date_utc"],
-              "definition": "Individual Yellow Card events before Score After First Half marker; includes 45+ by event order",
-          }
-          print("SUMMARY_JSON=" + json.dumps(summary, ensure_ascii=False, separators=(",", ":")))
-          print("ROWS_JSON=" + json.dumps(rows_out, ensure_ascii=False, separators=(",", ":")))
+          print("CROSSCHECK_JSON=" + json.dumps(output, ensure_ascii=False, separators=(",",":")))
           PY
