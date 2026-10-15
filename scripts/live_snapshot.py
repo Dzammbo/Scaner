@@ -152,6 +152,14 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "missing_requested_event_ids": sorted(set(requested_ids) - set(by_id)),
         "history_read_warnings": history_warnings, "selected_events_read_warnings": selected_warnings,
         "source": "BetsAPI Events API", "board_http": board_meta,
+        "delivery_policy": {
+            "primary_output": "immediate_after_live_snapshot_json",
+            "user_output_precedes": [
+                "refresh", "external_checks", "selection_ledger",
+                "history_verification", "diary_updates",
+            ],
+            "postprocessing_may_not_delay_primary_output": True,
+        },
         "raw_live_count": len(raw), "eligible_before_selected_count": eligible_before_selected_count,
         "previously_selected_skipped_count": len(skipped), "previously_selected_skipped_event_ids": sorted(skipped),
         "eligible_in_window_count": len(events), "sports_review_event_count": len(events),
