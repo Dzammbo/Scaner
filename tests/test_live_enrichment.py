@@ -75,7 +75,7 @@ class LiveEnrichmentTests(unittest.TestCase):
     def test_halftime_and_clock_mismatch_are_explicit_not_match_filters(self):
         result = self.trend([(30, 1), (40, 5)], event={"minute": 45, "timer": {"tt": "0"}})
         self.assertTrue(result["available"])
-        self.assertEqual(result["time_context"]["phase"], "before_halftime")
+        self.assertEqual(result["time_context"]["phase"], "halftime")
         self.assertEqual(result["time_context"]["board_minus_trend_minutes"], 5)
         self.assertIsNone(result["time_context"]["provider_age_seconds"])
 
@@ -108,7 +108,7 @@ class LiveEnrichmentTests(unittest.TestCase):
         self.assertEqual(interval, {"from_minute": 38, "to_minute": 44, "actual_duration_minutes": 6, "change": 1})
         self.assertTrue(result["available"])
         self.assertTrue(result["partial_counter_intervals_available"])
-        self.assertEqual(result["time_context"]["phase"], "before_halftime")
+        self.assertEqual(result["time_context"]["phase"], "halftime")
 
     def test_point_before_window_does_not_invent_zero_partial_interval(self):
         result = summarize_stats_trend({"success": 1, "results": {
