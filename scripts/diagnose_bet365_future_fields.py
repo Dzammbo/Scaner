@@ -15,7 +15,7 @@ PATTERNS = {
     "fouls": re.compile(r"\bfouls?\b|IFoul", re.I),
     "throw_ins": re.compile(r"throw[ _-]?ins?|IThrowIn", re.I),
     "corners": re.compile(r"\bcorners?\b|ICorner", re.I),
-    "yellow_cards": re.compile(r"yellow[ _-]?cards?|IYellowCard|bookings?", re.I),
+    "yellow_cards": re.compile(r"yellow[ _-]?cards?|IYellowCard|bookings?|\bcards?\b", re.I),
 }
 SAFE_KEYS = {
     "type", "ID", "IT", "NA", "OR", "SY", "VL", "FI", "HA", "HD", "OD", "SU",
@@ -42,8 +42,9 @@ def scalar_view(node):
     if not isinstance(node, dict):
         return {"value": node}
     return {str(k): v for k, v in node.items()
-            if (k in SAFE_KEYS or k in ("name", "id", "event_id", "home", "away", "league"))
-            and (v is None or isinstance(v, (str, int, float, bool)))}
+            if (v is None or isinstance(v, (str, int, float, bool)))
+            and str(k).lower() not in ("token", "api_key", "apikey")
+            and len(str(v)) <= 300}
 
 
 def text_of(node):
@@ -65,21 +66,36 @@ def flatten_dicts(value, path="results"):
     return out
 
 
-def blocks(rows):
-    """Split the common flat Bet365 result into market-group blocks."""
+def dict_sequences(value, path="results"):
     found = []
-    current = None
-    for index, row in enumerate(rows if isinstance(rows, list) else []):
-        if not isinstance(row, dict):
-            continue
-        if row.get("type") == "MG":
-            if current:
+    if isinstance(value, list):
+        if value and all(isinstance(item, dict) for item in value):
+            found.append((path, value))
+        for index, child in enumerate(value):
+            found.extend(dict_sequences(child, path + "[" + str(index) + "]"))
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            found.extend(dict_sequences(child, path + "." + str(key)))
+    return found
+
+
+def market_units(results):
+    """Return each MA market row with its following PA selections."""
+    found = []
+    for path, rows in dict_sequences(results):
+        current = None
+        for index, row in enumerate(rows):
+            if row.get("type") == "MA":
+                if current:
+                    found.append(current)
+                current = {"path": path, "start": index, "rows": [row]}
+            elif current is not None and row.get("type") == "PA":
+                current["rows"].append(row)
+            elif current is not None and row.get("type") not in ("PA",):
                 found.append(current)
-            current = {"start": index, "rows": [row]}
-        elif current is not None:
-            current["rows"].append(row)
-    if current:
-        found.append(current)
+                current = None
+        if current:
+            found.append(current)
     return found
 
 
@@ -115,16 +131,15 @@ def inspect_event(row):
             if len(summary[category]["objects"]) < 12:
                 summary[category]["objects"].append(hit)
 
-    result_rows = results if isinstance(results, list) else []
-    for block in blocks(result_rows):
-        block_text = " ".join(text_of(item) for item in block["rows"])
-        categories = matched_categories(block_text)
+    for unit in market_units(results):
+        unit_text = " ".join(text_of(item) for item in unit["rows"])
+        categories = matched_categories(unit_text)
         if not categories:
             continue
-        safe_rows = [scalar_view(item) for item in block["rows"]]
+        safe_rows = [scalar_view(item) for item in unit["rows"]]
         safe_rows = [item for item in safe_rows if item]
         priced = [item for item in safe_rows if item.get("OD") not in (None, "")]
-        block_view = {"start": block["start"], "rows": safe_rows[:100]}
+        block_view = {"path": unit["path"], "start": unit["start"], "rows": safe_rows[:60]}
         for category in categories:
             summary[category]["market_blocks"].append(block_view)
             summary[category]["priced_selections"].extend(priced[:30])
