@@ -165,7 +165,7 @@ jobs:
           ppg_rank.sort(key=lambda x:(x["ppg"],x["matches"]),reverse=True)
 
           # Traditional Big Six, matched to provider names.
-          big6_tokens=("manchestercity","arsenal","liverpool","chelsea","manchesterunited","tottenham")
+          big6_tokens=("mancity","arsenal","liverpool","chelsea","manutd","tottenham")
           big6=set(t for t in team_apps if norm(t) in big6_tokens)
           empirical6=set(x["team"] for x in ppg_rank[:6])
 
