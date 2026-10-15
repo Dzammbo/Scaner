@@ -113,6 +113,31 @@ def inspect_event(row, view_by_id):
     }
 
 
+def inspect_bet365_event(row):
+    fi = str(row.get("id") or row.get("FI") or "")
+    payload, http = get("/v1/bet365/event", FI=fi, stats=1)
+    results = payload.get("results") if isinstance(payload, dict) else None
+    hits = recursive_hits(results)
+    names = []
+    def collect_names(value):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key in ("NA", "name") and isinstance(child, str):
+                    names.append(child)
+                collect_names(child)
+        elif isinstance(value, list):
+            for child in value:
+                collect_names(child)
+    collect_names(results)
+    return {
+        "fi": fi, "home": label(row.get("home")), "away": label(row.get("away")),
+        "http": http, "success": payload.get("success") if isinstance(payload, dict) else None,
+        "target_hits": hits,
+        "matching_names": sorted({name for name in names if TARGET.search(name)}),
+        "all_name_count": len(names),
+    }
+
+
 def main():
     board, board_http = get("/v3/events/inplay", sport_id=1)
     rows = [row for row in (board.get("results") or []) if isinstance(row, dict)]
@@ -135,6 +160,13 @@ def main():
             checked.append(future.result())
     checked.sort(key=lambda row: ids.index(row["event_id"]))
     bet365, bet365_http = get("/v1/bet365/inplay_filter", sport_id=1)
+    bet365_rows = [row for row in (bet365.get("results") or []) if isinstance(row, dict)]
+    bet365_checks = []
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        futures = [pool.submit(inspect_bet365_event, row) for row in bet365_rows[:5]]
+        for future in as_completed(futures):
+            bet365_checks.append(future.result())
+    bet365_checks.sort(key=lambda row: row["fi"])
 
     def coverage(source, name):
         return sum(bool(row[source]) for row in checked if name in row[source])
@@ -165,6 +197,9 @@ def main():
             "error_fields": {key: value for key, value in (bet365.items() if isinstance(bet365, dict) else [])
                              if key not in ("results",) and key != "success"},
         },
+        "bet365_full_event_checked_count": len(bet365_checks),
+        "bet365_full_event_target_coverage": sum(bool(row["target_hits"]) for row in bet365_checks),
+        "bet365_full_event_checks": bet365_checks,
         "events": checked,
     }
     print("EVENTS_FIELDS_DIAGNOSTIC_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
