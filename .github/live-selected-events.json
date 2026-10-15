@@ -170,6 +170,11 @@
       "event_id": "12312257",
       "match": "Al Faisaly Harmah - Al Kholood",
       "selected_at_utc": "2026-10-15T14:36:10.226Z"
+    },
+    {
+      "event_id": "13296358",
+      "match": "Real Pilar Reserves - Villa San Carlos Reserves",
+      "selected_at_utc": "2026-10-15T14:42:24.401Z"
     }
   ],
   "selections": [
@@ -393,6 +398,48 @@
       "recommended_total": {
         "line": 4.5,
         "full_win_total": 5,
+        "additional_goals_for_full_win": 1,
+        "within_two_goal_recommendation_limit": true,
+        "over": null,
+        "source": "sports_suggestion_unpriced"
+      },
+      "is_user_choice": false
+    },
+    {
+      "snapshot_id": "38753692083-1",
+      "event_id": "13296358",
+      "rules_version": "sports-only-2026-10-15-v4",
+      "ranking_method": "single_snapshot_sports_queues_v2",
+      "selected_at_utc": "2026-10-15T14:42:24.401Z",
+      "board_observed_at_utc": "2026-10-15T14:41:56.831567+00:00",
+      "rank": 1,
+      "mode": "refresh",
+      "home": "Real Pilar Reserves",
+      "away": "Villa San Carlos Reserves",
+      "league": "Argentina Reserve League",
+      "country": "ar",
+      "category": "Резервный",
+      "minute": 30,
+      "score": "1-1",
+      "sports_reason": "После предыдущего снимка хозяева сравняли счёт; за последние 10 минут получили преимущество 9-2 по опасным атакам, нанесли удар в створ и забили.",
+      "expected_scenario": "Давление Real Pilar после пропущенного гола реализовалось и сохраняет основания минимум для ещё одного гола в открытом резервном матче.",
+      "reference_main_total": {
+        "line": 3.75,
+        "over": 1.875,
+        "under": null,
+        "quote_score": "1-1",
+        "age_s": 18,
+        "source": "events_odds_main",
+        "full_win_total": 5,
+        "additional_goals_for_full_win": 3,
+        "within_two_goal_recommendation_limit": false
+      },
+      "line_assessment": "lower_total",
+      "reference_line_status": "available",
+      "reference_line_reason": null,
+      "recommended_total": {
+        "line": 2.5,
+        "full_win_total": 3,
         "additional_goals_for_full_win": 1,
         "within_two_goal_recommendation_limit": true,
         "over": null,
