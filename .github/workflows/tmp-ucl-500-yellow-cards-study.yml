@@ -1,0 +1,268 @@
+name: Temporary UCL 500 first half yellow card study
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tmp-ucl-500-yellow-cards-study.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query and validate last 500 completed UEFA Champions League matches
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, math, os, re, time, urllib.error, urllib.parse, urllib.request
+          from collections import Counter
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from datetime import datetime, timezone
+
+          BASE = "https://api.b365api.com"
+          TOKEN = os.environ["BETSAPI_KEY"]
+          LEAGUE_ID = "1040"
+          LEAGUE_NAME = "UEFA Champions League"
+          YELLOW_RE = re.compile(r"(?i)\bYellow Card\b")
+          MINUTE_RE = re.compile(r"^(\d+)(?:\+(\d+))?'")
+
+          def get(path, retries=4, **params):
+              params["token"] = TOKEN
+              url = BASE + path + "?" + urllib.parse.urlencode(params)
+              req = urllib.request.Request(url, headers={"User-Agent":"dzam-ucl-500-yellow-study/1.0"})
+              for attempt in range(retries):
+                  try:
+                      with urllib.request.urlopen(req, timeout=35) as response:
+                          return json.load(response)
+                  except urllib.error.HTTPError as exc:
+                      if exc.code not in (429, 500, 502, 503, 504) or attempt == retries - 1:
+                          raise
+                  except Exception:
+                      if attempt == retries - 1:
+                          raise
+                  time.sleep(1.5 * (attempt + 1))
+
+          base_rows, seen = [], set()
+          for page in range(1, 14):
+              payload = get("/v3/events/ended", sport_id=1, league_id=LEAGUE_ID, page=page)
+              rows = payload.get("results") or []
+              if isinstance(rows, dict):
+                  rows = rows.get("events") or rows.get("results") or []
+              for row in rows:
+                  eid = str(row.get("id") or "")
+                  league = row.get("league") or {}
+                  if (not eid or eid in seen or str(row.get("time_status")) != "3"
+                          or str(league.get("id") or LEAGUE_ID) != LEAGUE_ID):
+                      continue
+                  seen.add(eid)
+                  base_rows.append(row)
+              if len(base_rows) >= 550 or not rows:
+                  break
+
+          base_rows.sort(key=lambda row: (int(row.get("time") or 0), int(row.get("id") or 0)), reverse=True)
+          base_rows = base_rows[:500]
+          if len(base_rows) != 500:
+              raise RuntimeError(f"Expected 500 ended matches, got {len(base_rows)}")
+
+          ids = [str(row["id"]) for row in base_rows]
+
+          def fetch_view_batch(batch):
+              payload = get("/v1/event/view", event_id=",".join(batch))
+              return payload.get("results") or []
+
+          details = {}
+          batches = [ids[i:i+10] for i in range(0, len(ids), 10)]
+          with ThreadPoolExecutor(max_workers=10) as pool:
+              futures = [pool.submit(fetch_view_batch, batch) for batch in batches]
+              for future in as_completed(futures):
+                  for row in future.result():
+                      details[str(row.get("id"))] = row
+
+          def fetch_trend(eid):
+              try:
+                  payload = get("/v1/event/stats_trend", event_id=eid)
+                  return eid, payload.get("results") or {}, None
+              except Exception as exc:
+                  return eid, {}, type(exc).__name__ + ": " + str(exc)[:120]
+
+          trends, trend_errors = {}, {}
+          with ThreadPoolExecutor(max_workers=20) as pool:
+              futures = [pool.submit(fetch_trend, eid) for eid in ids]
+              for future in as_completed(futures):
+                  eid, result, error = future.result()
+                  trends[eid] = result
+                  if error:
+                      trend_errors[eid] = error
+
+          def trend_value_at_45(trend):
+              yc = (trend or {}).get("yellowcards") or {}
+              total = 0
+              present = False
+              for side in ("home", "away"):
+                  best = None
+                  for point in yc.get(side) or []:
+                      try:
+                          minute = int(float(point.get("time_str")))
+                          value = int(float(point.get("val")))
+                      except Exception:
+                          continue
+                      if minute <= 45 and (best is None or minute >= best[0]):
+                          best = (minute, value)
+                  if best is not None:
+                      present = True
+                      total += best[1]
+              return total if present else None
+
+          output = []
+          for base in base_rows:
+              eid = str(base["id"])
+              row = details.get(eid) or {}
+              events = row.get("events") or []
+              marker = next((i for i,e in enumerate(events)
+                             if "Score After First Half" in str(e.get("text") or "")), None)
+              yellows = []
+              unparsed_yellows = 0
+              for idx, event in enumerate(events):
+                  text = str(event.get("text") or "")
+                  if not YELLOW_RE.search(text):
+                      continue
+                  match = MINUTE_RE.search(text)
+                  if match:
+                      minute = int(match.group(1))
+                      added = int(match.group(2) or 0)
+                  else:
+                      minute = added = None
+                      unparsed_yellows += 1
+                  yellows.append({"index":idx, "text":text, "minute":minute, "added":added})
+
+              if marker is not None:
+                  fh_timeline = [x for x in yellows if x["index"] < marker]
+              else:
+                  fh_timeline = [x for x in yellows if x["minute"] is not None and x["minute"] <= 45]
+              fh_count = len(fh_timeline)
+
+              stats_pair = (row.get("stats") or {}).get("yellowcards")
+              try:
+                  full_stats = int(stats_pair[0]) + int(stats_pair[1])
+              except Exception:
+                  full_stats = None
+              full_timeline = len(yellows)
+              full_consistent = full_stats is not None and full_stats == full_timeline
+              trend45 = trend_value_at_45(trends.get(eid))
+              timeline_outcome = fh_count <= 1
+              trend_outcome = (trend45 <= 1) if trend45 is not None else None
+
+              if marker is not None and full_consistent:
+                  quality = "exact_marker_and_full_consistency"
+                  resolved = True
+              elif marker is not None and trend_outcome is not None and trend_outcome == timeline_outcome:
+                  quality = "outcome_crosschecked_provider_mismatch"
+                  resolved = True
+              elif marker is None and full_consistent and unparsed_yellows == 0:
+                  quality = "exact_parsed_minutes"
+                  resolved = True
+              elif trend_outcome is not None and trend_outcome == timeline_outcome:
+                  quality = "outcome_crosschecked_without_marker"
+                  resolved = True
+              else:
+                  quality = "unresolved"
+                  resolved = False
+
+              ts = int(row.get("time") or base.get("time") or 0)
+              output.append({
+                  "event_id":eid,
+                  "date":datetime.fromtimestamp(ts, timezone.utc).date().isoformat(),
+                  "home":(row.get("home") or base.get("home") or {}).get("name"),
+                  "away":(row.get("away") or base.get("away") or {}).get("name"),
+                  "fh_yellows":fh_count,
+                  "under_1_5":timeline_outcome if resolved else None,
+                  "quality":quality,
+                  "marker":marker is not None,
+                  "full_stats":full_stats,
+                  "full_timeline":full_timeline,
+                  "trend45":trend45,
+                  "fh_events":[x["text"] for x in fh_timeline],
+              })
+
+          resolved_rows = [x for x in output if x["under_1_5"] is not None]
+          wins = sum(bool(x["under_1_5"]) for x in resolved_rows)
+          losses = len(resolved_rows) - wins
+          dist = Counter(x["fh_yellows"] for x in resolved_rows)
+          n = len(resolved_rows)
+          odds = 1.5
+          profit = wins * (odds - 1) - losses
+          p = wins / n if n else 0
+          z = 1.96
+          center = (p + z*z/(2*n)) / (1 + z*z/n) if n else None
+          half = z * math.sqrt(p*(1-p)/n + z*z/(4*n*n)) / (1 + z*z/n) if n else None
+
+          def stats(rows):
+              rr = [x for x in rows if x["under_1_5"] is not None]
+              w = sum(bool(x["under_1_5"]) for x in rr)
+              l = len(rr) - w
+              return {
+                  "requested":len(rows), "resolved":len(rr), "wins":w, "losses":l,
+                  "hit_rate":w/len(rr) if rr else None,
+                  "profit_units":w*0.5-l if rr else None,
+                  "roi":(w*0.5-l)/len(rr) if rr else None,
+                  "avg_fh_yellows":sum(x["fh_yellows"] for x in rr)/len(rr) if rr else None,
+              }
+
+          blocks = []
+          for start in range(0, 500, 100):
+              rows = output[start:start+100]
+              block = stats(rows)
+              block.update({
+                  "block":f"{start+1}-{start+100}",
+                  "date_to":rows[0]["date"],
+                  "date_from":rows[-1]["date"],
+              })
+              blocks.append(block)
+
+          summary = {
+              "generated_at_utc":datetime.now(timezone.utc).isoformat(),
+              "source":"BetsAPI Events API",
+              "league_id":LEAGUE_ID,
+              "league_name":LEAGUE_NAME,
+              "requested":500,
+              "ended_found":len(base_rows),
+              "details_found":len(details),
+              "trend_found":sum(1 for x in trends.values() if x),
+              "resolved":n,
+              "unresolved":500-n,
+              "quality_counts":dict(Counter(x["quality"] for x in output)),
+              "wins":wins,
+              "losses":losses,
+              "hit_rate":p,
+              "break_even_at_1_50":1/odds,
+              "profit_units":profit,
+              "roi_at_1_50":profit/n if n else None,
+              "fair_odds":1/p if p else None,
+              "avg_fh_yellows":sum(x["fh_yellows"] for x in resolved_rows)/n if n else None,
+              "distribution":{str(k):dist[k] for k in sorted(dist)},
+              "wilson_95_low":center-half if n else None,
+              "wilson_95_high":center+half if n else None,
+              "date_from":output[-1]["date"],
+              "date_to":output[0]["date"],
+              "trend_errors":len(trend_errors),
+              "definition":"Yellow Card timeline events before halftime marker; 45+ included by event order",
+          }
+          compact_rows = [
+              {"id":x["event_id"],"d":x["date"],"h":x["home"],"a":x["away"],
+               "yc":x["fh_yellows"],"u":x["under_1_5"],"q":x["quality"]}
+              for x in output
+          ]
+          issues = [x for x in output if x["quality"] != "exact_marker_and_full_consistency"]
+          print("SUMMARY_JSON=" + json.dumps(summary, ensure_ascii=False, separators=(",",":")))
+          print("BLOCKS_JSON=" + json.dumps(blocks, ensure_ascii=False, separators=(",",":")))
+          print("ISSUES_JSON=" + json.dumps(issues, ensure_ascii=False, separators=(",",":")))
+          print("ROWS_COMPACT_JSON=" + json.dumps(compact_rows, ensure_ascii=False, separators=(",",":")))
+          PY
