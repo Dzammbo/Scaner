@@ -2,59 +2,67 @@
 from collections import deque
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-15-v5"
-RANKING_METHOD = "single_snapshot_sports_queues_v3"
-FINAL_RANKING_METHOD = "fresh_sports_routes_v1"
+RULES_VERSION = "sports-only-2026-10-16-v6"
+RANKING_METHOD = "single_snapshot_sports_queues_v4"
+FINAL_RANKING_METHOD = "fresh_confirmed_threat_v2"
 FINAL_SELECTION_LIMIT = 10
 
 
-def numeric_pair(values):
+def partial_pair(values):
+    """Preserve each measured side; absence is never a measured zero."""
     if not isinstance(values, (list, tuple)) or len(values) != 2:
-        return None
-    parsed = [number(value) for value in values]
-    return parsed if all(value is not None and value >= 0 for value in parsed) else None
+        return [None, None]
+    return [value if value is not None and value >= 0 else None
+            for value in map(number, values)]
+
+
+def numeric_pair(values):
+    pair = partial_pair(values)
+    return pair if all(value is not None for value in pair) else None
 
 
 def pair_total(values):
-    parsed = numeric_pair(values)
-    return sum(parsed) if parsed is not None else None
+    pair = numeric_pair(values)
+    return sum(pair) if pair is not None else None
+
+
+def known_sum(pair):
+    known = [value for value in pair if value is not None]
+    return sum(known) if known else None
+
+
+def shot_pair(on, off):
+    return [a + b if a is not None and b is not None else None for a, b in zip(on, off)]
 
 
 def sports_features(event):
     stats = event.get("board_stats") or {}
     minute = max(number(event.get("minute")) or 1, 1)
-    on, off, xg, dangerous, corners = [numeric_pair(stats.get(key)) for key in (
-        "on_target", "off_target", "xg", "dangerous_attacks", "corners")]
-    # Stable definition across coverage: on-target + off-target, without adding
-    # blocked shots only for the subset of events where that counter is supplied.
-    shots = [a + b for a, b in zip(on, off)] if on is not None and off is not None else None
-    totals = {
-        "on_target": sum(on) if on is not None else None,
-        "shots": sum(shots) if shots is not None else None,
-        "xg": sum(xg) if xg is not None else None,
-        "dangerous_attacks": sum(dangerous) if dangerous is not None else None,
-        "corners": sum(corners) if corners is not None else None,
-        # Absolute threat from the less active side, not a balance percentage:
-        # 1-1 shots must not outrank 10-8 just because it is perfectly balanced.
-        "two_sided_on_target": min(on) if on is not None else None,
-        "two_sided_shots": min(shots) if shots is not None else None,
-        "two_sided_dangerous_attacks": min(dangerous) if dangerous is not None else None,
-    }
-    return {**{key + "_total": value for key, value in totals.items()},
-            **{key + "_per_minute": None if value is None else value / minute
-               for key, value in totals.items()}}
+    pairs = {key: partial_pair(stats.get(key)) for key in
+             ("on_target", "off_target", "xg", "dangerous_attacks", "corners")}
+    pairs["shots"] = shot_pair(pairs["on_target"], pairs["off_target"])
+    pairs["finishing"] = [known_sum(pair) for pair in zip(pairs["on_target"], pairs["off_target"])]
+    result = {}
+    for key, pair in pairs.items():
+        total, observed = pair_total(pair), known_sum(pair)
+        result.update({key + "_home_away": pair, key + "_total": total,
+                       key + "_per_minute": None if total is None else total / minute,
+                       key + "_known_total": observed,
+                       key + "_known_per_minute": None if observed is None else observed / minute})
+    for key in ("on_target", "shots", "dangerous_attacks"):
+        pair = numeric_pair(pairs[key])
+        total = min(pair) if pair is not None else None
+        result["two_sided_" + key + "_total"] = total
+        result["two_sided_" + key + "_per_minute"] = None if total is None else total / minute
+    return result
 
 
 def team_activity(event):
-    """Observable team context for downstream display, never a score-based gate."""
     stats = event.get("board_stats") or {}
-    on, off, xg = [numeric_pair(stats.get(key)) for key in ("on_target", "off_target", "xg")]
-    shots = [a + b for a, b in zip(on, off)] if on is not None and off is not None else None
-    return {
-        "score": event.get("score"),
-        "on_target_home_away": on, "shots_home_away": shots, "xg_home_away": xg,
-        "scope": "cumulative_current_snapshot_not_recent_pressure",
-    }
+    on, off, xg = [partial_pair(stats.get(key)) for key in ("on_target", "off_target", "xg")]
+    return {"score": event.get("score"), "on_target_home_away": on,
+            "shots_home_away": shot_pair(on, off), "xg_home_away": xg,
+            "scope": "cumulative_current_snapshot_not_recent_pressure"}
 
 
 def interleave(queues):
@@ -97,11 +105,11 @@ def rank_candidates(events):
             "volume": ordered(metric + "_total", positive_evidence),
         })] for metric in metrics})]
     nominations = list(interleave({
-        "intensity": route(("on_target", "shots")),
+        "intensity": route(("on_target_known", "finishing_known")),
         # A measured zero is not evidence for an extra nomination route, but
         # the event remains in intensity/fallback and in the full sports pool.
-        "quality_xg": route(("xg",), positive_evidence=True),
-        "territorial_pressure": route(("dangerous_attacks", "corners"), positive_evidence=True),
+        "quality_xg": route(("xg_known",), positive_evidence=True),
+        "territorial_pressure": route(("dangerous_attacks_known", "corners_known"), positive_evidence=True),
         "two_sided_threat": route(("two_sided_on_target", "two_sided_shots"), positive_evidence=True),
         "two_sided_pressure": route(("two_sided_dangerous_attacks",), positive_evidence=True),
     }))
@@ -120,105 +128,137 @@ def rank_candidates(events):
     return output
 
 
+def _windows(event):
+    trend = event.get("stats_trend") or {}
+    return trend.get("current_windows", trend.get("windows", {}))
+
+
 def _window_pair(event, window, field):
-    values = (((event.get("stats_trend") or {}).get("windows") or {})
-              .get(str(window), {}).get("stats", {}).get(field))
-    if not isinstance(values, dict):
-        return None
-    parsed = [number(values.get(side)) for side in ("home", "away")]
-    return parsed if all(value is not None and value >= 0 for value in parsed) else None
+    values = _windows(event).get(str(window), {}).get("stats", {}).get(field) or {}
+    return partial_pair([values.get(side) for side in ("home", "away")])
 
 
 def _window_duration(event, window):
-    value = (((event.get("stats_trend") or {}).get("windows") or {})
-             .get(str(window), {}).get("actual_duration_minutes"))
-    return number(value)
+    return number(_windows(event).get(str(window), {}).get("actual_duration_minutes"))
 
 
 def fresh_sports_features(event):
-    """Reproducible features from already fetched 5/10/15 minute counters."""
-    features = {}
-    pairs = {}
+    """Known-side evidence and disjoint-interval rates; no fabricated totals."""
+    features, pairs = {}, {}
     for window in (5, 10, 15):
         duration = _window_duration(event, window)
-        pairs[window] = {}
-        for field in ("on_target", "off_target", "xg", "dangerous_attacks", "corners"):
-            pair = _window_pair(event, window, field)
-            pairs[window][field] = pair
-            total = sum(pair) if pair is not None else None
+        pairs[window] = {field: _window_pair(event, window, field) for field in
+                         ("on_target", "off_target", "xg", "dangerous_attacks", "corners")}
+        pairs[window]["shots"] = shot_pair(pairs[window]["on_target"], pairs[window]["off_target"])
+        pairs[window]["finishing"] = [known_sum(pair) for pair in zip(pairs[window]["on_target"], pairs[window]["off_target"])]
+        for field, pair in pairs[window].items():
+            total, observed = pair_total(pair), known_sum(pair)
+            features[f"{field}_{window}_home_away"] = pair
             features[f"{field}_{window}_total"] = total
-            features[f"{field}_{window}_per_minute"] = (
-                None if total is None or not duration else total / duration)
-        on, off = pairs[window]["on_target"], pairs[window]["off_target"]
-        shots = [a + b for a, b in zip(on, off)] if on is not None and off is not None else None
-        features[f"shots_{window}_total"] = sum(shots) if shots is not None else None
-        features[f"shots_{window}_per_minute"] = (
-            None if shots is None or not duration else sum(shots) / duration)
+            features[f"{field}_{window}_known_total"] = observed
+            features[f"{field}_{window}_per_minute"] = None if total is None or not duration else total / duration
+            features[f"{field}_{window}_known_per_minute"] = None if observed is None or not duration else observed / duration
+        shots = numeric_pair(pairs[window]["shots"])
         features[f"two_sided_shots_{window}_total"] = min(shots) if shots is not None else None
+        # xG without a contemporaneous shot on THAT side may be a delayed update.
+        supported = [x if x is not None and any(v is not None and v > 0 for v in (on, off)) else None
+                     for x, on, off in zip(pairs[window]["xg"], pairs[window]["on_target"], pairs[window]["off_target"])]
+        features[f"supported_xg_{window}"] = known_sum(supported)
+        features[f"xg_timing_uncertain_{window}"] = any(
+            x is not None and x > 0 and support is None for x, support in zip(pairs[window]["xg"], supported))
 
-    da5 = features.get("dangerous_attacks_5_total")
-    da10 = features.get("dangerous_attacks_10_total")
-    previous5 = None if da5 is None or da10 is None or da10 < da5 else da10 - da5
-    features["dangerous_attacks_previous_5_total"] = previous5
-    features["persistent_dangerous_pressure"] = bool(
-        da5 is not None and da5 > 0 and previous5 is not None and previous5 > 0)
-    features["pressure_confirmed_by_15_minute_action"] = bool(
-        (features.get("shots_15_total") or 0) > 0 or
-        (features.get("corners_15_total") or 0) > 0)
-    features["quality_chance_available"] = bool(
-        (features.get("on_target_10_total") or 0) > 0 or
-        (features.get("on_target_15_total") or 0) > 0 or
-        (features.get("xg_10_total") or 0) > 0 or
-        (features.get("xg_15_total") or 0) > 0)
-    features["fresh_two_sided_threat"] = bool(
-        (features.get("two_sided_shots_10_total") or 0) > 0 or
-        (features.get("two_sided_shots_15_total") or 0) > 0)
-    features["sustained_pressure_available"] = bool(
-        features["persistent_dangerous_pressure"] and
-        features["pressure_confirmed_by_15_minute_action"])
+    w5, w10 = (_windows(event).get(str(w), {}) for w in (5, 10))
+    d5, d10 = (_window_duration(event, w) for w in (5, 10))
+    aligned = (w5.get("to_minute") is not None and w5.get("to_minute") == w10.get("to_minute")
+               and d5 is not None and d10 is not None and d10 > d5 > 0
+               and w10.get("from_minute") is not None and w5.get("from_minute") is not None
+               and w5["from_minute"] - w10["from_minute"] == d10 - d5)
+    previous = [b - a if aligned and a is not None and b is not None and b >= a else None
+                for a, b in zip(pairs[5]["dangerous_attacks"], pairs[10]["dangerous_attacks"])]
+    # Compare only the same observed teams in both disjoint intervals.
+    current = [a if p is not None else None for a, p in zip(pairs[5]["dangerous_attacks"], previous)]
+    prev_total, cur_total = known_sum(previous), known_sum(current)
+    prev_duration = d10 - d5 if aligned else None
+    prev_rate = prev_total / prev_duration if prev_total is not None and prev_duration else None
+    cur_rate = cur_total / d5 if cur_total is not None and d5 else None
+    previous_shots = [b - a if aligned and a is not None and b is not None and b >= a else None
+                      for a, b in zip(pairs[5]["shots"], pairs[10]["shots"])]
+    sustained_finishing = any(a is not None and a > 0 and b is not None and b > 0
+                             for a, b in zip(pairs[5]["shots"], previous_shots))
+    features.update({
+        "sustained_finishing": sustained_finishing,
+        "previous_interval": {"from_minute": w10.get("from_minute") if aligned else None,
+                              "to_minute": w5.get("from_minute") if aligned else None,
+                              "actual_duration_minutes": prev_duration,
+                              "dangerous_attacks_home_away": previous,
+                              "dangerous_attacks_known_total": prev_total,
+                              "dangerous_attacks_per_minute": prev_rate},
+        "dangerous_attacks_previous_5_total": pair_total(previous) if prev_duration == 5 else None,
+        "persistent_dangerous_pressure": bool(cur_total and prev_total),
+        "pressure_trend": "unknown" if prev_rate is None or cur_rate is None else
+                          "increasing" if cur_rate > prev_rate else "fading" if cur_rate < prev_rate else "steady",
+    })
+    positive = lambda field, window: (features.get(f"{field}_{window}_known_total") or 0) > 0
+    features["pressure_confirmed_by_15_minute_action"] = positive("finishing", 15) or positive("corners", 15)
+    features["quality_chance_available"] = any(positive("on_target", w) or (features[f"supported_xg_{w}"] or 0) > 0 for w in (5, 10, 15))
+    features["fresh_two_sided_threat"] = any((features[f"two_sided_shots_{w}_total"] or 0) > 0 for w in (5, 10, 15))
+    features["sustained_pressure_available"] = features["persistent_dangerous_pressure"] and features["pressure_confirmed_by_15_minute_action"]
     return features
 
 
 def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
-    """Return up to ``limit`` reproducible sports candidates without market input.
+    """Priority classes, then freshness and observed threat. No weighted score.
 
-    Qualification is intentionally route-based, not a weighted score. A match
-    must show a quality chance, fresh two-sided action, or persistent dangerous
-    pressure confirmed by a shot/corner. The total line and price are ignored.
+    Class 0: on-target shot, shot-supported xG, or shots in adjacent windows.
+    Class 1: pressure with finishing / two-sided finishing.
+    Class 2: sustained pressure with corners. Quiet last-five is not a veto.
+    Missing xG does not subtract points; simply having coverage adds nothing.
     """
-    by_id = {event["event_id"]: event for event in events}
-    features = {key: fresh_sports_features(event) for key, event in by_id.items()}
-
-    def ordered(fields, required_flag):
-        eligible = [key for key in by_id if features[key].get(required_flag)]
-        queues = {}
-        for field in fields:
-            queues[field] = sorted(
-                (key for key in eligible if features[key].get(field) is not None),
-                key=lambda key: (-features[key][field], key),
-            )
-        return [key for key, _ in interleave(queues)]
-
-    nominations = list(interleave({
-        "fresh_quality": ordered(
-            ("on_target_10_per_minute", "on_target_15_total", "xg_10_per_minute", "xg_15_total"),
-            "quality_chance_available"),
-        "sustained_pressure": ordered(
-            ("dangerous_attacks_10_per_minute", "dangerous_attacks_15_total", "shots_15_total"),
-            "sustained_pressure_available"),
-        "fresh_two_sided_threat": ordered(
-            ("two_sided_shots_10_total", "two_sided_shots_15_total"),
-            "fresh_two_sided_threat"),
-    }))
+    candidates = []
+    for event in events:
+        event.pop("final_sports_selection", None)
+        f = fresh_sports_features(event)
+        evidence = []
+        for w in (5, 10, 15):
+            on = f[f"on_target_{w}_known_total"] or 0
+            shots = f[f"finishing_{w}_known_total"] or 0
+            da = f[f"dangerous_attacks_{w}_known_total"] or 0
+            xg = f[f"supported_xg_{w}"] or 0
+            if on > 0 or xg > 0 or (w == 5 and f["sustained_finishing"]):
+                evidence.append((0, w, "fresh_quality"))
+            elif shots > 0 and (da > 0 or (f[f"two_sided_shots_{w}_total"] or 0) > 0):
+                evidence.append((1, w, "sustained_pressure"))
+            elif f["persistent_dangerous_pressure"] and (f[f"corners_{w}_known_total"] or 0) > 0:
+                evidence.append((2, w, "sustained_pressure_corners"))
+        if not evidence:
+            continue
+        tier, window, route = min(evidence)
+        # Known counts are lower bounds, NOT full totals or missing-value estimates.
+        # xG magnitudes are not used as a blanket advantage across unlike coverage.
+        key = (tier, window,
+               -(f[f"on_target_{window}_known_per_minute"] or 0),
+               -(f[f"finishing_{window}_known_per_minute"] or 0),
+               -(f[f"two_sided_shots_{window}_total"] or 0),
+               -(f[f"dangerous_attacks_{window}_known_per_minute"] or 0),
+               str(event["event_id"]))
+        candidates.append((key, event, route, f))
     output = []
-    for rank, (key, route) in enumerate(nominations[:limit], 1):
-        event = by_id[key]
+    for rank, (key, event, route, features) in enumerate(sorted(candidates, key=lambda row: row[0])[:limit], 1):
         event["final_sports_selection"] = {
-            "rank": rank,
-            "route": route,
-            "method": FINAL_RANKING_METHOD,
-            "features": features[key],
-            "market_used": False,
+            "rank": rank, "sports_rank": rank, "route": route,
+            "evidence_class": key[0], "evidence_window_minutes": key[1],
+            "method": FINAL_RANKING_METHOD, "features": features, "market_used": False,
         }
         output.append(event)
     return output
+
+
+def display_candidates(events):
+    """Presentation only; score never changes membership or sports_rank."""
+    def key(event):
+        goals = sum(int(value) for value in event["score"].split("-"))
+        return min(goals, 2), event["final_sports_selection"]["sports_rank"]
+    ordered = sorted(events, key=key)
+    for rank, event in enumerate(ordered, 1):
+        event["final_sports_selection"]["display_rank"] = rank
+    return ordered
