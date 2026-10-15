@@ -150,6 +150,21 @@
       "event_id": "13293063",
       "match": "Amtat FC - Ulaangom City FC",
       "selected_at_utc": "2026-10-15T09:12:00Z"
+    },
+    {
+      "event_id": "13262376",
+      "match": "Kataka FC - Vipers SC",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z"
+    },
+    {
+      "event_id": "12476998",
+      "match": "Express FC - UPDF FC",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z"
+    },
+    {
+      "event_id": "13119389",
+      "match": "Lillestrom U19 - Rosenborg U19",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z"
     }
   ],
   "selections": [
@@ -221,6 +236,121 @@
       "reference_line_status": "unavailable",
       "reference_line_reason": "latest_quote_unavailable",
       "recommended_total": null,
+      "is_user_choice": false
+    },
+    {
+      "snapshot_id": "38748842150-1",
+      "event_id": "13262376",
+      "rules_version": "sports-only-2026-10-15-v4",
+      "ranking_method": "single_snapshot_sports_queues_v2",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z",
+      "board_observed_at_utc": "2026-10-15T14:09:15.097102+00:00",
+      "rank": 1,
+      "mode": "refresh",
+      "home": "Kataka FC",
+      "away": "Vipers SC",
+      "league": "Uganda Premier League",
+      "country": "ug",
+      "category": "Взрослый мужской",
+      "minute": 51,
+      "score": "0-1",
+      "sports_reason": "Vipers сохранял выраженное давление: 6 ударов в створ суммарно, за последние 15 минут 28 атак, 16 опасных атак, 2 удара в створ и гол гостей.",
+      "expected_scenario": "Vipers продолжит создавать моменты, либо раскрывающийся Kataka ответит после пропущенного гола.",
+      "reference_main_total": null,
+      "line_assessment": "line_unavailable",
+      "reference_line_status": "unavailable",
+      "reference_line_reason": "score_changed_since_board",
+      "recommended_total": null,
+      "is_user_choice": false
+    },
+    {
+      "snapshot_id": "38748842150-1",
+      "event_id": "12476998",
+      "rules_version": "sports-only-2026-10-15-v4",
+      "ranking_method": "single_snapshot_sports_queues_v2",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z",
+      "board_observed_at_utc": "2026-10-15T14:09:15.097102+00:00",
+      "rank": 2,
+      "mode": "refresh",
+      "home": "Express FC",
+      "away": "UPDF FC",
+      "league": "Uganda Premier League",
+      "country": "ug",
+      "category": "Взрослый мужской",
+      "minute": 50,
+      "score": "0-2",
+      "sports_reason": "Express проигрывал 0-2, но имел 6 ударов и 2 удара в створ; за последние 15 минут хозяева добавили 2 удара в створ и 3 угловых.",
+      "expected_scenario": "Express продолжит активно отыгрываться, что создаёт вероятность ещё минимум одного гола.",
+      "reference_main_total": {
+        "line": 3.25,
+        "over": 2.075,
+        "under": 1.725,
+        "quote_score": "0-2",
+        "quote_changed_at": 1792073354.0,
+        "market_checked_at": 1792073354.0,
+        "age_s": 1.0,
+        "market_check_age_s": 1.0,
+        "source": "events_odds_main",
+        "full_win_total": 4,
+        "additional_goals_for_full_win": 2,
+        "within_two_goal_recommendation_limit": true
+      },
+      "line_assessment": "lower_total",
+      "reference_line_status": "available",
+      "reference_line_reason": null,
+      "recommended_total": {
+        "line": 2.5,
+        "full_win_total": 3,
+        "additional_goals_for_full_win": 1,
+        "within_two_goal_recommendation_limit": true,
+        "over": null,
+        "source": "sports_suggestion_unpriced"
+      },
+      "is_user_choice": false
+    },
+    {
+      "snapshot_id": "38748842150-1",
+      "event_id": "13119389",
+      "rules_version": "sports-only-2026-10-15-v4",
+      "ranking_method": "single_snapshot_sports_queues_v2",
+      "selected_at_utc": "2026-10-15T14:10:00.000Z",
+      "board_observed_at_utc": "2026-10-15T14:09:15.097102+00:00",
+      "rank": 3,
+      "mode": "refresh",
+      "home": "Lillestrom U19",
+      "away": "Rosenborg U19",
+      "league": "Norway U19 Elite League",
+      "country": "no",
+      "category": "Молодёжный/юниорский",
+      "minute": 39,
+      "score": "0-0",
+      "sports_reason": "Молодёжный матч с 12 ударами, 4 в створ и 9 угловыми к 39-й минуте; за последние 15 минут Lillestrom создал 3 удара и 2 угловых.",
+      "expected_scenario": "После перерыва открытый молодёжный матч должен сохранить высокий объём моментов с шансом минимум на два гола.",
+      "reference_main_total": {
+        "line": 2.75,
+        "over": 1.925,
+        "under": 1.875,
+        "quote_score": "0-0",
+        "quote_changed_at": 1792073349.0,
+        "market_checked_at": 1792073349.0,
+        "age_s": 6.0,
+        "market_check_age_s": 6.0,
+        "source": "events_odds_main",
+        "full_win_total": 4,
+        "additional_goals_for_full_win": 4,
+        "within_two_goal_recommendation_limit": false
+      },
+      "line_assessment": "lower_total",
+      "reference_line_status": "available",
+      "reference_line_reason": null,
+      "recommended_total": {
+        "line": 1.5,
+        "full_win_total": 2,
+        "additional_goals_for_full_win": 2,
+        "within_two_goal_recommendation_limit": true,
+        "over": null,
+        "source": "sports_suggestion_unpriced"
+      },
       "is_user_choice": false
     }
   ]
