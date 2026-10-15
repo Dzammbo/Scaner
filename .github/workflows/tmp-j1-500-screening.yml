@@ -1,4 +1,4 @@
-name: Temporary Eliteserien 500 card screening
+name: Temporary Ligue 1 500 card screening
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-      - name: Screen last 500 Eliteserien matches
+      - name: Screen last 500 Ligue 1 matches
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
           PYTHONDONTWRITEBYTECODE: '1'
@@ -46,7 +46,7 @@ jobs:
           # Resolve the current Events API league id from the provider catalog.
           leagues=[]; max_id=None
           for _ in range(60):
-              params={"sport_id":1,"cc":"no"}
+              params={"sport_id":1,"cc":"fr"}
               if max_id is not None: params["max_id"]=max_id
               payload=get("/v3/league",**params)
               rows=payload.get("results") or []
@@ -65,7 +65,7 @@ jobs:
               names=league.get("names") or {}
               name=str(league.get("name") or names.get("en") or "")
               low=name.lower()
-              if "eliteserien" in low and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
+              if "ligue 1" in low and not any(z in low for z in ("women","femen","u19","u20","youth","reserve")):
                   candidates.append({"id":str(league.get("id")),"name":name})
           probes=[]
           for cand in candidates:
@@ -75,12 +75,12 @@ jobs:
               teams=[]
               for r in rows:
                   teams.extend([(r.get("home") or {}).get("name",""),(r.get("away") or {}).get("name","")])
-              score=sum(re.sub(r"[^a-z0-9]","",str(t).lower()) in ("bodo/glimt","molde","rosenborg") for t in teams)
+              score=sum(re.sub(r"[^a-z0-9]","",str(t).lower()) in ("parissaintgermain","marseille","monaco") for t in teams)
               probes.append({**cand,"events":len(rows),"top_team_hits":score})
           probes.sort(key=lambda x:(x["top_team_hits"],x["events"]),reverse=True)
           print("LEAGUE_CANDIDATES_JSON="+json.dumps(probes,ensure_ascii=False,separators=(",",":")))
           if not probes or probes[0]["top_team_hits"]<1:
-              raise RuntimeError(f"Could not resolve Eliteserien: {probes[:20]}")
+              raise RuntimeError(f"Could not resolve Ligue 1: {probes[:20]}")
           LEAGUE_ID=probes[0]["id"]
 
           base_rows=[]; seen=set()
@@ -208,9 +208,9 @@ jobs:
               wanted=set(tokens)
               return {t for t in names if norm(t) in wanted}
           fixed_sets={
-              "core2":team_by_tokens("bodoglimt","molde"),
-              "core3":team_by_tokens("bodoglimt","molde","rosenborg"),
-              "core4":team_by_tokens("bodoglimt","molde","rosenborg","viking"),
+              "core2":team_by_tokens("parissaintgermain","marseille"),
+              "core3":team_by_tokens("parissaintgermain","marseille","monaco"),
+              "core4":team_by_tokens("parissaintgermain","marseille","monaco","lyon"),
           }
           fixed={k:{"teams":sorted(v),"all":split_rule(v,matches),"validation":split_rule(v,newest)} for k,v in fixed_sets.items()}
 
