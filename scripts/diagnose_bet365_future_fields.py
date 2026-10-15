@@ -13,7 +13,7 @@ TOKEN = os.environ["BETSAPI_KEY"]
 EXCLUDE = re.compile(r"virtual|esoccer|e-soccer|esports|simulated|cyber", re.I)
 PATTERNS = {
     "fouls": re.compile(r"\bfouls?\b|IFoul", re.I),
-    "throw_ins": re.compile(r"throw[ _-]?ins?|IThrowIn", re.I),
+    "throw_ins": re.compile(r"throw[ _-]?ins?|IThrowIn|\bthrows?\b", re.I),
     "corners": re.compile(r"\bcorners?\b|ICorner", re.I),
     "yellow_cards": re.compile(r"yellow[ _-]?cards?|IYellowCard|bookings?|\bcards?\b", re.I),
 }
@@ -161,6 +161,8 @@ def inspect_event(row):
         "result_kind": type(results).__name__,
         "flat_object_count": len(flat),
         "object_types": all_types,
+        "stat_detail_rows": [scalar_view(node) for _, node in flat
+                             if node.get("type") in ("SG", "ST")][:80],
         "target_names": sorted({name for name in all_names if matched_categories(name)}),
         "market_group_names": [name for name in all_names if name][:120],
         "indicators": summary,
