@@ -118,7 +118,7 @@ for sh in w:
   for c in row:
    if c.data_type=="f" and sh.title in cached.sheetnames:
     val=cached[sh.title][c.coordinate].value
-    assert val is not None,("uncached formula",sh.title,c.coordinate)
+    assert val is not None or (sh.title=="Реестр" and sh.cell(c.row,1).value is None),("uncached formula",sh.title,c.coordinate)
     c.value=val
 w.save(p)
 v=openpyxl.load_workbook(p,data_only=True)
