@@ -1,0 +1,21 @@
+name: Isolated Live diary update 20261016
+on:
+  push:
+    branches: [diary-update-analysis-20261016]
+    paths: ['.github/workflows/diary-write-20261016.yml']
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip -q install openpyxl
+      - run: python3 diagnostics/update_diary_20261016.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Live-diary-updated-20261016
+          path: |
+            Live ТБ/Live ТБ.xlsx
+            reports/live-diary-audit-20261016.json
