@@ -96,9 +96,9 @@ def profit(ft,line,price):
 def feature_rows(matches,targets,details):
     records=[];coverage=Counter();prior=[]
     split={}
-    for lid in {str(r['league']['id']) for r in matches}:
-        rs=[r for r in matches if str(r['league']['id'])==lid and str(r['id']) in targets]
-        # Entire kickoff groups remain in one chronological partition.
+    rs=[r for r in matches if str(r['id']) in targets]
+    if rs:
+        # Shared calendar cutoffs across leagues; no validation/test date overlap.
         t1=int(rs[int(len(rs)*.6)]['time']);t2=int(rs[int(len(rs)*.8)]['time'])
         for r in rs:split[str(r['id'])]='train' if int(r['time'])<t1 else 'validation' if int(r['time'])<t2 else 'test'
     for row in matches:
@@ -112,7 +112,7 @@ def feature_rows(matches,targets,details):
         if odds.get('success')==1:coverage['odds_response_matches']+=1
         if not ft:
             coverage['missing_ft']+=1;prior.append(row);continue
-        valid_goals=all(ser.get('goals',{}).get(side) and ser['goals'][side][-1][2]==ft[i] and all(y[2]>=x[2] for x,y in zip(ser['goals'][side],ser['goals'][side][1:])) for i,side in enumerate(('home','away')))
+        valid_goals=all(ser.get('goals',{}).get(side) and ser['goals'][side][-1][2]==ft[i] for i,side in enumerate(('home','away')))
         if not valid_goals:
             coverage['invalid_goal_series']+=1;prior.append(row);continue
         # Validate cumulative terminal values against the independent ended record.
@@ -134,6 +134,15 @@ def feature_rows(matches,targets,details):
             if not timestamps:continue
             cutoff=min(timestamps)
             cur=both(ser,'goals',t,cutoff)
+            # Local corrections are visible at decision time; future corrections
+            # must never remove an otherwise valid earlier observation.
+            local_correction=False
+            for side in ('home','away'):
+                ps=[p for p in ser.get('goals',{}).get(side,[]) if p[0]<=cutoff and p[1]<=t]
+                if any(y[2]<x[2] and y[1]>=t-20 for x,y in zip(ps,ps[1:])):local_correction=True
+            if local_correction:
+                coverage['decision_points_with_recent_score_correction']+=1
+                continue
             if cur is None or any(a>b for a,b in zip(cur,ft)):continue
             on=delta(ser,'on_target',t-10,t,cutoff);off=delta(ser,'off_target',t-10,t,cutoff)
             shots=on+off if on is not None and off is not None else None
@@ -263,7 +272,7 @@ def main():
             with gzip.open(p,'rt') as f:details[eid]=json.load(f)
     rows,coverage=feature_rows(matches,set(manifest['target_ids']),details)
     with gzip.open(folder/'features.json.gz','wt') as f:json.dump(rows,f)
-    result={'coverage':coverage,'splits':{s:len({r['event_id'] for r in rows if r['split']==s}) for s in ('train','validation','test')},'research':search(rows)}
+    result={'version':'tm-research-v1.1-quality-repair','holdout_status':'previously_inspected_dataset_after_quality_repair_not_fresh_confirmation','coverage':coverage,'splits':{s:len({r['event_id'] for r in rows if r['split']==s}) for s in ('train','validation','test')},'research':search(rows)}
     (folder/'analysis.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
     print(json.dumps(result,ensure_ascii=False))
 if __name__=='__main__':main()

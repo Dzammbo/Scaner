@@ -12,5 +12,6 @@ elif mode=='analyze':
     if not run.isdigit():raise ValueError('Only an isolated numeric research run ID is accepted')
     folder=ROOT/'data'/run
     subprocess.run([sys.executable,str(ROOT/'analyze.py'),str(folder)],check=True)
+    subprocess.run([sys.executable,str(ROOT/'audit.py'),str(folder)],check=True)
     subprocess.run([sys.executable,str(ROOT/'report.py'),str(folder)],check=True)
 else:raise ValueError('Unknown research mode; live rules are not activated')

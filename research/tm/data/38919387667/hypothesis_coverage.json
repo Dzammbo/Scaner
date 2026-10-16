@@ -1,0 +1,460 @@
+{
+  "status": "descriptive_only_not_new_independent_validation",
+  "hypotheses": [
+    {
+      "minute": 30,
+      "target": 2,
+      "flags": [
+        "quick_goals_then_pause"
+      ],
+      "train": {
+        "n": 14,
+        "wins": 11,
+        "rate": 0.7857142857142857,
+        "ci95": [
+          0.5241027622679172,
+          0.9242875166308363
+        ],
+        "matched_n": 9,
+        "matched_baseline": 0.7424704924704925,
+        "matched_lift": 0.03530728530728533,
+        "mean_remaining": 1.9285714285714286,
+        "priced_n": 14,
+        "roi": 0.21696428571428572,
+        "mean_price": 1.9464285714285714,
+        "league_n": {
+          "94": 7,
+          "38223": 7
+        }
+      },
+      "validation": {
+        "n": 6,
+        "wins": 6,
+        "rate": 1.0,
+        "ci95": [
+          0.6096569663469354,
+          0.9999999999999999
+        ],
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": 0.8333333333333334,
+        "priced_n": 5,
+        "roi": 0.95,
+        "mean_price": 1.95,
+        "league_n": {
+          "94": 4,
+          "38223": 2
+        }
+      },
+      "test": {
+        "n": 10,
+        "wins": 5,
+        "rate": 0.5,
+        "ci95": [
+          0.23658959361548731,
+          0.7634104063845126
+        ],
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": 2.2,
+        "priced_n": 9,
+        "roi": 0.03888888888888889,
+        "mean_price": 1.8972222222222221,
+        "league_n": {
+          "38223": 7,
+          "94": 3
+        }
+      }
+    },
+    {
+      "minute": 40,
+      "target": 2,
+      "flags": [
+        "quick_goals_then_pause"
+      ],
+      "train": {
+        "n": 17,
+        "wins": 12,
+        "rate": 0.7058823529411765,
+        "ci95": [
+          0.468664666737861,
+          0.8672020613444361
+        ],
+        "matched_n": 10,
+        "matched_baseline": 0.8341558441558442,
+        "matched_lift": -0.3341558441558442,
+        "mean_remaining": 2.0,
+        "priced_n": 17,
+        "roi": -0.17132352941176468,
+        "mean_price": 1.923529411764706,
+        "league_n": {
+          "94": 12,
+          "38223": 5
+        }
+      },
+      "validation": {
+        "n": 4,
+        "wins": 3,
+        "rate": 0.75,
+        "ci95": [
+          0.3006360524426366,
+          0.9544139373553637
+        ],
+        "matched_n": 2,
+        "matched_baseline": 0.625,
+        "matched_lift": 0.375,
+        "mean_remaining": 1.75,
+        "priced_n": 4,
+        "roi": -0.03750000000000003,
+        "mean_price": 1.9375,
+        "league_n": {
+          "94": 2,
+          "38223": 2
+        }
+      },
+      "test": {
+        "n": 8,
+        "wins": 4,
+        "rate": 0.5,
+        "ci95": [
+          0.21521252682444186,
+          0.7847874731755582
+        ],
+        "matched_n": 3,
+        "matched_baseline": 0.8888888888888888,
+        "matched_lift": -0.5555555555555556,
+        "mean_remaining": 2.375,
+        "priced_n": 7,
+        "roi": -0.30714285714285716,
+        "mean_price": 1.8821428571428571,
+        "league_n": {
+          "94": 1,
+          "38223": 7
+        }
+      }
+    },
+    {
+      "minute": 60,
+      "target": 1,
+      "flags": [
+        "ht_3plus",
+        "low_threat"
+      ],
+      "train": {
+        "n": 39,
+        "wins": 31,
+        "rate": 0.7948717948717948,
+        "ci95": [
+          0.6446572703687138,
+          0.8922040980208888
+        ],
+        "matched_n": 23,
+        "matched_baseline": 0.6725955204216073,
+        "matched_lift": 0.023056653491436152,
+        "mean_remaining": 0.8974358974358975,
+        "priced_n": 38,
+        "roi": 0.1907894736842105,
+        "mean_price": 1.9490789473684211,
+        "league_n": {
+          "94": 20,
+          "38223": 19
+        }
+      },
+      "validation": {
+        "n": 11,
+        "wins": 8,
+        "rate": 0.7272727272727273,
+        "ci95": [
+          0.4343497069897537,
+          0.9025411942607853
+        ],
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": 0.8181818181818182,
+        "priced_n": 10,
+        "roi": 0.215,
+        "mean_price": 1.89,
+        "league_n": {
+          "94": 7,
+          "38223": 4
+        }
+      },
+      "test": {
+        "n": 7,
+        "wins": 4,
+        "rate": 0.5714285714285714,
+        "ci95": [
+          0.2504542304090258,
+          0.8417830777373732
+        ],
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": 1.8571428571428572,
+        "priced_n": 5,
+        "roi": 0.06499999999999999,
+        "mean_price": 1.86,
+        "league_n": {
+          "38223": 5,
+          "94": 2
+        }
+      }
+    },
+    {
+      "minute": 60,
+      "target": 1,
+      "flags": [
+        "on_target_decay"
+      ],
+      "train": {
+        "n": 0,
+        "wins": 0,
+        "rate": null,
+        "ci95": null,
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": null,
+        "priced_n": 0,
+        "roi": null,
+        "mean_price": null,
+        "league_n": {}
+      },
+      "validation": {
+        "n": 0,
+        "wins": 0,
+        "rate": null,
+        "ci95": null,
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": null,
+        "priced_n": 0,
+        "roi": null,
+        "mean_price": null,
+        "league_n": {}
+      },
+      "test": {
+        "n": 0,
+        "wins": 0,
+        "rate": null,
+        "ci95": null,
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": null,
+        "priced_n": 0,
+        "roi": null,
+        "mean_price": null,
+        "league_n": {}
+      }
+    },
+    {
+      "minute": 70,
+      "target": 1,
+      "flags": [
+        "lead_2plus",
+        "low_threat"
+      ],
+      "train": {
+        "n": 80,
+        "wins": 70,
+        "rate": 0.875,
+        "ci95": [
+          0.7849700281693438,
+          0.9306651696322249
+        ],
+        "matched_n": 51,
+        "matched_baseline": 0.7598039215686274,
+        "matched_lift": 0.1421568627450981,
+        "mean_remaining": 0.65,
+        "priced_n": 76,
+        "roi": 0.12138157894736842,
+        "mean_price": 1.9180921052631579,
+        "league_n": {
+          "94": 52,
+          "38223": 28
+        }
+      },
+      "validation": {
+        "n": 23,
+        "wins": 19,
+        "rate": 0.8260869565217391,
+        "ci95": [
+          0.6286194521470433,
+          0.9302145964938723
+        ],
+        "matched_n": 4,
+        "matched_baseline": 1.0,
+        "matched_lift": -0.25,
+        "mean_remaining": 0.8260869565217391,
+        "priced_n": 22,
+        "roi": -0.04886363636363638,
+        "mean_price": 1.9795454545454545,
+        "league_n": {
+          "94": 12,
+          "38223": 11
+        }
+      },
+      "test": {
+        "n": 25,
+        "wins": 22,
+        "rate": 0.88,
+        "ci95": [
+          0.7004380781662651,
+          0.9583325864293191
+        ],
+        "matched_n": 0,
+        "matched_baseline": null,
+        "matched_lift": null,
+        "mean_remaining": 0.68,
+        "priced_n": 24,
+        "roi": 0.11041666666666666,
+        "mean_price": 1.94375,
+        "league_n": {
+          "38223": 14,
+          "94": 11
+        }
+      }
+    },
+    {
+      "minute": 60,
+      "target": 1,
+      "flags": [
+        "profile_low",
+        "low_threat"
+      ],
+      "train": {
+        "n": 29,
+        "wins": 23,
+        "rate": 0.7931034482758621,
+        "ci95": [
+          0.6160955339174228,
+          0.9015406348441479
+        ],
+        "matched_n": 29,
+        "matched_baseline": 0.6597137156262313,
+        "matched_lift": 0.13338973264963083,
+        "mean_remaining": 0.9310344827586207,
+        "priced_n": 28,
+        "roi": -0.05625000000000001,
+        "mean_price": 1.9348214285714285,
+        "league_n": {
+          "94": 10,
+          "38223": 19
+        }
+      },
+      "validation": {
+        "n": 13,
+        "wins": 11,
+        "rate": 0.8461538461538461,
+        "ci95": [
+          0.5776482949136899,
+          0.9567427368172621
+        ],
+        "matched_n": 11,
+        "matched_baseline": 0.7024604183695092,
+        "matched_lift": 0.20663049072139983,
+        "mean_remaining": 0.8461538461538461,
+        "priced_n": 11,
+        "roi": -0.00454545454545455,
+        "mean_price": 1.934090909090909,
+        "league_n": {
+          "38223": 11,
+          "94": 2
+        }
+      },
+      "test": {
+        "n": 6,
+        "wins": 5,
+        "rate": 0.8333333333333334,
+        "ci95": [
+          0.43649056343635395,
+          0.9699474141282697
+        ],
+        "matched_n": 5,
+        "matched_baseline": 0.641904761904762,
+        "matched_lift": 0.15809523809523807,
+        "mean_remaining": 0.6666666666666666,
+        "priced_n": 6,
+        "roi": 0.3416666666666666,
+        "mean_price": 1.9124999999999999,
+        "league_n": {
+          "38223": 5,
+          "94": 1
+        }
+      }
+    },
+    {
+      "minute": 30,
+      "target": 2,
+      "flags": [
+        "profile_low",
+        "low_threat"
+      ],
+      "train": {
+        "n": 30,
+        "wins": 23,
+        "rate": 0.7666666666666667,
+        "ci95": [
+          0.5907132766967574,
+          0.8820776078949878
+        ],
+        "matched_n": 29,
+        "matched_baseline": 0.6822078542958745,
+        "matched_lift": 0.1108955939799876,
+        "mean_remaining": 1.6333333333333333,
+        "priced_n": 29,
+        "roi": -0.1456896551724138,
+        "mean_price": 1.8853448275862068,
+        "league_n": {
+          "94": 11,
+          "38223": 19
+        }
+      },
+      "validation": {
+        "n": 12,
+        "wins": 7,
+        "rate": 0.5833333333333334,
+        "ci95": [
+          0.3195073356553728,
+          0.8067425380947535
+        ],
+        "matched_n": 8,
+        "matched_baseline": 0.7756410256410257,
+        "matched_lift": -0.15064102564102566,
+        "mean_remaining": 2.0,
+        "priced_n": 12,
+        "roi": -0.22291666666666668,
+        "mean_price": 1.8916666666666666,
+        "league_n": {
+          "38223": 10,
+          "94": 2
+        }
+      },
+      "test": {
+        "n": 12,
+        "wins": 9,
+        "rate": 0.75,
+        "ci95": [
+          0.46768966087934005,
+          0.9110599603710386
+        ],
+        "matched_n": 12,
+        "matched_baseline": 0.6498538011695906,
+        "matched_lift": 0.10014619883040943,
+        "mean_remaining": 1.5833333333333333,
+        "priced_n": 12,
+        "roi": 0.20833333333333331,
+        "mean_price": 1.9104166666666667,
+        "league_n": {
+          "38223": 8,
+          "94": 4
+        }
+      }
+    }
+  ]
+}
