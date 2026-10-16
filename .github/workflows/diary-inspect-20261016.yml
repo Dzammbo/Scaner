@@ -1,0 +1,27 @@
+name: Inspect Live diary for requested update
+on:
+  push:
+    branches: [diary-update-analysis-20261016]
+    paths: ['.github/workflows/diary-inspect-20261016.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip -q install openpyxl
+      - run: |
+          python3 - <<'PY'
+          import json,openpyxl
+          from datetime import datetime
+          w=openpyxl.load_workbook("Live ТБ/Live ТБ.xlsx",data_only=False)
+          wd=openpyxl.load_workbook("Live ТБ/Live ТБ.xlsx",data_only=True)
+          s=wd["Реестр"]
+          rows=[]
+          indices=[0,1,2,3,4,5,6,8,9,10,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+          for r in s.iter_rows(min_row=6,values_only=True):
+           if isinstance(r[0],(int,float)) and r[4]: rows.append([r[i] for i in indices])
+          print("DIARY_JSON="+json.dumps({"indices":indices,"rows":rows,"summary":[[c.value for c in r] for r in w["Сводка"]],"dimensions":dict((s.title,[s.max_row,s.max_column]) for s in w),"tables":list(w["Реестр"].tables),"merged":[str(x) for x in w["Реестр"].merged_cells.ranges]},ensure_ascii=False,default=str))
+          
+          PY
