@@ -2,9 +2,9 @@
 from collections import deque
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-16-v6"
+RULES_VERSION = "sports-only-2026-10-16-v7"
 RANKING_METHOD = "single_snapshot_sports_queues_v4"
-FINAL_RANKING_METHOD = "fresh_confirmed_threat_v2"
+FINAL_RANKING_METHOD = "fresh_threat_goal_profile_v3"
 FINAL_SELECTION_LIMIT = 10
 
 
@@ -235,7 +235,11 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
         tier, window, route = min(evidence)
         # Known counts are lower bounds, NOT full totals or missing-value estimates.
         # xG magnitudes are not used as a blanket advantage across unlike coverage.
-        key = (tier, window,
+        profile = event.get("goal_profile") or {}
+        ratio = profile.get("ranking_ratio", 1.0) if profile.get("ranking_used") else 1.0
+        f["historical_goal_profile_ratio"] = ratio
+        f["historical_goal_profile_used"] = bool(profile.get("ranking_used"))
+        key = (tier, window, -ratio,
                -(f[f"on_target_{window}_known_per_minute"] or 0),
                -(f[f"finishing_{window}_known_per_minute"] or 0),
                -(f[f"two_sided_shots_{window}_total"] or 0),

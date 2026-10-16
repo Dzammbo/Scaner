@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot, timestamp
 from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
+from live_goal_profile import build_profile, read_cache
 from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
                           rank_final_candidates, display_candidates)
@@ -45,10 +46,11 @@ def integer(value):
 
 
 def get(path, **params):
+    timeout = params.pop("_timeout", 20)
     params["token"] = os.environ["BETSAPI_KEY"]
     url = BASE + path + "?" + urllib.parse.urlencode(params)
     request = urllib.request.Request(url, headers={"User-Agent": "dzam-live-tb/2.0"})
-    with urllib.request.urlopen(request, timeout=20) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.load(response), {
             "status": response.status,
             "limit": response.headers.get("X-RateLimit-Limit"),
@@ -110,6 +112,54 @@ def prematch_context(path, observed_at):
         return {}, ["invalid_optional_prematch_cache"]
 
 
+def enrich_profiles(events, directory):
+    """Optional bounded stage, cached across snapshots; never changes eligibility."""
+    started = time.monotonic()
+    now = time.time()
+    cached, leagues = read_cache(directory, now)
+    histories, tasks, calls = {}, [], 0
+    eligible = [e for e in events if e.get('home_id') and e.get('away_id') and e.get('start_time')]
+    for e in eligible:
+        old = cached.get(e['event_id'])
+        if old and old[:2] == (e['home_id'], e['away_id']) and old[2].get('kickoff_cutoff') == float(e['start_time']):
+            e['goal_profile'] = dict(old[2], cache_hit=True)
+        else:
+            tasks.append(('history', e['event_id']))
+    for lid in sorted({e['league_id'] for e in eligible if e.get('league_id') and not e.get('goal_profile')}):
+        if lid not in leagues:
+            tasks.append(('league', lid))
+    deadline = started + 8
+    def fetch(task):
+        kind, identity = task
+        remaining = deadline-time.monotonic()
+        if remaining <= 0:
+            return kind, identity, {}, False
+        try:
+            path = '/v1/event/history' if kind == 'history' else '/v3/events/ended'
+            params = {'event_id': identity, 'qty': 20} if kind == 'history' else {'sport_id': 1, 'league_id': identity, 'page': 1}
+            payload, _ = get(path, _timeout=min(5, remaining), **params)
+            return kind, identity, payload, True
+        except Exception:
+            return kind, identity, {}, True
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+        for kind, identity, payload, called in pool.map(fetch, tasks):
+            calls += int(called)
+            if kind == 'history':
+                histories[identity] = payload
+            elif payload.get('success') == 1:
+                leagues[identity] = {'fetched_at': now, 'payload': payload}
+    for e in events:
+        if not e.get('goal_profile'):
+            e['goal_profile'] = build_profile(e, histories.get(e['event_id'], {}),
+                leagues.get(e.get('league_id'), {}).get('payload', {}), now)
+    used_leagues = {e.get('league_id') for e in eligible}
+    return {'goal_profile_api_calls': calls,
+            'goal_profile_seconds': round(time.monotonic()-started, 3),
+            'goal_profile_cache_hits': sum(bool(e['goal_profile'].get('cache_hit')) for e in events),
+            'goal_profile_available_count': sum(bool(e['goal_profile']['available']) for e in events),
+            'goal_profile_league_cache': {k:v for k,v in leagues.items() if k in used_leagues}}
+
+
 def collect(mode, requested_ids, history_dir, selected_file):
     started = time.monotonic()
     selected_ids, selected_warnings = read_selected_events(selected_file)
@@ -144,6 +194,10 @@ def collect(mode, requested_ids, history_dir, selected_file):
             "event_id": event_id, "league": league,
             "country": (row.get("league") or {}).get("cc") if isinstance(row.get("league"), dict) else None,
             "category": category(label), "home": home, "away": away,
+            "home_id": str((row.get("home") or {}).get("id") or ""),
+            "away_id": str((row.get("away") or {}).get("id") or ""),
+            "league_id": str((row.get("league") or {}).get("id") or ""),
+            "start_time": row.get("time"),
             "minute": minute, "score": score,
             "board_stats": row.get("stats") if isinstance(row.get("stats"), dict) else {},
             "timer": row.get("timer"), "board_observed_at_utc": observed_at,
@@ -170,6 +224,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
     # Inspect cached prematch matches first within the SAME sports shortlist.
     request_order = sorted(shortlist, key=lambda event: not bool(event.get("prematch_context")))
     enrichment_elapsed = enrich_events(request_order)
+    profile_meta = enrich_profiles(shortlist, history_dir)
     final = rank_final_candidates(shortlist)
     final_ids = [event["event_id"] for event in final]
     display_ids = [event["event_id"] for event in display_candidates(final)]
@@ -203,7 +258,8 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "category_counts": {cat: sum(event["category"] == cat for event in events)
                             for cat in sorted({event["category"] for event in events})},
         "detail_calls": 0, "stats_trend_calls": len(shortlist),
-        "total_api_calls": 1 + len(shortlist), "maximum_parallel_requests": MAX_WORKERS,
+        "total_api_calls": 1 + len(shortlist) + profile_meta["goal_profile_api_calls"],
+        **profile_meta, "maximum_parallel_requests": MAX_WORKERS,
         "events_main_total_count": sum(bool(event.get("events_main_total")) for event in events),
         "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
         "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
@@ -226,7 +282,7 @@ def complete_odds(snapshot):
     events = [event for event in snapshot["events"] if event["event_id"] in ids]
     elapsed = enrich_events(events, kinds=("odds",))
     snapshot["detail_calls"] = len(events)
-    snapshot["total_api_calls"] = 1 + snapshot["stats_trend_calls"] + len(events)
+    snapshot["total_api_calls"] = 1 + snapshot["stats_trend_calls"] + snapshot.get("goal_profile_api_calls", 0) + len(events)
     snapshot["events_main_total_count"] = sum(bool(e.get("events_main_total")) for e in events)
     snapshot["timing_seconds"]["odds"] = elapsed
     snapshot["odds_checked_at_utc"] = datetime.now(timezone.utc).isoformat()

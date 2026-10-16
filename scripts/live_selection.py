@@ -51,6 +51,7 @@ def record_choices(ledger, snapshot, choices, selected_at):
             "reference_line_status": event.get("main_total_status"),
             "reference_line_reason": event.get("main_total_reason"),
             "is_user_choice": False,
+            "goal_profile": deepcopy(event.get("goal_profile")),
         }
         if snapshot.get("schema_version", 0) >= 4:
             record["sports_rank"] = event["final_sports_selection"]["sports_rank"]
