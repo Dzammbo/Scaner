@@ -8,12 +8,20 @@ c=Client(cfg.get('max_calls',2200),cfg.get('reserve',800))
 folder=Path('research/tm/data')/os.environ['GITHUB_RUN_ID'];folder.mkdir(parents=True,exist_ok=True)
 manifest={'started_at':time.time(),'source':'BetsAPI Events','request':cfg,'leagues':{},'failures':[]}
 leagues={'94':'England Premier League'}
-lookup=c.get('/v3/league',sport_id=1,cc='es',max_id=1000)
-(folder/'league_lookup.json').write_text(json.dumps(lookup))
-for row in lookup.get('payload',{}).get('results',[]):
-    if row.get('name') in ('Spain Primera Liga','Spain La Liga','Spain Primera Division'):
-        leagues[str(row['id'])]=row['name']
-if len(leagues)!=2:raise RuntimeError('Spanish top league identity not resolved; inspect saved lookup')
+max_id=None
+for page_index in range(12):
+    params={'sport_id':1,'cc':'es'}
+    if max_id:params['max_id']=max_id
+    lookup=c.get('/v3/league',**params)
+    (folder/('league_lookup_'+str(page_index)+'.json')).write_text(json.dumps(lookup))
+    results=lookup.get('payload',{}).get('results',[])
+    candidates=[r for r in results if r.get('name') in ('Spain Primera Liga','Spain La Liga','Spain Primera Division') and str(r.get('id'))!='207']
+    if candidates:
+        chosen=max(candidates,key=lambda r:int(r['id']))
+        leagues[str(chosen['id'])]=chosen['name'];break
+    max_id=lookup.get('payload',{}).get('pager',{}).get('min_id')
+    if not results or not max_id:break
+if len(leagues)!=2:raise RuntimeError('Active Spanish top league identity not resolved; inspect saved lookup')
 print('TM_LEAGUES='+json.dumps(leagues),flush=True)
 rows={}
 def page(task):
@@ -36,6 +44,7 @@ targets=[]
 for lid in leagues:
     rs=[r for r in ordered if str(r['league']['id'])==lid]
     use=rs[-500:];targets+=use
+    if not rs:raise RuntimeError('Verified league returned no completed rows: '+lid)
     manifest['leagues'][lid]={'name':leagues[lid],'all_rows':len(rs),'target_rows':len(use),'earliest':rs[0]['time'],'latest':rs[-1]['time']}
 # Oldest to newest, with whole matches as fetch units. Reserve API capacity for TB.
 def detail(row):
