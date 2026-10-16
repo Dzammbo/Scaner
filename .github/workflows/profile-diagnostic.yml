@@ -20,17 +20,19 @@ jobs:
           from concurrent.futures import ThreadPoolExecutor
           from live_snapshot import get
           def probe(task):
-              version, league = task
+              version, league, day = task
               start = time.monotonic()
-              out = dict(version=version, league=league)
+              out = dict(version=version, league=league, day=day)
               try:
-                  p, meta = get('/'+version+'/events/ended', sport_id=1, league_id=league, page=1, _timeout=5)
+                  params = {'sport_id':1, 'league_id':league, 'page':1}
+                  if day: params['day'] = day
+                  p, meta = get('/'+version+'/events/ended', **params, _timeout=20)
                   out.update(http=meta.get('status'), success=p.get('success'), error_code=p.get('error'), results_n=len(p.get('results', [])), keys=list(p))
               except Exception as exc:
                   out.update(error_type=type(exc).__name__, http=getattr(exc, 'code', None))
               out['seconds']=round(time.monotonic()-start,3)
               return out
           with ThreadPoolExecutor(max_workers=4) as pool:
-              for result in pool.map(probe, [('v3','176'),('v2','176'),('v3','4836'),('v2','4836')]):
+              for result in pool.map(probe, [('v3','176',None),('v3','176','20261010'),('v3','4836','20261015'),('v1','176',None)]):
                   print('PROFILE_DIAGNOSTIC='+json.dumps(result), flush=True)
           PY
