@@ -1,0 +1,38 @@
+name: One-off selected match results 20261015
+on:
+  push:
+    branches: [results-20261015-once]
+    paths: ['.github/workflows/results-20261015-once.yml']
+permissions:
+  contents: read
+jobs:
+  results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read final results of published selections
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.parse
+          from concurrent.futures import ThreadPoolExecutor
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          rows=json.load(open(".github/live-selected-events.json"))["selections"]
+          rows=[r for r in rows if datetime.fromisoformat(r["selected_at_utc"].replace("Z","+00:00")).astimezone(ZoneInfo("Europe/Moscow")).date().isoformat()=="2026-10-15"]
+          def get(eid):
+              try:
+                  url="https://api.b365api.com/v1/event/view?"+urllib.parse.urlencode({"token":os.environ["BETSAPI_KEY"],"event_id":eid})
+                  with urllib.request.urlopen(url,timeout=25) as response:
+                      payload=json.load(response)
+                  result=[{k:e.get(k) for k in ("id","sport_id","time_status","time","ss","scores","home","away","league")} for e in payload.get("results",[]) if isinstance(e,dict)]
+                  return {"event_id":eid,"success":payload.get("success"),"results":result}
+              except Exception as exc:
+                  return {"event_id":eid,"error":type(exc).__name__}
+          with ThreadPoolExecutor(max_workers=12) as pool:
+              result=list(pool.map(get,sorted({r["event_id"] for r in rows})))
+          print("RESULTS_JSON="+json.dumps({"checked_at_utc":datetime.now(timezone.utc).isoformat(),"source":"BetsAPI /v1/event/view","events":result},ensure_ascii=False),flush=True)
+          
+          PY
