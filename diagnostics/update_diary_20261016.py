@@ -119,7 +119,7 @@ for sh in w:
    if c.data_type=="f" and sh.title in cached.sheetnames:
     val=cached[sh.title][c.coordinate].value
     assert val is not None or (sh.title=="Реестр" and sh.cell(c.row,1).value is None),("uncached formula",sh.title,c.coordinate)
-    c.value=val
+    if val is not None:c.value=val
 w.save(p)
 v=openpyxl.load_workbook(p,data_only=True)
 rows=[r for r in v["Реестр"].iter_rows(min_row=6,values_only=True) if isinstance(r[0],(int,float)) and r[4]]
