@@ -17,6 +17,43 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
                           rank_final_candidates, display_candidates)
 
+# User-approved chat presentation contract; does not change sports selection.
+LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v1',
+ 'preliminary': 'Запускаю live ТБ.\nУверенность: {confidence}/100.',
+ 'header': 'Live ТБ · {snapshot_time_msk} МСК · выбрано {selected}',
+ 'funnel': 'Пул {raw} → окно {in_window} → повтор {previously_shown} → новых {new} → с динамикой '
+           '{with_trend} → выбор {selected}.',
+ 'match_lines': ['{number}. {home_ru} - {away_ru} | {score} | {minute}′ {period}',
+                 '{country_ru}, {league_ru}, {category_ru}. {interval}: удары {shots}, створ '
+                 '{on_target}, опасные {dangerous}; всего: удары {total_shots}, xG {xg}. '
+                 '{scenario}, риск {risk}.',
+                 'История: {home_ru} - {home_mean_total} гола ({home_n} матчей); {away_ru} - '
+                 '{away_mean_total} ({away_n}). Лига - {league_mean_total} ({league_n}).',
+                 'Справочно: ТБ{line} ×{over}; ещё {additional_goals} гола для полного выигрыша.'],
+ 'within_match_separator': '  \n',
+ 'between_matches_separator': '\n\n',
+ 'history_fields': ['home.all.mean_total',
+                    'home.all.n',
+                    'away.all.mean_total',
+                    'away.all.n',
+                    'league.mean_total',
+                    'league.n'],
+ 'missing_value': 'н/д',
+ 'footer': 'Линии: {odds_time_msk} МСК, без рекомендации. История - средние тоталы завершённых '
+           'матчей. Реестр: {actual_registry_status}.\n'
+           'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
+ 'rules': ['Russian names; four consecutive lines per match; no tables or blank lines inside a '
+           'match.',
+           'Use actual intervals and phase; preserve material uncertainty, partial xG and red '
+           'cards compactly in the statistics/risk line.',
+           'No extra historical fields in default chat output; retain full source profiles and '
+           'ranking.',
+           'Confidence is evidence-based, not a fixed template number.',
+           'No matches: header, funnel, Подходящих матчей нет, confidence. API failure: report '
+           'failure, never invent an empty pool.',
+           'Do not wait for odds or registry before publishing the ready selection; use н/д and '
+           'actual status.']}
+
 BASE = "https://api.b365api.com"
 SHORTLIST_LIMIT = 30
 MAX_WORKERS = 16
@@ -276,6 +313,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "prematch_in_window_event_ids": [e["event_id"] for e in ranked if e.get("prematch_context")],
         "history_read_warnings": history_warnings, "selected_events_read_warnings": selected_warnings,
         "source": "BetsAPI Events API", "board_http": board_meta,
+        "response_format": LIVE_RESPONSE_FORMAT,
         "delivery_policy": {
             "primary_output": "immediate_after_live_snapshot_json",
             "user_output_precedes": [
@@ -326,6 +364,7 @@ def complete_odds(snapshot):
 def odds_main(path):
     snapshot = complete_odds(json.loads(Path(path).read_text()))
     print("LIVE_ODDS_JSON=" + json.dumps({
+        "response_format_version": LIVE_RESPONSE_FORMAT["version"],
         "snapshot_id": snapshot["snapshot_id"], "odds_checked_at_utc": snapshot["odds_checked_at_utc"],
         "events": [{key: event.get(key) for key in ("event_id", "events_main_total", "main_total_status", "main_total_reason")}
                    for event in snapshot["events"] if event["final_sports_selected"]],
