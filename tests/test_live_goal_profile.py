@@ -67,3 +67,51 @@ class ProfileTests(unittest.TestCase):
                     'actual_duration_minutes':5,'stats':{'on_target':{'home':on,'away':0}}}}}}
         rows=[event('a',.8),event('b',1.2),event('c',10,on=0)]
         self.assertEqual([x['event_id'] for x in rank_final_candidates(rows)],['b','a'])
+
+    def test_partial_cache_recovers_league_without_refetching_history(self):
+        p=build_profile(self.event,self.history,{},1001)
+        with tempfile.TemporaryDirectory() as directory:
+            Path(directory,'s.json').write_text(json.dumps({'events':[dict(self.event,goal_profile=p)]}))
+            e=copy.deepcopy(self.event)
+            with patch('live_snapshot.time.time',return_value=1002), patch('live_snapshot.get',return_value=(self.league,{'status':200})) as get:
+                meta=enrich_profiles([e],directory)
+            self.assertEqual(get.call_count,1)
+            self.assertEqual(get.call_args.args[0],'/v3/events/ended')
+            self.assertGreater(get.call_args.kwargs['_timeout'],5)
+            self.assertTrue(e['goal_profile']['ranking_used'])
+            self.assertEqual(e['goal_profile']['fetched_at'],1001)
+            self.assertEqual(meta['goal_profile_diagnostics'][0]['status'],'ok')
+
+    def test_shared_league_requested_once_and_errors_do_not_leak_secrets(self):
+        from urllib.error import HTTPError
+        calls=[]
+        def get(path,**params):
+            calls.append(path)
+            if path.endswith('/event/history'): return self.history,{'status':200}
+            raise HTTPError('https://example.com?token=secret',403,'secret',None,None)
+        es=[dict(self.event,event_id=str(i)) for i in range(3)]
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get',get):
+            meta=enrich_profiles(es,directory)
+        self.assertEqual(calls.count('/v3/events/ended'),1)
+        self.assertNotIn('secret',json.dumps(meta))
+        failure=[x for x in meta['goal_profile_diagnostics'] if x['kind']=='league'][0]
+        self.assertEqual(failure['http_status'],403)
+        self.assertEqual(failure['status'],'request_error')
+        self.assertTrue(all(e['goal_profile']['available'] for e in es))
+        self.assertFalse(any(e['goal_profile']['ranking_used'] for e in es))
+
+    def test_interleaved_requests_deadline_and_timeouts(self):
+        calls=[]
+        def get(path,**params):
+            calls.append(path)
+            raise TimeoutError('synthetic')
+        es=[dict(self.event,event_id=str(i),league_id=str(i)) for i in range(3)]
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get',get), patch('live_snapshot.MAX_WORKERS',1):
+            meta=enrich_profiles(es,directory)
+        self.assertEqual(calls[:4],['/v1/event/history','/v3/events/ended']*2)
+        self.assertTrue(all(x['status']=='timeout' for x in meta['goal_profile_diagnostics']))
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get') as get, patch('live_snapshot.time.monotonic',side_effect=[0]+[9]*20):
+            meta=enrich_profiles([copy.deepcopy(self.event)],directory)
+        get.assert_not_called()
+        self.assertEqual(meta['goal_profile_api_calls'],0)
+        self.assertTrue(all(x['status']=='budget_exhausted' for x in meta['goal_profile_diagnostics']))

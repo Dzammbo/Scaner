@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot, timestamp
 from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
-from live_goal_profile import build_profile, read_cache
+from live_goal_profile import build_profile, read_cache, apply_league
 from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
                           rank_final_candidates, display_candidates)
@@ -117,46 +117,68 @@ def enrich_profiles(events, directory):
     started = time.monotonic()
     now = time.time()
     cached, leagues = read_cache(directory, now)
-    histories, tasks, calls = {}, [], 0
+    histories, tasks, calls, diagnostics = {}, [], 0, []
     eligible = [e for e in events if e.get('home_id') and e.get('away_id') and e.get('start_time')]
+    scheduled_leagues = set()
     for e in eligible:
         old = cached.get(e['event_id'])
         if old and old[:2] == (e['home_id'], e['away_id']) and old[2].get('kickoff_cutoff') == float(e['start_time']):
             e['goal_profile'] = dict(old[2], cache_hit=True)
         else:
             tasks.append(('history', e['event_id']))
-    for lid in sorted({e['league_id'] for e in eligible if e.get('league_id') and not e.get('goal_profile')}):
-        if lid not in leagues:
+        lid = e.get('league_id')
+        complete_cached = (e.get('goal_profile') or {}).get('league_api_success') == 1
+        if lid and lid not in leagues and lid not in scheduled_leagues and not complete_cached:
             tasks.append(('league', lid))
+            scheduled_leagues.add(lid)
     deadline = started + 8
     def fetch(task):
         kind, identity = task
-        remaining = deadline-time.monotonic()
+        called_at = time.monotonic()
+        remaining = deadline-called_at
+        status = {'kind': kind, 'id': identity, 'called': False,
+                  'queue_seconds': round(called_at-started, 3)}
         if remaining <= 0:
-            return kind, identity, {}, False
+            return kind, identity, {}, dict(status, status='budget_exhausted', seconds=0)
+        status['called'] = True
         try:
             path = '/v1/event/history' if kind == 'history' else '/v3/events/ended'
             params = {'event_id': identity, 'qty': 20} if kind == 'history' else {'sport_id': 1, 'league_id': identity, 'page': 1}
-            payload, _ = get(path, _timeout=min(5, remaining), **params)
-            return kind, identity, payload, True
-        except Exception:
-            return kind, identity, {}, True
+            payload, http = get(path, _timeout=min(5 if kind == 'history' else 8, remaining), **params)
+            shape = dict if kind == 'history' else list
+            valid = isinstance(payload, dict) and isinstance(payload.get('results'), shape)
+            ok = valid and payload.get('success') == 1
+            status.update(status='ok' if ok else 'api_error' if isinstance(payload, dict) and payload.get('success') != 1 else 'invalid_response',
+                          http_status=http.get('status'))
+            if not ok:
+                payload = {}
+        except Exception as exc:
+            # Never persist exception text or URLs: they can contain credentials.
+            status.update(status='timeout' if isinstance(exc, TimeoutError) else 'request_error',
+                          error_type=type(exc).__name__, http_status=getattr(exc, 'code', None))
+            payload = {}
+        status['seconds'] = round(time.monotonic()-called_at, 3)
+        return kind, identity, payload, status
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        for kind, identity, payload, called in pool.map(fetch, tasks):
-            calls += int(called)
+        for kind, identity, payload, status in pool.map(fetch, tasks):
+            diagnostics.append(status)
+            calls += int(status['called'])
             if kind == 'history':
                 histories[identity] = payload
             elif payload.get('success') == 1:
                 leagues[identity] = {'fetched_at': now, 'payload': payload}
     for e in events:
+        league_payload = leagues.get(e.get('league_id'), {}).get('payload', {})
         if not e.get('goal_profile'):
-            e['goal_profile'] = build_profile(e, histories.get(e['event_id'], {}),
-                leagues.get(e.get('league_id'), {}).get('payload', {}), now)
+            e['goal_profile'] = build_profile(e, histories.get(e['event_id'], {}), league_payload, now)
+        elif league_payload and e['goal_profile'].get('available'):
+            e['goal_profile'] = apply_league(e['goal_profile'], e, league_payload)
     used_leagues = {e.get('league_id') for e in eligible}
     return {'goal_profile_api_calls': calls,
             'goal_profile_seconds': round(time.monotonic()-started, 3),
             'goal_profile_cache_hits': sum(bool(e['goal_profile'].get('cache_hit')) for e in events),
             'goal_profile_available_count': sum(bool(e['goal_profile']['available']) for e in events),
+            'goal_profile_diagnostics': diagnostics,
             'goal_profile_league_cache': {k:v for k,v in leagues.items() if k in used_leagues}}
 
 

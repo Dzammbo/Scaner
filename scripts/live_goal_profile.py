@@ -94,11 +94,17 @@ def build_profile(event, history, league_payload, fetched_at):
         venue = [r for r in rows if r[side+'_id'] == tid]
         out[side] = {'team_id': tid, 'all': summarize(rows, tid), 'last10': summarize(rows[:10], tid),
                      'same_league': summarize(same, tid), 'venue': summarize(venue, tid), 'matches': rows}
-    league_rows = clean_rows(league_payload.get('results'), cutoff)
+    out['available'] = bool(out['home']['all']['n'] or out['away']['all']['n'])
+    return apply_league(out, event, league_payload)
+
+
+def apply_league(profile, event, league_payload):
+    """Recover a missing league without refetching valid cached team history."""
+    out = dict(profile, ranking_ratio=1.0, ranking_used=False,
+               league_api_success=league_payload.get('success'))
+    league_rows = clean_rows(league_payload.get('results'), float(event['start_time']))
     league_rows = [r for r in league_rows if r['league_id'] == event.get('league_id')][:50]
     out['league'] = dict(summarize(league_rows), scope='latest_available_first_page_before_kickoff', matches=league_rows)
-    out['available'] = bool(out['home']['all']['n'] or out['away']['all']['n'])
-    # Comparable competition only. Coverage minimum is NOT a match eligibility filter.
     h, a, league = out['home']['same_league'], out['away']['same_league'], out['league']
     if min(h['n'], a['n']) >= 5 and league['n'] >= 10 and league['mean_total'] > 0:
         out['ranking_ratio'] = ((h['mean_for']+a['mean_against']+a['mean_for']+h['mean_against'])/2)/league['mean_total']

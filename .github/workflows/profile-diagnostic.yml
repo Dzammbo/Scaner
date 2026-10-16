@@ -8,31 +8,27 @@ permissions:
 jobs:
   diagnostic:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - name: Probe league history without changing scanner data
+      - name: Regression tests
+        run: python3 -m unittest discover -s tests -q
+      - name: Same pool cold and warm profile benchmark
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
         run: |
           PYTHONPATH=scripts python3 - <<'PY'
-          import json, time
-          from concurrent.futures import ThreadPoolExecutor
-          from live_snapshot import get
-          def probe(task):
-              version, league, day = task
-              start = time.monotonic()
-              out = dict(version=version, league=league, day=day)
-              try:
-                  params = {'sport_id':1, 'league_id':league, 'page':1}
-                  if day: params['day'] = day
-                  p, meta = get('/'+version+'/events/ended', **params, _timeout=20)
-                  out.update(http=meta.get('status'), success=p.get('success'), error_code=p.get('error'), results_n=len(p.get('results', [])), keys=list(p))
-              except Exception as exc:
-                  out.update(error_type=type(exc).__name__, http=getattr(exc, 'code', None))
-              out['seconds']=round(time.monotonic()-start,3)
-              return out
-          with ThreadPoolExecutor(max_workers=4) as pool:
-              for result in pool.map(probe, [('v3','176',None),('v3','176','20261010'),('v3','4836','20261015'),('v1','176',None)]):
-                  print('PROFILE_DIAGNOSTIC='+json.dumps(result), flush=True)
+          import copy, json, tempfile
+          from pathlib import Path
+          from live_snapshot import enrich_profiles
+          snapshot=json.loads(Path('snapshots/live/38912816979-1.json').read_text())
+          ids=snapshot['stats_trend_shortlisted_event_ids']
+          original=[next(e for e in snapshot['events'] if e['event_id']==eid) for eid in ids]
+          for e in original: e.pop('goal_profile', None)
+          with tempfile.TemporaryDirectory() as directory:
+              for mode in ('cold','warm'):
+                  events=copy.deepcopy(original)
+                  meta=enrich_profiles(events,directory)
+                  print('PROFILE_BENCHMARK='+json.dumps(dict(mode=mode,pool=len(events),seconds=meta['goal_profile_seconds'],calls=meta['goal_profile_api_calls'],cache_hits=meta['goal_profile_cache_hits'],leagues=len(meta['goal_profile_league_cache']),league_available=sum(e['goal_profile'].get('league',{}).get('n',0)>=10 for e in events),ranking_used=sum(e['goal_profile']['ranking_used'] for e in events),diagnostics=meta['goal_profile_diagnostics'])),flush=True)
+                  Path(directory,mode+'.json').write_text(json.dumps(dict(meta,events=events)))
           PY
