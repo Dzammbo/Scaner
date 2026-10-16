@@ -18,7 +18,7 @@ jobs:
       - name: Explicit bounded research request
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-        run: python3 research/tm/probe.py
+        run: python3 research/tm/collect.py
       - name: Save only isolated research data
         if: always()
         run: python3 research/tm/save.py
