@@ -159,14 +159,25 @@ def enrich_profiles(events, directory):
             payload = {}
         status['seconds'] = round(time.monotonic()-called_at, 3)
         return kind, identity, payload, status
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        for kind, identity, payload, status in pool.map(fetch, tasks):
+    def consume(results):
+        nonlocal calls
+        for kind, identity, payload, status in results:
             diagnostics.append(status)
             calls += int(status['called'])
             if kind == 'history':
                 histories[identity] = payload
             elif payload.get('success') == 1:
                 leagues[identity] = {'fetched_at': now, 'payload': payload}
+    if MAX_WORKERS == 1:
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            consume(pool.map(fetch, tasks))
+    else:
+        # Reserve capacity for both sources: slow league calls must not starve
+        # the primary team histories. Total concurrency remains MAX_WORKERS.
+        league_workers = MAX_WORKERS // 2
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS-league_workers) as history_pool, ThreadPoolExecutor(max_workers=league_workers) as league_pool:
+            futures = [(history_pool if task[0] == 'history' else league_pool).submit(fetch, task) for task in tasks]
+            consume(future.result() for future in as_completed(futures))
     for e in events:
         league_payload = leagues.get(e.get('league_id'), {}).get('payload', {})
         if not e.get('goal_profile'):

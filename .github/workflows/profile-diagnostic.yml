@@ -26,7 +26,7 @@ jobs:
           original=[next(e for e in snapshot['events'] if e['event_id']==eid) for eid in ids]
           for e in original: e.pop('goal_profile', None)
           with tempfile.TemporaryDirectory() as directory:
-              for mode in ('cold','warm'):
+              for mode in ('cold','warm','cached'):
                   events=copy.deepcopy(original)
                   meta=enrich_profiles(events,directory)
                   print('PROFILE_BENCHMARK='+json.dumps(dict(mode=mode,pool=len(events),seconds=meta['goal_profile_seconds'],calls=meta['goal_profile_api_calls'],cache_hits=meta['goal_profile_cache_hits'],leagues=len(meta['goal_profile_league_cache']),league_available=sum(e['goal_profile'].get('league',{}).get('n',0)>=10 for e in events),ranking_used=sum(e['goal_profile']['ranking_used'] for e in events),diagnostics=meta['goal_profile_diagnostics'])),flush=True)

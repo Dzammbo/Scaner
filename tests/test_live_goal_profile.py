@@ -115,3 +115,23 @@ class ProfileTests(unittest.TestCase):
         get.assert_not_called()
         self.assertEqual(meta['goal_profile_api_calls'],0)
         self.assertTrue(all(x['status']=='budget_exhausted' for x in meta['goal_profile_diagnostics']))
+
+    def test_slow_league_cannot_starve_team_history(self):
+        import threading
+        ready=threading.Event()
+        lock=threading.Lock()
+        histories=[]
+        def get(path, **params):
+            if path.endswith('/event/history'):
+                with lock:
+                    histories.append(params['event_id'])
+                    if len(histories)==6: ready.set()
+                return self.history, {}
+            if not ready.wait(2):
+                raise AssertionError('Slow leagues starved team histories')
+            return self.league, {}
+        es=[dict(self.event,event_id=str(i),league_id=str(i)) for i in range(6)]
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get',get), patch('live_snapshot.MAX_WORKERS',4):
+            meta=enrich_profiles(es,directory)
+        self.assertEqual(len(histories),6)
+        self.assertTrue(all(x['status']=='ok' for x in meta['goal_profile_diagnostics']))
