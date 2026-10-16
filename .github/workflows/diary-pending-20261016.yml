@@ -1,0 +1,36 @@
+name: Isolated pending diary results
+on:
+  push:
+    branches: [diary-update-analysis-20261016]
+    paths: ['.github/workflows/diary-pending-20261016.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip -q install openpyxl
+      - env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request,urllib.parse,concurrent.futures
+          from pathlib import Path
+          import openpyxl
+          p=Path("Live ТБ/Live ТБ.xlsx")
+          w=openpyxl.load_workbook(p,data_only=True)
+          ids=sorted({str(r[1]) for r in w["Реестр"].iter_rows(min_row=6,values_only=True) if isinstance(r[0],(int,float)) and r[4] and r[21] is None and r[1]})
+          def fetch(eid):
+           try:
+            url="https://api.b365api.com/v1/event/view?"+urllib.parse.urlencode({"token":os.environ["BETSAPI_KEY"],"event_id":eid})
+            with urllib.request.urlopen(url,timeout=25) as f: d=json.load(f)
+            out={"event_id":eid,"success":d.get("success")}
+            out["results"]=[{k:e.get(k) for k in ["id","time_status","ss","scores","home","away","league"]} for e in d.get("results",[])]
+            return out
+           except Exception as e: return {"event_id":eid,"error_type":type(e).__name__}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex: data=list(ex.map(fetch,ids))
+          print("PENDING_RESULTS="+json.dumps(data,ensure_ascii=False))
+          
+          PY
