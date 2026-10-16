@@ -1,0 +1,50 @@
+name: Compare BetsAPI endpoints once
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/compare-betsapi-endpoints.yml']
+permissions:
+  contents: read
+jobs:
+  compare:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'Run requested two-host BetsAPI diagnostic'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Compare identical authenticated football board requests
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.request, urllib.parse, urllib.error
+          from datetime import datetime, timezone
+          key = os.environ["BETSAPI_KEY"]
+          for host in ("api.b365api.com", "api.betsapi.com"):
+              started = time.monotonic()
+              result = {"host": host, "at": datetime.now(timezone.utc).isoformat(), "path": "/v3/events/inplay", "sport_id": 1}
+              req = urllib.request.Request("https://" + host + "/v3/events/inplay?" + urllib.parse.urlencode({"sport_id": 1, "token": key}), headers={"User-Agent": "dzam-live-tb/2.0"})
+              try:
+                  try:
+                      response = urllib.request.urlopen(req, timeout=25)
+                  except urllib.error.HTTPError as exc:
+                      response = exc
+                  with response:
+                      result["http"] = response.code
+                      result["headers"] = {k: response.headers.get(k) for k in ("Content-Type", "Server", "X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset")}
+                      body = response.read().decode("utf-8", "replace")
+                      try:
+                          payload = json.loads(body)
+                          result["success"] = payload.get("success")
+                          result["pager"] = payload.get("pager")
+                          result["events_count"] = len(payload.get("results", []))
+                          if response.code >= 400 or not payload.get("success"):
+                              result["error_body"] = body.replace(key, "[REDACTED]")[:1500]
+                      except (ValueError, AttributeError, TypeError):
+                          result["error_body"] = body.replace(key, "[REDACTED]")[:1500]
+              except Exception as exc:
+                  result["error"] = str(exc).replace(key, "[REDACTED]")
+              result["seconds"] = round(time.monotonic() - started, 3)
+              print("API_COMPARISON=" + json.dumps(result, ensure_ascii=False), flush=True)
+          
+          PY
