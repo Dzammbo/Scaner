@@ -168,7 +168,7 @@ def enrich_profiles(events, directory):
         if lid and lid not in leagues and lid not in scheduled_leagues and not complete_cached:
             tasks.append(('league', lid))
             scheduled_leagues.add(lid)
-    deadline = started + 8
+    deadline = started + 15
     def fetch(task):
         kind, identity = task
         called_at = time.monotonic()
@@ -181,7 +181,7 @@ def enrich_profiles(events, directory):
         try:
             path = '/v1/event/history' if kind == 'history' else '/v3/events/ended'
             params = {'event_id': identity, 'qty': 20} if kind == 'history' else {'sport_id': 1, 'league_id': identity, 'page': 1}
-            payload, http = get(path, _timeout=min(5 if kind == 'history' else 8, remaining), **params)
+            payload, http = get(path, _timeout=min(8 if kind == 'history' else 15, remaining), **params)
             shape = dict if kind == 'history' else list
             valid = isinstance(payload, dict) and isinstance(payload.get('results'), shape)
             ok = valid and payload.get('success') == 1
