@@ -110,7 +110,7 @@ class ProfileTests(unittest.TestCase):
             meta=enrich_profiles(es,directory)
         self.assertEqual(calls[:4],['/v1/event/history','/v3/events/ended']*2)
         self.assertTrue(all(x['status']=='timeout' for x in meta['goal_profile_diagnostics']))
-        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get') as get, patch('live_snapshot.time.monotonic',side_effect=[0]+[9]*20):
+        with tempfile.TemporaryDirectory() as directory, patch('live_snapshot.get') as get, patch('live_snapshot.time.monotonic',side_effect=[0]+[16]*20):
             meta=enrich_profiles([copy.deepcopy(self.event)],directory)
         get.assert_not_called()
         self.assertEqual(meta['goal_profile_api_calls'],0)
