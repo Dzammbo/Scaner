@@ -18,7 +18,7 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           rank_final_candidates, display_candidates)
 
 # User-approved chat presentation contract; does not change sports selection.
-LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v1',
+LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v2',
  'preliminary': 'Запускаю live ТБ.\nУверенность: {confidence}/100.',
  'header': 'Live ТБ · {snapshot_time_msk} МСК · выбрано {selected}',
  'funnel': 'Пул {raw} → окно {in_window} → повтор {previously_shown} → новых {new} → с динамикой '
@@ -29,7 +29,8 @@ LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v1',
                  '{scenario}, риск {risk}.',
                  'История: {home_ru} - {home_mean_total} гола ({home_n} матчей); {away_ru} - '
                  '{away_mean_total} ({away_n}). Лига - {league_mean_total} ({league_n}).',
-                 'Справочно: ТБ{line} ×{over}; ещё {additional_goals} гола для полного выигрыша.'],
+                 'Справочно: ТБ{line} ×{over}; ещё {additional_goals} гола для полного выигрыша.',
+                 'По твоему правилу: ТБ{user_line}; {user_price_text}.'],
  'within_match_separator': '  \n',
  'between_matches_separator': '\n\n',
  'history_fields': ['home.all.mean_total',
@@ -39,10 +40,18 @@ LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v1',
                     'league.mean_total',
                     'league.n'],
  'missing_value': 'н/д',
- 'footer': 'Линии: {odds_time_msk} МСК, без рекомендации. История - средние тоталы завершённых '
+ 'user_total_policy': {
+     'version': 'quarter-down-2026-10-17-v1',
+     'scope': 'full_match_total_only',
+     'integer_or_half': 'Keep the reference line and its quoted over price.',
+     'quarter': 'Subtract 0.25 from the reference line; never reuse its price.',
+     'rounded_price': 'Use a verified quote for that exact line, otherwise: коэффициент нужно проверить',
+     'missing_reference': 'н/д; do not invent a line or use an outdated quote.',
+     'selection_effect': 'None; presentation rule, not proof of profitability; no additional API calls.'},
+ 'footer': 'Линии: {odds_time_msk} МСК, тотал по правилу пользователя. История - средние тоталы завершённых '
            'матчей. Реестр: {actual_registry_status}.\n'
            'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
- 'rules': ['Russian names; four consecutive lines per match; no tables or blank lines inside a '
+ 'rules': ['Russian names; five consecutive lines per match; no tables or blank lines inside a '
            'match.',
            'Use actual intervals and phase; preserve material uncertainty, partial xG and red '
            'cards compactly in the statistics/risk line.',
