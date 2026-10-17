@@ -8,14 +8,15 @@ from pathlib import Path
 
 from live_enrichment import number, score_goals
 from live_history import timestamp
+from live_ranking import FINAL_SELECTION_LIMIT
 
 
 def record_choices(ledger, snapshot, choices, selected_at):
     """Append exactly the choices actually shown, preserving historical entries."""
     if ledger.get("schema_version") != 1 or not isinstance(ledger.get("events"), list):
         raise ValueError("Invalid selected-events ledger")
-    if not isinstance(choices, list) or not 1 <= len(choices) <= 10:
-        raise ValueError("Record only the 1-10 final sports choices actually shown")
+    if not isinstance(choices, list) or not 1 <= len(choices) <= FINAL_SELECTION_LIMIT:
+        raise ValueError(f"Record only the 1-{FINAL_SELECTION_LIMIT} final sports choices actually shown")
     if not snapshot.get("snapshot_id") or not snapshot.get("rules_version"):
         raise ValueError("Snapshot ID and rules version required; do not reconstruct history")
     if timestamp(selected_at) < timestamp(snapshot["generated_at_utc"]):

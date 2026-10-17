@@ -5,7 +5,7 @@ from live_enrichment import number
 RULES_VERSION = "sports-only-2026-10-16-v7"
 RANKING_METHOD = "single_snapshot_sports_queues_v4"
 FINAL_RANKING_METHOD = "fresh_threat_goal_profile_v3"
-FINAL_SELECTION_LIMIT = 10
+FINAL_SELECTION_LIMIT = 5
 
 
 def partial_pair(values):

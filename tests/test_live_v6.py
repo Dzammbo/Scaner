@@ -55,7 +55,7 @@ class V6Tests(unittest.TestCase):
         for w in corners['stats_trend']['windows'].values():
             for field in ('on_target', 'off_target'):
                 w['stats'][field] = {'home': 0, 'away': 0}
-        self.assertEqual(len(rank_final_candidates(quality+[corners])), 10)
+        self.assertEqual(len(rank_final_candidates(quality+[corners])), 5)
         self.assertNotIn('99', [e['event_id'] for e in rank_final_candidates(quality+[corners])])
         self.assertEqual(rank_final_candidates([corners])[0]['event_id'], '99')
 
@@ -110,7 +110,7 @@ class V6Tests(unittest.TestCase):
         self.assertEqual(result['selections'][0]['sports_rank'], 2)
         self.assertEqual(result['selections'][0]['display_rank'], 1)
 
-    def test_sports_ready_before_any_odds_and_41_call_budget_unchanged_membership(self):
+    def test_sports_ready_before_any_odds_and_36_call_budget_unchanged_membership(self):
         calls = []
         rows = [{'id': str(i), 'home': {'name': 'A'}, 'away': {'name': 'B'},
                  'league': {'name': 'Test'}, 'timer': {'tm': 30}, 'ss': '0-0'} for i in range(35)]
@@ -134,13 +134,22 @@ class V6Tests(unittest.TestCase):
             self.assertEqual(len(snapshot['outside_shortlist_event_ids']), 5)
             original = copy.deepcopy(snapshot['final_sports_selection_event_ids'])
             completed = complete_odds(snapshot)
-            self.assertEqual(len(calls), 41)
-            self.assertEqual(completed['total_api_calls'], 41)
+            self.assertEqual(len(calls), 36)
+            self.assertEqual(completed['total_api_calls'], 36)
             self.assertEqual(completed['final_sports_selection_event_ids'], original)
             self.assertEqual(json.loads(ledger.read_text())['events'], [])
             # An unpublished final list must also remain eligible in a new full.
             again = collect('full', [], tmp, str(ledger))
             self.assertEqual(again['previously_selected_skipped_count'], 0)
+            choices = [{'event_id': event_id, 'sports_reason': 'Shown',
+                        'expected_scenario': 'Continued threat'} for event_id in original]
+            published = record_choices(json.loads(ledger.read_text()), snapshot,
+                                       choices, snapshot['generated_at_utc'])
+            ledger.write_text(json.dumps(published))
+            following = collect('full', [], tmp, str(ledger))
+            self.assertEqual(following['previously_selected_skipped_count'], 5)
+            self.assertEqual(following['eligible_in_window_count'], 30)
+            self.assertTrue(set(original).isdisjoint(following['final_sports_selection_event_ids']))
 
     def test_pool_evaluation_keeps_unknown_and_separate_denominators(self):
         events = [dict(fixtures.RankingTests().trend_event(i), category='Test', final_sports_selected=i==0) for i in range(2)]
@@ -152,7 +161,7 @@ class V6Tests(unittest.TestCase):
         self.assertIsNone(group['selected']['next_15_goals']['one_more_rate'])
         self.assertEqual(group['unselected']['remaining_goals']['unknown'], 1)
 
-    def test_benchmark_uses_separate_stages_and_at_most_131_requests(self):
+    def test_benchmark_uses_separate_stages_and_at_most_111_requests(self):
         from benchmark_live_enrichment import run_benchmark
         events = [fixtures.RankingTests().trend_event(i) for i in range(35)]
         for i, event in enumerate(events):
@@ -169,8 +178,8 @@ class V6Tests(unittest.TestCase):
             return 1
         with patch('benchmark_live_enrichment.collect', return_value=snapshot), patch('benchmark_live_enrichment.enrich_events', enrich):
             result = run_benchmark('unused')
-        self.assertEqual(result['total_api_calls'], 131)
-        self.assertEqual([n for n, kinds in stages if kinds == ('odds',)], [10, 10, 10, 10])
+        self.assertEqual(result['total_api_calls'], 111)
+        self.assertEqual([n for n, kinds in stages if kinds == ('odds',)], [5, 5, 5, 5])
         self.assertEqual([n for n, kinds in stages if kinds == ('trend',)], [15, 15, 30])
 
     def test_optional_prematch_failure_and_partial_finishing_do_not_block_live(self):

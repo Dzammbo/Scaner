@@ -69,13 +69,24 @@ class SelectionTests(unittest.TestCase):
         self.assertEqual(len(repeated['events']), 2)
         self.assertEqual(len(repeated['selections']), 2)
 
-    def test_duplicate_unknown_or_more_than_ten_choices_rejected(self):
+    def test_duplicate_unknown_or_more_than_five_choices_rejected(self):
         with self.assertRaises(ValueError):
             record_choices(self.ledger, self.snapshot, [self.choice, self.choice], self.time)
         with self.assertRaises(ValueError):
             self.record(dict(self.choice, event_id='999'))
-        with self.assertRaisesRegex(ValueError, '1-10'):
-            record_choices(self.ledger, self.snapshot, [self.choice] * 11, self.time)
+        with self.assertRaisesRegex(ValueError, '1-5'):
+            record_choices(self.ledger, self.snapshot, [self.choice] * 6, self.time)
+
+    def test_only_five_published_choices_enter_exclusions(self):
+        template = self.snapshot['events'][0]
+        self.snapshot['events'] = [dict(copy.deepcopy(template), event_id=str(i))
+                                   for i in range(200, 210)]
+        choices = [dict(self.choice, event_id=str(i)) for i in range(200, 205)]
+        result = record_choices(self.ledger, self.snapshot, choices, self.time)
+        self.assertEqual({r['event_id'] for r in result['events']},
+                         {'100', '200', '201', '202', '203', '204'})
+        self.assertEqual(len(result['selections']), 5)
+        self.assertEqual(len(self.ledger['events']), 1)
 
     def test_unconfirmed_results_are_not_settled(self):
         record = self.record()['selections'][0]
