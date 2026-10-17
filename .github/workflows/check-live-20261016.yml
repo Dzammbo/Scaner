@@ -1,0 +1,39 @@
+name: Requested live outcomes for 16 October
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/check-live-20261016.yml']
+permissions:
+  contents: read
+jobs:
+  results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read final scores for published selections only
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request,urllib.parse
+          from datetime import datetime,timedelta,timezone
+          from concurrent.futures import ThreadPoolExecutor
+          from pathlib import Path
+          rows=[r for r in json.loads(Path(".github/live-selected-events.json").read_text())["selections"] if datetime.fromisoformat(r["selected_at_utc"].replace("Z","+00:00")).astimezone(timezone(timedelta(hours=3))).date().isoformat()=="2026-10-16"]
+          key=os.environ["BETSAPI_KEY"]
+          def check(r):
+              out={k:r.get(k) for k in ("event_id","snapshot_id","rules_version","selected_at_utc","board_observed_at_utc","home","away","category","minute","score")}
+              try:
+                  url="https://api.b365api.com/v1/event/view?"+urllib.parse.urlencode({"token":key,"event_id":r["event_id"]})
+                  with urllib.request.urlopen(url,timeout=20) as f: d=json.load(f)
+                  out["api_success"]=d.get("success")
+                  results=d.get("results",[])
+                  e=next((x for x in results if str(x.get("id"))==r["event_id"]),{})
+                  out["result"]={k:e.get(k) for k in ("id","time_status","ss","scores","home","away")}
+              except Exception as exc: out["error"]=str(exc).replace(key,"[REDACTED]")
+              return out
+          with ThreadPoolExecutor(max_workers=8) as pool:
+              for r in pool.map(check,rows): print("OUTCOME="+json.dumps(r,ensure_ascii=False),flush=True)
+          
+          PY
