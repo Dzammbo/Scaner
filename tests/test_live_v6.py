@@ -96,8 +96,8 @@ class V6Tests(unittest.TestCase):
         events[0]['score'], events[1]['score'], events[2]['score'] = '2-0', '0-0', '1-0'
         final = rank_final_candidates(events)
         display = display_candidates(final)
-        self.assertEqual([e['event_id'] for e in display], ['1', '2', '0'])
-        self.assertEqual([e['final_sports_selection']['sports_rank'] for e in display], [2, 3, 1])
+        self.assertEqual([e['event_id'] for e in display], ['2', '1', '0'])
+        self.assertEqual([e['final_sports_selection']['sports_rank'] for e in display], [3, 2, 1])
         for e in events:
             e.update(final_sports_selected=True, home='A', away='B')
         snapshot = {'schema_version': 4, 'snapshot_id': 's', 'rules_version': 'v6', 'mode': 'full',

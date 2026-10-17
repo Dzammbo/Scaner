@@ -18,7 +18,8 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           rank_final_candidates, display_candidates)
 
 # User-approved chat presentation contract; does not change sports selection.
-LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v2',
+LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v3',
+ 'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
  'preliminary': 'Запускаю live ТБ.\nУверенность: {confidence}/100.',
  'header': 'Live ТБ · {snapshot_time_msk} МСК · выбрано {selected}',
  'funnel': 'Пул {raw} → окно {in_window} → повтор {previously_shown} → новых {new} → с динамикой '
