@@ -60,4 +60,15 @@ class SharedTests(unittest.TestCase):
    self.assertEqual(s['collection_mode'],'shared_background_v1');self.assertFalse(s['independent_board'])
    self.assertEqual(calls['/v3/events/inplay'],1);self.assertEqual(calls['/v1/event/stats_trend'],4);self.assertEqual(calls['/v2/event/odds'],4)
    self.assertEqual(s['research_progress']['unique_deep_requested'],4)
+ def test_control_only_fresh_data_reaches_experiments_without_new_deep_entries(self):
+  with tempfile.TemporaryDirectory()as directory,settings():
+   root=Path(directory);now=datetime.datetime.now(datetime.timezone.utc).isoformat();req=root/'req.json';req.write_text(json.dumps(dict(mode='full',event_ids=[],requested_at_utc=now)))
+   original=c.configure_background
+   def configure(scope):original(scope);c.DATA=root/'archive'
+   event=dict(event_id='reused',home='H',away='A',league='L',minute=20,score='0-0',board_stats={},stats_trend_shortlisted=False,control_shortlisted=True,legacy_window_8_60=True,research_sampling=dict(inclusion_probability=0,selected=False))
+   def collect(*args,**kw):return dict(events=[event],board_observed_at_utc=now,generated_at_utc=now)
+   with patch.object(c,'configure_background',configure),patch.object(c,'control_journal',return_value=(set(),{},{})),patch.object(broad,'collect',collect),patch.object(c,'enrich_markets',return_value=None),patch.object(c,'training_model',return_value=(None,{})),patch.dict(os.environ,dict(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(req),GITHUB_RUN_ID='778',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
+   s=c.load_json(next((root/'archive/snapshots').rglob('*.gz')))
+   self.assertEqual(s['experimental_evaluation_event_ids'],['reused'])
+   self.assertEqual(s['research_progress']['unique_deep_requested'],0)
 if __name__=='__main__':unittest.main()

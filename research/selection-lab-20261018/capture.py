@@ -287,7 +287,9 @@ def main():
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
    snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
-   ordered=sports_order([e for e in snapshot['events']if e.get('stats_trend_shortlisted')and(not is_broad or(e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',e['score'])))])
+   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted')))and(not is_broad or(e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',e['score'])))]
+   ordered=sports_order(evaluation_events)
+   if unified:snapshot['experimental_evaluation_event_ids']=[e['event_id']for e in evaluation_events]
    sampled=[] if (SOURCE=='background'and SCOPE=='primary')or is_broad else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
    if is_broad:
