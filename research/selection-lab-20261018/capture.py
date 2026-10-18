@@ -330,7 +330,14 @@ def main():
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
    snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in price_probes)
-   snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',requested=len(price_probes),exact=snapshot['lab_exact_quote_count'],ratio=(snapshot['lab_exact_quote_count']/len(price_probes)if price_probes else None),target=.95,provider_unavailable=len(price_probes)-snapshot['lab_exact_quote_count'])
+   def price_coverage(rows):
+    exact=sum(market_for_event(e,snapshot)[0]is not None for e in rows)
+    return dict(requested=len(rows),exact=exact,ratio=(exact/len(rows)if rows else None),provider_unavailable=len(rows)-exact)
+   active_price_rows=[e for e in price_probes if number(e.get('minute'))is not None and 1<=number(e.get('minute'))<=89 and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
+   evaluation_price_rows=[e for e in price_probes if e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
+   snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',target=.95,
+    all_provider_rows=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),evaluation_window_8_60=price_coverage(evaluation_price_rows),
+    denominator_note='Target applies to active known-score and evaluation rows; minute 0 without score and 90+ events stay visible in raw coverage.')
    snapshot['production_api_call_fields_are_base_stage_only']=True
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])

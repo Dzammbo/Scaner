@@ -61,6 +61,7 @@ class SharedTests(unittest.TestCase):
    self.assertEqual(calls['/v3/events/inplay'],1);self.assertEqual(calls['/v1/event/stats_trend'],4);self.assertEqual(calls['/v2/event/odds'],4)
    self.assertEqual(s['research_progress']['unique_deep_requested'],4)
    self.assertEqual(s['lab_market_probe_count'],4)
+   self.assertIn('active_known_score',s['lab_price_coverage'])
  def test_control_only_fresh_data_reaches_experiments_without_new_deep_entries(self):
   with tempfile.TemporaryDirectory()as directory,settings():
    root=Path(directory);now=datetime.datetime.now(datetime.timezone.utc).isoformat();req=root/'req.json';req.write_text(json.dumps(dict(mode='full',event_ids=[],requested_at_utc=now)))
