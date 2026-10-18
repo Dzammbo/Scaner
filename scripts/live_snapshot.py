@@ -14,6 +14,7 @@ from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
 from live_hypotheses import VERSION as HYPOTHESES_VERSION, evaluate as evaluate_hypotheses
 from live_goal_profile import build_profile, read_cache, apply_league
+from live_second_half_research import VERSION as SECOND_HALF_VERSION, evaluate as evaluate_second_half
 from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
                           rank_final_candidates, display_candidates)
@@ -307,12 +308,16 @@ def collect(mode, requested_ids, history_dir, selected_file):
     for event in final:
         event["final_sports_selected"] = True
         event["research_hypotheses"] = evaluate_hypotheses(event)
+    # Compute after sporting selection, including unselected candidates. No API calls.
+    for event in ranked:
+        event["research_second_half"] = evaluate_second_half(event)
     events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
     snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     return {
         "schema_version": 4, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
         "final_ranking_method": FINAL_RANKING_METHOD,
         "research_hypotheses_version": HYPOTHESES_VERSION,
+        "research_second_half_version": SECOND_HALF_VERSION,
         "snapshot_id": snapshot_id, "code_revision": os.environ.get("GITHUB_SHA"),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(), "board_observed_at_utc": observed_at,
         "mode": mode, "requested_event_ids": requested_ids,

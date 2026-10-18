@@ -54,6 +54,18 @@ class SelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'immutable'):
             record_choices(result, self.snapshot, [changed], self.time)
 
+    def test_second_half_preserved_only_for_versioned_new_snapshots(self):
+        from live_second_half_research import VERSION, evaluate
+        event=self.snapshot['events'][0]
+        event['research_second_half']=evaluate(event)
+        self.assertNotIn('research_second_half',self.record()['selections'][0])
+        self.snapshot['research_second_half_version']=VERSION
+        result=self.record()
+        self.assertEqual(result['selections'][0]['research_second_half'],event['research_second_half'])
+        self.assertEqual(record_choices(result,self.snapshot,[self.choice],self.time),result)
+        event['research_second_half']['reason']='changed'
+        self.assertNotEqual(result['selections'][0]['research_second_half'],event['research_second_half'])
+
     def test_non_algorithmic_choice_is_rejected(self):
         self.snapshot['events'][0]['final_sports_selected'] = False
         with self.assertRaisesRegex(ValueError, 'deterministic final sports selection'):

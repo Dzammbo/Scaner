@@ -71,6 +71,12 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 250)
         self.assertEqual(result['final_sports_selection_count'], 0)
         self.assertEqual(result['final_sports_selection_limit'], 5)
+        from live_second_half_research import VERSION
+        self.assertEqual(result['research_second_half_version'], VERSION)
+        self.assertTrue(all(e['research_second_half']['version'] == VERSION for e in result['events']))
+        outside = [e for e in result['events'] if not e['stats_trend_shortlisted']]
+        self.assertEqual(len(outside), 220)
+        self.assertTrue(all(e['research_second_half']['reason'] == 'profile_not_collected' for e in outside))
 
     def test_odds_does_not_block_trend_and_failures_do_not_remove_match(self):
         from live_snapshot import collect
