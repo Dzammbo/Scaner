@@ -1,4 +1,4 @@
-"""Independent on-demand collector. Never reads production history or publication ledgers."""
+"""Research collector and shared background acquisition. Never writes production publications."""
 import collections,concurrent.futures,contextlib,datetime,gzip,hashlib,json,math,os,re,sys,tempfile,threading,time
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
@@ -81,7 +81,7 @@ def read_journal(directory=None):
  def add(row):
   eid=str(row['event_id']);targets[eid]=merge_target(targets.get(eid),row)
  for base in directories:
-  expected='background_experimental'if base==ROOT/'research/live-background/experimental'else CONTOUR
+  expected=('background_'+base.name)if base.parent==ROOT/'research/live-background'else CONTOUR
   if base==ROOT/'research/live-lab':expected='experimental'
   for path in sorted((base/'receipts').rglob('*.json*')):
    r=load_json(path)
@@ -102,6 +102,26 @@ def read_journal(directory=None):
     old=outcomes.get(str(row['event_id']))
     if old is None or row['checked_at_utc']>old['checked_at_utc']:outcomes[str(row['event_id'])]=row
  return seen,targets,outcomes
+
+def control_journal():
+ """Independent control choices; shared data does not merge decision ledgers."""
+ seen,targets,outcomes=read_journal(ROOT/'research/live-background/primary')
+ selected=set(seen['sports_v8_fresh'])
+ for path in (DATA/'receipts').rglob('*.json*'):
+  r=load_json(path)
+  selected.update(str(x['event_id'])for x in r.get('control_evaluation',{}).get('choices',[]))
+ return selected,targets,outcomes
+
+def evaluate_control(snapshot,seen):
+ events=[e for e in snapshot['events']if e.get('control_shortlisted')]
+ ordered=sports_order(events)
+ own_seen={p:set()for p in POLICIES};own_seen['sports_v8_fresh']=set(seen)
+ choices,_=choose(snapshot,ordered,own_seen,None)
+ return dict(rules_version=live.RULES_VERSION,candidate_event_ids=[e['event_id']for e in events],
+  choices=choices['sports_v8_fresh'],strong_count=len(ordered),
+  insufficient_data_count=sum(not(e.get('selection_confidence')or{}).get('data_sufficient',False)for e in events),
+  assessments=[dict(event_id=e['event_id'],confidence=e.get('selection_confidence'),trend_available=bool((e.get('stats_trend')or{}).get('available')))for e in events],
+  shares_acquisition=True,independent_decision_ledger=True,not_user_publications=True)
 
 def controls(events,ordered,seed):
  strong={e['event_id'] for e in ordered};groups={'inside30':[],'outside30':[]}
@@ -232,18 +252,28 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  return paths
 
 def main():
- global CAPTURE_DAY
+ global CAPTURE_DAY,MAX_CALLS,WORKERS
  if os.environ.get('LAB_RUN_SOURCE')=='background':configure_background(os.environ['LAB_DATA_SCOPE'])
+ unified=SOURCE=='background'and SCOPE=='experimental'and os.environ.get('LAB_BACKGROUND_UNIFIED')=='1'
+ if unified:MAX_CALLS=360;WORKERS=8
  now=datetime.datetime.now(datetime.timezone.utc);sid=os.environ.get('GITHUB_RUN_ID',str(time.time_ns()))+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')
  CAPTURE_DAY=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
  request_path=Path(os.environ['LAB_REQUEST_FILE']);request=json.loads(request_path.read_text())
  metadata=dict(contour=CONTOUR,source=SOURCE,data_scope=SCOPE,capture_day_msk=CAPTURE_DAY,snapshot_id=sid,trigger_main_sha=os.environ.get('LAB_TRIGGER_MAIN_SHA'),request=request,code_revision=os.environ.get('LAB_CODE_REVISION'),independent_board=True,shared_provider_quota=True)
+ if unified:metadata.update(independent_board=False,collection_mode='shared_background_v1',evaluation_mode='separate_rules_shared_observations')
  budget=Budget(live.get,cap=MAX_CALLS,reserve=PRIMARY_RESERVE);snapshot=None
  try:
   age=now.timestamp()-live.timestamp(request['requested_at_utc'])
   if not -30<=age<=180:raise ValueError('Lab request expired')
   if request.get('mode')!='full' or request.get('event_ids'):raise ValueError('Lab capture requires full Live request; refresh is separate')
   seen,old_targets,old_outcomes=read_journal()
+  control_seen=None
+  if unified:
+   control_seen,control_targets,control_outcomes=control_journal()
+   for eid,row in control_targets.items():
+    old_targets[eid]=merge_target(old_targets.get(eid),dict(row,deep_any=False,trend_available_any=False,exact_price_any=False))
+   for eid,row in control_outcomes.items():
+    if eid not in old_outcomes or row['checked_at_utc']>old_outcomes[eid]['checked_at_utc']:old_outcomes[eid]=row
   with isolated_runtime(budget),collection_history()as history,tempfile.TemporaryDirectory(prefix='live-lab-empty-ledger-') as directory:
    empty=Path(directory)/'selected.json'
    excluded=sorted(seen['sports_v8_fresh']) if SOURCE=='background' and SCOPE=='primary' else []
@@ -252,7 +282,8 @@ def main():
    outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)if is_broad else None
    if is_broad:
     import broad
-    snapshot=broad.collect(sys.modules[__name__],budget,history,(metadata['trigger_main_sha']or sid)+'|'+sid,{eid for eid,row in old_targets.items()if row.get('deep_any')})
+    extra={'control_seen':control_seen}if unified else {}
+    snapshot=broad.collect(sys.modules[__name__],budget,history,(metadata['trigger_main_sha']or sid)+'|'+sid,{eid for eid,row in old_targets.items()if row.get('deep_any')},**extra)
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
    snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
@@ -260,8 +291,8 @@ def main():
    sampled=[] if (SOURCE=='background'and SCOPE=='primary')or is_broad else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
    if is_broad:
-    selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')]
-   probes=[e for e,_ in selected_probes][:(DEEP_LIMIT if is_broad else MAX_MARKETS)]
+    selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted'))]
+   probes=[e for e,_ in selected_probes][:((DEEP_LIMIT+30 if unified else DEEP_LIMIT)if is_broad else MAX_MARKETS)]
    enrich_markets(probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
    for e in probes:by_id[e['event_id']].update(e)
@@ -273,6 +304,8 @@ def main():
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
    beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
    choices,reasons=choose(snapshot,ordered,seen,beta)
+   control=evaluate_control(snapshot,control_seen)if unified else None
+   if unified:snapshot['control_evaluation']=control
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
    targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in ([(e,dict(stratum='all_provider_universe',selected_for_deep=bool(e.get('stats_trend_shortlisted')),deep_inclusion_probability=e['research_sampling']['inclusion_probability']))for e in snapshot['events']]if is_broad else selected_probes)]
    if is_broad:
@@ -286,6 +319,7 @@ def main():
     closed={eid for eid,r in result_by_id.items()if r.get('settled')}
     snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_exact_price=sum(eid in closed and bool(r.get('exact_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
    receipt=dict(metadata,choices=choices,outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   if unified:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(probes)
    snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in probes)
