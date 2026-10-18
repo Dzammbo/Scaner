@@ -4,16 +4,22 @@
   "interval_minutes": 10,
   "stop_policy": "manual_only",
   "contours": [
-    "primary",
-    "experimental"
+    "shared_acquisition"
   ],
   "chat_output": false,
   "storage_branch": "research/selection-lab-20261018",
   "manual_live_priority": true,
   "freeze_selection_rules": true,
-  "research_policy": "broad-observation-v2-20261018",
+  "research_policy": "broad-observation-v3-shared-20261018",
   "research_universe": "all_nonvirtual_inplay",
   "research_new_deep_per_cycle": 60,
   "research_duplicate_policy": "exclude_prior_deep_entries_keep_never_selected_candidates",
-  "match_count_target_is_not_limit": true
+  "match_count_target_is_not_limit": true,
+  "collection_mode": "shared_background_v1",
+  "evaluations": [
+    "primary_rules",
+    "experimental_policies"
+  ],
+  "shared_api_call_cap": 360,
+  "control_candidate_limit": 30
 }

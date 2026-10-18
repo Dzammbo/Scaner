@@ -1,4 +1,4 @@
-name: Background dual Live collector
+name: Background unified Live collector
 on:
   schedule:
     - cron: '3,13,23,33,43,53 * * * *'
@@ -14,13 +14,9 @@ concurrency:
   cancel-in-progress: false
 jobs:
   capture:
-    name: Background ${{ matrix.scope }}
+    name: Shared acquisition and separate evaluations
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        scope: [primary, experimental]
     steps:
       - name: Read current controller configuration
         uses: actions/checkout@v4
@@ -33,7 +29,7 @@ jobs:
         working-directory: control
         env:
           GH_TOKEN: ${{ github.token }}
-          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-${{ matrix.scope }}.json
+          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-experimental.json
         run: python3 .github/scripts/live_background_gate.py
       - name: Checkout independent collector and archive
         if: steps.gate.outputs.enabled == 'true'
@@ -47,10 +43,11 @@ jobs:
         working-directory: collector
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-${{ matrix.scope }}.json
+          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-experimental.json
           LAB_TRIGGER_MAIN_SHA: ${{ github.sha }}
           LAB_RUN_SOURCE: background
-          LAB_DATA_SCOPE: ${{ matrix.scope }}
+          LAB_DATA_SCOPE: experimental
+          LAB_BACKGROUND_UNIFIED: "1"
         run: |
           LAB_CODE_REVISION="$(git rev-parse HEAD)" python3 research/selection-lab-20261018/capture.py
       - name: Save this contour to research branch only
@@ -60,16 +57,16 @@ jobs:
           LAB_CAPTURE_ID: ${{ steps.collect.outputs.capture_id }}
           LAB_CAPTURE_DAY: ${{ steps.collect.outputs.capture_day }}
           LAB_RUN_SOURCE: background
-          LAB_DATA_SCOPE: ${{ matrix.scope }}
+          LAB_DATA_SCOPE: experimental
         run: python3 research/selection-lab-20261018/save_capture.py
       - name: Preserve backup artifact
         if: always() && steps.collect.outputs.capture_id != ''
         uses: actions/upload-artifact@v4
         with:
-          name: background-live-${{ matrix.scope }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: background-live-experimental-${{ github.run_id }}-${{ github.run_attempt }}
           retention-days: 30
           if-no-files-found: ignore
           path: |
-            collector/research/live-background/${{ matrix.scope }}/snapshots/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
-            collector/research/live-background/${{ matrix.scope }}/receipts/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
-            collector/research/live-background/${{ matrix.scope }}/outcomes/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/snapshots/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/receipts/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/outcomes/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
