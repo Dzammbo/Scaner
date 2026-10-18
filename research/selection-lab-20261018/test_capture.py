@@ -35,6 +35,19 @@ class CaptureTests(unittest.TestCase):
   targets={'1':dict(board_observed_at_utc=old)}
   b=c.Budget(lambda *a,**k:({'results':[dict(id='1',time_status='3',ss='2-1',scores={})]},{}))
   r=c.collect_outcomes(targets,{},b,now);self.assertFalse(r['events'][0]['settled'])
+ def test_outcomes_start_after_one_hour_and_retry_after_thirty_minutes(self):
+  now=datetime.datetime.now(datetime.timezone.utc);calls=[]
+  def fetch(path,**params):
+   calls.append((path,params));return {'results':[]},{}
+  b=c.Budget(fetch)
+  recent={'1':dict(board_observed_at_utc=(now-datetime.timedelta(minutes=59)).isoformat())}
+  self.assertEqual(c.collect_outcomes(recent,{},b,now)['events'],[]);self.assertEqual(calls,[])
+  due={'1':dict(board_observed_at_utc=(now-datetime.timedelta(minutes=61)).isoformat())}
+  c.collect_outcomes(due,{},b,now);self.assertEqual(len(calls),1)
+  previous={'1':dict(checked_at_utc=(now-datetime.timedelta(minutes=29)).isoformat(),settled=False)}
+  c.collect_outcomes(due,previous,b,now);self.assertEqual(len(calls),1)
+  previous['1']['checked_at_utc']=(now-datetime.timedelta(minutes=31)).isoformat()
+  c.collect_outcomes(due,previous,b,now);self.assertEqual(len(calls),2)
  def test_sanitize(self):
   with patch.dict(os.environ,{'BETSAPI_KEY':'mysecret'}):
    self.assertEqual(c.sanitize(dict(token='mysecret',text='URL mysecret')),dict(text='URL [redacted]'))

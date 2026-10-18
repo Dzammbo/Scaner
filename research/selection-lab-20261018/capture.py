@@ -8,6 +8,7 @@ from lab import sports_order,market_for_event,full_win_total,number,fit,predict,
 DATA=ROOT/'research/live-lab'
 POLICIES=('sports_v8_fresh','exact_display_price','display_need_le2','display_need_le3','walk_forward_ev_ge005')
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
+OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=1800
 
 SOURCE='manual';SCOPE='experimental';CONTOUR='experimental';CAPTURE_DAY=None
 
@@ -184,7 +185,7 @@ def collect_outcomes_single(targets,previous,budget,now):
   if old.get('settled'):continue
   age=now.timestamp()-live.timestamp(row['board_observed_at_utc'])
   since=now.timestamp()-live.timestamp(old['checked_at_utc']) if old.get('checked_at_utc') else math.inf
-  if age>=7200 and since>=1800:candidates.append((row['board_observed_at_utc'],eid))
+  if age>=OUTCOME_INITIAL_DELAY_SECONDS and since>=OUTCOME_RETRY_SECONDS:candidates.append((row['board_observed_at_utc'],eid))
  rows=[]
  for _,eid in sorted(candidates)[:MAX_OUTCOMES]:
   checked=datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -212,7 +213,7 @@ def collect_outcomes(targets,previous,budget,now):
   if old.get('settled'):continue
   age=now.timestamp()-live.timestamp(target['board_observed_at_utc'])
   since=now.timestamp()-live.timestamp(old['checked_at_utc']) if old.get('checked_at_utc')else math.inf
-  if age>=7200 and since>=1800:pending.append((target['board_observed_at_utc'],eid))
+  if age>=OUTCOME_INITIAL_DELAY_SECONDS and since>=OUTCOME_RETRY_SECONDS:pending.append((target['board_observed_at_utc'],eid))
  pending.sort();rows=[];calls=0
  for start in range(0,min(len(pending),MAX_OUTCOMES*10),10):
   ids=[eid for _,eid in pending[start:start+10]];checked=datetime.datetime.now(datetime.timezone.utc).isoformat()
