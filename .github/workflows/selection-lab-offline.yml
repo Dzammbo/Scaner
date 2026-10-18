@@ -1,0 +1,22 @@
+name: Offline selection lab (research branch only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retrospective:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce offline historical experiment
+        run: python3 research/selection-lab-20261018/run.py
+      - name: Validate experiment
+        run: python3 research/selection-lab-20261018/test_lab.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selection-lab-results
+          path: |
+            research/selection-lab-20261018/results.json
+            research/selection-lab-20261018/details.json.gz
+            research/selection-lab-20261018/protocol.json

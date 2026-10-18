@@ -1,0 +1,52 @@
+{
+  "version": "selection-lab-v1",
+  "base_commit": "b9dbd96f1fdca234f2dabcbfee6b35dba2f1c262",
+  "scope": "offline_only_no_live_or_excel_or_ledger_writes",
+  "study_type": "exploratory_retrospective_after_prior_inspection_not_confirmatory_holdout",
+  "snapshot_policies": [
+    "sports_v8_fresh",
+    "exact_display_price",
+    "display_need_le2",
+    "display_need_le3"
+  ],
+  "historical_policies": [
+    "recorded_reference",
+    "reference_need_le2",
+    "reference_need_le3",
+    "walk_forward_ev_ge005"
+  ],
+  "canonical_display_line": "quarter_line_minus_0.25_without_transferring_price",
+  "snapshot_market_checks": [
+    "full_time_only",
+    "exact_line",
+    "quote_score_matches",
+    "price_gt_1",
+    "timestamp_required",
+    "no_future_quote_beyond_snapshot_odds_completion",
+    "quote_checked_not_earlier_than_board_minus_120_seconds_operational_guard_not_calibrated"
+  ],
+  "walk_forward": {
+    "training": "unique_closed_nonconflicting_events_on_strictly_earlier_Moscow_days",
+    "minimum_training_events": 80,
+    "model": "ridge_poisson_remaining_goals",
+    "features": [
+      "intercept",
+      "current_goals_div3",
+      "draw",
+      "on_target_per_minute_div0.2",
+      "on_target_missing"
+    ],
+    "exposure": "max(1,90-minute)/45",
+    "ridge": 10,
+    "iterations": 40,
+    "minimum_expected_profit": 0.05,
+    "fallback_on_insufficient_training": "no_selection"
+  },
+  "replay": "frozen_observed_pools_cannot_restore_events_excluded_by_original_publication_policy",
+  "missing_values": "unknown_never_loss_or_zero_price",
+  "rank_groups": [
+    "1-3",
+    "4-5"
+  ],
+  "future_validation_required": true
+}

@@ -1,0 +1,911 @@
+{
+  "protocol": {
+    "version": "selection-lab-v1",
+    "base_commit": "b9dbd96f1fdca234f2dabcbfee6b35dba2f1c262",
+    "scope": "offline_only_no_live_or_excel_or_ledger_writes",
+    "study_type": "exploratory_retrospective_after_prior_inspection_not_confirmatory_holdout",
+    "snapshot_policies": [
+      "sports_v8_fresh",
+      "exact_display_price",
+      "display_need_le2",
+      "display_need_le3"
+    ],
+    "historical_policies": [
+      "recorded_reference",
+      "reference_need_le2",
+      "reference_need_le3",
+      "walk_forward_ev_ge005"
+    ],
+    "canonical_display_line": "quarter_line_minus_0.25_without_transferring_price",
+    "snapshot_market_checks": [
+      "full_time_only",
+      "exact_line",
+      "quote_score_matches",
+      "price_gt_1",
+      "timestamp_required",
+      "no_future_quote_beyond_snapshot_odds_completion",
+      "quote_checked_not_earlier_than_board_minus_120_seconds_operational_guard_not_calibrated"
+    ],
+    "walk_forward": {
+      "training": "unique_closed_nonconflicting_events_on_strictly_earlier_Moscow_days",
+      "minimum_training_events": 80,
+      "model": "ridge_poisson_remaining_goals",
+      "features": [
+        "intercept",
+        "current_goals_div3",
+        "draw",
+        "on_target_per_minute_div0.2",
+        "on_target_missing"
+      ],
+      "exposure": "max(1,90-minute)/45",
+      "ridge": 10,
+      "iterations": 40,
+      "minimum_expected_profit": 0.05,
+      "fallback_on_insufficient_training": "no_selection"
+    },
+    "replay": "frozen_observed_pools_cannot_restore_events_excluded_by_original_publication_policy",
+    "missing_values": "unknown_never_loss_or_zero_price",
+    "rank_groups": [
+      "1-3",
+      "4-5"
+    ],
+    "future_validation_required": true
+  },
+  "coverage": {
+    "refresh_snapshots_excluded": 8,
+    "full_snapshots": 92,
+    "pool_observations": 4199,
+    "with_trend_payload": 1609,
+    "strong_observations": 222
+  },
+  "historical_input_rows": 428,
+  "excluded_conflicting_ids": [
+    "13291199",
+    "13196519",
+    "12100745"
+  ],
+  "historical": {
+    "recorded_reference": {
+      "selected": 428,
+      "closed": 421,
+      "priced": 401,
+      "profit": 1.6062000000000003,
+      "roi": 0.004005486284289278,
+      "one_plus": 360,
+      "two_plus": 274,
+      "losses": 177,
+      "full_losses": 141,
+      "positive": 193,
+      "max_drawdown": 11.475000000000001,
+      "days": {
+        "2026-10-13": {
+          "n": 51,
+          "profit": 3.775,
+          "roi": 0.07401960784313726
+        },
+        "2026-10-14": {
+          "n": 37,
+          "profit": 4.7687,
+          "roi": 0.1288837837837838
+        },
+        "2026-10-15": {
+          "n": 68,
+          "profit": -6.475,
+          "roi": -0.09522058823529411
+        },
+        "2026-10-16": {
+          "n": 67,
+          "profit": 4.675000000000001,
+          "roi": 0.06977611940298509
+        },
+        "2026-10-17": {
+          "n": 93,
+          "profit": -0.4,
+          "roi": -0.004301075268817204
+        },
+        "2026-10-18": {
+          "n": 85,
+          "profit": -4.737500000000001,
+          "roi": -0.05573529411764707
+        }
+      }
+    },
+    "reference_need_le2": {
+      "selected": 143,
+      "closed": 138,
+      "priced": 138,
+      "profit": 6.7812,
+      "roi": 0.04913913043478261,
+      "one_plus": 103,
+      "two_plus": 66,
+      "losses": 59,
+      "full_losses": 43,
+      "positive": 68,
+      "max_drawdown": 6.725000000000001,
+      "days": {
+        "2026-10-13": {
+          "n": 20,
+          "profit": 0.5249999999999997,
+          "roi": 0.026249999999999985
+        },
+        "2026-10-14": {
+          "n": 28,
+          "profit": 3.5437000000000003,
+          "roi": 0.1265607142857143
+        },
+        "2026-10-15": {
+          "n": 13,
+          "profit": 2.8000000000000003,
+          "roi": 0.2153846153846154
+        },
+        "2026-10-16": {
+          "n": 19,
+          "profit": 2.975,
+          "roi": 0.15657894736842107
+        },
+        "2026-10-17": {
+          "n": 35,
+          "profit": -0.26250000000000007,
+          "roi": -0.007500000000000002
+        },
+        "2026-10-18": {
+          "n": 23,
+          "profit": -2.8,
+          "roi": -0.1217391304347826
+        }
+      }
+    },
+    "reference_need_le3": {
+      "selected": 346,
+      "closed": 339,
+      "priced": 339,
+      "profit": 6.3687,
+      "roi": 0.01878672566371681,
+      "one_plus": 281,
+      "two_plus": 207,
+      "losses": 147,
+      "full_losses": 114,
+      "positive": 166,
+      "max_drawdown": 12.662500000000005,
+      "days": {
+        "2026-10-13": {
+          "n": 50,
+          "profit": 2.8499999999999996,
+          "roi": 0.056999999999999995
+        },
+        "2026-10-14": {
+          "n": 37,
+          "profit": 4.7687,
+          "roi": 0.1288837837837838
+        },
+        "2026-10-15": {
+          "n": 48,
+          "profit": 1.5000000000000002,
+          "roi": 0.03125000000000001
+        },
+        "2026-10-16": {
+          "n": 52,
+          "profit": 6.2250000000000005,
+          "roi": 0.11971153846153847
+        },
+        "2026-10-17": {
+          "n": 89,
+          "profit": -0.8750000000000001,
+          "roi": -0.009831460674157305
+        },
+        "2026-10-18": {
+          "n": 63,
+          "profit": -8.1,
+          "roi": -0.12857142857142856
+        }
+      }
+    },
+    "walk_forward_ev_ge005": {
+      "selected": 160,
+      "closed": 157,
+      "priced": 157,
+      "profit": -1.7999999999999994,
+      "roi": -0.011464968152866238,
+      "one_plus": 128,
+      "two_plus": 93,
+      "losses": 72,
+      "full_losses": 53,
+      "positive": 72,
+      "max_drawdown": 7.4,
+      "days": {
+        "2026-10-15": {
+          "n": 41,
+          "profit": -1.2624999999999997,
+          "roi": -0.03079268292682926
+        },
+        "2026-10-16": {
+          "n": 37,
+          "profit": 0.6750000000000004,
+          "roi": 0.018243243243243255
+        },
+        "2026-10-17": {
+          "n": 45,
+          "profit": 3.7875,
+          "roi": 0.08416666666666667
+        },
+        "2026-10-18": {
+          "n": 34,
+          "profit": -5.0,
+          "roi": -0.14705882352941177
+        }
+      }
+    }
+  },
+  "model_same_period_baseline": {
+    "selected": 336,
+    "closed": 333,
+    "priced": 313,
+    "profit": -6.9375,
+    "roi": -0.022164536741214057,
+    "one_plus": 290,
+    "two_plus": 219,
+    "losses": 143,
+    "full_losses": 114,
+    "positive": 143,
+    "max_drawdown": 11.475000000000001,
+    "days": {
+      "2026-10-15": {
+        "n": 68,
+        "profit": -6.475,
+        "roi": -0.09522058823529411
+      },
+      "2026-10-16": {
+        "n": 67,
+        "profit": 4.675000000000001,
+        "roi": 0.06977611940298509
+      },
+      "2026-10-17": {
+        "n": 93,
+        "profit": -0.4,
+        "roi": -0.004301075268817204
+      },
+      "2026-10-18": {
+        "n": 85,
+        "profit": -4.737500000000001,
+        "roi": -0.05573529411764707
+      }
+    }
+  },
+  "model_training": [
+    {
+      "day": "2026-10-13",
+      "training_n": 0,
+      "max_training_day": null,
+      "beta": null
+    },
+    {
+      "day": "2026-10-14",
+      "training_n": 51,
+      "max_training_day": "2026-10-13",
+      "beta": null
+    },
+    {
+      "day": "2026-10-15",
+      "training_n": 88,
+      "max_training_day": "2026-10-14",
+      "beta": [
+        0.555320118358999,
+        0.06985404494965897,
+        0.0735939766894083,
+        0.06592236330479642,
+        0.1328252733110681
+      ]
+    },
+    {
+      "day": "2026-10-16",
+      "training_n": 160,
+      "max_training_day": "2026-10-15",
+      "beta": [
+        0.5538965196364595,
+        0.22833118433293653,
+        -0.05220278290298046,
+        0.04845376804103942,
+        0.10458264945650804
+      ]
+    },
+    {
+      "day": "2026-10-17",
+      "training_n": 230,
+      "max_training_day": "2026-10-16",
+      "beta": [
+        0.4482493931184429,
+        0.3512455888347071,
+        0.01531716138215391,
+        0.07709377501809632,
+        0.10903888480808234
+      ]
+    },
+    {
+      "day": "2026-10-18",
+      "training_n": 332,
+      "max_training_day": "2026-10-17",
+      "beta": [
+        0.4531656002776056,
+        0.35844198269267724,
+        -0.013033127452514816,
+        0.04242172108899709,
+        0.11061032810888886
+      ]
+    }
+  ],
+  "model_calibration": {
+    "n": 333,
+    "brier_two": 0.21789121048018242,
+    "mean_predicted_remaining": 2.3738196685306785,
+    "mean_actual_remaining": 2.3003003003003,
+    "bins": [
+      {
+        "lower": 0,
+        "upper": 0.4,
+        "n": 13,
+        "predicted": 0.3515994168953167,
+        "actual": 0.46153846153846156
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.6,
+        "n": 92,
+        "predicted": 0.5093303527536125,
+        "actual": 0.5543478260869565
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.8,
+        "n": 173,
+        "predicted": 0.713673199964609,
+        "actual": 0.6878612716763006
+      },
+      {
+        "lower": 0.8,
+        "upper": 1.00001,
+        "n": 55,
+        "predicted": 0.8339026833527052,
+        "actual": 0.7818181818181819
+      }
+    ]
+  },
+  "snapshot_replay": {
+    "sports_v8_fresh": {
+      "selected": 162,
+      "closed": 106,
+      "priced": 40,
+      "profit": 1.4749999999999994,
+      "roi": 0.036874999999999984,
+      "one_plus": 92,
+      "two_plus": 66,
+      "losses": 15,
+      "full_losses": 15,
+      "positive": 18,
+      "max_drawdown": 3.5250000000000004,
+      "days": {
+        "2026-10-17": {
+          "n": 22,
+          "profit": 1.3499999999999999,
+          "roi": 0.061363636363636356
+        },
+        "2026-10-18": {
+          "n": 18,
+          "profit": 0.12499999999999956,
+          "roi": 0.00694444444444442
+        }
+      }
+    },
+    "exact_display_price": {
+      "selected": 62,
+      "closed": 50,
+      "priced": 50,
+      "profit": 3.3499999999999996,
+      "roi": 0.06699999999999999,
+      "one_plus": 43,
+      "two_plus": 32,
+      "losses": 18,
+      "full_losses": 18,
+      "positive": 23,
+      "max_drawdown": 4.525,
+      "days": {
+        "2026-10-17": {
+          "n": 25,
+          "profit": 1.3749999999999998,
+          "roi": 0.05499999999999999
+        },
+        "2026-10-18": {
+          "n": 25,
+          "profit": 1.9749999999999996,
+          "roi": 0.07899999999999999
+        }
+      }
+    },
+    "display_need_le2": {
+      "selected": 26,
+      "closed": 19,
+      "priced": 19,
+      "profit": -1.1,
+      "roi": -0.05789473684210527,
+      "one_plus": 13,
+      "two_plus": 7,
+      "losses": 8,
+      "full_losses": 8,
+      "positive": 7,
+      "max_drawdown": 4.1,
+      "days": {
+        "2026-10-17": {
+          "n": 12,
+          "profit": -0.07500000000000018,
+          "roi": -0.006250000000000015
+        },
+        "2026-10-18": {
+          "n": 7,
+          "profit": -1.025,
+          "roi": -0.1464285714285714
+        }
+      }
+    },
+    "display_need_le3": {
+      "selected": 56,
+      "closed": 44,
+      "priced": 44,
+      "profit": -0.3250000000000004,
+      "roi": -0.007386363636363646,
+      "one_plus": 37,
+      "two_plus": 26,
+      "losses": 18,
+      "full_losses": 18,
+      "positive": 19,
+      "max_drawdown": 6.375,
+      "days": {
+        "2026-10-17": {
+          "n": 24,
+          "profit": 1.3749999999999998,
+          "roi": 0.05729166666666666
+        },
+        "2026-10-18": {
+          "n": 20,
+          "profit": -1.7000000000000002,
+          "roi": -0.085
+        }
+      }
+    }
+  },
+  "snapshot_rank_groups": {
+    "sports_v8_fresh": {
+      "1-3": {
+        "selected": 115,
+        "closed": 78,
+        "priced": 33,
+        "profit": 2.874999999999999,
+        "roi": 0.0871212121212121,
+        "one_plus": 69,
+        "two_plus": 50,
+        "losses": 11,
+        "full_losses": 11,
+        "positive": 15,
+        "max_drawdown": 3.0,
+        "days": {
+          "2026-10-17": {
+            "n": 17,
+            "profit": 2.55,
+            "roi": 0.15
+          },
+          "2026-10-18": {
+            "n": 16,
+            "profit": 0.3249999999999995,
+            "roi": 0.02031249999999997
+          }
+        }
+      },
+      "4-5": {
+        "selected": 47,
+        "closed": 28,
+        "priced": 7,
+        "profit": -1.4,
+        "roi": -0.19999999999999998,
+        "one_plus": 23,
+        "two_plus": 16,
+        "losses": 4,
+        "full_losses": 4,
+        "positive": 3,
+        "max_drawdown": 2.2,
+        "days": {
+          "2026-10-17": {
+            "n": 5,
+            "profit": -1.2,
+            "roi": -0.24
+          },
+          "2026-10-18": {
+            "n": 2,
+            "profit": -0.19999999999999996,
+            "roi": -0.09999999999999998
+          }
+        }
+      }
+    },
+    "exact_display_price": {
+      "1-3": {
+        "selected": 62,
+        "closed": 50,
+        "priced": 50,
+        "profit": 3.3499999999999996,
+        "roi": 0.06699999999999999,
+        "one_plus": 43,
+        "two_plus": 32,
+        "losses": 18,
+        "full_losses": 18,
+        "positive": 23,
+        "max_drawdown": 4.525,
+        "days": {
+          "2026-10-17": {
+            "n": 25,
+            "profit": 1.3749999999999998,
+            "roi": 0.05499999999999999
+          },
+          "2026-10-18": {
+            "n": 25,
+            "profit": 1.9749999999999996,
+            "roi": 0.07899999999999999
+          }
+        }
+      },
+      "4-5": {
+        "selected": 0,
+        "closed": 0,
+        "priced": 0,
+        "profit": 0,
+        "roi": null,
+        "one_plus": 0,
+        "two_plus": 0,
+        "losses": 0,
+        "full_losses": 0,
+        "positive": 0,
+        "max_drawdown": 0.0,
+        "days": {}
+      }
+    },
+    "display_need_le2": {
+      "1-3": {
+        "selected": 26,
+        "closed": 19,
+        "priced": 19,
+        "profit": -1.1,
+        "roi": -0.05789473684210527,
+        "one_plus": 13,
+        "two_plus": 7,
+        "losses": 8,
+        "full_losses": 8,
+        "positive": 7,
+        "max_drawdown": 4.1,
+        "days": {
+          "2026-10-17": {
+            "n": 12,
+            "profit": -0.07500000000000018,
+            "roi": -0.006250000000000015
+          },
+          "2026-10-18": {
+            "n": 7,
+            "profit": -1.025,
+            "roi": -0.1464285714285714
+          }
+        }
+      },
+      "4-5": {
+        "selected": 0,
+        "closed": 0,
+        "priced": 0,
+        "profit": 0,
+        "roi": null,
+        "one_plus": 0,
+        "two_plus": 0,
+        "losses": 0,
+        "full_losses": 0,
+        "positive": 0,
+        "max_drawdown": 0.0,
+        "days": {}
+      }
+    },
+    "display_need_le3": {
+      "1-3": {
+        "selected": 56,
+        "closed": 44,
+        "priced": 44,
+        "profit": -0.3250000000000004,
+        "roi": -0.007386363636363646,
+        "one_plus": 37,
+        "two_plus": 26,
+        "losses": 18,
+        "full_losses": 18,
+        "positive": 19,
+        "max_drawdown": 6.375,
+        "days": {
+          "2026-10-17": {
+            "n": 24,
+            "profit": 1.3749999999999998,
+            "roi": 0.05729166666666666
+          },
+          "2026-10-18": {
+            "n": 20,
+            "profit": -1.7000000000000002,
+            "roi": -0.085
+          }
+        }
+      },
+      "4-5": {
+        "selected": 0,
+        "closed": 0,
+        "priced": 0,
+        "profit": 0,
+        "roi": null,
+        "one_plus": 0,
+        "two_plus": 0,
+        "losses": 0,
+        "full_losses": 0,
+        "positive": 0,
+        "max_drawdown": 0.0,
+        "days": {}
+      }
+    }
+  },
+  "historical_rank_groups": {
+    "recorded_reference": {
+      "1-3": {
+        "selected": 129,
+        "closed": 126,
+        "priced": 118,
+        "profit": -6.1000000000000005,
+        "roi": -0.05169491525423729,
+        "one_plus": 107,
+        "two_plus": 85,
+        "losses": 57,
+        "full_losses": 47,
+        "positive": 53,
+        "max_drawdown": 9.987499999999999,
+        "days": {
+          "2026-10-16": {
+            "n": 26,
+            "profit": 1.4625,
+            "roi": 0.056249999999999994
+          },
+          "2026-10-17": {
+            "n": 37,
+            "profit": -0.26249999999999996,
+            "roi": -0.007094594594594593
+          },
+          "2026-10-18": {
+            "n": 55,
+            "profit": -7.300000000000001,
+            "roi": -0.13272727272727275
+          }
+        }
+      },
+      "4-5": {
+        "selected": 75,
+        "closed": 75,
+        "priced": 69,
+        "profit": 9.4625,
+        "roi": 0.1371376811594203,
+        "one_plus": 65,
+        "two_plus": 47,
+        "losses": 26,
+        "full_losses": 17,
+        "positive": 36,
+        "max_drawdown": 4.35,
+        "days": {
+          "2026-10-16": {
+            "n": 14,
+            "profit": 5.112500000000001,
+            "roi": 0.36517857142857146
+          },
+          "2026-10-17": {
+            "n": 25,
+            "profit": 1.7875,
+            "roi": 0.07150000000000001
+          },
+          "2026-10-18": {
+            "n": 30,
+            "profit": 2.5625,
+            "roi": 0.08541666666666667
+          }
+        }
+      }
+    },
+    "reference_need_le2": {
+      "1-3": {
+        "selected": 32,
+        "closed": 31,
+        "priced": 31,
+        "profit": -3.8000000000000003,
+        "roi": -0.12258064516129033,
+        "one_plus": 20,
+        "two_plus": 12,
+        "losses": 17,
+        "full_losses": 13,
+        "positive": 12,
+        "max_drawdown": 5.675,
+        "days": {
+          "2026-10-16": {
+            "n": 6,
+            "profit": 0.875,
+            "roi": 0.14583333333333334
+          },
+          "2026-10-17": {
+            "n": 12,
+            "profit": -4.225,
+            "roi": -0.3520833333333333
+          },
+          "2026-10-18": {
+            "n": 13,
+            "profit": -0.4500000000000004,
+            "roi": -0.034615384615384645
+          }
+        }
+      },
+      "4-5": {
+        "selected": 29,
+        "closed": 29,
+        "priced": 29,
+        "profit": 3.2875000000000005,
+        "roi": 0.11336206896551726,
+        "one_plus": 24,
+        "two_plus": 13,
+        "losses": 11,
+        "full_losses": 6,
+        "positive": 14,
+        "max_drawdown": 4.0,
+        "days": {
+          "2026-10-16": {
+            "n": 5,
+            "profit": 2.45,
+            "roi": 0.49000000000000005
+          },
+          "2026-10-17": {
+            "n": 14,
+            "profit": 3.1875,
+            "roi": 0.22767857142857142
+          },
+          "2026-10-18": {
+            "n": 10,
+            "profit": -2.3499999999999996,
+            "roi": -0.23499999999999996
+          }
+        }
+      }
+    },
+    "reference_need_le3": {
+      "1-3": {
+        "selected": 100,
+        "closed": 97,
+        "priced": 97,
+        "profit": -2.6000000000000005,
+        "roi": -0.02680412371134021,
+        "one_plus": 79,
+        "two_plus": 62,
+        "losses": 46,
+        "full_losses": 36,
+        "positive": 45,
+        "max_drawdown": 8.537500000000001,
+        "days": {
+          "2026-10-16": {
+            "n": 21,
+            "profit": 4.4875,
+            "roi": 0.21369047619047618
+          },
+          "2026-10-17": {
+            "n": 35,
+            "profit": -1.2375,
+            "roi": -0.03535714285714286
+          },
+          "2026-10-18": {
+            "n": 41,
+            "profit": -5.8500000000000005,
+            "roi": -0.1426829268292683
+          }
+        }
+      },
+      "4-5": {
+        "selected": 55,
+        "closed": 55,
+        "priced": 55,
+        "profit": 2.9250000000000003,
+        "roi": 0.053181818181818184,
+        "one_plus": 46,
+        "two_plus": 29,
+        "losses": 23,
+        "full_losses": 16,
+        "positive": 26,
+        "max_drawdown": 4.3500000000000005,
+        "days": {
+          "2026-10-16": {
+            "n": 10,
+            "profit": 2.8875,
+            "roi": 0.28875
+          },
+          "2026-10-17": {
+            "n": 23,
+            "profit": 2.2875,
+            "roi": 0.09945652173913044
+          },
+          "2026-10-18": {
+            "n": 22,
+            "profit": -2.25,
+            "roi": -0.10227272727272728
+          }
+        }
+      }
+    },
+    "walk_forward_ev_ge005": {
+      "1-3": {
+        "selected": 52,
+        "closed": 49,
+        "priced": 49,
+        "profit": -3.6125,
+        "roi": -0.07372448979591836,
+        "one_plus": 37,
+        "two_plus": 29,
+        "losses": 25,
+        "full_losses": 17,
+        "positive": 21,
+        "max_drawdown": 4.525,
+        "days": {
+          "2026-10-16": {
+            "n": 16,
+            "profit": -1.2625000000000002,
+            "roi": -0.07890625000000001
+          },
+          "2026-10-17": {
+            "n": 15,
+            "profit": 0.07500000000000029,
+            "roi": 0.005000000000000019
+          },
+          "2026-10-18": {
+            "n": 18,
+            "profit": -2.4250000000000003,
+            "roi": -0.13472222222222224
+          }
+        }
+      },
+      "4-5": {
+        "selected": 36,
+        "closed": 36,
+        "priced": 36,
+        "profit": 1.9250000000000003,
+        "roi": 0.05347222222222223,
+        "one_plus": 29,
+        "two_plus": 19,
+        "losses": 15,
+        "full_losses": 10,
+        "positive": 17,
+        "max_drawdown": 4.574999999999999,
+        "days": {
+          "2026-10-16": {
+            "n": 7,
+            "profit": 2.9375,
+            "roi": 0.41964285714285715
+          },
+          "2026-10-17": {
+            "n": 13,
+            "profit": 1.5625,
+            "roi": 0.1201923076923077
+          },
+          "2026-10-18": {
+            "n": 16,
+            "profit": -2.5749999999999997,
+            "roi": -0.16093749999999998
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Exploratory retrospective; prior audit already inspected these outcomes.",
+    "Model trained only on earlier days but assumptions chosen after viewing archive; no untouched confirmation set.",
+    "Reference historical quarter-line returns do NOT represent the lowered display total.",
+    "Snapshot policies require an exact canonical-line quote with score and timestamps; unknown is not a loss.",
+    "Frozen source pools already exclude actual past publications. Missing alternative-pool events cannot be recovered.",
+    "Expansion beyond Top30 cannot be evaluated without uncollected trend/profile data.",
+    "Source archive outcomes were not refreshed live. Pending and missing outcomes remain unknown.",
+    "No user entry or actually executed price is assumed. All financial results are conditional one-unit reference results."
+  ]
+}
