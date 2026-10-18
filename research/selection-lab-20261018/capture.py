@@ -9,6 +9,33 @@ DATA=ROOT/'research/live-lab'
 POLICIES=('sports_v8_fresh','exact_display_price','display_need_le2','display_need_le3','walk_forward_ev_ge005')
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
 
+SOURCE='manual';SCOPE='experimental';CONTOUR='experimental';CAPTURE_DAY=None
+
+def configure_background(scope):
+ global DATA,POLICIES,DEEP_LIMIT,WORKERS,MAX_CALLS,MAX_MARKETS,SOURCE,SCOPE,CONTOUR
+ if scope not in ('primary','experimental'):raise ValueError('Invalid background scope')
+ SOURCE='background';SCOPE=scope;CONTOUR='background_'+scope
+ DATA=ROOT/'research/live-background'/scope
+ if scope=='primary':
+  POLICIES=('sports_v8_fresh',);DEEP_LIMIT=30;WORKERS=16;MAX_CALLS=120;MAX_MARKETS=5
+ else:
+  POLICIES=('sports_v8_fresh','exact_display_price','display_need_le2','display_need_le3','walk_forward_ev_ge005');DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;MAX_MARKETS=30
+
+def load_json(path):
+ return json.load(gzip.open(path,'rt')) if path.name.endswith('.gz') else json.loads(path.read_text())
+
+@contextlib.contextmanager
+def collection_history():
+ if SOURCE!='background':yield DATA/'snapshots';return
+ with tempfile.TemporaryDirectory(prefix='background-own-history-')as directory:
+  history=Path(directory)
+  for path in sorted((DATA/'snapshots').rglob('*.json.gz'),key=lambda p:p.name,reverse=True)[:50]:
+   record=load_json(path)
+   if record.get('board_observed_at_utc') and isinstance(record.get('events'),list):
+    destination=history/(record['snapshot_id']+'.json');destination.write_text(json.dumps(record))
+    observed=live.timestamp(record['board_observed_at_utc']);os.utime(destination,(observed,observed))
+  yield history
+
 class BudgetExhausted(RuntimeError):pass
 
 class Budget:
@@ -41,17 +68,17 @@ def isolated_runtime(budget):
 def read_journal(directory=None):
  directory=directory or DATA
  seen={p:set() for p in POLICIES};targets={};outcomes={}
- for path in sorted((directory/'receipts').glob('*.json')):
-  r=json.loads(path.read_text())
-  if r.get('contour')!='experimental':raise ValueError('Wrong journal contour')
+ for path in sorted((directory/'receipts').rglob('*.json*')):
+  r=load_json(path)
+  if r.get('contour')!=CONTOUR:raise ValueError('Wrong journal contour')
   for policy,rows in r.get('choices',{}).items():
    if policy not in seen:continue
    seen[policy].update(str(x['event_id']) for x in rows)
   for row in r.get('outcome_targets',[]):
    old=targets.get(str(row['event_id']))
    if old is None or row['board_observed_at_utc']<old['board_observed_at_utc']:targets[str(row['event_id'])]=row
- for path in sorted((directory/'outcomes').glob('*.json')):
-  r=json.loads(path.read_text())
+ for path in sorted((directory/'outcomes').rglob('*.json*')):
+  r=load_json(path)
   for row in r.get('events',[]):
    old=outcomes.get(str(row['event_id']))
    if old is None or row['checked_at_utc']>old['checked_at_utc']:outcomes[str(row['event_id'])]=row
@@ -144,28 +171,39 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid run id')
  paths=[]
  for folder,data in [('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]:
-  path=directory/folder/(sid+'.json');path.parent.mkdir(parents=True,exist_ok=True)
-  path.write_text(json.dumps(data,ensure_ascii=False,separators=(',',':'))+'\n');paths.append(path)
+  path=directory/folder
+  if SOURCE=='background':path=path/CAPTURE_DAY
+  path=path/(sid+('.json.gz' if SOURCE=='background' else '.json'));path.parent.mkdir(parents=True,exist_ok=True)
+  raw=(json.dumps(data,ensure_ascii=False,separators=(',',':'))+'\n').encode()
+  if SOURCE=='background':
+   with gzip.GzipFile(filename=str(path),mode='wb',mtime=0)as output:output.write(raw)
+  else:path.write_bytes(raw)
+  paths.append(path)
  return paths
 
 def main():
+ global CAPTURE_DAY
+ if os.environ.get('LAB_RUN_SOURCE')=='background':configure_background(os.environ['LAB_DATA_SCOPE'])
  now=datetime.datetime.now(datetime.timezone.utc);sid=os.environ.get('GITHUB_RUN_ID',str(time.time_ns()))+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')
+ CAPTURE_DAY=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
  request_path=Path(os.environ['LAB_REQUEST_FILE']);request=json.loads(request_path.read_text())
- metadata=dict(contour='experimental',snapshot_id=sid,trigger_main_sha=os.environ.get('LAB_TRIGGER_MAIN_SHA'),request=request,code_revision=os.environ.get('LAB_CODE_REVISION'),independent_board=True,shared_provider_quota=True)
- budget=Budget(live.get);snapshot=None
+ metadata=dict(contour=CONTOUR,source=SOURCE,data_scope=SCOPE,capture_day_msk=CAPTURE_DAY,snapshot_id=sid,trigger_main_sha=os.environ.get('LAB_TRIGGER_MAIN_SHA'),request=request,code_revision=os.environ.get('LAB_CODE_REVISION'),independent_board=True,shared_provider_quota=True)
+ budget=Budget(live.get,cap=MAX_CALLS,reserve=PRIMARY_RESERVE);snapshot=None
  try:
   age=now.timestamp()-live.timestamp(request['requested_at_utc'])
   if not -30<=age<=180:raise ValueError('Lab request expired')
   if request.get('mode')!='full' or request.get('event_ids'):raise ValueError('Lab capture requires full Live request; refresh is separate')
   seen,old_targets,old_outcomes=read_journal()
-  with isolated_runtime(budget),tempfile.TemporaryDirectory(prefix='live-lab-empty-ledger-') as directory:
-   empty=Path(directory)/'selected.json';empty.write_text('{"schema_version":1,"events":[]}')
-   snapshot=live.collect('full',[],DATA/'snapshots',empty)
+  with isolated_runtime(budget),collection_history()as history,tempfile.TemporaryDirectory(prefix='live-lab-empty-ledger-') as directory:
+   empty=Path(directory)/'selected.json'
+   excluded=sorted(seen['sports_v8_fresh']) if SOURCE=='background' and SCOPE=='primary' else []
+   empty.write_text(json.dumps(dict(schema_version=1,events=[dict(event_id=eid)for eid in excluded])))
+   snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
-   snapshot['pool_policy']='observe_all_in_window_each_time; exclude_only_per_experimental_policy_when_choosing'
+   snapshot['pool_policy']='own_background_primary_exclusions_before_top30' if SOURCE=='background'and SCOPE=='primary' else 'observe_all_in_window_each_time; exclude_only_per_experimental_policy_when_choosing'
    ordered=sports_order([e for e in snapshot['events']if e.get('stats_trend_shortlisted')])
-   sampled=controls(snapshot['events'],ordered,metadata['trigger_main_sha']or sid)
-   selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:20])]+sampled
+   sampled=[] if SOURCE=='background' and SCOPE=='primary' else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
+   selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
    probes=[e for e,_ in selected_probes][:MAX_MARKETS]
    enrich_markets(probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
@@ -174,7 +212,8 @@ def main():
    snapshot['base_sports_fields_are_diagnostic_only']=True
    snapshot['odds_checked_at_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
-   beta,model=training_model(day);choices,reasons=choose(snapshot,ordered,seen,beta)
+   beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
+   choices,reasons=choose(snapshot,ordered,seen,beta)
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
    targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in selected_probes]
    receipt=dict(metadata,choices=choices,outcome_targets=targets,not_user_publications=True)
@@ -191,6 +230,6 @@ def main():
   print('LAB_CAPTURE_STATUS=failed');raise RuntimeError('Experimental capture failed: '+type(exc).__name__)from None
  finally:
   if os.environ.get('GITHUB_OUTPUT'):
-   with open(os.environ['GITHUB_OUTPUT'],'a')as f:f.write('capture_id='+sid+'\n')
+   with open(os.environ['GITHUB_OUTPUT'],'a')as f:f.write('capture_id='+sid+'\n'+'capture_day='+CAPTURE_DAY+'\n')
 
 if __name__=='__main__':main()

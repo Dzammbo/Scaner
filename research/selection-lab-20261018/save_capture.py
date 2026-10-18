@@ -1,15 +1,23 @@
 """Save immutable lab files only to the research branch; never push main."""
-import json,os,re,subprocess,tempfile
+import gzip,json,os,re,subprocess,tempfile
 from pathlib import Path
 BRANCH='research/selection-lab-20261018';DATA=Path('research/live-lab')
 def git(*args):return subprocess.run(['git',*args],check=True,capture_output=True,text=True).stdout.strip()
 def main():
  sid=os.environ['LAB_CAPTURE_ID']
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid capture id')
- files={DATA/folder/(sid+'.json'):(DATA/folder/(sid+'.json')).read_bytes()for folder in ['snapshots','receipts','outcomes']}
+ source=os.environ.get('LAB_RUN_SOURCE','manual');scope=os.environ.get('LAB_DATA_SCOPE','experimental')
+ prefix=DATA;suffix='.json';contour='experimental';day=None
+ if source=='background':
+  if scope not in ('primary','experimental'):raise ValueError('Invalid scope')
+  day=os.environ['LAB_CAPTURE_DAY']
+  if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',day):raise ValueError('Invalid capture day')
+  prefix=Path('research/live-background')/scope;suffix='.json.gz';contour='background_'+scope
+ paths=[prefix/folder/(day or '')/(sid+suffix)for folder in ['snapshots','receipts','outcomes']]
+ files={path:path.read_bytes()for path in paths}
  for path,data in files.items():
-  record=json.loads(data)
-  if record.get('contour')!='experimental' or record.get('snapshot_id')!=sid:raise ValueError('Invalid lab record')
+  record=json.loads(gzip.decompress(data)if suffix.endswith('.gz')else data)
+  if record.get('contour')!=contour or record.get('snapshot_id')!=sid:raise ValueError('Invalid lab record')
  with tempfile.TemporaryDirectory(prefix='lab-publish-')as directory:
   work=Path(directory)/'repo';git('worktree','add','--detach',str(work),'HEAD')
   try:
