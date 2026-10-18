@@ -1,0 +1,30 @@
+name: One-off work-window result check
+on:
+  push:
+    paths: ['.github/workflows/check-window17.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check nineteen unresolved outcomes
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request,urllib.parse,concurrent.futures,datetime
+          ids=["13304429","12026897","11518420","12031625","13303028","11997976","11068570","13213337","12409805","11188858","12322609","13286340","12321090","11068569","13225026","13269794","13304450","11796469","13036835"]
+          def fetch(eid):
+              url='https://api.b365api.com/v1/event/view?'+urllib.parse.urlencode({'token':os.environ['BETSAPI_KEY'],'event_id':eid})
+              try:
+                  with urllib.request.urlopen(url,timeout=20) as f: p=json.load(f)
+                  events=p.get('results') or []
+                  e=next((e for e in events if str(e.get('id'))==eid),{})
+                  return {'id':eid,'success':p.get('success'),'status':e.get('time_status'),'home':e.get('home',{}).get('name'),'away':e.get('away',{}).get('name'),'ss':e.get('ss'),'scores':e.get('scores')}
+              except Exception as exc: return {'id':eid,'error':type(exc).__name__}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool: results=list(pool.map(fetch,ids))
+          print('RESULTS_JSON='+json.dumps({'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'results':results},ensure_ascii=False))
+          
+          PY
