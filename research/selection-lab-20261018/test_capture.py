@@ -2,6 +2,7 @@ import contextlib,copy,datetime,io,json,os,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 import capture as c
+import broad
 
 class CaptureTests(unittest.TestCase):
  def test_quota_guard(self):
@@ -45,11 +46,18 @@ class CaptureTests(unittest.TestCase):
    touched.append((history,selected))
    self.assertEqual(json.loads(selected.read_text())['events'],[])
    return copy.deepcopy(snapshot)
+  def broad_collect(module,budget,history,seed,excluded_deep=()):
+   touched.append((history,Path('independent-research-no-production-ledger')))
+   out=copy.deepcopy(snapshot)
+   for e in out['events']:
+    e['legacy_window_8_60']=e.get('minute')is not None and 8<=e['minute']<=60
+    e['research_sampling']=dict(inclusion_probability=1,selected=True)
+   return out
   def quotes(events,budget):
    for e in events:e['lab_test_quote_saved']=True
   with tempfile.TemporaryDirectory()as directory:
    root=Path(directory);request=root/'request.json';request.write_text(json.dumps(dict(mode='full',event_ids=[],requested_at_utc=now)))
-   with patch.object(c,'DATA',root/'lab'),patch.object(c.live,'collect',collect),patch.object(c,'enrich_markets',quotes),patch.object(c,'training_model',return_value=(None,dict(n=0))),patch.dict(os.environ,dict(LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='123',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
+   with patch.object(c,'DATA',root/'lab'),patch.object(c.live,'collect',collect),patch.object(broad,'collect',broad_collect),patch.object(c,'enrich_markets',quotes),patch.object(c,'training_model',return_value=(None,dict(n=0))),patch.dict(os.environ,dict(LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='123',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
    saved=json.loads((root/'lab/snapshots/123-1.json').read_text())
    self.assertEqual(saved['contour'],'experimental');self.assertTrue(any(e.get('lab_test_quote_saved')for e in saved['events']))
    self.assertEqual(touched[0][0],root/'lab/snapshots');self.assertNotIn('.github',str(touched[0][1]))

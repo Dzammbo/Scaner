@@ -65,23 +65,42 @@ def isolated_runtime(budget):
   if old[3] is None:os.environ.pop('LIVE_PREMATCH_FILE',None)
   else:os.environ['LIVE_PREMATCH_FILE']=old[3]
 
+def merge_target(old,row):
+ result=dict(row if old is None or row['board_observed_at_utc']<old['board_observed_at_utc']else old)
+ for field in ('deep_any','trend_available_any','exact_price_any'):
+  default=field=='deep_any'and 'selected_for_deep'not in row.get('sampling',{})
+  value=row.get(field,row.get('sampling',{}).get('selected_for_deep',default)if field=='deep_any'else False)
+  result[field]=bool(value or(old or{}).get(field,False))
+ return result
+
 def read_journal(directory=None):
  directory=directory or DATA
+ canonical={ROOT/'research/live-lab',ROOT/'research/live-background/experimental'}
+ directories=sorted(canonical)if SCOPE=='experimental'and directory in canonical else [directory]
  seen={p:set() for p in POLICIES};targets={};outcomes={}
- for path in sorted((directory/'receipts').rglob('*.json*')):
-  r=load_json(path)
-  if r.get('contour')!=CONTOUR:raise ValueError('Wrong journal contour')
-  for policy,rows in r.get('choices',{}).items():
-   if policy not in seen:continue
-   seen[policy].update(str(x['event_id']) for x in rows)
-  for row in r.get('outcome_targets',[]):
-   old=targets.get(str(row['event_id']))
-   if old is None or row['board_observed_at_utc']<old['board_observed_at_utc']:targets[str(row['event_id'])]=row
- for path in sorted((directory/'outcomes').rglob('*.json*')):
-  r=load_json(path)
-  for row in r.get('events',[]):
-   old=outcomes.get(str(row['event_id']))
-   if old is None or row['checked_at_utc']>old['checked_at_utc']:outcomes[str(row['event_id'])]=row
+ def add(row):
+  eid=str(row['event_id']);targets[eid]=merge_target(targets.get(eid),row)
+ for base in directories:
+  expected='background_experimental'if base==ROOT/'research/live-background/experimental'else CONTOUR
+  if base==ROOT/'research/live-lab':expected='experimental'
+  for path in sorted((base/'receipts').rglob('*.json*')):
+   r=load_json(path)
+   if r.get('contour')!=expected:raise ValueError('Wrong journal contour')
+   for policy,rows in r.get('choices',{}).items():
+    if policy in seen:seen[policy].update(str(x['event_id'])for x in rows)
+   for row in r.get('outcome_targets',[]):add(row)
+   if 'deep_entry_event_ids'not in r and not r.get('failed'):
+    # One-time compatibility seed from legacy snapshots: their receipts listed only a subset.
+    old=base/'snapshots'/path.relative_to(base/'receipts')
+    if old.exists():
+     snap=load_json(old)
+     for e in snap.get('events',[]):
+      if not e.get('stats_trend_shortlisted'):continue
+      add(dict(event_id=str(e['event_id']),home_id=e.get('home_id'),away_id=e.get('away_id'),score=e.get('score'),board_observed_at_utc=snap['board_observed_at_utc'],deep_any=True,trend_available_any=bool((e.get('stats_trend')or{}).get('available')),exact_price_any=False))
+  for path in sorted((base/'outcomes').rglob('*.json*')):
+   for row in load_json(path).get('events',[]):
+    old=outcomes.get(str(row['event_id']))
+    if old is None or row['checked_at_utc']>old['checked_at_utc']:outcomes[str(row['event_id'])]=row
  return seen,targets,outcomes
 
 def controls(events,ordered,seed):
@@ -107,7 +126,7 @@ def enrich_markets(events,budget):
  def fetch(e):
   observed=datetime.datetime.now(datetime.timezone.utc).isoformat()
   try:
-   payload,meta=budget('/v2/event/odds',event_id=e['event_id'],source='bet365',odds_market='3')
+   payload,meta=budget('/v2/event/odds',event_id=e['event_id'],source='bet365',odds_market='1,2,3,6,8' if SCOPE=='experimental' else '3')
    return e,dict(live.current_main_total(payload,e,int(time.time())),lab_odds_payload=sanitize(payload),odds_http=meta,lab_odds_observed_at_utc=observed)
   except Exception as exc:return e,dict(events_main_total=None,main_total_status='unavailable',main_total_reason=type(exc).__name__,lab_odds_observed_at_utc=observed)
  with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
@@ -138,7 +157,7 @@ def choose(snapshot,ordered,seen,beta):
    choices[policy].append(dict(event_id=str(e['event_id']),rank=len(choices[policy])+1,sports_position=position,score=e['score'],minute=e['minute'],market=q,market_unknown_reason=reason,model_lambda=lam,model_ev=ev,experimental_only=True))
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
-def collect_outcomes(targets,previous,budget,now):
+def collect_outcomes_single(targets,previous,budget,now):
  candidates=[]
  for eid,row in targets.items():
   old=previous.get(eid,{})
@@ -164,6 +183,37 @@ def collect_outcomes(targets,previous,budget,now):
   except BudgetExhausted:break
   except Exception as exc:rows.append(dict(event_id=eid,checked_at_utc=checked,settled=False,error_type=type(exc).__name__))
  return dict(events=rows,eligible_pending=len(candidates),attempt_cap=MAX_OUTCOMES,queued_after_run=max(0,len(candidates)-len(rows)))
+
+def collect_outcomes(targets,previous,budget,now):
+ if SCOPE!='experimental':return collect_outcomes_single(targets,previous,budget,now)
+ pending=[]
+ for eid,target in targets.items():
+  old=previous.get(eid,{})
+  if old.get('settled'):continue
+  age=now.timestamp()-live.timestamp(target['board_observed_at_utc'])
+  since=now.timestamp()-live.timestamp(old['checked_at_utc']) if old.get('checked_at_utc')else math.inf
+  if age>=7200 and since>=1800:pending.append((target['board_observed_at_utc'],eid))
+ pending.sort();rows=[];calls=0
+ for start in range(0,min(len(pending),MAX_OUTCOMES*10),10):
+  ids=[eid for _,eid in pending[start:start+10]];checked=datetime.datetime.now(datetime.timezone.utc).isoformat()
+  try:
+   payload,_=budget('/v1/event/view',event_id=','.join(ids));calls+=1
+   if payload.get('success')not in (1,True):raise ValueError('Outcome provider unsuccessful')
+   result=payload.get('results')or[];by_id={str(e.get('id')):e for e in result if isinstance(e,dict)}
+   for eid in ids:
+    event=by_id.get(eid);target=targets[eid]
+    if not event:rows.append(dict(event_id=eid,checked_at_utc=checked,settled=False,error_type='missing_batch_event'));continue
+    scores=event.get('scores')or{};ft=scores.get('2');status=str(event.get('time_status'));final=None
+    try:final=[int(ft['home']),int(ft['away'])]if isinstance(ft,dict)else None
+    except (ValueError,KeyError,TypeError):pass
+    initial=list(map(int,target['score'].split('-')))if re.fullmatch(r'\d+-\d+',str(target.get('score','')))else None
+    identity=all(not target.get(side+'_id')or str((event.get(side)or{}).get('id'))==target[side+'_id']for side in ('home','away'))
+    conflict=not identity or bool(final and (min(final)<0 or(initial and any(a<b for a,b in zip(final,initial)))))
+    rows.append(dict(event_id=eid,checked_at_utc=checked,settled=status=='3'and final is not None and min(final)>=0 and identity,result_conflict=conflict,goal_delta_valid=initial is not None and not conflict,final=final,time_status=status,scores=scores,source='BetsAPI /v1/event/view batched max10',result_only_do_not_use_asof_feature=True,event_view_payload=sanitize(event)))
+  except BudgetExhausted:break
+  except Exception as exc:
+   rows.extend(dict(event_id=eid,checked_at_utc=checked,settled=False,error_type=type(exc).__name__)for eid in ids)
+ return dict(events=rows,eligible_pending=len(pending),attempt_cap=MAX_OUTCOMES*10,api_calls=calls,queued_after_run=max(0,len(pending)-len(rows)))
 
 def write_run(snapshot,receipt,outcomes,directory=None):
  directory=directory or DATA
@@ -198,16 +248,25 @@ def main():
    empty=Path(directory)/'selected.json'
    excluded=sorted(seen['sports_v8_fresh']) if SOURCE=='background' and SCOPE=='primary' else []
    empty.write_text(json.dumps(dict(schema_version=1,events=[dict(event_id=eid)for eid in excluded])))
-   snapshot=live.collect('full',[],history,empty)
+   is_broad=SCOPE=='experimental'
+   outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)if is_broad else None
+   if is_broad:
+    import broad
+    snapshot=broad.collect(sys.modules[__name__],budget,history,(metadata['trigger_main_sha']or sid)+'|'+sid,{eid for eid,row in old_targets.items()if row.get('deep_any')})
+   else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
-   snapshot['pool_policy']='own_background_primary_exclusions_before_top30' if SOURCE=='background'and SCOPE=='primary' else 'observe_all_in_window_each_time; exclude_only_per_experimental_policy_when_choosing'
-   ordered=sports_order([e for e in snapshot['events']if e.get('stats_trend_shortlisted')])
-   sampled=[] if SOURCE=='background' and SCOPE=='primary' else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
+   snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
+   ordered=sports_order([e for e in snapshot['events']if e.get('stats_trend_shortlisted')and(not is_broad or(e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',e['score'])))])
+   sampled=[] if (SOURCE=='background'and SCOPE=='primary')or is_broad else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
-   probes=[e for e,_ in selected_probes][:MAX_MARKETS]
+   if is_broad:
+    selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')]
+   probes=[e for e,_ in selected_probes][:(DEEP_LIMIT if is_broad else MAX_MARKETS)]
    enrich_markets(probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
    for e in probes:by_id[e['event_id']].update(e)
+   for e in ordered:
+    if is_broad:e.update(by_id[e['event_id']])
    snapshot['lab_sports_order']=[str(e['event_id'])for e in ordered]
    snapshot['base_sports_fields_are_diagnostic_only']=True
    snapshot['odds_checked_at_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -215,9 +274,19 @@ def main():
    beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
    choices,reasons=choose(snapshot,ordered,seen,beta)
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
-   targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in selected_probes]
-   receipt=dict(metadata,choices=choices,outcome_targets=targets,not_user_publications=True)
-   outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
+   targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in ([(e,dict(stratum='all_provider_universe',selected_for_deep=bool(e.get('stats_trend_shortlisted')),deep_inclusion_probability=e['research_sampling']['inclusion_probability']))for e in snapshot['events']]if is_broad else selected_probes)]
+   if is_broad:
+    for target in targets:
+     e=by_id[target['event_id']]
+     target.update(deep_any=bool(e.get('stats_trend_shortlisted')),trend_available_any=bool((e.get('stats_trend')or{}).get('available')),exact_price_any=market_for_event(e,snapshot)[0]is not None)
+    merged=dict(old_targets)
+    for row in targets:merged[row['event_id']]=merge_target(merged.get(row['event_id']),row)
+    result_by_id=dict(old_outcomes)
+    result_by_id.update({r['event_id']:r for r in outcomes['events']})
+    closed={eid for eid,r in result_by_id.items()if r.get('settled')}
+    snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_exact_price=sum(eid in closed and bool(r.get('exact_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
+   receipt=dict(metadata,choices=choices,outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(probes)
    snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in probes)
    snapshot['production_api_call_fields_are_base_stage_only']=True
