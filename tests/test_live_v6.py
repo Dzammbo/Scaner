@@ -91,13 +91,13 @@ class V6Tests(unittest.TestCase):
         self.assertEqual(restart['current_windows']['15']['actual_duration_minutes'], 3)
         self.assertEqual(restart['current_windows']['15']['stats']['on_target']['home'], 0)
 
-    def test_display_changes_only_order_and_ledger_records_only_publication(self):
+    def test_display_uses_sports_rank_regardless_of_score_and_ledger_records_only_publication(self):
         events = [fixtures.RankingTests().trend_event(i) for i in range(3)]
         events[0]['score'], events[1]['score'], events[2]['score'] = '2-0', '0-0', '1-0'
         final = rank_final_candidates(events)
-        display = display_candidates(final)
-        self.assertEqual([e['event_id'] for e in display], ['2', '1', '0'])
-        self.assertEqual([e['final_sports_selection']['sports_rank'] for e in display], [3, 2, 1])
+        display = display_candidates(list(reversed(final)))
+        self.assertEqual([e['event_id'] for e in display], ['0', '1', '2'])
+        self.assertEqual([e['final_sports_selection']['sports_rank'] for e in display], [1, 2, 3])
         for e in events:
             e.update(final_sports_selected=True, home='A', away='B')
         snapshot = {'schema_version': 4, 'snapshot_id': 's', 'rules_version': 'v6', 'mode': 'full',

@@ -22,7 +22,7 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
 # User-approved chat presentation contract; does not change sports selection.
 LIVE_RESPONSE_FORMAT = {
     'version': 'live-compact-2026-10-18-v6',
-    'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
+    'display_order': ['sports_rank_ascending'],
     'preliminary': None,
     'header': 'Live ТБ · снимок {snapshot_time_msk} МСК · линии {odds_time_msk} МСК',
     'funnel': 'Пул {raw} → окно {in_window} → новых {new} → с динамикой {with_trend} '

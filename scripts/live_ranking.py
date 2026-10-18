@@ -324,12 +324,8 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
 
 
 def display_candidates(events):
-    """Presentation only; score never changes membership or sports_rank."""
-    def key(event):
-        goals = sum(int(value) for value in event["score"].split("-"))
-        group = 0 if goals == 1 else 1 if goals == 0 else 2
-        return group, event["final_sports_selection"]["sports_rank"]
-    ordered = sorted(events, key=key)
+    """Present candidates strictly by sports_rank, independently of score."""
+    ordered = sorted(events, key=lambda event: event["final_sports_selection"]["sports_rank"])
     for rank, event in enumerate(ordered, 1):
         event["final_sports_selection"]["display_rank"] = rank
     return ordered
