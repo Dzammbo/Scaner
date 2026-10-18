@@ -1,0 +1,67 @@
+name: Independent experimental Live capture
+on:
+  push:
+    branches: [main]
+    paths: ['.github/live-request.json']
+permissions:
+  contents: write
+jobs:
+  experimental_capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read only the triggering Live request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: request
+          persist-credentials: false
+      - name: Scope experimental capture to full Live
+        id: request
+        env:
+          LAB_REQUEST_PATH: ${{ runner.temp }}/independent-live-request.json
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, shutil
+          source = pathlib.Path('request/.github/live-request.json')
+          request = json.loads(source.read_text())
+          enabled = request.get('mode') == 'full' and request.get('event_ids') == []
+          if enabled:
+              shutil.copyfile(source, os.environ['LAB_REQUEST_PATH'])
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('enabled=' + str(enabled).lower() + '\n')
+          PY
+      - name: Checkout isolated experimental code and data
+        id: lab_checkout
+        if: steps.request.outputs.enabled == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: lab
+      - name: Collect independent experimental observation
+        id: collect
+        if: steps.request.outputs.enabled == 'true'
+        working-directory: lab
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          LAB_REQUEST_FILE: ${{ runner.temp }}/independent-live-request.json
+          LAB_TRIGGER_MAIN_SHA: ${{ github.sha }}
+        run: |
+          LAB_CODE_REVISION="$(git rev-parse HEAD)" python3 research/selection-lab-20261018/capture.py
+      - name: Save to experimental branch only
+        if: always() && steps.collect.outputs.capture_id != ''
+        working-directory: lab
+        env:
+          LAB_CAPTURE_ID: ${{ steps.collect.outputs.capture_id }}
+        run: python3 research/selection-lab-20261018/save_capture.py
+      - name: Preserve this observation as artifact
+        if: always() && steps.collect.outputs.capture_id != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-live-lab-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 30
+          if-no-files-found: ignore
+          path: |
+            lab/research/live-lab/snapshots/${{ steps.collect.outputs.capture_id }}.json
+            lab/research/live-lab/receipts/${{ steps.collect.outputs.capture_id }}.json
+            lab/research/live-lab/outcomes/${{ steps.collect.outputs.capture_id }}.json
