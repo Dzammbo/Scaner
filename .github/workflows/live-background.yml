@@ -1,11 +1,11 @@
 name: Background unified Live collector
 on:
-  schedule:
-    - cron: '3,13,23,33,43,53 * * * *'
-  push:
-    branches: [main]
-    paths: ['.github/live-background.json']
   workflow_dispatch:
+    inputs:
+      verify_recovery:
+        type: boolean
+        default: false
+        description: Exit deliberately after one saved capture to verify recovery
 permissions:
   contents: write
   actions: read
@@ -14,59 +14,35 @@ concurrency:
   cancel-in-progress: false
 jobs:
   capture:
-    name: Shared acquisition and separate evaluations
+    name: Resident shared collector 320 minutes
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 345
     steps:
-      - name: Read current controller configuration
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main
           path: control
           persist-credentials: false
-      - name: Check enabled state and manual priority
-        id: gate
-        working-directory: control
-        env:
-          GH_TOKEN: ${{ github.token }}
-          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-experimental.json
-        run: python3 .github/scripts/live_background_gate.py
-      - name: Checkout independent collector and archive
-        if: steps.gate.outputs.enabled == 'true'
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: research/selection-lab-20261018
           path: collector
-      - name: Collect without chat output or manual publications
-        id: collect
-        if: steps.gate.outputs.enabled == 'true'
-        working-directory: collector
+      - name: Run resident collector
+        id: worker
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
-          LAB_REQUEST_FILE: ${{ runner.temp }}/background-request-experimental.json
-          LAB_TRIGGER_MAIN_SHA: ${{ github.sha }}
-          LAB_RUN_SOURCE: background
-          LAB_DATA_SCOPE: experimental
-          LAB_BACKGROUND_UNIFIED: "1"
-        run: |
-          LAB_CODE_REVISION="$(git rev-parse HEAD)" python3 research/selection-lab-20261018/capture.py
-      - name: Save this contour to research branch only
-        if: always() && steps.collect.outputs.capture_id != ''
-        working-directory: collector
-        env:
-          LAB_CAPTURE_ID: ${{ steps.collect.outputs.capture_id }}
-          LAB_CAPTURE_DAY: ${{ steps.collect.outputs.capture_day }}
-          LAB_RUN_SOURCE: background
-          LAB_DATA_SCOPE: experimental
-        run: python3 research/selection-lab-20261018/save_capture.py
-      - name: Preserve backup artifact
-        if: always() && steps.collect.outputs.capture_id != ''
+          GH_TOKEN: ${{ github.token }}
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          VERIFY_RECOVERY: ${{ inputs.verify_recovery }}
+        run: python3 control/.github/scripts/live_runtime.py worker
+      - name: Preserve latest cycle backup
+        if: always() && steps.worker.outputs.capture_id != ''
         uses: actions/upload-artifact@v4
         with:
-          name: background-live-experimental-${{ github.run_id }}-${{ github.run_attempt }}
+          name: background-live-${{ github.run_id }}-${{ github.run_attempt }}
           retention-days: 30
           if-no-files-found: ignore
           path: |
-            collector/research/live-background/experimental/snapshots/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
-            collector/research/live-background/experimental/receipts/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
-            collector/research/live-background/experimental/outcomes/${{ steps.collect.outputs.capture_day }}/${{ steps.collect.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/snapshots/${{ steps.worker.outputs.capture_day }}/${{ steps.worker.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/receipts/${{ steps.worker.outputs.capture_day }}/${{ steps.worker.outputs.capture_id }}.json.gz
+            collector/research/live-background/experimental/outcomes/${{ steps.worker.outputs.capture_day }}/${{ steps.worker.outputs.capture_id }}.json.gz

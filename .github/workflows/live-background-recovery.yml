@@ -1,0 +1,29 @@
+name: Background Live recovery
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Background unified Live collector", "Background Live supervisor"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths: ['.github/live-background.json', '.github/workflows/live-background-recovery.yml']
+permissions:
+  actions: write
+  contents: write
+concurrency:
+  group: live-background-recovery
+  cancel-in-progress: false
+jobs:
+  ensure:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Ensure one worker and one reserve supervisor
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/live_runtime.py recover
