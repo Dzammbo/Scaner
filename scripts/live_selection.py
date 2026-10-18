@@ -6,7 +6,7 @@ from pathlib import Path
 
 from live_enrichment import number, score_goals
 from live_history import timestamp
-from live_ranking import FINAL_SELECTION_LIMIT, RULES_VERSION
+from live_ranking import FINAL_SELECTION_LIMIT, RULES_VERSION, TOP5_RULES_VERSIONS
 from live_hypotheses import VERSION as HYPOTHESES_VERSION, evaluate as evaluate_hypotheses
 from live_second_half_research import VERSION as SECOND_HALF_VERSION
 from live_publications import make_receipt, merge_publications, write_receipt
@@ -16,7 +16,7 @@ def record_choices(ledger, snapshot, choices, selected_at):
     """Append exactly the choices actually shown, preserving historical entries."""
     if ledger.get("schema_version") != 1 or not isinstance(ledger.get("events"), list):
         raise ValueError("Invalid selected-events ledger")
-    limit = FINAL_SELECTION_LIMIT if snapshot.get("rules_version") == RULES_VERSION else (3 if snapshot.get("rules_version") == "sports-only-2026-10-18-v8" else 5)
+    limit = FINAL_SELECTION_LIMIT if snapshot.get("rules_version") in TOP5_RULES_VERSIONS else (3 if snapshot.get("rules_version") == "sports-only-2026-10-18-v8" else 5)
     if not isinstance(choices, list) or not 1 <= len(choices) <= limit:
         raise ValueError(f"Record only the 1-{limit} final sports choices actually shown")
     if not snapshot.get("snapshot_id") or not snapshot.get("rules_version"):
@@ -37,7 +37,7 @@ def record_choices(ledger, snapshot, choices, selected_at):
         event = by_id[event_id]
         if not event.get("final_sports_selected") or not event.get("final_sports_selection"):
             raise ValueError("Choice is not in the deterministic final sports selection")
-        if snapshot["rules_version"] in (RULES_VERSION, "sports-only-2026-10-18-v8"):
+        if snapshot["rules_version"] in (*TOP5_RULES_VERSIONS, "sports-only-2026-10-18-v8"):
             confidence = event["final_sports_selection"].get("confidence") or {}
             if confidence.get("level") != "strong" or not confidence.get("eligible"):
                 raise ValueError("Current choices require strong evidence confidence")
@@ -67,7 +67,7 @@ def record_choices(ledger, snapshot, choices, selected_at):
         if snapshot.get("schema_version", 0) >= 4:
             record["sports_rank"] = event["final_sports_selection"]["sports_rank"]
             record["display_rank"] = rank
-        if snapshot["rules_version"] == RULES_VERSION:
+        if snapshot["rules_version"] in TOP5_RULES_VERSIONS:
             sports_rank = event["final_sports_selection"].get("sports_rank")
             if type(sports_rank) is not int or not 1 <= sports_rank <= FINAL_SELECTION_LIMIT:
                 raise ValueError("Valid sports_rank required for prospective rank cohort")

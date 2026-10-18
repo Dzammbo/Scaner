@@ -3,9 +3,10 @@ from collections import deque
 import re
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-18-v8-top5"
+RULES_VERSION = "sports-only-2026-10-18-v8-fresh-first"
+TOP5_RULES_VERSIONS = ("sports-only-2026-10-18-v8-top5", RULES_VERSION)
 RANKING_METHOD = "single_snapshot_sports_queues_v4"
-FINAL_RANKING_METHOD = "strong_evidence_goal_profile_v4"
+FINAL_RANKING_METHOD = "strong_evidence_fresh_first_v5"
 FINAL_SELECTION_LIMIT = 5
 
 
@@ -304,12 +305,12 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
         ratio = profile.get("ranking_ratio", 1.0) if profile.get("ranking_used") else 1.0
         f["historical_goal_profile_ratio"] = ratio
         f["historical_goal_profile_used"] = bool(profile.get("ranking_used"))
-        key = (tier, window, -ratio,
+        key = (tier, window,
                -(f[f"on_target_{window}_known_per_minute"] or 0),
                -(f[f"finishing_{window}_known_per_minute"] or 0),
                -(f[f"two_sided_shots_{window}_total"] or 0),
                -(f[f"dangerous_attacks_{window}_known_per_minute"] or 0),
-               str(event["event_id"]))
+               -ratio, str(event["event_id"]))
         candidates.append((key, event, route, f))
     output = []
     for rank, (key, event, route, features) in enumerate(sorted(candidates, key=lambda row: row[0])[:max(0, min(limit, FINAL_SELECTION_LIMIT))], 1):
