@@ -20,13 +20,13 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
 
 # User-approved chat presentation contract; does not change sports selection.
 LIVE_RESPONSE_FORMAT = {
-    'version': 'live-compact-2026-10-18-v5',
+    'version': 'live-compact-2026-10-18-v6',
     'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
     'preliminary': None,
     'header': 'Live ТБ · снимок {snapshot_time_msk} МСК · линии {odds_time_msk} МСК',
     'funnel': 'Пул {raw} → окно {in_window} → новых {new} → с динамикой {with_trend} '
               '→ сильных {strong} → выбор {selected}.',
-    'match_lines': ['{number}. {home_ru} - {away_ru} ({league_ru}, {category_ru}) | '
+    'match_lines': ['{number}. [ранг {sports_rank}] {home_ru} - {away_ru} ({league_ru}, {category_ru}) | '
                     '{score}, {minute}′ {period} | уверенность: сильная | '
                     'ТБ {user_line} × {user_price_text}; ещё {additional_goals}; {push_condition} | '
                     '{redcards_and_material_discrepancies} | '
@@ -46,7 +46,7 @@ LIVE_RESPONSE_FORMAT = {
         'selection_effect': 'None; no additional API calls.'},
     'footer': 'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
     'rules': [
-        'ONLY one short final answer, 0-3 strong candidates; no preliminary list or automatic full cards.',
+        'ONLY one short final answer, 0-5 strong candidates; no preliminary list or automatic full cards.',
         'Full cards and exclusion reasons only on подробно, without a new live request.',
         'Keep goal profile means and N compact; do not invent missing values.',
         'Show red cards, material discrepancies, goals needed and integer-line push condition.',

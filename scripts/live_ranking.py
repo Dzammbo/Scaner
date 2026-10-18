@@ -3,10 +3,10 @@ from collections import deque
 import re
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-18-v8"
+RULES_VERSION = "sports-only-2026-10-18-v8-top5"
 RANKING_METHOD = "single_snapshot_sports_queues_v4"
 FINAL_RANKING_METHOD = "strong_evidence_goal_profile_v4"
-FINAL_SELECTION_LIMIT = 3
+FINAL_SELECTION_LIMIT = 5
 
 
 def partial_pair(values):
@@ -275,7 +275,7 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
     Class 0: on-target shot, shot-supported xG, or shots in adjacent windows.
     Class 1: pressure with finishing / two-sided finishing.
     Class 2 remains diagnostic only. Admission requires strong confidence.
-    No mandatory quota; at most three. Critical gaps cannot be waived by a disclaimer.
+    No mandatory quota; at most five. Critical gaps cannot be waived by a disclaimer.
     Missing xG does not subtract points; simply having coverage adds nothing.
     """
     candidates = []
