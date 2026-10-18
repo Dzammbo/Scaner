@@ -7,6 +7,7 @@ from pathlib import Path
 from live_enrichment import number, score_goals
 from live_history import timestamp
 from live_ranking import FINAL_SELECTION_LIMIT, RULES_VERSION
+from live_hypotheses import VERSION as HYPOTHESES_VERSION, evaluate as evaluate_hypotheses
 from live_publications import make_receipt, merge_publications, write_receipt
 
 
@@ -58,6 +59,8 @@ def record_choices(ledger, snapshot, choices, selected_at):
             "is_user_choice": False,
             "goal_profile": deepcopy(event.get("goal_profile")),
         }
+        if snapshot.get("research_hypotheses_version") == HYPOTHESES_VERSION:
+            record["research_hypotheses"] = evaluate_hypotheses(event)
         if snapshot.get("schema_version", 0) >= 4:
             record["sports_rank"] = event["final_sports_selection"]["sports_rank"]
             record["display_rank"] = rank

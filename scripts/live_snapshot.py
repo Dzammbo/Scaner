@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from live_history import read_request, read_history, read_selected_events, compare_event, save_snapshot, timestamp
 from live_enrichment import number, summarize_stats_trend
 from live_odds import current_main_total
+from live_hypotheses import VERSION as HYPOTHESES_VERSION, evaluate as evaluate_hypotheses
 from live_goal_profile import build_profile, read_cache, apply_league
 from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
@@ -19,7 +20,7 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
 
 # User-approved chat presentation contract; does not change sports selection.
 LIVE_RESPONSE_FORMAT = {
-    'version': 'live-compact-2026-10-18-v4',
+    'version': 'live-compact-2026-10-18-v5',
     'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
     'preliminary': None,
     'header': 'Live ТБ · снимок {snapshot_time_msk} МСК · линии {odds_time_msk} МСК',
@@ -31,6 +32,8 @@ LIVE_RESPONSE_FORMAT = {
                     '{redcards_and_material_discrepancies} | '
                     'ГП: {home_mean_total}/{away_mean_total}/{league_mean_total} '
                     '(N={home_n}/{away_n}/{league_n}).'],
+    'research_hypotheses': {'version': HYPOTHESES_VERSION, 'field': 'research_hypotheses',
+                            'display': 'Append matched labels only: Г1/Г2/Г3. No match does not exclude a candidate.'},
     'history_fields': ['home.all.mean_total', 'home.all.n', 'away.all.mean_total',
                        'away.all.n', 'league.mean_total', 'league.n'],
     'missing_value': 'н/д',
@@ -303,11 +306,13 @@ def collect(mode, requested_ids, history_dir, selected_file):
     display_ids = [event["event_id"] for event in display_candidates(final)]
     for event in final:
         event["final_sports_selected"] = True
+        event["research_hypotheses"] = evaluate_hypotheses(event)
     events = sorted(ranked, key=lambda event: (event["minute"], event["league"], event["home"], event["event_id"]))
     snapshot_id = os.environ.get("GITHUB_RUN_ID", str(time.time_ns())) + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     return {
         "schema_version": 4, "rules_version": RULES_VERSION, "ranking_method": RANKING_METHOD,
         "final_ranking_method": FINAL_RANKING_METHOD,
+        "research_hypotheses_version": HYPOTHESES_VERSION,
         "snapshot_id": snapshot_id, "code_revision": os.environ.get("GITHUB_SHA"),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(), "board_observed_at_utc": observed_at,
         "mode": mode, "requested_event_ids": requested_ids,
@@ -363,6 +368,9 @@ def complete_odds(snapshot):
     snapshot["timing_seconds"]["odds"] = elapsed
     snapshot["odds_checked_at_utc"] = datetime.now(timezone.utc).isoformat()
     snapshot["stage"] = "odds_completed"
+    if snapshot.get("research_hypotheses_version") == HYPOTHESES_VERSION:
+        for event in events:
+            event["research_hypotheses"] = evaluate_hypotheses(event)
     return snapshot
 
 
@@ -371,7 +379,7 @@ def odds_main(path):
     print("LIVE_ODDS_JSON=" + json.dumps({
         "response_format_version": LIVE_RESPONSE_FORMAT["version"],
         "snapshot_id": snapshot["snapshot_id"], "odds_checked_at_utc": snapshot["odds_checked_at_utc"],
-        "events": [{key: event.get(key) for key in ("event_id", "events_main_total", "main_total_status", "main_total_reason")}
+        "events": [{key: event.get(key) for key in ("event_id", "events_main_total", "main_total_status", "main_total_reason", "research_hypotheses")}
                    for event in snapshot["events"] if event["final_sports_selected"]],
     }, ensure_ascii=False, separators=(",", ":")), flush=True)
     save_snapshot(snapshot, str(Path(path).parent), snapshot["snapshot_id"])
