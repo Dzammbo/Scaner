@@ -8,15 +8,16 @@ from pathlib import Path
 
 from live_enrichment import number, score_goals
 from live_history import timestamp
-from live_ranking import FINAL_SELECTION_LIMIT
+from live_ranking import FINAL_SELECTION_LIMIT, RULES_VERSION
 
 
 def record_choices(ledger, snapshot, choices, selected_at):
     """Append exactly the choices actually shown, preserving historical entries."""
     if ledger.get("schema_version") != 1 or not isinstance(ledger.get("events"), list):
         raise ValueError("Invalid selected-events ledger")
-    if not isinstance(choices, list) or not 1 <= len(choices) <= FINAL_SELECTION_LIMIT:
-        raise ValueError(f"Record only the 1-{FINAL_SELECTION_LIMIT} final sports choices actually shown")
+    limit = FINAL_SELECTION_LIMIT if snapshot.get("rules_version") == RULES_VERSION else 5
+    if not isinstance(choices, list) or not 1 <= len(choices) <= limit:
+        raise ValueError(f"Record only the 1-{limit} final sports choices actually shown")
     if not snapshot.get("snapshot_id") or not snapshot.get("rules_version"):
         raise ValueError("Snapshot ID and rules version required; do not reconstruct history")
     if timestamp(selected_at) < timestamp(snapshot["generated_at_utc"]):
@@ -35,6 +36,10 @@ def record_choices(ledger, snapshot, choices, selected_at):
         event = by_id[event_id]
         if not event.get("final_sports_selected") or not event.get("final_sports_selection"):
             raise ValueError("Choice is not in the deterministic final sports selection")
+        if snapshot["rules_version"] == RULES_VERSION:
+            confidence = event["final_sports_selection"].get("confidence") or {}
+            if confidence.get("level") != "strong" or not confidence.get("eligible"):
+                raise ValueError("Current choices require strong evidence confidence")
         for key in ("sports_reason", "expected_scenario"):
             if not isinstance(choice.get(key), str) or not choice[key].strip():
                 raise ValueError("Sports reason and expected scenario required")

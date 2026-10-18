@@ -53,7 +53,7 @@ def run_benchmark(selected_file):
     # Fixed cohort and ABBA order reduce changing-pool/order effects. Cache and
     # provider load may still differ; two passes are not a reliability study.
     for limit in (15, 15, 30) if ranked else ():
-        fields = ("event_id", "minute", "score", "board_stats", "timer", "home", "away")
+        fields = ("event_id", "minute", "score", "board_stats", "timer", "home", "away", "goal_profile")
         events = [{key: event.get(key) for key in fields} for event in ranked[:limit]]
         elapsed = enrich_events(events)
         cases.append(stage_summary(events, limit, elapsed))
@@ -71,7 +71,7 @@ def run_benchmark(selected_file):
         "eligible_pool": len(ranked), "full_15_vs_30_measured": len(ranked) >= 30,
         "initial_collection_seconds": snapshot["timing_seconds"]["collection"],
         "initial_snapshot_history_independent": all(not event["preliminary_selection"]["uses_previous_snapshots"] for event in ranked),
-        "board_http": snapshot["board_http"], "total_api_calls": 1 + sum(case["api_calls"] for case in cases),
+        "board_http": snapshot["board_http"], "total_api_calls": 1 + snapshot.get("goal_profile_api_calls", 0) + sum(case["api_calls"] for case in cases),
         "cases": cases, "median_enrichment_seconds_by_requested_limit": medians,
         "measured_median_difference_seconds": round(medians["30"] - medians["15"], 3) if len(ranked) >= 30 else None,
         "projection_only_repeating_observed_request_durations": {

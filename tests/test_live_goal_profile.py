@@ -61,10 +61,15 @@ class ProfileTests(unittest.TestCase):
             self.assertTrue(e['goal_profile']['cache_hit']);self.assertEqual(e['goal_profile']['fetched_at'],1001)
 
     def test_history_changes_tie_order_but_cannot_admit_no_live_evidence(self):
+        from test_live_ranking import RankingTests
         def event(eid,ratio,on=1):
-            return {'event_id':eid,'minute':30,'score':'0-0','goal_profile':{'ranking_used':True,'ranking_ratio':ratio},
-                    'stats_trend':{'available':True,'current_windows':{'5':{'from_minute':25,'to_minute':30,
-                    'actual_duration_minutes':5,'stats':{'on_target':{'home':on,'away':0}}}}}}
+            e = RankingTests().trend_event(eid)
+            e['goal_profile']['ranking_ratio'] = ratio
+            if not on:
+                for w in e['stats_trend']['windows'].values():
+                    w['stats']['on_target'] = {'home': 0, 'away': 0}
+                    w['stats']['off_target'] = {'home': 0, 'away': 0}
+            return e
         rows=[event('a',.8),event('b',1.2),event('c',10,on=0)]
         self.assertEqual([x['event_id'] for x in rank_final_candidates(rows)],['b','a'])
 

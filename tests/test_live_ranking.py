@@ -88,7 +88,7 @@ class RankingTests(unittest.TestCase):
 
     def trend_event(self, i, line=1.5, over=1.9):
         def window(minutes, on, off, dangerous, corners):
-            return {'from_minute': 35-minutes, 'to_minute': 35, 'actual_duration_minutes': minutes, 'stats': {
+            return {'from_minute': 35-minutes, 'to_minute': 35, 'actual_duration_minutes': minutes, 'full_requested_duration': True, 'stats': {
                 'on_target': {'home': on[0], 'away': on[1]},
                 'off_target': {'home': off[0], 'away': off[1]},
                 'dangerous_attacks': {'home': dangerous[0], 'away': dangerous[1]},
@@ -96,7 +96,11 @@ class RankingTests(unittest.TestCase):
             }}
         return {'event_id': str(i), 'minute': 35, 'score': '0-0',
                 'events_main_total': {'line': line, 'over': over},
-                'stats_trend': {'available': True, 'windows': {
+                'board_stats': {'redcards': [0, 0], 'on_target': [5, 5], 'off_target': [5, 5]},
+                'goal_profile': {'available': True, 'ranking_used': True, 'ranking_ratio': 1.0,
+                                 'home': {'same_league': {'n': 5}}, 'away': {'same_league': {'n': 5}},
+                                 'league': {'n': 10}},
+                'stats_trend': {'available': True, 'time_context': {'board_minus_trend_minutes': 0, 'phase': 'match_clock'}, 'windows': {
                     '5': window(5, [1, 0], [0, 0], [6, 2], [1, 0]),
                     '10': window(10, [1, 0], [1, 0], [12, 4], [1, 0]),
                     '15': window(15, [1, 1], [1, 0], [18, 7], [2, 0]),
@@ -115,22 +119,20 @@ class RankingTests(unittest.TestCase):
 
     def test_final_ranking_does_not_fill_without_reproducible_evidence(self):
         qualified = self.trend_event(1)
-        empty = {'event_id': '2', 'minute': 35, 'stats_trend': {'available': True, 'windows': {}}}
+        empty = {'event_id': '2', 'minute': 35, 'stats_trend': {'available': True, 'time_context': {'board_minus_trend_minutes': 0, 'phase': 'match_clock'}, 'windows': {}}}
         result = rank_final_candidates([qualified, empty])
         self.assertEqual([event['event_id'] for event in result], ['1'])
         features = fresh_sports_features(qualified)
         self.assertTrue(features['persistent_dangerous_pressure'])
         self.assertTrue(features['quality_chance_available'])
 
-    def test_sustained_dangerous_pressure_pattern_is_reproducibly_selected(self):
+    def test_pressure_without_fresh_finishing_is_diagnostic_only(self):
         pressure = self.trend_event(77)
         for window in pressure['stats_trend']['windows'].values():
             window['stats']['on_target'] = {'home': 0, 'away': 0}
         result = rank_final_candidates([pressure])
-        self.assertEqual([event['event_id'] for event in result], ['77'])
-        selection = result[0]['final_sports_selection']
-        self.assertEqual(selection['route'], 'sustained_pressure')
-        self.assertFalse(selection['market_used'])
+        self.assertEqual(result, [])
+        self.assertEqual(pressure['selection_confidence']['level'], 'medium')
 
     def test_measured_zero_does_not_get_quality_bonus_over_unknown(self):
         events = [self.event(i, on_target=[5, 5], off_target=[5, 5]) for i in range(20)]

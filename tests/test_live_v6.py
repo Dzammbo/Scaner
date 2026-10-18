@@ -23,15 +23,15 @@ def trend_series(values):
 class V6Tests(unittest.TestCase):
     def test_partial_team_xg_survives_without_invented_total_and_needs_timing_support(self):
         event = fixtures.RankingTests().trend_event(1)
-        event['board_stats'] = {'xg': [0.7, None]}
+        event['board_stats']['xg'] = [0.7, None]
         f = sports_features(event)
         self.assertEqual(f['xg_home_away'], [.7, None])
         self.assertEqual(f['xg_known_total'], .7)
         self.assertIsNone(f['xg_total'])
         for w in event['stats_trend']['windows'].values():
             w['stats']['xg'] = {'home': .3, 'away': None}
-            w['stats']['on_target'] = {'home': 0, 'away': None}
-            w['stats']['off_target'] = {'home': 1, 'away': None}
+            w['stats']['on_target'] = {'home': 0, 'away': 0}
+            w['stats']['off_target'] = {'home': 1, 'away': 0}
         f = fresh_sports_features(event)
         self.assertEqual(f['supported_xg_5'], .3)
         self.assertIsNone(f['xg_5_total'])
@@ -39,7 +39,7 @@ class V6Tests(unittest.TestCase):
         for w in event['stats_trend']['windows'].values():
             w['stats']['off_target'] = {'home': 0, 'away': None}
         self.assertTrue(fresh_sports_features(event)['xg_timing_uncertain_5'])
-        self.assertNotEqual(rank_final_candidates([event])[0]['final_sports_selection']['evidence_class'], 0)
+        self.assertEqual(rank_final_candidates([event]), [])
 
     def test_zero_or_absent_xg_does_not_change_rank(self):
         events = [fixtures.RankingTests().trend_event(i) for i in range(12)]
@@ -55,9 +55,9 @@ class V6Tests(unittest.TestCase):
         for w in corners['stats_trend']['windows'].values():
             for field in ('on_target', 'off_target'):
                 w['stats'][field] = {'home': 0, 'away': 0}
-        self.assertEqual(len(rank_final_candidates(quality+[corners])), 5)
+        self.assertEqual(len(rank_final_candidates(quality+[corners])), 3)
         self.assertNotIn('99', [e['event_id'] for e in rank_final_candidates(quality+[corners])])
-        self.assertEqual(rank_final_candidates([corners])[0]['event_id'], '99')
+        self.assertEqual(rank_final_candidates([corners]), [])
 
     def test_early_match_previous_interval_is_three_minutes_and_rates_compare(self):
         payload = {'success': 1, 'results': {'dangerous_attacks': {
@@ -110,10 +110,11 @@ class V6Tests(unittest.TestCase):
         self.assertEqual(result['selections'][0]['sports_rank'], 2)
         self.assertEqual(result['selections'][0]['display_rank'], 1)
 
-    def test_sports_ready_before_any_odds_and_36_call_budget_unchanged_membership(self):
+    def test_sports_ready_before_any_odds_and_three_choice_budget(self):
         calls = []
         rows = [{'id': str(i), 'home': {'name': 'A'}, 'away': {'name': 'B'},
-                 'league': {'name': 'Test'}, 'timer': {'tm': 30}, 'ss': '0-0'} for i in range(35)]
+                 'league': {'name': 'Test'}, 'timer': {'tm': 30}, 'ss': '0-0',
+                 'stats': {'on_target': [2, 0], 'off_target': [2, 0], 'redcards': [0, 0]}} for i in range(35)]
         def get(path, **kwargs):
             calls.append(path)
             if path.endswith('inplay'):
@@ -121,11 +122,17 @@ class V6Tests(unittest.TestCase):
             if path.endswith('stats_trend'):
                 return {'success': 1, 'results': {'on_target': {
                     'home': trend_series([(15, 0), (25, 0), (30, 2)]),
-                    'away': trend_series([(15, 0), (25, 0), (30, 0)])}}}, {}
+                    'away': trend_series([(15, 0), (25, 0), (30, 0)])},
+                    'off_target': {'home': trend_series([(15, 0), (20, 0), (25, 1), (30, 2)]),
+                                   'away': trend_series([(15, 0), (30, 0)])}}}, {}
             self.assertTrue(ready[0], 'Odds requested before sports-ready boundary')
             raise TimeoutError('slow odds failed')
         ready = [False]
-        with tempfile.TemporaryDirectory() as tmp, patch('live_snapshot.get', get):
+        def profiles(events, directory):
+            for e in events:
+                e['goal_profile'] = copy.deepcopy(fixtures.RankingTests().trend_event(0)['goal_profile'])
+            return {'goal_profile_api_calls': 0}
+        with tempfile.TemporaryDirectory() as tmp, patch('live_snapshot.get', get), patch('live_snapshot.enrich_profiles', profiles):
             ledger = Path(tmp)/'selected.json'
             ledger.write_text(json.dumps({'schema_version': 1, 'events': []}))
             snapshot = collect('full', [], tmp, str(ledger))
@@ -134,8 +141,8 @@ class V6Tests(unittest.TestCase):
             self.assertEqual(len(snapshot['outside_shortlist_event_ids']), 5)
             original = copy.deepcopy(snapshot['final_sports_selection_event_ids'])
             completed = complete_odds(snapshot)
-            self.assertEqual(len(calls), 36)
-            self.assertEqual(completed['total_api_calls'], 36)
+            self.assertEqual(len(calls), 34)
+            self.assertEqual(completed['total_api_calls'], 34)
             self.assertEqual(completed['final_sports_selection_event_ids'], original)
             self.assertEqual(json.loads(ledger.read_text())['events'], [])
             # An unpublished final list must also remain eligible in a new full.
@@ -147,8 +154,8 @@ class V6Tests(unittest.TestCase):
                                        choices, snapshot['generated_at_utc'])
             ledger.write_text(json.dumps(published))
             following = collect('full', [], tmp, str(ledger))
-            self.assertEqual(following['previously_selected_skipped_count'], 5)
-            self.assertEqual(following['eligible_in_window_count'], 30)
+            self.assertEqual(following['previously_selected_skipped_count'], 3)
+            self.assertEqual(following['eligible_in_window_count'], 32)
             self.assertTrue(set(original).isdisjoint(following['final_sports_selection_event_ids']))
 
     def test_pool_evaluation_keeps_unknown_and_separate_denominators(self):
@@ -161,7 +168,7 @@ class V6Tests(unittest.TestCase):
         self.assertIsNone(group['selected']['next_15_goals']['one_more_rate'])
         self.assertEqual(group['unselected']['remaining_goals']['unknown'], 1)
 
-    def test_benchmark_uses_separate_stages_and_at_most_111_requests(self):
+    def test_benchmark_uses_separate_stages_and_three_choice_budget(self):
         from benchmark_live_enrichment import run_benchmark
         events = [fixtures.RankingTests().trend_event(i) for i in range(35)]
         for i, event in enumerate(events):
@@ -178,11 +185,11 @@ class V6Tests(unittest.TestCase):
             return 1
         with patch('benchmark_live_enrichment.collect', return_value=snapshot), patch('benchmark_live_enrichment.enrich_events', enrich):
             result = run_benchmark('unused')
-        self.assertEqual(result['total_api_calls'], 111)
-        self.assertEqual([n for n, kinds in stages if kinds == ('odds',)], [5, 5, 5, 5])
+        self.assertEqual(result['total_api_calls'], 103)
+        self.assertEqual([n for n, kinds in stages if kinds == ('odds',)], [3, 3, 3, 3])
         self.assertEqual([n for n, kinds in stages if kinds == ('trend',)], [15, 15, 30])
 
-    def test_optional_prematch_failure_and_partial_finishing_do_not_block_live(self):
+    def test_optional_prematch_failure_preserves_pool_but_partial_finishing_blocks_final(self):
         from live_snapshot import prematch_context
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)/'prematch.json'
@@ -194,4 +201,5 @@ class V6Tests(unittest.TestCase):
             window['stats']['off_target'] = {'home': 2, 'away': None}
         self.assertIsNone(fresh_sports_features(event)['shots_5_total'])
         self.assertEqual(fresh_sports_features(event)['finishing_5_known_total'], 2)
-        self.assertEqual(rank_final_candidates([event])[0]['event_id'], '7')
+        self.assertEqual(rank_final_candidates([event]), [])
+        self.assertIn('incomplete_recent_off_target', event['selection_confidence']['data_gaps'])

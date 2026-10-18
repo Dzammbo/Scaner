@@ -70,7 +70,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
         self.assertEqual(len(odds_ids), 0)
         self.assertEqual(sum(e['main_total_status'] == 'not_requested' for e in result['events']), 250)
         self.assertEqual(result['final_sports_selection_count'], 0)
-        self.assertEqual(result['final_sports_selection_limit'], 5)
+        self.assertEqual(result['final_sports_selection_limit'], 3)
 
     def test_odds_does_not_block_trend_and_failures_do_not_remove_match(self):
         from live_snapshot import collect
@@ -148,9 +148,9 @@ class SnapshotIntegrationTests(unittest.TestCase):
             self.assertEqual(result['stats_trend_shortlisted_count'],2)
             self.assertTrue(by_id['123']['stats_trend']['available'])
             self.assertTrue(by_id['456']['stats_trend_shortlisted'])
-            self.assertTrue(by_id['456']['final_sports_selected'])
-            self.assertEqual(result['final_sports_selection_count'],2)
-            self.assertEqual(set(result['final_sports_selection_event_ids']),{'123','456'})
+            self.assertFalse(by_id['456']['final_sports_selected'])
+            self.assertEqual(result['final_sports_selection_count'],0)
+            self.assertEqual(set(result['final_sports_selection_event_ids']),set())
             self.assertNotIn('main_total_within_two_goal_limit',by_id['456'])
             self.assertIsNone(by_id['123']['events_main_total'])
             self.assertNotIn('/v2/event/odds', calls)

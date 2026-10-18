@@ -18,51 +18,40 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           rank_final_candidates, display_candidates)
 
 # User-approved chat presentation contract; does not change sports selection.
-LIVE_RESPONSE_FORMAT = {'version': 'live-compact-2026-10-17-v3',
- 'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
- 'preliminary': 'Запускаю live ТБ.\nУверенность: {confidence}/100.',
- 'header': 'Live ТБ · {snapshot_time_msk} МСК · выбрано {selected}',
- 'funnel': 'Пул {raw} → окно {in_window} → повтор {previously_shown} → новых {new} → с динамикой '
-           '{with_trend} → выбор {selected}.',
- 'match_lines': ['{number}. {home_ru} - {away_ru} | {score} | {minute}′ {period}',
-                 '{country_ru}, {league_ru}, {category_ru}. {interval}: удары {shots}, створ '
-                 '{on_target}, опасные {dangerous}; всего: удары {total_shots}, xG {xg}. '
-                 '{scenario}, риск {risk}.',
-                 'История: {home_ru} - {home_mean_total} гола ({home_n} матчей); {away_ru} - '
-                 '{away_mean_total} ({away_n}). Лига - {league_mean_total} ({league_n}).',
-                 'Справочно: ТБ{line} ×{over}; ещё {additional_goals} гола для полного выигрыша.',
-                 'По твоему правилу: ТБ{user_line}; {user_price_text}.'],
- 'within_match_separator': '  \n',
- 'between_matches_separator': '\n\n',
- 'history_fields': ['home.all.mean_total',
-                    'home.all.n',
-                    'away.all.mean_total',
-                    'away.all.n',
-                    'league.mean_total',
-                    'league.n'],
- 'missing_value': 'н/д',
- 'user_total_policy': {
-     'version': 'quarter-down-2026-10-17-v1',
-     'scope': 'full_match_total_only',
-     'integer_or_half': 'Keep the reference line and its quoted over price.',
-     'quarter': 'Subtract 0.25 from the reference line; never reuse its price.',
-     'rounded_price': 'Use a verified quote for that exact line, otherwise: коэффициент нужно проверить',
-     'missing_reference': 'н/д; do not invent a line or use an outdated quote.',
-     'selection_effect': 'None; presentation rule, not proof of profitability; no additional API calls.'},
- 'footer': 'Линии: {odds_time_msk} МСК, тотал по правилу пользователя. История - средние тоталы завершённых '
-           'матчей. Реестр: {actual_registry_status}.\n'
-           'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
- 'rules': ['Russian names; five consecutive lines per match; no tables or blank lines inside a '
-           'match.',
-           'Use actual intervals and phase; preserve material uncertainty, partial xG and red '
-           'cards compactly in the statistics/risk line.',
-           'No extra historical fields in default chat output; retain full source profiles and '
-           'ranking.',
-           'Confidence is evidence-based, not a fixed template number.',
-           'No matches: header, funnel, Подходящих матчей нет, confidence. API failure: report '
-           'failure, never invent an empty pool.',
-           'Do not wait for odds or registry before publishing the ready selection; use н/д and '
-           'actual status.']}
+LIVE_RESPONSE_FORMAT = {
+    'version': 'live-compact-2026-10-18-v4',
+    'display_order': ['exactly_one_goal', 'zero_goals', 'two_or_more_goals'],
+    'preliminary': None,
+    'header': 'Live ТБ · снимок {snapshot_time_msk} МСК · линии {odds_time_msk} МСК',
+    'funnel': 'Пул {raw} → окно {in_window} → новых {new} → с динамикой {with_trend} '
+              '→ сильных {strong} → выбор {selected}.',
+    'match_lines': ['{number}. {home_ru} - {away_ru} ({league_ru}, {category_ru}) | '
+                    '{score}, {minute}′ {period} | уверенность: сильная | '
+                    'ТБ {user_line} × {user_price_text}; ещё {additional_goals}; {push_condition} | '
+                    '{redcards_and_material_discrepancies} | '
+                    'ГП: {home_mean_total}/{away_mean_total}/{league_mean_total} '
+                    '(N={home_n}/{away_n}/{league_n}).'],
+    'history_fields': ['home.all.mean_total', 'home.all.n', 'away.all.mean_total',
+                       'away.all.n', 'league.mean_total', 'league.n'],
+    'missing_value': 'н/д',
+    'user_total_policy': {
+        'version': 'quarter-down-2026-10-17-v1', 'scope': 'full_match_total_only',
+        'integer_or_half': 'Keep the reference line and its quoted over price.',
+        'quarter': 'Subtract 0.25 from the reference line; never reuse its price.',
+        'rounded_price': 'Use an existing exact quote, otherwise: проверить. No extra requests.',
+        'missing_reference': 'н/д; do not invent a line.',
+        'selection_effect': 'None; no additional API calls.'},
+    'footer': 'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
+    'rules': [
+        'ONLY one short final answer, 0-3 strong candidates; no preliminary list or automatic full cards.',
+        'Full cards and exclusion reasons only on подробно, without a new live request.',
+        'Keep goal profile means and N compact; do not invent missing values.',
+        'Show red cards, material discrepancies, goals needed and integer-line push condition.',
+        'No Olimp availability checks and no additional exact-price verification.',
+        'Keep existing reference-line collection; missing exact price is проверить, not an admission veto.',
+        'Confidence describes evidence, never a calibrated win probability or a guaranteed outcome.',
+        'Zero choices: time, funnel, Подходящих матчей нет. API failure is not an empty pool.',
+        'Do not delay the ready final answer for formatting, extra checks or registry persistence.']}
 
 BASE = "https://api.b365api.com"
 SHORTLIST_LIMIT = 30
@@ -345,6 +334,8 @@ def collect(mode, requested_ids, history_dir, selected_file):
         "stats_trend_shortlist_limit": SHORTLIST_LIMIT, "stats_trend_shortlisted_count": len(shortlist),
         "stats_trend_shortlisted_event_ids": [event["event_id"] for event in shortlist],
         "stats_trend_available_count": sum(bool(event.get("stats_trend", {}).get("available")) for event in events),
+        "confidence_counts": {level: sum((e.get("selection_confidence") or {}).get("level") == level
+                                         for e in shortlist) for level in ("strong", "medium", "weak")},
         "final_sports_selection_limit": FINAL_SELECTION_LIMIT,
         "final_sports_selection_count": len(final_ids),
         "final_sports_selection_event_ids": final_ids,

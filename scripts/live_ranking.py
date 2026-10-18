@@ -1,11 +1,12 @@
 """Deterministic sports-only routing before and after API enrichment."""
 from collections import deque
+import re
 from live_enrichment import number
 
-RULES_VERSION = "sports-only-2026-10-16-v7"
+RULES_VERSION = "sports-only-2026-10-18-v8"
 RANKING_METHOD = "single_snapshot_sports_queues_v4"
-FINAL_RANKING_METHOD = "fresh_threat_goal_profile_v3"
-FINAL_SELECTION_LIMIT = 5
+FINAL_RANKING_METHOD = "strong_evidence_goal_profile_v4"
+FINAL_SELECTION_LIMIT = 3
 
 
 def partial_pair(values):
@@ -206,12 +207,75 @@ def fresh_sports_features(event):
     return features
 
 
+def assess_confidence(event, features, evidence):
+    """Evidence sufficiency and sporting strength, never win probability.
+
+    Uses existing comparable-profile minima (5/5/10). The clock tolerance
+    of two minutes and a full post-boundary five-minute window are explicit
+    operational guards, not statistically calibrated profitability cutoffs.
+    """
+    gaps, warnings = [], []
+    stats = event.get("board_stats") or {}
+    trend = event.get("stats_trend") or {}
+    context = trend.get("time_context") or {}
+    minute = number(event.get("minute"))
+    if not re.fullmatch(r"\d+-\d+", str(event.get("score", ""))) or minute is None:
+        gaps.append("unknown_score_or_clock")
+    if numeric_pair(stats.get("redcards")) is None:
+        gaps.append("unknown_redcards")
+    board_goals = numeric_pair(stats.get("goals"))
+    if board_goals is not None and re.fullmatch(r"\d+-\d+", str(event.get("score", ""))):
+        if board_goals != [int(v) for v in event["score"].split("-")]:
+            gaps.append("score_conflict")
+    lag = number(context.get("board_minus_trend_minutes"))
+    if not trend.get("available") or lag is None or not 0 <= lag <= 2:
+        gaps.append("unknown_or_stale_trend_clock")
+    if context.get("phase") in ("halftime", "before_halftime"):
+        gaps.append("no_current_playing_phase")
+    window = _windows(event).get("5", {})
+    if _window_duration(event, 5) != 5 or not window.get("full_requested_duration"):
+        gaps.append("incomplete_current_five_minutes")
+    for field in ("on_target", "off_target"):
+        if numeric_pair(_window_pair(event, 5, field)) is None:
+            gaps.append("incomplete_recent_" + field)
+        if numeric_pair(stats.get(field)) is None:
+            gaps.append("incomplete_board_" + field)
+        # A recent increment cannot exceed its corresponding cumulative count.
+        for recent, cumulative in zip(_window_pair(event, 5, field), partial_pair(stats.get(field))):
+            if recent is not None and cumulative is not None and recent > cumulative:
+                gaps.append("conflicting_" + field)
+    profile = event.get("goal_profile") or {}
+    comparable = (profile.get("available") and profile.get("ranking_used")
+                  and all((number(profile.get(side, {}).get("same_league", {}).get("n")) or 0) >= 5
+                          for side in ("home", "away"))
+                  and (number(profile.get("league", {}).get("n")) or 0) >= 10)
+    if not comparable:
+        gaps.append("insufficient_comparable_goal_profile")
+    if numeric_pair(stats.get("xg")) is None:
+        warnings.append("xg_missing_or_partial_not_a_veto")
+    if any(features.get("xg_timing_uncertain_" + str(w)) for w in (5, 10, 15)):
+        warnings.append("unsupported_xg_not_used")
+    fresh_finishing = (features.get("finishing_5_known_total") or 0) > 0
+    quality = ((features.get("on_target_5_known_total") or 0) > 0
+               or (features.get("supported_xg_5") or 0) > 0)
+    continuation = features["sustained_finishing"] or features["persistent_dangerous_pressure"]
+    strong_sport = fresh_finishing and continuation and (quality or features["sustained_finishing"])
+    sporting = "strong" if strong_sport else "medium" if evidence else "weak"
+    level = "strong" if strong_sport and not gaps else "medium" if evidence else "weak"
+    return {"level": level, "label": {"strong": "Сильная", "medium": "Средняя", "weak": "Слабая"}[level],
+            "data_sufficient": not gaps, "sporting_strength": sporting,
+            "eligible": level == "strong", "data_gaps": sorted(set(gaps)),
+            "sporting_gaps": [] if strong_sport else ["fresh_finishing_and_continuation_not_confirmed"],
+            "warnings": warnings, "is_win_probability": False}
+
+
 def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
     """Priority classes, then freshness and observed threat. No weighted score.
 
     Class 0: on-target shot, shot-supported xG, or shots in adjacent windows.
     Class 1: pressure with finishing / two-sided finishing.
-    Class 2: sustained pressure with corners. Quiet last-five is not a veto.
+    Class 2 remains diagnostic only. Admission requires strong confidence.
+    No mandatory quota; at most three. Critical gaps cannot be waived by a disclaimer.
     Missing xG does not subtract points; simply having coverage adds nothing.
     """
     candidates = []
@@ -230,7 +294,8 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
                 evidence.append((1, w, "sustained_pressure"))
             elif f["persistent_dangerous_pressure"] and (f[f"corners_{w}_known_total"] or 0) > 0:
                 evidence.append((2, w, "sustained_pressure_corners"))
-        if not evidence:
+        event["selection_confidence"] = assess_confidence(event, f, evidence)
+        if not event["selection_confidence"]["eligible"]:
             continue
         tier, window, route = min(evidence)
         # Known counts are lower bounds, NOT full totals or missing-value estimates.
@@ -247,11 +312,12 @@ def rank_final_candidates(events, limit=FINAL_SELECTION_LIMIT):
                str(event["event_id"]))
         candidates.append((key, event, route, f))
     output = []
-    for rank, (key, event, route, features) in enumerate(sorted(candidates, key=lambda row: row[0])[:limit], 1):
+    for rank, (key, event, route, features) in enumerate(sorted(candidates, key=lambda row: row[0])[:max(0, min(limit, FINAL_SELECTION_LIMIT))], 1):
         event["final_sports_selection"] = {
             "rank": rank, "sports_rank": rank, "route": route,
             "evidence_class": key[0], "evidence_window_minutes": key[1],
             "method": FINAL_RANKING_METHOD, "features": features, "market_used": False,
+            "confidence": event["selection_confidence"],
         }
         output.append(event)
     return output
