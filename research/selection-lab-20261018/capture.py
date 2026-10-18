@@ -6,7 +6,7 @@ sys.path[:0]=[str(HERE),str(ROOT/'scripts')]
 import live_snapshot as live
 from lab import sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
-POLICIES=('sports_v8_fresh','exact_display_price','display_need_le2','display_need_le3','walk_forward_ev_ge005')
+POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
 OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=1800
 
@@ -20,7 +20,7 @@ def configure_background(scope):
  if scope=='primary':
   POLICIES=('sports_v8_fresh',);DEEP_LIMIT=30;WORKERS=16;MAX_CALLS=120;MAX_MARKETS=5
  else:
-  POLICIES=('sports_v8_fresh','exact_display_price','display_need_le2','display_need_le3','walk_forward_ev_ge005');DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;MAX_MARKETS=30
+  POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005');DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;MAX_MARKETS=30
 
 def load_json(path):
  return json.load(gzip.open(path,'rt')) if path.name.endswith('.gz') else json.loads(path.read_text())
@@ -68,7 +68,7 @@ def isolated_runtime(budget):
 
 def merge_target(old,row):
  result=dict(row if old is None or row['board_observed_at_utc']<old['board_observed_at_utc']else old)
- for field in ('deep_any','trend_available_any','exact_price_any'):
+ for field in ('deep_any','trend_available_any','exact_price_any','provider_main_price_any'):
   default=field=='deep_any'and 'selected_for_deep'not in row.get('sampling',{})
   value=row.get(field,row.get('sampling',{}).get('selected_for_deep',default)if field=='deep_any'else False)
   result[field]=bool(value or(old or{}).get(field,False))
@@ -173,8 +173,8 @@ def choose(snapshot,ordered,seen,beta):
    if str(e['event_id']) in seen[policy]:diagnostics[policy]['already_selected_in_this_policy']+=1;continue
    if policy!='sports_v8_fresh' and not q:diagnostics[policy][reason or'unknown_exact_market']+=1;continue
    need=full_win_total(q['line'])-sum(score) if q else None
-   if (policy=='display_need_le2' and need>2) or (policy=='display_need_le3' and need>3):diagnostics[policy]['too_many_goals_required']+=1;continue
-   if policy=='walk_forward_ev_ge005' and (ev is None or ev<.05):diagnostics[policy]['model_unavailable_or_ev_below_threshold']+=1;continue
+   if (policy=='provider_main_need_le2' and need>2) or (policy=='provider_main_need_le3' and need>3):diagnostics[policy]['too_many_goals_required']+=1;continue
+   if policy=='provider_main_ev_ge005' and (ev is None or ev<.05):diagnostics[policy]['model_unavailable_or_ev_below_threshold']+=1;continue
    choices[policy].append(dict(event_id=str(e['event_id']),rank=len(choices[policy])+1,sports_position=position,score=e['score'],minute=e['minute'],market=q,market_unknown_reason=reason,model_lambda=lam,model_ev=ev,experimental_only=True))
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
@@ -260,7 +260,7 @@ def main():
  now=datetime.datetime.now(datetime.timezone.utc);sid=os.environ.get('GITHUB_RUN_ID',str(time.time_ns()))+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')
  CAPTURE_DAY=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
  request_path=Path(os.environ['LAB_REQUEST_FILE']);request=json.loads(request_path.read_text())
- metadata=dict(contour=CONTOUR,source=SOURCE,data_scope=SCOPE,capture_day_msk=CAPTURE_DAY,snapshot_id=sid,trigger_main_sha=os.environ.get('LAB_TRIGGER_MAIN_SHA'),request=request,code_revision=os.environ.get('LAB_CODE_REVISION'),independent_board=True,shared_provider_quota=True)
+ metadata=dict(contour=CONTOUR,source=SOURCE,data_scope=SCOPE,capture_day_msk=CAPTURE_DAY,snapshot_id=sid,trigger_main_sha=os.environ.get('LAB_TRIGGER_MAIN_SHA'),request=request,code_revision=os.environ.get('LAB_CODE_REVISION'),independent_board=True,shared_provider_quota=True,market_policy='provider_main_total_exact-v1',price_coverage_target=.95)
  if unified:metadata.update(independent_board=False,collection_mode='shared_background_v1',evaluation_mode='separate_rules_shared_observations')
  budget=Budget(live.get,cap=MAX_CALLS,reserve=PRIMARY_RESERVE);snapshot=None
  try:
@@ -296,9 +296,13 @@ def main():
    if is_broad:
     selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted'))]
    probes=[e for e,_ in selected_probes][:((DEEP_LIMIT+30 if unified else DEEP_LIMIT)if is_broad else MAX_MARKETS)]
-   enrich_markets(probes,budget)
+   price_probes=probes
+   if is_broad:
+    price_ids={str(e['event_id'])for e in price_probes}
+    price_probes=price_probes+[e for e in snapshot['events']if str(e['event_id'])not in price_ids]
+   enrich_markets(price_probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
-   for e in probes:by_id[e['event_id']].update(e)
+   for e in price_probes:by_id[e['event_id']].update(e)
    for e in ordered:
     if is_broad:e.update(by_id[e['event_id']])
    snapshot['lab_sports_order']=[str(e['event_id'])for e in ordered]
@@ -314,18 +318,19 @@ def main():
    if is_broad:
     for target in targets:
      e=by_id[target['event_id']]
-     target.update(deep_any=bool(e.get('stats_trend_shortlisted')),trend_available_any=bool((e.get('stats_trend')or{}).get('available')),exact_price_any=market_for_event(e,snapshot)[0]is not None)
+     target.update(deep_any=bool(e.get('stats_trend_shortlisted')),trend_available_any=bool((e.get('stats_trend')or{}).get('available')),provider_main_price_any=market_for_event(e,snapshot)[0]is not None)
     merged=dict(old_targets)
     for row in targets:merged[row['event_id']]=merge_target(merged.get(row['event_id']),row)
     result_by_id=dict(old_outcomes)
     result_by_id.update({r['event_id']:r for r in outcomes['events']})
     closed={eid for eid,r in result_by_id.items()if r.get('settled')}
-    snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_exact_price=sum(eid in closed and bool(r.get('exact_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
+    snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),unique_provider_main_price=sum(bool(r.get('provider_main_price_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_provider_main_price=sum(eid in closed and bool(r.get('provider_main_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
    receipt=dict(metadata,choices=choices,outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if unified:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
-   snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(probes)
-   snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in probes)
+   snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
+   snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in price_probes)
+   snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',requested=len(price_probes),exact=snapshot['lab_exact_quote_count'],ratio=(snapshot['lab_exact_quote_count']/len(price_probes)if price_probes else None),target=.95,provider_unavailable=len(price_probes)-snapshot['lab_exact_quote_count'])
    snapshot['production_api_call_fields_are_base_stage_only']=True
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])

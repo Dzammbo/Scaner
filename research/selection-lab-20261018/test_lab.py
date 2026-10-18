@@ -11,10 +11,11 @@ class LabTests(unittest.TestCase):
   self.assertEqual(settle(2,2.25,1.9),-.5)
   self.assertEqual(settle(2,2.,1.9),0)
   self.assertAlmostEqual(settle(3,2.25,1.9),.9)
- def test_no_quarter_price_transfer(self):
+ def test_provider_main_quarter_price_is_used_without_line_change(self):
   e={'score':'0-0','events_main_total':{'line':2.25,'over':1.9,'source':'test','quote_score':'0-0','market_checked_at':1000}}
   s={'board_observed_at_utc':1000,'generated_at_utc':1000}
-  self.assertIsNone(market_for_event(e,s)[0])
+  self.assertEqual(market_for_event(e,s)[0]['line'],2.25)
+  self.assertEqual(market_for_event(e,s)[0]['price'],1.9)
   e['events_main_total']['line']=2
   self.assertEqual(market_for_event(e,s)[0]['line'],2)
  def test_score_and_time_checks(self):

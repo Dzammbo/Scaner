@@ -28,8 +28,7 @@ def market_for_event(e,snapshot):
  reference=e.get('events_main_total')or{}
  target=number(reference.get('line'))
  if target is None:return None,'reference_market_missing'
- target=display_line(target)
- candidates=[reference]+list(e.get('totals')or[])+list(e.get('eligible_full_time_totals')or[])
+ candidates=[reference]
  reasons=[]
  for q in candidates:
   if number(q.get('line'))!=target:continue
@@ -45,8 +44,8 @@ def market_for_event(e,snapshot):
   if checked>end+1:reasons.append('quote_from_future');continue
   board=parse_time(snapshot.get('board_observed_at_utc'))
   if board is not None and checked<board-120:reasons.append('quote_not_contemporaneous');continue
-  return dict(line=target,price=k,source=q['source'],checked_at=checked,score=q['quote_score']),None
- return None,','.join(sorted(set(reasons))) or 'exact_lowered_line_price_missing'
+  return dict(line=target,price=k,source=q['source'],checked_at=checked,score=q['quote_score'],market_basis='provider_main_total_exact'),None
+ return None,','.join(sorted(set(reasons))) or 'exact_provider_main_price_missing'
 
 def sports_order(events):
  # Repeated batches preserve the production function's exact sporting order without changing its cap.

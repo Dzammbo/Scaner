@@ -23,7 +23,7 @@ class CaptureTests(unittest.TestCase):
    root=Path(directory);(root/'receipts').mkdir()
    (root/'receipts/a.json').write_text(json.dumps(dict(contour='experimental',choices={'sports_v8_fresh':[dict(event_id='1')]},outcome_targets=[])))
    seen,_,_=c.read_journal(root)
-   self.assertEqual(seen['sports_v8_fresh'],{'1'});self.assertEqual(seen['exact_display_price'],set())
+   self.assertEqual(seen['sports_v8_fresh'],{'1'});self.assertEqual(seen['provider_main_total_exact'],set())
  def test_control_sample_reproducible_with_known_probability(self):
   es=[dict(event_id=str(i),stats_trend_shortlisted=True,preliminary_selection=dict(rank=i))for i in range(1,61)]
   a=c.controls(es,[],'seed');b=c.controls(list(reversed(es)),[],'seed')
