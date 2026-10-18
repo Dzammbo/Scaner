@@ -4,6 +4,7 @@ BRANCH='research/selection-lab-20261018'
 PREFIX='research/live-background/runtime/'
 WORKER='live-background.yml';SUPERVISOR='live-background-supervisor.yml';RECOVERY='live-background-recovery.yml'
 ACTIVE={'queued','in_progress','waiting','pending','requested'}
+GENERATION='resident-v2-mutual'
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def epoch(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()
@@ -57,11 +58,20 @@ def recover(api):
     if run['status']in ACTIVE:api.cancel(run['id'])
   print('RECOVERY=disabled');return
  state,_=api.file(PREFIX+'recovery.json',BRANCH);state=state or {};actions=[]
- for name,workflow,stale in [('worker',WORKER,1500),('supervisor',SUPERVISOR,21000)]:
+ for name,workflow,stale in [('worker',WORKER,1500),('supervisor',SUPERVISOR,900)]:
   status,_=api.file(PREFIX+name+'.json',BRANCH)
-  action,run_id=decision(api.runs(workflow),status,time.time(),stale)
-  if action=='cancel_stale':api.cancel(run_id);actions.append(dict(role=name,action=action,run_id=run_id))
-  elif action=='start':
+  runs=api.runs(workflow)
+  action,run_id=decision(runs,status,time.time(),stale)
+  if status and status.get('generation')!=GENERATION:
+   old=next((r for r in runs if r['status']=='in_progress'and str(r['id'])==str(status.get('run_id'))),None)
+   if old:action,run_id='cancel_stale',old['id']
+  if action=='cancel_stale':
+   api.cancel(run_id);actions.append(dict(role=name,action=action,run_id=run_id))
+   # Wait for terminal state; never run two simultaneous football collectors.
+   for attempt in range(18):
+    time.sleep(5)
+    if not any(r['status']in ACTIVE for r in api.runs(workflow)):action='start';break
+  if action=='start':
    last=state.get(name+'_dispatched_at')
    if last and time.time()-epoch(last)<120:continue
    probe=name=='worker'and bool(cfg.get('verify_recovery_once'))and not state.get('verification_dispatched')
@@ -73,22 +83,30 @@ def recover(api):
   state.update(updated_at=stamp(),actions=actions,controller_run_id=os.environ['GITHUB_RUN_ID']);api.put(PREFIX+'recovery.json',state)
  print('RECOVERY='+json.dumps(actions))
 
+def request_recovery(api):
+ if not any(r['status']in ACTIVE for r in api.runs(RECOVERY)):api.dispatch(RECOVERY)
+
 def supervisor(api):
- started=time.monotonic();run_id=os.environ['GITHUB_RUN_ID']
- api.put(PREFIX+'supervisor.json',dict(run_id=run_id,updated_at=stamp(),state='monitoring',duration_seconds=19800,poll_seconds=60))
+ started=time.monotonic();run_id=os.environ['GITHUB_RUN_ID'];heartbeat=0.
  while time.monotonic()-started<19800:
   try:
    cfg=api.config()
    if not cfg['enabled']:break
+   if time.monotonic()>=heartbeat:
+    api.put(PREFIX+'supervisor.json',dict(run_id=run_id,updated_at=stamp(),state='monitoring',duration_seconds=19800,poll_seconds=60,generation=GENERATION))
+    heartbeat=time.monotonic()+300
    status,_=api.file(PREFIX+'worker.json',BRANCH)
    action,_=decision(api.runs(WORKER),status,time.time(),1500)
    if action!='keep':
     # All mutation decisions go through the same serialized recovery workflow.
-    if not any(r['status']in ACTIVE for r in api.runs(RECOVERY)):api.dispatch(RECOVERY)
+    request_recovery(api)
    print('SUPERVISOR_CHECK='+stamp()+':'+action,flush=True)
   except Exception as exc:print('SUPERVISOR_ERROR='+type(exc).__name__,flush=True)
   time.sleep(60)
  api.put(PREFIX+'supervisor.json',dict(run_id=run_id,updated_at=stamp(),state='finished'))
+ # Explicit queued handoff also works if workflow_run delivery is delayed.
+ if api.config()['enabled']and not any(r['status']in ACTIVE and str(r['id'])!=run_id for r in api.runs(SUPERVISOR)):
+  api.dispatch(SUPERVISOR)
 
 def invoke(args,cwd,env,timeout):
  r=subprocess.run(args,cwd=cwd,env=env,timeout=timeout,check=False)
@@ -97,12 +115,17 @@ def invoke(args,cwd,env,timeout):
 def worker(api):
  from live_background_gate import allowed
  root=pathlib.Path(os.environ['COLLECTOR_ROOT']).resolve();parent_id=os.environ['GITHUB_RUN_ID'];attempt=int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))
- started=time.monotonic();next_due=0.;cycles=0;failures=0
- state=dict(run_id=parent_id,run_attempt=attempt,started_at=stamp(),updated_at=stamp(),state='starting',duration_seconds=19200,interval_seconds=600)
+ started=time.monotonic();next_due=0.;cycles=0;failures=0;next_reserve_check=0.
+ state=dict(run_id=parent_id,run_attempt=attempt,started_at=stamp(),updated_at=stamp(),state='starting',duration_seconds=19200,interval_seconds=600,generation=GENERATION)
  api.put(PREFIX+'worker.json',state)
  while time.monotonic()-started<19200:
   cfg=api.config()
   if not cfg['enabled']:state['state']='stopped';break
+  if time.monotonic()>=next_reserve_check:
+   reserve,_=api.file(PREFIX+'supervisor.json',BRANCH)
+   action,_=decision(api.runs(SUPERVISOR),reserve,time.time(),900)
+   if action!='keep':request_recovery(api)
+   next_reserve_check=time.monotonic()+60
   if time.monotonic()<next_due:time.sleep(min(30,next_due-time.monotonic()));continue
   manual,_=api.file('.github/live-request.json')
   runs=api.call('/actions/runs?per_page=50')['workflow_runs']
@@ -141,4 +164,10 @@ def worker(api):
  state['updated_at']=stamp();api.put(PREFIX+'worker.json',state)
 
 if __name__=='__main__':
- {'recover':recover,'supervisor':supervisor,'worker':worker}[sys.argv[1]](API())
+ api=API();role=sys.argv[1]
+ try:{'recover':recover,'supervisor':supervisor,'worker':worker}[role](api)
+ finally:
+  if role!='recover':
+   try:
+    if api.config()['enabled']:request_recovery(api)
+   except Exception as exc:print('EXIT_RECOVERY_ERROR='+type(exc).__name__,flush=True)

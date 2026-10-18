@@ -29,5 +29,8 @@
   "supervisor_poll_seconds": 60,
   "stale_worker_seconds": 1500,
   "cron_enabled": false,
-  "verify_recovery_once": true
+  "verify_recovery_once": false,
+  "runtime_generation": "resident-v2-mutual",
+  "supervisor_heartbeat_seconds": 300,
+  "stale_supervisor_seconds": 900
 }

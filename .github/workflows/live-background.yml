@@ -8,7 +8,7 @@ on:
         description: Exit deliberately after one saved capture to verify recovery
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: background-dual-live
   cancel-in-progress: false
