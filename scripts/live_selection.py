@@ -1,14 +1,13 @@
 """Explicit sports-choice ledger. No API calls, Excel work or total advice."""
 import argparse
 import json
-import os
-import tempfile
 from copy import deepcopy
 from pathlib import Path
 
 from live_enrichment import number, score_goals
 from live_history import timestamp
 from live_ranking import FINAL_SELECTION_LIMIT, RULES_VERSION
+from live_publications import make_receipt, merge_publications, write_receipt
 
 
 def record_choices(ledger, snapshot, choices, selected_at):
@@ -142,22 +141,19 @@ def main():
     parser.add_argument("--snapshot", required=True)
     parser.add_argument("--choices", required=True, help="JSON: selected_at_utc and selections actually shown")
     parser.add_argument("--ledger", default=".github/live-selected-events.json")
+    parser.add_argument("--receipt-directory", help="Default: live-publications beside the legacy ledger")
     args = parser.parse_args()
     path = Path(args.ledger)
-    ledger = json.loads(path.read_text())
+    directory = Path(args.receipt_directory) if args.receipt_directory else path.parent / 'live-publications'
+    ledger = merge_publications(json.loads(path.read_text()), directory)
     snapshot = json.loads(Path(args.snapshot).read_text())
     request = json.loads(Path(args.choices).read_text())
     updated = record_choices(ledger, snapshot, request["selections"], request["selected_at_utc"])
-    # Atomic local replace; publish via a normal git commit without force push.
-    with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, suffix=".tmp", delete=False) as handle:
-        temporary = Path(handle.name)
-        json.dump(updated, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
-    try:
-        os.replace(temporary, path)
-    finally:
-        temporary.unlink(missing_ok=True)
-    print(json.dumps({"recorded_choices": len(request["selections"]), "ledger": str(path)}, ensure_ascii=False))
+    keys = {(snapshot['snapshot_id'], str(choice['event_id'])) for choice in request['selections']}
+    records = [row for row in updated['selections'] if (row['snapshot_id'], row['event_id']) in keys]
+    receipt = write_receipt(directory, make_receipt(records))
+    print(json.dumps({"recorded_choices": len(records), "receipt": str(receipt),
+                      "persistence": "local_only_until_committed_to_main"}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

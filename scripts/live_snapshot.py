@@ -51,6 +51,8 @@ LIVE_RESPONSE_FORMAT = {
         'Keep existing reference-line collection; missing exact price is проверить, not an admission veto.',
         'Confidence describes evidence, never a calibrated win probability or a guaranteed outcome.',
         'Zero choices: time, funnel, Подходящих матчей нет. API failure is not an empty pool.',
+        'Record only the actual final choices as a small .github/live-publications/<snapshot_id>.json receipt; '
+        'commit with GitHub create_file, never rewrite the large legacy ledger through the connector.',
         'Do not delay the ready final answer for formatting, extra checks or registry persistence.']}
 
 BASE = "https://api.b365api.com"
@@ -232,6 +234,8 @@ def enrich_profiles(events, directory):
 def collect(mode, requested_ids, history_dir, selected_file):
     started = time.monotonic()
     selected_ids, selected_warnings = read_selected_events(selected_file)
+    if selected_warnings:
+        raise RuntimeError("Cannot safely read published Live exclusions; restore the journal before scanning")
     if mode == "full" and selected_warnings:
         raise RuntimeError("Cannot safely run full scan without selected-events ledger: " + "; ".join(selected_warnings))
     board, board_meta = get("/v3/events/inplay", sport_id=1)

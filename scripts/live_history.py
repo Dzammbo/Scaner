@@ -7,7 +7,7 @@ from pathlib import Path
 
 COUNTERS = ('on_target', 'off_target', 'corners', 'dangerous_attacks', 'xg', 'goals', 'redcards')
 
-def read_selected_events(path):
+def _read_legacy_selected_events(path):
     """Read event IDs that already received an Основной live forecast."""
     try:
         payload = json.loads(Path(path).read_text())
@@ -26,6 +26,14 @@ def read_selected_events(path):
         return ids, []
     except (TypeError, ValueError) as exc:
         return set(), [type(exc).__name__ + ': ' + str(exc)[:180]]
+
+def read_selected_events(path):
+    """Legacy IDs plus durable small receipts, even before any materialization."""
+    from live_publications import read_publications
+    ids, warnings = _read_legacy_selected_events(path)
+    ids.update(row['event_id'] for row in read_publications(Path(path).parent / 'live-publications'))
+    return ids, warnings
+
 
 def timestamp(value):
     return datetime.fromisoformat(value.replace('Z', '+00:00')).timestamp()
