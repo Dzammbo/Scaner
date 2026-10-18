@@ -21,7 +21,7 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
 
 # User-approved chat presentation contract; does not change sports selection.
 LIVE_RESPONSE_FORMAT = {
-    'version': 'live-compact-2026-10-18-v6',
+    'version': 'live-compact-2026-10-19-v7',
     'display_order': ['sports_rank_ascending'],
     'preliminary': None,
     'header': 'Live ТБ · снимок {snapshot_time_msk} МСК · линии {odds_time_msk} МСК',
@@ -29,7 +29,8 @@ LIVE_RESPONSE_FORMAT = {
               '→ сильных {strong} → выбор {selected}.',
     'match_lines': ['{number}. [ранг {sports_rank}] {home_ru} - {away_ru} ({league_ru}, {category_ru}) | '
                     '{score}, {minute}′ {period} | уверенность: сильная | '
-                    'ТБ {user_line} × {user_price_text}; ещё {additional_goals}; {push_condition} | '
+                    'основной ТБ {main_line} × {main_price_text}; справочно вниз: {rounded_down_text}; '
+                    'ещё {additional_goals}; {push_condition} | '
                     '{redcards_and_material_discrepancies} | '
                     'ГП: {home_mean_total}/{away_mean_total}/{league_mean_total} '
                     '(N={home_n}/{away_n}/{league_n}).'],
@@ -39,12 +40,12 @@ LIVE_RESPONSE_FORMAT = {
                        'away.all.n', 'league.mean_total', 'league.n'],
     'missing_value': 'н/д',
     'user_total_policy': {
-        'version': 'quarter-down-2026-10-17-v1', 'scope': 'full_match_total_only',
-        'integer_or_half': 'Keep the reference line and its quoted over price.',
-        'quarter': 'Subtract 0.25 from the reference line; never reuse its price.',
-        'rounded_price': 'Use an existing exact quote, otherwise: проверить. No extra requests.',
+        'version': 'provider-main-total-2026-10-19-v1', 'scope': 'full_match_total_only',
+        'calculation': 'Use the exact provider main total and its quoted over price, including quarter lines.',
+        'quarter_display': 'Also show line minus 0.25 as a convenience reference only.',
+        'rounded_price': 'Never attach or transfer a price to the convenience reference line.',
         'missing_reference': 'н/д; do not invent a line.',
-        'selection_effect': 'None; no additional API calls.'},
+        'selection_effect': 'None; prices never affect sporting rank.'},
     'footer': 'Уверенность: {confidence}/100 в данных снимка, не вероятность гола.',
     'rules': [
         'ONLY one short final answer, 0-5 strong candidates; no preliminary list or automatic full cards.',

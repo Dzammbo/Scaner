@@ -45,6 +45,17 @@ def record_choices(ledger, snapshot, choices, selected_at):
             if not isinstance(choice.get(key), str) or not choice[key].strip():
                 raise ValueError("Sports reason and expected scenario required")
         reference = deepcopy(event.get("events_main_total"))
+        calculation_market = None
+        if isinstance(reference, dict):
+            line, price = number(reference.get("line")), number(reference.get("over"))
+            if (line is not None and price is not None and price > 1 and reference.get("source")
+                    and abs(line * 4 - round(line * 4)) < 1e-8):
+                calculation_market = deepcopy(reference)
+                calculation_market["market_basis"] = "provider_main_total_exact"
+        rounded_reference = None
+        if calculation_market and round(calculation_market["line"] * 4) % 2:
+            rounded_reference = {"line": calculation_market["line"] - .25, "over": None,
+                                 "calculation_effect": False, "purpose": "display_convenience_only"}
         record = {
             "snapshot_id": snapshot["snapshot_id"], "event_id": event_id,
             "rules_version": snapshot["rules_version"], "ranking_method": snapshot.get("ranking_method"),
@@ -55,6 +66,9 @@ def record_choices(ledger, snapshot, choices, selected_at):
             "expected_scenario": choice["expected_scenario"].strip(),
             "final_sports_selection": deepcopy(event["final_sports_selection"]),
             "reference_main_total": reference,
+            "recommended_total": calculation_market,
+            "rounded_down_total_reference": rounded_reference,
+            "market_result_policy": "provider-main-total-exact-v1",
             "reference_line_status": event.get("main_total_status"),
             "reference_line_reason": event.get("main_total_reason"),
             "is_user_choice": False,

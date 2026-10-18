@@ -33,7 +33,7 @@ class SelectionTests(unittest.TestCase):
     def record(self, choice=None):
         return record_choices(self.ledger, self.snapshot, [choice or self.choice], self.time)
 
-    def test_preserves_history_and_records_sports_choice_without_total_advice(self):
+    def test_preserves_history_and_records_provider_main_total_for_results(self):
         original = copy.deepcopy(self.ledger)
         self.snapshot['events'].append({'event_id': '300'})
         result = self.record()
@@ -44,7 +44,9 @@ class SelectionTests(unittest.TestCase):
         self.assertEqual(record['rules_version'], 'test-v3')
         self.assertEqual(record['reference_main_total']['line'], 4.5)
         self.assertNotIn('line_assessment', record)
-        self.assertNotIn('recommended_total', record)
+        self.assertEqual(record['recommended_total']['line'],4.5)
+        self.assertEqual(record['recommended_total']['over'],1.9)
+        self.assertEqual(record['market_result_policy'],'provider-main-total-exact-v1')
         self.assertFalse(record['final_sports_selection']['market_used'])
 
     def test_idempotent_and_immutable(self):
@@ -106,13 +108,13 @@ class SelectionTests(unittest.TestCase):
             'event_id': '200', 'time_status': 1, 'final_score': '2-0', 'source': 'test'})
         self.assertFalse(result['settled'])
 
-    def test_new_sports_record_settles_without_financial_result(self):
+    def test_new_sports_record_settles_on_provider_main_total(self):
         record = self.record()['selections'][0]
         result = evaluate_selection(record, {
             'event_id': '200', 'time_status': 3, 'final_score': '2-0', 'source': 'test'})
         self.assertTrue(result['at_least_two_more'])
-        self.assertFalse(result['financial_result_available'])
-        self.assertIsNone(result['conditional_profit'])
+        self.assertTrue(result['financial_result_available'])
+        self.assertEqual(result['conditional_profit'],-1)
 
     def test_historical_priced_record_keeps_legacy_financial_evaluation(self):
         record = self.record()['selections'][0]
@@ -121,7 +123,7 @@ class SelectionTests(unittest.TestCase):
             'event_id': '200', 'time_status': 3, 'final_score': '2-0', 'source': 'test'})
         self.assertAlmostEqual(result['conditional_profit'], .9)
 
-    def test_summary_keeps_new_candidates_in_sports_denominator_only(self):
+    def test_summary_uses_provider_main_price_denominator(self):
         base = self.record()['selections'][0]
         lost = dict(copy.deepcopy(base), event_id='201')
         open_record = dict(copy.deepcopy(base), event_id='202')
@@ -130,10 +132,10 @@ class SelectionTests(unittest.TestCase):
             '201': {'event_id': '201', 'time_status': 3, 'final_score': '0-0', 'source': 'test'},
         })
         self.assertEqual(groups[0]['settled_sports_count'], 2)
-        self.assertEqual(groups[0]['priced_settled_count'], 0)
+        self.assertEqual(groups[0]['priced_settled_count'], 2)
         self.assertEqual(groups[0]['unsettled_count'], 1)
         self.assertEqual(groups[0]['one_more_rate'], .5)
-        self.assertIsNone(groups[0]['roi'])
+        self.assertEqual(groups[0]['roi'], -1)
 
     def test_summary_separates_versions_and_marks_dependent_repeats(self):
         base = self.record()['selections'][0]

@@ -28,15 +28,14 @@ class HypothesisTests(unittest.TestCase):
         for minute,expected in [(45,False),(46,True),(60,True),(61,False)]:
             self.assertIs(evaluate(self.event(minute=minute))['flags']['H2'],expected)
 
-    def test_rounding_separates_reference_price_and_membership(self):
+    def test_provider_main_drives_calculation_and_rounding_is_reference_only(self):
         for line in [2,2.25,2.5,2.75]:
             r=evaluate(self.event(line))
-            self.assertTrue(r['flags']['H3'])
-            self.assertEqual(r['display_market']['additional_goals_for_full_win'],2)
-            if line in [2.25,2.75]:
-                self.assertIsNone(r['display_market']['over'])
-                self.assertFalse(r['display_market']['conditional_roi_eligible'])
-            else:self.assertEqual(r['display_market']['over'],1.9)
+            self.assertEqual(r['display_market']['line'],line)
+            self.assertEqual(r['display_market']['over'],1.9)
+            self.assertTrue(r['display_market']['conditional_roi_eligible'])
+            if line in [2.25,2.75]:self.assertEqual(r['rounded_down_reference']['line'],line-.25)
+            else:self.assertIsNone(r['rounded_down_reference']['line'])
         self.assertFalse(evaluate(self.event(2.75))['reference_flags']['H3'])
 
     def test_missing_stats_and_changed_market_stay_unknown(self):
