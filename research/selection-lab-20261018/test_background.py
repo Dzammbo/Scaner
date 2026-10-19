@@ -16,7 +16,7 @@ class BackgroundTests(unittest.TestCase):
   with settings():
    c.configure_background('primary');self.assertEqual(c.DEEP_LIMIT,30);self.assertEqual(c.MAX_CALLS,120)
    self.assertEqual(c.POLICIES,('sports_v8_fresh',));self.assertNotIn('.github',str(c.DATA))
-   c.configure_background('experimental');self.assertEqual(c.DEEP_LIMIT,60);self.assertEqual(c.MAX_CALLS,240);self.assertEqual(len(c.POLICIES),5)
+   c.configure_background('experimental');self.assertEqual(c.DEEP_LIMIT,60);self.assertEqual(c.MAX_CALLS,240);self.assertEqual(c.POLICIES,c.EXPERIMENTAL_POLICIES);self.assertEqual(len(c.POLICIES),10)
  def test_compressed_roundtrip_and_cache(self):
   with tempfile.TemporaryDirectory()as directory,settings():
    c.configure_background('experimental');c.DATA=Path(directory);c.CAPTURE_DAY='2026-10-18'

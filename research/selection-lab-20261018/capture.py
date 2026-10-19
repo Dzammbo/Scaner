@@ -6,7 +6,9 @@ sys.path[:0]=[str(HERE),str(ROOT/'scripts')]
 import live_snapshot as live
 from lab import sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
-POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')
+POCKET_POLICIES=('provider_main_sot_rate_010_020','provider_main_minute_46_60','provider_main_score_one','provider_main_integer_line','provider_main_danger_rate_lt1')
+EXPERIMENTAL_POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')+POCKET_POLICIES
+POLICIES=EXPERIMENTAL_POLICIES
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
 OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=900
 
@@ -20,7 +22,7 @@ def configure_background(scope):
  if scope=='primary':
   POLICIES=('sports_v8_fresh',);DEEP_LIMIT=30;WORKERS=16;MAX_CALLS=120;MAX_MARKETS=5
  else:
-  POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005');DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;MAX_MARKETS=30
+  POLICIES=EXPERIMENTAL_POLICIES;DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;MAX_MARKETS=30
 
 def load_json(path):
  return json.load(gzip.open(path,'rt')) if path.name.endswith('.gz') else json.loads(path.read_text())
@@ -159,6 +161,29 @@ def training_model(day):
  past=[r for r in rows if r['day']<day and r.get('closed') and str(r['id']) not in conflicts and r.get('additional') is not None and r.get('minute') is not None and 0<r['minute']<90]
  return (fit(past) if len(past)>=80 else None),dict(n=len(past),max_day=max((r['day']for r in past),default=None),source='frozen_historical_seed_previous_days_only',ridge=10,minimum_ev=.05)
 
+def pocket_features(event,market):
+ def total(field):
+  pair=(event.get('board_stats')or{}).get(field)
+  if not isinstance(pair,list)or len(pair)!=2:return None
+  values=[number(v)for v in pair]
+  return sum(values)if all(v is not None and v>=0 for v in values)else None
+ minute=number(event.get('minute'));sot=total('on_target');danger=total('dangerous_attacks')
+ return dict(minute=minute,goals=sum(map(int,event['score'].split('-'))),
+  on_target_per_minute=sot/minute if sot is not None and minute is not None and minute>0 else None,
+  dangerous_attacks_per_minute=danger/minute if danger is not None and minute is not None and minute>0 else None,line=(market or{}).get('line'))
+
+def pocket_matches(policy,features):
+ if policy=='provider_main_sot_rate_010_020':
+  value=features['on_target_per_minute'];return value is not None and .1<=value<.2
+ if policy=='provider_main_minute_46_60':
+  value=features['minute'];return value is not None and 46<=value<=60
+ if policy=='provider_main_score_one':return features['goals']==1
+ if policy=='provider_main_integer_line':
+  value=features['line'];return value is not None and float(value).is_integer()
+ if policy=='provider_main_danger_rate_lt1':
+  value=features['dangerous_attacks_per_minute'];return value is not None and 0<=value<1
+ raise ValueError('Unknown research pocket')
+
 def choose(snapshot,ordered,seen,beta):
  choices={p:[] for p in POLICIES};diagnostics={p:collections.Counter() for p in POLICIES}
  for position,e in enumerate(ordered,1):
@@ -175,7 +200,10 @@ def choose(snapshot,ordered,seen,beta):
    need=full_win_total(q['line'])-sum(score) if q else None
    if (policy=='provider_main_need_le2' and need>2) or (policy=='provider_main_need_le3' and need>3):diagnostics[policy]['too_many_goals_required']+=1;continue
    if policy=='provider_main_ev_ge005' and (ev is None or ev<.05):diagnostics[policy]['model_unavailable_or_ev_below_threshold']+=1;continue
+   features=pocket_features(e,q)if policy in POCKET_POLICIES else None
+   if features is not None and not pocket_matches(policy,features):diagnostics[policy]['pocket_condition_not_met_or_unknown']+=1;continue
    choices[policy].append(dict(event_id=str(e['event_id']),rank=len(choices[policy])+1,sports_position=position,score=e['score'],minute=e['minute'],market=q,market_unknown_reason=reason,model_lambda=lam,model_ev=ev,experimental_only=True))
+   if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='five-pockets-v1-20261019')
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
 def collect_outcomes_single(targets,previous,budget,now):
