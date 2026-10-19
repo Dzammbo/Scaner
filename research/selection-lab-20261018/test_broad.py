@@ -35,6 +35,7 @@ class BroadTests(unittest.TestCase):
   with patch.object(c.live,'enrich_profiles',return_value={}):
    s=broad.collect(c,fake,'unused','seed')
   self.assertEqual(len(s['events']),4);self.assertFalse(any(e['legacy_window_8_60']for e in s['events']))
+  self.assertEqual({e['minute']:e['full_collection_window_5_89']for e in s['events']},{2:False,88:True,95:False,None:False})
   self.assertEqual(s['research_version'],broad.VERSION);self.assertIn('research_raw_board',s)
  def test_batched_outcomes_ten_per_request(self):
   now=datetime.datetime.now(datetime.timezone.utc);old=(now-datetime.timedelta(hours=3)).isoformat();calls=[]

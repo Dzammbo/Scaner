@@ -288,8 +288,12 @@ def main():
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
    snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
-   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted')))and(not is_broad or(e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',e['score'])))]
+   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted')))and(not is_broad or(e.get('full_collection_window_5_89')and re.fullmatch(r'\d+-\d+',e['score'])))]
    ordered=sports_order(evaluation_events)
+   if is_broad:
+    window=dict(min_minute=broad.FULL_COLLECTION_MINUTE_MIN,max_minute=broad.FULL_COLLECTION_MINUTE_MAX,inclusive=True,requires_known_score=True,control_window_unchanged=[8,60])
+    snapshot['experimental_evaluation_window']=window
+    metadata['experimental_evaluation_window']=window
    if unified:snapshot['experimental_evaluation_event_ids']=[e['event_id']for e in evaluation_events]
    sampled=[] if (SOURCE=='background'and SCOPE=='primary')or is_broad else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
@@ -334,10 +338,13 @@ def main():
     exact=sum(market_for_event(e,snapshot)[0]is not None for e in rows)
     return dict(requested=len(rows),exact=exact,ratio=(exact/len(rows)if rows else None),provider_unavailable=len(rows)-exact)
    active_price_rows=[e for e in price_probes if number(e.get('minute'))is not None and 1<=number(e.get('minute'))<=89 and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
-   evaluation_price_rows=[e for e in price_probes if e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
+   legacy_evaluation_price_rows=[e for e in price_probes if e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
+   full_collection_price_rows=[e for e in price_probes if number(e.get('minute'))is not None and broad.FULL_COLLECTION_MINUTE_MIN<=number(e.get('minute'))<=broad.FULL_COLLECTION_MINUTE_MAX and re.fullmatch(r'\d+-\d+',str(e.get('score','')))] if is_broad else []
    snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',target=.95,
-    all_provider_rows=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),evaluation_window_8_60=price_coverage(evaluation_price_rows),
-    denominator_note='Target applies to active known-score and evaluation rows; minute 0 without score and 90+ events stay visible in raw coverage.')
+    all_provider_rows=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),
+    evaluation_window_8_60=price_coverage(legacy_evaluation_price_rows),
+    full_collection_window_5_89=price_coverage(full_collection_price_rows)if is_broad else dict(requested=0,exact=0,ratio=None,provider_unavailable=0),
+    denominator_note='Target applies to active known-score and full-collection rows; the legacy 8-60 row remains a comparison. Minute 0 without score and 90+ events stay visible in raw coverage.')
    snapshot['production_api_call_fields_are_base_stage_only']=True
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])

@@ -2,6 +2,8 @@
 import collections,concurrent.futures,datetime,hashlib,re,time
 from live_ranking import fresh_sports_features,rank_final_candidates
 VERSION='broad-observation-v3-shared-20261018'
+FULL_COLLECTION_MINUTE_MIN=5
+FULL_COLLECTION_MINUTE_MAX=89
 
 def stratum(event):
  minute=event.get('minute');score=event.get('score','')
@@ -40,7 +42,7 @@ def collect(c,budget,history,seed,excluded_deep=(),control_seen=None):
   eid=str(row.get('id')or'')
   if not eid or eid in seen:excluded['missing_or_duplicate_id']+=1;continue
   seen.add(eid);minute=c.live.integer((row.get('timer')or{}).get('tm'));score=str(row.get('ss')or'').replace(':','-')
-  events.append(dict(event_id=eid,league=league,home=home,away=away,home_id=str((row.get('home')or{}).get('id')or''),away_id=str((row.get('away')or{}).get('id')or''),league_id=str((row.get('league')or{}).get('id')or''),country=(row.get('league')or{}).get('cc'),category=c.live.category(' '.join((league,home,away))),start_time=row.get('time'),minute=minute,score=score,board_stats=row.get('stats')or{},timer=row.get('timer'),time_status=row.get('time_status'),board_observed_at_utc=observed,provider_board_row=c.sanitize(row),legacy_window_8_60=minute is not None and 8<=minute<=60,events_main_total=None,final_sports_selected=False))
+  events.append(dict(event_id=eid,league=league,home=home,away=away,home_id=str((row.get('home')or{}).get('id')or''),away_id=str((row.get('away')or{}).get('id')or''),league_id=str((row.get('league')or{}).get('id')or''),country=(row.get('league')or{}).get('cc'),category=c.live.category(' '.join((league,home,away))),start_time=row.get('time'),minute=minute,score=score,board_stats=row.get('stats')or{},timer=row.get('timer'),time_status=row.get('time_status'),board_observed_at_utc=observed,provider_board_row=c.sanitize(row),legacy_window_8_60=minute is not None and 8<=minute<=60,full_collection_window_5_89=minute is not None and FULL_COLLECTION_MINUTE_MIN<=minute<=FULL_COLLECTION_MINUTE_MAX,events_main_total=None,final_sports_selected=False))
  chosen=sample(events,c.DEEP_LIMIT,seed,excluded_deep)
  for e in events:e['stats_trend_shortlisted']=e['research_sampling']['selected']
  controls=[]
