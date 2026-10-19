@@ -8,7 +8,7 @@ from lab import sports_order,market_for_event,full_win_total,number,fit,predict,
 DATA=ROOT/'research/live-lab'
 POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
-OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=1800
+OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=900
 
 SOURCE='manual';SCOPE='experimental';CONTOUR='experimental';CAPTURE_DAY=None
 
