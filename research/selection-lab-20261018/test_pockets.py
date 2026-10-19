@@ -24,7 +24,7 @@ class PocketTests(unittest.TestCase):
    choices,_=c.choose({},events,seen,None)
   self.assertEqual([r['event_id']for r in choices[c.POCKET_POLICIES[0]]],['1','2','3','4','5'])
   self.assertEqual([r['event_id']for r in choices[c.POCKET_POLICIES[1]]],['0','1','2','3','4'])
-  old=policies[:-5]
+  old=tuple(p for p in policies if p not in c.COMBINATION_POLICIES)
   with patch.object(c,'POLICIES',old),patch.object(c,'market_for_event',market):baseline,_=c.choose({},events,{p:seen[p]for p in old},None)
   self.assertEqual({p:choices[p]for p in old},baseline)
   self.assertTrue(all(r['research_pocket_version']=='five-pockets-v1-20261019'for p in c.POCKET_POLICIES for r in choices[p]))

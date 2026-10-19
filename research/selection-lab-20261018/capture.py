@@ -7,7 +7,19 @@ import live_snapshot as live
 from lab import sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
 POCKET_POLICIES=('provider_main_sot_rate_010_020','provider_main_minute_46_60','provider_main_score_one','provider_main_integer_line','provider_main_danger_rate_lt1')
-EXPERIMENTAL_POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')+POCKET_POLICIES
+COMBINATION_POLICIES={
+ 'combo_sot_minute':('provider_main_sot_rate_010_020','provider_main_minute_46_60'),
+ 'combo_sot_need2':('provider_main_sot_rate_010_020','provider_main_need_le2'),
+ 'combo_minute_need2':('provider_main_minute_46_60','provider_main_need_le2'),
+ 'combo_sot_score1':('provider_main_sot_rate_010_020','provider_main_score_one'),
+ 'combo_score1_need2':('provider_main_score_one','provider_main_need_le2'),
+ 'combo_minute_score1':('provider_main_minute_46_60','provider_main_score_one'),
+ 'combo_integer_need2':('provider_main_integer_line','provider_main_need_le2'),
+ 'combo_minute_integer':('provider_main_minute_46_60','provider_main_integer_line'),
+ 'combo_sot_minute_need2':('provider_main_sot_rate_010_020','provider_main_minute_46_60','provider_main_need_le2'),
+ 'combo_score1_minute_need2':('provider_main_score_one','provider_main_minute_46_60','provider_main_need_le2'),
+}
+EXPERIMENTAL_POLICIES=('sports_v8_fresh','provider_main_total_exact','provider_main_need_le2','provider_main_need_le3','provider_main_ev_ge005')+POCKET_POLICIES+tuple(COMBINATION_POLICIES)
 POLICIES=EXPERIMENTAL_POLICIES
 DEEP_LIMIT=60;WORKERS=4;MAX_CALLS=240;PRIMARY_RESERVE=200;MAX_MARKETS=30;MAX_OUTCOMES=20
 OUTCOME_INITIAL_DELAY_SECONDS=3600;OUTCOME_RETRY_SECONDS=900
@@ -173,6 +185,9 @@ def pocket_features(event,market):
   dangerous_attacks_per_minute=danger/minute if danger is not None and minute is not None and minute>0 else None,line=(market or{}).get('line'))
 
 def pocket_matches(policy,features):
+ if policy in COMBINATION_POLICIES:return all(pocket_matches(p,features)for p in COMBINATION_POLICIES[policy])
+ if policy=='provider_main_need_le2':
+  value=features['line'];return value is not None and full_win_total(value)-features['goals']<=2
  if policy=='provider_main_sot_rate_010_020':
   value=features['on_target_per_minute'];return value is not None and .1<=value<.2
  if policy=='provider_main_minute_46_60':
@@ -200,10 +215,10 @@ def choose(snapshot,ordered,seen,beta):
    need=full_win_total(q['line'])-sum(score) if q else None
    if (policy=='provider_main_need_le2' and need>2) or (policy=='provider_main_need_le3' and need>3):diagnostics[policy]['too_many_goals_required']+=1;continue
    if policy=='provider_main_ev_ge005' and (ev is None or ev<.05):diagnostics[policy]['model_unavailable_or_ev_below_threshold']+=1;continue
-   features=pocket_features(e,q)if policy in POCKET_POLICIES else None
+   features=pocket_features(e,q)if policy in POCKET_POLICIES or policy in COMBINATION_POLICIES else None
    if features is not None and not pocket_matches(policy,features):diagnostics[policy]['pocket_condition_not_met_or_unknown']+=1;continue
    choices[policy].append(dict(event_id=str(e['event_id']),rank=len(choices[policy])+1,sports_position=position,score=e['score'],minute=e['minute'],market=q,market_unknown_reason=reason,model_lambda=lam,model_ev=ev,experimental_only=True))
-   if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='five-pockets-v1-20261019')
+   if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='ten-combinations-v1-20261019'if policy in COMBINATION_POLICIES else'five-pockets-v1-20261019')
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
 def collect_outcomes_single(targets,previous,budget,now):
