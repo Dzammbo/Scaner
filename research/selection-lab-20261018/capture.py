@@ -199,7 +199,7 @@ def pocket_matches(policy,features):
   value=features['dangerous_attacks_per_minute'];return value is not None and 0<=value<1
  raise ValueError('Unknown research pocket')
 
-def choose(snapshot,ordered,seen,beta):
+def choose(snapshot,ordered,seen,beta,limit=5):
  choices={p:[] for p in POLICIES};diagnostics={p:collections.Counter() for p in POLICIES}
  for position,e in enumerate(ordered,1):
   q,reason=market_for_event(e,snapshot);score=list(map(int,e['score'].split('-')))
@@ -209,7 +209,7 @@ def choose(snapshot,ordered,seen,beta):
   lam=predict(model_row,beta) if beta is not None else None
   ev=expected_profit(lam,sum(score),q['line'],q['price']) if lam is not None and q else None
   for policy in POLICIES:
-   if len(choices[policy])>=5:continue
+   if limit is not None and len(choices[policy])>=limit:continue
    if str(e['event_id']) in seen[policy]:diagnostics[policy]['already_selected_in_this_policy']+=1;continue
    if policy!='sports_v8_fresh' and not q:diagnostics[policy][reason or'unknown_exact_market']+=1;continue
    need=full_win_total(q['line'])-sum(score) if q else None
@@ -221,27 +221,29 @@ def choose(snapshot,ordered,seen,beta):
    if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='ten-combinations-v1-20261019'if policy in COMBINATION_POLICIES else'five-pockets-v1-20261019')
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
-ENTRY_VERSION='repeated-model-entries-v1-20261020'
+ENTRY_VERSION='all-qualified-model-entries-v2-20261020'
 
 def repeated_entries(snapshot,ordered,beta,control=None):
  """One entry per model/event/capture; no lifetime ID exclusion. Legacy choices stay intact."""
- raw,_=choose(snapshot,ordered,{p:set()for p in POLICIES},beta)
+ raw,_=choose(snapshot,ordered,{p:set()for p in POLICIES},beta,limit=None)
  if control is not None:
   # The production-like model retains its own 8-60 Top30 routing.
-  standard,_=choose(snapshot,sports_order([e for e in snapshot['events']if e.get('repeat_control_shortlisted')]),{p:set()for p in POLICIES},None)
+  standard,_=choose(snapshot,sports_order([e for e in snapshot['events']if e.get('repeat_control_shortlisted')]),{p:set()for p in POLICIES},None,limit=None)
   raw['standard_v8']=standard['sports_v8_fresh']
  by_id={str(e['event_id']):e for e in snapshot['events']};result={}
  for policy,rows in raw.items():
   result[policy]=[]
   for row in rows:
    e=by_id[row['event_id']];q=row.get('market');features=pocket_features(e,q)
-   identity='|'.join((snapshot['snapshot_id'],policy,row['event_id']))
+   identity='|'.join((ENTRY_VERSION,snapshot['snapshot_id'],policy,row['event_id']))
    result[policy].append(dict(row,entry_id=hashlib.sha256(identity.encode()).hexdigest(),entry_version=ENTRY_VERSION,
     model=policy,snapshot_id=snapshot['snapshot_id'],code_revision=snapshot.get('code_revision'),
     source=snapshot.get('source'),contour=snapshot.get('contour'),observed_at_utc=snapshot.get('board_observed_at_utc'),
     observed_at_msk=datetime.datetime.fromisoformat(snapshot['board_observed_at_utc']).astimezone(datetime.timezone(datetime.timedelta(hours=3))).isoformat(),
     minute_window=('46-60'if 46<=e['minute']<=60 else '5-14'if e['minute']<15 else '15-29'if e['minute']<30 else '30-45'if e['minute']<46 else '61-74'if e['minute']<75 else '75-89'),
-    entry_rule='first_five_sports_qualified_per_capture_no_lifetime_exclusion',
+    entry_rule='all_sports_qualified_per_capture_no_lifetime_exclusion',
+    top5_benchmark=row['rank']<=5,model_rank=row['rank'],
+    model_rank_group='1-5'if row['rank']<=5 else '6-10'if row['rank']<=10 else '11+',
     model_definition=dict(policy=policy,components=COMBINATION_POLICIES.get(policy),ev_threshold=.05 if policy=='provider_main_ev_ge005'else None),
     features=features,goals_needed=full_win_total(q['line'])-features['goals']if q else None,
     context={k:sanitize(e.get(k))for k in ('home','away','home_id','away_id','league','league_id','country','category','timer','time_status','board_stats','stats_trend','goal_profile','selection_confidence','research_sports_features','research_sampling','events_main_total','lab_odds_observed_at_utc','trend_observed_at_utc')},
@@ -261,17 +263,23 @@ def entry_journal(directory=None):
  return entries
 
 def entry_progress(previous,current,outcomes=None):
- entries=dict(previous)
+ all_entries=dict(previous)
  for rows in current.values():
-  for row in rows:entries.setdefault(row['entry_id'],row)
+  for row in rows:all_entries.setdefault(row['entry_id'],row)
+ entries={key:r for key,r in all_entries.items()if r.get('entry_version')==ENTRY_VERSION}
+ prior=collections.Counter(r.get('entry_version','unknown')for r in all_entries.values()if r.get('entry_version')!=ENTRY_VERSION)
  models=sorted(set(current)|{r['model']for r in entries.values()});outcomes=outcomes or {}
- def metrics(policy):
-  rows=[r for r in entries.values()if r['model']==policy]
+ def metrics(rows):
   profits=[v for r in rows if(v:=settle_entry(r,outcomes.get(r['event_id'],{})))is not None]
   return dict(entries=len(rows),unique_matches=len({r['event_id']for r in rows}),settled_priced_entries=len(profits),unit_profit=sum(profits),roi=sum(profits)/len(profits)if profits else None)
- return dict(version=ENTRY_VERSION,entries=len(entries),unique_matches=len({r['event_id']for r in entries.values()}),
-  by_model={p:metrics(p)for p in models},
-  denominator_note='Entries within a match are correlated. Legacy first selections remain separate; no retroactive entries.')
+ def model_metrics(policy):
+  rows=[r for r in entries.values()if r['model']==policy]
+  return dict(metrics(rows),top5=metrics([r for r in rows if r.get('top5_benchmark')]),
+   outside_top5=metrics([r for r in rows if not r.get('top5_benchmark')]),
+   rank_groups={key:metrics([r for r in rows if r.get('model_rank_group')==key])for key in ('1-5','6-10','11+')})
+ return dict(version=ENTRY_VERSION,entry_limit_per_model=None,entries=len(entries),unique_matches=len({r['event_id']for r in entries.values()}),
+  by_model={p:model_metrics(p)for p in models},prior_version_entry_counts=dict(prior),
+  denominator_note='Current version only; entries within a match are correlated. Top5 is a subset of all qualified entries. Legacy choices and prior versions remain separate; no backfill.')
 
 def settle_entry(entry,outcome):
  q=entry.get('market');score=list(map(int,entry['score'].split('-')));final=outcome.get('final')

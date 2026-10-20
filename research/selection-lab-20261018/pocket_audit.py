@@ -128,7 +128,7 @@ def main():
    return normalize(dict(id=eid,match=e.get('home','')+' - '+e.get('away',''),day=day,time=time,minute=minute,score=score,
     line=q['line']if q else None,odds=q['price']if q else None,need=full_win_total(q['line'])-feat['goals']if q and feat else None,
     on_target_rate=feat.get('on_target_per_minute'),dangerous_attacks_rate=feat.get('dangerous_attacks_per_minute'),country=e.get('country'),
-    league=e.get('league'),category=e.get('category'),profit=profit,final=outcome.get('final'),source_path=str(snapshot_path.relative_to(ROOT)),snapshot_id=snapshot['snapshot_id']))
+    league=e.get('league'),category=e.get('category'),top5_benchmark=(choice or{}).get('top5_benchmark'),entry_version=(choice or{}).get('entry_version'),profit=profit,final=outcome.get('final'),source_path=str(snapshot_path.relative_to(ROOT)),snapshot_id=snapshot['snapshot_id']))
   for eid,e in events.items():
    # First *priced* fresh deep observation, not first raw row; explicit separate population.
    if eid not in broad_first and(e.get('stats_trend_shortlisted')or e.get('control_shortlisted')or e.get('repeat_control_shortlisted'))and e.get('minute')is not None and 5<=e['minute']<=89 and re.fullmatch(r'\d+-\d+',str(e.get('score',''))):
@@ -144,14 +144,14 @@ def main():
     if eid not in selected[p]:
      assert eid in events,(p,eid);selected[p][eid]=record(events[eid],choice)
   for p,rows in receipt.get('model_entries',{}).items():
-   for entry in rows:repeat.setdefault(entry['entry_id'],(p,record(events[entry['event_id']],entry)))
+   for entry in rows:repeat.setdefault(entry['entry_id'],(p,entry.get('entry_version','unknown'),record(events[entry['event_id']],entry)))
  frozen_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  result=dict(generated_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_revision=frozen_head,latest_snapshot_utc=latest,
   definitions=dict(profit='net units, equal unit per entry; historical recorded FT line/price, current exact provider main FT line/price; quarter split',roi='sum(net units)/priced settled N',
    historical='primary first full-time records; exclude known outcome conflicts; all historical strategies exploratory',
    current='first selection per model/event, deduplicated chronological receipts; no retroactive policy selections',
    broad_grid='first priced fresh deep observation per event in 5-89; NOT all raw observed or only strong selections',
-   repeated='new model_entries only; no backfill; correlated entries, not independent matches',region='explicit country code only; no inference from league name; null/unmapped unknown; explicit provider eu maps Europe',
+   repeated='model_entries only; versions separated; current all-qualified entries and their Top5 subset reported separately; no backfill; correlated entries',region='explicit country code only; no inference from league name; null/unmapped unknown; explicit provider eu maps Europe',
    region_map={k:sorted(v)for k,v in REGION_CODES.items()},region_convention='Turkey/Georgia/Cyprus in Europe for reproducible convention, no claim of causal grouping',
    grid='fixed bins, all Cartesian combinations including empty; no optimized thresholds',
    without_best_day='remove day with maximum NET PROFIT, recompute remaining N; not subtract from original N',
@@ -160,7 +160,9 @@ def main():
    observed_unique=len(observed_ids),broad_first_priced_unique=len(broad_first),missing_snapshot_files=missing_snapshots,independent_decimal_checks=crosschecks,
    historical_unknown_region=sum(r['region']=='Неизвестный регион'for r in history),outcome_events=len(outcomes)),
   historical={p:audit(rows)for p,rows in historical.items()},current={p:audit(list(rows.values()))for p,rows in selected.items()},
-  repeated={p:audit([r for policy,r in repeat.values()if policy==p])for p in sorted({p for p,r in repeat.values()})},
+  repeated={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION])for p in sorted({p for p,version,r in repeat.values()if version==c.ENTRY_VERSION})},
+  repeated_by_version={version:{p:audit([r for policy,v,r in repeat.values()if policy==p and v==version])for p in sorted({policy for policy,v,r in repeat.values()if v==version})}for version in sorted({v for p,v,r in repeat.values()})},
+  repeated_top5={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION and r.get('top5_benchmark')])for p in sorted({p for p,v,r in repeat.values()if v==c.ENTRY_VERSION})},
   slice_maps=dict(historical_all=grid(history),current_broad_first_priced=grid(list(broad_first.values()))),
   source_sha256=manifest)
  (HERE/'pocket-audit-results.json').write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n')
@@ -180,7 +182,7 @@ def render(result):
  new=result['current']['provider_main_need_le2']['minute_windows'].get('46–60',{})
  out += ['',f"Окно 46–60 внутри ≤2: история {pct(old.get('roi'))} (N={old.get('n',0)}), новые первые выборы {pct(new.get('roi'))} (N={new.get('n',0)}). Разница наблюдаемая, но периоды и составы различаются; это не доказательство вреда позднего входа.",'',
  'Целые линии имеют заметную зависимость от лучшего дня. Темп створов выдержал эту проверку концентрации, но его короткая новая выборка пока не подтверждает историческую доходность. По этим результатам ничего не исключаем и условия моделей не меняем.','']
- for section,title in [('historical','История 13–18 октября, исследовательский срез'),('current','Фон и ручной исследовательский сбор, первые выборы'),('repeated','Повторные входы после запуска новой версии')]:
+ for section,title in [('historical','История 13–18 октября, исследовательский срез'),('current','Фон и ручной исследовательский сбор, первые выборы'),('repeated','Все подходящие повторные входы текущей версии'),('repeated_top5','Top-5 текущей версии, подмножество всех входов')]:
   out+=['## '+title,'','| Вариант | N | ROI | Без лучшего дня, N / ROI | Без трёх лучших, N / ROI |','|---|---:|---:|---:|---:|']
   for policy,v in result[section].items():
    t=v['total'];d=v['without_best_day'];w=v['without_top3'];out.append(f"| {NAMES.get(policy,policy)} | {t['n']} | {pct(t['roi'])} | {d['n']} / {pct(d['roi'])} | {w['n']} / {pct(w['roi'])} |")
