@@ -294,7 +294,8 @@ def entry_progress(previous,current,outcomes=None):
   by_model={p:metrics([r for r in first if r['model']==p])for p in models},
   selection_rule='Earliest qualified exact-priced observation per model/event; no rank cap; select before settlement; never replace after outcome.')
  return dict(version=ENTRY_VERSION,entry_limit_per_model=None,entries=len(entries),unique_matches=len({r['event_id']for r in entries.values()}),
-  first_entry_progress=first_summary,report_default='first_entry_progress',
+  first_entry_progress=first_summary,report_default='legacy_top5_first_choices',
+  report_default_source='Chronological choices/experimental_choices plus control_evaluation.choices; first per model/event; pocket_audit.current',
   by_model={p:model_metrics(p)for p in models},prior_version_entry_counts=dict(prior),
   denominator_note='Current version only; entries within a match are correlated. Top5 is a subset of all qualified entries. Legacy choices and prior versions remain separate; no backfill.')
 
