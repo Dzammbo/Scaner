@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "enabled": true,
-  "interval_minutes": 10,
+  "interval_minutes": 5,
   "stop_policy": "manual_only",
   "contours": [
     "shared_acquisition"
@@ -20,7 +20,7 @@
     "primary_rules",
     "experimental_policies"
   ],
-  "shared_api_call_cap": 360,
+  "shared_api_call_cap": 280,
   "control_candidate_limit": 30,
   "evaluation_data_policy": "all_fresh_enriched_candidates",
   "runtime_mode": "resident_with_supervisor_v1",
@@ -30,7 +30,7 @@
   "stale_worker_seconds": 1500,
   "cron_enabled": false,
   "verify_recovery_once": false,
-  "runtime_generation": "resident-v2-mutual",
+  "runtime_generation": "resident-v3-configurable-20261020",
   "supervisor_heartbeat_seconds": 300,
   "stale_supervisor_seconds": 900
 }

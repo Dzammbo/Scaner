@@ -4,7 +4,7 @@ BRANCH='research/selection-lab-20261018'
 PREFIX='research/live-background/runtime/'
 WORKER='live-background.yml';SUPERVISOR='live-background-supervisor.yml';RECOVERY='live-background-recovery.yml'
 ACTIVE={'queued','in_progress','waiting','pending','requested'}
-GENERATION='resident-v2-mutual'
+GENERATION='resident-v3-configurable-20261020'
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def epoch(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()
@@ -116,7 +116,8 @@ def worker(api):
  from live_background_gate import allowed
  root=pathlib.Path(os.environ['COLLECTOR_ROOT']).resolve();parent_id=os.environ['GITHUB_RUN_ID'];attempt=int(os.environ.get('GITHUB_RUN_ATTEMPT','1'))
  started=time.monotonic();next_due=0.;cycles=0;failures=0;next_reserve_check=0.
- state=dict(run_id=parent_id,run_attempt=attempt,started_at=stamp(),updated_at=stamp(),state='starting',duration_seconds=19200,interval_seconds=600,generation=GENERATION)
+ initial=api.config();interval_seconds=int(initial['interval_minutes'])*60
+ state=dict(run_id=parent_id,run_attempt=attempt,started_at=stamp(),updated_at=stamp(),state='starting',duration_seconds=19200,interval_seconds=interval_seconds,generation=GENERATION)
  api.put(PREFIX+'worker.json',state)
  while time.monotonic()-started<19200:
   cfg=api.config()
@@ -132,8 +133,11 @@ def worker(api):
   enabled,reason=allowed(cfg,time.time(),manual,runs)
   if not enabled:
    state.update(updated_at=stamp(),state='yielding_to_manual',reason=reason);api.put(PREFIX+'worker.json',state);next_due=time.monotonic()+60;continue
-  cycles+=1;next_due=time.monotonic()+600
-  state.update(updated_at=stamp(),state='collecting',cycle=cycles);api.put(PREFIX+'worker.json',state)
+  interval_seconds=int(cfg['interval_minutes'])*60
+  api_cap=int(cfg.get('shared_api_call_cap',360))
+  if not 1<=api_cap<=min(360,(3600-200)//(3600//interval_seconds)):raise ValueError('Unsafe background API cap')
+  cycles+=1;next_due=time.monotonic()+interval_seconds
+  state.update(updated_at=stamp(),state='collecting',cycle=cycles,interval_seconds=interval_seconds,api_call_cap=api_cap);api.put(PREFIX+'worker.json',state)
   # Each cycle syncs the latest archive/code, avoiding stale deduplication ledgers.
   env=dict(os.environ)
   invoke(['git','fetch','origin','refs/heads/'+BRANCH],root,env,120)
@@ -143,7 +147,7 @@ def worker(api):
   request=pathlib.Path(os.environ['RUNNER_TEMP'])/'resident-live-request.json'
   request.write_text(json.dumps(dict(mode='full',event_ids=[],requested_at_utc=stamp(),source='background',cycle_id=sid)))
   revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
-  env.update(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(request),LAB_CODE_REVISION=revision,LAB_TRIGGER_MAIN_SHA=os.environ['GITHUB_SHA'],GITHUB_RUN_ATTEMPT=str(cycle_number),LAB_CAPTURE_ID=sid,LAB_CAPTURE_DAY=day)
+  env.update(LAB_API_CALL_CAP=str(api_cap),LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(request),LAB_CODE_REVISION=revision,LAB_TRIGGER_MAIN_SHA=os.environ['GITHUB_SHA'],GITHUB_RUN_ATTEMPT=str(cycle_number),LAB_CAPTURE_ID=sid,LAB_CAPTURE_DAY=day)
   captured=False;error=None
   try:
    invoke(['python3','research/selection-lab-20261018/capture.py'],root,env,360)

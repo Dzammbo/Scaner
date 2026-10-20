@@ -3,7 +3,7 @@ import datetime,json,os,pathlib,urllib.request
 MANUAL_WORKFLOWS={'Manual BetsAPI live football snapshot','Independent experimental Live capture'}
 def timestamp(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()
 def allowed(config,now,manual_request=None,runs=()):
- if config.get('schema_version')!=1 or config.get('interval_minutes')!=10:raise ValueError('Unsupported collector configuration')
+ if config.get('schema_version')!=1 or config.get('interval_minutes')not in (5,10):raise ValueError('Unsupported collector configuration')
  if not config.get('enabled'):return False,'disabled'
  if manual_request:
   age=now-timestamp(manual_request['requested_at_utc'])
