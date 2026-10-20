@@ -55,10 +55,11 @@ class SharedTests(unittest.TestCase):
    def fetch(path,**kw):
     calls[path]+=1
     return dict(success=1,results=board()[:4]if 'inplay'in path else {}),{}
-   with patch.object(c,'configure_background',configure),patch.object(c,'control_journal',return_value=(set(),{},{})),patch.object(c.live,'get',fetch),patch.object(c.live,'enrich_profiles',return_value={}),patch.object(c,'training_model',return_value=(None,{})),patch.dict(os.environ,dict(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='777',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
+   with patch.object(c,'configure_background',configure),patch.object(c,'control_journal',return_value=(set(),{},{})),patch.object(c.live,'get',fetch),patch.object(c.live,'enrich_profiles',return_value={}),patch.object(c,'training_model',return_value=(None,{})),patch.dict(os.environ,dict(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_API_CALL_CAP='280',LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='777',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
    paths=list((root/'archive/snapshots').rglob('*.gz'));self.assertEqual(len(paths),1)
    s=c.load_json(paths[0]);self.assertIn('control_evaluation',s);self.assertIn('experimental_choices',s)
    self.assertEqual(s['collection_mode'],'shared_background_v1');self.assertFalse(s['independent_board'])
+   self.assertEqual(s['lab_api']['cap'],280)
    self.assertEqual(calls['/v3/events/inplay'],1);self.assertEqual(calls['/v1/event/stats_trend'],4);self.assertEqual(calls['/v2/event/odds'],4)
    self.assertEqual(s['research_progress']['unique_deep_requested'],4)
    self.assertEqual(s['lab_market_probe_count'],4)
@@ -70,7 +71,7 @@ class SharedTests(unittest.TestCase):
    def configure(scope):original(scope);c.DATA=root/'archive'
    event=dict(event_id='reused',home='H',away='A',league='L',minute=20,score='0-0',board_stats={},stats_trend_shortlisted=False,control_shortlisted=True,legacy_window_8_60=True,full_collection_window_5_89=True,research_sampling=dict(inclusion_probability=0,selected=False))
    def collect(*args,**kw):return dict(events=[event],board_observed_at_utc=now,generated_at_utc=now)
-   with patch.object(c,'configure_background',configure),patch.object(c,'control_journal',return_value=(set(),{},{})),patch.object(broad,'collect',collect),patch.object(c,'enrich_markets',return_value=None),patch.object(c,'training_model',return_value=(None,{})),patch.dict(os.environ,dict(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(req),GITHUB_RUN_ID='778',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
+   with patch.object(c,'configure_background',configure),patch.object(c,'control_journal',return_value=(set(),{},{})),patch.object(broad,'collect',collect),patch.object(c,'enrich_markets',return_value=None),patch.object(c,'training_model',return_value=(None,{})),patch.dict(os.environ,dict(LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_API_CALL_CAP='280',LAB_REQUEST_FILE=str(req),GITHUB_RUN_ID='778',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):c.main()
    s=c.load_json(next((root/'archive/snapshots').rglob('*.gz')))
    self.assertEqual(s['experimental_evaluation_event_ids'],['reused'])
    self.assertEqual(s['research_progress']['unique_deep_requested'],0)

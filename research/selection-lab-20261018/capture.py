@@ -357,7 +357,9 @@ def main():
  global CAPTURE_DAY,MAX_CALLS,WORKERS
  if os.environ.get('LAB_RUN_SOURCE')=='background':configure_background(os.environ['LAB_DATA_SCOPE'])
  unified=SOURCE=='background'and SCOPE=='experimental'and os.environ.get('LAB_BACKGROUND_UNIFIED')=='1'
- if unified:MAX_CALLS=360;WORKERS=8
+ if unified:
+  MAX_CALLS=min(360,int(os.environ.get('LAB_API_CALL_CAP','360')));WORKERS=8
+  if MAX_CALLS<=0:raise ValueError('Invalid background API cap')
  now=datetime.datetime.now(datetime.timezone.utc);sid=os.environ.get('GITHUB_RUN_ID',str(time.time_ns()))+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')
  CAPTURE_DAY=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
  request_path=Path(os.environ['LAB_REQUEST_FILE']);request=json.loads(request_path.read_text())
