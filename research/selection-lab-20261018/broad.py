@@ -1,7 +1,7 @@
 """Prospective broad observations, independent of legacy Top-30 and strong gates."""
 import collections,concurrent.futures,datetime,hashlib,re,time
 from live_ranking import fresh_sports_features,rank_final_candidates
-VERSION='broad-observation-v3-shared-20261018'
+VERSION='broad-observation-v4-reentries-20261020'
 FULL_COLLECTION_MINUTE_MIN=5
 FULL_COLLECTION_MINUTE_MAX=89
 
@@ -31,6 +31,21 @@ def sample(events,limit,seed,excluded=()):
   e['research_sampling']=dict(version=VERSION,stratum=key,population=population,sample_n=counts[key],inclusion_probability=counts[key]/population if eligible and population else 0,selected=e in chosen,eligible_for_new_deep=eligible,reason=None if eligible else 'already_entered_deep_sample',seed=seed)
  return chosen
 
+def sample_repeated(events,limit,seed,previous_deep=()):
+ """Split depth between new IDs and returning observations; unused seats transfer."""
+ previous_deep=set(previous_deep)
+ cohorts={'new':[e for e in events if str(e['event_id'])not in previous_deep],
+          'repeat':[e for e in events if str(e['event_id'])in previous_deep]}
+ quotas={'new':min(len(cohorts['new']),(limit+1)//2),'repeat':min(len(cohorts['repeat']),limit//2)}
+ for label in ('new','repeat'):
+  quotas[label]+=min(len(cohorts[label])-quotas[label],limit-sum(quotas.values()))
+ chosen=[]
+ for label,rows in cohorts.items():
+  chosen.extend(sample(rows,quotas[label],seed+'|'+label))
+  for e in rows:
+   e['research_sampling'].update(cohort=label,previously_deep=label=='repeat',reason=None,eligible_for_new_deep=label=='new',eligible_for_deep_observation=True)
+ return chosen
+
 def collect(c,budget,history,seed,excluded_deep=(),control_seen=None):
  payload,http=budget('/v3/events/inplay',sport_id=1)
  if payload.get('success')not in (1,True)or not isinstance(payload.get('results'),list):raise RuntimeError('Broad board unavailable')
@@ -43,9 +58,9 @@ def collect(c,budget,history,seed,excluded_deep=(),control_seen=None):
   if not eid or eid in seen:excluded['missing_or_duplicate_id']+=1;continue
   seen.add(eid);minute=c.live.integer((row.get('timer')or{}).get('tm'));score=str(row.get('ss')or'').replace(':','-')
   events.append(dict(event_id=eid,league=league,home=home,away=away,home_id=str((row.get('home')or{}).get('id')or''),away_id=str((row.get('away')or{}).get('id')or''),league_id=str((row.get('league')or{}).get('id')or''),country=(row.get('league')or{}).get('cc'),category=c.live.category(' '.join((league,home,away))),start_time=row.get('time'),minute=minute,score=score,board_stats=row.get('stats')or{},timer=row.get('timer'),time_status=row.get('time_status'),board_observed_at_utc=observed,provider_board_row=c.sanitize(row),legacy_window_8_60=minute is not None and 8<=minute<=60,full_collection_window_5_89=minute is not None and FULL_COLLECTION_MINUTE_MIN<=minute<=FULL_COLLECTION_MINUTE_MAX,events_main_total=None,final_sports_selected=False))
- chosen=sample(events,c.DEEP_LIMIT,seed,excluded_deep)
+ chosen=sample_repeated(events,c.DEEP_LIMIT,seed,excluded_deep)
  for e in events:e['stats_trend_shortlisted']=e['research_sampling']['selected']
- controls=[]
+ controls=[];repeat_controls=[]
  if control_seen is not None:
   # Same preliminary routing and 30-candidate depth as the working rules.
   # Research deep-entry exclusions must NEVER exclude control candidates.
@@ -53,13 +68,18 @@ def collect(c,budget,history,seed,excluded_deep=(),control_seen=None):
   for e in events:e['dynamics']=c.live.compare_event(e,previous.get(e['event_id']),observed)
   eligible=[e for e in events if e['legacy_window_8_60']and re.fullmatch(r'\d+-\d+',e['score'])and e['event_id']not in control_seen]
   controls=c.live.rank_candidates(eligible)[:30]
+  repeat_controls=c.live.rank_candidates([e for e in events if e['legacy_window_8_60']and re.fullmatch(r'\d+-\d+',e['score'])])[:30]
   by_id={e['event_id']:e for e in events}
-  for e in controls:by_id[e['event_id']].update(e)
+  for e in controls+repeat_controls:by_id[e['event_id']].update(e)
   controls=[by_id[e['event_id']]for e in controls]
+  repeat_controls=[by_id[e['event_id']]for e in repeat_controls]
  control_ids={e['event_id']for e in controls}
- for e in events:e['control_shortlisted']=e['event_id']in control_ids
+ repeat_ids={e['event_id']for e in repeat_controls}
+ for e in events:
+  e['control_shortlisted']=e['event_id']in control_ids
+  e['repeat_control_shortlisted']=e['event_id']in repeat_ids
  # Union by ID: one trend/profile/market acquisition per event in this cycle.
- enriched=list({e['event_id']:e for e in controls+chosen}.values())
+ enriched=list({e['event_id']:e for e in controls+repeat_controls+chosen}.values())
  def trend(e):
   try:
    raw,meta=budget('/v1/event/stats_trend',event_id=e['event_id'])
@@ -75,4 +95,4 @@ def collect(c,budget,history,seed,excluded_deep=(),control_seen=None):
   e['legacy_strength_tag']=bool(diagnostic)if valid else None
   e['research_sports_features']=fresh_sports_features(e)if valid else None
   e['legacy_strength_outside_original_window']=not e['legacy_window_8_60']
- return dict(schema_version=5,research_version=VERSION,rules_version=c.live.RULES_VERSION,final_ranking_method=c.live.FINAL_RANKING_METHOD,board_observed_at_utc=observed,generated_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),mode='research_observation',source_provider='BetsAPI Events API',raw_live_count=len(payload['results']),events=events,stats_trend_shortlisted_count=len(chosen),research_sampled_event_ids=[e['event_id']for e in chosen],control_candidate_event_ids=[e['event_id']for e in controls],shared_enriched_event_ids=[e['event_id']for e in enriched],research_universe='all_nonvirtual_provider_inplay_no_minute_score_strength_or_league_admission_filter',research_exclusions=dict(excluded),research_raw_board=c.sanitize(payload),board_http=http,**profiles)
+ return dict(schema_version=5,research_version=VERSION,rules_version=c.live.RULES_VERSION,final_ranking_method=c.live.FINAL_RANKING_METHOD,board_observed_at_utc=observed,generated_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),mode='research_observation',source_provider='BetsAPI Events API',raw_live_count=len(payload['results']),events=events,stats_trend_shortlisted_count=len(chosen),research_sampled_event_ids=[e['event_id']for e in chosen],control_candidate_event_ids=[e['event_id']for e in controls],repeat_control_candidate_event_ids=[e['event_id']for e in repeat_controls],shared_enriched_event_ids=[e['event_id']for e in enriched],research_universe='all_nonvirtual_provider_inplay_no_minute_score_strength_or_league_admission_filter',research_exclusions=dict(excluded),research_raw_board=c.sanitize(payload),board_http=http,**profiles)

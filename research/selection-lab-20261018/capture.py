@@ -4,7 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 sys.path[:0]=[str(HERE),str(ROOT/'scripts')]
 import live_snapshot as live
-from lab import sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
+from lab import settle,sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
 POCKET_POLICIES=('provider_main_sot_rate_010_020','provider_main_minute_46_60','provider_main_score_one','provider_main_integer_line','provider_main_danger_rate_lt1')
 COMBINATION_POLICIES={
@@ -221,6 +221,64 @@ def choose(snapshot,ordered,seen,beta):
    if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='ten-combinations-v1-20261019'if policy in COMBINATION_POLICIES else'five-pockets-v1-20261019')
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
+ENTRY_VERSION='repeated-model-entries-v1-20261020'
+
+def repeated_entries(snapshot,ordered,beta,control=None):
+ """One entry per model/event/capture; no lifetime ID exclusion. Legacy choices stay intact."""
+ raw,_=choose(snapshot,ordered,{p:set()for p in POLICIES},beta)
+ if control is not None:
+  # The production-like model retains its own 8-60 Top30 routing.
+  standard,_=choose(snapshot,sports_order([e for e in snapshot['events']if e.get('repeat_control_shortlisted')]),{p:set()for p in POLICIES},None)
+  raw['standard_v8']=standard['sports_v8_fresh']
+ by_id={str(e['event_id']):e for e in snapshot['events']};result={}
+ for policy,rows in raw.items():
+  result[policy]=[]
+  for row in rows:
+   e=by_id[row['event_id']];q=row.get('market');features=pocket_features(e,q)
+   identity='|'.join((snapshot['snapshot_id'],policy,row['event_id']))
+   result[policy].append(dict(row,entry_id=hashlib.sha256(identity.encode()).hexdigest(),entry_version=ENTRY_VERSION,
+    model=policy,snapshot_id=snapshot['snapshot_id'],code_revision=snapshot.get('code_revision'),
+    source=snapshot.get('source'),contour=snapshot.get('contour'),observed_at_utc=snapshot.get('board_observed_at_utc'),
+    observed_at_msk=datetime.datetime.fromisoformat(snapshot['board_observed_at_utc']).astimezone(datetime.timezone(datetime.timedelta(hours=3))).isoformat(),
+    minute_window=('46-60'if 46<=e['minute']<=60 else '5-14'if e['minute']<15 else '15-29'if e['minute']<30 else '30-45'if e['minute']<46 else '61-74'if e['minute']<75 else '75-89'),
+    entry_rule='first_five_sports_qualified_per_capture_no_lifetime_exclusion',
+    model_definition=dict(policy=policy,components=COMBINATION_POLICIES.get(policy),ev_threshold=.05 if policy=='provider_main_ev_ge005'else None),
+    features=features,goals_needed=full_win_total(q['line'])-features['goals']if q else None,
+    context={k:sanitize(e.get(k))for k in ('home','away','home_id','away_id','league','league_id','country','category','timer','time_status','board_stats','stats_trend','goal_profile','selection_confidence','research_sports_features','research_sampling','events_main_total','lab_odds_observed_at_utc','trend_observed_at_utc')},
+    rules_version=snapshot.get('rules_version'),final_ranking_method=snapshot.get('final_ranking_method'),
+    experimental_model=snapshot.get('experimental_model'),not_independent_match=True))
+ return result
+
+def entry_journal(directory=None):
+ directory=directory or DATA
+ canonical={ROOT/'research/live-lab',ROOT/'research/live-background/experimental'}
+ bases=canonical if directory in canonical else [directory]
+ entries={}
+ for base in bases:
+  for path in (base/'receipts').rglob('*.json*'):
+   for rows in load_json(path).get('model_entries',{}).values():
+    for row in rows:entries.setdefault(row['entry_id'],row)
+ return entries
+
+def entry_progress(previous,current,outcomes=None):
+ entries=dict(previous)
+ for rows in current.values():
+  for row in rows:entries.setdefault(row['entry_id'],row)
+ models=sorted(set(current)|{r['model']for r in entries.values()});outcomes=outcomes or {}
+ def metrics(policy):
+  rows=[r for r in entries.values()if r['model']==policy]
+  profits=[v for r in rows if(v:=settle_entry(r,outcomes.get(r['event_id'],{})))is not None]
+  return dict(entries=len(rows),unique_matches=len({r['event_id']for r in rows}),settled_priced_entries=len(profits),unit_profit=sum(profits),roi=sum(profits)/len(profits)if profits else None)
+ return dict(version=ENTRY_VERSION,entries=len(entries),unique_matches=len({r['event_id']for r in entries.values()}),
+  by_model={p:metrics(p)for p in models},
+  denominator_note='Entries within a match are correlated. Legacy first selections remain separate; no retroactive entries.')
+
+def settle_entry(entry,outcome):
+ q=entry.get('market');score=list(map(int,entry['score'].split('-')));final=outcome.get('final')
+ if not q or not outcome.get('settled')or outcome.get('result_conflict')or not isinstance(final,list)or len(final)!=2:return None
+ if str(q.get('score','')).replace(':','-')!=entry['score']or any(a<b for a,b in zip(final,score)):return None
+ return settle(sum(final),q['line'],q['price'])
+
 def collect_outcomes_single(targets,previous,budget,now):
  candidates=[]
  for eid,row in targets.items():
@@ -331,7 +389,7 @@ def main():
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
    snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
-   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted')))and(not is_broad or(e.get('full_collection_window_5_89')and re.fullmatch(r'\d+-\d+',e['score'])))]
+   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and(e.get('control_shortlisted')or e.get('repeat_control_shortlisted'))))and(not is_broad or(e.get('full_collection_window_5_89')and re.fullmatch(r'\d+-\d+',e['score'])))]
    ordered=sports_order(evaluation_events)
    if is_broad:
     window=dict(min_minute=broad.FULL_COLLECTION_MINUTE_MIN,max_minute=broad.FULL_COLLECTION_MINUTE_MAX,inclusive=True,requires_known_score=True,control_window_unchanged=[8,60])
@@ -341,8 +399,8 @@ def main():
    sampled=[] if (SOURCE=='background'and SCOPE=='primary')or is_broad else controls(snapshot['events'],ordered,(metadata['trigger_main_sha']or sid)+'|'+sid)
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
    if is_broad:
-    selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')or(unified and e.get('control_shortlisted'))]
-   probes=[e for e,_ in selected_probes][:((DEEP_LIMIT+30 if unified else DEEP_LIMIT)if is_broad else MAX_MARKETS)]
+    selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')or(unified and(e.get('control_shortlisted')or e.get('repeat_control_shortlisted')))]
+   probes=[e for e,_ in selected_probes][:((DEEP_LIMIT+60 if unified else DEEP_LIMIT)if is_broad else MAX_MARKETS)]
    price_probes=probes
    if is_broad:
     price_ids={str(e['event_id'])for e in price_probes}
@@ -361,6 +419,11 @@ def main():
    control=evaluate_control(snapshot,control_seen)if unified else None
    if unified:snapshot['control_evaluation']=control
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
+   model_entries=repeated_entries(snapshot,ordered,beta,control)if is_broad else {}
+   snapshot['model_entries']=model_entries
+   entry_outcomes=dict(old_outcomes)
+   if outcomes:entry_outcomes.update({r['event_id']:r for r in outcomes['events']})
+   snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in ([(e,dict(stratum='all_provider_universe',selected_for_deep=bool(e.get('stats_trend_shortlisted')),deep_inclusion_probability=e['research_sampling']['inclusion_probability']))for e in snapshot['events']]if is_broad else selected_probes)]
    if is_broad:
     for target in targets:
@@ -372,7 +435,7 @@ def main():
     result_by_id.update({r['event_id']:r for r in outcomes['events']})
     closed={eid for eid,r in result_by_id.items()if r.get('settled')}
     snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),unique_provider_main_price=sum(bool(r.get('provider_main_price_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_provider_main_price=sum(eid in closed and bool(r.get('provider_main_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
-   receipt=dict(metadata,choices=choices,outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   receipt=dict(metadata,choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if unified:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
