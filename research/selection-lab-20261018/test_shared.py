@@ -26,11 +26,11 @@ class SharedTests(unittest.TestCase):
    return dict(success=1,results=board()if 'inplay'in path else {}),{}
   with tempfile.TemporaryDirectory()as history,patch.object(c.live,'enrich_profiles',return_value={}):
    s=broad.collect(c,c.Budget(fetch),Path(history),'fixed',set(map(str,range(70))),control_seen={'79'})
-  self.assertEqual(len(s['research_sampled_event_ids']),60)
+  self.assertEqual(len(s['research_sampled_event_ids']),79)
   self.assertTrue(set(s['research_sampled_event_ids'])&set(map(str,range(70))))
   self.assertEqual(len(s['control_candidate_event_ids']),30)
   self.assertNotIn('79',s['control_candidate_event_ids'])
-  self.assertTrue(set(s['control_candidate_event_ids'])-set(s['research_sampled_event_ids']))
+  self.assertTrue(set(s['control_candidate_event_ids'])<=set(s['research_sampled_event_ids']))
   self.assertEqual(len(s['shared_enriched_event_ids']),len(set(s['control_candidate_event_ids'])|set(s['repeat_control_candidate_event_ids'])|set(s['research_sampled_event_ids'])))
   self.assertTrue(all(n==1 for n in calls.values()))
   actual=[e for e in s['events']if e['control_shortlisted']]

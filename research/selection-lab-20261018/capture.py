@@ -55,10 +55,10 @@ class BudgetExhausted(RuntimeError):pass
 
 class Budget:
  def __init__(self,fetch,cap=MAX_CALLS,reserve=PRIMARY_RESERVE):
-  self.fetch=fetch;self.cap=cap;self.reserve=reserve;self.calls=0;self.blocked=0;self.remaining=None;self.paths=collections.Counter();self.lock=threading.Lock()
+  self.fetch=fetch;self.cap=cap;self.reserve=reserve;self.calls=0;self.blocked=0;self.remaining=None;self.held_calls=0;self.paths=collections.Counter();self.lock=threading.Lock()
  def __call__(self,path,**params):
   with self.lock:
-   if self.calls>=self.cap or (self.remaining is not None and self.remaining<=self.reserve):
+   if self.calls>=self.cap-self.held_calls or (self.remaining is not None and self.remaining<=self.reserve+self.held_calls):
     self.blocked+=1;raise BudgetExhausted('lab_budget_or_primary_reserve')
    self.calls+=1;self.paths[path]+=1
    if self.remaining is not None:self.remaining-=1
@@ -67,6 +67,14 @@ class Budget:
   if remaining is not None:
    with self.lock:self.remaining=remaining if self.remaining is None else min(self.remaining,remaining)
   return payload,meta
+ def available_calls(self):
+  with self.lock:return max(0,min(self.cap-self.calls-self.held_calls,self.remaining-self.reserve-self.held_calls if self.remaining is not None else self.cap))
+ @contextlib.contextmanager
+ def reserve_calls(self,count):
+  with self.lock:self.held_calls+=count
+  try:yield
+  finally:
+   with self.lock:self.held_calls-=count
  def summary(self):return dict(calls=self.calls,blocked=self.blocked,cap=self.cap,primary_reserve=self.reserve,remaining_lower_bound=self.remaining,endpoints=dict(self.paths))
 
 @contextlib.contextmanager
@@ -237,7 +245,7 @@ def repeated_entries(snapshot,ordered,beta,control=None):
    e=by_id[row['event_id']];q=row.get('market');features=pocket_features(e,q)
    identity='|'.join((ENTRY_VERSION,snapshot['snapshot_id'],policy,row['event_id']))
    result[policy].append(dict(row,entry_id=hashlib.sha256(identity.encode()).hexdigest(),entry_version=ENTRY_VERSION,
-    model=policy,snapshot_id=snapshot['snapshot_id'],code_revision=snapshot.get('code_revision'),
+    model=policy,snapshot_id=snapshot['snapshot_id'],code_revision=snapshot.get('code_revision'),acquisition_version=snapshot.get('research_version'),
     source=snapshot.get('source'),contour=snapshot.get('contour'),observed_at_utc=snapshot.get('board_observed_at_utc'),
     observed_at_msk=datetime.datetime.fromisoformat(snapshot['board_observed_at_utc']).astimezone(datetime.timezone(datetime.timedelta(hours=3))).isoformat(),
     minute_window=('46-60'if 46<=e['minute']<=60 else '5-14'if e['minute']<15 else '15-29'if e['minute']<30 else '30-45'if e['minute']<46 else '61-74'if e['minute']<75 else '75-89'),
@@ -399,7 +407,7 @@ def main():
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
    snapshot['pool_policy']='broad_stratified_observations_not_legacy_admission' if is_broad else 'own_background_primary_exclusions_before_top30'
-   evaluation_events=[e for e in snapshot['events']if(e.get('stats_trend_shortlisted')or(unified and(e.get('control_shortlisted')or e.get('repeat_control_shortlisted'))))and(not is_broad or(e.get('full_collection_window_5_89')and re.fullmatch(r'\d+-\d+',e['score'])))]
+   evaluation_events=[e for e in snapshot['events']if e.get('research_enriched',e.get('stats_trend_shortlisted')or(unified and(e.get('control_shortlisted')or e.get('repeat_control_shortlisted'))))and(not is_broad or(e.get('full_collection_window_5_89')and re.fullmatch(r'\d+-\d+',e['score'])))]
    ordered=sports_order(evaluation_events)
    if is_broad:
     window=dict(min_minute=broad.FULL_COLLECTION_MINUTE_MIN,max_minute=broad.FULL_COLLECTION_MINUTE_MAX,inclusive=True,requires_known_score=True,control_window_unchanged=[8,60])
@@ -410,7 +418,7 @@ def main():
    selected_probes=[(e,dict(stratum='sports_top20',population=len(ordered),sample_n=min(20,len(ordered)),inclusion_probability=1 if i<20 else 0))for i,e in enumerate(ordered[:(5 if SOURCE=='background'and SCOPE=='primary'else 20)])]+sampled
    if is_broad:
     selected_probes=[(e,e['research_sampling'])for e in snapshot['events']if e.get('stats_trend_shortlisted')or(unified and(e.get('control_shortlisted')or e.get('repeat_control_shortlisted')))]
-   probes=[e for e,_ in selected_probes][:((DEEP_LIMIT+60 if unified else DEEP_LIMIT)if is_broad else MAX_MARKETS)]
+   probes=[e for e,_ in selected_probes]if is_broad else[e for e,_ in selected_probes][:MAX_MARKETS]
    price_probes=probes
    if is_broad:
     price_ids={str(e['event_id'])for e in price_probes}
@@ -423,6 +431,9 @@ def main():
    snapshot['lab_sports_order']=[str(e['event_id'])for e in ordered]
    snapshot['base_sports_fields_are_diagnostic_only']=True
    snapshot['odds_checked_at_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+   if is_broad:
+    import adaptive
+    snapshot['research_detail_coverage']=adaptive.coverage(snapshot,market_for_event)
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
    beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
    choices,reasons=choose(snapshot,ordered,seen,beta)
@@ -445,7 +456,7 @@ def main():
     result_by_id.update({r['event_id']:r for r in outcomes['events']})
     closed={eid for eid,r in result_by_id.items()if r.get('settled')}
     snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),unique_provider_main_price=sum(bool(r.get('provider_main_price_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_provider_main_price=sum(eid in closed and bool(r.get('provider_main_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
-   receipt=dict(metadata,choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if unified:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
