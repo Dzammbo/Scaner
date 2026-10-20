@@ -10,10 +10,10 @@
   "storage_branch": "research/selection-lab-20261018",
   "manual_live_priority": true,
   "freeze_selection_rules": true,
-  "research_policy": "broad-observation-v3-shared-20261018",
+  "research_policy": "broad-observation-v5-adaptive-20261020",
   "research_universe": "all_nonvirtual_inplay",
-  "research_new_deep_per_cycle": 60,
-  "research_duplicate_policy": "exclude_prior_deep_entries_keep_never_selected_candidates",
+  "research_new_deep_per_cycle": null,
+  "research_duplicate_policy": "balanced_new_and_repeat_observations",
   "match_count_target_is_not_limit": true,
   "collection_mode": "shared_background_v1",
   "evaluations": [
@@ -32,5 +32,7 @@
   "verify_recovery_once": false,
   "runtime_generation": "resident-v3-configurable-20261020",
   "supervisor_heartbeat_seconds": 300,
-  "stale_supervisor_seconds": 900
+  "stale_supervisor_seconds": 900,
+  "research_deep_policy": "adaptive-deep-v1-20261020",
+  "research_entry_policy": "all-qualified-model-entries-v2-20261020"
 }
