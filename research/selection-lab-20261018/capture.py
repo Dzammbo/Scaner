@@ -4,6 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 sys.path[:0]=[str(HERE),str(ROOT/'scripts')]
 import live_snapshot as live
+from first_entry import first_entries, VERSION as FIRST_ENTRY_VERSION
 from lab import settle,sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
 POCKET_POLICIES=('provider_main_sot_rate_010_020','provider_main_minute_46_60','provider_main_score_one','provider_main_integer_line','provider_main_danger_rate_lt1')
@@ -285,7 +286,15 @@ def entry_progress(previous,current,outcomes=None):
   return dict(metrics(rows),top5=metrics([r for r in rows if r.get('top5_benchmark')]),
    outside_top5=metrics([r for r in rows if not r.get('top5_benchmark')]),
    rank_groups={key:metrics([r for r in rows if r.get('model_rank_group')==key])for key in ('1-5','6-10','11+')})
+ first=first_entries(entries.values(),ENTRY_VERSION)
+ first_summary=dict(version=FIRST_ENTRY_VERSION,source_entry_version=ENTRY_VERSION,
+  entries=len(first),unique_matches=len({r['event_id']for r in first}),
+  first_observed_at_utc=min((r['observed_at_utc']for r in first),default=None),
+  selected_entry_ids=[r['entry_id']for r in first],
+  by_model={p:metrics([r for r in first if r['model']==p])for p in models},
+  selection_rule='Earliest qualified exact-priced observation per model/event; no rank cap; select before settlement; never replace after outcome.')
  return dict(version=ENTRY_VERSION,entry_limit_per_model=None,entries=len(entries),unique_matches=len({r['event_id']for r in entries.values()}),
+  first_entry_progress=first_summary,report_default='first_entry_progress',
   by_model={p:model_metrics(p)for p in models},prior_version_entry_counts=dict(prior),
   denominator_note='Current version only; entries within a match are correlated. Top5 is a subset of all qualified entries. Legacy choices and prior versions remain separate; no backfill.')
 

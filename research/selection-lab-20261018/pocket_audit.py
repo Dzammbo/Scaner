@@ -110,7 +110,7 @@ def main():
   for path in sorted((base/'receipts').rglob('*.json*')):
    record=load(path)
    if not record.get('failed'):receipts.append((record.get('request',{}).get('requested_at_utc',''),base,path,record))
- selected={p:{}for p in ('standard_v8',)+c.EXPERIMENTAL_POLICIES};broad_first={};repeat={};latest='';observed_ids=set();missing_snapshots=0
+ selected={p:{}for p in ('standard_v8',)+c.EXPERIMENTAL_POLICIES};broad_first={};repeat={};raw_entries={};latest='';observed_ids=set();missing_snapshots=0
  for timestamp,base,path,receipt in sorted(receipts,key=lambda x:(x[0],str(x[2]))):
   snapshot_path=base/'snapshots'/path.relative_to(base/'receipts')
   if not snapshot_path.exists():missing_snapshots+=1;continue
@@ -144,12 +144,18 @@ def main():
     if eid not in selected[p]:
      assert eid in events,(p,eid);selected[p][eid]=record(events[eid],choice)
   for p,rows in receipt.get('model_entries',{}).items():
-   for entry in rows:repeat.setdefault(entry['entry_id'],(p,entry.get('entry_version','unknown'),record(events[entry['event_id']],entry)))
+   for entry in rows:
+    raw_entries.setdefault(entry['entry_id'],entry)
+    repeat.setdefault(entry['entry_id'],(p,entry.get('entry_version','unknown'),record(events[entry['event_id']],entry)))
+ first=c.first_entries(raw_entries.values(),c.ENTRY_VERSION)
+ first_groups={p:[]for p in selected}
+ for entry in first:first_groups.setdefault(entry['model'],[]).append(repeat[entry['entry_id']][2])
  frozen_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  result=dict(generated_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_revision=frozen_head,latest_snapshot_utc=latest,
   definitions=dict(profit='net units, equal unit per entry; historical recorded FT line/price, current exact provider main FT line/price; quarter split',roi='sum(net units)/priced settled N',
    historical='primary first full-time records; exclude known outcome conflicts; all historical strategies exploratory',
-   current='first selection per model/event, deduplicated chronological receipts; no retroactive policy selections',
+   current='LEGACY first selection per model/event with original Top5 quota; do not merge with first_entries',
+   first_entries=dict(version=c.FIRST_ENTRY_VERSION,source_entry_version=c.ENTRY_VERSION,rule='Earliest qualified exact-priced saved entry per model/event, no rank cap; selection ignores outcomes',first_observed_at_utc=min((e['observed_at_utc']for e in first),default=None),selected_entry_ids=[e['entry_id']for e in first],report_default=True),
    broad_grid='first priced fresh deep observation per event in 5-89; NOT all raw observed or only strong selections',
    repeated='model_entries only; versions separated; current all-qualified entries and their Top5 subset reported separately; no backfill; correlated entries',region='explicit country code only; no inference from league name; null/unmapped unknown; explicit provider eu maps Europe',
    region_map={k:sorted(v)for k,v in REGION_CODES.items()},region_convention='Turkey/Georgia/Cyprus in Europe for reproducible convention, no claim of causal grouping',
@@ -160,6 +166,7 @@ def main():
    observed_unique=len(observed_ids),broad_first_priced_unique=len(broad_first),missing_snapshot_files=missing_snapshots,independent_decimal_checks=crosschecks,
    historical_unknown_region=sum(r['region']=='Неизвестный регион'for r in history),outcome_events=len(outcomes)),
   historical={p:audit(rows)for p,rows in historical.items()},current={p:audit(list(rows.values()))for p,rows in selected.items()},
+  first_entries={p:audit(rows)for p,rows in first_groups.items()},
   repeated={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION])for p in sorted({p for p,version,r in repeat.values()if version==c.ENTRY_VERSION})},
   repeated_by_version={version:{p:audit([r for policy,v,r in repeat.values()if policy==p and v==version])for p in sorted({policy for policy,v,r in repeat.values()if v==version})}for version in sorted({v for p,v,r in repeat.values()})},
   repeated_top5={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION and r.get('top5_benchmark')])for p in sorted({p for p,v,r in repeat.values()if v==c.ENTRY_VERSION})},
@@ -182,7 +189,7 @@ def render(result):
  new=result['current']['provider_main_need_le2']['minute_windows'].get('46–60',{})
  out += ['',f"Окно 46–60 внутри ≤2: история {pct(old.get('roi'))} (N={old.get('n',0)}), новые первые выборы {pct(new.get('roi'))} (N={new.get('n',0)}). Разница наблюдаемая, но периоды и составы различаются; это не доказательство вреда позднего входа.",'',
  'Целые линии имеют заметную зависимость от лучшего дня. Темп створов выдержал эту проверку концентрации, но его короткая новая выборка пока не подтверждает историческую доходность. По этим результатам ничего не исключаем и условия моделей не меняем.','']
- for section,title in [('historical','История 13–18 октября, исследовательский срез'),('current','Фон и ручной исследовательский сбор, первые выборы'),('repeated','Все подходящие повторные входы текущей версии'),('repeated_top5','Top-5 текущей версии, подмножество всех входов')]:
+ for section,title in [('first_entries','Основной учёт: первый подходящий вход на матч, без лимита Top5'),('historical','История 13–18 октября, исследовательский срез'),('current','Архив: прежние первые выборы с лимитом Top5')]:
   out+=['## '+title,'','| Вариант | N | ROI | Без лучшего дня, N / ROI | Без трёх лучших, N / ROI |','|---|---:|---:|---:|---:|']
   for policy,v in result[section].items():
    t=v['total'];d=v['without_best_day'];w=v['without_top3'];out.append(f"| {NAMES.get(policy,policy)} | {t['n']} | {pct(t['roi'])} | {d['n']} / {pct(d['roi'])} | {w['n']} / {pct(w['roi'])} |")
