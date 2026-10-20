@@ -1,14 +1,29 @@
 {
-  "worker_dispatched_at": "2026-10-20T10:21:08.823909+00:00",
+  "worker_dispatched_at": "2026-10-20T10:37:49.222407+00:00",
   "verification_dispatched": true,
-  "supervisor_dispatched_at": "2026-10-18T20:56:00.182022+00:00",
-  "updated_at": "2026-10-20T10:21:09.576068+00:00",
+  "supervisor_dispatched_at": "2026-10-20T10:38:08.384600+00:00",
+  "updated_at": "2026-10-20T10:38:08.384619+00:00",
   "actions": [
+    {
+      "role": "worker",
+      "action": "cancel_stale",
+      "run_id": 39407321205
+    },
     {
       "role": "worker",
       "action": "dispatched",
       "verification": false
+    },
+    {
+      "role": "supervisor",
+      "action": "cancel_stale",
+      "run_id": 39378019074
+    },
+    {
+      "role": "supervisor",
+      "action": "dispatched",
+      "verification": false
     }
   ],
-  "controller_run_id": "39407304055"
+  "controller_run_id": "39409223607"
 }
