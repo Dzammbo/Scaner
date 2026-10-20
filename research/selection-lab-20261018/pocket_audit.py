@@ -167,6 +167,8 @@ def main():
    historical_unknown_region=sum(r['region']=='Неизвестный регион'for r in history),outcome_events=len(outcomes)),
   historical={p:audit(rows)for p,rows in historical.items()},current={p:audit(list(rows.values()))for p,rows in selected.items()},
   first_entries={p:audit(rows)for p,rows in first_groups.items()},
+  current_window_audit={p:dict(outside_original_window=sum(not 8<=r['minute']<=60 for r in rows.values()),
+   series_label='Actual recorded choices; includes historical 5-89 window drift where count is nonzero; not a reconstructed original-window series')for p,rows in selected.items()},
   repeated={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION])for p in sorted({p for p,version,r in repeat.values()if version==c.ENTRY_VERSION})},
   repeated_by_version={version:{p:audit([r for policy,v,r in repeat.values()if policy==p and v==version])for p in sorted({policy for policy,v,r in repeat.values()if v==version})}for version in sorted({v for p,v,r in repeat.values()})},
   repeated_top5={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION and r.get('top5_benchmark')])for p in sorted({p for p,v,r in repeat.values()if v==c.ENTRY_VERSION})},
@@ -183,6 +185,8 @@ def render(result):
  'Условный флет 1 единица; ROI = чистый результат / число завершённых входов с точной ценой. N включает возвраты. Дни по Москве. Сегменты и пересечения не складываются в независимую выборку. Это исследование, не подбор новых правил по результату.','',
  'Старые первые выборы и новые повторные входы разделены. Карта широкого пула берёт первое свежее обогащённое наблюдение с ценой в 5–89, а не все сырые строки. Неизвестные страны не восстановлены догадкой по названию турнира. Названия турниров сохраняются как в источнике, русские и английские алиасы не объединяются автоматически.','']
  out+=['## Что показала проверка','']
+ contaminated={p:v['outside_original_window']for p,v in result.get('current_window_audit',{}).items()if v['outside_original_window']}
+ if contaminated:out+=['ВНИМАНИЕ: фактическая накопительная серия содержит исторические входы вне исходного окна 8–60: '+', '.join(f'{NAMES.get(p,p)}: {n}'for p,n in contaminated.items())+'. Это ошибка прежней границы исследовательских моделей; записи сохранены, возврат Top5 не удаляет их. Исправленный отбор действует только для новых выборов. Восстановленную историю считать отдельно.','']
  for key in ['provider_main_sot_rate_010_020','provider_main_integer_line','provider_main_need_le2']:
   v=result['historical'][key];out.append(f"- {NAMES[key]}: история {pct(v['total']['roi'])} (N={v['total']['n']}), без лучшего дня {pct(v['without_best_day']['roi'])} (N={v['without_best_day']['n']}), без трёх лучших {pct(v['without_top3']['roi'])} (N={v['without_top3']['n']}).")
  old=result['historical']['provider_main_need_le2']['minute_windows'].get('46–60',{})
