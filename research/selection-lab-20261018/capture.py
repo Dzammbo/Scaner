@@ -230,6 +230,16 @@ def choose(snapshot,ordered,seen,beta,limit=5):
    if features is not None:choices[policy][-1].update(research_pocket_features=features,research_pocket_version='ten-combinations-v1-20261019'if policy in COMBINATION_POLICIES else'five-pockets-v1-20261019')
  return choices,{p:dict(d)for p,d in diagnostics.items()}
 
+NARROW_WINDOW_VERSION='narrow-top5-window-8-60-v1-20261021'
+
+def choose_narrow(snapshot,ordered,seen,beta):
+ """Original narrow models; broad acquisition and repeated research remain 5-89."""
+ eligible=[e for e in ordered if number(e.get('minute'))is not None and 8<=number(e['minute'])<=60]
+ choices,reasons=choose(snapshot,eligible,seen,beta,limit=5)
+ for rows in choices.values():
+  for row in rows:row.update(admission_window_version=NARROW_WINDOW_VERSION,admission_window=[8,60])
+ return choices,reasons
+
 ENTRY_VERSION='all-qualified-model-entries-v2-20261020'
 
 def repeated_entries(snapshot,ordered,beta,control=None):
@@ -446,7 +456,9 @@ def main():
     snapshot['research_detail_coverage']=adaptive.coverage(snapshot,market_for_event)
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
    beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
-   choices,reasons=choose(snapshot,ordered,seen,beta)
+   choices,reasons=choose_narrow(snapshot,ordered,seen,beta)
+   metadata['narrow_selection_window']=dict(version=NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
+   snapshot['narrow_selection_window']=metadata['narrow_selection_window']
    control=evaluate_control(snapshot,control_seen)if unified else None
    if unified:snapshot['control_evaluation']=control
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
