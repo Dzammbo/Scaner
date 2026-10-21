@@ -2,6 +2,7 @@
 import collections,datetime,decimal,hashlib,itertools,json,math,re,subprocess
 from pathlib import Path
 import capture as c
+import statistics_epoch as epoch
 from lab import full_win_total,settle
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 NAMES={
@@ -110,11 +111,23 @@ def main():
   for path in sorted((base/'receipts').rglob('*.json*')):
    record=load(path)
    if not record.get('failed'):receipts.append((record.get('request',{}).get('requested_at_utc',''),base,path,record))
- selected={p:{}for p in ('standard_v8',)+c.EXPERIMENTAL_POLICIES};broad_first={};repeat={};raw_entries={};latest='';observed_ids=set();missing_snapshots=0
+ config=epoch.load_config();epoch_id=config['id']if config else None
+ selected={p:{}for p in ('standard_v8',)+c.EXPERIMENTAL_POLICIES};legacy_selected={p:{}for p in selected}
+ epoch_metadata=None;epoch_observed_ids=set();first_seen={}
+ for _,_,_,receipt in receipts:
+  for row in receipt.get('outcome_targets',[]):
+   eid=str(row['event_id']);ts=row.get('board_observed_at_utc','')
+   if ts and(eid not in first_seen or ts<first_seen[eid]):first_seen[eid]=ts
+ broad_first={};repeat={};raw_entries={};latest='';observed_ids=set();missing_snapshots=0
  for timestamp,base,path,receipt in sorted(receipts,key=lambda x:(x[0],str(x[2]))):
   snapshot_path=base/'snapshots'/path.relative_to(base/'receipts')
   if not snapshot_path.exists():missing_snapshots+=1;continue
   snapshot=load(snapshot_path);latest=max(latest,snapshot.get('board_observed_at_utc')or'');events={str(e['event_id']):e for e in snapshot.get('events',[])}
+  is_current=not config or(receipt.get('statistics_epoch')or{}).get('id')==epoch_id
+  if config and is_current:
+   meta=receipt['statistics_epoch']
+   if epoch_metadata is None or meta['started_at_utc']<epoch_metadata['started_at_utc']:epoch_metadata=meta
+   epoch_observed_ids.update(eid for eid in events if first_seen.get(eid,'')>=meta['started_at_utc'])
   observed_ids.update(events)
   def record(e,choice=None):
    nonlocal crosschecks
@@ -126,7 +139,7 @@ def main():
     assert abs(profit-independent_profit(outcome['final'],q['line'],q['price']))<1e-9;crosschecks+=1
    time=snapshot['board_observed_at_utc'];day=datetime.datetime.fromisoformat(time).astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
    return normalize(dict(id=eid,match=e.get('home','')+' - '+e.get('away',''),day=day,time=time,minute=minute,score=score,
-    line=q['line']if q else None,odds=q['price']if q else None,need=full_win_total(q['line'])-feat['goals']if q and feat else None,
+    line=q['line']if q else None,odds=q['price']if q else None,sports_rank=(choice or{}).get('sports_rank'),rank_cohort=(choice or{}).get('rank_cohort'),need=full_win_total(q['line'])-feat['goals']if q and feat else None,
     on_target_rate=feat.get('on_target_per_minute'),dangerous_attacks_rate=feat.get('dangerous_attacks_per_minute'),country=e.get('country'),
     league=e.get('league'),category=e.get('category'),top5_benchmark=(choice or{}).get('top5_benchmark'),entry_version=(choice or{}).get('entry_version'),profit=profit,final=outcome.get('final'),source_path=str(snapshot_path.relative_to(ROOT)),snapshot_id=snapshot['snapshot_id']))
   for eid,e in events.items():
@@ -139,22 +152,33 @@ def main():
   else:groups['standard_v8']=receipt.get('control_evaluation',{}).get('choices',[])
   for p,rows in groups.items():
    if p not in selected:continue
+   destination=selected if is_current else legacy_selected
    for choice in rows:
     eid=str(choice['event_id'])
-    if eid not in selected[p]:
-     assert eid in events,(p,eid);selected[p][eid]=record(events[eid],choice)
+    if config and is_current:
+     assert eid in {str(r['event_id'])for r in receipt.get('epoch_base_choices',[])},('outside_common_base',p,eid)
+     assert choice.get('statistics_epoch_id')==epoch_id and 8<=choice['minute']<=60
+    if eid not in destination[p]:
+     assert eid in events,(p,eid);destination[p][eid]=record(events[eid],choice)
   for p,rows in receipt.get('model_entries',{}).items():
    for entry in rows:
-    raw_entries.setdefault(entry['entry_id'],entry)
-    repeat.setdefault(entry['entry_id'],(p,entry.get('entry_version','unknown'),record(events[entry['event_id']],entry)))
+    if not config or entry.get('statistics_epoch_id')==epoch_id:
+     raw_entries.setdefault(entry['entry_id'],entry)
+     repeat.setdefault(entry['entry_id'],(p,entry.get('entry_version','unknown'),record(events[entry['event_id']],entry)))
  first=c.first_entries(raw_entries.values(),c.ENTRY_VERSION)
  first_groups={p:[]for p in selected}
  for entry in first:first_groups.setdefault(entry['model'],[]).append(repeat[entry['entry_id']][2])
+ if config:
+  base_ids=set(selected['standard_v8'])
+  assert base_ids==set(selected['sports_v8_fresh'])
+  assert all(set(rows)<=base_ids for rows in selected.values())
+ broad_epoch={eid:r for eid,r in broad_first.items()if not config or(epoch_metadata and eid in epoch_observed_ids and r['time']>=epoch_metadata['started_at_utc'])}
  frozen_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  result=dict(generated_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_revision=frozen_head,latest_snapshot_utc=latest,report_default='current',
+  statistics_epoch=(epoch_metadata or dict(config or{},status='awaiting_first_successful_capture')),
   definitions=dict(profit='net units, equal unit per entry; historical recorded FT line/price, current exact provider main FT line/price; quarter split',roi='sum(net units)/priced settled N',
    historical='primary first full-time records; exclude known outcome conflicts; all historical strategies exploratory',
-   current='DEFAULT original Top5 first selection per model/event, chronological receipt deduplication; exclude already selected IDs before filling each model quota; series continues without reset; do not merge with first_entries',
+   current='DEFAULT frozen forward epoch: one common sports Top5, 8-60, exclude pre-epoch observed and previously base-selected IDs BEFORE Top30/Top5; every pocket is a subset of that same base; never refill pockets; one initial line/price per match; no backfill'if config else'Legacy per-policy Top5 first choices',
    first_entries=dict(version=c.FIRST_ENTRY_VERSION,source_entry_version=c.ENTRY_VERSION,rule='RESEARCH ONLY: earliest qualified exact-priced saved entry per model/event, no rank cap; selection ignores outcomes',first_observed_at_utc=min((e['observed_at_utc']for e in first),default=None),selected_entry_ids=[e['entry_id']for e in first],report_default=False),
    broad_grid='first priced fresh deep observation per event in 5-89; NOT all raw observed or only strong selections',
    repeated='model_entries only; versions separated; current all-qualified entries and their Top5 subset reported separately; no backfill; correlated entries',region='explicit country code only; no inference from league name; null/unmapped unknown; explicit provider eu maps Europe',
@@ -163,16 +187,18 @@ def main():
    without_best_day='remove day with maximum NET PROFIT, recompute remaining N; not subtract from original N',
    without_top3='remove three highest net unit returns, recompute remaining N; no claim of formal significance'),
   quality=dict(historical_records=len(all_history),historical_after_conflicts=len(history),historical_conflicts=sorted(conflicts),
-   observed_unique=len(observed_ids),broad_first_priced_unique=len(broad_first),missing_snapshot_files=missing_snapshots,independent_decimal_checks=crosschecks,
+   observed_unique=len(epoch_observed_ids)if config else len(observed_ids),lifetime_observed_unique=len(observed_ids),broad_first_priced_unique=len(broad_epoch),lifetime_broad_first_priced_unique=len(broad_first),missing_snapshot_files=missing_snapshots,independent_decimal_checks=crosschecks,
    historical_unknown_region=sum(r['region']=='Неизвестный регион'for r in history),outcome_events=len(outcomes)),
   historical={p:audit(rows)for p,rows in historical.items()},current={p:audit(list(rows.values()))for p,rows in selected.items()},
+  legacy_top5_archive={p:audit(list(rows.values()))for p,rows in legacy_selected.items()},
+  current_rank_cohorts={p:{cohort:stats([r for r in rows.values()if r.get('rank_cohort')==cohort])for cohort in ('1-3','4-5')}for p,rows in selected.items()},
   first_entries={p:audit(rows)for p,rows in first_groups.items()},
   current_window_audit={p:dict(outside_original_window=sum(not 8<=r['minute']<=60 for r in rows.values()),
    series_label='Actual recorded choices; includes historical 5-89 window drift where count is nonzero; not a reconstructed original-window series')for p,rows in selected.items()},
   repeated={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION])for p in sorted({p for p,version,r in repeat.values()if version==c.ENTRY_VERSION})},
   repeated_by_version={version:{p:audit([r for policy,v,r in repeat.values()if policy==p and v==version])for p in sorted({policy for policy,v,r in repeat.values()if v==version})}for version in sorted({v for p,v,r in repeat.values()})},
   repeated_top5={p:audit([r for policy,version,r in repeat.values()if policy==p and version==c.ENTRY_VERSION and r.get('top5_benchmark')])for p in sorted({p for p,v,r in repeat.values()if v==c.ENTRY_VERSION})},
-  slice_maps=dict(historical_all=grid(history),current_broad_first_priced=grid(list(broad_first.values()))),
+  slice_maps=dict(historical_all=grid(history),current_broad_first_priced=grid(list(broad_epoch.values()))),
   source_sha256=manifest)
  (HERE/'pocket-audit-results.json').write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n')
  render(result)
@@ -193,7 +219,8 @@ def render(result):
  new=result['current']['provider_main_need_le2']['minute_windows'].get('46–60',{})
  out += ['',f"Окно 46–60 внутри ≤2: история {pct(old.get('roi'))} (N={old.get('n',0)}), новые первые выборы {pct(new.get('roi'))} (N={new.get('n',0)}). Разница наблюдаемая, но периоды и составы различаются; это не доказательство вреда позднего входа.",'',
  'Целые линии имеют заметную зависимость от лучшего дня. Темп створов выдержал эту проверку концентрации, но его короткая новая выборка пока не подтверждает историческую доходность. По этим результатам ничего не исключаем и условия моделей не меняем.','']
- for section,title in [('current','Основной учёт: прежний отбор Top5, один вход на матч'),('first_entries','Отдельное исследование: первый подходящий вход на матч по всем рангам'),('historical','История 13–18 октября, исследовательский срез')]:
+ out+=['Новая основная серия: одна общая спортивная пятёрка 8–60; карманы являются её подмножествами без добора. Старые отдельные пятёрки находятся в legacy_top5_archive и не входят в current. Версия и начало серии: '+json.dumps(result.get('statistics_epoch'),ensure_ascii=False)+'.','']
+ for section,title in [('current','Основной учёт: новая общая спортивная пятёрка, один вход на матч'),('first_entries','Отдельное исследование: первый подходящий вход на матч по всем рангам'),('legacy_top5_archive','Архив прежних отдельных пятёрок, включая прежнее ошибочное окно'),('historical','История 13–18 октября, исследовательский срез')]:
   out+=['## '+title,'','| Вариант | N | ROI | Без лучшего дня, N / ROI | Без трёх лучших, N / ROI |','|---|---:|---:|---:|---:|']
   for policy,v in result[section].items():
    t=v['total'];d=v['without_best_day'];w=v['without_top3'];out.append(f"| {NAMES.get(policy,policy)} | {t['n']} | {pct(t['roi'])} | {d['n']} / {pct(d['roi'])} | {w['n']} / {pct(w['roi'])} |")
@@ -219,6 +246,6 @@ def render(result):
  out+=['## Ограничения','',
   'Исторические карманы выбраны после известных результатов, поэтому их плюс не является независимым подтверждением. Новые варианты наблюдались короткое время, некоторые только в одном времени суток/регионе. Это описательная раскладка без причинных выводов и без поправки на множество проверенных срезов. Удаление лучшего дня/трёх выигрышей - проверка концентрации, не статистический тест.','',
   'Повторные входы по одному матчу коррелируют. Первый обогащённый вход в широком пуле зависит от маршрутизации и выборки; поздние окна нельзя считать равномерным экспериментом. Счёт и линия берутся из сохранённого входа; итоговые данные не используются как признаки прошлого. Регион по стране турнира не описывает силу лиги.','',
-  'Полные определения, состав стран, SHA256 источников, N и финансовые суммы сохранены в pocket-audit-results.json. Незавершённые и непроверенные цены исключены из ROI. Ручной Live и правила моделей не менялись.']
+ 'Полные определения, состав стран, SHA256 источников, N и финансовые суммы сохранены в pocket-audit-results.json. Незавершённые и непроверенные цены исключены из ROI. Новая общая пятёрка и новая серия запущены по согласованию 21.10.2026; исходные условия карманов и широкий сбор сохранены.']
  (HERE/'Разбор прибыли и срезов.md').write_text('\n'.join(out)+'\n')
 if __name__=='__main__':main()

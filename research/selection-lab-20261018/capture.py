@@ -4,6 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 sys.path[:0]=[str(HERE),str(ROOT/'scripts')]
 import live_snapshot as live
+import statistics_epoch as epoch
 from first_entry import first_entries, VERSION as FIRST_ENTRY_VERSION
 from lab import settle,sports_order,market_for_event,full_win_total,number,fit,predict,expected_profit
 DATA=ROOT/'research/live-lab'
@@ -414,6 +415,14 @@ def main():
     old_targets[eid]=merge_target(old_targets.get(eid),dict(row,deep_any=False,trend_available_any=False,exact_price_any=False))
    for eid,row in control_outcomes.items():
     if eid not in old_outcomes or row['checked_at_utc']>old_outcomes[eid]['checked_at_utc']:old_outcomes[eid]=row
+  epoch_config=epoch.load_config()if SCOPE=='experimental'and DATA in (ROOT/'research/live-lab',ROOT/'research/live-background/experimental')else None
+  epoch_state=None
+  if epoch_config:
+   bases=(ROOT/'research/live-lab',ROOT/'research/live-background/experimental')
+   records=(load_json(p)for base in bases for p in (base/'receipts').rglob('*.json*'))
+   epoch_state=epoch.read_state(epoch_config,records,old_targets,now.isoformat())
+   control_seen=epoch_state['excluded']|epoch_state['selected']
+   metadata['statistics_epoch']=epoch.metadata(epoch_state)
   with isolated_runtime(budget),collection_history()as history,tempfile.TemporaryDirectory(prefix='live-lab-empty-ledger-') as directory:
    empty=Path(directory)/'selected.json'
    excluded=sorted(seen['sports_v8_fresh']) if SOURCE=='background' and SCOPE=='primary' else []
@@ -422,7 +431,7 @@ def main():
    outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)if is_broad else None
    if is_broad:
     import broad
-    extra={'control_seen':control_seen}if unified else {}
+    extra={'control_seen':control_seen}if unified or epoch_state else {}
     snapshot=broad.collect(sys.modules[__name__],budget,history,(metadata['trigger_main_sha']or sid)+'|'+sid,{eid for eid,row in old_targets.items()if row.get('deep_any')},**extra)
    else:snapshot=live.collect('full',[],history,empty)
    snapshot.update(metadata)
@@ -456,17 +465,33 @@ def main():
     snapshot['research_detail_coverage']=adaptive.coverage(snapshot,market_for_event)
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
    beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
-   choices,reasons=choose_narrow(snapshot,ordered,seen,beta)
-   metadata['narrow_selection_window']=dict(version=NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
+   if epoch_state:
+    common_order=sports_order([e for e in snapshot['events']if e.get('control_shortlisted')])
+    choices,reasons,base_choices=epoch.choose_common(sys.modules[__name__],snapshot,common_order,epoch_state,beta)
+    metadata['epoch_base_choices']=base_choices
+    snapshot['epoch_base_choices']=base_choices
+   else:choices,reasons=choose_narrow(snapshot,ordered,seen,beta)
+   metadata['narrow_selection_window']=dict(version=epoch.VERSION if epoch_state else NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
    snapshot['narrow_selection_window']=metadata['narrow_selection_window']
    control=evaluate_control(snapshot,control_seen)if unified else None
-   if unified:snapshot['control_evaluation']=control
+   if epoch_state:
+    control=dict(control or{},choices=choices['standard_v8'],statistics_epoch=epoch.metadata(epoch_state),independent_decision_ledger=False,common_base=True)
+   if unified or epoch_state:snapshot['control_evaluation']=control
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
    model_entries=repeated_entries(snapshot,ordered,beta,control)if is_broad else {}
+   if epoch_state:
+    for rows in model_entries.values():
+     for row in rows:
+      row['statistics_epoch_id']=epoch_state['id']if row['event_id']not in epoch_state['excluded']else None
    snapshot['model_entries']=model_entries
    entry_outcomes=dict(old_outcomes)
    if outcomes:entry_outcomes.update({r['event_id']:r for r in outcomes['events']})
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
+   if epoch_state:
+    snapshot['entry_progress_lifetime']=snapshot['entry_progress']
+    previous={key:r for key,r in entry_journal().items()if r.get('statistics_epoch_id')==epoch_state['id']}
+    snapshot['entry_progress']=entry_progress(previous,epoch.epoch_entries(epoch_state,model_entries),entry_outcomes)
+    snapshot['entry_progress'].update(report_default='shared_epoch_common_top5',report_default_source='statistics_epoch and epoch_base_choices; pockets are subsets of the same base')
    targets=[dict(event_id=str(e['event_id']),home=e['home'],away=e['away'],home_id=e.get('home_id'),away_id=e.get('away_id'),league=e['league'],minute=e['minute'],score=e['score'],board_observed_at_utc=snapshot['board_observed_at_utc'],sampling=sample)for e,sample in ([(e,dict(stratum='all_provider_universe',selected_for_deep=bool(e.get('stats_trend_shortlisted')),deep_inclusion_probability=e['research_sampling']['inclusion_probability']))for e in snapshot['events']]if is_broad else selected_probes)]
    if is_broad:
     for target in targets:
@@ -478,8 +503,16 @@ def main():
     result_by_id.update({r['event_id']:r for r in outcomes['events']})
     closed={eid for eid,r in result_by_id.items()if r.get('settled')}
     snapshot['research_progress']=dict(unique_observed=len(merged),unique_deep_requested=sum(bool(r.get('deep_any'))for r in merged.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in merged.values()),unique_provider_main_price=sum(bool(r.get('provider_main_price_any'))for r in merged.values()),closed_unique=len(closed),closed_with_trend=sum(eid in closed and bool(r.get('trend_available_any'))for eid,r in merged.items()),closed_with_provider_main_price=sum(eid in closed and bool(r.get('provider_main_price_any'))for eid,r in merged.items()),pending_outcome_queue=outcomes['queued_after_run'],not_independent_snapshot_count=True)
+    if epoch_state:
+     snapshot['research_progress_lifetime']=snapshot['research_progress']
+     fresh=epoch.new_universe(epoch_state,merged);fresh_closed=closed&fresh.keys()
+     snapshot['research_progress']=dict(statistics_epoch_id=epoch_state['id'],unique_observed=len(fresh),
+      unique_deep_requested=sum(bool(r.get('deep_any'))for r in fresh.values()),unique_trend_available=sum(bool(r.get('trend_available_any'))for r in fresh.values()),
+      unique_provider_main_price=sum(bool(r.get('provider_main_price_any'))for r in fresh.values()),closed_unique=len(fresh_closed),
+      closed_with_trend=sum(eid in fresh_closed and bool(r.get('trend_available_any'))for eid,r in fresh.items()),
+      closed_with_provider_main_price=sum(eid in fresh_closed and bool(r.get('provider_main_price_any'))for eid,r in fresh.items()),not_independent_snapshot_count=True)
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
-   if unified:receipt['control_evaluation']=control
+   if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
    snapshot['lab_exact_quote_count']=sum(market_for_event(e,snapshot)[0]is not None for e in price_probes)
