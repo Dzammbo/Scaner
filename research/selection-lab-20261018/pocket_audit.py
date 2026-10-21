@@ -49,6 +49,10 @@ def stats(rows):
  return dict(selected=len(rows),n=n,unit_profit=round(math.fsum(values),8),roi=math.fsum(values)/n if n else None,
   unique_matches=len({r['id']for r in rows}),positive=sum(x>0 for x in values),negative=sum(x<0 for x in values),push=sum(x==0 for x in values))
 
+def displayed_without_top3(value):
+ """Chat/current readout: show the concentration check starting at 31 settled matches."""
+ return value['without_top3']if value['total']['n']>30 else None
+
 def contribution(rows,key):
  groups=collections.defaultdict(list)
  for r in rows:groups[str(r.get(key)or'неизвестно')].append(r)
@@ -185,7 +189,8 @@ def main():
    region_map={k:sorted(v)for k,v in REGION_CODES.items()},region_convention='Turkey/Georgia/Cyprus in Europe for reproducible convention, no claim of causal grouping',
    grid='fixed bins, all Cartesian combinations including empty; no optimized thresholds',
    without_best_day='remove day with maximum NET PROFIT, recompute remaining N; not subtract from original N',
-   without_top3='remove three highest net unit returns, recompute remaining N; no claim of formal significance'),
+   without_top3='remove three highest net unit returns, recompute remaining N; no claim of formal significance',
+   without_top3_display='Current/chat rows: extra ROI only when original settled priced N>30; show remaining N=N-3; threshold never filters selections or changes settlement'),
   quality=dict(historical_records=len(all_history),historical_after_conflicts=len(history),historical_conflicts=sorted(conflicts),
    observed_unique=len(epoch_observed_ids)if config else len(observed_ids),lifetime_observed_unique=len(observed_ids),broad_first_priced_unique=len(broad_epoch),lifetime_broad_first_priced_unique=len(broad_first),missing_snapshot_files=missing_snapshots,independent_decimal_checks=crosschecks,
    historical_unknown_region=sum(r['region']=='Неизвестный регион'for r in history),outcome_events=len(outcomes)),
@@ -223,7 +228,9 @@ def render(result):
  for section,title in [('current','Основной учёт: новая общая спортивная пятёрка, один вход на матч'),('first_entries','Отдельное исследование: первый подходящий вход на матч по всем рангам'),('legacy_top5_archive','Архив прежних отдельных пятёрок, включая прежнее ошибочное окно'),('historical','История 13–18 октября, исследовательский срез')]:
   out+=['## '+title,'','| Вариант | N | ROI | Без лучшего дня, N / ROI | Без трёх лучших, N / ROI |','|---|---:|---:|---:|---:|']
   for policy,v in result[section].items():
-   t=v['total'];d=v['without_best_day'];w=v['without_top3'];out.append(f"| {NAMES.get(policy,policy)} | {t['n']} | {pct(t['roi'])} | {d['n']} / {pct(d['roi'])} | {w['n']} / {pct(w['roi'])} |")
+   t=v['total'];d=v['without_best_day'];w=displayed_without_top3(v)if section=='current'else v['without_top3']
+   trimmed=f"{w['n']} / {pct(w['roi'])}"if w is not None else'-'
+   out.append(f"| {NAMES.get(policy,policy)} | {t['n']} | {pct(t['roi'])} | {d['n']} / {pct(d['roi'])} | {trimmed} |")
   out+=['']
   for policy,v in result[section].items():
    if not v['total']['n']:continue
