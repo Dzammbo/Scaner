@@ -1,0 +1,35 @@
+name: Refresh confirmed Live results
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-results-refresh.yml'
+      - '.github/live-results-refresh.json'
+permissions:
+  contents: write
+concurrency:
+  group: explicit-live-results-refresh
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Refresh unresolved outcomes and rebuild frozen-series statistics
+        id: refresh
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
+        run: python3 control/.github/scripts/refresh_live_results.py
