@@ -57,6 +57,14 @@ def groups_for_epoch(receipts, config):
                 assert eid in base, ("outside_common_base", model, eid)
                 assert row.get("statistics_epoch_id") == config["id"]
                 assert config["selection_window"][0] <= row["minute"] <= config["selection_window"][1]
+                if config.get("admission_filters"):
+                    assert row.get("admission_filter_version") == config["rules_version"]
+                    observed = dt.datetime.fromisoformat(row["entry_observed_at_utc"].replace("Z", "+00:00"))
+                    assert observed.tzinfo is not None
+                    hour = observed.astimezone(MSK).hour
+                    assert row["entry_hour_msk"] == hour and 8 <= hour < 24
+                    ratio = row["goal_profile_ratio_at_entry"]
+                    assert math.isfinite(ratio) and 0 <= ratio < 1.1
                 if eid in groups[model]:
                     duplicates += 1
                     continue
@@ -145,7 +153,7 @@ def main():
     import statistics_epoch as epoch
     c.configure_background("experimental")
     config = json.loads(Path(os.environ["EPOCH_CONFIG"]).read_text())
-    assert config.get("enabled") and config.get("rules_version") == epoch.VERSION
+    assert config.get("enabled") and config.get("rules_version") in getattr(epoch, "SUPPORTED_VERSIONS", (epoch.VERSION,))
     source_revision = git(root, "rev-parse", "HEAD").stdout.strip()
     _, targets, previous = c.read_journal()
     _, control_targets, control_outcomes = c.control_journal()
@@ -198,7 +206,10 @@ def main():
     day = generated.astimezone(MSK).date().isoformat()
     report = dict(generated_at_utc=generated.isoformat(),
                   source_revision=source_revision, rules_revision=os.environ["GITHUB_SHA"],
-                  statistics_epoch=dict(id=config["id"], started_at_utc=started),
+                  statistics_epoch=dict(id=config["id"], started_at_utc=started,
+                                        rules_version=config["rules_version"],
+                                        admission_filters=config.get("admission_filters"),
+                                        previous_epoch_id=config.get("previous_epoch_id")),
                   population=dict(unique_observed=len(fresh), confirmed_closed=len(finished),
                                   closed_with_provider_price=len(finished & priced),
                                   unresolved=len(fresh)-len(finished),
@@ -239,3 +250,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

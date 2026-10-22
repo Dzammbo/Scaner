@@ -1,11 +1,17 @@
 {
   "enabled": true,
-  "id": "shared-top5-forward-20261021-v1",
-  "rules_version": "shared-sports-top5-v1-20261021",
+  "id": "shared-top5-forward-20261022-v2",
+  "rules_version": "shared-sports-top5-v2-20261022",
   "activation": "first_successful_capture",
   "exclude_previously_observed_matches": true,
-  "collection_window": [5, 89],
-  "selection_window": [8, 60],
+  "collection_window": [
+    5,
+    89
+  ],
+  "selection_window": [
+    8,
+    60
+  ],
   "common_base_limit": 5,
   "pockets_are_base_subsets": true,
   "refill_pocket_quota": false,
@@ -13,5 +19,16 @@
   "market": "exact_provider_primary_full_time_total",
   "missing_entry_price": "exclude_from_roi_never_backfill",
   "stake_units": 1,
-  "archive_previous_series": true
+  "archive_previous_series": true,
+  "previous_epoch_id": "shared-top5-forward-20261021-v1",
+  "admission_filters": {
+    "timezone": "Europe/Moscow",
+    "entry_hour_start_inclusive": 8,
+    "entry_hour_end_exclusive": 24,
+    "goal_profile_ratio_max_exclusive": 1.1,
+    "apply_after_common_top5": true,
+    "refill": false,
+    "retry_rejected_matches": false
+  },
+  "implementation_revision": "07abda84c1c844ae997b6f34d1549dedd49858f6"
 }

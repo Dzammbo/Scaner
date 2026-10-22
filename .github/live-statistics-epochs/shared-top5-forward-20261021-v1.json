@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "id": "shared-top5-forward-20261021-v1",
+  "rules_version": "shared-sports-top5-v1-20261021",
+  "activation": "first_successful_capture",
+  "exclude_previously_observed_matches": true,
+  "collection_window": [5, 89],
+  "selection_window": [8, 60],
+  "common_base_limit": 5,
+  "pockets_are_base_subsets": true,
+  "refill_pocket_quota": false,
+  "one_base_entry_per_match": true,
+  "market": "exact_provider_primary_full_time_total",
+  "missing_entry_price": "exclude_from_roi_never_backfill",
+  "stake_units": 1,
+  "archive_previous_series": true
+}
