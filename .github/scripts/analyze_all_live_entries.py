@@ -453,7 +453,10 @@ def main():
   result=lab.settle(sum(r["final"]),r["line"],r["price"])
   assert abs(result-independent_profit(r["final"],r["line"],r["price"]))<1e-9
   r["profit"]=result;checks+=1
- config=load(Path(os.environ["EPOCH_CONFIG"]))
+ config_path=Path(os.environ["EPOCH_CONFIG"])
+ config_bytes=config_path.read_bytes()
+ config=json.loads(config_bytes)
+ manifest["control/.github/live-statistics-epoch.json"]=hashlib.sha256(config_bytes).hexdigest()
  # Locate the recorded activation time; never use the configuration commit timestamp.
  epoch_start=None
  for base in bases:
