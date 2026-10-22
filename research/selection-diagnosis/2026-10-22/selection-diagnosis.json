@@ -1,0 +1,8367 @@
+{
+  "created_at_utc": "2026-10-22T14:49:42.657889+00:00",
+  "sources": {
+    "repo": "Dzammbo/Scaner",
+    "report_path": "research/live-results-refresh/2026-10-22/39787094940-1.json",
+    "points_path": "research/all-entry-audit/2026-10-22/39787094940-1/entry-points.json.gz",
+    "report_sha256": "6dc403ec9c589001ecd3138d46a28f14109e0e5ed67f862ec44a7f5aacfae684",
+    "points_sha256": "4d3339cf01ae8757e6c5b8ae7fbedfcef73b6449b17fd85aa1ca5bbfb737e06e",
+    "reported_as_of_utc": "2026-10-22T13:29:20.356234+00:00",
+    "report_data_revision": "6e30acb3fea94224d29fa738e08f08045adcfa69",
+    "points_data_revision": "3e1b601ba93bf90ded0b7f12bc561ee1304efaca",
+    "ranking_main_revision": "60f2b7200f5d53ccd9485b9d557a96251666ad0b"
+  },
+  "definitions": {
+    "unit": "One original entry per match, flat stake 1, full-time Asian over settlement.",
+    "earlier_recorded": "First recorded exact-price strong v8 entry per match before the epoch. Historical protocols differ from the frozen common Top5.",
+    "current_primary": "Original canonical epoch ledger, settled and originally priced only. Original outcomes override conservative broad-archive conflict exclusions.",
+    "earlier_observed": "Sensitivity: first exact-price strong v8 opportunity, whether recorded as a model entry or not.",
+    "counterfactual": "Subset of original entries; rejected entries are not replaced with later opportunities or sixth-ranked matches.",
+    "night": "Entry timestamp, not kickoff; Moscow local time 00:00 inclusive to 08:00 exclusive.",
+    "goal_profile": "Average of the two teams same-league mean match totals, divided by league mean; >=1.1 means at least 10% above that league baseline.",
+    "uncertainty": "Descriptive match bootstrap only; ignores within-league/day dependence and multiple selection. Historical analyses are not untouched validation.",
+    "causality": "Loss concentrations and candidate restrictions, not proof that time or historical scoring causes losses.",
+    "execution": "Saved API prices; not a claim of verified executable bookmaker prices."
+  },
+  "source_audit": {
+    "files": [
+      "scripts/live_ranking.py",
+      "scripts/live_goal_profile.py",
+      "research/selection-lab-20261018/lab.py",
+      "research/selection-lab-20261018/statistics_epoch.py"
+    ],
+    "strong_gate": "Complete required data, fresh finishing, continuation, and either recent SOT/supported xG or same-team shots in adjacent intervals. No calibrated win probability.",
+    "pressure_presence": "persistent_dangerous_pressure tests positive aggregate counts in both observed intervals; it has no calibrated minimum intensity.",
+    "ranking": "All eligible events necessarily have evidence class 0, window 5; remaining order uses SOT rate, finishing rate, two-sided finishing, dangerous-attacks rate, goal-profile ratio, event ID.",
+    "market": "Sports admission/ranking does not use total line or price; a separately recorded Poisson EV subset is assessed in existing_ev_filter.",
+    "goal_profile_role": "A higher ratio is only a late tie-breaker. Its losing subgroup is not proof that this tie-breaker caused the losses.",
+    "raw_example": {
+      "path": "research/live-background/experimental/snapshots/2026-10-21/39603123249-100029.json.gz",
+      "sha256": "9ba079cc0fa25b0eaf06fdb3426db8f182dae505656285eaa7e487a047935b58",
+      "event_id": "13332639",
+      "match": "Harju JK Laagri - FC Flora Tallinn",
+      "minute": 14,
+      "score": [
+        2,
+        0
+      ],
+      "strong": true,
+      "shots_last5": 1,
+      "sot_last5": 0,
+      "previous_observed_interval_minutes": 2,
+      "previous_interval_shots_same_team": 1,
+      "main_line": 5.0,
+      "price": 1.925,
+      "final": [
+        3,
+        1
+      ],
+      "profit": -1,
+      "interpretation": "Illustrates the qualitative strength label only; one losing example does not establish a profitable replacement threshold."
+    }
+  },
+  "filters": {
+    "earlier_recorded": {
+      "baseline": {
+        "n": 324,
+        "net_units": -15.200000000000001,
+        "roi_pct": -4.691358024691358,
+        "positive": 150,
+        "negative": 153,
+        "push": 21,
+        "without_top3": {
+          "n": 321,
+          "roi_pct": -5.724299065420561
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 164,
+          "roi_pct": -12.15701219512195
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": 0.7249999999999996,
+            "roi_pct": 9.062499999999996
+          },
+          "2026-10-19": {
+            "n": 160,
+            "net": 4.737500000000001,
+            "roi_pct": 2.9609375000000004
+          },
+          "2026-10-20": {
+            "n": 131,
+            "net": -15.887500000000001,
+            "roi_pct": -12.127862595419847
+          },
+          "2026-10-21": {
+            "n": 25,
+            "net": -4.775,
+            "roi_pct": -19.1
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -14.020061728395062,
+          4.784432870370363
+        ]
+      },
+      "no_night_00_08": {
+        "n": 248,
+        "net_units": -2.687500000000001,
+        "roi_pct": -1.0836693548387102,
+        "positive": 121,
+        "negative": 113,
+        "push": 14,
+        "without_top3": {
+          "n": 245,
+          "roi_pct": -2.38265306122449
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 123,
+          "roi_pct": -7.825203252032522
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": 0.7249999999999996,
+            "roi_pct": 9.062499999999996
+          },
+          "2026-10-19": {
+            "n": 125,
+            "net": 6.9375,
+            "roi_pct": 5.55
+          },
+          "2026-10-20": {
+            "n": 114,
+            "net": -9.350000000000001,
+            "roi_pct": -8.201754385964913
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        }
+      },
+      "goal_profile_below_1_1": {
+        "n": 260,
+        "net_units": 2.2874999999999996,
+        "roi_pct": 0.8798076923076922,
+        "positive": 128,
+        "negative": 116,
+        "push": 16,
+        "without_top3": {
+          "n": 257,
+          "roi_pct": -0.3453307392996109
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 131,
+          "roi_pct": -9.274809160305344
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": 0.7249999999999996,
+            "roi_pct": 9.062499999999996
+          },
+          "2026-10-19": {
+            "n": 129,
+            "net": 14.4375,
+            "roi_pct": 11.19186046511628
+          },
+          "2026-10-20": {
+            "n": 102,
+            "net": -7.825,
+            "roi_pct": -7.671568627450981
+          },
+          "2026-10-21": {
+            "n": 21,
+            "net": -5.05,
+            "roi_pct": -24.047619047619047
+          }
+        }
+      },
+      "no_night_and_profile_below_1_1": {
+        "n": 203,
+        "net_units": 7.7749999999999995,
+        "roi_pct": 3.8300492610837438,
+        "positive": 105,
+        "negative": 88,
+        "push": 10,
+        "without_top3": {
+          "n": 200,
+          "roi_pct": 2.325
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 100,
+          "roi_pct": -3.7375000000000007
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": 0.7249999999999996,
+            "roi_pct": 9.062499999999996
+          },
+          "2026-10-19": {
+            "n": 103,
+            "net": 11.512500000000001,
+            "roi_pct": 11.177184466019417
+          },
+          "2026-10-20": {
+            "n": 91,
+            "net": -3.4625000000000004,
+            "roi_pct": -3.8049450549450556
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -8.392857142857144,
+          15.923799261083744
+        ]
+      },
+      "shots5_at_least_2": {
+        "n": 176,
+        "net_units": -17.4125,
+        "roi_pct": -9.89346590909091,
+        "positive": 80,
+        "negative": 87,
+        "push": 9,
+        "without_top3": {
+          "n": 173,
+          "roi_pct": -11.871387283236995
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 165,
+          "roi_pct": -10.219696969696969
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": -1.2000000000000002,
+            "roi_pct": -24.000000000000004
+          },
+          "2026-10-19": {
+            "n": 88,
+            "net": -5.137499999999999,
+            "roi_pct": -5.838068181818181
+          },
+          "2026-10-20": {
+            "n": 72,
+            "net": -10.525,
+            "roi_pct": -14.618055555555555
+          },
+          "2026-10-21": {
+            "n": 11,
+            "net": -0.5499999999999999,
+            "roi_pct": -4.999999999999999
+          }
+        }
+      },
+      "shots5_at_least_3": {
+        "n": 62,
+        "net_units": -12.7875,
+        "roi_pct": -20.625,
+        "positive": 25,
+        "negative": 36,
+        "push": 1,
+        "without_top3": {
+          "n": 59,
+          "roi_pct": -26.758474576271187
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 29,
+          "roi_pct": -27.28448275862069
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 33,
+            "net": -4.875,
+            "roi_pct": -14.772727272727273
+          },
+          "2026-10-20": {
+            "n": 29,
+            "net": -7.9125000000000005,
+            "roi_pct": -27.28448275862069
+          }
+        }
+      },
+      "sot5_at_least_1": {
+        "n": 208,
+        "net_units": -12.775,
+        "roi_pct": -6.141826923076923,
+        "positive": 95,
+        "negative": 100,
+        "push": 13,
+        "without_top3": {
+          "n": 205,
+          "roi_pct": -7.780487804878049
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 105,
+          "roi_pct": -13.928571428571429
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": -2.1,
+            "roi_pct": -42.0
+          },
+          "2026-10-19": {
+            "n": 103,
+            "net": 1.8500000000000005,
+            "roi_pct": 1.7961165048543695
+          },
+          "2026-10-20": {
+            "n": 85,
+            "net": -10.475000000000001,
+            "roi_pct": -12.323529411764708
+          },
+          "2026-10-21": {
+            "n": 15,
+            "net": -2.05,
+            "roi_pct": -13.666666666666664
+          }
+        }
+      },
+      "score_zero": {
+        "n": 201,
+        "net_units": -8.725,
+        "roi_pct": -4.340796019900497,
+        "positive": 94,
+        "negative": 95,
+        "push": 12,
+        "without_top3": {
+          "n": 198,
+          "roi_pct": -5.9469696969696955
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 101,
+          "roi_pct": -12.066831683168317
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": -1.2000000000000002,
+            "roi_pct": -24.000000000000004
+          },
+          "2026-10-19": {
+            "n": 100,
+            "net": 3.4625000000000012,
+            "roi_pct": 3.4625000000000012
+          },
+          "2026-10-20": {
+            "n": 78,
+            "net": -4.987500000000001,
+            "roi_pct": -6.39423076923077
+          },
+          "2026-10-21": {
+            "n": 18,
+            "net": -6.0,
+            "roi_pct": -33.333333333333336
+          }
+        }
+      },
+      "minute_below_30": {
+        "n": 227,
+        "net_units": -16.3875,
+        "roi_pct": -7.219162995594714,
+        "positive": 101,
+        "negative": 112,
+        "push": 14,
+        "without_top3": {
+          "n": 224,
+          "roi_pct": -8.688616071428571
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 222,
+          "roi_pct": -8.203828828828827
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": 1.8249999999999997,
+            "roi_pct": 36.49999999999999
+          },
+          "2026-10-19": {
+            "n": 112,
+            "net": 0.5000000000000007,
+            "roi_pct": 0.446428571428572
+          },
+          "2026-10-20": {
+            "n": 88,
+            "net": -13.7125,
+            "roi_pct": -15.582386363636363
+          },
+          "2026-10-21": {
+            "n": 22,
+            "net": -5.0,
+            "roi_pct": -22.727272727272727
+          }
+        }
+      },
+      "odds_1_8_to_2": {
+        "n": 248,
+        "net_units": -12.25,
+        "roi_pct": -4.939516129032258,
+        "positive": 116,
+        "negative": 118,
+        "push": 14,
+        "without_top3": {
+          "n": 245,
+          "roi_pct": -6.1938775510204085
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 243,
+          "roi_pct": -5.329218106995885
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": 0.6999999999999997,
+            "roi_pct": 13.999999999999995
+          },
+          "2026-10-19": {
+            "n": 122,
+            "net": -0.512499999999999,
+            "roi_pct": -0.42008196721311386
+          },
+          "2026-10-20": {
+            "n": 102,
+            "net": -11.1375,
+            "roi_pct": -10.919117647058824
+          },
+          "2026-10-21": {
+            "n": 19,
+            "net": -1.2999999999999998,
+            "roi_pct": -6.842105263157893
+          }
+        }
+      },
+      "rank_1_to_3": {
+        "n": 243,
+        "net_units": -14.149999999999999,
+        "roi_pct": -5.823045267489711,
+        "positive": 111,
+        "negative": 117,
+        "push": 15,
+        "without_top3": {
+          "n": 240,
+          "roi_pct": -7.1875
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 105,
+          "roi_pct": -20.19047619047619
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 6,
+            "net": -0.30000000000000027,
+            "roi_pct": -5.000000000000004
+          },
+          "2026-10-19": {
+            "n": 138,
+            "net": 7.050000000000001,
+            "roi_pct": 5.108695652173914
+          },
+          "2026-10-20": {
+            "n": 74,
+            "net": -16.125,
+            "roi_pct": -21.79054054054054
+          },
+          "2026-10-21": {
+            "n": 25,
+            "net": -4.775,
+            "roi_pct": -19.1
+          }
+        }
+      },
+      "need_two_goals": {
+        "n": 62,
+        "net_units": 6.0625,
+        "roi_pct": 9.778225806451612,
+        "positive": 34,
+        "negative": 25,
+        "push": 3,
+        "without_top3": {
+          "n": 59,
+          "roi_pct": 4.8940677966101696
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 28,
+          "roi_pct": 1.4285714285714266
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 2,
+            "net": -2.0,
+            "roi_pct": -100.0
+          },
+          "2026-10-19": {
+            "n": 34,
+            "net": 5.6625000000000005,
+            "roi_pct": 16.654411764705884
+          },
+          "2026-10-20": {
+            "n": 25,
+            "net": 1.9749999999999994,
+            "roi_pct": 7.899999999999998
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": 0.42500000000000004,
+            "roi_pct": 42.50000000000001
+          }
+        }
+      },
+      "danger_rate_at_least_1": {
+        "n": 202,
+        "net_units": -17.3125,
+        "roi_pct": -8.570544554455445,
+        "positive": 90,
+        "negative": 101,
+        "push": 11,
+        "without_top3": {
+          "n": 199,
+          "roi_pct": -10.282663316582914
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 97,
+          "roi_pct": -21.662371134020617
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 4,
+            "net": -0.20000000000000018,
+            "roi_pct": -5.000000000000004
+          },
+          "2026-10-19": {
+            "n": 105,
+            "net": 3.7,
+            "roi_pct": 3.5238095238095237
+          },
+          "2026-10-20": {
+            "n": 77,
+            "net": -17.2875,
+            "roi_pct": -22.451298701298704
+          },
+          "2026-10-21": {
+            "n": 16,
+            "net": -3.525,
+            "roi_pct": -22.03125
+          }
+        }
+      }
+    },
+    "current_primary": {
+      "baseline": {
+        "n": 167,
+        "net_units": 0.3875000000000005,
+        "roi_pct": 0.23203592814371288,
+        "positive": 83,
+        "negative": 77,
+        "push": 7,
+        "without_top3": {
+          "n": 164,
+          "roi_pct": -1.6387195121951212
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 36,
+          "roi_pct": -21.631944444444443
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 131,
+            "net": 8.175,
+            "roi_pct": 6.240458015267176
+          },
+          "2026-10-22": {
+            "n": 36,
+            "net": -7.7875,
+            "roi_pct": -21.631944444444443
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -13.271145209580839,
+          14.10179640718563
+        ]
+      },
+      "no_night_00_08": {
+        "n": 143,
+        "net_units": 9.175,
+        "roi_pct": 6.416083916083917,
+        "positive": 75,
+        "negative": 61,
+        "push": 7,
+        "without_top3": {
+          "n": 140,
+          "roi_pct": 4.357142857142857
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 12,
+          "roi_pct": 8.333333333333334
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 131,
+            "net": 8.175,
+            "roi_pct": 6.240458015267176
+          },
+          "2026-10-22": {
+            "n": 12,
+            "net": 1.0,
+            "roi_pct": 8.333333333333334
+          }
+        }
+      },
+      "goal_profile_below_1_1": {
+        "n": 111,
+        "net_units": 6.375,
+        "roi_pct": 5.743243243243243,
+        "positive": 58,
+        "negative": 47,
+        "push": 6,
+        "without_top3": {
+          "n": 108,
+          "roi_pct": 3.078703703703704
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 27,
+          "roi_pct": -11.62037037037037
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 84,
+            "net": 9.512500000000001,
+            "roi_pct": 11.324404761904763
+          },
+          "2026-10-22": {
+            "n": 27,
+            "net": -3.1375,
+            "roi_pct": -11.62037037037037
+          }
+        }
+      },
+      "no_night_and_profile_below_1_1": {
+        "n": 94,
+        "net_units": 8.6625,
+        "roi_pct": 9.215425531914894,
+        "positive": 50,
+        "negative": 38,
+        "push": 6,
+        "without_top3": {
+          "n": 91,
+          "roi_pct": 6.167582417582419
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 10,
+          "roi_pct": -8.500000000000002
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 84,
+            "net": 9.512500000000001,
+            "roi_pct": 11.324404761904763
+          },
+          "2026-10-22": {
+            "n": 10,
+            "net": -0.8500000000000001,
+            "roi_pct": -8.500000000000002
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -8.191821808510639,
+          26.742353723404253
+        ]
+      },
+      "shots5_at_least_2": {
+        "n": 89,
+        "net_units": 14.7375,
+        "roi_pct": 16.558988764044944,
+        "positive": 52,
+        "negative": 33,
+        "push": 4,
+        "without_top3": {
+          "n": 86,
+          "roi_pct": 13.590116279069768
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 17,
+          "roi_pct": -4.705882352941177
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 72,
+            "net": 15.5375,
+            "roi_pct": 21.57986111111111
+          },
+          "2026-10-22": {
+            "n": 17,
+            "net": -0.8,
+            "roi_pct": -4.705882352941177
+          }
+        }
+      },
+      "shots5_at_least_3": {
+        "n": 26,
+        "net_units": 6.4750000000000005,
+        "roi_pct": 24.903846153846153,
+        "positive": 17,
+        "negative": 9,
+        "push": 0,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 3,
+          "roi_pct": 21.66666666666667
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 23,
+            "net": 5.825,
+            "roi_pct": 25.32608695652174
+          },
+          "2026-10-22": {
+            "n": 3,
+            "net": 0.6500000000000001,
+            "roi_pct": 21.66666666666667
+          }
+        }
+      },
+      "sot5_at_least_1": {
+        "n": 111,
+        "net_units": 6.1000000000000005,
+        "roi_pct": 5.495495495495495,
+        "positive": 58,
+        "negative": 49,
+        "push": 4,
+        "without_top3": {
+          "n": 108,
+          "roi_pct": 2.8240740740740744
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 18,
+          "roi_pct": -5.763888888888888
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 93,
+            "net": 7.1375,
+            "roi_pct": 7.674731182795699
+          },
+          "2026-10-22": {
+            "n": 18,
+            "net": -1.0374999999999999,
+            "roi_pct": -5.763888888888888
+          }
+        }
+      },
+      "score_zero": {
+        "n": 117,
+        "net_units": 10.1,
+        "roi_pct": 8.632478632478632,
+        "positive": 62,
+        "negative": 49,
+        "push": 6,
+        "without_top3": {
+          "n": 114,
+          "roi_pct": 6.228070175438597
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 22,
+          "roi_pct": -26.306818181818183
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 95,
+            "net": 15.8875,
+            "roi_pct": 16.723684210526315
+          },
+          "2026-10-22": {
+            "n": 22,
+            "net": -5.7875,
+            "roi_pct": -26.306818181818183
+          }
+        }
+      },
+      "minute_below_30": {
+        "n": 140,
+        "net_units": 7.075,
+        "roi_pct": 5.053571428571429,
+        "positive": 73,
+        "negative": 61,
+        "push": 6,
+        "without_top3": {
+          "n": 137,
+          "roi_pct": 2.956204379562044
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 33,
+          "roi_pct": -16.022727272727273
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 107,
+            "net": 12.3625,
+            "roi_pct": 11.55373831775701
+          },
+          "2026-10-22": {
+            "n": 33,
+            "net": -5.2875,
+            "roi_pct": -16.022727272727273
+          }
+        }
+      },
+      "odds_1_8_to_2": {
+        "n": 130,
+        "net_units": 8.4375,
+        "roi_pct": 6.490384615384615,
+        "positive": 70,
+        "negative": 57,
+        "push": 3,
+        "without_top3": {
+          "n": 127,
+          "roi_pct": 4.340551181102362
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 28,
+          "roi_pct": -13.08035714285714
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 102,
+            "net": 12.100000000000001,
+            "roi_pct": 11.862745098039218
+          },
+          "2026-10-22": {
+            "n": 28,
+            "net": -3.6624999999999996,
+            "roi_pct": -13.08035714285714
+          }
+        }
+      },
+      "rank_1_to_3": {
+        "n": 156,
+        "net_units": 5.075,
+        "roi_pct": 3.253205128205128,
+        "positive": 81,
+        "negative": 71,
+        "push": 4,
+        "without_top3": {
+          "n": 153,
+          "roi_pct": 1.3071895424836606
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 36,
+          "roi_pct": -21.631944444444443
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 120,
+            "net": 12.8625,
+            "roi_pct": 10.71875
+          },
+          "2026-10-22": {
+            "n": 36,
+            "net": -7.7875,
+            "roi_pct": -21.631944444444443
+          }
+        }
+      },
+      "need_two_goals": {
+        "n": 18,
+        "net_units": 0.23750000000000027,
+        "roi_pct": 1.319444444444446,
+        "positive": 9,
+        "negative": 8,
+        "push": 1,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 1,
+          "roi_pct": -50.0
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 17,
+            "net": 0.7375000000000003,
+            "roi_pct": 4.3382352941176485
+          },
+          "2026-10-22": {
+            "n": 1,
+            "net": -0.5,
+            "roi_pct": -50.0
+          }
+        }
+      },
+      "danger_rate_at_least_1": {
+        "n": 120,
+        "net_units": 3.1875,
+        "roi_pct": 2.65625,
+        "positive": 61,
+        "negative": 52,
+        "push": 7,
+        "without_top3": {
+          "n": 117,
+          "roi_pct": 0.09615384615384638
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 27,
+          "roi_pct": -27.546296296296298
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 93,
+            "net": 10.625,
+            "roi_pct": 11.424731182795698
+          },
+          "2026-10-22": {
+            "n": 27,
+            "net": -7.4375,
+            "roi_pct": -27.546296296296298
+          }
+        }
+      }
+    },
+    "earlier_all_strong_observed_sensitivity": {
+      "baseline": {
+        "n": 332,
+        "net_units": -15.675,
+        "roi_pct": -4.721385542168675,
+        "positive": 154,
+        "negative": 157,
+        "push": 21,
+        "without_top3": {
+          "n": 329,
+          "roi_pct": -5.729483282674773
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 170,
+          "roi_pct": -11.816176470588237
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 14,
+            "net": 0.5749999999999994,
+            "roi_pct": 4.107142857142853
+          },
+          "2026-10-19": {
+            "n": 162,
+            "net": 4.4125000000000005,
+            "roi_pct": 2.723765432098766
+          },
+          "2026-10-20": {
+            "n": 131,
+            "net": -15.887500000000001,
+            "roi_pct": -12.127862595419847
+          },
+          "2026-10-21": {
+            "n": 25,
+            "net": -4.775,
+            "roi_pct": -19.1
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -13.968373493975902,
+          4.567112198795178
+        ]
+      },
+      "no_night_00_08": {
+        "n": 255,
+        "net_units": -3.987500000000001,
+        "roi_pct": -1.5637254901960789,
+        "positive": 124,
+        "negative": 117,
+        "push": 14,
+        "without_top3": {
+          "n": 252,
+          "roi_pct": -2.83234126984127
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 129,
+          "roi_pct": -7.577519379844963
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 14,
+            "net": 0.5749999999999994,
+            "roi_pct": 4.107142857142853
+          },
+          "2026-10-19": {
+            "n": 126,
+            "net": 5.7875000000000005,
+            "roi_pct": 4.593253968253968
+          },
+          "2026-10-20": {
+            "n": 114,
+            "net": -9.350000000000001,
+            "roi_pct": -8.201754385964913
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        }
+      },
+      "goal_profile_below_1_1": {
+        "n": 267,
+        "net_units": 2.3124999999999996,
+        "roi_pct": 0.8661048689138575,
+        "positive": 132,
+        "negative": 119,
+        "push": 16,
+        "without_top3": {
+          "n": 264,
+          "roi_pct": -0.32670454545454564
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 136,
+          "roi_pct": -8.676470588235293
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 13,
+            "net": 1.0749999999999993,
+            "roi_pct": 8.269230769230763
+          },
+          "2026-10-19": {
+            "n": 131,
+            "net": 14.1125,
+            "roi_pct": 10.772900763358779
+          },
+          "2026-10-20": {
+            "n": 102,
+            "net": -7.825,
+            "roi_pct": -7.671568627450981
+          },
+          "2026-10-21": {
+            "n": 21,
+            "net": -5.05,
+            "roi_pct": -24.047619047619047
+          }
+        }
+      },
+      "no_night_and_profile_below_1_1": {
+        "n": 209,
+        "net_units": 6.974999999999999,
+        "roi_pct": 3.337320574162679,
+        "positive": 108,
+        "negative": 91,
+        "push": 10,
+        "without_top3": {
+          "n": 206,
+          "roi_pct": 1.8567961165048543
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 105,
+          "roi_pct": -3.226190476190477
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 13,
+            "net": 1.0749999999999993,
+            "roi_pct": 8.269230769230763
+          },
+          "2026-10-19": {
+            "n": 104,
+            "net": 10.3625,
+            "roi_pct": 9.963942307692308
+          },
+          "2026-10-20": {
+            "n": 91,
+            "net": -3.4625000000000004,
+            "roi_pct": -3.8049450549450556
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        },
+        "descriptive_iid_match_bootstrap_95_pct": [
+          -8.594647129186603,
+          15.053827751196172
+        ]
+      },
+      "shots5_at_least_2": {
+        "n": 181,
+        "net_units": -15.2375,
+        "roi_pct": -8.418508287292818,
+        "positive": 84,
+        "negative": 88,
+        "push": 9,
+        "without_top3": {
+          "n": 178,
+          "roi_pct": -10.330056179775282
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 172,
+          "roi_pct": -8.946220930232558
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 9,
+            "net": 0.14999999999999958,
+            "roi_pct": 1.6666666666666619
+          },
+          "2026-10-19": {
+            "n": 89,
+            "net": -4.3125,
+            "roi_pct": -4.845505617977528
+          },
+          "2026-10-20": {
+            "n": 72,
+            "net": -10.525,
+            "roi_pct": -14.618055555555555
+          },
+          "2026-10-21": {
+            "n": 11,
+            "net": -0.5499999999999999,
+            "roi_pct": -4.999999999999999
+          }
+        }
+      },
+      "shots5_at_least_3": {
+        "n": 62,
+        "net_units": -12.7875,
+        "roi_pct": -20.625,
+        "positive": 25,
+        "negative": 36,
+        "push": 1,
+        "without_top3": {
+          "n": 59,
+          "roi_pct": -26.758474576271187
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 29,
+          "roi_pct": -27.28448275862069
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 33,
+            "net": -4.875,
+            "roi_pct": -14.772727272727273
+          },
+          "2026-10-20": {
+            "n": 29,
+            "net": -7.9125000000000005,
+            "roi_pct": -27.28448275862069
+          }
+        }
+      },
+      "sot5_at_least_1": {
+        "n": 213,
+        "net_units": -14.625,
+        "roi_pct": -6.866197183098592,
+        "positive": 97,
+        "negative": 103,
+        "push": 13,
+        "without_top3": {
+          "n": 210,
+          "roi_pct": -8.476190476190476
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 109,
+          "roi_pct": -14.059633027522937
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 9,
+            "net": -2.8000000000000003,
+            "roi_pct": -31.11111111111111
+          },
+          "2026-10-19": {
+            "n": 104,
+            "net": 0.7000000000000005,
+            "roi_pct": 0.6730769230769236
+          },
+          "2026-10-20": {
+            "n": 85,
+            "net": -10.475000000000001,
+            "roi_pct": -12.323529411764708
+          },
+          "2026-10-21": {
+            "n": 15,
+            "net": -2.05,
+            "roi_pct": -13.666666666666664
+          }
+        }
+      },
+      "score_zero": {
+        "n": 208,
+        "net_units": -8.275,
+        "roi_pct": -3.9783653846153846,
+        "positive": 98,
+        "negative": 98,
+        "push": 12,
+        "without_top3": {
+          "n": 205,
+          "roi_pct": -5.524390243902439
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 105,
+          "roi_pct": -11.797619047619047
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 9,
+            "net": -1.4000000000000004,
+            "roi_pct": -15.555555555555559
+          },
+          "2026-10-19": {
+            "n": 103,
+            "net": 4.112500000000001,
+            "roi_pct": 3.992718446601942
+          },
+          "2026-10-20": {
+            "n": 78,
+            "net": -4.987500000000001,
+            "roi_pct": -6.39423076923077
+          },
+          "2026-10-21": {
+            "n": 18,
+            "net": -6.0,
+            "roi_pct": -33.333333333333336
+          }
+        }
+      },
+      "minute_below_30": {
+        "n": 231,
+        "net_units": -16.7375,
+        "roi_pct": -7.245670995670996,
+        "positive": 103,
+        "negative": 114,
+        "push": 14,
+        "without_top3": {
+          "n": 228,
+          "roi_pct": -8.68969298245614
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 116,
+          "roi_pct": -15.420258620689655
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 6,
+            "net": 0.8249999999999997,
+            "roi_pct": 13.749999999999995
+          },
+          "2026-10-19": {
+            "n": 115,
+            "net": 1.1500000000000006,
+            "roi_pct": 1.0000000000000004
+          },
+          "2026-10-20": {
+            "n": 88,
+            "net": -13.7125,
+            "roi_pct": -15.582386363636363
+          },
+          "2026-10-21": {
+            "n": 22,
+            "net": -5.0,
+            "roi_pct": -22.727272727272727
+          }
+        }
+      },
+      "odds_1_8_to_2": {
+        "n": 252,
+        "net_units": -12.625,
+        "roi_pct": -5.009920634920635,
+        "positive": 118,
+        "negative": 120,
+        "push": 14,
+        "without_top3": {
+          "n": 249,
+          "roi_pct": -6.244979919678715
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 245,
+          "roi_pct": -5.4183673469387745
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 7,
+            "net": 0.6499999999999997,
+            "roi_pct": 9.285714285714281
+          },
+          "2026-10-19": {
+            "n": 124,
+            "net": -0.8374999999999991,
+            "roi_pct": -0.675403225806451
+          },
+          "2026-10-20": {
+            "n": 102,
+            "net": -11.1375,
+            "roi_pct": -10.919117647058824
+          },
+          "2026-10-21": {
+            "n": 19,
+            "net": -1.2999999999999998,
+            "roi_pct": -6.842105263157893
+          }
+        }
+      },
+      "rank_1_to_3": {
+        "n": 250,
+        "net_units": -14.125,
+        "roi_pct": -5.65,
+        "positive": 115,
+        "negative": 120,
+        "push": 15,
+        "without_top3": {
+          "n": 247,
+          "roi_pct": -6.9939271255060715
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 110,
+          "roi_pct": -18.954545454545453
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 11,
+            "net": 0.04999999999999949,
+            "roi_pct": 0.45454545454544987
+          },
+          "2026-10-19": {
+            "n": 140,
+            "net": 6.7250000000000005,
+            "roi_pct": 4.803571428571429
+          },
+          "2026-10-20": {
+            "n": 74,
+            "net": -16.125,
+            "roi_pct": -21.79054054054054
+          },
+          "2026-10-21": {
+            "n": 25,
+            "net": -4.775,
+            "roi_pct": -19.1
+          }
+        }
+      },
+      "need_two_goals": {
+        "n": 66,
+        "net_units": 5.9624999999999995,
+        "roi_pct": 9.034090909090908,
+        "positive": 36,
+        "negative": 27,
+        "push": 3,
+        "without_top3": {
+          "n": 63,
+          "roi_pct": 4.424603174603174
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 32,
+          "roi_pct": 0.9374999999999977
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 6,
+            "net": -2.1,
+            "roi_pct": -35.0
+          },
+          "2026-10-19": {
+            "n": 34,
+            "net": 5.6625000000000005,
+            "roi_pct": 16.654411764705884
+          },
+          "2026-10-20": {
+            "n": 25,
+            "net": 1.9749999999999994,
+            "roi_pct": 7.899999999999998
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": 0.42500000000000004,
+            "roi_pct": 42.50000000000001
+          }
+        }
+      },
+      "danger_rate_at_least_1": {
+        "n": 208,
+        "net_units": -18.1875,
+        "roi_pct": -8.743990384615385,
+        "positive": 93,
+        "negative": 104,
+        "push": 11,
+        "without_top3": {
+          "n": 205,
+          "roi_pct": -10.408536585365853
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 101,
+          "roi_pct": -21.497524752475247
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": -0.9000000000000002,
+            "roi_pct": -11.250000000000004
+          },
+          "2026-10-19": {
+            "n": 107,
+            "net": 3.5250000000000004,
+            "roi_pct": 3.2943925233644866
+          },
+          "2026-10-20": {
+            "n": 77,
+            "net": -17.2875,
+            "roi_pct": -22.451298701298704
+          },
+          "2026-10-21": {
+            "n": 16,
+            "net": -3.525,
+            "roi_pct": -22.03125
+          }
+        }
+      }
+    }
+  },
+  "loss_groups": {
+    "earlier_recorded": {
+      "night_00_08": {
+        "n": 76,
+        "net_units": -12.5125,
+        "roi_pct": -16.463815789473685,
+        "positive": 29,
+        "negative": 40,
+        "push": 7,
+        "without_top3": {
+          "n": 73,
+          "roi_pct": -21.386986301369863
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 41,
+          "roi_pct": -25.152439024390244
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 35,
+            "net": -2.1999999999999993,
+            "roi_pct": -6.285714285714284
+          },
+          "2026-10-20": {
+            "n": 17,
+            "net": -6.5375,
+            "roi_pct": -38.455882352941174
+          },
+          "2026-10-21": {
+            "n": 24,
+            "net": -3.775,
+            "roi_pct": -15.729166666666666
+          }
+        }
+      },
+      "profile_at_least_1_1": {
+        "n": 64,
+        "net_units": -17.4875,
+        "roi_pct": -27.32421875,
+        "positive": 22,
+        "negative": 37,
+        "push": 5,
+        "without_top3": {
+          "n": 61,
+          "roi_pct": -33.66803278688525
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 60,
+          "roi_pct": -29.604166666666668
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 31,
+            "net": -9.7,
+            "roi_pct": -31.290322580645157
+          },
+          "2026-10-20": {
+            "n": 29,
+            "net": -8.0625,
+            "roi_pct": -27.801724137931036
+          },
+          "2026-10-21": {
+            "n": 4,
+            "net": 0.275,
+            "roi_pct": 6.875000000000001
+          }
+        }
+      },
+      "one_shot5": {
+        "n": 148,
+        "net_units": 2.2125,
+        "roi_pct": 1.4949324324324325,
+        "positive": 70,
+        "negative": 66,
+        "push": 12,
+        "without_top3": {
+          "n": 145,
+          "roi_pct": -0.6465517241379307
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 76,
+          "roi_pct": -10.082236842105264
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 3,
+            "net": 1.9249999999999998,
+            "roi_pct": 64.16666666666666
+          },
+          "2026-10-19": {
+            "n": 72,
+            "net": 9.875,
+            "roi_pct": 13.715277777777779
+          },
+          "2026-10-20": {
+            "n": 59,
+            "net": -5.362500000000001,
+            "roi_pct": -9.08898305084746
+          },
+          "2026-10-21": {
+            "n": 14,
+            "net": -4.225,
+            "roi_pct": -30.178571428571423
+          }
+        }
+      },
+      "score_nonzero": {
+        "n": 123,
+        "net_units": -6.4750000000000005,
+        "roi_pct": -5.264227642276423,
+        "positive": 56,
+        "negative": 58,
+        "push": 9,
+        "without_top3": {
+          "n": 120,
+          "roi_pct": -8.041666666666666
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 120,
+          "roi_pct": -7.0
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 3,
+            "net": 1.9249999999999998,
+            "roi_pct": 64.16666666666666
+          },
+          "2026-10-19": {
+            "n": 60,
+            "net": 1.275,
+            "roi_pct": 2.1249999999999996
+          },
+          "2026-10-20": {
+            "n": 53,
+            "net": -10.9,
+            "roi_pct": -20.566037735849058
+          },
+          "2026-10-21": {
+            "n": 7,
+            "net": 1.225,
+            "roi_pct": 17.500000000000004
+          }
+        }
+      },
+      "minute_30_to_60": {
+        "n": 97,
+        "net_units": 1.1874999999999996,
+        "roi_pct": 1.224226804123711,
+        "positive": 49,
+        "negative": 41,
+        "push": 7,
+        "without_top3": {
+          "n": 94,
+          "roi_pct": -2.1143617021276597
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 49,
+          "roi_pct": -6.224489795918369
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 3,
+            "net": -1.1,
+            "roi_pct": -36.66666666666667
+          },
+          "2026-10-19": {
+            "n": 48,
+            "net": 4.237500000000001,
+            "roi_pct": 8.828125000000002
+          },
+          "2026-10-20": {
+            "n": 43,
+            "net": -2.1750000000000007,
+            "roi_pct": -5.058139534883722
+          },
+          "2026-10-21": {
+            "n": 3,
+            "net": 0.2250000000000001,
+            "roi_pct": 7.500000000000003
+          }
+        }
+      },
+      "rank_4_to_5": {
+        "n": 38,
+        "net_units": 1.4124999999999994,
+        "roi_pct": 3.7171052631578934,
+        "positive": 19,
+        "negative": 16,
+        "push": 3,
+        "without_top3": {
+          "n": 35,
+          "roi_pct": -4.821428571428572
+        },
+        "best_day_by_net": "2026-10-20",
+        "without_best_day": {
+          "n": 24,
+          "roi_pct": -5.364583333333333
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 2,
+            "net": 1.025,
+            "roi_pct": 51.24999999999999
+          },
+          "2026-10-19": {
+            "n": 22,
+            "net": -2.3125,
+            "roi_pct": -10.511363636363637
+          },
+          "2026-10-20": {
+            "n": 14,
+            "net": 2.6999999999999993,
+            "roi_pct": 19.28571428571428
+          }
+        }
+      }
+    },
+    "current_primary": {
+      "night_00_08": {
+        "n": 24,
+        "net_units": -8.7875,
+        "roi_pct": -36.614583333333336,
+        "positive": 8,
+        "negative": 16,
+        "push": 0,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": null,
+        "days_msk": {
+          "2026-10-22": {
+            "n": 24,
+            "net": -8.7875,
+            "roi_pct": -36.614583333333336
+          }
+        }
+      },
+      "profile_at_least_1_1": {
+        "n": 56,
+        "net_units": -5.9875,
+        "roi_pct": -10.691964285714286,
+        "positive": 25,
+        "negative": 30,
+        "push": 1,
+        "without_top3": {
+          "n": 53,
+          "roi_pct": -16.910377358490567
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 9,
+          "roi_pct": -51.66666666666667
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 47,
+            "net": -1.3375,
+            "roi_pct": -2.845744680851064
+          },
+          "2026-10-22": {
+            "n": 9,
+            "net": -4.65,
+            "roi_pct": -51.66666666666667
+          }
+        }
+      },
+      "one_shot5": {
+        "n": 78,
+        "net_units": -14.35,
+        "roi_pct": -18.397435897435898,
+        "positive": 31,
+        "negative": 44,
+        "push": 3,
+        "without_top3": {
+          "n": 75,
+          "roi_pct": -23.166666666666668
+        },
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": {
+          "n": 59,
+          "roi_pct": -12.478813559322035
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 59,
+            "net": -7.3625,
+            "roi_pct": -12.478813559322035
+          },
+          "2026-10-22": {
+            "n": 19,
+            "net": -6.9875,
+            "roi_pct": -36.776315789473685
+          }
+        }
+      },
+      "score_nonzero": {
+        "n": 50,
+        "net_units": -9.7125,
+        "roi_pct": -19.425,
+        "positive": 21,
+        "negative": 28,
+        "push": 1,
+        "without_top3": {
+          "n": 47,
+          "roi_pct": -27.20744680851064
+        },
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": {
+          "n": 36,
+          "roi_pct": -21.42361111111111
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 36,
+            "net": -7.7124999999999995,
+            "roi_pct": -21.42361111111111
+          },
+          "2026-10-22": {
+            "n": 14,
+            "net": -2.0,
+            "roi_pct": -14.285714285714286
+          }
+        }
+      },
+      "minute_30_to_60": {
+        "n": 27,
+        "net_units": -6.6875,
+        "roi_pct": -24.76851851851852,
+        "positive": 10,
+        "negative": 16,
+        "push": 1,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": {
+          "n": 24,
+          "roi_pct": -17.447916666666668
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 24,
+            "net": -4.1875,
+            "roi_pct": -17.447916666666668
+          },
+          "2026-10-22": {
+            "n": 3,
+            "net": -2.5,
+            "roi_pct": -83.33333333333333
+          }
+        }
+      },
+      "rank_4_to_5": {
+        "n": 11,
+        "net_units": -4.6875,
+        "roi_pct": -42.61363636363637,
+        "positive": 2,
+        "negative": 6,
+        "push": 3,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": null,
+        "days_msk": {
+          "2026-10-21": {
+            "n": 11,
+            "net": -4.6875,
+            "roi_pct": -42.61363636363637
+          }
+        }
+      }
+    },
+    "earlier_all_strong_observed_sensitivity": {
+      "night_00_08": {
+        "n": 77,
+        "net_units": -11.6875,
+        "roi_pct": -15.178571428571429,
+        "positive": 30,
+        "negative": 40,
+        "push": 7,
+        "without_top3": {
+          "n": 74,
+          "roi_pct": -19.98310810810811
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 41,
+          "roi_pct": -25.152439024390244
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 36,
+            "net": -1.3749999999999996,
+            "roi_pct": -3.819444444444443
+          },
+          "2026-10-20": {
+            "n": 17,
+            "net": -6.5375,
+            "roi_pct": -38.455882352941174
+          },
+          "2026-10-21": {
+            "n": 24,
+            "net": -3.775,
+            "roi_pct": -15.729166666666666
+          }
+        }
+      },
+      "profile_at_least_1_1": {
+        "n": 65,
+        "net_units": -17.9875,
+        "roi_pct": -27.673076923076923,
+        "positive": 22,
+        "negative": 38,
+        "push": 5,
+        "without_top3": {
+          "n": 62,
+          "roi_pct": -33.931451612903224
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 61,
+          "roi_pct": -29.938524590163933
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 1,
+            "net": -0.5,
+            "roi_pct": -50.0
+          },
+          "2026-10-19": {
+            "n": 31,
+            "net": -9.7,
+            "roi_pct": -31.290322580645157
+          },
+          "2026-10-20": {
+            "n": 29,
+            "net": -8.0625,
+            "roi_pct": -27.801724137931036
+          },
+          "2026-10-21": {
+            "n": 4,
+            "net": 0.275,
+            "roi_pct": 6.875000000000001
+          }
+        }
+      },
+      "one_shot5": {
+        "n": 151,
+        "net_units": -0.4375000000000002,
+        "roi_pct": -0.2897350993377485,
+        "positive": 70,
+        "negative": 69,
+        "push": 12,
+        "without_top3": {
+          "n": 148,
+          "roi_pct": -2.423986486486486
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 78,
+          "roi_pct": -11.746794871794874
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": 0.4249999999999998,
+            "roi_pct": 8.499999999999996
+          },
+          "2026-10-19": {
+            "n": 73,
+            "net": 8.725000000000001,
+            "roi_pct": 11.95205479452055
+          },
+          "2026-10-20": {
+            "n": 59,
+            "net": -5.362500000000001,
+            "roi_pct": -9.08898305084746
+          },
+          "2026-10-21": {
+            "n": 14,
+            "net": -4.225,
+            "roi_pct": -30.178571428571423
+          }
+        }
+      },
+      "score_nonzero": {
+        "n": 124,
+        "net_units": -7.400000000000001,
+        "roi_pct": -5.967741935483872,
+        "positive": 56,
+        "negative": 59,
+        "push": 9,
+        "without_top3": {
+          "n": 121,
+          "roi_pct": -8.739669421487603
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 119,
+          "roi_pct": -7.878151260504202
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 5,
+            "net": 1.9749999999999996,
+            "roi_pct": 39.49999999999999
+          },
+          "2026-10-19": {
+            "n": 59,
+            "net": 0.2999999999999998,
+            "roi_pct": 0.5084745762711861
+          },
+          "2026-10-20": {
+            "n": 53,
+            "net": -10.9,
+            "roi_pct": -20.566037735849058
+          },
+          "2026-10-21": {
+            "n": 7,
+            "net": 1.225,
+            "roi_pct": 17.500000000000004
+          }
+        }
+      },
+      "minute_30_to_60": {
+        "n": 101,
+        "net_units": 1.0624999999999991,
+        "roi_pct": 1.0519801980198011,
+        "positive": 51,
+        "negative": 43,
+        "push": 7,
+        "without_top3": {
+          "n": 98,
+          "roi_pct": -2.1556122448979598
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 54,
+          "roi_pct": -4.074074074074076
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": -0.25000000000000033,
+            "roi_pct": -3.125000000000004
+          },
+          "2026-10-19": {
+            "n": 47,
+            "net": 3.2625,
+            "roi_pct": 6.941489361702128
+          },
+          "2026-10-20": {
+            "n": 43,
+            "net": -2.1750000000000007,
+            "roi_pct": -5.058139534883722
+          },
+          "2026-10-21": {
+            "n": 3,
+            "net": 0.2250000000000001,
+            "roi_pct": 7.500000000000003
+          }
+        }
+      },
+      "rank_4_to_5": {
+        "n": 39,
+        "net_units": 0.9124999999999994,
+        "roi_pct": 2.339743589743588,
+        "positive": 19,
+        "negative": 17,
+        "push": 3,
+        "without_top3": {
+          "n": 36,
+          "roi_pct": -6.076388888888889
+        },
+        "best_day_by_net": "2026-10-20",
+        "without_best_day": {
+          "n": 25,
+          "roi_pct": -7.15
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 3,
+            "net": 0.5249999999999999,
+            "roi_pct": 17.499999999999996
+          },
+          "2026-10-19": {
+            "n": 22,
+            "net": -2.3125,
+            "roi_pct": -10.511363636363637
+          },
+          "2026-10-20": {
+            "n": 14,
+            "net": 2.6999999999999993,
+            "roi_pct": 19.28571428571428
+          }
+        }
+      }
+    }
+  },
+  "overlap": {
+    "earlier_recorded": {
+      "night=False,high_profile=False": {
+        "n": 203,
+        "net_units": 7.7749999999999995,
+        "roi_pct": 3.8300492610837438,
+        "positive": 105,
+        "negative": 88,
+        "push": 10,
+        "without_top3": {
+          "n": 200,
+          "roi_pct": 2.325
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 100,
+          "roi_pct": -3.7375000000000007
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 8,
+            "net": 0.7249999999999996,
+            "roi_pct": 9.062499999999996
+          },
+          "2026-10-19": {
+            "n": 103,
+            "net": 11.512500000000001,
+            "roi_pct": 11.177184466019417
+          },
+          "2026-10-20": {
+            "n": 91,
+            "net": -3.4625000000000004,
+            "roi_pct": -3.8049450549450556
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        }
+      },
+      "night=False,high_profile=True": {
+        "n": 45,
+        "net_units": -10.4625,
+        "roi_pct": -23.25,
+        "positive": 16,
+        "negative": 25,
+        "push": 4,
+        "without_top3": {
+          "n": 42,
+          "roi_pct": -32.17261904761905
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 23,
+          "roi_pct": -25.597826086956523
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 22,
+            "net": -4.575,
+            "roi_pct": -20.795454545454547
+          },
+          "2026-10-20": {
+            "n": 23,
+            "net": -5.8875,
+            "roi_pct": -25.597826086956523
+          }
+        }
+      },
+      "night=True,high_profile=False": {
+        "n": 57,
+        "net_units": -5.4875,
+        "roi_pct": -9.62719298245614,
+        "positive": 23,
+        "negative": 28,
+        "push": 6,
+        "without_top3": {
+          "n": 54,
+          "roi_pct": -15.902777777777779
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 31,
+          "roi_pct": -27.137096774193548
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 26,
+            "net": 2.9250000000000007,
+            "roi_pct": 11.250000000000002
+          },
+          "2026-10-20": {
+            "n": 11,
+            "net": -4.3625,
+            "roi_pct": -39.65909090909091
+          },
+          "2026-10-21": {
+            "n": 20,
+            "net": -4.05,
+            "roi_pct": -20.25
+          }
+        }
+      },
+      "night=True,high_profile=True": {
+        "n": 19,
+        "net_units": -7.025,
+        "roi_pct": -36.973684210526315,
+        "positive": 6,
+        "negative": 12,
+        "push": 1,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 15,
+          "roi_pct": -48.666666666666664
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 9,
+            "net": -5.125,
+            "roi_pct": -56.94444444444444
+          },
+          "2026-10-20": {
+            "n": 6,
+            "net": -2.175,
+            "roi_pct": -36.24999999999999
+          },
+          "2026-10-21": {
+            "n": 4,
+            "net": 0.275,
+            "roi_pct": 6.875000000000001
+          }
+        }
+      }
+    },
+    "current_primary": {
+      "night=False,high_profile=False": {
+        "n": 94,
+        "net_units": 8.6625,
+        "roi_pct": 9.215425531914894,
+        "positive": 50,
+        "negative": 38,
+        "push": 6,
+        "without_top3": {
+          "n": 91,
+          "roi_pct": 6.167582417582419
+        },
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 10,
+          "roi_pct": -8.500000000000002
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 84,
+            "net": 9.512500000000001,
+            "roi_pct": 11.324404761904763
+          },
+          "2026-10-22": {
+            "n": 10,
+            "net": -0.8500000000000001,
+            "roi_pct": -8.500000000000002
+          }
+        }
+      },
+      "night=False,high_profile=True": {
+        "n": 49,
+        "net_units": 0.5125000000000002,
+        "roi_pct": 1.045918367346939,
+        "positive": 25,
+        "negative": 23,
+        "push": 1,
+        "without_top3": {
+          "n": 46,
+          "roi_pct": -5.353260869565218
+        },
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": {
+          "n": 47,
+          "roi_pct": -2.845744680851064
+        },
+        "days_msk": {
+          "2026-10-21": {
+            "n": 47,
+            "net": -1.3375,
+            "roi_pct": -2.845744680851064
+          },
+          "2026-10-22": {
+            "n": 2,
+            "net": 1.85,
+            "roi_pct": 92.5
+          }
+        }
+      },
+      "night=True,high_profile=False": {
+        "n": 17,
+        "net_units": -2.2874999999999996,
+        "roi_pct": -13.455882352941174,
+        "positive": 8,
+        "negative": 9,
+        "push": 0,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": null,
+        "days_msk": {
+          "2026-10-22": {
+            "n": 17,
+            "net": -2.2874999999999996,
+            "roi_pct": -13.455882352941174
+          }
+        }
+      },
+      "night=True,high_profile=True": {
+        "n": 7,
+        "net_units": -6.5,
+        "roi_pct": -92.85714285714286,
+        "positive": 0,
+        "negative": 7,
+        "push": 0,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-22",
+        "without_best_day": null,
+        "days_msk": {
+          "2026-10-22": {
+            "n": 7,
+            "net": -6.5,
+            "roi_pct": -92.85714285714286
+          }
+        }
+      }
+    },
+    "earlier_all_strong_observed_sensitivity": {
+      "night=False,high_profile=False": {
+        "n": 209,
+        "net_units": 6.974999999999999,
+        "roi_pct": 3.337320574162679,
+        "positive": 108,
+        "negative": 91,
+        "push": 10,
+        "without_top3": {
+          "n": 206,
+          "roi_pct": 1.8567961165048543
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 105,
+          "roi_pct": -3.226190476190477
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 13,
+            "net": 1.0749999999999993,
+            "roi_pct": 8.269230769230763
+          },
+          "2026-10-19": {
+            "n": 104,
+            "net": 10.3625,
+            "roi_pct": 9.963942307692308
+          },
+          "2026-10-20": {
+            "n": 91,
+            "net": -3.4625000000000004,
+            "roi_pct": -3.8049450549450556
+          },
+          "2026-10-21": {
+            "n": 1,
+            "net": -1.0,
+            "roi_pct": -100.0
+          }
+        }
+      },
+      "night=False,high_profile=True": {
+        "n": 46,
+        "net_units": -10.9625,
+        "roi_pct": -23.831521739130434,
+        "positive": 16,
+        "negative": 26,
+        "push": 4,
+        "without_top3": {
+          "n": 43,
+          "roi_pct": -32.58720930232558
+        },
+        "best_day_by_net": "2026-10-18",
+        "without_best_day": {
+          "n": 45,
+          "roi_pct": -23.25
+        },
+        "days_msk": {
+          "2026-10-18": {
+            "n": 1,
+            "net": -0.5,
+            "roi_pct": -50.0
+          },
+          "2026-10-19": {
+            "n": 22,
+            "net": -4.575,
+            "roi_pct": -20.795454545454547
+          },
+          "2026-10-20": {
+            "n": 23,
+            "net": -5.8875,
+            "roi_pct": -25.597826086956523
+          }
+        }
+      },
+      "night=True,high_profile=False": {
+        "n": 58,
+        "net_units": -4.6625,
+        "roi_pct": -8.038793103448274,
+        "positive": 24,
+        "negative": 28,
+        "push": 6,
+        "without_top3": {
+          "n": 55,
+          "roi_pct": -14.113636363636362
+        },
+        "best_day_by_net": "2026-10-19",
+        "without_best_day": {
+          "n": 31,
+          "roi_pct": -27.137096774193548
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 27,
+            "net": 3.7500000000000004,
+            "roi_pct": 13.888888888888891
+          },
+          "2026-10-20": {
+            "n": 11,
+            "net": -4.3625,
+            "roi_pct": -39.65909090909091
+          },
+          "2026-10-21": {
+            "n": 20,
+            "net": -4.05,
+            "roi_pct": -20.25
+          }
+        }
+      },
+      "night=True,high_profile=True": {
+        "n": 19,
+        "net_units": -7.025,
+        "roi_pct": -36.973684210526315,
+        "positive": 6,
+        "negative": 12,
+        "push": 1,
+        "without_top3": null,
+        "best_day_by_net": "2026-10-21",
+        "without_best_day": {
+          "n": 15,
+          "roi_pct": -48.666666666666664
+        },
+        "days_msk": {
+          "2026-10-19": {
+            "n": 9,
+            "net": -5.125,
+            "roi_pct": -56.94444444444444
+          },
+          "2026-10-20": {
+            "n": 6,
+            "net": -2.175,
+            "roi_pct": -36.24999999999999
+          },
+          "2026-10-21": {
+            "n": 4,
+            "net": 0.275,
+            "roi_pct": 6.875000000000001
+          }
+        }
+      }
+    }
+  },
+  "sensitivities": {
+    "earlier_recorded": {
+      "profile_neighbour_thresholds_with_no_night": {
+        "1.05": {
+          "n": 172,
+          "net_units": 10.2125,
+          "roi_pct": 5.9375,
+          "positive": 90,
+          "negative": 72,
+          "push": 10,
+          "without_top3": {
+            "n": 169,
+            "roi_pct": 4.193786982248521
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 85,
+            "roi_pct": -2.6029411764705888
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 7,
+              "net": 1.7249999999999996,
+              "roi_pct": 24.64285714285714
+            },
+            "2026-10-19": {
+              "n": 87,
+              "net": 12.425,
+              "roi_pct": 14.281609195402298
+            },
+            "2026-10-20": {
+              "n": 77,
+              "net": -2.9375,
+              "roi_pct": -3.814935064935065
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "1.1": {
+          "n": 203,
+          "net_units": 7.7749999999999995,
+          "roi_pct": 3.8300492610837438,
+          "positive": 105,
+          "negative": 88,
+          "push": 10,
+          "without_top3": {
+            "n": 200,
+            "roi_pct": 2.325
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 100,
+            "roi_pct": -3.7375000000000007
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 8,
+              "net": 0.7249999999999996,
+              "roi_pct": 9.062499999999996
+            },
+            "2026-10-19": {
+              "n": 103,
+              "net": 11.512500000000001,
+              "roi_pct": 11.177184466019417
+            },
+            "2026-10-20": {
+              "n": 91,
+              "net": -3.4625000000000004,
+              "roi_pct": -3.8049450549450556
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "1.15": {
+          "n": 222,
+          "net_units": 6.124999999999999,
+          "roi_pct": 2.7590090090090085,
+          "positive": 113,
+          "negative": 97,
+          "push": 12,
+          "without_top3": {
+            "n": 219,
+            "roi_pct": 1.3698630136986298
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 107,
+            "roi_pct": -3.9135514018691597
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 8,
+              "net": 0.7249999999999996,
+              "roi_pct": 9.062499999999996
+            },
+            "2026-10-19": {
+              "n": 115,
+              "net": 10.3125,
+              "roi_pct": 8.967391304347826
+            },
+            "2026-10-20": {
+              "n": 98,
+              "net": -3.9125000000000005,
+              "roi_pct": -3.9923469387755106
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        }
+      },
+      "regions_night_vs_day": {
+        "None": {
+          "False": {
+            "n": 7,
+            "net_units": 1.2125,
+            "roi_pct": 17.32142857142857,
+            "positive": 4,
+            "negative": 2,
+            "push": 1,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-20",
+            "without_best_day": {
+              "n": 3,
+              "roi_pct": -18.75
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 2,
+                "net": 0.4375,
+                "roi_pct": 21.875
+              },
+              "2026-10-20": {
+                "n": 4,
+                "net": 1.775,
+                "roi_pct": 44.375
+              },
+              "2026-10-21": {
+                "n": 1,
+                "net": -1.0,
+                "roi_pct": -100.0
+              }
+            }
+          },
+          "True": {
+            "n": 2,
+            "net_units": -2.0,
+            "roi_pct": -100.0,
+            "positive": 0,
+            "negative": 2,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-19": {
+                "n": 2,
+                "net": -2.0,
+                "roi_pct": -100.0
+              }
+            }
+          }
+        },
+        "Америка": {
+          "False": {
+            "n": 43,
+            "net_units": -1.1625,
+            "roi_pct": -2.7034883720930236,
+            "positive": 21,
+            "negative": 20,
+            "push": 2,
+            "without_top3": {
+              "n": 40,
+              "roi_pct": -10.406249999999998
+            },
+            "best_day_by_net": "2026-10-18",
+            "without_best_day": {
+              "n": 35,
+              "roi_pct": -5.392857142857142
+            },
+            "days_msk": {
+              "2026-10-18": {
+                "n": 8,
+                "net": 0.7249999999999996,
+                "roi_pct": 9.062499999999996
+              },
+              "2026-10-19": {
+                "n": 16,
+                "net": -1.0499999999999998,
+                "roi_pct": -6.562499999999999
+              },
+              "2026-10-20": {
+                "n": 19,
+                "net": -0.8374999999999999,
+                "roi_pct": -4.407894736842104
+              }
+            }
+          },
+          "True": {
+            "n": 68,
+            "net_units": -9.6625,
+            "roi_pct": -14.209558823529411,
+            "positive": 27,
+            "negative": 35,
+            "push": 6,
+            "without_top3": {
+              "n": 65,
+              "roi_pct": -19.634615384615383
+            },
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 35,
+              "roi_pct": -27.035714285714285
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 33,
+                "net": -0.1999999999999995,
+                "roi_pct": -0.6060606060606045
+              },
+              "2026-10-20": {
+                "n": 17,
+                "net": -6.5375,
+                "roi_pct": -38.455882352941174
+              },
+              "2026-10-21": {
+                "n": 18,
+                "net": -2.9250000000000003,
+                "roi_pct": -16.25
+              }
+            }
+          }
+        },
+        "Восточная и Юго-Восточная Азия": {
+          "False": {
+            "n": 13,
+            "net_units": -3.35,
+            "roi_pct": -25.76923076923077,
+            "positive": 5,
+            "negative": 8,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 7,
+              "roi_pct": -65.71428571428571
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 6,
+                "net": 1.25,
+                "roi_pct": 20.833333333333332
+              },
+              "2026-10-20": {
+                "n": 7,
+                "net": -4.6,
+                "roi_pct": -65.71428571428571
+              }
+            }
+          },
+          "True": {
+            "n": 6,
+            "net_units": -0.8499999999999999,
+            "roi_pct": -14.166666666666664,
+            "positive": 2,
+            "negative": 3,
+            "push": 1,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-21",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-21": {
+                "n": 6,
+                "net": -0.8499999999999999,
+                "roi_pct": -14.166666666666664
+              }
+            }
+          }
+        },
+        "Европа": {
+          "False": {
+            "n": 120,
+            "net_units": -7.9,
+            "roi_pct": -6.583333333333333,
+            "positive": 53,
+            "negative": 58,
+            "push": 9,
+            "without_top3": {
+              "n": 117,
+              "roi_pct": -9.423076923076923
+            },
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 60,
+              "roi_pct": -10.395833333333336
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 60,
+                "net": -1.6625,
+                "roi_pct": -2.7708333333333335
+              },
+              "2026-10-20": {
+                "n": 60,
+                "net": -6.237500000000001,
+                "roi_pct": -10.395833333333336
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Западная Азия и Северная Африка": {
+          "False": {
+            "n": 51,
+            "net_units": 4.5375000000000005,
+            "roi_pct": 8.897058823529413,
+            "positive": 29,
+            "negative": 20,
+            "push": 2,
+            "without_top3": {
+              "n": 48,
+              "roi_pct": 3.3072916666666674
+            },
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 19,
+              "roi_pct": -1.8421052631578947
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 32,
+                "net": 4.8875,
+                "roi_pct": 15.2734375
+              },
+              "2026-10-20": {
+                "n": 19,
+                "net": -0.35,
+                "roi_pct": -1.8421052631578947
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Прочие регионы": {
+          "False": {
+            "n": 14,
+            "net_units": 3.9749999999999996,
+            "roi_pct": 28.39285714285714,
+            "positive": 9,
+            "negative": 5,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 5,
+              "roi_pct": 17.999999999999993
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 9,
+                "net": 3.075,
+                "roi_pct": 34.166666666666664
+              },
+              "2026-10-20": {
+                "n": 5,
+                "net": 0.8999999999999997,
+                "roi_pct": 17.999999999999993
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        }
+      }
+    },
+    "current_primary": {
+      "profile_neighbour_thresholds_with_no_night": {
+        "1.05": {
+          "n": 83,
+          "net_units": 8.85,
+          "roi_pct": 10.662650602409638,
+          "positive": 45,
+          "negative": 33,
+          "push": 5,
+          "without_top3": {
+            "n": 80,
+            "roi_pct": 7.250000000000002
+          },
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": {
+            "n": 10,
+            "roi_pct": -8.500000000000002
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 73,
+              "net": 9.700000000000001,
+              "roi_pct": 13.287671232876713
+            },
+            "2026-10-22": {
+              "n": 10,
+              "net": -0.8500000000000001,
+              "roi_pct": -8.500000000000002
+            }
+          }
+        },
+        "1.1": {
+          "n": 94,
+          "net_units": 8.6625,
+          "roi_pct": 9.215425531914894,
+          "positive": 50,
+          "negative": 38,
+          "push": 6,
+          "without_top3": {
+            "n": 91,
+            "roi_pct": 6.167582417582419
+          },
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": {
+            "n": 10,
+            "roi_pct": -8.500000000000002
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 84,
+              "net": 9.512500000000001,
+              "roi_pct": 11.324404761904763
+            },
+            "2026-10-22": {
+              "n": 10,
+              "net": -0.8500000000000001,
+              "roi_pct": -8.500000000000002
+            }
+          }
+        },
+        "1.15": {
+          "n": 104,
+          "net_units": 9.0625,
+          "roi_pct": 8.713942307692308,
+          "positive": 55,
+          "negative": 43,
+          "push": 6,
+          "without_top3": {
+            "n": 101,
+            "roi_pct": 5.952970297029703
+          },
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": {
+            "n": 10,
+            "roi_pct": -8.500000000000002
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 94,
+              "net": 9.9125,
+              "roi_pct": 10.545212765957446
+            },
+            "2026-10-22": {
+              "n": 10,
+              "net": -0.8500000000000001,
+              "roi_pct": -8.500000000000002
+            }
+          }
+        }
+      },
+      "regions_night_vs_day": {
+        "None": {
+          "False": {
+            "n": 4,
+            "net_units": 1.8,
+            "roi_pct": 45.0,
+            "positive": 3,
+            "negative": 1,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-22",
+            "without_best_day": {
+              "n": 2,
+              "roi_pct": -3.749999999999998
+            },
+            "days_msk": {
+              "2026-10-21": {
+                "n": 2,
+                "net": -0.07499999999999996,
+                "roi_pct": -3.749999999999998
+              },
+              "2026-10-22": {
+                "n": 2,
+                "net": 1.875,
+                "roi_pct": 93.75
+              }
+            }
+          },
+          "True": {
+            "n": 1,
+            "net_units": -1.0,
+            "roi_pct": -100.0,
+            "positive": 0,
+            "negative": 1,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-22",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-22": {
+                "n": 1,
+                "net": -1.0,
+                "roi_pct": -100.0
+              }
+            }
+          }
+        },
+        "Америка": {
+          "False": {
+            "n": 21,
+            "net_units": 0.17499999999999982,
+            "roi_pct": 0.8333333333333325,
+            "positive": 10,
+            "negative": 10,
+            "push": 1,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-21",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-21": {
+                "n": 21,
+                "net": 0.17499999999999982,
+                "roi_pct": 0.8333333333333325
+              }
+            }
+          },
+          "True": {
+            "n": 23,
+            "net_units": -7.7875,
+            "roi_pct": -33.858695652173914,
+            "positive": 8,
+            "negative": 15,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-22",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-22": {
+                "n": 23,
+                "net": -7.7875,
+                "roi_pct": -33.858695652173914
+              }
+            }
+          }
+        },
+        "Восточная и Юго-Восточная Азия": {
+          "False": {
+            "n": 40,
+            "net_units": 12.6125,
+            "roi_pct": 31.53125,
+            "positive": 26,
+            "negative": 10,
+            "push": 4,
+            "without_top3": {
+              "n": 37,
+              "roi_pct": 26.047297297297295
+            },
+            "best_day_by_net": "2026-10-21",
+            "without_best_day": {
+              "n": 6,
+              "roi_pct": -12.5
+            },
+            "days_msk": {
+              "2026-10-21": {
+                "n": 34,
+                "net": 13.3625,
+                "roi_pct": 39.3014705882353
+              },
+              "2026-10-22": {
+                "n": 6,
+                "net": -0.75,
+                "roi_pct": -12.5
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Европа": {
+          "False": {
+            "n": 51,
+            "net_units": -7.0,
+            "roi_pct": -13.72549019607843,
+            "positive": 21,
+            "negative": 28,
+            "push": 2,
+            "without_top3": {
+              "n": 48,
+              "roi_pct": -20.833333333333332
+            },
+            "best_day_by_net": "2026-10-22",
+            "without_best_day": {
+              "n": 49,
+              "roi_pct": -10.204081632653061
+            },
+            "days_msk": {
+              "2026-10-21": {
+                "n": 49,
+                "net": -5.0,
+                "roi_pct": -10.204081632653061
+              },
+              "2026-10-22": {
+                "n": 2,
+                "net": -2.0,
+                "roi_pct": -100.0
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Западная Азия и Северная Африка": {
+          "False": {
+            "n": 17,
+            "net_units": 2.4000000000000004,
+            "roi_pct": 14.11764705882353,
+            "positive": 10,
+            "negative": 7,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-21",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-21": {
+                "n": 17,
+                "net": 2.4000000000000004,
+                "roi_pct": 14.11764705882353
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Прочие регионы": {
+          "False": {
+            "n": 10,
+            "net_units": -0.8125,
+            "roi_pct": -8.125,
+            "positive": 5,
+            "negative": 5,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-22",
+            "without_best_day": {
+              "n": 8,
+              "roi_pct": -33.59375
+            },
+            "days_msk": {
+              "2026-10-21": {
+                "n": 8,
+                "net": -2.6875,
+                "roi_pct": -33.59375
+              },
+              "2026-10-22": {
+                "n": 2,
+                "net": 1.875,
+                "roi_pct": 93.75
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        }
+      }
+    },
+    "earlier_all_strong_observed_sensitivity": {
+      "profile_neighbour_thresholds_with_no_night": {
+        "1.05": {
+          "n": 178,
+          "net_units": 9.5625,
+          "roi_pct": 5.372191011235955,
+          "positive": 93,
+          "negative": 75,
+          "push": 10,
+          "without_top3": {
+            "n": 175,
+            "roi_pct": 3.664285714285714
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 90,
+            "roi_pct": -2.069444444444445
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 12,
+              "net": 2.0749999999999993,
+              "roi_pct": 17.29166666666666
+            },
+            "2026-10-19": {
+              "n": 88,
+              "net": 11.425,
+              "roi_pct": 12.982954545454545
+            },
+            "2026-10-20": {
+              "n": 77,
+              "net": -2.9375,
+              "roi_pct": -3.814935064935065
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "1.1": {
+          "n": 209,
+          "net_units": 6.974999999999999,
+          "roi_pct": 3.337320574162679,
+          "positive": 108,
+          "negative": 91,
+          "push": 10,
+          "without_top3": {
+            "n": 206,
+            "roi_pct": 1.8567961165048543
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 105,
+            "roi_pct": -3.226190476190477
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 13,
+              "net": 1.0749999999999993,
+              "roi_pct": 8.269230769230763
+            },
+            "2026-10-19": {
+              "n": 104,
+              "net": 10.3625,
+              "roi_pct": 9.963942307692308
+            },
+            "2026-10-20": {
+              "n": 91,
+              "net": -3.4625000000000004,
+              "roi_pct": -3.8049450549450556
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "1.15": {
+          "n": 228,
+          "net_units": 5.324999999999999,
+          "roi_pct": 2.335526315789473,
+          "positive": 116,
+          "negative": 100,
+          "push": 12,
+          "without_top3": {
+            "n": 225,
+            "roi_pct": 0.9666666666666665
+          },
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 112,
+            "roi_pct": -3.426339285714287
+          },
+          "days_msk": {
+            "2026-10-18": {
+              "n": 13,
+              "net": 1.0749999999999993,
+              "roi_pct": 8.269230769230763
+            },
+            "2026-10-19": {
+              "n": 116,
+              "net": 9.1625,
+              "roi_pct": 7.898706896551724
+            },
+            "2026-10-20": {
+              "n": 98,
+              "net": -3.9125000000000005,
+              "roi_pct": -3.9923469387755106
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        }
+      },
+      "regions_night_vs_day": {
+        "None": {
+          "False": {
+            "n": 7,
+            "net_units": 1.2125,
+            "roi_pct": 17.32142857142857,
+            "positive": 4,
+            "negative": 2,
+            "push": 1,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-20",
+            "without_best_day": {
+              "n": 3,
+              "roi_pct": -18.75
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 2,
+                "net": 0.4375,
+                "roi_pct": 21.875
+              },
+              "2026-10-20": {
+                "n": 4,
+                "net": 1.775,
+                "roi_pct": 44.375
+              },
+              "2026-10-21": {
+                "n": 1,
+                "net": -1.0,
+                "roi_pct": -100.0
+              }
+            }
+          },
+          "True": {
+            "n": 2,
+            "net_units": -2.0,
+            "roi_pct": -100.0,
+            "positive": 0,
+            "negative": 2,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-19": {
+                "n": 2,
+                "net": -2.0,
+                "roi_pct": -100.0
+              }
+            }
+          }
+        },
+        "Америка": {
+          "False": {
+            "n": 47,
+            "net_units": -1.3625000000000003,
+            "roi_pct": -2.8989361702127665,
+            "positive": 23,
+            "negative": 22,
+            "push": 2,
+            "without_top3": {
+              "n": 44,
+              "roi_pct": -9.914772727272727
+            },
+            "best_day_by_net": "2026-10-18",
+            "without_best_day": {
+              "n": 35,
+              "roi_pct": -5.392857142857142
+            },
+            "days_msk": {
+              "2026-10-18": {
+                "n": 12,
+                "net": 0.5249999999999996,
+                "roi_pct": 4.3749999999999964
+              },
+              "2026-10-19": {
+                "n": 16,
+                "net": -1.0499999999999998,
+                "roi_pct": -6.562499999999999
+              },
+              "2026-10-20": {
+                "n": 19,
+                "net": -0.8374999999999999,
+                "roi_pct": -4.407894736842104
+              }
+            }
+          },
+          "True": {
+            "n": 69,
+            "net_units": -8.8375,
+            "roi_pct": -12.807971014492754,
+            "positive": 28,
+            "negative": 35,
+            "push": 6,
+            "without_top3": {
+              "n": 66,
+              "roi_pct": -18.08712121212121
+            },
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 35,
+              "roi_pct": -27.035714285714285
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 34,
+                "net": 0.6250000000000004,
+                "roi_pct": 1.8382352941176483
+              },
+              "2026-10-20": {
+                "n": 17,
+                "net": -6.5375,
+                "roi_pct": -38.455882352941174
+              },
+              "2026-10-21": {
+                "n": 18,
+                "net": -2.9250000000000003,
+                "roi_pct": -16.25
+              }
+            }
+          }
+        },
+        "Восточная и Юго-Восточная Азия": {
+          "False": {
+            "n": 13,
+            "net_units": -3.35,
+            "roi_pct": -25.76923076923077,
+            "positive": 5,
+            "negative": 8,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 7,
+              "roi_pct": -65.71428571428571
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 6,
+                "net": 1.25,
+                "roi_pct": 20.833333333333332
+              },
+              "2026-10-20": {
+                "n": 7,
+                "net": -4.6,
+                "roi_pct": -65.71428571428571
+              }
+            }
+          },
+          "True": {
+            "n": 6,
+            "net_units": -0.8499999999999999,
+            "roi_pct": -14.166666666666664,
+            "positive": 2,
+            "negative": 3,
+            "push": 1,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-21",
+            "without_best_day": null,
+            "days_msk": {
+              "2026-10-21": {
+                "n": 6,
+                "net": -0.8499999999999999,
+                "roi_pct": -14.166666666666664
+              }
+            }
+          }
+        },
+        "Европа": {
+          "False": {
+            "n": 123,
+            "net_units": -8.850000000000001,
+            "roi_pct": -7.195121951219513,
+            "positive": 54,
+            "negative": 60,
+            "push": 9,
+            "without_top3": {
+              "n": 120,
+              "roi_pct": -10.0
+            },
+            "best_day_by_net": "2026-10-18",
+            "without_best_day": {
+              "n": 121,
+              "roi_pct": -7.355371900826446
+            },
+            "days_msk": {
+              "2026-10-18": {
+                "n": 2,
+                "net": 0.04999999999999982,
+                "roi_pct": 2.499999999999991
+              },
+              "2026-10-19": {
+                "n": 61,
+                "net": -2.6625,
+                "roi_pct": -4.364754098360656
+              },
+              "2026-10-20": {
+                "n": 60,
+                "net": -6.237500000000001,
+                "roi_pct": -10.395833333333336
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Западная Азия и Северная Африка": {
+          "False": {
+            "n": 51,
+            "net_units": 4.3875,
+            "roi_pct": 8.602941176470589,
+            "positive": 29,
+            "negative": 20,
+            "push": 2,
+            "without_top3": {
+              "n": 48,
+              "roi_pct": 2.9947916666666665
+            },
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 19,
+              "roi_pct": -1.8421052631578947
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 32,
+                "net": 4.737500000000001,
+                "roi_pct": 14.804687500000002
+              },
+              "2026-10-20": {
+                "n": 19,
+                "net": -0.35,
+                "roi_pct": -1.8421052631578947
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        },
+        "Прочие регионы": {
+          "False": {
+            "n": 14,
+            "net_units": 3.9749999999999996,
+            "roi_pct": 28.39285714285714,
+            "positive": 9,
+            "negative": 5,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": "2026-10-19",
+            "without_best_day": {
+              "n": 5,
+              "roi_pct": 17.999999999999993
+            },
+            "days_msk": {
+              "2026-10-19": {
+                "n": 9,
+                "net": 3.075,
+                "roi_pct": 34.166666666666664
+              },
+              "2026-10-20": {
+                "n": 5,
+                "net": 0.8999999999999997,
+                "roi_pct": 17.999999999999993
+              }
+            }
+          },
+          "True": {
+            "n": 0,
+            "net_units": 0,
+            "roi_pct": null,
+            "positive": 0,
+            "negative": 0,
+            "push": 0,
+            "without_top3": null,
+            "best_day_by_net": null,
+            "without_best_day": null,
+            "days_msk": {}
+          }
+        }
+      }
+    }
+  },
+  "matching": {
+    "earlier_recorded": {
+      "same_day": {
+        "pairs": 21,
+        "low_profile": {
+          "n": 21,
+          "net_units": 8.0,
+          "roi_pct": 38.095238095238095,
+          "positive": 14,
+          "negative": 5,
+          "push": 2,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-20",
+          "without_best_day": {
+            "n": 10,
+            "roi_pct": 24.500000000000004
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 9,
+              "net": 2.95,
+              "roi_pct": 32.77777777777778
+            },
+            "2026-10-20": {
+              "n": 11,
+              "net": 5.55,
+              "roi_pct": 50.45454545454545
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -0.5,
+              "roi_pct": -50.0
+            }
+          }
+        },
+        "high_profile": {
+          "n": 21,
+          "net_units": -3.7874999999999996,
+          "roi_pct": -18.035714285714285,
+          "positive": 8,
+          "negative": 11,
+          "push": 2,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-20",
+          "without_best_day": {
+            "n": 10,
+            "roi_pct": -33.75
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 9,
+              "net": -2.375,
+              "roi_pct": -26.38888888888889
+            },
+            "2026-10-20": {
+              "n": 11,
+              "net": -0.4125000000000001,
+              "roi_pct": -3.7500000000000004
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          5.119047619047615,
+          104.52380952380953
+        ],
+        "matched_event_ids": [
+          [
+            "13269795",
+            "12271346"
+          ],
+          [
+            "13104751",
+            "12325253"
+          ],
+          [
+            "12436276",
+            "12031933"
+          ],
+          [
+            "13315787",
+            "13315228"
+          ],
+          [
+            "11624350",
+            "12099608"
+          ],
+          [
+            "13087775",
+            "12325135"
+          ],
+          [
+            "12074515",
+            "13222962"
+          ],
+          [
+            "12031931",
+            "13076960"
+          ],
+          [
+            "12402251",
+            "12076767"
+          ],
+          [
+            "12321091",
+            "12229107"
+          ],
+          [
+            "13323205",
+            "12101338"
+          ],
+          [
+            "13323819",
+            "13324400"
+          ],
+          [
+            "12471933",
+            "13325564"
+          ],
+          [
+            "12391831",
+            "13221813"
+          ],
+          [
+            "12471930",
+            "13033247"
+          ],
+          [
+            "13298323",
+            "13324863"
+          ],
+          [
+            "13268951",
+            "13325873"
+          ],
+          [
+            "13323372",
+            "12325193"
+          ],
+          [
+            "12101031",
+            "12101339"
+          ],
+          [
+            "13218071",
+            "12375317"
+          ],
+          [
+            "12027312",
+            "13285996"
+          ]
+        ]
+      },
+      "same_region": {
+        "pairs": 14,
+        "low_profile": {
+          "n": 14,
+          "net_units": 2.8874999999999997,
+          "roi_pct": 20.625,
+          "positive": 9,
+          "negative": 5,
+          "push": 0,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 8,
+            "roi_pct": -5.781250000000002
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 6,
+              "net": 3.3499999999999996,
+              "roi_pct": 55.83333333333332
+            },
+            "2026-10-20": {
+              "n": 6,
+              "net": 1.0374999999999999,
+              "roi_pct": 17.291666666666664
+            },
+            "2026-10-21": {
+              "n": 2,
+              "net": -1.5,
+              "roi_pct": -75.0
+            }
+          }
+        },
+        "high_profile": {
+          "n": 14,
+          "net_units": -2.1375,
+          "roi_pct": -15.267857142857144,
+          "positive": 6,
+          "negative": 7,
+          "push": 1,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-20",
+          "without_best_day": {
+            "n": 5,
+            "roi_pct": -63.0
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 4,
+              "net": -2.15,
+              "roi_pct": -53.75
+            },
+            "2026-10-20": {
+              "n": 9,
+              "net": 1.0125,
+              "roi_pct": 11.25
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          -15.0,
+          88.03571428571429
+        ],
+        "matched_event_ids": [
+          [
+            "12322423",
+            "12099964"
+          ],
+          [
+            "13072748",
+            "13033247"
+          ],
+          [
+            "13276122",
+            "12325193"
+          ],
+          [
+            "12206504",
+            "12101338"
+          ],
+          [
+            "13087775",
+            "12325135"
+          ],
+          [
+            "12031932",
+            "12101036"
+          ],
+          [
+            "12321091",
+            "12229107"
+          ],
+          [
+            "11734045",
+            "12099608"
+          ],
+          [
+            "12471929",
+            "12076767"
+          ],
+          [
+            "13298323",
+            "13324863"
+          ],
+          [
+            "12101031",
+            "12101339"
+          ],
+          [
+            "12272870",
+            "12271346"
+          ],
+          [
+            "13328401",
+            "13325873"
+          ],
+          [
+            "12027312",
+            "13285996"
+          ]
+        ]
+      },
+      "same_day_and_region": {
+        "pairs": 5,
+        "low_profile": {
+          "n": 5,
+          "net_units": 2.4375,
+          "roi_pct": 48.75,
+          "positive": 4,
+          "negative": 1,
+          "push": 0,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-20",
+          "without_best_day": {
+            "n": 2,
+            "roi_pct": 15.000000000000002
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 1,
+              "net": 0.8,
+              "roi_pct": 80.0
+            },
+            "2026-10-20": {
+              "n": 3,
+              "net": 2.1375,
+              "roi_pct": 71.25000000000001
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -0.5,
+              "roi_pct": -50.0
+            }
+          }
+        },
+        "high_profile": {
+          "n": 5,
+          "net_units": 0.13749999999999996,
+          "roi_pct": 2.749999999999999,
+          "positive": 3,
+          "negative": 2,
+          "push": 0,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-19",
+          "without_best_day": {
+            "n": 4,
+            "roi_pct": -17.812500000000004
+          },
+          "days_msk": {
+            "2026-10-19": {
+              "n": 1,
+              "net": 0.8500000000000001,
+              "roi_pct": 85.00000000000001
+            },
+            "2026-10-20": {
+              "n": 3,
+              "net": 0.28749999999999987,
+              "roi_pct": 9.583333333333329
+            },
+            "2026-10-21": {
+              "n": 1,
+              "net": -1.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          -1.4999999999999991,
+          118.5
+        ],
+        "matched_event_ids": [
+          [
+            "13087775",
+            "12325135"
+          ],
+          [
+            "12321091",
+            "12229107"
+          ],
+          [
+            "13298323",
+            "13324863"
+          ],
+          [
+            "12101031",
+            "12101339"
+          ],
+          [
+            "12027312",
+            "13285996"
+          ]
+        ]
+      }
+    },
+    "current_primary": {
+      "same_day": {
+        "pairs": 20,
+        "low_profile": {
+          "n": 20,
+          "net_units": 5.8,
+          "roi_pct": 29.0,
+          "positive": 12,
+          "negative": 5,
+          "push": 3,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": {
+            "n": 1,
+            "roi_pct": 89.99999999999999
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 19,
+              "net": 4.9,
+              "roi_pct": 25.78947368421053
+            },
+            "2026-10-22": {
+              "n": 1,
+              "net": 0.8999999999999999,
+              "roi_pct": 89.99999999999999
+            }
+          }
+        },
+        "high_profile": {
+          "n": 20,
+          "net_units": 0.8999999999999999,
+          "roi_pct": 4.499999999999999,
+          "positive": 10,
+          "negative": 9,
+          "push": 1,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-22",
+          "without_best_day": {
+            "n": 19,
+            "roi_pct": 0.13157894736842057
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 19,
+              "net": 0.02499999999999991,
+              "roi_pct": 0.13157894736842057
+            },
+            "2026-10-22": {
+              "n": 1,
+              "net": 0.875,
+              "roi_pct": 87.5
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          -15.249999999999995,
+          65.0
+        ],
+        "matched_event_ids": [
+          [
+            "13332656",
+            "12325100"
+          ],
+          [
+            "13327974",
+            "13328411"
+          ],
+          [
+            "12049973",
+            "12051797"
+          ],
+          [
+            "12050623",
+            "13328756"
+          ],
+          [
+            "12432952",
+            "13045581"
+          ],
+          [
+            "13328412",
+            "13328757"
+          ],
+          [
+            "13327373",
+            "13276778"
+          ],
+          [
+            "13327492",
+            "12370951"
+          ],
+          [
+            "13072221",
+            "12051800"
+          ],
+          [
+            "13036702",
+            "12050620"
+          ],
+          [
+            "13160801",
+            "13331936"
+          ],
+          [
+            "12375312",
+            "12229103"
+          ],
+          [
+            "12325191",
+            "12229104"
+          ],
+          [
+            "13328094",
+            "12148371"
+          ],
+          [
+            "13301739",
+            "12375313"
+          ],
+          [
+            "13293552",
+            "12049972"
+          ],
+          [
+            "13330037",
+            "13217791"
+          ],
+          [
+            "12117455",
+            "12399541"
+          ],
+          [
+            "13329707",
+            "12051794"
+          ],
+          [
+            "13331683",
+            "12432950"
+          ]
+        ]
+      },
+      "same_region": {
+        "pairs": 8,
+        "low_profile": {
+          "n": 8,
+          "net_units": 0.7250000000000001,
+          "roi_pct": 9.062500000000002,
+          "positive": 4,
+          "negative": 3,
+          "push": 1,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": {
+            "n": 2,
+            "roi_pct": -100.0
+          },
+          "days_msk": {
+            "2026-10-21": {
+              "n": 6,
+              "net": 2.725,
+              "roi_pct": 45.416666666666664
+            },
+            "2026-10-22": {
+              "n": 2,
+              "net": -2.0,
+              "roi_pct": -100.0
+            }
+          }
+        },
+        "high_profile": {
+          "n": 8,
+          "net_units": -2.475,
+          "roi_pct": -30.9375,
+          "positive": 3,
+          "negative": 5,
+          "push": 0,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": null,
+          "days_msk": {
+            "2026-10-21": {
+              "n": 8,
+              "net": -2.475,
+              "roi_pct": -30.9375
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          -76.875,
+          146.25
+        ],
+        "matched_event_ids": [
+          [
+            "13332656",
+            "12101029"
+          ],
+          [
+            "12049975",
+            "12050620"
+          ],
+          [
+            "12049973",
+            "12051797"
+          ],
+          [
+            "13327373",
+            "13327439"
+          ],
+          [
+            "12117455",
+            "12399541"
+          ],
+          [
+            "13329707",
+            "13301742"
+          ],
+          [
+            "13333001",
+            "13328889"
+          ],
+          [
+            "13332980",
+            "12229103"
+          ]
+        ]
+      },
+      "same_day_and_region": {
+        "pairs": 6,
+        "low_profile": {
+          "n": 6,
+          "net_units": 2.725,
+          "roi_pct": 45.416666666666664,
+          "positive": 4,
+          "negative": 1,
+          "push": 1,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": null,
+          "days_msk": {
+            "2026-10-21": {
+              "n": 6,
+              "net": 2.725,
+              "roi_pct": 45.416666666666664
+            }
+          }
+        },
+        "high_profile": {
+          "n": 6,
+          "net_units": -4.25,
+          "roi_pct": -70.83333333333333,
+          "positive": 1,
+          "negative": 5,
+          "push": 0,
+          "without_top3": null,
+          "best_day_by_net": "2026-10-21",
+          "without_best_day": null,
+          "days_msk": {
+            "2026-10-21": {
+              "n": 6,
+              "net": -4.25,
+              "roi_pct": -70.83333333333333
+            }
+          }
+        },
+        "paired_difference_95_pct_points": [
+          25.416666666666664,
+          194.58333333333331
+        ],
+        "matched_event_ids": [
+          [
+            "13332656",
+            "12101029"
+          ],
+          [
+            "12049975",
+            "12050620"
+          ],
+          [
+            "12049973",
+            "12051797"
+          ],
+          [
+            "13327373",
+            "13327439"
+          ],
+          [
+            "12117455",
+            "12399541"
+          ],
+          [
+            "13329707",
+            "13301742"
+          ]
+        ]
+      }
+    }
+  },
+  "ranking_capacity": {
+    "selected_unique_including_open_and_unpriced": 186,
+    "observed_exact_priced_strong_8_60_unique": 186,
+    "strong_observed_never_selected_ids": [],
+    "selected_without_any_observed_priced_strong_ids": [],
+    "cycles_by_number_selected": {
+      "1": 66,
+      "3": 15,
+      "5": 5,
+      "4": 2,
+      "2": 21
+    },
+    "settled_entries_with_an_earlier_saved_strong_quote": 5,
+    "earlier_quote_delay_rows": [
+      {
+        "id": "12049970",
+        "original_profit": -1.0,
+        "earlier_profit": -1.0,
+        "delay_minutes": 10.06599231561025
+      },
+      {
+        "id": "12049974",
+        "original_profit": 0.48750000000000004,
+        "earlier_profit": 0.0,
+        "delay_minutes": 10.06599231561025
+      },
+      {
+        "id": "12051801",
+        "original_profit": -1.0,
+        "earlier_profit": -1.0,
+        "delay_minutes": 9.729553099473318
+      },
+      {
+        "id": "13326887",
+        "original_profit": -0.5,
+        "earlier_profit": -1.0,
+        "delay_minutes": 8.25389883518219
+      },
+      {
+        "id": "13217790",
+        "original_profit": -1.0,
+        "earlier_profit": -1.0,
+        "delay_minutes": 13.312909332911174
+      }
+    ],
+    "scope_limit": "Only saved exact-priced enriched observations, not unseen/unpriced board matches. Ever selected is not same-cycle selected."
+  },
+  "existing_ev_filter": {
+    "n": 90,
+    "net_units": -0.7874999999999996,
+    "roi_pct": -0.8749999999999997,
+    "positive": 42,
+    "negative": 42,
+    "push": 6,
+    "without_top3": {
+      "n": 87,
+      "roi_pct": -4.410919540229885
+    },
+    "best_day_by_net": "2026-10-21",
+    "without_best_day": {
+      "n": 15,
+      "roi_pct": -13.833333333333336
+    },
+    "days_msk": {
+      "2026-10-21": {
+        "n": 75,
+        "net": 1.2875000000000003,
+        "roi_pct": 1.716666666666667
+      },
+      "2026-10-22": {
+        "n": 15,
+        "net": -2.075,
+        "roi_pct": -13.833333333333336
+      }
+    }
+  },
+  "selected_candidate_rows": [
+    {
+      "id": "13332656",
+      "sid": "39562579402-100010",
+      "t": 1792570647.228607,
+      "day": "2026-10-21",
+      "hour": 11,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        1,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8072623029144769,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12391829",
+      "sid": "39562579402-100015",
+      "t": 1792572149.418409,
+      "day": "2026-10-21",
+      "hour": 11,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0473684210526315,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327975",
+      "sid": "39562579402-100021",
+      "t": 1792573959.801616,
+      "day": "2026-10-21",
+      "hour": 12,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.8,
+      "profit": 0.8,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8806712962962964,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327973",
+      "sid": "39562579402-100021",
+      "t": 1792573959.801616,
+      "day": "2026-10-21",
+      "hour": 12,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 5.0,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        0,
+        6
+      ],
+      "rank": 2,
+      "gp_ratio": 1.3805555555555558,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13327974",
+      "sid": "39562579402-100021",
+      "t": 1792573959.801616,
+      "day": "2026-10-21",
+      "hour": 12,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        2,
+        3
+      ],
+      "rank": 3,
+      "gp_ratio": 0.875,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12099741",
+      "sid": "39562579402-100027",
+      "t": 1792575771.10256,
+      "day": "2026-10-21",
+      "hour": 12,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0526315789473684,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049975",
+      "sid": "39562579402-100033",
+      "t": 1792577579.779012,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0006784260515604,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049972",
+      "sid": "39562579402-100033",
+      "t": 1792577579.779012,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 2,
+      "gp_ratio": 1.1194029850746268,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12050617",
+      "sid": "39562579402-100033",
+      "t": 1792577579.779012,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        3,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.8373205741626795,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12050621",
+      "sid": "39562579402-100033",
+      "t": 1792577579.779012,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 4,
+      "gp_ratio": 1.076555023923445,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12050620",
+      "sid": "39562579402-100033",
+      "t": 1792577579.779012,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 5,
+      "gp_ratio": 1.1790840738209158,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051800",
+      "sid": "39562579402-100034",
+      "t": 1792577902.167703,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2163561076604554,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051797",
+      "sid": "39562579402-100034",
+      "t": 1792577902.167703,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.75,
+      "profit": 0.75,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 1.2004300047778311,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051796",
+      "sid": "39562579402-100034",
+      "t": 1792577902.167703,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.95,
+      "profit": 0.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.9937888198757765,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049973",
+      "sid": "39562579402-100034",
+      "t": 1792577902.167703,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.775,
+      "profit": 0.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 4,
+      "gp_ratio": 0.9667571234735413,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12050623",
+      "sid": "39562579402-100034",
+      "t": 1792577902.167703,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 14.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 5,
+      "gp_ratio": 0.9227614490772386,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049977",
+      "sid": "39562579402-100035",
+      "t": 1792578183.738551,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 19.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.5,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0515603799185889,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12050619",
+      "sid": "39562579402-100035",
+      "t": 1792578183.738551,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 19.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.5,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 1.2047163362952835,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12049971",
+      "sid": "39562579402-100035",
+      "t": 1792578183.738551,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 19.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 3,
+      "gp_ratio": 0.9837177747625507,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049970",
+      "sid": "39562579402-100035",
+      "t": 1792578183.738551,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 19.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 2.025,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 4,
+      "gp_ratio": 0.8819538670284939,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049974",
+      "sid": "39562579402-100035",
+      "t": 1792578183.738551,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 19.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.975,
+      "profit": 0.48750000000000004,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 5,
+      "gp_ratio": 1.0685210312075983,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12050616",
+      "sid": "39562579402-100036",
+      "t": 1792578485.940889,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 24.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1107313738892683,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051794",
+      "sid": "39562579402-100036",
+      "t": 1792578485.940889,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 24.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        4,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.1984392419175027,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051795",
+      "sid": "39562579402-100036",
+      "t": 1792578485.940889,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 24.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        1,
+        2
+      ],
+      "rank": 3,
+      "gp_ratio": 1.244824016563147,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051801",
+      "sid": "39562579402-100036",
+      "t": 1792578485.940889,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 24.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 4,
+      "gp_ratio": 1.4190821256038648,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051798",
+      "sid": "39562579402-100037",
+      "t": 1792578787.516771,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 30.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.25,
+      "price": 2.025,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1891490152359718,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12051799",
+      "sid": "39562579402-100038",
+      "t": 1792579091.566656,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 34.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 2.75,
+      "price": 2.025,
+      "profit": 1.025,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0351966873706004,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12049968",
+      "sid": "39562579402-100039",
+      "t": 1792579392.071489,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 40.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.25,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9158751696065127,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12458567",
+      "sid": "39562579402-100039",
+      "t": 1792579392.071489,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 41.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 3.75,
+      "price": 1.975,
+      "profit": -1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8425028835063437,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12051323",
+      "sid": "39562579402-100040",
+      "t": 1792579694.835533,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 44.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 2.25,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        0,
+        5
+      ],
+      "rank": 1,
+      "gp_ratio": 1.131085098476403,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13327354",
+      "sid": "39562579402-100041",
+      "t": 1792579996.958371,
+      "day": "2026-10-21",
+      "hour": 13,
+      "minute": 22.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.75,
+      "price": 1.8,
+      "profit": 0.8,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.95703125,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327355",
+      "sid": "39562579402-100043",
+      "t": 1792580599.954728,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 16.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.75,
+      "price": 1.85,
+      "profit": 0.42500000000000004,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9066611842105262,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12432952",
+      "sid": "39562579402-100044",
+      "t": 1792580901.56856,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9425158641284062,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328411",
+      "sid": "39562579402-100045",
+      "t": 1792581204.37404,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        6,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1925465838509317,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12049969",
+      "sid": "39562579402-100045",
+      "t": 1792581204.37404,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 53.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.0,
+      "price": 2.05,
+      "profit": 0.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8649932157394844,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12051802",
+      "sid": "39562579402-100045",
+      "t": 1792581204.37404,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 39.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 3.75,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 3,
+      "gp_ratio": 1.3437649307214525,
+      "fresh_shots5": 5.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328412",
+      "sid": "39562579402-100046",
+      "t": 1792581509.800982,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 16.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        6,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.946583850931677,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328364",
+      "sid": "39562579402-100054",
+      "t": 1792583923.766179,
+      "day": "2026-10-21",
+      "hour": 14,
+      "minute": 45.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 2.5,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8944099378881988,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327440",
+      "sid": "39562579402-100056",
+      "t": 1792584527.024457,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        1,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9424867724867726,
+      "fresh_shots5": 5.0,
+      "fresh_sot5": 3.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13045694",
+      "sid": "39562579402-100057",
+      "t": 1792584829.426668,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 15.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1618165784832453,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13324374",
+      "sid": "39562579402-100058",
+      "t": 1792585130.624291,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 14.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        4,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8860998650472334,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12458568",
+      "sid": "39562579402-100058",
+      "t": 1792585130.624291,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 14.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 4.75,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        1,
+        3
+      ],
+      "rank": 2,
+      "gp_ratio": 1.1918973471741638,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12411118",
+      "sid": "39562579402-100058",
+      "t": 1792585130.624291,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 20.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 4.25,
+      "price": 1.875,
+      "profit": -0.5,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 3,
+      "gp_ratio": 1.0512756909992913,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327439",
+      "sid": "39562579402-100059",
+      "t": 1792585433.53683,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 22.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.3863756613756615,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13045583",
+      "sid": "39562579402-100062",
+      "t": 1792586338.013856,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.825,
+      "profit": -1.0,
+      "final": [
+        3,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.236424394319131,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13045581",
+      "sid": "39562579402-100062",
+      "t": 1792586338.013856,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.975,
+      "profit": -0.5,
+      "final": [
+        1,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 1.1507936507936507,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13327381",
+      "sid": "39562579402-100062",
+      "t": 1792586338.013856,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.9363040629095675,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327375",
+      "sid": "39562579402-100063",
+      "t": 1792586640.871581,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1490906164493804,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13332336",
+      "sid": "39562579402-100064",
+      "t": 1792586942.833225,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 14.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 4.5,
+      "price": 2.025,
+      "profit": 1.025,
+      "final": [
+        6,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2500963688227587,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13327491",
+      "sid": "39562579402-100064",
+      "t": 1792586942.833225,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 18.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.8,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 0.7218392565359476,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327377",
+      "sid": "39562579402-100064",
+      "t": 1792586942.833225,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 13.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.8,
+      "profit": 0.8,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 3,
+      "gp_ratio": 0.9947690326734266,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327380",
+      "sid": "39603123249-100002",
+      "t": 1792587499.978483,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 21.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.8,
+      "profit": 0.8,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.7885850388143967,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327373",
+      "sid": "39603123249-100002",
+      "t": 1792587499.978483,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 23.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8743628950050968,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327492",
+      "sid": "39603123249-100002",
+      "t": 1792587499.978483,
+      "day": "2026-10-21",
+      "hour": 15,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        1,
+        3
+      ],
+      "rank": 3,
+      "gp_ratio": 0.842354302832244,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13234890",
+      "sid": "39603123249-100005",
+      "t": 1792588407.235132,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 2.0,
+      "profit": 1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.7124434389140272,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328113",
+      "sid": "39603123249-100005",
+      "t": 1792588407.235132,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 2.0,
+      "profit": 1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8542410714285713,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328114",
+      "sid": "39603123249-100005",
+      "t": 1792588407.235132,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 13.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.7921052631578946,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13331936",
+      "sid": "39603123249-100005",
+      "t": 1792588407.235132,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 4,
+      "gp_ratio": 1.147641632016632,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328365",
+      "sid": "39603123249-100006",
+      "t": 1792588710.238791,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 58.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 3.0,
+      "price": 1.725,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8571428571428573,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13333605",
+      "sid": "39603123249-100006",
+      "t": 1792588710.238791,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 17.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 0.9893908969210176,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13323545",
+      "sid": "39603123249-100006",
+      "t": 1792588710.238791,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 55.0,
+      "score": [
+        0,
+        2
+      ],
+      "line": 2.75,
+      "price": 1.875,
+      "profit": 0.4375,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 3,
+      "gp_ratio": 1.3092460881934567,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13231477",
+      "sid": "39603123249-100009",
+      "t": 1792589616.825464,
+      "day": "2026-10-21",
+      "hour": 16,
+      "minute": 33.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.25,
+      "price": 2.025,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2004834810636584,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12375316",
+      "sid": "39603123249-100017",
+      "t": 1792592036.417535,
+      "day": "2026-10-21",
+      "hour": 17,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8734119782214156,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13045695",
+      "sid": "39603123249-100022",
+      "t": 1792593545.460046,
+      "day": "2026-10-21",
+      "hour": 17,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.85,
+      "profit": -0.5,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9785353535353535,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13302247",
+      "sid": "39603123249-100026",
+      "t": 1792594751.668975,
+      "day": "2026-10-21",
+      "hour": 17,
+      "minute": 26.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.6717741935483871,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12325100",
+      "sid": "39603123249-100028",
+      "t": 1792595356.231802,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.875,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1563970902866922,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13329009",
+      "sid": "39603123249-100028",
+      "t": 1792595356.231802,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 56.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 0.75,
+      "price": 1.7,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 0.5314606741573032,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12471935",
+      "sid": "39603123249-100029",
+      "t": 1792595660.811726,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 13.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        4,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8556080371869845,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13332639",
+      "sid": "39603123249-100029",
+      "t": 1792595660.811726,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 14.0,
+      "score": [
+        2,
+        0
+      ],
+      "line": 5.0,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0204303197789182,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328647",
+      "sid": "39603123249-100031",
+      "t": 1792596263.672254,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 19.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 4.75,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        3,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 1.5817307692307692,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13297232",
+      "sid": "39603123249-100031",
+      "t": 1792596263.672254,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 17.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 2.0212765957446805,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12229104",
+      "sid": "39603123249-100032",
+      "t": 1792596563.42397,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 26.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.4053751399776038,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12229103",
+      "sid": "39603123249-100032",
+      "t": 1792596563.42397,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 2.2163120567375887,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12167938",
+      "sid": "39603123249-100037",
+      "t": 1792598074.979594,
+      "day": "2026-10-21",
+      "hour": 18,
+      "minute": 22.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 2.0,
+      "profit": 1.0,
+      "final": [
+        3,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9702970297029704,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12148371",
+      "sid": "39603123249-100039",
+      "t": 1792598677.24209,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 31.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.775,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1602284454451637,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13329057",
+      "sid": "39603123249-100040",
+      "t": 1792598979.720544,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        4,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.3089645723233507,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13072222",
+      "sid": "39603123249-100041",
+      "t": 1792599282.210314,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 13.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        3,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.7323013415892672,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13072200",
+      "sid": "39603123249-100042",
+      "t": 1792599583.849248,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 19.0,
+      "score": [
+        2,
+        0
+      ],
+      "line": 4.0,
+      "price": 1.875,
+      "profit": -1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8899896800825594,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329085",
+      "sid": "39603123249-100043",
+      "t": 1792599886.627226,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 21.0,
+      "score": [
+        0,
+        3
+      ],
+      "line": 7.5,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        0,
+        6
+      ],
+      "rank": 1,
+      "gp_ratio": 1.035225048923679,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13276778",
+      "sid": "39603123249-100043",
+      "t": 1792599886.627226,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 23.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.975,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.1954022988505746,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13330150",
+      "sid": "39603123249-100044",
+      "t": 1792600193.068095,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 19.0,
+      "score": [
+        0,
+        2
+      ],
+      "line": 3.5,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        1,
+        4
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9220175438596492,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12144499",
+      "sid": "39603123249-100045",
+      "t": 1792600493.369645,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 35.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9924812030075187,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329858",
+      "sid": "39603123249-100046",
+      "t": 1792600794.075325,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 39.0,
+      "score": [
+        3,
+        0
+      ],
+      "line": 5.25,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        3,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0616459627329191,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12136892",
+      "sid": "39603123249-100046",
+      "t": 1792600794.075325,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 40.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.026315789473684,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329084",
+      "sid": "39603123249-100047",
+      "t": 1792601095.129949,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 43.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8439334637964775,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 3.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13072221",
+      "sid": "39603123249-100047",
+      "t": 1792601095.129949,
+      "day": "2026-10-21",
+      "hour": 19,
+      "minute": 14.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        3,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 0.9385620915032679,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13036702",
+      "sid": "39603123249-100052",
+      "t": 1792602604.782464,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.825,
+      "profit": -1.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0095238095238095,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12375313",
+      "sid": "39603123249-100052",
+      "t": 1792602604.782464,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.875,
+      "profit": -0.5,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.119140184809556,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13160801",
+      "sid": "39603123249-100052",
+      "t": 1792602604.782464,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.85,
+      "profit": 0.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 3,
+      "gp_ratio": 1.0982298474945533,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12375312",
+      "sid": "39603123249-100053",
+      "t": 1792602906.801814,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 13.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        3,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9781167108753316,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12325191",
+      "sid": "39603123249-100053",
+      "t": 1792602906.801814,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 25.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8949507916131793,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13332868",
+      "sid": "39603123249-100054",
+      "t": 1792603210.104342,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 20.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.975,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2140624999999998,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328889",
+      "sid": "39603123249-100056",
+      "t": 1792603813.217372,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 23.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.8257812500000004,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328094",
+      "sid": "39603123249-100056",
+      "t": 1792603813.217372,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 28.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.775,
+      "profit": 0.7749999999999999,
+      "final": [
+        0,
+        5
+      ],
+      "rank": 2,
+      "gp_ratio": 0.7624037469238706,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13242267",
+      "sid": "39603123249-100057",
+      "t": 1792604116.109715,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 32.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        2,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0551750380517504,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12229102",
+      "sid": "39603123249-100059",
+      "t": 1792604719.373362,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 41.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 2.5,
+      "price": 1.975,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 2.070527974783294,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328757",
+      "sid": "39603123249-100060",
+      "t": 1792605021.436002,
+      "day": "2026-10-21",
+      "hour": 20,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.4190384615384615,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12370951",
+      "sid": "39603123249-100064",
+      "t": 1792606244.194412,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        4,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1150278293135436,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12323552",
+      "sid": "39603123249-100064",
+      "t": 1792606244.194412,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.975,
+      "profit": -0.5,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0490830636461705,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13301739",
+      "sid": "39603123249-100064",
+      "t": 1792606244.194412,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 3,
+      "gp_ratio": 0.951111615245009,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328756",
+      "sid": "39603123249-100064",
+      "t": 1792606244.194412,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 15.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.5,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 4,
+      "gp_ratio": 1.663076923076923,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13217791",
+      "sid": "39603123249-100064",
+      "t": 1792606244.194412,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.775,
+      "profit": 0.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 5,
+      "gp_ratio": 1.2395833333333335,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13293552",
+      "sid": "39650714256-100001",
+      "t": 1792606437.675242,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        4,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0176339285714286,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13327995",
+      "sid": "39650714256-100001",
+      "t": 1792606437.675242,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.925,
+      "profit": -0.5,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0115702479338842,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13148108",
+      "sid": "39650714256-100001",
+      "t": 1792606437.675242,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 3,
+      "gp_ratio": 0.8971291866028708,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13330037",
+      "sid": "39650714256-100001",
+      "t": 1792606437.675242,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.725,
+      "profit": 0.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 4,
+      "gp_ratio": 0.9691989942528735,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13326887",
+      "sid": "39650714256-100002",
+      "t": 1792606739.428342,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 18.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.9,
+      "profit": -0.5,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1059920634920635,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328817",
+      "sid": "39650714256-100002",
+      "t": 1792606739.428342,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 16.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 2.0,
+      "profit": 1.0,
+      "final": [
+        1,
+        4
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8036032388663968,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329008",
+      "sid": "39650714256-100002",
+      "t": 1792606739.428342,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.7724719101123595,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13217790",
+      "sid": "39650714256-100003",
+      "t": 1792607042.968972,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 22.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 2.75,
+      "price": 1.725,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0000000000000002,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12323515",
+      "sid": "39650714256-100003",
+      "t": 1792607042.968972,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 23.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.5,
+      "price": 1.75,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8764832793959008,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13217844",
+      "sid": "39650714256-100003",
+      "t": 1792607042.968972,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 24.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 3,
+      "gp_ratio": 0.8645833333333335,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328818",
+      "sid": "39650714256-100004",
+      "t": 1792607344.464154,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 26.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.75,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        1,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0894736842105264,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13217843",
+      "sid": "39650714256-100005",
+      "t": 1792607646.427131,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 35.0,
+      "score": [
+        2,
+        0
+      ],
+      "line": 4.0,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2291666666666667,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13062305",
+      "sid": "39650714256-100005",
+      "t": 1792607646.427131,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 31.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.825,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.2393483709273183,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13327957",
+      "sid": "39650714256-100007",
+      "t": 1792608249.231703,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.95,
+      "profit": 0.475,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.7855592441266598,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12134903",
+      "sid": "39650714256-100007",
+      "t": 1792608249.231703,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.925,
+      "profit": -0.5,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0924812030075188,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13183224",
+      "sid": "39650714256-100007",
+      "t": 1792608249.231703,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.825,
+      "profit": 0.825,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 1.0848623853211008,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12144500",
+      "sid": "39650714256-100008",
+      "t": 1792608550.38181,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        2,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9508601224423288,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13301742",
+      "sid": "39650714256-100008",
+      "t": 1792608550.38181,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 19.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.168103448275862,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13329719",
+      "sid": "39650714256-100009",
+      "t": 1792608861.813853,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 38.0,
+      "score": [
+        3,
+        0
+      ],
+      "line": 6.25,
+      "price": 1.75,
+      "profit": -1.0,
+      "final": [
+        5,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0461128048780488,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329017",
+      "sid": "39650714256-100009",
+      "t": 1792608861.813853,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 22.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 3.75,
+      "price": 1.725,
+      "profit": 0.7250000000000001,
+      "final": [
+        1,
+        4
+      ],
+      "rank": 2,
+      "gp_ratio": 0.8690228690228691,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12117456",
+      "sid": "39650714256-100010",
+      "t": 1792609154.903265,
+      "day": "2026-10-21",
+      "hour": 21,
+      "minute": 28.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0202380952380952,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12274857",
+      "sid": "39650714256-100011",
+      "t": 1792609482.772834,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 16.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.75,
+      "profit": 0.75,
+      "final": [
+        2,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 1.114296636085627,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13183236",
+      "sid": "39650714256-100011",
+      "t": 1792609482.772834,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 33.0,
+      "score": [
+        0,
+        2
+      ],
+      "line": 4.0,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0404528139921672,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12117454",
+      "sid": "39650714256-100011",
+      "t": 1792609482.772834,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 17.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.875,
+      "profit": -1.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 3,
+      "gp_ratio": 0.8832236842105263,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12117455",
+      "sid": "39650714256-100012",
+      "t": 1792609764.242078,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 23.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.825,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9092105263157895,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13329707",
+      "sid": "39650714256-100012",
+      "t": 1792609764.242078,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 22.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        1,
+        3
+      ],
+      "rank": 2,
+      "gp_ratio": 0.7510653409090909,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12101029",
+      "sid": "39650714256-100012",
+      "t": 1792609764.242078,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 1.1037735849056605,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12399541",
+      "sid": "39650714256-100013",
+      "t": 1792610065.368094,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 25.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.825,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1680327868852458,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 3.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13031196",
+      "sid": "39650714256-100013",
+      "t": 1792610065.368094,
+      "day": "2026-10-21",
+      "hour": 22,
+      "minute": 51.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 2.0,
+      "price": 2.025,
+      "profit": 1.025,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0094005239636306,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13334514",
+      "sid": "39650714256-100038",
+      "t": 1792617617.614154,
+      "day": "2026-10-22",
+      "hour": 0,
+      "minute": 20.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 5.25,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        0,
+        4
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9764673463764123,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 3.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13333001",
+      "sid": "39650714256-100039",
+      "t": 1792617917.603158,
+      "day": "2026-10-22",
+      "hour": 0,
+      "minute": 25.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.775,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.92574200913242,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13333002",
+      "sid": "39650714256-100039",
+      "t": 1792617917.603158,
+      "day": "2026-10-22",
+      "hour": 0,
+      "minute": 14.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 4.0,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        5,
+        1
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0320205479452054,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13332980",
+      "sid": "39650714256-100039",
+      "t": 1792617917.603158,
+      "day": "2026-10-22",
+      "hour": 0,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.975,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 3,
+      "gp_ratio": 0.8789954337899543,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328892",
+      "sid": "39650714256-100047",
+      "t": 1792620333.175498,
+      "day": "2026-10-22",
+      "hour": 1,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.4520833333333334,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 2.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13217841",
+      "sid": "39650714256-100048",
+      "t": 1792620630.648408,
+      "day": "2026-10-22",
+      "hour": 1,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.95,
+      "profit": -0.5,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9479166666666666,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13328891",
+      "sid": "39650714256-100048",
+      "t": 1792620630.648408,
+      "day": "2026-10-22",
+      "hour": 1,
+      "minute": 20.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 2.08203125,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12441550",
+      "sid": "39650714256-100055",
+      "t": 1792622748.736826,
+      "day": "2026-10-22",
+      "hour": 1,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        2,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0096618357487923,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13029000",
+      "sid": "39650714256-100059",
+      "t": 1792623953.253838,
+      "day": "2026-10-22",
+      "hour": 2,
+      "minute": 29.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 4.25,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        1,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2627504553734061,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13329178",
+      "sid": "39650714256-100060",
+      "t": 1792624254.853747,
+      "day": "2026-10-22",
+      "hour": 2,
+      "minute": 10.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.875,
+      "profit": -1.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0587301587301587,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13326428",
+      "sid": "39650714256-100063",
+      "t": 1792625167.841789,
+      "day": "2026-10-22",
+      "hour": 2,
+      "minute": 24.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.25,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        1,
+        4
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0776315789473685,
+      "fresh_shots5": 3.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13067656",
+      "sid": "39694219643-100001",
+      "t": 1792625701.159514,
+      "day": "2026-10-22",
+      "hour": 2,
+      "minute": 19.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 2.75,
+      "price": 1.75,
+      "profit": 0.375,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9400269541778976,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13133775",
+      "sid": "39694219643-100002",
+      "t": 1792626001.697405,
+      "day": "2026-10-22",
+      "hour": 2,
+      "minute": 24.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.75,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1064163641863278,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13028999",
+      "sid": "39694219643-100006",
+      "t": 1792627224.271663,
+      "day": "2026-10-22",
+      "hour": 3,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.925,
+      "profit": 0.925,
+      "final": [
+        3,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9658445630985677,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13321495",
+      "sid": "39694219643-100007",
+      "t": 1792627513.423459,
+      "day": "2026-10-22",
+      "hour": 3,
+      "minute": 28.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.9,
+      "profit": -0.5,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.4553734061930783,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13329570",
+      "sid": "39694219643-100013",
+      "t": 1792629324.089422,
+      "day": "2026-10-22",
+      "hour": 3,
+      "minute": 12.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 4.0,
+      "price": 1.95,
+      "profit": -1.0,
+      "final": [
+        1,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.3281481481481483,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12025922",
+      "sid": "39694219643-100020",
+      "t": 1792631428.888769,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.75,
+      "price": 1.875,
+      "profit": 0.4375,
+      "final": [
+        2,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9668803418803417,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13326423",
+      "sid": "39694219643-100020",
+      "t": 1792631428.888769,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 9.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0409774436090227,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12027309",
+      "sid": "39694219643-100022",
+      "t": 1792632031.674267,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 17.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.8,
+      "profit": 0.8,
+      "final": [
+        2,
+        5
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0215274921157274,
+      "fresh_shots5": 4.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12027310",
+      "sid": "39694219643-100023",
+      "t": 1792632341.699717,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 24.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.0,
+      "price": 1.95,
+      "profit": 0.95,
+      "final": [
+        1,
+        4
+      ],
+      "rank": 1,
+      "gp_ratio": 0.8730711219399002,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13298505",
+      "sid": "39694219643-100025",
+      "t": 1792632941.533398,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 14.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.75,
+      "price": 1.775,
+      "profit": -1.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.2028301886792454,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13323641",
+      "sid": "39694219643-100026",
+      "t": 1792633242.745727,
+      "day": "2026-10-22",
+      "hour": 4,
+      "minute": 8.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.25,
+      "price": 1.925,
+      "profit": -1.0,
+      "final": [
+        0,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9361714285714287,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12027308",
+      "sid": "39694219643-100048",
+      "t": 1792639873.494841,
+      "day": "2026-10-22",
+      "hour": 6,
+      "minute": 17.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.5,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        2,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.876068376068376,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12025921",
+      "sid": "39694219643-100051",
+      "t": 1792640778.7826,
+      "day": "2026-10-22",
+      "hour": 6,
+      "minute": 35.0,
+      "score": [
+        1,
+        1
+      ],
+      "line": 4.0,
+      "price": 2.0,
+      "profit": -1.0,
+      "final": [
+        1,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0246258266620258,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "13331684",
+      "sid": "39725033893-100043",
+      "t": 1792657639.526372,
+      "day": "2026-10-22",
+      "hour": 11,
+      "minute": 24.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 4.25,
+      "price": 1.975,
+      "profit": 0.9750000000000001,
+      "final": [
+        1,
+        6
+      ],
+      "rank": 1,
+      "gp_ratio": 1.3246753246753247,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12391826",
+      "sid": "39725033893-100048",
+      "t": 1792659149.011431,
+      "day": "2026-10-22",
+      "hour": 11,
+      "minute": 22.0,
+      "score": [
+        1,
+        0
+      ],
+      "line": 3.0,
+      "price": 1.95,
+      "profit": 0.0,
+      "final": [
+        2,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 1.0346283783783785,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328715",
+      "sid": "39725033893-100051",
+      "t": 1792660057.153386,
+      "day": "2026-10-22",
+      "hour": 12,
+      "minute": 36.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.75,
+      "price": 1.9,
+      "profit": -1.0,
+      "final": [
+        0,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.826048951048951,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12391827",
+      "sid": "39725033893-100051",
+      "t": 1792660057.153386,
+      "day": "2026-10-22",
+      "hour": 12,
+      "minute": 37.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 1.25,
+      "price": 1.775,
+      "profit": -0.5,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 2,
+      "gp_ratio": 1.0301715176715178,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13330745",
+      "sid": "39725033893-100052",
+      "t": 1792660356.812986,
+      "day": "2026-10-22",
+      "hour": 12,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.5,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        1,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9343220338983051,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13331558",
+      "sid": "39725033893-100052",
+      "t": 1792660356.812986,
+      "day": "2026-10-22",
+      "hour": 12,
+      "minute": 11.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.25,
+      "price": 1.85,
+      "profit": -1.0,
+      "final": [
+        0,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 0.9868013687469448,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13127818",
+      "sid": "39725033893-100064",
+      "t": 1792663984.580758,
+      "day": "2026-10-22",
+      "hour": 13,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.0,
+      "price": 1.85,
+      "profit": 0.8500000000000001,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 1,
+      "gp_ratio": 0.695503856259005,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13335074",
+      "sid": "39761806269-100001",
+      "t": 1792664233.550476,
+      "day": "2026-10-22",
+      "hour": 13,
+      "minute": 12.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 3.75,
+      "price": 1.875,
+      "profit": -1.0,
+      "final": [
+        0,
+        3
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9602954755309326,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13331683",
+      "sid": "39761806269-100006",
+      "t": 1792665744.359937,
+      "day": "2026-10-22",
+      "hour": 13,
+      "minute": 14.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9569805194805193,
+      "fresh_shots5": 1.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "12432950",
+      "sid": "39761806269-100013",
+      "t": 1792667853.907669,
+      "day": "2026-10-22",
+      "hour": 14,
+      "minute": 15.0,
+      "score": [
+        0,
+        0
+      ],
+      "line": 2.75,
+      "price": 1.875,
+      "profit": 0.875,
+      "final": [
+        7,
+        0
+      ],
+      "rank": 1,
+      "gp_ratio": 1.1510791366906477,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 0.0,
+      "candidate_keep": false
+    },
+    {
+      "id": "12432949",
+      "sid": "39761806269-100015",
+      "t": 1792668459.652279,
+      "day": "2026-10-22",
+      "hour": 14,
+      "minute": 23.0,
+      "score": [
+        0,
+        1
+      ],
+      "line": 3.25,
+      "price": 2.0,
+      "profit": 1.0,
+      "final": [
+        3,
+        1
+      ],
+      "rank": 1,
+      "gp_ratio": 0.9532374100719425,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    },
+    {
+      "id": "13328716",
+      "sid": "39761806269-100015",
+      "t": 1792668459.652279,
+      "day": "2026-10-22",
+      "hour": 14,
+      "minute": 27.0,
+      "score": [
+        2,
+        0
+      ],
+      "line": 4.25,
+      "price": 1.9,
+      "profit": 0.8999999999999999,
+      "final": [
+        3,
+        2
+      ],
+      "rank": 2,
+      "gp_ratio": 0.9674273095325728,
+      "fresh_shots5": 2.0,
+      "fresh_sot5": 1.0,
+      "candidate_keep": true
+    }
+  ]
+}
