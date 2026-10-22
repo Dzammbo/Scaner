@@ -50,6 +50,7 @@ def groups_for_epoch(receipts, config):
         choices = record.get("choices", {})
         assert base == {str(r["event_id"]) for r in choices.get("standard_v8", [])}
         for model, rows in choices.items():
+            groups.setdefault(model, {})
             for source in rows:
                 row = dict(source)
                 eid = str(row["event_id"])
@@ -200,7 +201,9 @@ def main():
                   statistics_epoch=dict(id=config["id"], started_at_utc=started),
                   population=dict(unique_observed=len(fresh), confirmed_closed=len(finished),
                                   closed_with_provider_price=len(finished & priced),
-                                  unresolved=len(fresh)-len(finished)),
+                                  unresolved=len(fresh)-len(finished),
+                                  unresolved_provider_status_counts=dict(collections.Counter(
+                                      row.get("time_status") or "unknown" for row in remaining))),
                   outcomes_refresh=dict(checked=len(updates["events"]),
                                         newly_confirmed=sum(
                                             bool(row.get("settled") and not row.get("result_conflict"))
