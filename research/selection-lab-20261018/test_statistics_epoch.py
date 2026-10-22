@@ -62,7 +62,7 @@ class EpochTests(unittest.TestCase):
     events=[event('old')]+[event(i)for i in range(1,8)]
     for e in events:e['control_shortlisted']=e['event_id']not in control_seen
     return dict(events=events,board_observed_at_utc=ts,generated_at_utc=ts,snapshot_id='test')
-   config=dict(id='test-epoch',enabled=True,rules_version=ep.VERSION)
+   config=dict(id='test-epoch',enabled=True,rules_version=ep.LEGACY_VERSION)
    with patch.object(c,'ROOT',root),patch.object(c,'DATA',data),patch.object(ep,'load_config',return_value=config),patch.object(broad,'collect',side_effect=collect),patch.object(c,'sports_order',side_effect=lambda rows:rows),patch.object(c,'enrich_markets',return_value=None),patch.object(c,'market_for_event',side_effect=quote),patch.object(c,'training_model',return_value=(None,{})),patch.object(c,'collect_outcomes',return_value=dict(events=[],queued_after_run=0)),patch.dict(os.environ,dict(LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='99991',GITHUB_RUN_ATTEMPT='1')),contextlib.redirect_stdout(io.StringIO()):
     c.main()
     first=json.loads((data/'snapshots/99991-1.json').read_text())
@@ -78,3 +78,4 @@ class EpochTests(unittest.TestCase):
    self.assertTrue(all(r.get('statistics_epoch_id')is None for rows in first['model_entries'].values()for r in rows if r['event_id']=='old'))
 
 if __name__=='__main__':unittest.main()
+

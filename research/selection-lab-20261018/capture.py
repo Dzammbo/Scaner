@@ -421,7 +421,7 @@ def main():
    bases=(ROOT/'research/live-lab',ROOT/'research/live-background/experimental')
    records=(load_json(p)for base in bases for p in (base/'receipts').rglob('*.json*'))
    epoch_state=epoch.read_state(epoch_config,records,old_targets,now.isoformat())
-   control_seen=epoch_state['excluded']|epoch_state['selected']
+   control_seen=epoch_state['excluded']|epoch_state['selected']|epoch_state.get('rejected',set())
    metadata['statistics_epoch']=epoch.metadata(epoch_state)
   with isolated_runtime(budget),collection_history()as history,tempfile.TemporaryDirectory(prefix='live-lab-empty-ledger-') as directory:
    empty=Path(directory)/'selected.json'
@@ -470,8 +470,9 @@ def main():
     choices,reasons,base_choices=epoch.choose_common(sys.modules[__name__],snapshot,common_order,epoch_state,beta)
     metadata['epoch_base_choices']=base_choices
     snapshot['epoch_base_choices']=base_choices
+    if 'epoch_admission'in snapshot:metadata['epoch_admission']=snapshot['epoch_admission']
    else:choices,reasons=choose_narrow(snapshot,ordered,seen,beta)
-   metadata['narrow_selection_window']=dict(version=epoch.VERSION if epoch_state else NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
+   metadata['narrow_selection_window']=dict(version=epoch_state['rules_version'] if epoch_state else NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
    snapshot['narrow_selection_window']=metadata['narrow_selection_window']
    control=evaluate_control(snapshot,control_seen)if unified else None
    if epoch_state:
@@ -540,3 +541,4 @@ def main():
    with open(os.environ['GITHUB_OUTPUT'],'a')as f:f.write('capture_id='+sid+'\n'+'capture_day='+CAPTURE_DAY+'\n')
 
 if __name__=='__main__':main()
+
