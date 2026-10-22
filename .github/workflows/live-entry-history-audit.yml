@@ -1,0 +1,40 @@
+name: Audit all Live entry history
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-entry-history-audit.yml'
+      - '.github/live-entry-history-audit.json'
+permissions:
+  contents: write
+concurrency:
+  group: explicit-live-entry-history-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Refresh unresolved confirmed outcomes
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
+        run: python3 control/.github/scripts/refresh_live_results.py
+      - name: Search all saved points and validate on a complete day
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+          EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
+        run: python3 control/.github/scripts/analyze_all_live_entries.py
