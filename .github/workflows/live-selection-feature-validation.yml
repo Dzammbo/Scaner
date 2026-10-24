@@ -1,0 +1,39 @@
+name: Validate feature effects with leagues and execute audit notebook
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/selection_feature_validation.py'
+      - '.github/scripts/finalize_selection_feature_audit.py'
+      - '.github/workflows/live-selection-feature-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: explicit-feature-validation
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Install fixed analytical and notebook dependencies
+        run: python3 -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 nbformat==5.10.4 nbclient==0.10.2 ipykernel==6.29.5
+      - name: Validate league composition and save executed notebook
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+        run: python3 control/.github/scripts/finalize_selection_feature_audit.py
