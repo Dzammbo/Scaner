@@ -383,6 +383,9 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
   records.append(('pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    independent_pockets=receipt['independent_pockets'])))
+ if receipt.get('shadow_universe') is not None and not receipt.get('failed'):
+  records.append(('shadow-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   shadow_universe=receipt['shadow_universe'])))
  for folder,data in records:
   path=directory/folder
   if SOURCE=='background':path=path/CAPTURE_DAY
@@ -512,6 +515,15 @@ def main():
       status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
+   shadow_result=None
+   if unified:
+    import shadow_universe
+    try:
+     shadow_result=shadow_universe.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     shadow_result=dict(version=shadow_universe.VERSION,status='error',
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,production_selection_changed=False)
+    snapshot['shadow_universe']=shadow_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -540,6 +552,7 @@ def main():
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
+   if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
