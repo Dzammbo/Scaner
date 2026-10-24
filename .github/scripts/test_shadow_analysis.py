@@ -30,7 +30,9 @@ class ProspectiveAnalysis(unittest.TestCase):
                       entry_day_msk='2026-10-24',league='L',country='GB')
             strong=dict(base,event_id='1',market=market(2.5,1.8),decision='strong_v8')
             rejected=dict(base,event_id='2',market=market(2.5,1.82),decision='rejected_strong_v8',minute=23)
-            unknown=dict(base,event_id='3',market=market(2.5,1.82),decision='insufficient_sports_data')
+            unknown=dict(base,event_id='3',market=market(2.5,1.82),decision='insufficient_sports_data',
+                         selection_confidence=dict(data_gaps=['insufficient_comparable_goal_profile']),
+                         deep_missing_reasons=['league_budget_exhausted'])
             p1=dict(strong,observed_at_utc='2026-10-24T18:06:00+00:00',minute=25,market=market(3.5,2.3))
             p2=dict(strong,observed_at_utc='2026-10-24T18:12:00+00:00',minute=31,market=market(2.5,3.1))
             receipt=dict(shadow_universe=dict(version=shadow.VERSION,status='active',
@@ -51,6 +53,7 @@ class ProspectiveAnalysis(unittest.TestCase):
             self.assertEqual(report['gate']['all_leagues_diagnostic_only']['n'],1)
             self.assertEqual(report['gate']['same_country_week_diagnostic']['n'],1)
             self.assertFalse(report['gate']['same_league']['evidence_signal'])
+            self.assertEqual(report['gate']['admission_flow']['insufficient_data_gaps']['insufficient_comparable_goal_profile'],1)
 
 
 if __name__=='__main__':unittest.main()

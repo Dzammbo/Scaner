@@ -100,6 +100,24 @@ def gate_pairs(rows, outcomes, settle, key, relaxed=False):
     return summarized_pairs(pairs)
 
 
+def admission_flow(rows, outcomes, settle):
+    groups=collections.Counter();closed=collections.Counter();data_gaps=collections.Counter()
+    sporting_gaps=collections.Counter();acquisition_gaps=collections.Counter()
+    for row in rows.values():
+        group=row['decision'];groups[group]+=1
+        if settle(row,outcomes.get(str(row['event_id']),{})) is not None:closed[group]+=1
+        confidence=row.get('selection_confidence') or {}
+        if group=='insufficient_sports_data':
+            data_gaps.update(confidence.get('data_gaps') or [])
+            acquisition_gaps.update(row.get('deep_missing_reasons') or [])
+        if group=='rejected_strong_v8':sporting_gaps.update(confidence.get('sporting_gaps') or [])
+    return dict(first_quoted_by_decision=dict(groups),settled_by_decision=dict(closed),
+                insufficient_data_gaps=dict(data_gaps),
+                insufficient_acquisition_gaps=dict(acquisition_gaps),
+                rejected_sporting_gaps=dict(sporting_gaps),
+                note='A match may have multiple gaps; gap counts are not disjoint match counts.')
+
+
 def analyze(root, outcomes, settle):
     import shadow_universe as shadow
     rows,started,errors,captures=shadow.history(root)
@@ -107,6 +125,7 @@ def analyze(root, outcomes, settle):
                 started_at_utc=started,successful_captures=captures,capture_errors=errors,
                 timing=timed_pairs(root,rows,outcomes,settle,shadow),
                 gate=dict(rule='One original first-priced entry per event; same Moscow day, exact score and total line; minute ±5; price ±0.05; distinct matched events without replacement.',
+                          admission_flow=admission_flow(rows,outcomes,settle),
                           same_league=gate_pairs(rows,outcomes,settle,'league'),
                           same_country=gate_pairs(rows,outcomes,settle,'country'),
                           all_leagues_diagnostic_only=gate_pairs(rows,outcomes,settle,'all'),
