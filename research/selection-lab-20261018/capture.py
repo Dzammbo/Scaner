@@ -379,7 +379,11 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  sid=snapshot['snapshot_id']
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid run id')
  paths=[]
- for folder,data in [('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]:
+ records=[('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]
+ if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
+  records.append(('pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   independent_pockets=receipt['independent_pockets'])))
+ for folder,data in records:
   path=directory/folder
   if SOURCE=='background':path=path/CAPTURE_DAY
   path=path/(sid+('.json.gz' if SOURCE=='background' else '.json'));path.parent.mkdir(parents=True,exist_ok=True)
@@ -497,6 +501,17 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
       missed_base_event_ids=[r['event_id']for r in base_choices],primary_selection_changed=False)
     if quality_result is not None:snapshot['quality_experiment']=quality_result
+   independent_result=None
+   if unified:
+    import independent_pockets
+    try:
+     independent_result=independent_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     cfg_path=ROOT/independent_pockets.CONFIG
+     independent_result=dict(id='independent-20-pockets-forward-20261024-v1',version=independent_pockets.VERSION,
+      status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
+    if independent_result is not None:snapshot['independent_pockets']=independent_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -524,6 +539,7 @@ def main():
       closed_with_provider_main_price=sum(eid in fresh_closed and bool(r.get('provider_main_price_any'))for eid,r in fresh.items()),not_independent_snapshot_count=True)
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if quality_result is not None:receipt['quality_experiment']=quality_result
+   if independent_result is not None:receipt['independent_pockets']=independent_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
@@ -552,3 +568,4 @@ def main():
    with open(os.environ['GITHUB_OUTPUT'],'a')as f:f.write('capture_id='+sid+'\n'+'capture_day='+CAPTURE_DAY+'\n')
 
 if __name__=='__main__':main()
+
