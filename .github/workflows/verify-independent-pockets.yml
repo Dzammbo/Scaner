@@ -1,0 +1,27 @@
+name: Verify twenty independent pocket ledgers
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/independent_pockets.py'
+      - '.github/scripts/test_independent_pockets.py'
+      - '.github/live-independent-pockets.json'
+      - '.github/workflows/verify-independent-pockets.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: control
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+      - name: Check all pocket rules, independent entries, restart safety and original control
+        env:
+          PYTHONPATH: control/.github/scripts:collector/research/selection-lab-20261018:collector/scripts
+        run: python3 -m unittest discover -s control/.github/scripts -p test_independent_pockets.py -v

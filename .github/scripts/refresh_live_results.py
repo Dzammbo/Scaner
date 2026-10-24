@@ -232,6 +232,11 @@ def main():
     except Exception as exc:
         report['quality_comparison'] = dict(status='error', error_type=type(exc).__name__,
                                           primary_selection_changed=False)
+    try:
+        import independent_pockets
+        report['independent_pockets'] = independent_pockets.report(root, merged, c.settle_entry)
+    except Exception as exc:
+        report['independent_pockets'] = dict(status='error', error_type=type(exc).__name__)
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
@@ -258,3 +263,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
