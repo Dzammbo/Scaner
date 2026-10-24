@@ -487,6 +487,16 @@ def main():
    snapshot['model_entries']=model_entries
    entry_outcomes=dict(old_outcomes)
    if outcomes:entry_outcomes.update({r['event_id']:r for r in outcomes['events']})
+   quality_result=None
+   if unified and epoch_state:
+    import quality_forward
+    try:
+     quality_result=quality_forward.capture_evaluation(ROOT,DATA,snapshot,base_choices,old_targets,entry_outcomes)
+    except Exception as exc:
+     quality_result=dict(id=quality_forward.EXPERIMENT,version=quality_forward.VERSION,status='error',
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      missed_base_event_ids=[r['event_id']for r in base_choices],primary_selection_changed=False)
+    if quality_result is not None:snapshot['quality_experiment']=quality_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -513,6 +523,7 @@ def main():
       closed_with_trend=sum(eid in fresh_closed and bool(r.get('trend_available_any'))for eid,r in fresh.items()),
       closed_with_provider_main_price=sum(eid in fresh_closed and bool(r.get('provider_main_price_any'))for eid,r in fresh.items()),not_independent_snapshot_count=True)
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   if quality_result is not None:receipt['quality_experiment']=quality_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
@@ -541,4 +552,3 @@ def main():
    with open(os.environ['GITHUB_OUTPUT'],'a')as f:f.write('capture_id='+sid+'\n'+'capture_day='+CAPTURE_DAY+'\n')
 
 if __name__=='__main__':main()
-
