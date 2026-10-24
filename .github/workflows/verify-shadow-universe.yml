@@ -1,0 +1,17 @@
+name: Verify full Live board shadow journal
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/shadow_universe.py'
+      - '.github/scripts/test_shadow_universe.py'
+      - '.github/workflows/verify-shadow-universe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest discover -s .github/scripts -p test_shadow_universe.py -v

@@ -237,6 +237,26 @@ def main():
         report['independent_pockets'] = independent_pockets.report(root, merged, c.settle_entry)
     except Exception as exc:
         report['independent_pockets'] = dict(status='error', error_type=type(exc).__name__)
+    try:
+        import shadow_universe
+        shadow = shadow_universe.report(root, merged, c.settle_entry)
+        shadow_rows, _, _, _ = shadow_universe.history(root)
+        population = {eid: row for eid, row in targets.items()
+                      if shadow['started_at_utc'] and (row.get('board_observed_at_utc', '') >= shadow['started_at_utc'] or eid in shadow_rows)
+                      and row.get('minute') is not None and 5 <= row['minute'] <= 89
+                      and isinstance(row.get('score'), str) and row['score'].replace('-', '').isdigit()
+                      and row['score'].count('-') == 1}
+        observed_closed = sum(bool((merged.get(eid) or {}).get('settled')
+                                   and not (merged.get(eid) or {}).get('result_conflict'))
+                              for eid in population)
+        shadow['board_population'] = dict(unique_observed=len(population),
+                                          confirmed_closed=observed_closed,
+                                          first_quoted=shadow['total']['selected'],
+                                          not_first_quoted=len(population)-shadow['total']['selected'],
+                                          note='Unquoted matches have results, but no executable ROI')
+        report['shadow_universe'] = shadow
+    except Exception as exc:
+        report['shadow_universe'] = dict(status='error', error_type=type(exc).__name__)
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
