@@ -47,6 +47,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
     clock = snapshot['board_observed_at_utc']
     strong = {str(e['event_id']): i for i, e in enumerate(ordered, 1)}
     entries = []
+    points = []
     coverage = collections.Counter()
     for e in snapshot['events']:
         eid = str(e['event_id'])
@@ -55,9 +56,6 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
             coverage['outside_window_or_unknown_score'] += 1
             continue
         coverage['eligible_board_rows'] += 1
-        if eid in rows:
-            coverage['already_recorded'] += 1
-            continue
         # Never create a retrospective entry for a match already confirmed finished.
         if outcomes.get(eid, {}).get('settled'):
             coverage['already_finished'] += 1
@@ -74,6 +72,14 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
             decision = 'rejected_strong_v8' if confidence.get('data_sufficient') else 'insufficient_sports_data'
         else:
             decision = 'not_deep_evaluated'
+        points.append(dict(event_id=eid, score=e['score'], minute=minute, market=q,
+                           observed_at_utc=clock, quote_observed_at_utc=e.get('lab_odds_observed_at_utc'),
+                           decision=decision, sports_position=strong.get(eid),
+                           fresh_sports_features=e.get('research_sports_features') if deep else None,
+                           source_snapshot_id=snapshot['snapshot_id']))
+        if eid in rows:
+            coverage['already_recorded'] += 1
+            continue
         observed = dt.datetime.fromisoformat(clock.replace('Z', '+00:00'))
         row = dict(event_id=eid, score=e['score'], minute=minute, market=q,
                    observed_at_utc=clock, quote_observed_at_utc=e.get('lab_odds_observed_at_utc'),
@@ -93,7 +99,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
         entries.append(row)
         coverage[decision] += 1
     return dict(version=VERSION, status='active', started_at_utc=started or clock,
-                observed_at_utc=clock, entries=entries, coverage=dict(coverage),
+                observed_at_utc=clock, entries=entries, quoted_points=points, coverage=dict(coverage),
                 previous_successful_captures=captures, prior_capture_errors=errors,
                 progress=stats(rows, outcomes, settle), production_selection_changed=False)
 
@@ -116,8 +122,17 @@ def stats(rows, outcomes, settle):
 
 def report(root, outcomes, settle):
     rows, started, errors, captures = history(root)
+    points, ids = 0, set()
+    for path in (Path(root) / JOURNAL).rglob('*.json*'):
+        data = (load(path).get('shadow_universe') or {})
+        if data.get('version') != VERSION or data.get('status') != 'active':
+            continue
+        for point in data.get('quoted_points', []):
+            points += 1
+            ids.add(str(point['event_id']))
     return dict(version=VERSION, status='active' if started else 'awaiting_first_successful_capture',
                 started_at_utc=started, successful_captures=captures, capture_errors=errors,
                 **stats(rows, outcomes, settle),
+                quoted_points=points, quoted_matches=len(ids),
                 denominator='First exact priced 5-89 point per observed nonvirtual match; all board observations and missing quotes remain in snapshots',
                 observational_only=True, production_selection_changed=False)

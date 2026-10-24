@@ -33,6 +33,8 @@ class ShadowTests(unittest.TestCase):
             events[3]['events_main_total'] = dict(line=2.5, price=2.0)
             second = s.evaluate(root, dict(snapshot, snapshot_id='11-1'), events[:1], market, {}, settle)
             self.assertEqual([r['event_id'] for r in second['entries']], ['4'])
+            self.assertEqual(len(second['quoted_points']), 4)
+            self.assertEqual(second['quoted_points'][0]['market']['line'], 3.5)
             final = s.report(root, {'1': dict(settled=True, final=[3, 0]),
                                     '2': dict(settled=True, final=[0, 0])}, settle)
             self.assertEqual(final['total']['n'], 2)
