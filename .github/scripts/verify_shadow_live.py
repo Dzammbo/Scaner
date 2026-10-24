@@ -22,9 +22,16 @@ assert len(points)>=len(entries)
 assert all(e['source_snapshot_id']==record['snapshot_id'] for e in entries)
 assert all(p['source_snapshot_id']==record['snapshot_id'] and p['market']['price']>1 for p in points)
 assert all(e['market']['price']>1 for e in entries)
+all_points=collections.Counter()
+for path in paths:
+    data=(json.loads(gzip.decompress(path.read_bytes())).get('shadow_universe') or {})
+    for point in data.get('quoted_points', []):
+        all_points[str(point['event_id'])]+=1
 rows,started,errors,captures=shadow.history(root)
 assert started==data['started_at_utc'] and captures>=1
 assert len(rows)>=len(entries)
 print(json.dumps(dict(snapshot_id=record['snapshot_id'],status=data['status'],
   entries=len(entries),quoted_points=len(points),decisions=dict(collections.Counter(e['decision'] for e in entries)),
-  coverage=data['coverage'],lifetime_first_quoted=len(rows),captures=captures,capture_errors=errors)))
+  coverage=data['coverage'],lifetime_first_quoted=len(rows),captures=captures,capture_errors=errors,
+  repeated_quoted_matches=sum(n>=2 for n in all_points.values()),
+  total_quoted_points=sum(all_points.values()))))
