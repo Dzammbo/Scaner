@@ -15,6 +15,18 @@ MSK = dt.timezone(dt.timedelta(hours=3))
 JOURNAL = 'research/live-background/experimental/shadow-receipts'
 
 
+def fresh_summary(event):
+    # The full as-of raw trend remains immutable in the source snapshot.
+    f = event.get('research_sports_features') or {}
+    keys = [f'{name}_{window}_{suffix}' for window in (5, 10, 15)
+            for name in ('finishing', 'on_target', 'shots', 'xg')
+            for suffix in ('total', 'known_total')]
+    keys += [f'supported_xg_{window}' for window in (5, 10, 15)]
+    keys += ['sustained_finishing', 'persistent_dangerous_pressure',
+             'pressure_trend', 'fresh_two_sided_threat']
+    return {key: f[key] for key in keys if key in f}
+
+
 def load(path):
     raw = path.read_bytes()
     return json.loads(gzip.decompress(raw) if path.suffix == '.gz' else raw)
@@ -77,7 +89,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
                            decision=decision, sports_position=strong.get(eid),
                            selection_confidence=confidence,
                            deep_missing_reasons=(e.get('research_detail_coverage') or {}).get('missing_reasons', []),
-                           fresh_sports_features=e.get('research_sports_features') if deep else None,
+                           fresh_sports_features=fresh_summary(e) if deep else None,
                            source_snapshot_id=snapshot['snapshot_id']))
         if eid in rows:
             coverage['already_recorded'] += 1
@@ -92,9 +104,8 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
                    deep_missing_reasons=(e.get('research_detail_coverage') or {}).get('missing_reasons', []),
                    home=e.get('home'), away=e.get('away'), league=e.get('league'),
                    country=e.get('country'), board_stats=e.get('board_stats'),
-                   fresh_sports_features=e.get('research_sports_features') if deep else None,
-                   stats_trend=e.get('stats_trend') if deep else None,
-                   goal_profile=e.get('goal_profile') if deep else None,
+                   fresh_sports_features=fresh_summary(e) if deep else None,
+                   goal_profile_ratio=(e.get('goal_profile') or {}).get('ranking_ratio') if deep else None,
                    control_shortlisted=bool(e.get('control_shortlisted')),
                    first_exact_quote_not_necessarily_first_board_observation=True)
         rows[eid] = row
