@@ -1,0 +1,28 @@
+name: Verify executable Live quote budget
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/test_market_budget.py'
+      - '.github/workflows/verify-market-budget.yml'
+      - '.github/live-background.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+      - env:
+          ADAPTIVE_MODULE: ${{ github.workspace }}/collector/research/selection-lab-20261018/adaptive.py
+        run: |
+          python3 -m unittest discover -s control/.github/scripts -p test_market_budget.py -v
+          python3 -m py_compile collector/research/selection-lab-20261018/adaptive.py collector/research/selection-lab-20261018/broad.py collector/research/selection-lab-20261018/capture.py
