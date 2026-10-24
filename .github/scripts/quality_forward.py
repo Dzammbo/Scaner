@@ -197,7 +197,8 @@ def event_features(e):
     board = e.get('board_stats') or {}
     def total(k):
         a = board.get(k)
-        return sum(a) if isinstance(a, list) and len(a) == 2 and all(num(x) is not None and x >= 0 for x in a) else None
+        values=[num(x) for x in a] if isinstance(a,list) and len(a)==2 else []
+        return sum(values) if len(values)==2 and all(x is not None and x>=0 for x in values) else None
     f = (e.get('final_sports_selection') or {}).get('features') or e.get('research_sports_features') or {}
     return dict(minute=e['minute'], score=[int(x) for x in e['score'].split('-')],
                 sot=total('on_target'), danger=total('dangerous_attacks'), redcards=total('redcards'),
