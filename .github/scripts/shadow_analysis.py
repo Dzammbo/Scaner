@@ -39,16 +39,36 @@ def summarized_pairs(pairs):
     return result
 
 
-def timed_pairs(root, rows, outcomes, settle, shadow):
+def point_history(root, shadow):
     points=collections.defaultdict(list)
     for path in sorted((Path(root)/shadow.JOURNAL).rglob('*.json*')):
         data=(shadow.load(path).get('shadow_universe') or {})
         if data.get('version') != shadow.VERSION or data.get('status') != 'active':continue
         for point in data.get('quoted_points',[]):points[str(point['event_id'])].append(point)
+    for items in points.values():items.sort(key=lambda p:(p['observed_at_utc'],p.get('source_snapshot_id','')))
+    return points
+
+
+def first_decidable(rows, points):
+    result={};later_than_first=0
+    msk=dt.timezone(dt.timedelta(hours=3))
+    for eid,first in rows.items():
+        choice=next((p for p in points[eid] if p.get('decision') in ('strong_v8','rejected_strong_v8')),None)
+        if choice is None:continue
+        entry=dict(first,score=choice['score'],minute=choice['minute'],market=choice['market'],
+                   observed_at_utc=choice['observed_at_utc'],source_snapshot_id=choice.get('source_snapshot_id'),
+                   decision=choice['decision'],selection_confidence=choice.get('selection_confidence') or {},
+                   entry_day_msk=instant(choice['observed_at_utc']).astimezone(msk).date().isoformat())
+        later_than_first+=choice['observed_at_utc']!=first['observed_at_utc']
+        result[eid]=entry
+    return result,later_than_first
+
+
+def timed_pairs(rows, points, outcomes, settle):
     pairs=[];eligible_with_later=0
     for eid, first in rows.items():
         t0=instant(first['observed_at_utc']);m0=first['minute']
-        later=next((p for p in sorted(points[eid],key=lambda p:p['observed_at_utc'])
+        later=next((p for p in points[eid]
                     if instant(p['observed_at_utc'])>=t0+dt.timedelta(minutes=5)
                     and p['minute']>=m0+3),None)
         if later is None:continue
@@ -121,17 +141,23 @@ def admission_flow(rows, outcomes, settle):
 def analyze(root, outcomes, settle):
     import shadow_universe as shadow
     rows,started,errors,captures=shadow.history(root)
+    points=point_history(root,shadow)
+    decidable,later_decision=first_decidable(rows,points)
     return dict(version=VERSION,status='active' if started else 'awaiting_first_capture',
                 started_at_utc=started,successful_captures=captures,capture_errors=errors,
-                timing=timed_pairs(root,rows,outcomes,settle,shadow),
-                gate=dict(rule='One original first-priced entry per event; same Moscow day, exact score and total line; minute ±5; price ±0.05; distinct matched events without replacement.',
-                          admission_flow=admission_flow(rows,outcomes,settle),
-                          same_league=gate_pairs(rows,outcomes,settle,'league'),
-                          same_country=gate_pairs(rows,outcomes,settle,'country'),
-                          all_leagues_diagnostic_only=gate_pairs(rows,outcomes,settle,'all'),
-                          same_league_week_diagnostic=gate_pairs(rows,outcomes,settle,'league',True),
-                          same_country_week_diagnostic=gate_pairs(rows,outcomes,settle,'country',True),
-                          all_leagues_week_diagnostic=gate_pairs(rows,outcomes,settle,'all',True),
+                timing=timed_pairs(rows,points,outcomes,settle),
+                gate=dict(rule='One first prospectively decidable exact-priced point per event; same Moscow day, exact score and total line; minute ±5; price ±0.05; distinct matched events without replacement.',
+                          first_quote_flow=admission_flow(rows,outcomes,settle),
+                          first_decidable_flow=admission_flow(decidable,outcomes,settle),
+                          first_decidable_matches=len(decidable),
+                          decision_reached_after_first_quote=later_decision,
+                          decision_entry_rule='First prospective exact-priced strong or rejected point with sufficient sporting data; never backfill first quote or select by result.',
+                          same_league=gate_pairs(decidable,outcomes,settle,'league'),
+                          same_country=gate_pairs(decidable,outcomes,settle,'country'),
+                          all_leagues_diagnostic_only=gate_pairs(decidable,outcomes,settle,'all'),
+                          same_league_week_diagnostic=gate_pairs(decidable,outcomes,settle,'league',True),
+                          same_country_week_diagnostic=gate_pairs(decidable,outcomes,settle,'country',True),
+                          all_leagues_week_diagnostic=gate_pairs(decidable,outcomes,settle,'all',True),
                           relaxed_rule='Separate diagnostic only: date ±7 days, exact score, total line ±0.5, minute ±10, price ±0.10; same league or country where specified.',
                           data_insufficient_not_called_rejected=True),
                 no_rule_changes=True,exploratory_until_minimum_pairs_and_days=True)

@@ -53,7 +53,18 @@ class ProspectiveAnalysis(unittest.TestCase):
             self.assertEqual(report['gate']['all_leagues_diagnostic_only']['n'],1)
             self.assertEqual(report['gate']['same_country_week_diagnostic']['n'],1)
             self.assertFalse(report['gate']['same_league']['evidence_signal'])
-            self.assertEqual(report['gate']['admission_flow']['insufficient_data_gaps']['insufficient_comparable_goal_profile'],1)
+            self.assertEqual(report['gate']['first_quote_flow']['insufficient_data_gaps']['insufficient_comparable_goal_profile'],1)
+
+    def test_first_decidable_point_uses_its_own_later_price(self):
+        first=dict(event_id='x',decision='insufficient_sports_data',minute=14,score='0-0',
+                   observed_at_utc='2026-10-24T18:00:00+00:00',entry_day_msk='2026-10-24',
+                   market=dict(line=2.5,price=1.7),league='L',country='GB')
+        point=dict(first,decision='rejected_strong_v8',minute=20,
+                   observed_at_utc='2026-10-24T18:07:00+00:00',market=dict(line=3.0,price=2.1))
+        rows,later=a.first_decidable({'x':first},{'x':[first,point]})
+        self.assertEqual(later,1)
+        self.assertEqual(rows['x']['market']['line'],3.0)
+        self.assertEqual(rows['x']['observed_at_utc'],point['observed_at_utc'])
 
 
 if __name__=='__main__':unittest.main()
