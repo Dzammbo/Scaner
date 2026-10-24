@@ -314,6 +314,9 @@ def summary(entries, outcomes):
 def evaluate(snapshot, base_choices, receipts, old_targets, outcomes, cfg, model):
     prior = prior_state(receipts, cfg)
     observed = snapshot['board_observed_at_utc']
+    parent=snapshot.get('statistics_epoch')
+    if parent and parent.get('id')!=PROTOCOL['parent_epoch_id']:
+        raise ValueError('Parent selection version changed')
     if stamp(model['created_at_utc']) >= stamp(observed):
         raise ValueError('Model must precede prospective observations')
     if prior:
@@ -382,11 +385,21 @@ def capture_evaluation(root, data, snapshot, base_choices, old_targets, outcomes
         return None
     model = load_model(root,cfg)
     # Descending UTC-date/capture IDs; only this background contour owns the experiment.
+    recent_errors=[]
     def receipts():
         for path in sorted((Path(data)/'receipts').rglob('*.json*'),reverse=True):
             record=read(path)
             quality=record.get('quality_experiment')
+            if not record.get('failed') and quality and quality.get('id')==cfg['id'] and quality.get('status')=='error':
+                recent_errors.append(quality)
             if not record.get('failed') and quality and quality.get('id')==cfg['id'] and quality.get('status')=='active':
                 yield record
                 return
-    return evaluate(snapshot,base_choices,receipts(),old_targets,outcomes,cfg,model)
+    state=evaluate(snapshot,base_choices,receipts(),old_targets,outcomes,cfg,model)
+    count=state.get('integrity_error_captures',0)
+    count+=sum(stamp(r['observed_at_utc'])>=stamp(state['started_at_utc']) for r in recent_errors)
+    state['integrity_error_captures']=count
+    state['progress']['integrity_error_captures']=count
+    state['progress']['criteria']['complete_capture_history']=not count
+    state['progress']['evidence_ready']=all(state['progress']['criteria'].values())
+    return state

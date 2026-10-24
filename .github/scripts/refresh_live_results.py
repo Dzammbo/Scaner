@@ -224,6 +224,14 @@ def main():
                   unresolved_records=remaining, duplicate_model_choices=duplicates,
                   definition="One original choice per match; exact original provider line/price; "
                              "common sports Top5; current epoch only; no backfill; flat 1 unit")
+    try:
+        import quality_forward
+        quality_report = quality_forward.report_from_receipts(root, receipts, merged)
+        if quality_report is not None:
+            report['quality_comparison'] = quality_report
+    except Exception as exc:
+        report['quality_comparison'] = dict(status='error', error_type=type(exc).__name__,
+                                          primary_selection_changed=False)
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
@@ -250,4 +258,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

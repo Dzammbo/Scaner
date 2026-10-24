@@ -3,6 +3,9 @@ import datetime as dt
 from decimal import Decimal as D
 import math
 import unittest
+import tempfile
+import json
+from pathlib import Path
 import quality_forward as q
 
 
@@ -117,6 +120,24 @@ class QualityTests(unittest.TestCase):
         self.assertEqual(state['progress']['feature_unavailable'],1)
         again=q.evaluate(snapshot(),[choice()],[{'quality_experiment':state}],{},{},cfg(),model())
         self.assertEqual(again['entries'],state['entries'])
+
+    def test_parent_version_change_is_rejected(self):
+        s=snapshot();s['statistics_epoch']={'id':'different'}
+        with self.assertRaises(ValueError):q.evaluate(s,[choice()],[],{},{},cfg(),model())
+
+    def test_refresh_recomputes_outcomes_and_exposes_interrupted_comparison(self):
+        state=q.evaluate(snapshot(),[choice()],[],{},{},cfg(),model())
+        config=dict(cfg(),enabled=True,model_path=q.MODEL_PATH)
+        error={'id':q.EXPERIMENT,'status':'error','observed_at_utc':'2026-10-24T09:05:00+00:00'}
+        receipts=[{'quality_experiment':state},{'quality_experiment':error}]
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'.github').mkdir()
+            (root/'.github/live-quality-experiment.json').write_text(json.dumps(config))
+            out=q.report_from_receipts(root,receipts,{'new':{'settled':True,'final':[1,0]}})
+        self.assertEqual(out['progress']['benchmark']['n'],1)
+        self.assertEqual(out['progress']['benchmark']['unit_profit'],-1.)
+        self.assertEqual(out['progress']['integrity_error_captures'],1)
+        self.assertFalse(out['progress']['criteria']['complete_capture_history'])
 
 
 if __name__=='__main__':unittest.main()
