@@ -1,0 +1,17 @@
+name: Verify shadow timing and gate comparisons
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/shadow_analysis.py'
+      - '.github/scripts/test_shadow_analysis.py'
+      - '.github/workflows/verify-shadow-analysis.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest discover -s .github/scripts -p test_shadow_analysis.py -v

@@ -268,6 +268,11 @@ def main():
         report['shadow_universe'] = shadow
     except Exception as exc:
         report['shadow_universe'] = dict(status='error', error_type=type(exc).__name__)
+    try:
+        import shadow_analysis
+        report['shadow_analysis'] = shadow_analysis.analyze(root, merged, c.settle_entry)
+    except Exception as exc:
+        report['shadow_analysis'] = dict(status='error', error_type=type(exc).__name__, no_rule_changes=True)
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
@@ -277,7 +282,9 @@ def main():
                     + "/" + os.environ["GITHUB_RUN_ID"] + "-900001.json.gz")
     payload = lambda value: (json.dumps(value, ensure_ascii=False,
                                         separators=(",", ":")) + "\n").encode()
+    shadow_path = "research/shadow-analysis/" + day + "/" + run_id + ".json"
     files = {summary_path: payload(report),
+             shadow_path: payload(report['shadow_analysis']),
              outcome_path: gzip.compress(payload(outcome_record), mtime=0)}
     commit = save_files(root, files)
     print("RESULTS_REFRESH_PATH=" + summary_path)
