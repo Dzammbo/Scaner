@@ -1,0 +1,35 @@
+name: Freeze remaining-goals quality model
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-quality-model.yml'
+      - '.github/live-quality-training-request.json'
+permissions:
+  contents: write
+concurrency:
+  group: freeze-live-quality-model
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Verify prospective protocol and settlement
+        run: python3 -m unittest discover -s control/.github/scripts -p 'test_quality_forward.py' -v
+      - name: Fit, calibrate and freeze model on disjoint chronological matches
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+        run: python3 control/.github/scripts/train_quality_model.py
