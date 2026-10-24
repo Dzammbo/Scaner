@@ -2,8 +2,8 @@
   "run_id": "40110505040",
   "run_attempt": 1,
   "started_at": "2026-10-24T16:13:45.038883+00:00",
-  "updated_at": "2026-10-24T20:34:29.045238+00:00",
-  "state": "sleeping",
+  "updated_at": "2026-10-24T20:35:05.356060+00:00",
+  "state": "yielding_to_manual",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-v3-configurable-20261020",
@@ -12,5 +12,6 @@
   "last_capture_id": "40110505040-100050",
   "last_error": null,
   "last_success_at": "2026-10-24T20:34:29.045262+00:00",
-  "consecutive_failures": 0
+  "consecutive_failures": 0,
+  "reason": "recent_manual_live_has_priority"
 }
