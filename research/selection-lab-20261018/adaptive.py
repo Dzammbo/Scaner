@@ -1,6 +1,6 @@
 """Budget-aware deep routing and explicit per-event acquisition coverage."""
 import collections,itertools,re,time
-VERSION='adaptive-deep-v1-20261020'
+VERSION='adaptive-deep-v2-executable-quotes-20261024'
 
 def eligible(event):
  return event.get('minute')is not None and 5<=event['minute']<=89 and bool(re.fullmatch(r'\d+-\d+',str(event.get('score',''))))
@@ -29,9 +29,11 @@ def plan(c,budget,events,controls,history,seed,previous_deep):
   if str(e['event_id'])in ids or not eligible(e):continue
   t=tasks(e)
   if used+len(t)+len(selected)+1<=available:add(e,t)
- # Reserve all board markets when possible. In an oversized pool retain a detail budget too.
- price_reserve=min(len(events),max(0,available-used))
- if price_reserve<len(events):price_reserve=min(price_reserve,max(len(selected),available-used-available//4))
+ # Reserve executable markets for every known-score 5-89 event, including rejects.
+ # Outside-window board rows stay archived and outcome-tracked, without a paid quote.
+ eligible_n=sum(eligible(e)for e in events)
+ price_reserve=min(eligible_n,max(0,available-used))
+ if price_reserve<eligible_n:price_reserve=min(price_reserve,max(len(selected),available-used-available//4))
  candidates=[e for e in events if eligible(e)and str(e['event_id'])not in ids and str(e['event_id'])not in control_ids]
  cohorts={label:[e for e in candidates if(str(e['event_id'])in previous_deep)==(label=='repeat')]for label in ('new','repeat')}
  for label,rows in cohorts.items():cohorts[label]=sample(rows,len(rows),seed+'|'+label)
@@ -40,7 +42,6 @@ def plan(c,budget,events,controls,history,seed,previous_deep):
    if e is None:continue
    t=tasks(e)
    if used+len(t)+price_reserve<=available:add(e,t)
- eligible_n=sum(eligible(e)for e in events)
  for e in events:
   eid=str(e['event_id']);ok=eligible(e);chosen=eid in ids
   reason=None if chosen else 'outside_5_89'if not(e.get('minute')is not None and 5<=e['minute']<=89)else 'unknown_score'if not ok else 'deep_budget_limit'
@@ -52,6 +53,15 @@ def plan(c,budget,events,controls,history,seed,previous_deep):
  return selected,dict(version=VERSION,observed=len(events),eligible=eligible_n,selected=len(selected),available_calls=available,
   estimated_detail_calls=used,reserved_market_calls=price_reserve,cache_history_misses=len(history_tasks),cache_league_misses=len(league_tasks),
   control_candidates=len(control_ids),control_selected=len(ids&control_ids),fixed_deep_limit=None)
+
+def market_probes(events,priority):
+ """Quote all eligible matches, deep/control first, once per event."""
+ seen=set();ordered=[]
+ for e in list(priority)+list(events):
+  eid=str(e['event_id'])
+  if eid in seen or not eligible(e):continue
+  seen.add(eid);ordered.append(e)
+ return ordered
 
 def coverage(snapshot,market_for_event):
  events=snapshot.get('events',[]);skip=collections.Counter();failure=collections.Counter();strata={}

@@ -457,8 +457,9 @@ def main():
    probes=[e for e,_ in selected_probes]if is_broad else[e for e,_ in selected_probes][:MAX_MARKETS]
    price_probes=probes
    if is_broad:
-    price_ids={str(e['event_id'])for e in price_probes}
-    price_probes=price_probes+[e for e in snapshot['events']if str(e['event_id'])not in price_ids]
+    import adaptive
+    price_probes=adaptive.market_probes(snapshot['events'],probes)
+    snapshot['market_probe_policy']='all_known_score_5_89_deep_first_no_outside_window_odds'
    enrich_markets(price_probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
    for e in price_probes:by_id[e['event_id']].update(e)
@@ -564,10 +565,11 @@ def main():
    legacy_evaluation_price_rows=[e for e in price_probes if e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
    full_collection_price_rows=[e for e in price_probes if number(e.get('minute'))is not None and broad.FULL_COLLECTION_MINUTE_MIN<=number(e.get('minute'))<=broad.FULL_COLLECTION_MINUTE_MAX and re.fullmatch(r'\d+-\d+',str(e.get('score','')))] if is_broad else []
    snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',target=.95,
-    all_provider_rows=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),
+    all_provider_rows=price_coverage(snapshot['events']) if is_broad else price_coverage(price_probes),
+    requested_market_probes=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),
     evaluation_window_8_60=price_coverage(legacy_evaluation_price_rows),
     full_collection_window_5_89=price_coverage(full_collection_price_rows)if is_broad else dict(requested=0,exact=0,ratio=None,provider_unavailable=0),
-    denominator_note='Target applies to active known-score and full-collection rows; the legacy 8-60 row remains a comparison. Minute 0 without score and 90+ events stay visible in raw coverage.')
+    denominator_note='Target applies to known-score 5-89 market probes; the legacy 8-60 row remains a comparison. All raw board rows remain visible, but outside-window and unknown-score rows are not quoted.')
    snapshot['production_api_call_fields_are_base_stage_only']=True
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])

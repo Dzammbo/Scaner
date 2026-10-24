@@ -1,7 +1,7 @@
 """Prospective broad observations, independent of legacy Top-30 and strong gates."""
 import collections,concurrent.futures,datetime,hashlib,re,time
 from live_ranking import fresh_sports_features,rank_final_candidates
-VERSION='broad-observation-v5-adaptive-20261020'
+VERSION='broad-observation-v6-executable-quotes-20261024'
 FULL_COLLECTION_MINUTE_MIN=5
 FULL_COLLECTION_MINUTE_MAX=89
 
