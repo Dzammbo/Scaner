@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/live-results-refresh.yml'
       - '.github/live-results-refresh.json'
+      - '.github/scripts/shadow_analysis.py'
+      - '.github/scripts/independent_pockets.py'
 permissions:
   contents: write
 concurrency:
