@@ -41,6 +41,13 @@ class ProspectiveAnalysis(unittest.TestCase):
             path=root/shadow.JOURNAL/'2026-10-24'/'1-1.json.gz'
             path.parent.mkdir(parents=True)
             path.write_bytes(gzip.compress(json.dumps(receipt).encode()))
+            snapshot=root/'research/live-background/experimental/snapshots/2026-10-24/1-1.json.gz'
+            snapshot.parent.mkdir(parents=True)
+            snapshot.write_bytes(gzip.compress(json.dumps(dict(snapshot_id='1-1',
+                board_observed_at_utc=base['observed_at_utc'],events=[
+                    dict(event_id=eid,minute=20,score='0-0',research_enriched=True,
+                         research_detail_coverage=dict(exact_main_price=True))
+                    for eid in ('1','2','3')])).encode()))
             outcome={'1':dict(settled=True,final=[3,0]),'2':dict(settled=True,final=[0,0]),
                      '3':dict(settled=True,final=[0,0])}
             def settle(row,result):
@@ -54,6 +61,36 @@ class ProspectiveAnalysis(unittest.TestCase):
             self.assertEqual(report['gate']['same_country_week_diagnostic']['n'],1)
             self.assertFalse(report['gate']['same_league']['evidence_signal'])
             self.assertEqual(report['gate']['first_quote_flow']['insufficient_data_gaps']['insufficient_comparable_goal_profile'],1)
+            self.assertEqual(report['coverage_funnel']['unique_eligible_board'],3)
+            self.assertEqual(report['coverage_funnel']['first_quote_insufficient'],1)
+
+    def test_funnel_tracks_unquoted_and_later_decidable_without_double_counting(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            first=dict(event_id='a',decision='insufficient_sports_data',score='0-0',minute=12,
+                       observed_at_utc='2026-10-24T18:05:00+00:00',entry_day_msk='2026-10-24',
+                       market=dict(line=2.5,price=1.8))
+            later=dict(first,decision='strong_v8',minute=18,
+                       observed_at_utc='2026-10-24T18:11:00+00:00',market=dict(line=3.0,price=1.7))
+            data=dict(shadow_universe=dict(version=shadow.VERSION,status='active',
+                started_at_utc=first['observed_at_utc'],entries=[first],quoted_points=[first,later]))
+            base=root/shadow.JOURNAL/'2026-10-24'/'1-1.json.gz';base.parent.mkdir(parents=True)
+            base.write_bytes(gzip.compress(json.dumps(data).encode()))
+            events=[dict(event_id='a',score='0-0',minute=12,research_enriched=True,
+                         research_detail_coverage=dict(exact_main_price=True)),
+                    dict(event_id='b',score='0-0',minute=40,research_enriched=False,
+                         research_detail_coverage=dict(exact_main_price=False,missing_reasons=['price_provider_unavailable']))]
+            snap=root/'research/live-background/experimental/snapshots/2026-10-24/1-1.json.gz'
+            snap.parent.mkdir(parents=True)
+            snap.write_bytes(gzip.compress(json.dumps(dict(snapshot_id='1-1',
+                board_observed_at_utc=first['observed_at_utc'],events=events)).encode()))
+            report=a.analyze(root,{'a':dict(settled=True)},
+                             lambda row,outcome: 0.8 if outcome.get('settled') else None)
+            f=report['coverage_funnel']
+            self.assertEqual((f['unique_eligible_board'],f['ever_first_quoted'],f['eventually_sports_decidable']),(2,1,1))
+            self.assertEqual(f['never_quoted_first_board_reasons']['price_provider_unavailable'],1)
+            self.assertEqual(f['first_quote_to_decision']['median_minutes'],6)
+            self.assertEqual(f['acquisition_later_decidable']['no_explicit_acquisition_error'],1)
 
     def test_first_decidable_point_uses_its_own_later_price(self):
         first=dict(event_id='x',decision='insufficient_sports_data',minute=14,score='0-0',

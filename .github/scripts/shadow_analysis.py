@@ -6,6 +6,7 @@ import collections
 import datetime as dt
 import math
 import random
+import statistics
 from pathlib import Path
 
 VERSION = 'shadow-matched-analysis-v1-20261024'
@@ -138,6 +139,107 @@ def admission_flow(rows, outcomes, settle):
                 note='A match may have multiple gaps; gap counts are not disjoint match counts.')
 
 
+def coverage_funnel(root, shadow, rows, points, decidable, outcomes, settle):
+    """Count distinct as-of events, never repeated snapshots as new matches."""
+    first_board = {}
+    for path in sorted((Path(root)/shadow.JOURNAL).rglob('*.json*')):
+        item = shadow.load(path).get('shadow_universe') or {}
+        if item.get('version') != shadow.VERSION or item.get('status') != 'active':
+            continue
+        source = (Path(root)/'research/live-background/experimental/snapshots'
+                  /path.parent.name/path.name)
+        if not source.exists():
+            raise FileNotFoundError('Missing paired board snapshot: ' + str(source))
+        snapshot = shadow.load(source)
+        if snapshot['snapshot_id'] != path.name.split('.json')[0]:
+            raise ValueError('Shadow and board snapshot IDs differ')
+        for event in snapshot.get('events', []):
+            minute = event.get('minute')
+            score = str(event.get('score', ''))
+            if not isinstance(minute, (int, float)) or not 5 <= minute <= 89:
+                continue
+            if score.count('-') != 1 or not all(part.isdigit() for part in score.split('-')):
+                continue
+            eid = str(event['event_id'])
+            if eid not in first_board:
+                coverage = event.get('research_detail_coverage') or {}
+                first_board[eid] = dict(at=snapshot['board_observed_at_utc'],
+                    minute=minute, league=event.get('league'), country=event.get('country'),
+                    priced=bool(coverage.get('exact_main_price')),
+                    deep=bool(event.get('research_enriched')),
+                    missing=coverage.get('missing_reasons') or [])
+    if not set(rows) <= set(first_board):
+        raise ValueError('First quote without eligible observed board row')
+    durations_to_quote = []
+    durations_to_decision = []
+    delayed_decisions = []
+    eventual_missing = collections.Counter()
+    first_price_missing = collections.Counter()
+    minute_bands = collections.defaultdict(lambda: collections.Counter())
+    for eid, board in first_board.items():
+        band = ('05-30' if board['minute'] <= 30 else '31-60' if board['minute'] <= 60 else '61-89')
+        minute_bands[band]['observed'] += 1
+        if eid in rows:
+            minute_bands[band]['quoted'] += 1
+            durations_to_quote.append((instant(rows[eid]['observed_at_utc'])-instant(board['at'])).total_seconds()/60)
+        else:
+            eventual_missing.update(r for r in board['missing'] if r.startswith('price_'))
+            if not any(r.startswith('price_') for r in board['missing']):
+                eventual_missing['price_reason_unknown'] += 1
+        if not board['priced']:
+            first_price_missing.update(r for r in board['missing'] if r.startswith('price_'))
+        if eid in decidable:minute_bands[band]['decidable'] += 1
+    for eid, decision in decidable.items():
+        minutes=(instant(decision['observed_at_utc'])
+                 -instant(rows[eid]['observed_at_utc'])).total_seconds()/60
+        durations_to_decision.append(minutes)
+        if minutes>0:delayed_decisions.append(minutes)
+    first_insufficient = {eid for eid, row in rows.items()
+                          if row['decision'] == 'insufficient_sports_data'}
+    last_unresolved = collections.Counter()
+    acquisition = collections.Counter()
+    acquisition_recovered = collections.Counter()
+    for eid in first_insufficient:
+        reasons=rows[eid].get('deep_missing_reasons') or []
+        if any('budget' in r.lower() for r in reasons):category='budget_exhausted'
+        elif any(('timeout' in r.lower() or 'http' in r.lower() or 'request_error' in r.lower()) for r in reasons):category='transient_api_error'
+        elif reasons:category='other_acquisition_gap'
+        else:category='no_explicit_acquisition_error'
+        acquisition[category]+=1
+        if eid in decidable:acquisition_recovered[category]+=1
+    for eid in first_insufficient - decidable.keys():
+        last = points.get(eid, [])[-1] if points.get(eid) else rows[eid]
+        last_unresolved.update((last.get('selection_confidence') or {}).get('data_gaps') or [])
+    def delay(values):
+        return dict(n=len(values),median_minutes=statistics.median(values) if values else None,
+                    p90_minutes=sorted(values)[math.ceil(.9*len(values))-1] if values else None)
+    def settled(entries):
+        return sum(settle(row, outcomes.get(eid, {})) is not None
+                   for eid, row in entries.items())
+    return dict(unique_eligible_board=len(first_board),
+                first_board_priced=sum(b['priced'] for b in first_board.values()),
+                ever_first_quoted=len(rows),
+                first_quote_deep_evaluated=sum(r.get('deep_evaluated', False) for r in rows.values()),
+                first_quote_sports_decidable=sum(r['decision'] in ('strong_v8', 'rejected_strong_v8') for r in rows.values()),
+                eventually_sports_decidable=len(decidable),
+                eligible_board_confirmed=sum(bool((outcomes.get(eid) or {}).get('settled')
+                    and not (outcomes.get(eid) or {}).get('result_conflict')) for eid in first_board),
+                quoted_settleable=settled(rows),
+                decidable_settleable=settled(decidable),
+                first_quote_insufficient=len(first_insufficient),
+                insufficient_later_decidable=len(first_insufficient & decidable.keys()),
+                first_quote_to_decision=delay(durations_to_decision),
+                first_quote_to_later_decision=delay(delayed_decisions),
+                first_board_to_first_quote=delay(durations_to_quote),
+                first_quote_insufficient_acquisition_categories=dict(acquisition),
+                acquisition_later_decidable=dict(acquisition_recovered),
+                first_board_unpriced_reasons=dict(first_price_missing),
+                never_quoted_first_board_reasons=dict(eventual_missing),
+                persistent_insufficiency_last_observed_gaps=dict(last_unresolved),
+                by_first_seen_minute={k:dict(v) for k,v in sorted(minute_bands.items())},
+                note='Unique matches, not repeated observations; missing reasons overlap. Provider unavailable on an observed point does not prove permanent absence; snapshots only cover successful captures.')
+
+
 def analyze(root, outcomes, settle):
     import shadow_universe as shadow
     rows,started,errors,captures=shadow.history(root)
@@ -145,6 +247,7 @@ def analyze(root, outcomes, settle):
     decidable,later_decision=first_decidable(rows,points)
     return dict(version=VERSION,status='active' if started else 'awaiting_first_capture',
                 started_at_utc=started,successful_captures=captures,capture_errors=errors,
+                coverage_funnel=coverage_funnel(root,shadow,rows,points,decidable,outcomes,settle),
                 timing=timed_pairs(rows,points,outcomes,settle),
                 gate=dict(rule='One first prospectively decidable exact-priced point per event; same Moscow day, exact score and total line; minute ±5; price ±0.05; distinct matched events without replacement.',
                           first_quote_flow=admission_flow(rows,outcomes,settle),

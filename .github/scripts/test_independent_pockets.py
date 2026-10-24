@@ -42,6 +42,15 @@ class IndependentTests(unittest.TestCase):
  def test_report_recomputes_exact_outcomes_and_conflicts(self):
   self.save(self.evaluate([event('1')]));r=p.report(self.root,{'1':dict(settled=True,final=[2,1])},settle);self.assertAlmostEqual(r['pockets']['provider_main_score_one']['roi'],.9)
   r=p.report(self.root,{'1':dict(settled=True,final=[2,1],result_conflict=True)},settle);self.assertEqual(r['pockets']['provider_main_score_one']['n'],0)
+ def test_four_finishing_attempts_is_prospective_diagnostic_only(self):
+  a=event('1');a['research_sports_features']={'finishing_5_total':4}
+  b=event('2');b['research_sports_features']={'finishing_5_total':2}
+  c=event('3');c['research_sports_features']={'finishing_5_total':None}
+  r=self.evaluate([a,b,c]);self.save(r)
+  report=p.report(self.root,{i:dict(settled=True,final=[2,1]) for i in ('1','2','3')},settle)
+  bucket=report['finishing_5_diagnostic']['provider_main_score_one']
+  self.assertEqual([bucket[k]['n'] for k in ('four_plus','zero_to_three','unknown')],[1,1,1])
+  self.assertEqual(report['pockets']['provider_main_score_one']['selected'],3)
  def test_changed_catalog_fails_closed(self):
   self.save(self.evaluate([event('1')]));f=self.root/p.CONFIG;d=json.loads(f.read_text());d['pockets'][0]['name']='changed';f.write_text(json.dumps(d))
   with self.assertRaises(ValueError):self.evaluate([event('2')])
