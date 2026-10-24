@@ -1,0 +1,45 @@
+{
+  "created_at_utc": "2026-10-24T16:06:33.258Z",
+  "data_cutoff_utc": "2026-10-24T15:50:21.590931+00:00",
+  "main_selection_changed": false,
+  "main": {
+    "selected": 433,
+    "n": 381,
+    "net": -13.7,
+    "roi": -0.03595800524934383
+  },
+  "sources": {
+    "current_audit": "results.json",
+    "shortlist": "candidate-shortlist.json",
+    "version_replay": "../40109115890-1/version-replay.json",
+    "original_research_protocol": "research/selection-lab-20261018/protocol.json",
+    "original_combinations": "research/selection-lab-20261018/combinations-baseline.json"
+  },
+  "findings": [
+    {
+      "fact": "Original research protocol and combination baseline explicitly identify post-outcome exploratory selection; they are not untouched confirmation."
+    },
+    {
+      "fact": "Current original-entry search examined 37099 distinct subsets; approximate BH rejections at 0.05: zero."
+    },
+    {
+      "fact": "Moderate dangerous-attacks rate with at least one team having zero cumulative shots on target: N127 ROI0.14438976377952756, ROI without best day0.0881578947368421, without best3 0.12328629032258064. All are retrospective."
+    },
+    {
+      "fact": "Old low-SOT need2 condition on new-universe broad first-qualifying entries: N703 ROI-0.028591749644381225; same condition additionally requiring strong8-60 and current hour/profile filters at its own first qualifying time: N118 ROI0.08230932203389829; at original primary entry: N49 ROI-0.10918367346938776. Different strategies and cohorts, not causal effect."
+    },
+    {
+      "fact": "Original SOT0.1-0.2 per-minute legacy independent-model receipts: N98 ROI-0.26900510204081635 on20-21October, before common-Top5 epoch. Already losing under old pocket admission."
+    },
+    {
+      "fact": "Observed-candidate replay with current hour/profile filters: all v6,v7,old v8,current v8 have negative ROI. Actual acquisition history cannot be counterfactually restored."
+    },
+    {
+      "fact": "Three global historical-score-conflict IDs are excluded from broad replay but their individually valid original primary settlements remain in official N381. Conservative replay N378 differs intentionally."
+    },
+    {
+      "fact": "Two worker failures in logs are caused by unhandled missing-snapshot errors in save_capture. Capture timeout is inferred from360second timing, not directly logged. Latest failed receipt40109124145-100001 independently records TimeoutError in acquisition."
+    }
+  ],
+  "recommendation": "Treat first two simple shortlist candidates as fixed research hypotheses; no production filter changes or resets from this retrospective scan. Validate subsequent original parent entries with exact saved quotes and completed cohorts. Investigate collector missing-snapshot error before claiming complete data."
+}
