@@ -15,10 +15,16 @@ for path in paths[-48:]:
        blocked=api.get('blocked',0),remaining=api.get('remaining_lower_bound'),
        cap=api.get('cap'),reserve=api.get('primary_reserve'),
        endpoints=api.get('endpoints',{}),observed=cov.get('observed'),
+       market_policy=s.get('market_probe_policy'),market_probes=s.get('lab_market_probe_count'),
+       odds_calls=(api.get('endpoints') or {}).get('/v2/event/odds',0),
        eligible=cov.get('eligible'),deep=cov.get('selected'),complete=cov.get('complete'),
        priced=price.get('exact'),price_requested=price.get('requested'),
        available_at_plan=plan.get('available_calls'),reserved_market_calls=plan.get('reserved_market_calls')))
 good=[r for r in rows if r['status'] in ('captured','partial')]
+for r in good:
+    if r['market_policy'] == 'all_known_score_5_89_deep_first_no_outside_window_odds':
+        assert r['market_probes'] == r['eligible'], r
+        assert r['odds_calls'] <= r['eligible'], r
 hours=collections.defaultdict(list)
 for r in rows:
     if r['at']: hours[r['at'][:13]].append(r)
