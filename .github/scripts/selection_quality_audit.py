@@ -45,6 +45,9 @@ for a in report['ledger']['sports_v8_fresh']:
  r.update(profit=a['profit'],final=a['final'],rank=a['sports_rank']);main.append(r)
 ev_ids={r['event_id'] for r in report['ledger']['provider_main_ev_ge005']}
 mainids={r['id'] for r in main}
+shared=[r for r in new if r['id'] in mainids]
+si={r['id'] for r in shared}
+print('PAIRED',json.dumps({'same_ids':len(si),'original_primary_entries':stats([r for r in main if r['id'] in si]),'first_pocket_entries':stats(shared),'pocket_pending':[{'id':r['id'],'match':r.get('match'),'t':r['t'],'day':r.get('day'),'sid':r['sid'],'final':r.get('final'),'closed':r.get('closed')} for r in new if r.get('profit') is None],'selected_by_entry_day':grouped(new,lambda r:dt.datetime.fromtimestamp(r['t'],MSK).date().isoformat()),'first_full24h':stats([r for r in new if r['t']<START+86400])},ensure_ascii=False))
 fixed_filters={
  'baseline':lambda r:True,
  'shots5_at_least_2':lambda r:r.get('fresh_shots5') is not None and r['fresh_shots5']>=2,
