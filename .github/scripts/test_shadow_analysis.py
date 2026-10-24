@@ -9,6 +9,19 @@ import shadow_universe as shadow
 
 
 class ProspectiveAnalysis(unittest.TestCase):
+    def test_week_diagnostic_remains_separate_from_strict_gate(self):
+        first=dict(event_id='a',decision='strong_v8',entry_day_msk='2026-10-24',
+                   observed_at_utc='2026-10-24T18:00:00+00:00',score='0-0',
+                   minute=20,league='L',country='GB',market=dict(line=2.5,price=1.8,score='0-0'))
+        other=dict(first,event_id='b',decision='rejected_strong_v8',
+                   entry_day_msk='2026-10-25',observed_at_utc='2026-10-25T18:00:00+00:00',
+                   minute=29,market=dict(line=3.0,price=1.9,score='0-0'))
+        results={'a':dict(settled=True),'b':dict(settled=True)}
+        settle=lambda row,outcome: 0.25 if outcome.get('settled') else None
+        rows={'a':first,'b':other}
+        self.assertEqual(a.gate_pairs(rows,results,settle,'country')['n'],0)
+        self.assertEqual(a.gate_pairs(rows,results,settle,'country',True)['n'],1)
+
     def test_later_point_fixed_by_clock_and_gate_requires_comparability(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
@@ -36,6 +49,7 @@ class ProspectiveAnalysis(unittest.TestCase):
             self.assertAlmostEqual(report['timing']['settled_pairs']['difference_right_minus_left'],-1.8)
             self.assertEqual(report['gate']['same_league']['n'],1)
             self.assertEqual(report['gate']['all_leagues_diagnostic_only']['n'],1)
+            self.assertEqual(report['gate']['same_country_week_diagnostic']['n'],1)
             self.assertFalse(report['gate']['same_league']['evidence_signal'])
 
 

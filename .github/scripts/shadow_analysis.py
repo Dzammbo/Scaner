@@ -66,7 +66,7 @@ def timed_pairs(root, rows, outcomes, settle, shadow):
                 note='One pair per event; later point fixed by clock, never chosen by its result.')
 
 
-def gate_pairs(rows, outcomes, settle, key):
+def gate_pairs(rows, outcomes, settle, key, relaxed=False):
     strong=[r for r in rows.values() if r['decision']=='strong_v8']
     rejected=[r for r in rows.values() if r['decision']=='rejected_strong_v8']
     strong.sort(key=lambda r:(r['entry_day_msk'],r['observed_at_utc'],str(r['event_id'])))
@@ -77,16 +77,21 @@ def gate_pairs(rows, outcomes, settle, key):
         if left is None:continue
         choices=[]
         for eid,b in available.items():
-            if b['entry_day_msk']!=a['entry_day_msk'] or b['score']!=a['score']:continue
-            if abs(float(b['market']['line'])-float(a['market']['line']))>1e-8:continue
-            if abs(float(b['market']['price'])-float(a['market']['price']))>.05+1e-9:continue
-            if abs(float(b['minute'])-float(a['minute']))>5:continue
+            day_gap=abs((dt.date.fromisoformat(b['entry_day_msk'])-dt.date.fromisoformat(a['entry_day_msk'])).days)
+            line_gap=abs(float(b['market']['line'])-float(a['market']['line']))
+            price_gap=abs(float(b['market']['price'])-float(a['market']['price']))
+            minute_gap=abs(float(b['minute'])-float(a['minute']))
+            if day_gap>(7 if relaxed else 0) or b['score']!=a['score']:continue
+            if line_gap>(.5 if relaxed else 1e-8):continue
+            if price_gap>(.10 if relaxed else .05)+1e-9:continue
+            if minute_gap>(10 if relaxed else 5):continue
             if key=='league' and (not a.get('league') or b.get('league')!=a['league']):continue
             if key=='country' and (not a.get('country') or b.get('country')!=a['country']):continue
             right=settle(b,outcomes.get(eid,{}))
             if right is None:continue
-            distance=(abs(a['minute']-b['minute']),abs(a['market']['price']-b['market']['price']),
-                      abs((instant(a['observed_at_utc'])-instant(b['observed_at_utc'])).total_seconds()),eid)
+            distance=(minute_gap/(10 if relaxed else 5)+line_gap/(.5 if relaxed else 1)
+                      +price_gap/(.10 if relaxed else .05)+day_gap/7,
+                      minute_gap,line_gap,price_gap,eid)
             choices.append((distance,eid,right))
         if choices:
             _,eid,right=min(choices)
@@ -105,5 +110,9 @@ def analyze(root, outcomes, settle):
                           same_league=gate_pairs(rows,outcomes,settle,'league'),
                           same_country=gate_pairs(rows,outcomes,settle,'country'),
                           all_leagues_diagnostic_only=gate_pairs(rows,outcomes,settle,'all'),
+                          same_league_week_diagnostic=gate_pairs(rows,outcomes,settle,'league',True),
+                          same_country_week_diagnostic=gate_pairs(rows,outcomes,settle,'country',True),
+                          all_leagues_week_diagnostic=gate_pairs(rows,outcomes,settle,'all',True),
+                          relaxed_rule='Separate diagnostic only: date ±7 days, exact score, total line ±0.5, minute ±10, price ±0.10; same league or country where specified.',
                           data_insufficient_not_called_rejected=True),
                 no_rule_changes=True,exploratory_until_minimum_pairs_and_days=True)
