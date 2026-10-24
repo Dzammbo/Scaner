@@ -1,0 +1,34 @@
+name: Validate original pocket and primary selection quality
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-selection-quality-audit.yml'
+      - '.github/scripts/selection_quality_audit.py'
+      - '.github/scripts/run_selection_quality_audit.py'
+permissions:
+  contents: write
+concurrency:
+  group: explicit-selection-quality-audit
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Calculate fixed pocket and inspect original primary entries
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+        run: python3 control/.github/scripts/run_selection_quality_audit.py
