@@ -1,0 +1,40 @@
+name: Deep audit of selection history and current pockets
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-deep-selection-audit.yml'
+      - '.github/scripts/deep_selection_audit.py'
+permissions:
+  contents: write
+concurrency:
+  group: explicit-deep-selection-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Refresh confirmed outcomes without changing selection
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
+        run: python3 control/.github/scripts/refresh_live_results.py
+      - name: Audit all saved observations and original selection versions
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+          EXPORTER_SHA256: 4c0207570aff9a97356360f3972545c312bdc715850511665170bedc15709f46
+        run: python3 control/.github/scripts/deep_selection_audit.py
