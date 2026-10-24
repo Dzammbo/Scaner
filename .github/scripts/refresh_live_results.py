@@ -241,11 +241,22 @@ def main():
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)
         shadow_rows, _, _, _ = shadow_universe.history(root)
-        population = {eid: row for eid, row in targets.items()
-                      if shadow['started_at_utc'] and (row.get('board_observed_at_utc', '') >= shadow['started_at_utc'] or eid in shadow_rows)
-                      and row.get('minute') is not None and 5 <= row['minute'] <= 89
-                      and isinstance(row.get('score'), str) and row['score'].replace('-', '').isdigit()
-                      and row['score'].count('-') == 1}
+        population = {}
+        for path in (root/shadow_universe.JOURNAL).rglob('*.json*'):
+            item = shadow_universe.load(path).get('shadow_universe') or {}
+            if item.get('version') != shadow_universe.VERSION or item.get('status') != 'active':
+                continue
+            snap_path = root/'research/live-background/experimental/snapshots'/path.parent.name/path.name
+            snapshot = c.load_json(snap_path)
+            assert snapshot['snapshot_id'] == path.name.split('.json')[0]
+            for event in snapshot['events']:
+                minute = event.get('minute')
+                score = event.get('score')
+                if (isinstance(minute, (int, float)) and 5 <= minute <= 89
+                        and isinstance(score, str) and score.count('-') == 1
+                        and score.replace('-', '').isdigit()):
+                    population.setdefault(str(event['event_id']), event)
+        assert set(shadow_rows) <= set(population), 'Quoted event missing from observed board'
         observed_closed = sum(bool((merged.get(eid) or {}).get('settled')
                                    and not (merged.get(eid) or {}).get('result_conflict'))
                               for eid in population)
