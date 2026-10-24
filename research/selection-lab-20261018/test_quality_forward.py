@@ -66,6 +66,14 @@ class QualityTests(unittest.TestCase):
         self.assertEqual(q.vector(a)[10],1.)
         self.assertEqual(q.vector(row())[10],0.)
 
+    def test_live_provider_numeric_strings_are_normalized(self):
+        e=snapshot()['events'][0]
+        e['board_stats']={k:[str(v) for v in values] for k,values in e['board_stats'].items()}
+        r=q.event_features(e)
+        self.assertEqual(r['sot'],2.)
+        self.assertEqual(r['danger'],20.)
+        self.assertEqual(q.vector(r),q.vector(row()))
+
     def test_split_purges_labels_unknown_at_next_block_and_event_overlap(self):
         rows=[dict(row(str(i)),t=i*3600,additional=i%3,confirmed_at=i*3600+7200) for i in range(600)]
         train,cal,val=q.chronological_split(rows)
