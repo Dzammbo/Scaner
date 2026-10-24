@@ -1,0 +1,25 @@
+name: Verify saved full-board shadow capture
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/verify_shadow_live.py'
+      - '.github/workflows/verify-shadow-live.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+      - env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+        run: python3 control/.github/scripts/verify_shadow_live.py
