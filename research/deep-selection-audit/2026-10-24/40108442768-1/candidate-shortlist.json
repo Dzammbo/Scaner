@@ -1,0 +1,440 @@
+{
+  "as_of": "2026-10-24T15:50:21.590931+00:00",
+  "source_report": "research/live-results-refresh/2026-10-24/40108442768-1.json",
+  "source_audit": "results.json",
+  "status": "retrospective_candidates_not_confirmed",
+  "current_selection_changed": false,
+  "search_subsets": 37099,
+  "bh_rejections_005": 0,
+  "notes": [
+    "Shortlist chosen after reviewing entire current history. Temporal checks are retrospective, not untouched future data.",
+    "Groups overlap. N includes settled original-price rows only. Missing original prices are excluded.",
+    "No automatic rule change or promotion."
+  ],
+  "candidates": [
+    {
+      "id": "moderate_danger_at_least_one_team_without_sot",
+      "rule": "1 <= sum(dangerous_attacks)/minute < 2 AND min(on_target_home,on_target_away)=0",
+      "all": {
+        "selected": 129,
+        "n": 127,
+        "net": 18.3375,
+        "roi": 0.14438976377952756,
+        "without_top3": 0.12328629032258062,
+        "without_best_day": 0.08815789473684212,
+        "days": {
+          "2026-10-22": {
+            "n": 7,
+            "net": -2.25
+          },
+          "2026-10-23": {
+            "n": 70,
+            "net": 13.312499999999998
+          },
+          "2026-10-24": {
+            "n": 50,
+            "net": 7.274999999999999
+          }
+        }
+      },
+      "discovery": {
+        "selected": 77,
+        "n": 77,
+        "net": 11.0625,
+        "roi": 0.14366883116883117,
+        "without_top3": 0.1089527027027027,
+        "without_best_day": -0.3214285714285712,
+        "days": {
+          "2026-10-22": {
+            "n": 7,
+            "net": -2.25
+          },
+          "2026-10-23": {
+            "n": 70,
+            "net": 13.312499999999998
+          }
+        }
+      },
+      "temporal_check": {
+        "selected": 52,
+        "n": 50,
+        "net": 7.275,
+        "roi": 0.14550000000000002,
+        "without_top3": 0.0898936170212766,
+        "without_best_day": null,
+        "days": {
+          "2026-10-24": {
+            "n": 50,
+            "net": 7.274999999999999
+          }
+        }
+      },
+      "mature": {
+        "selected": 125,
+        "n": 125,
+        "net": 17.8375,
+        "roi": 0.1427,
+        "without_top3": 0.1212090163934426,
+        "without_best_day": 0.08227272727272728,
+        "days": {
+          "2026-10-22": {
+            "n": 7,
+            "net": -2.25
+          },
+          "2026-10-23": {
+            "n": 70,
+            "net": 13.312499999999998
+          },
+          "2026-10-24": {
+            "n": 48,
+            "net": 6.774999999999999
+          }
+        }
+      },
+      "exclude_zero_sot": {
+        "selected": 100,
+        "n": 98,
+        "net": 15.5875,
+        "roi": 0.1590561224489796,
+        "without_top3": 0.13197368421052633,
+        "without_best_day": 0.10212765957446814,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -1.25
+          },
+          "2026-10-23": {
+            "n": 51,
+            "net": 10.787499999999998
+          },
+          "2026-10-24": {
+            "n": 42,
+            "net": 6.05
+          }
+        }
+      }
+    },
+    {
+      "id": "moderate_danger_quarter_line",
+      "rule": "1 <= sum(dangerous_attacks)/minute < 2 AND round(line*4)%2=1",
+      "all": {
+        "selected": 129,
+        "n": 121,
+        "net": 14.525,
+        "roi": 0.12004132231404958,
+        "without_top3": 0.09724576271186441,
+        "without_best_day": 0.09385245901639344,
+        "days": {
+          "2026-10-22": {
+            "n": 6,
+            "net": 0.29999999999999993
+          },
+          "2026-10-23": {
+            "n": 60,
+            "net": 8.8
+          },
+          "2026-10-24": {
+            "n": 55,
+            "net": 5.425000000000001
+          }
+        }
+      },
+      "discovery": {
+        "selected": 66,
+        "n": 66,
+        "net": 9.1,
+        "roi": 0.13787878787878788,
+        "without_top3": 0.09642857142857142,
+        "without_best_day": 0.04999999999999982,
+        "days": {
+          "2026-10-22": {
+            "n": 6,
+            "net": 0.29999999999999993
+          },
+          "2026-10-23": {
+            "n": 60,
+            "net": 8.8
+          }
+        }
+      },
+      "temporal_check": {
+        "selected": 63,
+        "n": 55,
+        "net": 5.425,
+        "roi": 0.09863636363636363,
+        "without_top3": 0.04615384615384615,
+        "without_best_day": null,
+        "days": {
+          "2026-10-24": {
+            "n": 55,
+            "net": 5.425000000000001
+          }
+        }
+      },
+      "mature": {
+        "selected": 111,
+        "n": 110,
+        "net": 17.3,
+        "roi": 0.1572727272727273,
+        "without_top3": 0.13317757009345793,
+        "without_best_day": 0.17,
+        "days": {
+          "2026-10-22": {
+            "n": 6,
+            "net": 0.29999999999999993
+          },
+          "2026-10-23": {
+            "n": 60,
+            "net": 8.8
+          },
+          "2026-10-24": {
+            "n": 44,
+            "net": 8.200000000000001
+          }
+        }
+      },
+      "exclude_zero_sot": {
+        "selected": 114,
+        "n": 106,
+        "net": 11.325,
+        "roi": 0.10683962264150942,
+        "without_top3": 0.08033980582524271,
+        "without_best_day": 0.08035714285714286,
+        "days": {
+          "2026-10-22": {
+            "n": 6,
+            "net": 0.29999999999999993
+          },
+          "2026-10-23": {
+            "n": 50,
+            "net": 6.824999999999999
+          },
+          "2026-10-24": {
+            "n": 50,
+            "net": 4.200000000000002
+          }
+        }
+      }
+    },
+    {
+      "id": "four_or_more_goals_for_full_win",
+      "rule": "need >= 4",
+      "all": {
+        "selected": 87,
+        "n": 85,
+        "net": 10.2,
+        "roi": 0.12,
+        "without_top3": 0.0871951219512195,
+        "without_best_day": 0.09555555555555555,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -0.75
+          },
+          "2026-10-23": {
+            "n": 40,
+            "net": 5.8999999999999995
+          },
+          "2026-10-24": {
+            "n": 40,
+            "net": 5.05
+          }
+        }
+      },
+      "discovery": {
+        "selected": 45,
+        "n": 45,
+        "net": 5.15,
+        "roi": 0.11444444444444445,
+        "without_top3": 0.05178571428571429,
+        "without_best_day": -0.14999999999999983,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -0.75
+          },
+          "2026-10-23": {
+            "n": 40,
+            "net": 5.8999999999999995
+          }
+        }
+      },
+      "temporal_check": {
+        "selected": 42,
+        "n": 40,
+        "net": 5.05,
+        "roi": 0.12625,
+        "without_top3": 0.05405405405405406,
+        "without_best_day": null,
+        "days": {
+          "2026-10-24": {
+            "n": 40,
+            "net": 5.05
+          }
+        }
+      },
+      "mature": {
+        "selected": 83,
+        "n": 82,
+        "net": 9.7625,
+        "roi": 0.11905487804878048,
+        "without_top3": 0.08496835443037974,
+        "without_best_day": 0.0919642857142857,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -0.75
+          },
+          "2026-10-23": {
+            "n": 40,
+            "net": 5.8999999999999995
+          },
+          "2026-10-24": {
+            "n": 37,
+            "net": 4.6125
+          }
+        }
+      },
+      "exclude_zero_sot": {
+        "selected": 78,
+        "n": 76,
+        "net": 8.1375,
+        "roi": 0.10707236842105262,
+        "without_top3": 0.0696917808219178,
+        "without_best_day": 0.07286585365853658,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -0.75
+          },
+          "2026-10-23": {
+            "n": 35,
+            "net": 5.1499999999999995
+          },
+          "2026-10-24": {
+            "n": 36,
+            "net": 3.7375
+          }
+        }
+      }
+    },
+    {
+      "id": "moderate_danger_without_sot_profile09_11",
+      "rule": "moderate_danger_at_least_one_team_without_sot AND 0.9 <= gp_ratio < 1.1",
+      "all": {
+        "selected": 87,
+        "n": 85,
+        "net": 19.7875,
+        "roi": 0.23279411764705885,
+        "without_top3": 0.2041158536585366,
+        "without_best_day": 0.06062499999999993,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -1.25
+          },
+          "2026-10-23": {
+            "n": 45,
+            "net": 17.362500000000004
+          },
+          "2026-10-24": {
+            "n": 35,
+            "net": 3.6749999999999994
+          }
+        }
+      },
+      "discovery": {
+        "selected": 50,
+        "n": 50,
+        "net": 16.1125,
+        "roi": 0.32225000000000004,
+        "without_top3": 0.2789893617021277,
+        "without_best_day": -0.2500000000000007,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -1.25
+          },
+          "2026-10-23": {
+            "n": 45,
+            "net": 17.362500000000004
+          }
+        }
+      },
+      "temporal_check": {
+        "selected": 37,
+        "n": 35,
+        "net": 3.675,
+        "roi": 0.105,
+        "without_top3": 0.01953125,
+        "without_best_day": null,
+        "days": {
+          "2026-10-24": {
+            "n": 35,
+            "net": 3.6749999999999994
+          }
+        }
+      },
+      "mature": {
+        "selected": 83,
+        "n": 83,
+        "net": 19.2875,
+        "roi": 0.23237951807228918,
+        "without_top3": 0.20296875,
+        "without_best_day": 0.050657894736842034,
+        "days": {
+          "2026-10-22": {
+            "n": 5,
+            "net": -1.25
+          },
+          "2026-10-23": {
+            "n": 45,
+            "net": 17.362500000000004
+          },
+          "2026-10-24": {
+            "n": 33,
+            "net": 3.1749999999999994
+          }
+        }
+      },
+      "exclude_zero_sot": {
+        "selected": 67,
+        "n": 65,
+        "net": 17.2375,
+        "roi": 0.2651923076923077,
+        "without_top3": 0.2288306451612903,
+        "without_best_day": 0.08897058823529413,
+        "days": {
+          "2026-10-22": {
+            "n": 4,
+            "net": -0.25
+          },
+          "2026-10-23": {
+            "n": 31,
+            "net": 14.2125
+          },
+          "2026-10-24": {
+            "n": 30,
+            "net": 3.274999999999999
+          }
+        }
+      }
+    }
+  ],
+  "runtime_incidents": [
+    {
+      "run": 40094656909,
+      "job": 120874275381,
+      "at_utc": "2026-10-24T14:12:28Z",
+      "failed_snapshot": "40094656909-100018",
+      "observed_error": "FileNotFoundError in save_capture.py after capture process exceeded worker 360-second limit"
+    },
+    {
+      "run": 40101478818,
+      "job": 120894364390,
+      "at_utc": "2026-10-24T15:54:34Z",
+      "failed_snapshot": "40101478818-100019",
+      "observed_error": "FileNotFoundError in save_capture.py after capture process exceeded worker 360-second limit"
+    }
+  ]
+}
