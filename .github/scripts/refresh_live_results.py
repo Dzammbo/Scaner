@@ -279,7 +279,7 @@ def main():
                           source_revision=source_revision, **updates)
     summary_path = "research/live-results-refresh/" + day + "/" + run_id + ".json"
     outcome_path = ("research/live-background/experimental/outcomes/" + day
-                    + "/" + os.environ["GITHUB_RUN_ID"] + "-900001.json.gz")
+                    + "/" + run_id + "-900001.json.gz")
     payload = lambda value: (json.dumps(value, ensure_ascii=False,
                                         separators=(",", ":")) + "\n").encode()
     shadow_path = "research/shadow-analysis/" + day + "/" + run_id + ".json"
