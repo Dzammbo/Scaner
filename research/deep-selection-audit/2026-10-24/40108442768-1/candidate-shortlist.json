@@ -427,14 +427,16 @@
       "job": 120874275381,
       "at_utc": "2026-10-24T14:12:28Z",
       "failed_snapshot": "40094656909-100018",
-      "observed_error": "FileNotFoundError in save_capture.py after capture process exceeded worker 360-second limit"
+      "observed_error": "FileNotFoundError in save_capture.py for missing current snapshot; exception aborts worker",
+      "inference": "Likely capture timeout: interval from cycle checkout to saver traceback is approximately 360 seconds, matching worker capture timeout. TimeoutExpired itself is not logged."
     },
     {
       "run": 40101478818,
       "job": 120894364390,
       "at_utc": "2026-10-24T15:54:34Z",
       "failed_snapshot": "40101478818-100019",
-      "observed_error": "FileNotFoundError in save_capture.py after capture process exceeded worker 360-second limit"
+      "observed_error": "FileNotFoundError in save_capture.py for missing current snapshot; exception aborts worker",
+      "inference": "Likely capture timeout: interval from cycle checkout to saver traceback is approximately 360 seconds, matching worker capture timeout. TimeoutExpired itself is not logged."
     }
   ]
 }
