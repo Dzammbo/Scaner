@@ -75,6 +75,8 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
         points.append(dict(event_id=eid, score=e['score'], minute=minute, market=q,
                            observed_at_utc=clock, quote_observed_at_utc=e.get('lab_odds_observed_at_utc'),
                            decision=decision, sports_position=strong.get(eid),
+                           selection_confidence=confidence,
+                           deep_missing_reasons=(e.get('research_detail_coverage') or {}).get('missing_reasons', []),
                            fresh_sports_features=e.get('research_sports_features') if deep else None,
                            source_snapshot_id=snapshot['snapshot_id']))
         if eid in rows:
