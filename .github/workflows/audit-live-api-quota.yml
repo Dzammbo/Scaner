@@ -1,0 +1,25 @@
+name: Audit unified Live API quota and coverage
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/audit_live_api_quota.py'
+      - '.github/workflows/audit-live-api-quota.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+      - env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+        run: python3 control/.github/scripts/audit_live_api_quota.py
