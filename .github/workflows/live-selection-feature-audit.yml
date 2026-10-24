@@ -1,0 +1,38 @@
+name: Audit selection features and original Top3 Top5 Top10 decisions
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/selection_feature_audit.py'
+      - '.github/workflows/live-selection-feature-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: explicit-selection-feature-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+      - name: Install fixed analytical dependencies
+        run: python3 -m pip install numpy==2.2.6 scipy==1.15.3
+      - name: Reconstruct original decisions and validate feature families on later days
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          CONTROL_ROOT: ${{ github.workspace }}/control
+        run: python3 control/.github/scripts/selection_feature_audit.py
