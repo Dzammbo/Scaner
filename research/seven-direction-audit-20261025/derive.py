@@ -10,6 +10,7 @@ quality=collections.Counter()
 for r in rows:
     bs=[b for b in hist[r['event_id']] if b['ts']<=r['board_ts'] and b.get('available_ts',b['ts'])<=r['ts']+1]
     changes=[];reds=[]
+    path_consistent=all(all(b['score'][j]>=a['score'][j] for j in (0,1)) for a,b in zip(bs,bs[1:]))
     for a,b in zip(bs,bs[1:]):
         gap=(b['ts']-a['ts'])/60
         if not 0<gap<=12 or not 0<=b['minute']-a['minute']<=12:continue
@@ -37,9 +38,13 @@ for r in rows:
     early=next(((a,b) for a,b,d in changes if sum(a['score'])==0 and b['minute']<=20),None)
     late=next(((a,b) for a,b,d in changes if sum(a['score'])==0 and a['minute']>=30),None)
     r['first_goal_seen_early']=bool(early);r['first_goal_seen_late']=bool(late)
-    r['known_drought15']=any(b['score']==r['score'] and r['board_ts']-b['ts']>=15*60 and r['minute']-b['minute']>=15 for b in bs)
+    r['known_drought15']=any(b['score']==r['score'] and r['board_ts']-b['ts']>=15*60 and r['minute']-b['minute']>=15 and all(c['score']==r['score'] for c in bs if c['ts']>=b['ts']) for b in bs)
     currentmargin=r['score'][0]-r['score'][1]
     r['observed_lead_reversed']=currentmargin!=0 and any((b['score'][0]-b['score'][1])*currentmargin<0 for b in bs)
+    if not path_consistent:
+        quality['observed_score_correction_before_entry']+=1
+        r['observed_goal_age']=None;r['goal_reaction']=None;r['recent_equalizer']=False;r['two_goals_observed_recent']=False
+        r['first_goal_seen_early']=False;r['first_goal_seen_late']=False;r['known_drought15']=False;r['observed_lead_reversed']=False
     pre=r.get('prematch_1x2');r['favorite_side']=None;r['favorite_probability']=None;r['favorite_state']=None
     if pre:
         side=0 if pre[0]>=pre[2] else 1;p=pre[0] if side==0 else pre[2]
