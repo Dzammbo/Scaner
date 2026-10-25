@@ -48,6 +48,61 @@ def order_pockets(report, metric):
     return report
 
 
+def previous_statistics_report(root):
+    """The latest successful explicit statistics request, across Moscow dates."""
+    reports = root / 'research/live-results-refresh'
+    previous = None
+    for path in reports.glob('*/*.json'):
+        try:
+            with path.open() as source:
+                candidate = json.load(source)
+            generated = dt.datetime.fromisoformat(candidate['generated_at_utc'])
+            if generated.tzinfo is None:
+                continue
+            if previous is None or generated > previous[0]:
+                previous = (generated, path, candidate)
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    return previous
+
+
+def add_pocket_dynamics(report, previous):
+    """Compare identically named frozen ledgers with the preceding user refresh."""
+    anchor = previous[2] if previous else {}
+    report['pocket_dynamics_reference'] = (
+        dict(generated_at_utc=anchor['generated_at_utc'],
+             report_path=previous[1].relative_to(previous[1].parents[3]).as_posix())
+        if previous else None)
+    for series in ('independent_pockets', 'under_pockets', 'distinct_pockets'):
+        current_series = report.get(series) or {}
+        old_series = anchor.get(series) or {}
+        if current_series.get('status') == 'error' or not isinstance(current_series.get('pockets'), dict):
+            continue
+        same_catalog = (old_series.get('id') == current_series.get('id') and
+                        old_series.get('version') == current_series.get('version') and
+                        old_series.get('catalog_sha256') == current_series.get('catalog_sha256'))
+        old_rows = (old_series.get('pockets') or {}) if same_catalog else {}
+        for pocket_id, row in current_series['pockets'].items():
+            old = old_rows.get(pocket_id)
+            # New TB series uses the same robust metric as the existing TB series.
+            metric = ('without_top3' if series == 'independent_pockets' or
+                      (series == 'distinct_pockets' and row.get('market') == 'over')
+                      else 'roi')
+            def value(item):
+                return ((item.get('without_top3') or {}).get('roi') if metric == 'without_top3'
+                        else item.get('roi'))
+            current_roi = value(row)
+            old_roi = value(old) if old else None
+            delta = round((current_roi - old_roi) * 100, 4) if current_roi is not None and old_roi is not None else None
+            row['dynamics'] = dict(metric='without_top3_roi' if metric == 'without_top3' else 'roi',
+                                   previous_n=old.get('n') if old else None,
+                                   new_closed=row.get('n', 0) - old.get('n', 0) if old else None,
+                                   previous_roi=old_roi,
+                                   delta_pp=delta,
+                                   trend=('improving' if delta > 0 else 'worsening' if delta < 0
+                                          else 'unchanged') if delta is not None else 'insufficient_data')
+
+
 def groups_for_epoch(receipts, config):
     groups = collections.defaultdict(dict)
     duplicates = 0
@@ -262,6 +317,7 @@ def main():
         report['distinct_pockets'] = distinct_pockets.report(root, merged)
     except Exception as exc:
         report['distinct_pockets'] = dict(status='error', error_type=type(exc).__name__)
+    add_pocket_dynamics(report, previous_statistics_report(root))
     try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)
