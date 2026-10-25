@@ -1,0 +1,346 @@
+{
+  "coverage": {
+    "snapshots": 1802,
+    "board_events": 72461,
+    "window_observations": 61098,
+    "observations_with_raw_total_arrays": 447,
+    "observations_with_verified_alternate_arrays": 405,
+    "standalone_prematch_files": 1,
+    "points_with_raw_odds": 49266,
+    "points_with_verified_prematch_total": 49227,
+    "points_with_verified_prematch_1x2": 49209
+  },
+  "issues": {
+    "no_valid_main_line": 11080,
+    "quote_clock_invalid": 287,
+    "snapshot_no_clock": 24,
+    "conflicting_final_points": 33,
+    "score_exceeds_final": 14
+  },
+  "points": 49731,
+  "events": 3961,
+  "closed_events": 3628,
+  "first": 1792017018.053545,
+  "last": 1792957126.886401,
+  "by_day": {
+    "2026-10-15": 175,
+    "2026-10-16": 70,
+    "2026-10-17": 106,
+    "2026-10-18": 221,
+    "2026-10-19": 2467,
+    "2026-10-20": 4153,
+    "2026-10-21": 5254,
+    "2026-10-22": 3931,
+    "2026-10-23": 7381,
+    "2026-10-24": 13847,
+    "2026-10-25": 12126
+  },
+  "league_aliases": {},
+  "prematch_examples": [
+    {
+      "path": "snapshots/prematch-latest.json",
+      "keys": [
+        "generated_at_utc",
+        "window_end_utc",
+        "source",
+        "upcoming_in_window_count",
+        "with_totals_count",
+        "events"
+      ],
+      "sample": "{'generated_at_utc': '2026-10-15T17:57:13.525286+00:00', 'window_end_utc': '2026-10-15T20:57:03+00:00', 'source': 'BetsAPI / Bet365', 'upcoming_in_window_count': 41, 'with_totals_count': 38, 'events': [{'event_id': '13293080', 'start_utc': '2026-10-15T18:15:00+00:00', 'league': 'Norway Interkretsserie U19', 'country': 'no', 'home': 'Klofta U19', 'away': 'Raelingen U19', 'detail_ok': True, 'totals': [{'line': 4.25, 'over': 1.825, 'under': 1.975, 'add_time': 1791946809}], 'one_x_two': {'home': 2.55, 'draw': 4.333, 'away': 2.05, 'add_time': 1792086791}}, {'event_id': '13292905', 'start_utc': '2026-10-15T18:15:00+00:00', 'league': 'Norway Interkretsserie U19', 'country': 'no', 'home': 'Ready U19"
+    }
+  ],
+  "alternate_examples": [
+    {
+      "path": "snapshots/live/38570273381-1.json",
+      "totals": [
+        {
+          "line": 1.5,
+          "over": 1.575,
+          "under": 2.25,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 1.75,
+          "over": 1.85,
+          "under": 1.95,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.0,
+          "over": 2.4,
+          "under": 1.5,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.25,
+          "over": 2.95,
+          "under": 1.35,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.5,
+          "over": 3.5,
+          "under": 1.2857,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.5,
+          "over": 8.5,
+          "under": 1.05,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        }
+      ],
+      "full_market_ok": true,
+      "lag": 2.4787590503692627
+    },
+    {
+      "path": "snapshots/live/38571307563-1.json",
+      "totals": [
+        {
+          "line": 0.5,
+          "over": 1.0714,
+          "under": 7.5,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 1.5,
+          "over": 1.3636,
+          "under": 3.0,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 1.75,
+          "over": 1.5,
+          "under": 2.5,
+          "market": "Goal Line (0-0)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.0,
+          "over": 1.675,
+          "under": 2.15,
+          "market": "Goal Line (0-0)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.25,
+          "over": 1.975,
+          "under": 1.825,
+          "market": "Goal Line (0-0)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.5,
+          "over": 2.25,
+          "under": 1.625,
+          "market": "Goal Line (0-0)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.75,
+          "over": 2.6,
+          "under": 1.475,
+          "market": "Goal Line (0-0)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.5,
+          "over": 3.75,
+          "under": 1.25,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 4.5,
+          "over": 7.5,
+          "under": 1.0714,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 5.5,
+          "over": 11.0,
+          "under": 1.02,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        }
+      ],
+      "full_market_ok": true,
+      "lag": 12.923985958099365
+    },
+    {
+      "path": "snapshots/live/38571307563-1.json",
+      "totals": [
+        {
+          "line": 1.5,
+          "over": 1.1,
+          "under": 6.5,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.5,
+          "over": 1.525,
+          "under": 2.35,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.75,
+          "over": 1.675,
+          "under": 2.05,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.0,
+          "over": 1.95,
+          "under": 1.85,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.25,
+          "over": 2.2,
+          "under": 1.6,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.5,
+          "over": 2.475,
+          "under": 1.475,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 4.5,
+          "over": 4.5,
+          "under": 1.1667,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 5.5,
+          "over": 8.5,
+          "under": 1.05,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 6.5,
+          "over": 13.0,
+          "under": 1.0125,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        }
+      ],
+      "full_market_ok": true,
+      "lag": 12.923985958099365
+    },
+    {
+      "path": "snapshots/live/38571307563-1.json",
+      "totals": [
+        {
+          "line": 1.5,
+          "over": 1.2222,
+          "under": 4.0,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.0,
+          "over": 1.375,
+          "under": 2.825,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.25,
+          "over": 1.7,
+          "under": 2.0,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.5,
+          "over": 2.025,
+          "under": 1.775,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 2.75,
+          "over": 2.3,
+          "under": 1.55,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.0,
+          "over": 3.075,
+          "under": 1.325,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 3.5,
+          "over": 4.0,
+          "under": 1.2222,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 4.5,
+          "over": 8.0,
+          "under": 1.0625,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 5.5,
+          "over": 13.0,
+          "under": 1.0125,
+          "market": "Alternative Match Goals",
+          "source": "bet365_full_markets"
+        }
+      ],
+      "full_market_ok": true,
+      "lag": 12.923985958099365
+    },
+    {
+      "path": "snapshots/live/38571307563-1.json",
+      "totals": [
+        {
+          "line": 4.0,
+          "over": 1.875,
+          "under": 1.925,
+          "market": "Goal Line (0-1)",
+          "source": "bet365_full_markets"
+        },
+        {
+          "line": 4.5,
+          "over": 2.2,
+          "under": 1.6154,
+          "market": "Match Goals",
+          "source": "bet365_full_markets"
+        }
+      ],
+      "full_market_ok": true,
+      "lag": 12.923985958099365
+    }
+  ],
+  "source_heads": {
+    "main": "e59a70dfb7d689505b521d06f1572a65706757e5",
+    "runtime": "d85963b1fbd95fd6d9c0c596275b60c4b56d1ef7"
+  }
+}
