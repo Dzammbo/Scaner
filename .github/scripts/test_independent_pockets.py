@@ -68,8 +68,12 @@ class IndependentTests(unittest.TestCase):
   from unittest.mock import patch
   with patch('pathlib.Path.cwd',return_value=self.root):
    files=save_capture.prepare_files(self.root/'missing','999-1','.json.gz','2026-10-24','background_experimental')
-  self.assertEqual(len(files),3)
-  for b in files.values():self.assertTrue(json.loads(gzip.decompress(b))['failed'])
+  self.assertGreaterEqual(len(files),3)
+  for path,b in files.items():
+   record=json.loads(gzip.decompress(b))
+   if 'pocket-receipts' in str(path):
+    self.assertEqual((record.get('under_pockets') or record.get('independent_pockets'))['status'],'error')
+   else:self.assertTrue(record['failed'])
  def test_all_twenty_can_receive_their_own_matching_entry(self):
   cfg,_=p.config(self.root)
   for i,pocket in enumerate(cfg['pockets']):

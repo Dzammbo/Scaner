@@ -1,0 +1,60 @@
+{
+  "enabled": true,
+  "id": "independent-5-under-forward-20261025-v1",
+  "version": "independent-under-pockets-v1-20261025",
+  "activation": "first_successful_capture_after_install",
+  "entry_policy": "first_qualifying_exact_under_quote_per_pocket_event",
+  "pool": "all_observed_nonvirtual_football_with_known_score_and_original_exact_under_quote",
+  "minute_window": [
+    5,
+    89
+  ],
+  "rank_limit": null,
+  "parent_top5_required": false,
+  "market": "provider_primary_full_time_total_original_line_and_under_price",
+  "stake_units": 1,
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {
+      "id": "tm_draw_half_goal",
+      "name": "Ничья + линия ТМ на 0,5 выше суммы голов",
+      "condition": "exact_draw_line_gap_0_5",
+      "historical_closed_n": 741,
+      "historical_roi": 0.043130904183535754,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tm_zero_70_79",
+      "name": "0:0 на 70–79 минуте",
+      "condition": "score_zero_minute_70_79",
+      "historical_closed_n": 256,
+      "historical_roi": 0.074072265625,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tm_red_price_ge2",
+      "name": "Удаление + коэффициент ТМ не ниже 2",
+      "condition": "red_cards_any_under_price_ge2",
+      "historical_closed_n": 173,
+      "historical_roi": 0.1051300578034682,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tm_xg_ge2_80_89",
+      "name": "80–89 минута + xG не ниже 2",
+      "condition": "minute_80_89_total_xg_ge2",
+      "historical_closed_n": 237,
+      "historical_roi": 0.04132911392405063,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tm_finishing10_ge4_45_59",
+      "name": "45–59 минута + 4 завершения за 10 минут",
+      "condition": "minute_45_59_finishing_10_ge4",
+      "historical_closed_n": 329,
+      "historical_roi": 0.02750759878419453,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    }
+  ]
+}
