@@ -82,6 +82,13 @@ def add_pocket_dynamics(report, previous, root=None):
         same_catalog = (old_series.get('id') == current_series.get('id') and
                         old_series.get('version') == current_series.get('version') and
                         old_series.get('catalog_sha256') == current_series.get('catalog_sha256'))
+        # A first continuity report may have been produced before the dynamics
+        # anchor was fixed. Do not inherit its empty comparisons as a baseline.
+        if same_catalog and current_series.get('continuity_backfilled'):
+            old_rows_for_anchor = (old_series.get('pockets') or {}).values()
+            same_catalog = (old_series.get('continuity_backfilled') is True and
+                            any(((row.get('dynamics') or {}).get('previous_n') or 0) > 0
+                                for row in old_rows_for_anchor))
         if not same_catalog and root is not None and current_series.get('continuity_backfilled'):
             candidates = []
             for path in (root / 'research/live-results-refresh').glob('*/*.json'):
