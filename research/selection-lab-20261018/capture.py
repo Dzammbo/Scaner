@@ -386,6 +386,9 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('under_pockets') is not None and not receipt.get('failed'):
   records.append(('under-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    under_pockets=receipt['under_pockets'])))
+ if receipt.get('distinct_pockets') is not None and not receipt.get('failed'):
+  records.append(('distinct-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   distinct_pockets=receipt['distinct_pockets'])))
  if receipt.get('shadow_universe') is not None and not receipt.get('failed'):
   records.append(('shadow-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    shadow_universe=receipt['shadow_universe'])))
@@ -534,6 +537,20 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
       parent_selection_changed=False)
     if under_result is not None:snapshot['under_pockets']=under_result
+   distinct_result=None
+   if unified:
+    import distinct_pockets
+    try:
+     distinct_result=distinct_pockets.evaluate(ROOT,snapshot,entry_outcomes)
+    except Exception as exc:
+     cfg_path=ROOT/distinct_pockets.CONFIG
+     cfg=distinct_pockets.read(cfg_path)if cfg_path.exists()else{}
+     distinct_result=dict(id=cfg.get('id','distinct-five-pockets-forward-20261025-v1'),
+      version=distinct_pockets.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      parent_selection_changed=False)
+    if distinct_result is not None:snapshot['distinct_pockets']=distinct_result
    shadow_result=None
    if unified:
     import shadow_universe
@@ -572,6 +589,7 @@ def main():
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
    if under_result is not None:receipt['under_pockets']=under_result
+   if distinct_result is not None:receipt['distinct_pockets']=distinct_result
    if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)

@@ -1,0 +1,58 @@
+{
+  "enabled": true,
+  "id": "distinct-five-pockets-forward-20261025-v1",
+  "version": "distinct-pockets-v1-20261025",
+  "activation": "first_successful_capture_after_deployment",
+  "pool": "all_observed_nonvirtual_football_with_exact_original_full_time_quote",
+  "parent_top5_required": false,
+  "entry_policy": "one_independent_first_signal_and_exact_delayed_entry_per_pocket_event",
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {
+      "id": "tb_45_59_lead2_exact2",
+      "name": "ТБ 45-59 минут, 2:0 или 0:2",
+      "market": "over",
+      "minute_window": [45, 59],
+      "conditions": ["lead2", "goals2"],
+      "delay_seconds": 0,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tb_45_59_outside_strong_price200_249_wait3",
+      "name": "ТБ 45-59 минут, вне сильного спорта, цена 2,00-2,49, ожидание 3 минуты",
+      "market": "over",
+      "minute_window": [45, 59],
+      "conditions": ["outside_strong", "over_price200_249"],
+      "delay_seconds": 180,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tb_5_29_goals2_quarter",
+      "name": "ТБ 5-29 минут, два гола и четвертная линия",
+      "market": "over",
+      "minute_window": [5, 29],
+      "conditions": ["goals2", "quarter_line"],
+      "delay_seconds": 0,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tb_45_49_goal1_gap125_150_wait5",
+      "name": "ТБ 45-49 минут, один гол и запас 1,25-1,50, ожидание 5 минут",
+      "market": "over",
+      "minute_window": [45, 49],
+      "conditions": ["goals1", "gap125_150"],
+      "delay_seconds": 300,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    },
+    {
+      "id": "tm_60_79_gap075_100_sot010_020_wait5",
+      "name": "ТМ 60-79 минут, запас 0,75-1,00 и створы 0,10-0,20 в минуту, ожидание 5 минут",
+      "market": "under",
+      "minute_window": [60, 79],
+      "conditions": ["gap075_100", "sot_rate_gt010_le020"],
+      "delay_seconds": 300,
+      "evidence_status": "retrospective_exploratory_not_proven"
+    }
+  ]
+}
