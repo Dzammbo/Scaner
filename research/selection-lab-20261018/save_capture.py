@@ -24,6 +24,19 @@ def prepare_files(prefix,sid,suffix,day,contour):
      id=d['id'],version=d['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),status='error',
      error_type='CaptureFailed',observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
      parent_selection_changed=False)))
+ distinct_path=prefix/'distinct-pocket-receipts'/(day or '')/(sid+suffix)
+ cfg=Path('.github/live-distinct-pockets.json')
+ if str(prefix)==str(Path('research/live-background/experimental')) and cfg.exists():
+  raw=cfg.read_bytes();data=json.loads(raw)
+  if data.get('enabled'):
+   if not receipt.get('failed') and distinct_path.exists():
+    files[distinct_path]=distinct_path.read_bytes()
+   else:
+    files[distinct_path]=encode(dict(contour=contour,snapshot_id=sid,distinct_pockets=dict(
+     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+     status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingDistinctJournal',
+     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     parent_selection_changed=False)))
  return files
 def main():
  sid=os.environ['LAB_CAPTURE_ID']

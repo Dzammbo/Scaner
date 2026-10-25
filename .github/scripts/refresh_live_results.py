@@ -258,6 +258,11 @@ def main():
     except Exception as exc:
         report['under_pockets'] = dict(status='error', error_type=type(exc).__name__)
     try:
+        import distinct_pockets
+        report['distinct_pockets'] = distinct_pockets.report(root, merged)
+    except Exception as exc:
+        report['distinct_pockets'] = dict(status='error', error_type=type(exc).__name__)
+    try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)
         shadow_rows, _, _, _ = shadow_universe.history(root)
