@@ -68,6 +68,18 @@ def prepare_files(prefix,sid,suffix,day,contour):
   files[shadow_path]=encode(dict(contour=contour,snapshot_id=sid,shadow_universe=dict(
    version='full-board-shadow-v1-20261024',status='error',error_type='CaptureFailed',
    observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),production_selection_changed=False)))
+ seven_path=prefix/'seven-direction-pocket-receipts'/(day or '')/(sid+suffix)
+ cfg=Path('.github/live-seven-direction-pockets.json')
+ if source_shadow_enabled(prefix) and cfg.exists():
+  raw=cfg.read_bytes();data=json.loads(raw)
+  if data.get('enabled'):
+   if not receipt.get('failed') and seven_path.exists():files[seven_path]=seven_path.read_bytes()
+   else:
+    files[seven_path]=encode(dict(contour=contour,snapshot_id=sid,seven_direction_pockets=dict(
+     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+     status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingSevenDirectionJournal',
+     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     parent_selection_changed=False)))
  return files
 
 def source_shadow_enabled(prefix):

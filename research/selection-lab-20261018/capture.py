@@ -386,6 +386,9 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('under_pockets') is not None and not receipt.get('failed'):
   records.append(('under-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    under_pockets=receipt['under_pockets'])))
+ if receipt.get('seven_direction_pockets') is not None and not receipt.get('failed'):
+  records.append(('seven-direction-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   seven_direction_pockets=receipt['seven_direction_pockets'])))
  if receipt.get('distinct_pockets') is not None and not receipt.get('failed'):
   records.append(('distinct-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    distinct_pockets=receipt['distinct_pockets'])))
@@ -518,7 +521,7 @@ def main():
      independent_result=independent_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
     except Exception as exc:
      cfg_path=ROOT/independent_pockets.CONFIG
-     independent_result=dict(id='independent-20-pockets-forward-20261024-v1',version=independent_pockets.VERSION,
+     independent_result=dict(id='independent-9-pockets-forward-20261026-v2',version=independent_pockets.VERSION,
       status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
@@ -531,7 +534,7 @@ def main():
     except Exception as exc:
      cfg_path=ROOT/under_pockets.CONFIG
      cfg=under_pockets.read(cfg_path)if cfg_path.exists()else{}
-     under_result=dict(id=cfg.get('id','independent-5-under-forward-20261025-v1'),
+     under_result=dict(id=cfg.get('id','independent-2-under-forward-20261026-v3'),
       version=under_pockets.VERSION,status='error',
       catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
@@ -545,7 +548,7 @@ def main():
     except Exception as exc:
      cfg_path=ROOT/distinct_pockets.CONFIG
      cfg=distinct_pockets.read(cfg_path)if cfg_path.exists()else{}
-     distinct_result=dict(id=cfg.get('id','distinct-five-pockets-forward-20261025-v1'),
+     distinct_result=dict(id=cfg.get('id','distinct-three-pockets-forward-20261026-v2'),
       version=distinct_pockets.VERSION,status='error',
       catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
@@ -560,6 +563,20 @@ def main():
      shadow_result=dict(version=shadow_universe.VERSION,status='error',
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,production_selection_changed=False)
     snapshot['shadow_universe']=shadow_result
+   seven_result=None
+   if unified:
+    import seven_direction_pockets
+    try:
+     seven_result=seven_direction_pockets.evaluate(ROOT,snapshot,entry_outcomes)
+    except Exception as exc:
+     cfg_path=ROOT/seven_direction_pockets.CONFIG
+     cfg=seven_direction_pockets.read(cfg_path)if cfg_path.exists()else{}
+     seven_result=dict(id=cfg.get('id','seven-direction-eight-forward-20261026-v1'),
+      version=seven_direction_pockets.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      parent_selection_changed=False)
+    if seven_result is not None:snapshot['seven_direction_pockets']=seven_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -590,6 +607,7 @@ def main():
    if independent_result is not None:receipt['independent_pockets']=independent_result
    if under_result is not None:receipt['under_pockets']=under_result
    if distinct_result is not None:receipt['distinct_pockets']=distinct_result
+   if seven_result is not None:receipt['seven_direction_pockets']=seven_result
    if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)

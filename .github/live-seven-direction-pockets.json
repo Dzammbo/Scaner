@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "id": "seven-direction-eight-forward-20261026-v1",
+  "version": "seven-direction-pockets-v1-20261026",
+  "activation": "first_successful_capture_after_deployment",
+  "pool": "all_observed_nonvirtual_football_with_original_exact_full_time_quote",
+  "entry_policy": "one_first_fresh_priced_entry_per_rule_and_event_after_exact_delay",
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {"id":"equalizer_under","name":"ТМ после сравнявшего гола на 45–59 минуте","market":"under","delay_seconds":0},
+    {"id":"same_total_one_goal_over","name":"ТБ при одном голе и неизменном прематчевом тотале","market":"over","delay_seconds":300},
+    {"id":"leader_goal_quarter_over","name":"ТБ после гола лидера на 45–59 минуте и четвертной линии","market":"over","delay_seconds":0},
+    {"id":"lead2_shift_up_over","name":"ТБ при преимуществе два гола и росте линии на 45–59 минуте","market":"over","delay_seconds":180},
+    {"id":"two_goals_shift_up_over","name":"ТБ при двух голах и росте линии на 30–44 минуте","market":"over","delay_seconds":180},
+    {"id":"shift_down_low_danger_over","name":"ТБ при снижении линии и редких опасных атаках на 45–69 минуте","market":"over","delay_seconds":300},
+    {"id":"draw_drought_under","name":"ТМ при ничьей и 15 минутах без изменения счёта","market":"under","delay_seconds":0},
+    {"id":"home_favorite_need4_over","name":"ТБ при лидерстве домашнего фаворита и четырёх нужных голах","market":"over","delay_seconds":0}
+  ]
+}

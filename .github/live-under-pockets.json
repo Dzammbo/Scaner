@@ -1,8 +1,8 @@
 {
   "enabled": true,
-  "id": "independent-5-under-forward-20261025-reset-v2",
-  "version": "independent-under-pockets-v2-20261025-reset",
-  "activation": "first_successful_capture_after_explicit_reset_20261025",
+  "id": "independent-2-under-forward-20261026-v3",
+  "version": "independent-under-pockets-v3-20261026",
+  "activation": "first_successful_capture_after_pruning",
   "entry_policy": "first_qualifying_exact_under_quote_per_pocket_event",
   "pool": "all_observed_nonvirtual_football_with_known_score_and_original_exact_under_quote",
   "minute_window": [
@@ -17,12 +17,6 @@
   "automatic_rule_changes": false,
   "pockets": [
     {
-      "id": "tm_draw_half_goal",
-      "name": "Ничья + линия ТМ на 0,5 выше суммы голов",
-      "condition": "exact_draw_line_gap_0_5",
-      "evidence_status": "retrospective_exploratory_not_proven"
-    },
-    {
       "id": "tm_zero_70_79",
       "name": "0:0 на 70–79 минуте",
       "condition": "score_zero_minute_70_79",
@@ -32,18 +26,6 @@
       "id": "tm_red_price_ge2",
       "name": "Удаление + коэффициент ТМ не ниже 2",
       "condition": "red_cards_any_under_price_ge2",
-      "evidence_status": "retrospective_exploratory_not_proven"
-    },
-    {
-      "id": "tm_xg_ge2_80_89",
-      "name": "80–89 минута + xG не ниже 2",
-      "condition": "minute_80_89_total_xg_ge2",
-      "evidence_status": "retrospective_exploratory_not_proven"
-    },
-    {
-      "id": "tm_finishing10_ge4_45_59",
-      "name": "45–59 минута + 4 завершения за 10 минут",
-      "condition": "minute_45_59_finishing_10_ge4",
       "evidence_status": "retrospective_exploratory_not_proven"
     }
   ]

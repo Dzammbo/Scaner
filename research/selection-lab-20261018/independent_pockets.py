@@ -1,7 +1,7 @@
-"""Twenty independent first-qualified-priced pocket ledgers, separate from parent Top5."""
+"""Nine independent first-qualified-priced pocket ledgers, separate from parent Top5."""
 import collections,copy,datetime as dt,gzip,hashlib,json,math,re
 from pathlib import Path
-VERSION='independent-pockets-v1-20261024'
+VERSION='independent-pockets-v2-20261026'
 CONFIG='.github/live-independent-pockets.json'
 MSK=dt.timezone(dt.timedelta(hours=3))
 def number(x):
@@ -15,7 +15,7 @@ def config(root):
  if not p.exists():return None,None
  b=p.read_bytes();d=json.loads(b)
  if not d.get('enabled'):return None,None
- if d.get('version')!=VERSION or len(d['pockets'])!=20 or len({p['id'] for p in d['pockets']})!=20:raise ValueError('Invalid independent catalog')
+ if d.get('version')!=VERSION or len(d['pockets'])!=9 or len({p['id'] for p in d['pockets']})!=9:raise ValueError('Invalid independent catalog')
  return d,hashlib.sha256(b).hexdigest()
 def features(e,q):
  def pair(k):
@@ -68,17 +68,6 @@ def summary(rows,outcomes,settle):
   result[key]=dict(selected=len(byid),n=n,unresolved=len(byid)-n,unit_profit=net,roi=net/n if n else None)
   if n>30:result[key]['without_top3']=dict(n=n-3,roi=math.fsum(sorted(values)[:-3])/(n-3))
  return result
-def finishing_slices(rows,outcomes,settle):
- result={}
- for key,byid in rows.items():
-  buckets=collections.defaultdict(dict)
-  for eid,entry in byid.items():
-   total=number(entry.get('fresh_finishing_5_total_at_entry'))
-   band='unknown' if total is None else 'four_plus' if total>=4 else 'zero_to_three'
-   buckets[band][eid]=entry
-  result[key]={name:summary({key:buckets[name]},outcomes,settle)[key]
-               for name in ('four_plus','zero_to_three','unknown')}
- return result
 def evaluate(root,snapshot,ordered,market_for_event,outcomes,settle):
  cfg,digest=config(root)
  if cfg is None:return None
@@ -105,7 +94,6 @@ def evaluate(root,snapshot,ordered,market_for_event,outcomes,settle):
     observed_at_utc=clock,entry_day_msk=dt.datetime.fromisoformat(clock.replace('Z','+00:00')).astimezone(MSK).date().isoformat(),
     source_snapshot_id=snapshot['snapshot_id'],version=VERSION,catalog_sha256=digest,
     features=f,home=e.get('home'),away=e.get('away'),league=e.get('league'),
-    fresh_finishing_5_total_at_entry=number((e.get('research_sports_features') or {}).get('finishing_5_total')),
     quality_confidence=copy.deepcopy(confidence),independent_of_parent_top5=True)
    rows[key][eid]=entry;choices[key].append(entry)
  return dict(id=cfg['id'],version=VERSION,status='active',catalog_sha256=digest,started_at_utc=started,
@@ -120,6 +108,4 @@ def report(root,outcomes,settle):
  return dict(id=cfg['id'],version=VERSION,status='active' if started else 'awaiting_first_successful_capture',
   started_at_utc=started,catalog_sha256=digest,capture_errors=errors,successful_captures=captures,
   pockets={p['id']:dict(name=p['name'],minute_window=p['minute_window'],conditions=p['conditions'],**summary({p['id']:rows[p['id']]},outcomes,settle)[p['id']]) for p in cfg['pockets']},
-  finishing_5_diagnostic=finishing_slices(rows,outcomes,settle),
-  finishing_5_rule='Four or more finishing attempts in the preceding five-minute window, on both known sides at the original pocket entry; missing or incomplete totals remain unknown. Diagnostic only, overlapping pockets are not a combined portfolio.',
   overlapping_groups=True,not_a_combined_portfolio=True,parent_selection_changed=False)

@@ -1,4 +1,4 @@
-"""Five frozen, independent, prospective under-total observation ledgers."""
+"""Two frozen, independent, prospective under-total observation ledgers."""
 import collections
 import datetime as dt
 import gzip
@@ -8,7 +8,7 @@ import math
 import re
 from pathlib import Path
 
-VERSION = 'independent-under-pockets-v2-20261025-reset'
+VERSION = 'independent-under-pockets-v3-20261026'
 CONFIG = '.github/live-under-pockets.json'
 JOURNAL = 'research/live-background/experimental/under-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
@@ -42,8 +42,8 @@ def config(root):
     cfg = json.loads(raw)
     if not cfg.get('enabled'):
         return None, None
-    if (cfg.get('version') != VERSION or len(cfg.get('pockets', [])) != 5
-            or len({p['id'] for p in cfg['pockets']}) != 5):
+    if (cfg.get('version') != VERSION or len(cfg.get('pockets', [])) != 2
+            or len({p['id'] for p in cfg['pockets']}) != 2):
         raise ValueError('Invalid frozen under pocket catalog')
     return cfg, hashlib.sha256(raw).hexdigest()
 
@@ -227,7 +227,7 @@ def archived_report(root, outcomes):
     cfg, _ = config(root)
     if cfg is None:
         return None
-    byid = {p['id']: {} for p in cfg['pockets']}
+    byid = {key: {} for key in ARCHIVE_LABELS.values()}
     conflicts = 0
     for row in entries:
         key = ARCHIVE_LABELS[row['pocket']]
@@ -269,5 +269,5 @@ def archived_report(root, outcomes):
     return dict(status='archived_observational_cohort_outcomes_refreshed',
                 original_archive='research/tm/observations-20261025/candidate-entries.json.gz',
                 fixed_entry_count=len(entries), conflicts=conflicts,
-                pockets={p['id']: dict(name=p['name'], **result[p['id']]) for p in cfg['pockets']},
+                pockets={key: dict(name=label, **result[key]) for label, key in ARCHIVE_LABELS.items()},
                 is_new_forward_series=False, overlapping_groups=True)

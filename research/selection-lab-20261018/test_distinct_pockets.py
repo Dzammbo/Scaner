@@ -48,34 +48,15 @@ class DistinctPocketTests(unittest.TestCase):
             path.write_bytes(gzip.compress(json.dumps(dict(distinct_pockets=result)).encode()))
         return result
 
-    def test_independent_first_signal_and_delayed_exact_price(self):
+    def test_retained_first_signal_and_delayed_exact_price(self):
         first = event('1', 46, '2-0', 3.25, 2.1)
         start = self.run_capture([first])
-        now_id = 'tb_45_59_lead2_exact2'
-        delayed_id = 'tb_45_59_outside_strong_price200_249_wait3'
-        self.assertEqual(len(start['choices'][now_id]), 1)
-        self.assertEqual(start['choices'][delayed_id], [])
-        self.assertEqual(len(start['triggers'][delayed_id]), 1)
-        self.assertEqual(self.run_capture([event('1', 48)], minutes=2)['choices'][delayed_id], [])
-        later = self.run_capture([event('1', 49, line=3.0, over=2.4)], minutes=3)
-        entry = later['choices'][delayed_id][0]
-        self.assertEqual((entry['market']['line'], entry['market']['price']), (3.0, 2.4))
-        self.assertEqual(entry['trigger']['source_snapshot_id'], '999-1')
-        self.assertEqual(self.run_capture([event('1', 50)], minutes=4)['choices'][delayed_id], [])
-
-    def test_under_wait_and_score_change_cancel(self):
-        under_id = 'tm_60_79_gap075_100_sot010_020_wait5'
-        first = event('2', 65, '1-1', 3.0, sot=(5, 5))
-        result = self.run_capture([first])
-        self.assertEqual(result['choices'][under_id], [])
-        self.assertEqual(len(result['triggers'][under_id]), 1)
-        changed = self.run_capture([event('2', 71, '2-1', 4.0, sot=(6, 5))], minutes=6)
-        self.assertEqual(changed['choices'][under_id], [])
-        # Another match retains its original trigger and enters only at a later quote.
-        self.run_capture([event('3', 65, '1-1', 3.0, sot=(5, 5))], minutes=10)
-        entered = self.run_capture([event('3', 70, '1-1', 3.0, sot=(5, 5))], minutes=15)
-        self.assertEqual(len(entered['choices'][under_id]), 1)
-        self.assertEqual(entered['choices'][under_id][0]['side'], 'under')
+        self.assertEqual(len(start['choices']['tb_45_59_lead2_exact2']), 1)
+        delayed = event('2', 46, '1-0', 2.25, 2.1)
+        self.run_capture([delayed], minutes=2)
+        self.assertEqual(self.run_capture([event('2', 49, '1-0', 2.25, 2.1)], minutes=4)['choices']['tb_45_49_goal1_gap125_150_wait5'], [])
+        entered = self.run_capture([event('2', 49, '1-0', 2.25, 2.1)], minutes=7)
+        self.assertEqual(len(entered['choices']['tb_45_49_goal1_gap125_150_wait5']), 1)
 
     def test_quarter_settlement_and_report_from_new_series_only(self):
         self.run_capture([event('4', 20, '2-0', 3.25)])
@@ -87,7 +68,7 @@ class DistinctPocketTests(unittest.TestCase):
         self.assertIsNone(p.settle(entry, dict(settled=True, final=[4, 0], result_conflict=True)))
         report = p.report(self.root, {'4': dict(settled=True, final=[4, 0])})
         self.assertEqual(report['pockets']['tb_5_29_goals2_quarter']['n'], 1)
-        self.assertEqual(report['pockets']['tm_60_79_gap075_100_sot010_020_wait5']['n'], 0)
+        self.assertEqual(len(report['pockets']), 3)
 
     def test_catalog_mutation_fails_closed(self):
         self.run_capture([event('5', 20)])

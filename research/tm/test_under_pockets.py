@@ -38,40 +38,21 @@ class UnderPocketsTests(unittest.TestCase):
         dest = self.root / p.JOURNAL / '2026-10-25' / (self.snapshot['snapshot_id'] + '.json.gz')
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(gzip.compress(json.dumps(dict(under_pockets=result)).encode()))
-    def test_all_five_get_their_own_entry_without_parent_gate(self):
-        a = event('1')
-        a['board_stats']['redcards'] = [1, 0]
-        a['board_stats']['xg'] = [1., 1.]
-        a['events_main_total']['under'] = 2.
-        b = event('2', minute=50, score='1-0', line=3.5)
-        b['research_sports_features']['finishing_10_total'] = 4
-        original = copy.deepcopy([a, b])
-        result = self.evaluate([a, b])
-        self.assertEqual([len(v) for v in result['choices'].values()], [1, 0, 1, 0, 1])
-        # The xG pocket needs 80-89; the 0:0 pocket needs exactly 70-79.
-        a['minute'] = 83
-        b['minute'] = 72
-        b['score'] = b['events_main_total']['quote_score'] = '0-0'
-        self.snapshot['snapshot_id'] = '900-2'
-        self.save(result)
-        result2 = self.evaluate([a, b])
-        self.assertEqual(len(result2['choices']['tm_xg_ge2_80_89']), 1)
-        self.assertEqual(len(result2['choices']['tm_zero_70_79']), 1)
-        self.assertEqual(result2['choices']['tm_draw_half_goal'], [])
-        self.assertNotEqual([a, b], original)
+    def test_two_retained_pockets_collect_independently(self):
+        a=event('1',minute=75,score='0-0',line=1.5)
+        a['board_stats']['redcards']=[1,0]
+        a['events_main_total']['under']=2.1
+        result=self.evaluate([a])
+        self.assertEqual(set(result['choices']), {'tm_zero_70_79','tm_red_price_ge2'})
+        self.assertEqual([len(v) for v in result['choices'].values()], [1,1])
     def test_first_matching_point_only_per_pocket_after_rejection(self):
-        a = event('1', minute=65, score='0-0', line=1.5)
+        a=event('1',minute=65,score='0-0',line=.5)
         self.save(self.evaluate([a]))
-        a['minute'] = 72
-        a['events_main_total']['line'] = .5
-        self.snapshot['snapshot_id'] = '900-2'
-        r = self.evaluate([a])
-        self.assertEqual(len(r['choices']['tm_draw_half_goal']), 1)
-        self.assertEqual(len(r['choices']['tm_zero_70_79']), 1)
-        self.save(r)
-        self.snapshot['snapshot_id'] = '900-3'
-        r = self.evaluate([a])
-        self.assertFalse(any(r['choices'].values()))
+        a['minute']=72;self.snapshot['snapshot_id']='900-2'
+        r=self.evaluate([a])
+        self.assertEqual(len(r['choices']['tm_zero_70_79']),1)
+        self.save(r);self.snapshot['snapshot_id']='900-3'
+        self.assertFalse(any(self.evaluate([a])['choices'].values()))
     def test_exact_under_and_quarter_settlement(self):
         a = event('1', score='1-0', line=2.25, under=2.2)
         self.assertEqual(p.exact_under(a, self.snapshot)[0]['price'], 2.2)
@@ -96,8 +77,8 @@ class UnderPocketsTests(unittest.TestCase):
         self.assertEqual(len(files),4)
         q=p.report(self.root,{'1':dict(settled=True,final=[1,1])})
         self.assertEqual(q['successful_captures'],1)
-        self.assertEqual(q['pockets']['tm_draw_half_goal']['n'],1)
-        self.assertAlmostEqual(q['pockets']['tm_draw_half_goal']['roi'],.8)
+        self.assertEqual(q['pockets']['tm_red_price_ge2']['n'],0)
+        self.assertEqual(q['pockets']['tm_red_price_ge2']['roi'],None)
     def test_frozen_historical_entries_only_refresh_outcomes(self):
         path=self.root/'research/tm/observations-20261025/candidate-entries.json.gz'
         path.parent.mkdir(parents=True)
@@ -119,10 +100,10 @@ class UnderPocketsTests(unittest.TestCase):
         old['version'] = 'independent-under-pockets-v1-20261025'
         self.save(old)
         self.assertEqual(p.report(self.root, {})['successful_captures'], 0)
-        self.assertEqual(p.report(self.root, {})['pockets']['tm_draw_half_goal']['selected'], 0)
+        self.assertEqual(p.report(self.root, {})['pockets']['tm_zero_70_79']['selected'], 0)
         self.snapshot['snapshot_id'] = '900-2'
         fresh = self.evaluate([event('1')])
-        self.assertEqual(len(fresh['choices']['tm_draw_half_goal']), 1)
+        self.assertEqual(len(fresh['choices']['tm_red_price_ge2']), 0)
 
 
 if __name__=='__main__':unittest.main()

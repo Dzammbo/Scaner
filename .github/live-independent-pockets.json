@@ -1,8 +1,8 @@
 {
   "enabled": true,
-  "id": "independent-20-pockets-forward-20261024-v1",
-  "version": "independent-pockets-v1-20261024",
-  "activation": "first_successful_capture",
+  "id": "independent-9-pockets-forward-20261026-v2",
+  "version": "independent-pockets-v2-20261026",
+  "activation": "first_successful_capture_after_pruning",
   "entry_policy": "first_strong_qualified_exact_priced_point_per_pocket_event",
   "pool": "all_fresh_enriched_strong_v8_events",
   "rank_limit": null,
@@ -21,19 +21,6 @@
       "name": "Створы 0,10–0,20 в минуту",
       "conditions": [
         "sot_medium"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "historical_positive_five_pockets_20261019",
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "provider_main_minute_46_60",
-      "name": "Вход 46–60 минут",
-      "conditions": [
-        "minute46_60"
       ],
       "minute_window": [
         8,
@@ -82,54 +69,6 @@
       "evidence_status": "historical_positive_not_confirmed"
     },
     {
-      "id": "combo_sot_minute",
-      "name": "Темп створов + 46–60 минут",
-      "conditions": [
-        "sot_medium",
-        "minute46_60"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 48,
-      "historical_roi": 0.16223958333333335,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "combo_sot_need2",
-      "name": "Темп створов + нужно ≤2 голов",
-      "conditions": [
-        "sot_medium",
-        "need_le2"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 56,
-      "historical_roi": 0.14579464285714286,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "combo_minute_need2",
-      "name": "46–60 минут + нужно ≤2 голов",
-      "conditions": [
-        "minute46_60",
-        "need_le2"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 85,
-      "historical_roi": 0.10544117647058823,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
       "id": "combo_sot_score1",
       "name": "Темп створов + ровно один гол",
       "conditions": [
@@ -143,38 +82,6 @@
       "source": "research/selection-lab-20261018/combinations-baseline.json",
       "historical_n": 49,
       "historical_roi": 0.21764285714285714,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "combo_score1_need2",
-      "name": "Ровно один гол + нужно ≤2 голов",
-      "conditions": [
-        "score_one",
-        "need_le2"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 40,
-      "historical_roi": 0.2613,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "combo_minute_score1",
-      "name": "46–60 минут + ровно один гол",
-      "conditions": [
-        "minute46_60",
-        "score_one"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 37,
-      "historical_roi": 0.17229729729729729,
       "evidence_status": "historical_positive_not_confirmed"
     },
     {
@@ -210,40 +117,6 @@
       "evidence_status": "historical_positive_not_confirmed"
     },
     {
-      "id": "combo_sot_minute_need2",
-      "name": "Темп створов + 46–60 минут + нужно ≤2 голов",
-      "conditions": [
-        "sot_medium",
-        "minute46_60",
-        "need_le2"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 39,
-      "historical_roi": 0.196474358974359,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "combo_score1_minute_need2",
-      "name": "Ровно один гол + 46–60 минут + нужно ≤2 голов",
-      "conditions": [
-        "score_one",
-        "minute46_60",
-        "need_le2"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/selection-lab-20261018/combinations-baseline.json",
-      "historical_n": 31,
-      "historical_roi": 0.19677419354838707,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
       "id": "need_two_low_sot",
       "name": "Нужно ровно два гола + створы менее 0,10 в минуту",
       "conditions": [
@@ -256,38 +129,6 @@
       "source": "research/sot-comparison/2026-10-22/sot-comparison.json",
       "historical_n": 573,
       "historical_roi": 0.05015270506108202,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "moderate_danger_no_sot",
-      "name": "Опасные атаки 1–2 в минуту + хотя бы одна команда без створов",
-      "conditions": [
-        "danger_medium",
-        "not_both_sot"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/deep-selection-audit/2026-10-24/40108442768-1/candidate-shortlist.json",
-      "historical_n": 127,
-      "historical_roi": 0.14438976377952756,
-      "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "moderate_danger_quarter",
-      "name": "Опасные атаки 1–2 в минуту + четвертная линия",
-      "conditions": [
-        "danger_medium",
-        "quarter"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/deep-selection-audit/2026-10-24/40108442768-1/candidate-shortlist.json",
-      "historical_n": 121,
-      "historical_roi": 0.12004132231404957,
       "evidence_status": "historical_positive_not_confirmed"
     },
     {
@@ -304,23 +145,7 @@
       "historical_n": 85,
       "historical_roi": 0.12,
       "evidence_status": "historical_positive_not_confirmed"
-    },
-    {
-      "id": "moderate_danger_no_sot_profile",
-      "name": "Опасные атаки 1–2 + команда без створов + профиль 0,90–1,10",
-      "conditions": [
-        "danger_medium",
-        "not_both_sot",
-        "profile09_11"
-      ],
-      "minute_window": [
-        8,
-        60
-      ],
-      "source": "research/deep-selection-audit/2026-10-24/40108442768-1/candidate-shortlist.json",
-      "historical_n": 85,
-      "historical_roi": 0.2327941176470588,
-      "evidence_status": "historical_positive_not_confirmed"
     }
-  ]
+  ],
+  "historical_results_in_new_series": false
 }
