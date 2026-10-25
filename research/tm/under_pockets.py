@@ -10,6 +10,8 @@ from pathlib import Path
 
 VERSION = 'independent-under-pockets-v3-20261026'
 CONFIG = '.github/live-under-pockets.json'
+PREDECESSOR_ID = 'independent-5-under-forward-20261025-reset-v2'
+PREDECESSOR_SHA = '0214852186a8297a9fc34cb8a46f1d9be4590fbbc304c989af2ff6b6281f8955'
 JOURNAL = 'research/live-background/experimental/under-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
@@ -103,9 +105,10 @@ def history(root, cfg, digest):
     errors = captures = 0
     for path in sorted((Path(root) / JOURNAL).rglob('*.json*')):
         item = (read(path).get('under_pockets') or {})
-        if item.get('id') != cfg['id']:
+        old = item.get('id') == PREDECESSOR_ID
+        if not old and item.get('id') != cfg['id']:
             continue
-        if item.get('catalog_sha256') != digest:
+        if item.get('catalog_sha256') != (PREDECESSOR_SHA if old else digest):
             raise ValueError('Frozen under catalog changed during series')
         if item.get('status') == 'error':
             errors += 1
@@ -116,10 +119,14 @@ def history(root, cfg, digest):
         started = min(started or item['started_at_utc'], item['started_at_utc'])
         for key, entries in item['choices'].items():
             if key not in rows:
+                if old:
+                    continue
                 raise ValueError('Unknown under ledger')
             for entry in entries:
                 eid = str(entry['event_id'])
                 if eid in rows[key]:
+                    if not old and rows[key][eid].get('catalog_sha256') == PREDECESSOR_SHA:
+                        continue
                     raise ValueError('Duplicate under pocket/event entry')
                 rows[key][eid] = entry
     return rows, started, errors, captures
@@ -204,6 +211,8 @@ def report(root, outcomes):
                 status='active' if started else 'awaiting_first_successful_capture',
                 started_at_utc=started, catalog_sha256=digest,
                 successful_captures=captures, capture_errors=errors,
+                continuity_backfilled=True, predecessor_id=PREDECESSOR_ID,
+                predecessor_catalog_sha256=PREDECESSOR_SHA,
                 pockets={p['id']: dict(name=p['name'], **summary({p['id']: rows[p['id']]}, outcomes)[p['id']])
                          for p in cfg['pockets']},
                 overlapping_groups=True, not_a_combined_portfolio=True,

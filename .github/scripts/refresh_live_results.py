@@ -66,7 +66,7 @@ def previous_statistics_report(root):
     return previous
 
 
-def add_pocket_dynamics(report, previous):
+def add_pocket_dynamics(report, previous, root=None):
     """Compare identically named frozen ledgers with the preceding user refresh."""
     anchor = previous[2] if previous else {}
     report['pocket_dynamics_reference'] = (
@@ -78,9 +78,32 @@ def add_pocket_dynamics(report, previous):
         old_series = anchor.get(series) or {}
         if current_series.get('status') == 'error' or not isinstance(current_series.get('pockets'), dict):
             continue
+        reference = previous
         same_catalog = (old_series.get('id') == current_series.get('id') and
                         old_series.get('version') == current_series.get('version') and
                         old_series.get('catalog_sha256') == current_series.get('catalog_sha256'))
+        if not same_catalog and root is not None and current_series.get('continuity_backfilled'):
+            candidates = []
+            for path in (root / 'research/live-results-refresh').glob('*/*.json'):
+                try:
+                    with path.open() as source:
+                        candidate = json.load(source)
+                    prior = candidate.get(series) or {}
+                    generated = dt.datetime.fromisoformat(candidate['generated_at_utc'])
+                    if (generated < dt.datetime.fromisoformat(report['generated_at_utc']) and
+                            prior.get('id') == current_series.get('predecessor_id') and
+                            prior.get('catalog_sha256') == current_series.get('predecessor_catalog_sha256')):
+                        candidates.append((generated, path, candidate))
+                except (OSError, ValueError, KeyError, TypeError):
+                    continue
+            if candidates:
+                reference = max(candidates, key=lambda item: item[0])
+                old_series = reference[2][series]
+                same_catalog = True
+        current_series['dynamics_reference'] = (dict(
+            generated_at_utc=reference[2]['generated_at_utc'],
+            report_path=reference[1].relative_to(root).as_posix())
+            if reference and root is not None and same_catalog else None)
         old_rows = (old_series.get('pockets') or {}) if same_catalog else {}
         for pocket_id, row in current_series['pockets'].items():
             old = old_rows.get(pocket_id)
@@ -322,7 +345,7 @@ def main():
         report['seven_direction_pockets'] = seven_direction_pockets.report(root, merged)
     except Exception as exc:
         report['seven_direction_pockets'] = dict(status='error', error_type=type(exc).__name__)
-    add_pocket_dynamics(report, previous_statistics_report(root))
+    add_pocket_dynamics(report, previous_statistics_report(root), root)
     try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)

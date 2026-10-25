@@ -10,6 +10,8 @@ from pathlib import Path
 
 VERSION = 'distinct-pockets-v2-20261026'
 CONFIG = '.github/live-distinct-pockets.json'
+PREDECESSOR_ID = 'distinct-five-pockets-forward-20261025-v1'
+PREDECESSOR_SHA = 'f9597dc8fbc5d771254bb7d71e772c70faf7d173736a7f50ef088ea8e0f2dcc5'
 JOURNAL = 'research/live-background/experimental/distinct-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
@@ -111,13 +113,15 @@ def match(pocket, event, market):
 def history(root, cfg, digest):
     entries = {p['id']: {} for p in cfg['pockets']}
     triggers = {p['id']: {} for p in cfg['pockets']}
+    legacy_triggers = {p['id']: set() for p in cfg['pockets']}
     started = None
     errors = captures = 0
     for path in sorted((Path(root) / JOURNAL).rglob('*.json*')):
         item = (read(path).get('distinct_pockets') or {})
-        if item.get('id') != cfg['id']:
+        old = item.get('id') == PREDECESSOR_ID
+        if not old and item.get('id') != cfg['id']:
             continue
-        if item.get('catalog_sha256') != digest:
+        if item.get('catalog_sha256') != (PREDECESSOR_SHA if old else digest):
             raise ValueError('Distinct catalog changed within frozen series')
         if item.get('status') == 'error':
             errors += 1
@@ -128,18 +132,28 @@ def history(root, cfg, digest):
         started = min(started or item['started_at_utc'], item['started_at_utc'])
         for key, values in item['triggers'].items():
             if key not in triggers:
+                if old:
+                    continue
                 raise ValueError('Unknown distinct trigger')
             for value in values:
                 eid = str(value['event_id'])
                 if eid in triggers[key]:
+                    if not old and eid in legacy_triggers[key]:
+                        continue
                     raise ValueError('Duplicate distinct trigger')
                 triggers[key][eid] = value
+                if old:
+                    legacy_triggers[key].add(eid)
         for key, values in item['choices'].items():
             if key not in entries:
+                if old:
+                    continue
                 raise ValueError('Unknown distinct ledger')
             for value in values:
                 eid = str(value['event_id'])
                 if eid in entries[key]:
+                    if not old and entries[key][eid].get('catalog_sha256') == PREDECESSOR_SHA:
+                        continue
                     raise ValueError('Duplicate distinct entry')
                 entries[key][eid] = value
     return entries, triggers, started, errors, captures
@@ -260,6 +274,8 @@ def report(root, outcomes):
     return dict(id=cfg['id'], version=VERSION,
                 status='active' if started else 'awaiting_first_successful_capture',
                 started_at_utc=started, catalog_sha256=digest,
+                continuity_backfilled=True, predecessor_id=PREDECESSOR_ID,
+                predecessor_catalog_sha256=PREDECESSOR_SHA,
                 successful_captures=captures, capture_errors=errors,
                 pockets={p['id']: dict(name=p['name'], market=p['market'],
                          minute_window=p['minute_window'], conditions=p['conditions'],
