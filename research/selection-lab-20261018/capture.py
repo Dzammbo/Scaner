@@ -521,7 +521,7 @@ def main():
      independent_result=independent_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
     except Exception as exc:
      cfg_path=ROOT/independent_pockets.CONFIG
-     independent_result=dict(id='independent-9-pockets-forward-20261026-v2',version=independent_pockets.VERSION,
+     independent_result=dict(id='independent-10-pockets-forward-20261026-v3',version=independent_pockets.VERSION,
       status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
