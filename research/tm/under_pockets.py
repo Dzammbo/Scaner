@@ -209,3 +209,65 @@ def report(root, outcomes):
                 overlapping_groups=True, not_a_combined_portfolio=True,
                 source='new_forward_series_only; archived 13-25 October exploration remains separate',
                 parent_selection_changed=False)
+
+
+ARCHIVE_LABELS = {
+    'разница 0 + запас линии ≤0,5': 'tm_draw_half_goal',
+    '70–79 мин + голов 0': 'tm_zero_70_79',
+    'цена ≥2 + есть удаления': 'tm_red_price_ge2',
+    '80–89 мин + xG ≥2': 'tm_xg_ge2_80_89',
+    '45–59 мин + fin10=4+': 'tm_finishing10_ge4_45_59',
+}
+
+
+def archived_report(root, outcomes):
+    """Refresh only outcomes of frozen historical entries; never find new entries retrospectively."""
+    path = Path(root) / 'research/tm/observations-20261025/candidate-entries.json.gz'
+    entries = read(path)
+    cfg, _ = config(root)
+    if cfg is None:
+        return None
+    byid = {p['id']: {} for p in cfg['pockets']}
+    conflicts = 0
+    for row in entries:
+        key = ARCHIVE_LABELS[row['pocket']]
+        eid = str(row['event_id'])
+        if eid in byid[key]:
+            raise ValueError('Historical archive contains duplicate pocket/event')
+        prior_final = pair(row.get('final'))
+        outcome = outcomes.get(eid, {})
+        fresh_final = pair(outcome.get('final')) if outcome.get('settled') else None
+        if outcome.get('result_conflict') or (prior_final and fresh_final and prior_final != fresh_final):
+            conflicts += 1
+            byid[key][eid] = dict(event_id=eid, score='-'.join(str(int(x)) for x in row['score']),
+                                  market=dict(score='-'.join(str(int(x)) for x in row['score']),
+                                              line=row['line'], price=row['price']))
+            continue
+        final = fresh_final or prior_final
+        entry = dict(event_id=eid, score='-'.join(str(int(x)) for x in row['score']),
+                     market=dict(score='-'.join(str(int(x)) for x in row['score']),
+                                 line=row['line'], price=row['price']))
+        byid[key][eid] = entry
+        if final:
+            got = settle(entry, dict(settled=True, final=final))
+            if prior_final and row.get('profit') is not None and abs(got - row['profit']) > 1e-9:
+                raise ValueError('Frozen historical settlement changed')
+    # The archived result and newly confirmed result may coexist. Do not treat
+    # archived matches without a current journal row as pending.
+    resolved = {}
+    for row in entries:
+        eid = str(row['event_id'])
+        outcome = outcomes.get(eid, {})
+        old = pair(row.get('final'))
+        fresh = pair(outcome.get('final')) if outcome.get('settled') else None
+        if outcome.get('result_conflict') or (old and fresh and old != fresh):
+            continue
+        final = fresh or old
+        if final:
+            resolved[eid] = dict(settled=True, final=final)
+    result = summary(byid, resolved)
+    return dict(status='archived_observational_cohort_outcomes_refreshed',
+                original_archive='research/tm/observations-20261025/candidate-entries.json.gz',
+                fixed_entry_count=len(entries), conflicts=conflicts,
+                pockets={p['id']: dict(name=p['name'], **result[p['id']]) for p in cfg['pockets']},
+                is_new_forward_series=False, overlapping_groups=True)

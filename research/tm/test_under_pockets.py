@@ -98,6 +98,20 @@ class UnderPocketsTests(unittest.TestCase):
         self.assertEqual(q['successful_captures'],1)
         self.assertEqual(q['pockets']['tm_draw_half_goal']['n'],1)
         self.assertAlmostEqual(q['pockets']['tm_draw_half_goal']['roi'],.8)
+    def test_frozen_historical_entries_only_refresh_outcomes(self):
+        path=self.root/'research/tm/observations-20261025/candidate-entries.json.gz'
+        path.parent.mkdir(parents=True)
+        rows=[dict(pocket='разница 0 + запас линии ≤0,5',event_id='1',score=[0,0],
+                   line=.5,price=1.8,final=[0,0],profit=.8),
+              dict(pocket='разница 0 + запас линии ≤0,5',event_id='2',score=[1,1],
+                   line=2.5,price=1.8,final=None,profit=None)]
+        path.write_bytes(gzip.compress(json.dumps(rows,ensure_ascii=False).encode()))
+        old=p.archived_report(self.root,{})['pockets']['tm_draw_half_goal']
+        self.assertEqual((old['selected'],old['n']), (2,1))
+        updated=p.archived_report(self.root,{'2':dict(settled=True,final=[1,1])})
+        item=updated['pockets']['tm_draw_half_goal']
+        self.assertEqual((item['selected'],item['n']), (2,2))
+        self.assertAlmostEqual(item['roi'],.8)
 
 
 if __name__=='__main__':unittest.main()
