@@ -1,7 +1,7 @@
 {
   "enabled": true,
-  "id": "independent-9-pockets-forward-20261026-v2",
-  "version": "independent-pockets-v2-20261026",
+  "id": "independent-10-pockets-forward-20261026-v3",
+  "version": "independent-pockets-v3-20261026",
   "activation": "first_successful_capture_after_pruning",
   "entry_policy": "first_strong_qualified_exact_priced_point_per_pocket_event",
   "pool": "all_fresh_enriched_strong_v8_events",
@@ -144,6 +144,22 @@
       "source": "research/deep-selection-audit/2026-10-24/40108442768-1/candidate-shortlist.json",
       "historical_n": 85,
       "historical_roi": 0.12,
+      "evidence_status": "historical_positive_not_confirmed"
+    },
+    {
+      "id": "combo_score1_need2",
+      "name": "Ровно один гол + нужно ≤2 голов",
+      "conditions": [
+        "score_one",
+        "need_le2"
+      ],
+      "minute_window": [
+        8,
+        60
+      ],
+      "source": "research/selection-lab-20261018/combinations-baseline.json",
+      "historical_n": 40,
+      "historical_roi": 0.2613,
       "evidence_status": "historical_positive_not_confirmed"
     }
   ],
