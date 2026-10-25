@@ -1,0 +1,103 @@
+import copy
+import gzip
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+import under_pockets as p
+
+
+def event(eid, minute=76, score='1-1', line=2.5, under=1.8):
+    return dict(event_id=str(eid), minute=minute, score=score, home='A', away='B',
+                league='L', board_stats=dict(redcards=[0, 0], xg=[.5, .5]),
+                research_sports_features=dict(finishing_10_total=2),
+                events_main_total=dict(line=line, over=2., under=under,
+                                       quote_score=score, market_checked_at=1792882800,
+                                       source='events_odds_main'))
+
+
+class UnderPocketsTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        (self.root / '.github').mkdir()
+        (self.root / p.CONFIG).write_bytes((Path(__file__).resolve().parents[2] / p.CONFIG).read_bytes())
+        self.snapshot = dict(snapshot_id='900-1', board_observed_at_utc='2026-10-24T22:59:50+00:00',
+                             odds_checked_at_utc='2026-10-24T23:00:00+00:00', events=[])
+        self.snapshot['board_observed_at_utc'] = '2026-10-24T22:59:50+00:00'
+        # 1792882800 is 2026-10-24 23:00 UTC; keep clock checks deterministic.
+        self.snapshot['odds_checked_at_utc'] = '2026-10-24T23:00:00+00:00'
+    def tearDown(self):
+        self.temp.cleanup()
+    def evaluate(self, events, outcomes=None):
+        self.snapshot['events'] = events
+        return p.evaluate(self.root, self.snapshot, outcomes or {})
+    def save(self, result):
+        dest = self.root / p.JOURNAL / '2026-10-25' / (self.snapshot['snapshot_id'] + '.json.gz')
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(gzip.compress(json.dumps(dict(under_pockets=result)).encode()))
+    def test_all_five_get_their_own_entry_without_parent_gate(self):
+        a = event('1')
+        a['board_stats']['redcards'] = [1, 0]
+        a['board_stats']['xg'] = [1., 1.]
+        a['events_main_total']['under'] = 2.
+        b = event('2', minute=50, score='1-0', line=3.5)
+        b['research_sports_features']['finishing_10_total'] = 4
+        original = copy.deepcopy([a, b])
+        result = self.evaluate([a, b])
+        self.assertEqual([len(v) for v in result['choices'].values()], [1, 0, 1, 0, 1])
+        # The xG pocket needs 80-89; the 0:0 pocket needs exactly 70-79.
+        a['minute'] = 83
+        b['minute'] = 72
+        b['score'] = b['events_main_total']['quote_score'] = '0-0'
+        self.snapshot['snapshot_id'] = '900-2'
+        self.save(result)
+        result2 = self.evaluate([a, b])
+        self.assertEqual(len(result2['choices']['tm_xg_ge2_80_89']), 1)
+        self.assertEqual(len(result2['choices']['tm_zero_70_79']), 1)
+        self.assertEqual(result2['choices']['tm_draw_half_goal'], [])
+        self.assertNotEqual([a, b], original)
+    def test_first_matching_point_only_per_pocket_after_rejection(self):
+        a = event('1', minute=65, score='0-0', line=1.5)
+        self.save(self.evaluate([a]))
+        a['minute'] = 72
+        a['events_main_total']['line'] = .5
+        self.snapshot['snapshot_id'] = '900-2'
+        r = self.evaluate([a])
+        self.assertEqual(len(r['choices']['tm_draw_half_goal']), 1)
+        self.assertEqual(len(r['choices']['tm_zero_70_79']), 1)
+        self.save(r)
+        self.snapshot['snapshot_id'] = '900-3'
+        r = self.evaluate([a])
+        self.assertFalse(any(r['choices'].values()))
+    def test_exact_under_and_quarter_settlement(self):
+        a = event('1', score='1-0', line=2.25, under=2.2)
+        self.assertEqual(p.exact_under(a, self.snapshot)[0]['price'], 2.2)
+        a['events_main_total']['quote_score'] = '0-0'
+        self.assertIsNone(p.exact_under(a, self.snapshot)[0])
+        entry=dict(score='1-0',market=dict(score='1-0',line=2.25,price=2.2))
+        self.assertAlmostEqual(p.settle(entry, dict(settled=True, final=[2, 0])), .6)
+        self.assertEqual(p.settle(entry, dict(settled=True, final=[2, 1])), -1.)
+        self.assertIsNone(p.settle(entry, dict(settled=True, final=[0, 1])))
+    def test_unknown_is_not_zero_and_catalog_immutable(self):
+        a=event('1',minute=83)
+        a['board_stats']['xg']=[None, 2.5]
+        self.assertFalse(p.match('tm_xg_ge2_80_89', a, 2.5, 1.8))
+        self.save(self.evaluate([a]))
+        cfg=self.root/p.CONFIG;obj=json.loads(cfg.read_text());obj['pockets'][0]['name']='changed';cfg.write_text(json.dumps(obj))
+        with self.assertRaises(ValueError):self.evaluate([a])
+    def test_capture_and_report_use_separate_compact_journal(self):
+        import capture
+        a=event('1');r=self.evaluate([a]);snap=dict(self.snapshot,under_pockets=r)
+        with patch.object(capture,'DATA',self.root/'research/live-background/experimental'),patch.object(capture,'SOURCE','background'),patch.object(capture,'CAPTURE_DAY','2026-10-25'):
+            files=capture.write_run(snap,dict(contour='background_experimental',under_pockets=r),dict(contour='background_experimental'))
+        self.assertEqual(len(files),4)
+        q=p.report(self.root,{'1':dict(settled=True,final=[1,1])})
+        self.assertEqual(q['successful_captures'],1)
+        self.assertEqual(q['pockets']['tm_draw_half_goal']['n'],1)
+        self.assertAlmostEqual(q['pockets']['tm_draw_half_goal']['roi'],.8)
+
+
+if __name__=='__main__':unittest.main()

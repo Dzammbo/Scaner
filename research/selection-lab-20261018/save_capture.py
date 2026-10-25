@@ -15,6 +15,26 @@ def prepare_files(prefix,sid,suffix,day,contour):
  receipt=json.loads(gzip.decompress(files[paths[1]])if suffix.endswith('.gz')else files[paths[1]])
  pocket_path=prefix/'pocket-receipts'/(day or '')/(sid+suffix)
  if not receipt.get('failed') and pocket_path.exists():files[pocket_path]=pocket_path.read_bytes()
+ under_path=prefix/'under-pocket-receipts'/(day or '')/(sid+suffix)
+ if not receipt.get('failed') and under_path.exists():files[under_path]=under_path.read_bytes()
+ elif not receipt.get('failed') and source_shadow_enabled(prefix) and Path('.github/live-under-pockets.json').exists():
+  cfg=Path('.github/live-under-pockets.json');raw=cfg.read_bytes();data=json.loads(raw)
+  if data.get('enabled'):
+   files[under_path]=encode(dict(contour=contour,snapshot_id=sid,under_pockets=dict(
+    id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+    status='error',error_type='MissingUnderJournal',
+    observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    parent_selection_changed=False)))
+ elif receipt.get('failed') and source_shadow_enabled(prefix):
+  cfg=Path('.github/live-under-pockets.json')
+  if cfg.exists():
+   raw=cfg.read_bytes();data=json.loads(raw)
+   if data.get('enabled'):
+    files[under_path]=encode(dict(contour=contour,snapshot_id=sid,under_pockets=dict(
+     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+     status='error',error_type='CaptureFailed',
+     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     parent_selection_changed=False)))
  shadow_path=prefix/'shadow-receipts'/(day or '')/(sid+suffix)
  if not receipt.get('failed') and shadow_path.exists():files[shadow_path]=shadow_path.read_bytes()
  elif not receipt.get('failed') and source_shadow_enabled(prefix):

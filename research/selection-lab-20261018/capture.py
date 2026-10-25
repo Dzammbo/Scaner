@@ -383,6 +383,9 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
   records.append(('pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    independent_pockets=receipt['independent_pockets'])))
+ if receipt.get('under_pockets') is not None and not receipt.get('failed'):
+  records.append(('under-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   under_pockets=receipt['under_pockets'])))
  if receipt.get('shadow_universe') is not None and not receipt.get('failed'):
   records.append(('shadow-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    shadow_universe=receipt['shadow_universe'])))
@@ -516,6 +519,21 @@ def main():
       status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
+   under_result=None
+   if unified:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tm'))
+    import under_pockets
+    try:
+     under_result=under_pockets.evaluate(ROOT,snapshot,entry_outcomes)
+    except Exception as exc:
+     cfg_path=ROOT/under_pockets.CONFIG
+     cfg=under_pockets.read(cfg_path)if cfg_path.exists()else{}
+     under_result=dict(id=cfg.get('id','independent-5-under-forward-20261025-v1'),
+      version=under_pockets.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      parent_selection_changed=False)
+    if under_result is not None:snapshot['under_pockets']=under_result
    shadow_result=None
    if unified:
     import shadow_universe
@@ -553,6 +571,7 @@ def main():
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
+   if under_result is not None:receipt['under_pockets']=under_result
    if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
