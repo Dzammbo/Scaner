@@ -113,5 +113,16 @@ class UnderPocketsTests(unittest.TestCase):
         self.assertEqual((item['selected'],item['n']), (2,2))
         self.assertAlmostEqual(item['roi'],.8)
 
+    def test_reset_keeps_old_journal_but_starts_new_series_at_zero(self):
+        old = self.evaluate([event('1')])
+        old['id'] = 'independent-5-under-forward-20261025-v1'
+        old['version'] = 'independent-under-pockets-v1-20261025'
+        self.save(old)
+        self.assertEqual(p.report(self.root, {})['successful_captures'], 0)
+        self.assertEqual(p.report(self.root, {})['pockets']['tm_draw_half_goal']['selected'], 0)
+        self.snapshot['snapshot_id'] = '900-2'
+        fresh = self.evaluate([event('1')])
+        self.assertEqual(len(fresh['choices']['tm_draw_half_goal']), 1)
+
 
 if __name__=='__main__':unittest.main()

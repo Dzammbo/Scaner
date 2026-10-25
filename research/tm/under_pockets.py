@@ -8,7 +8,7 @@ import math
 import re
 from pathlib import Path
 
-VERSION = 'independent-under-pockets-v1-20261025'
+VERSION = 'independent-under-pockets-v2-20261025-reset'
 CONFIG = '.github/live-under-pockets.json'
 JOURNAL = 'research/live-background/experimental/under-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
