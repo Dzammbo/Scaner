@@ -35,6 +35,19 @@ def independent_profit(final, line, price):
                      else D(-1) for x in legs) / len(legs))
 
 
+def order_pockets(report, metric):
+    """Keep the published pocket rows in the requested ranking order."""
+    if not report or report.get('status') == 'error' or 'pockets' not in report:
+        return report
+    def value(row):
+        return (row.get('without_top3') or {}).get('roi') if metric == 'without_top3_roi' else row.get('roi')
+    report['pockets'] = dict(sorted(report['pockets'].items(),
+                                  key=lambda item: (value(item[1]) is None,
+                                                    -(value(item[1]) or 0))))
+    report['sorted_by'] = metric + '_descending_nulls_last'
+    return report
+
+
 def groups_for_epoch(receipts, config):
     groups = collections.defaultdict(dict)
     duplicates = 0
@@ -234,17 +247,16 @@ def main():
                                           primary_selection_changed=False)
     try:
         import independent_pockets
-        report['independent_pockets'] = independent_pockets.report(root, merged, c.settle_entry)
+        report['independent_pockets'] = order_pockets(
+            independent_pockets.report(root, merged, c.settle_entry), 'without_top3_roi')
     except Exception as exc:
         report['independent_pockets'] = dict(status='error', error_type=type(exc).__name__)
     try:
         sys.path.insert(0, str(root / 'research/tm'))
         import under_pockets
-        report['under_pockets'] = under_pockets.report(root, merged)
-        report['under_historical'] = under_pockets.archived_report(root, merged)
+        report['under_pockets'] = order_pockets(under_pockets.report(root, merged), 'roi')
     except Exception as exc:
         report['under_pockets'] = dict(status='error', error_type=type(exc).__name__)
-        report['under_historical'] = dict(status='error', error_type=type(exc).__name__)
     try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)

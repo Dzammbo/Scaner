@@ -1,6 +1,7 @@
 import copy,datetime,gzip,json,tempfile,unittest
 from pathlib import Path
 import independent_pockets as p
+from refresh_live_results import order_pockets
 CATALOG=Path(__file__).with_name('catalog.json')
 if not CATALOG.exists():CATALOG=next(parent/p.CONFIG for parent in Path(__file__).resolve().parents if (parent/p.CONFIG).exists())
 def event(i,minute=50,score='1-0',sot=(4,4),danger=(10,10)):
@@ -12,6 +13,12 @@ def settle(e,o):
  goals=sum(o['final']);l=e['market']['line'];k=e['market']['price'];legs=[l]if l*2==int(l*2)else[l-.25,l+.25]
  return sum(k-1 if goals>x else 0 if goals==x else -1 for x in legs)/len(legs)
 class IndependentTests(unittest.TestCase):
+ def test_report_ordering_uses_requested_metric_and_leaves_empty_last(self):
+  sample=lambda:dict(pockets={'a':dict(roi=.4,without_top3=dict(roi=-.1)),
+                              'b':dict(roi=.2,without_top3=dict(roi=.1)),
+                              'c':dict(roi=None)})
+  self.assertEqual(list(order_pockets(sample(),'without_top3_roi')['pockets']),['b','a','c'])
+  self.assertEqual(list(order_pockets(sample(),'roi')['pockets']),['a','b','c'])
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);(self.root/'.github').mkdir();(self.root/p.CONFIG).write_bytes(CATALOG.read_bytes());self.snap=dict(snapshot_id='999-1',board_observed_at_utc='2026-10-24T22:00:00+00:00')
  def tearDown(self):self.tmp.cleanup()
