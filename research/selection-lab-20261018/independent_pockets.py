@@ -1,7 +1,7 @@
-"""Twenty independent first-qualified-priced pocket ledgers, separate from parent Top5."""
+"""Nine independent first-qualified-priced pocket ledgers, separate from parent Top5."""
 import collections,copy,datetime as dt,gzip,hashlib,json,math,re
 from pathlib import Path
-VERSION='independent-pockets-v1-20261024'
+VERSION='independent-pockets-v2-20261026'
 CONFIG='.github/live-independent-pockets.json'
 MSK=dt.timezone(dt.timedelta(hours=3))
 def number(x):
@@ -15,7 +15,7 @@ def config(root):
  if not p.exists():return None,None
  b=p.read_bytes();d=json.loads(b)
  if not d.get('enabled'):return None,None
- if d.get('version')!=VERSION or len(d['pockets'])!=20 or len({p['id'] for p in d['pockets']})!=20:raise ValueError('Invalid independent catalog')
+ if d.get('version')!=VERSION or len(d['pockets'])!=9 or len({p['id'] for p in d['pockets']})!=9:raise ValueError('Invalid independent catalog')
  return d,hashlib.sha256(b).hexdigest()
 def features(e,q):
  def pair(k):

@@ -25,8 +25,8 @@ class IndependentTests(unittest.TestCase):
  def evaluate(self,events,outcomes=None):return p.evaluate(self.root,self.snap,events,market,outcomes or{},settle)
  def save(self,result):
   path=self.root/'research/live-background/experimental/pocket-receipts/2026-10-24'/f"{self.snap['snapshot_id']}.json.gz";path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(gzip.compress(json.dumps(dict(independent_pockets=result)).encode()))
- def test_all_twenty_defined_and_conditions_valid(self):
-  cfg,_=p.config(self.root);self.assertEqual(len(cfg['pockets']),20)
+ def test_all_nine_defined_and_conditions_valid(self):
+  cfg,_=p.config(self.root);self.assertEqual(len(cfg['pockets']),9)
   f=p.features(event('1'),market(event('1'),self.snap)[0])
   for pocket in cfg['pockets']:
    for c in pocket['conditions']:self.assertIsInstance(p.match(c,f),bool)
@@ -81,7 +81,7 @@ class IndependentTests(unittest.TestCase):
    if 'pocket-receipts' in str(path):
     self.assertEqual((record.get('under_pockets') or record.get('independent_pockets'))['status'],'error')
    else:self.assertTrue(record['failed'])
- def test_all_twenty_can_receive_their_own_matching_entry(self):
+ def test_all_nine_can_receive_their_own_matching_entry(self):
   cfg,_=p.config(self.root)
   for i,pocket in enumerate(cfg['pockets']):
    a=event(str(i),minute=50,score='1-0',sot=(4,4),danger=(10,10));cs=pocket['conditions']

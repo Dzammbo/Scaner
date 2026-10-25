@@ -383,9 +383,18 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
   records.append(('pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    independent_pockets=receipt['independent_pockets'])))
+ if receipt.get('under_pockets') is not None and not receipt.get('failed'):
+  records.append(('under-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   under_pockets=receipt['under_pockets'])))
+ if receipt.get('seven_direction_pockets') is not None and not receipt.get('failed'):
+  records.append(('seven-direction-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   seven_direction_pockets=receipt['seven_direction_pockets'])))
  if receipt.get('distinct_pockets') is not None and not receipt.get('failed'):
   records.append(('distinct-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    distinct_pockets=receipt['distinct_pockets'])))
+ if receipt.get('shadow_universe') is not None and not receipt.get('failed'):
+  records.append(('shadow-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   shadow_universe=receipt['shadow_universe'])))
  for folder,data in records:
   path=directory/folder
   if SOURCE=='background':path=path/CAPTURE_DAY
@@ -457,8 +466,9 @@ def main():
    probes=[e for e,_ in selected_probes]if is_broad else[e for e,_ in selected_probes][:MAX_MARKETS]
    price_probes=probes
    if is_broad:
-    price_ids={str(e['event_id'])for e in price_probes}
-    price_probes=price_probes+[e for e in snapshot['events']if str(e['event_id'])not in price_ids]
+    import adaptive
+    price_probes=adaptive.market_probes(snapshot['events'],probes)
+    snapshot['market_probe_policy']='all_known_score_5_89_deep_first_no_outside_window_odds'
    enrich_markets(price_probes,budget)
    by_id={e['event_id']:e for e in snapshot['events']}
    for e in price_probes:by_id[e['event_id']].update(e)
@@ -511,10 +521,25 @@ def main():
      independent_result=independent_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
     except Exception as exc:
      cfg_path=ROOT/independent_pockets.CONFIG
-     independent_result=dict(id='independent-20-pockets-forward-20261024-v1',version=independent_pockets.VERSION,
+     independent_result=dict(id='independent-9-pockets-forward-20261026-v2',version=independent_pockets.VERSION,
       status='error',catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
+   under_result=None
+   if unified:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tm'))
+    import under_pockets
+    try:
+     under_result=under_pockets.evaluate(ROOT,snapshot,entry_outcomes)
+    except Exception as exc:
+     cfg_path=ROOT/under_pockets.CONFIG
+     cfg=under_pockets.read(cfg_path)if cfg_path.exists()else{}
+     under_result=dict(id=cfg.get('id','independent-2-under-forward-20261026-v3'),
+      version=under_pockets.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      parent_selection_changed=False)
+    if under_result is not None:snapshot['under_pockets']=under_result
    distinct_result=None
    if unified:
     import distinct_pockets
@@ -523,12 +548,35 @@ def main():
     except Exception as exc:
      cfg_path=ROOT/distinct_pockets.CONFIG
      cfg=distinct_pockets.read(cfg_path)if cfg_path.exists()else{}
-     distinct_result=dict(id=cfg.get('id','distinct-five-pockets-forward-20261025-v1'),
+     distinct_result=dict(id=cfg.get('id','distinct-three-pockets-forward-20261026-v2'),
       version=distinct_pockets.VERSION,status='error',
       catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
       parent_selection_changed=False)
     if distinct_result is not None:snapshot['distinct_pockets']=distinct_result
+   shadow_result=None
+   if unified:
+    import shadow_universe
+    try:
+     shadow_result=shadow_universe.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     shadow_result=dict(version=shadow_universe.VERSION,status='error',
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,production_selection_changed=False)
+    snapshot['shadow_universe']=shadow_result
+   seven_result=None
+   if unified:
+    import seven_direction_pockets
+    try:
+     seven_result=seven_direction_pockets.evaluate(ROOT,snapshot,entry_outcomes)
+    except Exception as exc:
+     cfg_path=ROOT/seven_direction_pockets.CONFIG
+     cfg=seven_direction_pockets.read(cfg_path)if cfg_path.exists()else{}
+     seven_result=dict(id=cfg.get('id','seven-direction-eight-forward-20261026-v1'),
+      version=seven_direction_pockets.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      parent_selection_changed=False)
+    if seven_result is not None:snapshot['seven_direction_pockets']=seven_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -557,7 +605,10 @@ def main():
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
+   if under_result is not None:receipt['under_pockets']=under_result
    if distinct_result is not None:receipt['distinct_pockets']=distinct_result
+   if seven_result is not None:receipt['seven_direction_pockets']=seven_result
+   if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)
    snapshot['lab_api']=budget.summary();snapshot['lab_status']='partial' if budget.blocked else 'captured';snapshot['lab_market_probe_count']=len(price_probes)
@@ -569,10 +620,11 @@ def main():
    legacy_evaluation_price_rows=[e for e in price_probes if e.get('legacy_window_8_60')and re.fullmatch(r'\d+-\d+',str(e.get('score','')))]
    full_collection_price_rows=[e for e in price_probes if number(e.get('minute'))is not None and broad.FULL_COLLECTION_MINUTE_MIN<=number(e.get('minute'))<=broad.FULL_COLLECTION_MINUTE_MAX and re.fullmatch(r'\d+-\d+',str(e.get('score','')))] if is_broad else []
    snapshot['lab_price_coverage']=dict(policy='provider_main_total_exact-v1',target=.95,
-    all_provider_rows=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),
+    all_provider_rows=price_coverage(snapshot['events']) if is_broad else price_coverage(price_probes),
+    requested_market_probes=price_coverage(price_probes),active_known_score=price_coverage(active_price_rows),
     evaluation_window_8_60=price_coverage(legacy_evaluation_price_rows),
     full_collection_window_5_89=price_coverage(full_collection_price_rows)if is_broad else dict(requested=0,exact=0,ratio=None,provider_unavailable=0),
-    denominator_note='Target applies to active known-score and full-collection rows; the legacy 8-60 row remains a comparison. Minute 0 without score and 90+ events stay visible in raw coverage.')
+    denominator_note='Target applies to known-score 5-89 market probes; the legacy 8-60 row remains a comparison. All raw board rows remain visible, but outside-window and unknown-score rows are not quoted.')
    snapshot['production_api_call_fields_are_base_stage_only']=True
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])

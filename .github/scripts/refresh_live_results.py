@@ -73,7 +73,7 @@ def add_pocket_dynamics(report, previous):
         dict(generated_at_utc=anchor['generated_at_utc'],
              report_path=previous[1].relative_to(previous[1].parents[3]).as_posix())
         if previous else None)
-    for series in ('independent_pockets', 'under_pockets', 'distinct_pockets'):
+    for series in ('independent_pockets', 'under_pockets', 'distinct_pockets', 'seven_direction_pockets'):
         current_series = report.get(series) or {}
         old_series = anchor.get(series) or {}
         if current_series.get('status') == 'error' or not isinstance(current_series.get('pockets'), dict):
@@ -86,7 +86,7 @@ def add_pocket_dynamics(report, previous):
             old = old_rows.get(pocket_id)
             # New TB series uses the same robust metric as the existing TB series.
             metric = ('without_top3' if series == 'independent_pockets' or
-                      (series == 'distinct_pockets' and row.get('market') == 'over')
+                      (series in ('distinct_pockets', 'seven_direction_pockets') and row.get('market') == 'over')
                       else 'roi')
             def value(item):
                 return ((item.get('without_top3') or {}).get('roi') if metric == 'without_top3'
@@ -317,6 +317,11 @@ def main():
         report['distinct_pockets'] = distinct_pockets.report(root, merged)
     except Exception as exc:
         report['distinct_pockets'] = dict(status='error', error_type=type(exc).__name__)
+    try:
+        import seven_direction_pockets
+        report['seven_direction_pockets'] = seven_direction_pockets.report(root, merged)
+    except Exception as exc:
+        report['seven_direction_pockets'] = dict(status='error', error_type=type(exc).__name__)
     add_pocket_dynamics(report, previous_statistics_report(root))
     try:
         import shadow_universe

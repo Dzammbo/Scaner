@@ -1,4 +1,4 @@
-"""Independent prospective FT over/under entries for five distinct combinations."""
+"""Independent prospective FT over/under entries for three retained combinations."""
 import collections
 import datetime as dt
 import gzip
@@ -8,7 +8,7 @@ import math
 import re
 from pathlib import Path
 
-VERSION = 'distinct-pockets-v1-20261025'
+VERSION = 'distinct-pockets-v2-20261026'
 CONFIG = '.github/live-distinct-pockets.json'
 JOURNAL = 'research/live-background/experimental/distinct-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
@@ -43,9 +43,9 @@ def config(root):
     pockets = cfg.get('pockets', [])
     if not cfg.get('enabled'):
         return None, None
-    if (cfg.get('version') != VERSION or len(pockets) != 5
-            or len({p['id'] for p in pockets}) != 5
-            or {p['market'] for p in pockets} != {'over', 'under'}
+    if (cfg.get('version') != VERSION or len(pockets) != 3
+            or len({p['id'] for p in pockets}) != 3
+            or {p['market'] for p in pockets} != {'over'}
             or any(p['delay_seconds'] not in (0, 180, 300) for p in pockets)):
         raise ValueError('Invalid frozen distinct pocket catalog')
     return cfg, hashlib.sha256(raw).hexdigest()
