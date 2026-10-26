@@ -16,6 +16,8 @@ from distinct_pockets import number, pair, quote, read, stamp, settle, summary
 
 VERSION = 'seven-direction-pockets-v1-20261026'
 CONFIG = '.github/live-seven-direction-pockets.json'
+# Pause under rules without changing the frozen catalog hash or over ledgers.
+ACTIVE_MARKETS = frozenset({'over'})
 JOURNAL = 'research/live-background/experimental/seven-direction-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
@@ -210,6 +212,8 @@ def evaluate(root, snapshot, outcomes):
         observations[eid].update(goal_age=f['goal_age'],recent_equalizer=f['equalizer'],leader_scored=f['leader_scored'])
         for pocket in cfg['pockets']:
             key = pocket['id']; side = pocket['market']
+            if side not in ACTIVE_MARKETS:
+                continue
             if eid in entries[key] or current[side] is None or current[side] <= 1:
                 continue
             trigger = triggers[key].get(eid)
@@ -232,12 +236,14 @@ def evaluate(root, snapshot, outcomes):
                          home=event.get('home'),away=event.get('away'),league=event.get('league'))
             entries[key][eid]=entry;choices[key].append(entry)
         # Persist active trigger state; delayed entry never uses a quote from the trigger capture.
-    for key, active in triggers.items():
-        new_triggers[key] = [v for eid,v in active.items() if eid not in entries[key]]
+    for pocket in cfg['pockets']:
+        key = pocket['id']
+        if pocket['market'] in ACTIVE_MARKETS:
+            new_triggers[key] = [v for eid,v in triggers[key].items() if eid not in entries[key]]
     return dict(id=cfg['id'],version=VERSION,status='active',catalog_sha256=digest,
                 started_at_utc=started or clock,observed_at_utc=clock,
                 observations=observations,triggers=new_triggers,choices=choices,
-                progress=summary(entries,outcomes),diagnostics=dict(checks),
+                progress=summary({p['id']: entries[p['id']] for p in cfg['pockets'] if p['market'] in ACTIVE_MARKETS},outcomes),diagnostics=dict(checks),
                 prior_capture_errors=errors,previous_successful_captures=captures,
                 parent_selection_changed=False,not_a_combined_portfolio=True)
 
@@ -252,6 +258,6 @@ def report(root,outcomes):
                 status='active' if started else 'awaiting_first_successful_capture',
                 started_at_utc=started,catalog_sha256=digest,successful_captures=captures,
                 capture_errors=errors,pockets={p['id']:dict(name=p['name'],market=p['market'],
-                delay_seconds=p['delay_seconds'],triggered=len(triggers[p['id']]),**result[p['id']]) for p in cfg['pockets']},
+                delay_seconds=p['delay_seconds'],triggered=len(triggers[p['id']]),**result[p['id']]) for p in cfg['pockets'] if p['market'] in ACTIVE_MARKETS},
                 overlapping_groups=True,not_a_combined_portfolio=True,
                 historical_results_in_new_series=False,parent_selection_changed=False)
