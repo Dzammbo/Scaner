@@ -12,6 +12,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from statistics_format import VERSION as STATISTICS_FORMAT_VERSION, build_tables, render_statistics
 
 BRANCH = "research/selection-lab-20261018"
 UTC = dt.timezone.utc
@@ -352,7 +353,8 @@ def main():
         report['seven_direction_pockets'] = seven_direction_pockets.report(root, merged)
     except Exception as exc:
         report['seven_direction_pockets'] = dict(status='error', error_type=type(exc).__name__)
-    add_pocket_dynamics(report, previous_statistics_report(root), root)
+    previous_report = previous_statistics_report(root)
+    add_pocket_dynamics(report, previous_report, root)
     try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)
@@ -389,6 +391,10 @@ def main():
         report['shadow_analysis'] = shadow_analysis.analyze(root, merged, c.settle_entry)
     except Exception as exc:
         report['shadow_analysis'] = dict(status='error', error_type=type(exc).__name__, no_rule_changes=True)
+    previous_data = previous_report[2] if previous_report else None
+    report['statistics_format_version'] = STATISTICS_FORMAT_VERSION
+    report['statistics_tables'] = build_tables(report, previous_data)
+    report['statistics_markdown'] = render_statistics(report, previous_data, report['statistics_tables'])
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
@@ -400,12 +406,17 @@ def main():
                                         separators=(",", ":")) + "\n").encode()
     shadow_path = "research/shadow-analysis/" + day + "/" + run_id + ".json"
     files = {summary_path: payload(report),
+             summary_path.removesuffix('.json') + '.md': report['statistics_markdown'].encode('utf-8'),
              shadow_path: payload(report['shadow_analysis']),
              outcome_path: gzip.compress(payload(outcome_record), mtime=0)}
     commit = save_files(root, files)
     print("RESULTS_REFRESH_PATH=" + summary_path)
     print("RESULTS_REFRESH_COMMIT=" + commit)
     print("RESULTS_REFRESH_STATUS=complete")
+    print(report['statistics_markdown'])
+    if os.environ.get('GITHUB_STEP_SUMMARY'):
+        with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+            output.write(report['statistics_markdown'])
     print(json.dumps({key: report[key] for key in
                       ("generated_at_utc", "statistics_epoch", "population",
                        "outcomes_refresh", "current", "unresolved_records")},

@@ -1,0 +1,26 @@
+name: Verify default statistics tables
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/scripts/statistics_format.py'
+      - '.github/scripts/test_statistics_format.py'
+      - '.github/scripts/refresh_live_results.py'
+      - '.github/scripts/test_refresh_live_results.py'
+      - '.github/workflows/verify-statistics-format.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify sorting, thresholds, comparison and canonical renderer
+        env:
+          PYTHONPATH: .github/scripts
+        run: python3 -m unittest discover -s .github/scripts -p 'test_*statistics*.py' -v
+      - name: Verify refresh comparison
+        env:
+          PYTHONPATH: .github/scripts
+        run: python3 -m unittest discover -s .github/scripts -p test_refresh_live_results.py -v
