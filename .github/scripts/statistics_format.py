@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 'statistics-over-only-20261026-v3'
+VERSION = 'statistics-over-only-20261026-v4'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
 
@@ -36,6 +36,16 @@ def build_tables(report, previous=None):
     previous = previous or {}
     result = dict(format_version=VERSION, over=[], under=[], errors=[],
                   reference_at_utc=previous.get('generated_at_utc'))
+
+    population = report.get('population') or {}
+    prior_population = (previous.get('population') or {}) if compatible(
+        report.get('statistics_epoch') or {}, previous.get('statistics_epoch') or {},
+        ('id', 'rules_version')) else {}
+    result['population'] = {
+        key: dict(n=population[key], delta=population[key]-prior_population[key]
+                  if prior_population.get(key) is not None else None)
+        for key in ('unique_observed', 'confirmed_closed', 'closed_with_provider_price')
+        if key in population}
 
     def add(key, label, market, row, old=None):
         # Archived under entries never enter the active report, including old JSON.
@@ -145,11 +155,15 @@ def render_statistics(report, previous=None, tables=None):
     tables = tables if tables is not None else build_tables(report, previous)
     lines = ['**Срез: ' + clock(report['generated_at_utc']) + '.** Сравнение с ' +
              clock(tables['reference_at_utc']) + '.', '']
-    population = report.get('population') or {}
+    population = tables.get('population') or {}
+    def population_count(key):
+        row = population[key]
+        delta = row['delta']
+        return count(row['n']) + (f" ({delta:+d})" if delta is not None else " (н/д)")
     if population:
-        lines.extend([f"Всего наблюдалось {count(population['unique_observed'])} уникальных матчей, "
-                      f"подтверждённо завершены {count(population['confirmed_closed'])}, "
-                      f"из них {count(population['closed_with_provider_price'])} с сохранённой ценой.", ''])
+        lines.extend([f"Всего наблюдалось {population_count('unique_observed')} уникальных матчей, "
+                      f"подтверждённо завершены {population_count('confirmed_closed')}, "
+                      f"из них {population_count('closed_with_provider_price')} с сохранённой ценой.", ''])
     lines.extend(['N - рассчитанные матчи; в скобках прирост к предыдущему отчёту. '
                   'Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: '
                   'такие группы стоят внизу по убыванию обычного ROI.', ''])

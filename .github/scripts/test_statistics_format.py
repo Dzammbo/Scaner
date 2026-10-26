@@ -20,6 +20,23 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_population_deltas_share_the_report_baseline(self):
+        old = report()
+        old['population'] = dict(unique_observed=2823, confirmed_closed=2762,
+                                 closed_with_provider_price=2728)
+        new = copy.deepcopy(old)
+        new['population'] = dict(unique_observed=2838, confirmed_closed=2762,
+                                 closed_with_provider_price=2727)
+        text = render_statistics(new, old)
+        self.assertIn('2 838 (+15) уникальных', text)
+        self.assertIn('завершены 2 762 (+0)', text)
+        self.assertIn('2 727 (-1) с сохранённой ценой', text)
+        self.assertIn('2 838 (н/д)', render_statistics(new))
+        del old['population']['confirmed_closed']
+        self.assertIn('завершены 2 762 (н/д)', render_statistics(new, old))
+        old['statistics_epoch']['id'] = 'another-series'
+        self.assertIn('2 838 (н/д)', render_statistics(new, old))
+
     def test_percent_rounding_keeps_the_agreed_two_decimal_display(self):
         self.assertEqual(percent(.17825), '+17,83%')
         self.assertEqual(percent(-.17825), '−17,83%')
