@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 'statistics-over-only-20261026-v4'
+VERSION = 'statistics-over-only-20261026-v5'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
 
@@ -76,9 +76,12 @@ def build_tables(report, previous=None):
         ('independent_pockets', 'Самостоятельные ТБ', 'over', ''),
         ('distinct_pockets', 'Отдельные сочетания', None, 'Сочетание: '),
         ('seven_direction_pockets', 'Новые карманы ТБ', None, 'Новый: '),
+        ('refined_pockets', 'Двадцать уточнений ТБ', None, 'Уточнение: '),
     )
     for key, title, market, prefix in sections:
         section, prior = report.get(key) or {}, previous.get(key) or {}
+        if key == 'refined_pockets' and key not in report:
+            continue
         if section.get('status') == 'error' or not isinstance(section.get('pockets'), dict):
             result['errors'].append(title + ': ' + section.get('error_type', 'данные отсутствуют'))
             continue
@@ -180,7 +183,7 @@ def render_statistics(report, previous=None, tables=None):
         lines.append('')
     lines.extend(['Δ - изменение ROI без трёх лучших, в процентных пунктах. '
                   'При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, '
-                  'их N и ROI не складываются. Контроль, широкий пул и эксперимент качества '
+                  'их N и ROI не складываются. Контроль и широкий пул '
                   'имеют собственные условия и периоды: сортировка не доказывает превосходство метода. '
                   'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
     quality = report.get('quality_comparison') or {}
@@ -206,3 +209,4 @@ if __name__ == '__main__':
     current = json.loads(args.report.read_text())
     previous = json.loads(args.previous.read_text()) if args.previous else None
     print(render_statistics(current, previous), end='')
+

@@ -8,6 +8,9 @@ on:
       - '.github/scripts/refresh_live_results.py'
       - '.github/scripts/test_refresh_live_results.py'
       - '.github/workflows/verify-statistics-format.yml'
+      - 'research/selection-lab-20261018/refined_pockets.py'
+      - '.github/live-refined-pockets.json'
+      - 'research/selection-lab-20261018/test_refined_pockets.py'
       - 'research/selection-lab-20261018/seven_direction_pockets.py'
       - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
       - '.github/live-under-pockets.json'
@@ -31,3 +34,7 @@ jobs:
         env:
           PYTHONPATH: research/selection-lab-20261018
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p test_seven_direction_pockets.py -v
+
+
+      - name: Verify independent refinement ledgers and delayed exact entries
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_refined_pockets.py' -v

@@ -1,0 +1,339 @@
+{
+  "enabled": true,
+  "id": "refined-20-pockets-forward-20261026-v1",
+  "version": "refined-pockets-v1-20261026",
+  "activation": "first_successful_capture_after_deployment",
+  "entry_policy": "independent_first_qualified_exact_priced_entry_per_rule_event",
+  "inherit_parent_seen": false,
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {
+      "id": "need4_margin1",
+      "name": "Нужно ≥4 голов + преимущество в один гол",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "need_ge4",
+        "margin_one"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 1
+    },
+    {
+      "id": "lead2_line35",
+      "name": "45-59 минут, 2:0/0:2 + ТБ 3,5",
+      "pool": "observed",
+      "minute_window": [
+        45,
+        59
+      ],
+      "conditions": [
+        "exact_lead2",
+        "line_35"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 2
+    },
+    {
+      "id": "early2_quarter_need3",
+      "name": "5-29 минут, два гола, четвертная линия + нужно три гола",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        29
+      ],
+      "conditions": [
+        "goals_two",
+        "quarter",
+        "need_three"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 3
+    },
+    {
+      "id": "need4_dangerlow",
+      "name": "Нужно ≥4 голов + опасные атаки <1 в минуту",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "need_ge4",
+        "danger_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 4
+    },
+    {
+      "id": "lead2_need2",
+      "name": "45-59 минут, 2:0/0:2 + нужно два гола",
+      "pool": "observed",
+      "minute_window": [
+        45,
+        59
+      ],
+      "conditions": [
+        "exact_lead2",
+        "need_two"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 5
+    },
+    {
+      "id": "need2_lowsot_half_price",
+      "name": "Нужно два гола, мало створов + половинная линия и коэффициент 1,80-1,99",
+      "pool": "strong",
+      "minute_window": [
+        5,
+        89
+      ],
+      "conditions": [
+        "need_two",
+        "sot_low",
+        "half_line",
+        "price180_199"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 6
+    },
+    {
+      "id": "lead2_dangerlow",
+      "name": "45-59 минут, 2:0/0:2 + опасные атаки <1 в минуту",
+      "pool": "observed",
+      "minute_window": [
+        45,
+        59
+      ],
+      "conditions": [
+        "exact_lead2",
+        "danger_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 7
+    },
+    {
+      "id": "score1_sot_profilelow",
+      "name": "Один гол, створы 0,10-0,20 + голевой профиль <0,90",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "score_one",
+        "sot_medium",
+        "profile_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 8
+    },
+    {
+      "id": "score1_profilelow",
+      "name": "Один гол + голевой профиль <0,90",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "score_one",
+        "profile_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 9
+    },
+    {
+      "id": "dangerlow_profilelow",
+      "name": "Опасные атаки <1 + голевой профиль <0,90",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "danger_low",
+        "profile_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 10
+    },
+    {
+      "id": "sot_score01",
+      "name": "Створы 0,10-0,20 + счёт 0:1",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "sot_medium",
+        "score_01"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 11
+    },
+    {
+      "id": "dangerlow_price",
+      "name": "Опасные атаки <1 + коэффициент 1,80-1,99",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "danger_low",
+        "price180_199"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 12
+    },
+    {
+      "id": "integer_sot",
+      "name": "Целая линия + створы 0,10-0,20",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "integer",
+        "sot_medium"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 13
+    },
+    {
+      "id": "minute_integer_price",
+      "name": "46-60 минут, целая линия + коэффициент 1,80-1,99",
+      "pool": "strong",
+      "minute_window": [
+        46,
+        60
+      ],
+      "conditions": [
+        "integer",
+        "price180_199"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 14
+    },
+    {
+      "id": "score1_need2_profilelow",
+      "name": "Один гол, нужно ≤2 голов + голевой профиль <0,90",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "score_one",
+        "need_le2",
+        "profile_low"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 15
+    },
+    {
+      "id": "wait5_score1_notboth",
+      "name": "45-49 минут, один гол, запас 1,25-1,50, ожидание 5 минут + не обе со створами",
+      "pool": "observed",
+      "minute_window": [
+        45,
+        49
+      ],
+      "conditions": [
+        "score_one",
+        "gap125_150",
+        "not_both_sot"
+      ],
+      "delay_seconds": 300,
+      "market": "over",
+      "proposal_number": 16
+    },
+    {
+      "id": "early_integer",
+      "name": "Целая линия + вход на 8-29 минуте",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        29
+      ],
+      "conditions": [
+        "integer"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 17
+    },
+    {
+      "id": "integer_need2_dangermed",
+      "name": "Целая линия, нужно ≤2 голов + опасные атаки 1-2",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "integer",
+        "need_le2",
+        "danger_medium"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 18
+    },
+    {
+      "id": "need2_lowsot_price",
+      "name": "Нужно два гола, мало створов + коэффициент 1,80-1,99",
+      "pool": "strong",
+      "minute_window": [
+        5,
+        89
+      ],
+      "conditions": [
+        "need_two",
+        "sot_low",
+        "price180_199"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 19
+    },
+    {
+      "id": "score1_bothsot",
+      "name": "Один гол + створы у обеих команд",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "conditions": [
+        "score_one",
+        "both_sot"
+      ],
+      "delay_seconds": 0,
+      "market": "over",
+      "proposal_number": 20
+    }
+  ]
+}

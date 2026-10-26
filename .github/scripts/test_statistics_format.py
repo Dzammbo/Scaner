@@ -20,6 +20,26 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_twenty_refinements_start_at_zero_then_compare_only_their_own_series(self):
+        old = report()
+        new = copy.deepcopy(old)
+        new['refined_pockets'] = dict(id='ref20', version=1, catalog_sha256='frozen',
+            pockets={str(i): row('Уточнение '+str(i), n=0, roi=None) for i in range(20)})
+        tables = build_tables(new, old)
+        self.assertEqual(len(tables['over']), 21)
+        self.assertFalse(tables['errors'])
+        self.assertEqual(tables['over'][0]['n'], 40)
+        self.assertEqual(sum(r['n'] for r in tables['over'] if r['key'].startswith('refined_pockets/')), 0)
+        later = copy.deepcopy(new)
+        later['refined_pockets']['pockets']['0'] = row('Уточнение 0', n=31, roi=.2, robust=.1)
+        rows = build_tables(later, new)['over']
+        refined = next(r for r in rows if r['key']=='refined_pockets/0')
+        self.assertEqual(refined['new_closed'], 31)
+        self.assertTrue(refined['first_result'])
+        self.assertEqual(rows[0]['key'], 'refined_pockets/0')
+        self.assertIsNone(refined['delta_pp'])
+        self.assertEqual(render_statistics(later, new).count('| Группа |'),1)
+
     def test_population_deltas_share_the_report_baseline(self):
         old = report()
         old['population'] = dict(unique_observed=2823, confirmed_closed=2762,
@@ -123,3 +143,4 @@ class StatisticsFormatTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
