@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 'statistics-two-tables-20261026-v1'
+VERSION = 'statistics-two-tables-20261026-v2'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
 
@@ -40,8 +40,8 @@ def build_tables(report, previous=None):
     def add(key, label, market, row, old=None):
         n = row['n']
         roi, without = number(row.get('roi')), robust(row)
-        metric = without if market == 'over' else roi
-        prior_metric = (robust(old) if market == 'over' else number(old.get('roi'))) if old else None
+        metric = without
+        prior_metric = robust(old) if old else None
         delta = ((metric - prior_metric) * 100
                  if metric is not None and prior_metric is not None else None)
         result[market].append(dict(
@@ -151,7 +151,7 @@ def render_statistics(report, previous=None, tables=None):
     lines.extend(['N - рассчитанные матчи; в скобках прирост к предыдущему отчёту. '
                   'Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: '
                   'такие группы стоят внизу по убыванию обычного ROI.', ''])
-    for market, title, metric in (('over', 'ТБ', 'без 3'), ('under', 'ТМ', 'ROI')):
+    for market, title, metric in (('over', 'ТБ', 'без 3'), ('under', 'ТМ', 'без 3')):
         lines.extend([f'**Все {title} - по убыванию ROI без трёх**', '',
                       f'| Группа | N (+новые) | ROI | ROI без 3 | Δ {metric}, п.п. |',
                       '|---|---:|---:|---:|---:|'])
@@ -162,7 +162,7 @@ def render_statistics(report, previous=None, tables=None):
             lines.append(f"| {cell(row['name'])} | {count(row['n'])}{growth} | {percent(row['roi'])} | "
                          f"{percent(row['roi_without_top3'])} | {change} |")
         lines.append('')
-    lines.extend(['Δ ТБ - изменение ROI без трёх; Δ ТМ - изменение обычного ROI, в процентных пунктах. '
+    lines.extend(['Δ ТБ и ТМ - изменение ROI без трёх лучших, в процентных пунктах. '
                   'При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, '
                   'их N и ROI не складываются. Контроль, широкий пул и эксперимент качества '
                   'имеют собственные условия и периоды: сортировка не доказывает превосходство метода.', ''])

@@ -115,17 +115,16 @@ def add_pocket_dynamics(report, previous, root=None):
         old_rows = (old_series.get('pockets') or {}) if same_catalog else {}
         for pocket_id, row in current_series['pockets'].items():
             old = old_rows.get(pocket_id)
-            # New TB series uses the same robust metric as the existing TB series.
-            metric = ('without_top3' if series == 'independent_pockets' or
-                      (series in ('distinct_pockets', 'seven_direction_pockets') and row.get('market') == 'over')
-                      else 'roi')
+            # Both markets use the same robust metric as the table ranking.
             def value(item):
-                return ((item.get('without_top3') or {}).get('roi') if metric == 'without_top3'
-                        else item.get('roi'))
+                if item.get('n', 0) <= 30:
+                    return None
+                robust = item.get('without_top3', item.get('without_top3_roi'))
+                return robust.get('roi') if isinstance(robust, dict) else robust
             current_roi = value(row)
             old_roi = value(old) if old else None
             delta = round((current_roi - old_roi) * 100, 4) if current_roi is not None and old_roi is not None else None
-            row['dynamics'] = dict(metric='without_top3_roi' if metric == 'without_top3' else 'roi',
+            row['dynamics'] = dict(metric='without_top3_roi',
                                    previous_n=old.get('n') if old else None,
                                    new_closed=row.get('n', 0) - old.get('n', 0) if old else None,
                                    previous_roi=old_roi,

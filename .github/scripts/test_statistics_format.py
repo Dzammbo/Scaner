@@ -39,7 +39,7 @@ class StatisticsFormatTest(unittest.TestCase):
         self.assertIsNone(tables['over'][-1]['roi_without_top3'])
         self.assertEqual([r['name'] for r in tables['under']], ['Новый: новый', 'ТМ красная'])
 
-    def test_delta_uses_previous_full_report_with_different_metric_for_each_market(self):
+    def test_delta_uses_the_same_robust_metric_for_each_market(self):
         old = report()
         old['independent_pockets']['pockets']['a'] = row('ТБ', n=40, roi=.9, robust=.1)
         old['under_pockets']['pockets']['b'] = row('ТМ', n=40, roi=.1, robust=.9, market='under')
@@ -50,7 +50,7 @@ class StatisticsFormatTest(unittest.TestCase):
         tb = next(r for r in tables['over'] if r['name'] == 'ТБ')
         self.assertAlmostEqual(tb['delta_pp'], 10)
         self.assertEqual(tb['new_closed'], 5)
-        self.assertAlmostEqual(tables['under'][0]['delta_pp'], 10)
+        self.assertAlmostEqual(tables['under'][0]['delta_pp'], -10)
         self.assertEqual(tables['under'][0]['new_closed'], 3)
         new['independent_pockets']['catalog_sha256'] = 'different'
         tb = next(r for r in build_tables(new, old)['over'] if r['name'] == 'ТБ')
@@ -68,6 +68,8 @@ class StatisticsFormatTest(unittest.TestCase):
         self.assertEqual(len(build_tables(data)['over']), 4)
         text = render_statistics(data)
         self.assertEqual(text.count('| Группа |'), 2)
+        self.assertEqual(text.count('| Δ без 3, п.п. |'), 2)
+        self.assertNotIn('| Δ ROI, п.п. |', text)
         self.assertEqual(text.count('| Контрольная пятёрка |'), 1)
         self.assertIn('26.10, 07:00 МСК', text)
 

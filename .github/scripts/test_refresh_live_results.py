@@ -28,23 +28,35 @@ class PocketDynamicsTest(unittest.TestCase):
             previous = previous_statistics_report(root)
             self.assertEqual(previous[1].name, '200.json')
 
-    def test_robust_tb_and_raw_tm_with_new_closed_count(self):
+    def test_robust_tb_and_tm_with_new_closed_count(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             path = root / 'research/live-results-refresh/2026-10-25/100.json'
             path.parent.mkdir(parents=True)
             old = {'generated_at_utc': '2026-10-25T01:00:00+00:00',
-                   'independent_pockets': series('over', 10, .1, .05),
-                   'under_pockets': series('under', 10, .1)}
-            report = {'independent_pockets': series('over', 12, .07, .08),
-                      'under_pockets': series('under', 13, .08)}
+                   'independent_pockets': series('over', 40, .1, .05),
+                   'under_pockets': series('under', 40, .1, .05)}
+            report = {'independent_pockets': series('over', 42, .07, .08),
+                      'under_pockets': series('under', 43, .08, .09)}
             add_pocket_dynamics(report, (dt.datetime.now(dt.timezone.utc), path, old))
             tb = report['independent_pockets']['pockets']['p']['dynamics']
             tm = report['under_pockets']['pockets']['p']['dynamics']
             self.assertEqual((tb['delta_pp'], tb['new_closed'], tb['trend']),
                              (3.0, 2, 'improving'))
             self.assertEqual((tm['delta_pp'], tm['new_closed'], tm['trend']),
-                             (-2.0, 3, 'worsening'))
+                             (4.0, 3, 'improving'))
+
+    def test_tm_threshold_crossing_has_no_robust_delta(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'research/live-results-refresh/2026-10-25/100.json'
+            old = {'generated_at_utc': '2026-10-25T01:00:00+00:00',
+                   'under_pockets': series('under', 30, .1, .05)}
+            report = {'under_pockets': series('under', 31, .2, .1)}
+            add_pocket_dynamics(report, (dt.datetime.now(dt.timezone.utc), path, old))
+            dynamics = report['under_pockets']['pockets']['p']['dynamics']
+            self.assertEqual(dynamics['metric'], 'without_top3_roi')
+            self.assertIsNone(dynamics['delta_pp'])
+            self.assertEqual(dynamics['new_closed'], 1)
 
     def test_reset_or_no_previous_roi_has_no_trend(self):
         with tempfile.TemporaryDirectory() as directory:
