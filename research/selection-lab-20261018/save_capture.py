@@ -80,6 +80,17 @@ def prepare_files(prefix,sid,suffix,day,contour):
      status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingSevenDirectionJournal',
      observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
      parent_selection_changed=False)))
+ refined_path=prefix/'refined-pocket-receipts'/(day or '')/(sid+suffix)
+ cfg=Path('.github/live-refined-pockets.json')
+ if source_shadow_enabled(prefix) and cfg.exists():
+  raw=cfg.read_bytes();data=json.loads(raw)
+  if data.get('enabled'):
+   if not receipt.get('failed') and refined_path.exists():files[refined_path]=refined_path.read_bytes()
+   else:
+    files[refined_path]=encode(dict(contour=contour,snapshot_id=sid,refined_pockets=dict(
+     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+     status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingRefinedJournal',
+     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),parent_selection_changed=False)))
  return files
 
 def source_shadow_enabled(prefix):
@@ -118,4 +129,5 @@ def main():
      if attempt==2:raise
   finally:git('worktree','remove','--force',str(work))
 if __name__=='__main__':main()
+
 
