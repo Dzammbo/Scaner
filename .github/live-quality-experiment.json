@@ -1,1 +1,25 @@
-{"activation":"first_successful_background_capture_after_model_creation","enabled":true,"id":"quality-forward-v1-20261024","mode":"prospective_parallel_comparison","model_path":"research/selection-quality/models/remaining-goals-quality-v1-20261024.json","model_sha256":"049b1ecc410119973c43659a9f5610693d591941f2e549fbc6e1a19ba0fdea7f","protocol":{"automatic_promotion":false,"calibration_relative_error_max":0.1,"candidate_ev_min":0.05,"minimum_bin_n":50,"minimum_candidate_settled":100,"minimum_entry_days":7,"minimum_settled":500,"opportunity":"original_parent_base_entry_once_per_new_match","parent_epoch_id":"shared-top5-forward-20261022-v2","probability_comparison_minimum_fraction":0.8,"refill":false,"retrain":false},"version":"remaining-goals-quality-v1-20261024"}
+{
+  "activation": "first_successful_background_capture_after_model_creation",
+  "enabled": false,
+  "id": "quality-forward-v1-20261024",
+  "mode": "prospective_parallel_comparison",
+  "model_path": "research/selection-quality/models/remaining-goals-quality-v1-20261024.json",
+  "model_sha256": "049b1ecc410119973c43659a9f5610693d591941f2e549fbc6e1a19ba0fdea7f",
+  "protocol": {
+    "automatic_promotion": false,
+    "calibration_relative_error_max": 0.1,
+    "candidate_ev_min": 0.05,
+    "minimum_bin_n": 50,
+    "minimum_candidate_settled": 100,
+    "minimum_entry_days": 7,
+    "minimum_settled": 500,
+    "opportunity": "original_parent_base_entry_once_per_new_match",
+    "parent_epoch_id": "shared-top5-forward-20261022-v2",
+    "probability_comparison_minimum_fraction": 0.8,
+    "refill": false,
+    "retrain": false
+  },
+  "version": "remaining-goals-quality-v1-20261024",
+  "paused_at_utc": "2026-10-26T18:15:08.548Z",
+  "pause_reason": "Отключён по решению пользователя: прекратить расчёты эксперимента качества и убрать его из активной статистики; историю сохранить."
+}
