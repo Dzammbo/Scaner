@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 'statistics-two-tables-20261026-v2'
+VERSION = 'statistics-over-only-20261026-v3'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
 
@@ -38,6 +38,9 @@ def build_tables(report, previous=None):
                   reference_at_utc=previous.get('generated_at_utc'))
 
     def add(key, label, market, row, old=None):
+        # Archived under entries never enter the active report, including old JSON.
+        if market != 'over':
+            return
         n = row['n']
         roi, without = number(row.get('roi')), robust(row)
         metric = without
@@ -61,9 +64,8 @@ def build_tables(report, previous=None):
 
     sections = (
         ('independent_pockets', 'Самостоятельные ТБ', 'over', ''),
-        ('under_pockets', 'Самостоятельные ТМ', 'under', ''),
         ('distinct_pockets', 'Отдельные сочетания', None, 'Сочетание: '),
-        ('seven_direction_pockets', 'Восемь новых карманов', None, 'Новый: '),
+        ('seven_direction_pockets', 'Новые карманы ТБ', None, 'Новый: '),
     )
     for key, title, market, prefix in sections:
         section, prior = report.get(key) or {}, previous.get(key) or {}
@@ -151,7 +153,7 @@ def render_statistics(report, previous=None, tables=None):
     lines.extend(['N - рассчитанные матчи; в скобках прирост к предыдущему отчёту. '
                   'Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: '
                   'такие группы стоят внизу по убыванию обычного ROI.', ''])
-    for market, title, metric in (('over', 'ТБ', 'без 3'), ('under', 'ТМ', 'без 3')):
+    for market, title, metric in (('over', 'ТБ', 'без 3'),):
         lines.extend([f'**Все {title} - по убыванию ROI без трёх**', '',
                       f'| Группа | N (+новые) | ROI | ROI без 3 | Δ {metric}, п.п. |',
                       '|---|---:|---:|---:|---:|'])
@@ -162,10 +164,11 @@ def render_statistics(report, previous=None, tables=None):
             lines.append(f"| {cell(row['name'])} | {count(row['n'])}{growth} | {percent(row['roi'])} | "
                          f"{percent(row['roi_without_top3'])} | {change} |")
         lines.append('')
-    lines.extend(['Δ ТБ и ТМ - изменение ROI без трёх лучших, в процентных пунктах. '
+    lines.extend(['Δ - изменение ROI без трёх лучших, в процентных пунктах. '
                   'При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, '
                   'их N и ROI не складываются. Контроль, широкий пул и эксперимент качества '
-                  'имеют собственные условия и периоды: сортировка не доказывает превосходство метода.', ''])
+                  'имеют собственные условия и периоды: сортировка не доказывает превосходство метода. '
+                  'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
     quality = report.get('quality_comparison') or {}
     progress = quality.get('progress') or {}
     if progress:

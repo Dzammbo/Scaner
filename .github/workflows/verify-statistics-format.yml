@@ -1,4 +1,4 @@
-name: Verify default statistics tables
+name: Verify default TB statistics and paused under rules
 on:
   push:
     branches: [main]
@@ -8,6 +8,9 @@ on:
       - '.github/scripts/refresh_live_results.py'
       - '.github/scripts/test_refresh_live_results.py'
       - '.github/workflows/verify-statistics-format.yml'
+      - 'research/selection-lab-20261018/seven_direction_pockets.py'
+      - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
+      - '.github/live-under-pockets.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,3 +27,7 @@ jobs:
         env:
           PYTHONPATH: .github/scripts
         run: python3 -m unittest discover -s .github/scripts -p test_refresh_live_results.py -v
+      - name: Verify paused TM and continuous TB history
+        env:
+          PYTHONPATH: research/selection-lab-20261018
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p test_seven_direction_pockets.py -v

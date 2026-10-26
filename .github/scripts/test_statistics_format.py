@@ -37,9 +37,9 @@ class StatisticsFormatTest(unittest.TestCase):
         self.assertEqual([r['name'] for r in tables['over']], [
             'Сочетание: сочетание', 'самостоятельный', 'Контрольная пятёрка', 'Новый: новый'])
         self.assertIsNone(tables['over'][-1]['roi_without_top3'])
-        self.assertEqual([r['name'] for r in tables['under']], ['Новый: новый', 'ТМ красная'])
+        self.assertEqual(tables['under'], [])
 
-    def test_delta_uses_the_same_robust_metric_for_each_market(self):
+    def test_over_delta_uses_the_robust_metric(self):
         old = report()
         old['independent_pockets']['pockets']['a'] = row('ТБ', n=40, roi=.9, robust=.1)
         old['under_pockets']['pockets']['b'] = row('ТМ', n=40, roi=.1, robust=.9, market='under')
@@ -50,8 +50,7 @@ class StatisticsFormatTest(unittest.TestCase):
         tb = next(r for r in tables['over'] if r['name'] == 'ТБ')
         self.assertAlmostEqual(tb['delta_pp'], 10)
         self.assertEqual(tb['new_closed'], 5)
-        self.assertAlmostEqual(tables['under'][0]['delta_pp'], -10)
-        self.assertEqual(tables['under'][0]['new_closed'], 3)
+        self.assertEqual(tables['under'], [])
         new['independent_pockets']['catalog_sha256'] = 'different'
         tb = next(r for r in build_tables(new, old)['over'] if r['name'] == 'ТБ')
         self.assertIsNone(tb['delta_pp'])
@@ -67,20 +66,31 @@ class StatisticsFormatTest(unittest.TestCase):
         data['shadow_universe'] = dict(total=dict(n=40, roi=.1, without_top3=.08))
         self.assertEqual(len(build_tables(data)['over']), 4)
         text = render_statistics(data)
-        self.assertEqual(text.count('| Группа |'), 2)
-        self.assertEqual(text.count('| Δ без 3, п.п. |'), 2)
+        self.assertEqual(text.count('| Группа |'), 1)
+        self.assertEqual(text.count('| Δ без 3, п.п. |'), 1)
         self.assertNotIn('| Δ ROI, п.п. |', text)
         self.assertEqual(text.count('| Контрольная пятёрка |'), 1)
         self.assertIn('26.10, 07:00 МСК', text)
 
     def test_missing_baseline_and_errors_are_visible_without_mutating_data(self):
         data = report()
-        data['under_pockets'] = dict(status='error', error_type='ValueError')
+        data['independent_pockets'] = dict(status='error', error_type='ValueError')
         original = copy.deepcopy(data)
         text = render_statistics(data)
-        self.assertIn('Самостоятельные ТМ: ValueError', text)
+        self.assertIn('Самостоятельные ТБ: ValueError', text)
         self.assertIn('| 40 | +10,00% | +5,00% | н/д |', text)
         self.assertEqual(data, original)
+
+    def test_archived_under_rows_and_errors_never_appear_in_active_report(self):
+        data=report()
+        data['under_pockets']=dict(status='error',error_type='ARCHIVED_UNDER')
+        data['seven_direction_pockets']['pockets']['under']=row('ARCHIVED_SIGNAL',market='under')
+        tables=build_tables(data)
+        text=render_statistics(data)
+        self.assertEqual(tables['under'],[])
+        self.assertNotIn('ARCHIVED_UNDER',text)
+        self.assertNotIn('ARCHIVED_SIGNAL',text)
+        self.assertNotIn('**Все ТМ',text)
 
     def test_first_result_and_threshold_crossing_are_not_a_zero_roi_baseline(self):
         old = report()

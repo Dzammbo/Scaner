@@ -43,10 +43,10 @@ class ForwardTests(unittest.TestCase):
         a=event('1-0',40);a['line']=3.5
         self.run_capture([a]);a['minute']=45
         r=self.run_capture([a]);self.assertEqual(len(r['choices']['two_goals_shift_up_over']),0)
-    def test_equalizer_needs_prior_observed_trailing_score(self):
+    def test_under_equalizer_is_paused_even_when_its_original_trigger_matches(self):
         a=event('1-0',45);self.run_capture([a])
         a['score']='1-1';a['minute']=50
-        r=self.run_capture([a]);self.assertEqual(len(r['choices']['equalizer_under']),1)
+        r=self.run_capture([a]);self.assertEqual(len(r['choices']['equalizer_under']),0)
         r=self.run_capture([a]);self.assertEqual(len(r['choices']['equalizer_under']),0)
     def test_delayed_entry_uses_next_quote_and_does_not_reenter(self):
         a=event('1-0',30);a['line']=2.5
@@ -58,6 +58,21 @@ class ForwardTests(unittest.TestCase):
         a=event('1-0',45);self.run_capture([a]);a['score']='0-0';a['minute']=48;self.run_capture([a])
         a['score']='1-1';a['minute']=51
         r=self.run_capture([a]);self.assertEqual(r['choices']['equalizer_under'],[])
+    def test_catalog_and_existing_over_history_survive_under_pause(self):
+        cfg, before_digest = p.config(self.root)
+        a=event('1-0',30);a['line']=2.5
+        self.run_capture([a]);a['minute']=35
+        result=self.run_capture([a])
+        self.assertEqual(len(result['choices']['same_total_one_goal_over']),1)
+        self.assertEqual(p.config(self.root)[1],before_digest)
+        self.assertEqual(len(cfg['pockets']),8)
+        report=p.report(self.root,{})
+        self.assertEqual(len(report['pockets']),6)
+        self.assertEqual(report['pockets']['same_total_one_goal_over']['selected'],1)
+        self.assertTrue(all(row['market']=='over' for row in report['pockets'].values()))
+        self.assertNotIn('equalizer_under',result['progress'])
+        self.assertEqual(self.run_capture([a])['choices']['same_total_one_goal_over'],[])
+
     def test_no_prematch_data_no_prematch_rule(self):
         a=event('1-0',30);a.pop('lab_odds_payload')
         self.assertEqual(self.run_capture([a])['choices']['same_total_one_goal_over'],[])
