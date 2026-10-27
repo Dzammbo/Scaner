@@ -153,6 +153,10 @@ class DailyTests(unittest.TestCase):
     def test_real_provider_names_render_in_russian_without_changing_identity(self):
         examples=[('Türkiye Cup','Yeni Mersin Idmanyurdu','Mus Spor FC',
                    'Кубок Турции','Ени Мерсин Идманюрду','Муш Спор'),
+                  ('Bosnia & Herzegovina Cup','FK Laktasi','Zrinjski Mostar',
+                   'Кубок Боснии и Герцеговины','Лакташи','Зриньски Мостар'),
+                  ('Italy Serie A','Sassuolo','Lazio',
+                   'Италия, Серия А','Сассуоло','Лацио'),
                   ('Slovenia 2. SNL','Tabor Sezana','ND Slovan Ljubljana',
                    'Словения, 2-я лига','Табор Сежана','Слован Любляна'),
                   ('Bulgaria Second League','Ludogorets Razgrad II','PFC Dobrudzha Dobrich',
