@@ -1,0 +1,61 @@
+{
+  "enabled": true,
+  "id": "external-four-forward-20261027-v1",
+  "version": "external-pockets-v1-20261027",
+  "activation": "first_successful_capture_after_deployment",
+  "entry_policy": "independent_first_qualified_exact_priced_entry_per_rule_event",
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "extra_api_calls": 0,
+  "profitability_proven": false,
+  "pockets": [
+    {
+      "id": "draw_60_65",
+      "name": "Ничья на 60-65-й минуте",
+      "minute_window": [
+        60,
+        65
+      ],
+      "market": "over",
+      "external_proposal_number": 1,
+      "definition": "Равный счёт; адаптация позднего гола к основной FT-линии",
+      "source": "https://betfairtradingcommunity.com/en/blog/betfair-late-goal-when-drawing-trading-strategy"
+    },
+    {
+      "id": "two_sided_xg15",
+      "name": "35-75 минут, xG каждой команды ≥0,25 за 15 минут",
+      "minute_window": [
+        35,
+        75
+      ],
+      "market": "over",
+      "external_proposal_number": 8,
+      "definition": "Полное свежее окно 15 минут, xG ≥0,25 и удары у каждой команды",
+      "source": "https://www.hudl.com/blog/expected-goals-xg-explained"
+    },
+    {
+      "id": "favorite_behind_sot15",
+      "name": "50-70 минут, фаворит ≤1,70 проигрывает один + ≥2 створа за 15 минут",
+      "minute_window": [
+        50,
+        70
+      ],
+      "market": "over",
+      "external_proposal_number": 13,
+      "definition": "Точная прематчевая цена фаворита ≤1,70; отстаёт на гол; ≥2 его створа за 15 минут",
+      "source": "https://arxiv.org/html/2312.04338v1"
+    },
+    {
+      "id": "late_draw_shots10",
+      "name": "75-85 минут, ничья + ≥3 удара за 10 минут",
+      "minute_window": [
+        75,
+        85
+      ],
+      "market": "over",
+      "external_proposal_number": 15,
+      "definition": "Адаптация: полные створы + мимо, не удары именно из штрафной",
+      "source": "https://arxiv.org/html/2312.04338v1"
+    }
+  ]
+}
