@@ -345,6 +345,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
 
 
 def render(snapshot):
+    from live_ru import russian_name
     def clean(s):return str(s).replace('\n',' ').replace('\r',' ').replace('|','/').replace('*','')
     def num(v):
         from live_enrichment import number
@@ -369,7 +370,7 @@ def render(snapshot):
             fresh=f"За {num(w.get('actual_duration_minutes'))}′: удары {pair_text(f.get('shots_5_home_away'))}, створы {pair_text(f.get('on_target_5_home_away'))}"
         else:fresh='динамика н/д'
         red=stats.get('redcards');reds='удалений нет' if isinstance(red,(list,tuple)) and len(red)==2 and all(str(v) in ('0','0.0') for v in red) else 'КК '+pair_text(red)
-        lines.extend([f"**{rank}. {clean(e['league'])} · {clean(e['home'])} - {clean(e['away'])} · {num(e['minute'])}′ · {e['score'].replace('-',':')}**  ",
+        lines.extend([f"**{rank}. {clean(russian_name(e['league'],league=True))} · {clean(russian_name(e['home']))} - {clean(russian_name(e['away']))} · {num(e['minute'])}′ · {e['score'].replace('-',':')}**  ",
             f"**ТБ {num(q['line'])} × {price(q['over'])}**  ",
             f"{fresh}; xG {pair_text(stats.get('xg'))}; {reds}.  ",
             f"**Группа №{g['rank']}: «{clean(g['name'])}».**",''])

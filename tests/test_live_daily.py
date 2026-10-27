@@ -150,6 +150,28 @@ class DailyTests(unittest.TestCase):
         self.assertIn('ТБ 3,75 × 1,90',lines[2]);self.assertIn('xG н/д',lines[3])
         self.assertIn('Группа №1',lines[4]);self.assertNotIn('ROI',text);self.assertNotIn('ГП:',text)
 
+    def test_real_provider_names_render_in_russian_without_changing_identity(self):
+        examples=[('Türkiye Cup','Yeni Mersin Idmanyurdu','Mus Spor FC',
+                   'Кубок Турции','Ени Мерсин Идманюрду','Муш Спор'),
+                  ('Slovenia 2. SNL','Tabor Sezana','ND Slovan Ljubljana',
+                   'Словения, 2-я лига','Табор Сежана','Слован Любляна'),
+                  ('Bulgaria Second League','Ludogorets Razgrad II','PFC Dobrudzha Dobrich',
+                   'Болгария, Вторая лига','Лудогорец Разград-2','Добруджа Добрич'),
+                  ('Georgia Cup','FC Gagra','FC Rustavi',
+                   'Кубок Грузии','Гагра','Рустави')]
+        for source_league,home,away,league_ru,home_ru,away_ru in examples:
+            e=self.event(1,'2-0',line=3.25)
+            e.update(league=source_league,home=home,away=away,daily_group=self.daily['groups'][0])
+            snap=self.snapshot([e]);snap['display_event_ids']=['1']
+            heading=d.render(snap).splitlines()[2]
+            self.assertIn(f'{league_ru} · {home_ru} - {away_ru}',heading)
+            self.assertNotRegex(heading,r'[A-Za-z]')
+            self.assertEqual((e['league'],e['home'],e['away']),
+                             (source_league,home,away))
+        from live_ru import russian_name
+        self.assertEqual(russian_name('Portugal Primeira Liga',league=True),
+                         'Португалия, Примейра-лига')
+
     def test_budget_is_a_hard_api_cap(self):
         calls=[];budget=d.Budget(lambda *a,**kw:calls.append(a),96)
         for _ in range(96):budget('test')
@@ -181,9 +203,12 @@ class DailyTests(unittest.TestCase):
 
     def test_manual_entrypoint_uses_daily_collector_and_ready_markdown(self):
         output=io.StringIO();stub=dict(snapshot_id='test-1',live_markdown='four lines')
-        with patch.object(live,'read_request',return_value=('full',[])),patch('live_daily.collect',return_value=stub) as collector,patch.object(live,'save_snapshot',return_value='snapshots/live/test-1.json'),patch.dict(os.environ,{'GITHUB_OUTPUT':''}),contextlib.redirect_stdout(output):
+        def save(*args):
+            self.assertTrue(output.getvalue().startswith('LIVE_MARKDOWN_JSON='))
+            return 'snapshots/live/test-1.json'
+        with patch.object(live,'read_request',return_value=('full',[])),patch('live_daily.collect',return_value=stub) as collector,patch.object(live,'save_snapshot',side_effect=save),patch.dict(os.environ,{'GITHUB_OUTPUT':''}),contextlib.redirect_stdout(output):
             live.main()
-        self.assertTrue(collector.called);self.assertIn('LIVE_MARKDOWN_JSON=',output.getvalue())
+        self.assertTrue(collector.called);self.assertTrue(output.getvalue().startswith('LIVE_MARKDOWN_JSON='))
 
 
 if __name__=='__main__':unittest.main()

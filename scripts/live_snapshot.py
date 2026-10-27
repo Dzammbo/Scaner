@@ -401,8 +401,8 @@ def main():
     result = collect_daily(__import__(__name__ if __name__ != "__main__" else "live_snapshot"),
                            mode, requested_ids, directory,
                            os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"), ROOT)
-    print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
     print("LIVE_MARKDOWN_JSON=" + json.dumps(result["live_markdown"], ensure_ascii=False), flush=True)
+    print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
     path = save_snapshot(result, directory, result["snapshot_id"])
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a") as output:

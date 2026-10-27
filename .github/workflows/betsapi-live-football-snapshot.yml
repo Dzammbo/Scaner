@@ -42,7 +42,8 @@ jobs:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
           SNAPSHOT_PATH: ${{ steps.live.outputs.snapshot_path }}
         run: python3 scripts/live_snapshot.py --odds-snapshot "$SNAPSHOT_PATH"
-      # LIVE_MARKDOWN_JSON is the ready four-line answer, including exact prices.
+      # LIVE_MARKDOWN_JSON is emitted first: display it immediately from streaming logs.
+      # Do not wait for the full snapshot line, workflow completion or history save.
       # Persist the snapshot without generating a second candidate list.
       - name: Post-output save of already published snapshot
         continue-on-error: true
