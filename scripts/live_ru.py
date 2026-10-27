@@ -13,6 +13,8 @@ NAMES = {
     'Zrinjski Mostar': 'Зриньски Мостар',
     'Sassuolo': 'Сассуоло',
     'Lazio': 'Лацио',
+    'Alanyaspor': 'Аланьяспор',
+    '12 Bingolspor': '12 Бингёльспор',
     'Portugal Primeira Liga': 'Португалия, Примейра-лига',
     'England Premier League': 'Англия, Премьер-лига',
     'Yeni Mersin Idmanyurdu': 'Ени Мерсин Идманюрду',
