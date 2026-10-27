@@ -74,7 +74,7 @@ def add_pocket_dynamics(report, previous, root=None):
         dict(generated_at_utc=anchor['generated_at_utc'],
              report_path=previous[1].relative_to(previous[1].parents[3]).as_posix())
         if previous else None)
-    for series in ('independent_pockets', 'under_pockets', 'distinct_pockets', 'seven_direction_pockets', 'refined_pockets'):
+    for series in ('independent_pockets', 'under_pockets', 'distinct_pockets', 'seven_direction_pockets', 'refined_pockets', 'external_pockets'):
         current_series = report.get(series) or {}
         old_series = anchor.get(series) or {}
         if current_series.get('status') == 'error' or not isinstance(current_series.get('pockets'), dict):
@@ -352,6 +352,11 @@ def main():
         report['refined_pockets'] = refined_pockets.report(root, merged)
     except Exception as exc:
         report['refined_pockets'] = dict(status='error', error_type=type(exc).__name__)
+    try:
+        import external_pockets
+        report['external_pockets'] = external_pockets.report(root, merged)
+    except Exception as exc:
+        report['external_pockets'] = dict(status='error', error_type=type(exc).__name__)
     previous_report = previous_statistics_report(root)
     add_pocket_dynamics(report, previous_report, root)
     try:

@@ -91,6 +91,17 @@ def prepare_files(prefix,sid,suffix,day,contour):
      id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
      status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingRefinedJournal',
      observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),parent_selection_changed=False)))
+ external_path=prefix/'external-pocket-receipts'/(day or '')/(sid+suffix)
+ cfg=Path('.github/live-external-pockets.json')
+ if source_shadow_enabled(prefix) and cfg.exists():
+  raw=cfg.read_bytes();data=json.loads(raw)
+  if data.get('enabled'):
+   if not receipt.get('failed') and external_path.exists():files[external_path]=external_path.read_bytes()
+   else:
+    files[external_path]=encode(dict(contour=contour,snapshot_id=sid,external_pockets=dict(
+     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+     status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingExternalJournal',
+     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),parent_selection_changed=False)))
  return files
 
 def source_shadow_enabled(prefix):

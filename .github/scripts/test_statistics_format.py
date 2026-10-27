@@ -40,6 +40,24 @@ class StatisticsFormatTest(unittest.TestCase):
         self.assertIsNone(refined['delta_pp'])
         self.assertEqual(render_statistics(later, new).count('| Группа |'),1)
 
+    def test_four_external_hypotheses_join_existing_table_without_old_row_changes(self):
+        old = report()
+        new = copy.deepcopy(old)
+        new['external_pockets'] = dict(id='external4', version=1, catalog_sha256='external-fixed',
+            pockets={str(i): row('Гипотеза '+str(i),n=0,roi=None) for i in range(4)})
+        before = build_tables(old)['over']
+        after = build_tables(new, old)['over']
+        self.assertEqual(len(after),len(before)+4)
+        self.assertFalse(build_tables(new,old)['errors'])
+        self.assertEqual(after[0]['roi'],before[0]['roi'])
+        self.assertTrue(all(r['n']==0 for r in after if r['key'].startswith('external_pockets/')))
+        self.assertEqual(render_statistics(new,old).count('| Группа |'),1)
+        later=copy.deepcopy(new)
+        later['external_pockets']['pockets']['0']=row('test',n=31,roi=.3,robust=.2)
+        selected=next(r for r in build_tables(later,new)['over'] if r['key']=='external_pockets/0')
+        self.assertEqual(selected['new_closed'],31)
+        self.assertIsNone(selected['delta_pp'])
+
     def test_population_deltas_share_the_report_baseline(self):
         old = report()
         old['population'] = dict(unique_observed=2823, confirmed_closed=2762,
