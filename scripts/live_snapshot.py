@@ -19,7 +19,7 @@ from live_ranking import (FINAL_RANKING_METHOD, FINAL_SELECTION_LIMIT,
                           RULES_VERSION, RANKING_METHOD, rank_candidates,
                           rank_final_candidates, display_candidates)
 
-# User-approved chat presentation contract; does not change sports selection.
+# Archived v8 contract for frozen research collect(); manual main() uses live_daily.FORMAT.
 LIVE_RESPONSE_FORMAT = {
     'version': 'live-compact-2026-10-19-v7',
     'display_order': ['sports_rank_ascending'],
@@ -365,6 +365,8 @@ def collect(mode, requested_ids, history_dir, selected_file):
 
 def complete_odds(snapshot):
     """Enrich immutable sports membership; no ranking or selection-ledger writes."""
+    if snapshot.get("rules_version") == "live-daily-pockets-20261027-v1":
+        return snapshot  # Daily pocket selection already freezes exact current prices.
     ids = set(snapshot["final_sports_selection_event_ids"])
     events = [event for event in snapshot["events"] if event["event_id"] in ids]
     elapsed = enrich_events(events, kinds=("odds",))
@@ -394,13 +396,17 @@ def odds_main(path):
 def main():
     mode, requested_ids = read_request()
     directory = os.environ.get("LIVE_HISTORY_DIR", "snapshots/live")
-    result = collect(mode, requested_ids, directory,
-                     os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"))
+    from live_daily import collect as collect_daily, ROOT
+    # Only the manual entrypoint changes. Research capture.collect retains its frozen logic.
+    result = collect_daily(__import__(__name__ if __name__ != "__main__" else "live_snapshot"),
+                           mode, requested_ids, directory,
+                           os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"), ROOT)
     print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
+    print("LIVE_MARKDOWN_JSON=" + json.dumps(result["live_markdown"], ensure_ascii=False), flush=True)
     path = save_snapshot(result, directory, result["snapshot_id"])
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a") as output:
-            output.write("snapshot_path=" + path + "\n")
+            output.write("snapshot_path=" + path + "\nprices_complete=true\n")
 
 
 if __name__ == "__main__":

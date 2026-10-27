@@ -6,11 +6,17 @@ on:
     paths:
       - 'scripts/**'
       - 'tests/**'
+      - '.github/live-daily-policy.json'
+      - '.github/live-daily-pockets*.json'
+      - '.github/live-daily-pockets/**'
       - '.github/workflows/verify-live.yml'
   pull_request:
     paths:
       - 'scripts/**'
       - 'tests/**'
+      - '.github/live-daily-policy.json'
+      - '.github/live-daily-pockets*.json'
+      - '.github/live-daily-pockets/**'
       - '.github/workflows/verify-live.yml'
 
 permissions:

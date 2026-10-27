@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-      - name: Fetch compact live football snapshot
+      - name: Select LIVE by frozen daily pockets and render four-line cards
         id: live
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
@@ -35,14 +35,15 @@ jobs:
           else
             python3 scripts/live_snapshot.py --event-ids "$EVENT_IDS"
           fi
-      - name: Optional prices after sports-ready output
+      - name: Optional prices for legacy snapshots only
+        if: steps.live.outputs.prices_complete != 'true'
         continue-on-error: true
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
           SNAPSHOT_PATH: ${{ steps.live.outputs.snapshot_path }}
         run: python3 scripts/live_snapshot.py --odds-snapshot "$SNAPSHOT_PATH"
-      # Post-output operation. The LIVE_SNAPSHOT_JSON line is the delivery boundary:
-      # clients must publish candidates before waiting for this step or doing refresh/ledger work.
+      # LIVE_MARKDOWN_JSON is the ready four-line answer, including exact prices.
+      # Persist the snapshot without generating a second candidate list.
       - name: Post-output save of already published snapshot
         continue-on-error: true
         env:

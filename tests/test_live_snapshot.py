@@ -23,6 +23,17 @@ class Response:
     def __exit__(self,*args):pass
     def read(self):return json.dumps(self.data).encode()
 
+def run_legacy_snapshot():
+    """Exercise the frozen research collector; daily CLI is covered in test_live_daily."""
+    import live_snapshot as legacy
+    mode, ids = legacy.read_request()
+    directory = os.environ['LIVE_HISTORY_DIR']
+    result = legacy.collect(mode, ids, directory,
+        os.environ.get('LIVE_SELECTED_EVENTS_FILE', str(ROOT/'.github/live-selected-events.json')))
+    legacy.save_snapshot(result, directory, result['snapshot_id'])
+    print('LIVE_SNAPSHOT_JSON=' + json.dumps(result))
+
+
 class SnapshotIntegrationTests(unittest.TestCase):
     def test_large_pool_is_not_capped_and_enrichment_is_bounded(self):
         from live_snapshot import collect
@@ -147,7 +158,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
             env={'BETSAPI_KEY':'test','LIVE_HISTORY_DIR':directory,
                  'GITHUB_RUN_ID':'789','GITHUB_RUN_ATTEMPT':'1'}
             with patch.dict(os.environ,env,clear=True),patch.object(sys,'argv',['live_snapshot.py']),patch('urllib.request.urlopen',get),contextlib.redirect_stdout(output):
-                runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
+                run_legacy_snapshot()
             result=json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             by_id={event['event_id']:event for event in result['events']}
             self.assertEqual(result['events_main_total_count'],0)
@@ -179,7 +190,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
             def run(args,attempt):
                 output=io.StringIO()
                 with patch.dict(os.environ,{'BETSAPI_KEY':'test','LIVE_HISTORY_DIR':directory,'GITHUB_RUN_ID':'123','GITHUB_RUN_ATTEMPT':str(attempt)},clear=True),patch.object(sys,'argv',['live_snapshot.py']+args),patch('urllib.request.urlopen',get),contextlib.redirect_stdout(output):
-                    runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
+                    run_legacy_snapshot()
                 return json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             first=run([],1)
             self.assertEqual([e['event_id'] for e in first['events']],['123'])
@@ -213,7 +224,7 @@ class SnapshotIntegrationTests(unittest.TestCase):
                      'LIVE_SELECTED_EVENTS_FILE':str(selected),'GITHUB_RUN_ID':'456',
                      'GITHUB_RUN_ATTEMPT':str(attempt)}
                 with patch.dict(os.environ,env,clear=True),patch.object(sys,'argv',['live_snapshot.py']+args),patch('urllib.request.urlopen',get),contextlib.redirect_stdout(output):
-                    runpy.run_path(str(ROOT/'scripts/live_snapshot.py'),run_name='__main__')
+                    run_legacy_snapshot()
                 return json.loads(output.getvalue().split('LIVE_SNAPSHOT_JSON=')[1].splitlines()[0])
             full=run([],1)
             self.assertEqual(full['events'],[])

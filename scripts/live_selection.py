@@ -41,6 +41,17 @@ def record_choices(ledger, snapshot, choices, selected_at):
             confidence = event["final_sports_selection"].get("confidence") or {}
             if confidence.get("level") != "strong" or not confidence.get("eligible"):
                 raise ValueError("Current choices require strong evidence confidence")
+        if snapshot["rules_version"] == "live-daily-pockets-20261027-v1":
+            group = event.get("daily_group")
+            frozen = (snapshot.get("daily_pockets") or {}).get("groups", [])
+            if not group or group not in frozen:
+                raise ValueError("Published LIVE choice lacks its frozen daily group")
+            ids = snapshot.get("display_event_ids", [])
+            if event_id not in ids or (rank > 1 and ids.index(str(choices[rank-2]['event_id'])) >= ids.index(event_id)):
+                raise ValueError("Daily LIVE publication must preserve group-priority order")
+            q = event.get("events_main_total") or {}
+            if number(q.get("line")) is None or (number(q.get("over")) or 0) <= 1:
+                raise ValueError("Daily LIVE requires the exact priced market")
         for key in ("sports_reason", "expected_scenario"):
             if not isinstance(choice.get(key), str) or not choice[key].strip():
                 raise ValueError("Sports reason and expected scenario required")
@@ -74,6 +85,10 @@ def record_choices(ledger, snapshot, choices, selected_at):
             "is_user_choice": False,
             "goal_profile": deepcopy(event.get("goal_profile")),
         }
+        if snapshot["rules_version"] == "live-daily-pockets-20261027-v1":
+            record["daily_group"] = deepcopy(event["daily_group"])
+            record["daily_pockets"] = deepcopy(snapshot["daily_pockets"])
+            record["response_format_version"] = snapshot["response_format"]["version"]
         if snapshot.get("research_hypotheses_version") == HYPOTHESES_VERSION:
             record["research_hypotheses"] = evaluate_hypotheses(event)
         if snapshot.get("research_second_half_version") == SECOND_HALF_VERSION:
