@@ -2,12 +2,15 @@
   "run_id": "40746978928",
   "run_attempt": 1,
   "started_at": "2026-10-28T18:40:50.523988+00:00",
-  "updated_at": "2026-10-28T18:53:51.887812+00:00",
-  "state": "collecting",
+  "updated_at": "2026-10-28T19:00:16.176432+00:00",
+  "state": "capture_failed",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-v3-configurable-20261020",
   "reason": "manual_workflow_has_priority",
   "cycle": 1,
-  "api_call_cap": 160
+  "api_call_cap": 160,
+  "last_capture_id": "40746978928-100001",
+  "last_error": "TimeoutExpired",
+  "consecutive_failures": 1
 }
