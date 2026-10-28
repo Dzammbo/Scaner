@@ -41,9 +41,11 @@ def record_choices(ledger, snapshot, choices, selected_at):
             confidence = event["final_sports_selection"].get("confidence") or {}
             if confidence.get("level") != "strong" or not confidence.get("eligible"):
                 raise ValueError("Current choices require strong evidence confidence")
-        if snapshot["rules_version"] == "live-daily-pockets-20261027-v1":
+        if snapshot["rules_version"] in ("live-daily-pockets-20261027-v1", "live-daily-pockets-20261028-v2"):
             group = event.get("daily_group")
             frozen = (snapshot.get("daily_pockets") or {}).get("groups", [])
+            if snapshot['rules_version'] == 'live-daily-pockets-20261028-v2':
+                frozen = snapshot.get('active_daily_groups') or []
             if not group or group not in frozen:
                 raise ValueError("Published LIVE choice lacks its frozen daily group")
             ids = snapshot.get("display_event_ids", [])
@@ -85,9 +87,11 @@ def record_choices(ledger, snapshot, choices, selected_at):
             "is_user_choice": False,
             "goal_profile": deepcopy(event.get("goal_profile")),
         }
-        if snapshot["rules_version"] == "live-daily-pockets-20261027-v1":
+        if snapshot["rules_version"] in ("live-daily-pockets-20261027-v1", "live-daily-pockets-20261028-v2"):
             record["daily_group"] = deepcopy(event["daily_group"])
             record["daily_pockets"] = deepcopy(snapshot["daily_pockets"])
+            if snapshot['rules_version'] == 'live-daily-pockets-20261028-v2':
+                record['active_daily_groups'] = deepcopy(snapshot['active_daily_groups'])
             record["response_format_version"] = snapshot["response_format"]["version"]
         if snapshot.get("research_hypotheses_version") == HYPOTHESES_VERSION:
             record["research_hypotheses"] = evaluate_hypotheses(event)

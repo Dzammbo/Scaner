@@ -365,7 +365,7 @@ def collect(mode, requested_ids, history_dir, selected_file):
 
 def complete_odds(snapshot):
     """Enrich immutable sports membership; no ranking or selection-ledger writes."""
-    if snapshot.get("rules_version") == "live-daily-pockets-20261027-v1":
+    if snapshot.get("rules_version") in ("live-daily-pockets-20261027-v1", "live-daily-pockets-20261028-v2"):
         return snapshot  # Daily pocket selection already freezes exact current prices.
     ids = set(snapshot["final_sports_selection_event_ids"])
     events = [event for event in snapshot["events"] if event["event_id"] in ids]
@@ -402,7 +402,7 @@ def main():
                            mode, requested_ids, directory,
                            os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"), ROOT)
     print("LIVE_MARKDOWN_JSON=" + json.dumps(result["live_markdown"], ensure_ascii=False), flush=True)
-    if result.get('rules_version') == 'live-daily-pockets-20261027-v1':
+    if result.get('rules_version') in ('live-daily-pockets-20261027-v1', 'live-daily-pockets-20261028-v2'):
         # Keep the hot log proportional to the shown five, even with 400+ candidates.
         ids=set(result['display_event_ids'])
         fields=('event_id','home','away','league','country','category','minute','score',
@@ -410,6 +410,7 @@ def main():
                 'final_sports_selection','goal_profile','daily_group')
         compact={key:result[key] for key in ('snapshot_id','rules_version','ranking_method',
             'board_observed_at_utc','mode','daily_pockets','response_format','display_event_ids')}
+        if 'active_daily_groups' in result:compact['active_daily_groups']=result['active_daily_groups']
         compact['events']=[{key:e.get(key) for key in fields} for e in result['events']
                            if e['event_id'] in ids]
         print('LIVE_SELECTION_JSON='+json.dumps(compact,ensure_ascii=False,separators=(',',':')),

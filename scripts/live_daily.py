@@ -16,7 +16,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 LAB = ROOT/'research/selection-lab-20261018'
-VERSION = 'live-daily-pockets-20261027-v1'
+VERSION = 'live-daily-pockets-20261028-v2'
 MSK = dt.timezone(dt.timedelta(hours=3))
 POLICY = '.github/live-daily-policy.json'
 POINTER = '.github/live-daily-pockets.json'
@@ -27,14 +27,14 @@ FAMILIES = {
     'refined_pockets': '.github/live-refined-pockets.json',
     'external_pockets': '.github/live-external-pockets.json',
 }
-FORMAT = dict(version='live-four-lines-20261027-v1',
+FORMAT = dict(version='live-four-lines-20261028-v2',
     header='Live · {time_msk} МСК · {n}/5',
     match_lines=['{number}. {league} · {home} - {away} · {minute}′ · {score}',
                  'ТБ {line} × {price}', '{available_recent_stats_and_missing_data}',
                  'Группа №{group_rank}: «{group_name}».'],
     display_order=['frozen_daily_group_rank', 'fresh_sporting_order'],
     preliminary=None, missing_value='н/д', group_statistics_in_card=False,
-    history_in_card=False, rounded_alternative_in_card=False)
+    history_in_card=False, rounded_alternative_in_card=False, daily_group_limit=4)
 
 
 def family(name):
@@ -90,8 +90,10 @@ def freeze(report, root, date_msk, report_path, now=None):
                 and isinstance(r.get('roi_without_top3'),(int,float))
                 and math.isfinite(r['roi_without_top3']) and r['roi_without_top3'] > 0]
     eligible.sort(key=lambda r:(-r['roi_without_top3'],-r['n'],r['key']))
+    limit=int(json.loads((root/POLICY).read_text())['max_groups'])
+    if not 1<=limit<=5:raise ValueError('Invalid daily group limit')
     groups=[]
-    for rank,r in enumerate(eligible[:5],1):
+    for rank,r in enumerate(eligible[:limit],1):
         section,key = r['key'].split('/',1)
         p,digest = observed[r['key']]
         groups.append(dict(rank=rank,section=section,pocket_id=key,
@@ -121,6 +123,7 @@ def load_daily(root=ROOT, now=None):
     if not archive.exists() or json.loads(archive.read_text()) != daily:
         raise ValueError('Daily pointer differs from immutable archive')
     groups=daily['groups']
+    if not 1<=int(policy['max_groups'])<=5:raise ValueError('Invalid daily group limit')
     if len(groups)>5 or [g['rank'] for g in groups] != list(range(1,len(groups)+1)):
         raise ValueError('Invalid daily group priority')
     if len({(g['section'],g['pocket_id']) for g in groups}) != len(groups):
@@ -132,6 +135,11 @@ def load_daily(root=ROOT, now=None):
                 or g['n']<=30 or not math.isfinite(g['roi_without_top3']) or g['roi_without_top3']<=0):
             raise ValueError('Frozen daily group no longer matches its approved catalog')
     return daily,policy
+
+
+def active_groups(daily,policy):
+    """Apply the current cap without rewriting an immutable older daily archive."""
+    return daily['groups'][:int(policy['max_groups'])]
 
 
 def pre_matches(event, group, root=ROOT):
@@ -189,7 +197,7 @@ def evaluate_pockets(root,snapshot,ordered,history_dir):
     Research seen IDs and accounting ledgers are never read or modified here.
     Qualified but unpublished candidates remain available on subsequent LIVE calls.
     """
-    sections={g['section'] for g in snapshot['daily_pockets']['groups']}
+    sections={g['section'] for g in snapshot.get('active_daily_groups',snapshot['daily_pockets']['groups'])}
     results={}
     with tempfile.TemporaryDirectory(prefix='live-daily-predicates-') as tmp:
         work=Path(tmp)
@@ -310,8 +318,9 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
     from live_ranking import rank_candidates,rank_final_candidates,fresh_sports_features
     from live_history import read_selected_events
     daily,policy=load_daily(root)
+    groups=active_groups(daily,policy)
     # Load original shared predicates before resolving market_for_event's imports.
-    for section in {g['section'] for g in daily['groups']}:family(section)
+    for section in {g['section'] for g in groups}:family(section)
     family('distinct_pockets')
     published,warnings=read_selected_events(selected_file)
     if warnings:raise ValueError('Cannot read published LIVE exclusions')
@@ -345,7 +354,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
         events=ranked
         candidates=[]
         for e in ranked:
-            ranks=[g['rank'] for g in daily['groups'] if pre_matches(e,g,root)]
+            ranks=[g['rank'] for g in groups if pre_matches(e,g,root)]
             if ranks:e['daily_candidate_priority']=min(ranks);candidates.append(e)
         candidates.sort(key=lambda e:(e['daily_candidate_priority'],e['preliminary_selection']['rank']))
         configured_limit=policy.get('deep_candidate_limit')
@@ -357,7 +366,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
         review=[e for e in review if not e.pop('_quota_skipped',False)]
         reviewed_ids={e['event_id'] for e in review}
         strong_groups=[]
-        for g in daily['groups']:
+        for g in groups:
             cfg,_=catalog(root,g['section']);p=next(p for p in cfg['pockets'] if p['id']==g['pocket_id'])
             if g['section']=='independent_pockets' or p.get('pool')=='strong':strong_groups.append(g)
         need_profiles=[e for e in review if e.get('events_main_total') and any(pre_matches(e,g,root) for g in strong_groups)]
@@ -376,7 +385,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
             final_ranking_method='frozen_daily_group_then_fresh_sporting',snapshot_id=sid,code_revision=os.environ.get('GITHUB_SHA'),
             board_observed_at_utc=clock,generated_at_utc=dt.datetime.now(dt.timezone.utc).isoformat(),
             odds_checked_at_utc=dt.datetime.now(dt.timezone.utc).isoformat(),mode=mode,requested_event_ids=requested_ids,
-            daily_pockets=daily,events=events,source='BetsAPI Events API',board_http=http,response_format=FORMAT,
+            daily_pockets=daily,active_daily_groups=groups,events=events,source='BetsAPI Events API',board_http=http,response_format=FORMAT,
             raw_live_count=len(board['results']),eligible_in_window_count=len(events),
             previously_selected_skipped_event_ids=skipped,previously_selected_skipped_count=len(skipped),
             candidate_count=len(candidates),reviewed_count=len(review),
@@ -386,7 +395,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
             stats_trend_calls=len(review),detail_calls=len(review),**profile_meta,
             timing_seconds=dict(collection=round(time.monotonic()-started,3)),stage='daily_pockets_ready')
         evaluations=evaluate_pockets(root,snapshot,ordered,history_dir)
-        selected=choose(events,daily['groups'],evaluations)
+        selected=choose(events,groups,evaluations)
         for rank,e in enumerate(selected,1):
             e['final_sports_selected']=True
             e['final_sports_selection']=dict(sports_rank=rank,display_rank=rank,method=snapshot['ranking_method'],

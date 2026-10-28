@@ -65,7 +65,7 @@ class DailyTests(unittest.TestCase):
 
     def test_daily_freeze_excludes_small_control_and_never_reranks_intraday(self):
         self.assertEqual([g['pocket_id'] for g in self.daily['groups']],
-            ['tb_45_59_lead2_exact2','need_four_plus','combo_sot_score1','provider_main_danger_rate_lt1','combo_minute_integer'])
+            ['tb_45_59_lead2_exact2','need_four_plus','combo_sot_score1','provider_main_danger_rate_lt1'])
         self.setrow('refined_pockets/lead2_line35',100,10)
         self.assertEqual(d.freeze(self.report,self.root,'2026-10-27','new.json'),self.daily)
         self.report['generated_at_utc']='2026-10-28T03:05:00+00:00'
@@ -74,6 +74,35 @@ class DailyTests(unittest.TestCase):
         self.report['generated_at_utc']='2026-10-29T03:05:00+00:00'
         self.report['statistics_tables']['errors']=['missing']
         with self.assertRaises(ValueError):d.freeze(self.report,self.root,'2026-10-29','bad.json')
+
+    def test_old_five_group_archive_keeps_its_hashes_but_live_uses_first_four(self):
+        old=copy.deepcopy(self.daily)
+        old['groups'].append(dict(rank=5,section='independent_pockets',
+                                 pocket_id='combo_minute_integer',name='legacy fifth',
+                                 n=122,roi=.06882,roi_without_top3=.05882,
+                                 catalog_sha256=d.catalog(self.root,'independent_pockets')[1]))
+        (self.root/'.github/live-daily-pockets/2026-10-27.json').write_text(json.dumps(old))
+        (self.root/d.POINTER).write_text(json.dumps(old))
+        daily,policy=d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))
+        self.assertEqual(len(daily['groups']),5)
+        self.assertEqual([g['rank'] for g in d.active_groups(daily,policy)],[1,2,3,4])
+        from types import SimpleNamespace
+        board=[dict(id='last',home=dict(id='11',name='A'),away=dict(id='22',name='B'),
+                    league=dict(id='33',name='Test'),timer=dict(tm=53),ss='0-0',stats={})]
+        base=SimpleNamespace(get=lambda path,**kw:(dict(success=1,results=board),{}),
+                             MAX_WORKERS=1,integer=live.integer,name=live.name,EXCLUDE=live.EXCLUDE,
+                             category=live.category)
+        evaluations={section:dict(choices={g['pocket_id']:[] for g in daily['groups'][:4]
+                                           if g['section']==section})
+                     for section in {g['section'] for g in daily['groups'][:4]}}
+        with patch.object(d,'pre_matches',side_effect=lambda event,group,root: group['rank']==5),\
+             patch.object(d,'evaluate_pockets',return_value=evaluations):
+            snap=d.collect(base,'full',[],self.history,self.ledger,self.root)
+        self.assertEqual(snap['candidate_count'],0)
+        self.assertEqual(snap['display_event_ids'],[])
+        self.assertEqual([g['rank'] for g in snap['active_daily_groups']],[1,2,3,4])
+        self.assertEqual(len(snap['daily_pockets']['groups']),5)
+
 
     def test_frozen_archive_and_catalog_are_validated(self):
         self.assertEqual(d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))[0],self.daily)
@@ -287,6 +316,7 @@ class DailyTests(unittest.TestCase):
         saved=record_choices(dict(schema_version=1,events=[],selections=[]),snap,choices,snap['generated_at_utc'])
         self.assertEqual(saved['selections'][0]['daily_group']['rank'],1)
         self.assertEqual(saved['selections'][0]['daily_pockets'],self.daily)
+        self.assertEqual(saved['selections'][0]['active_daily_groups'],self.daily['groups'])
         self.assertIs(live.complete_odds(snap),snap)
         with self.assertRaises(ValueError):record_choices(dict(schema_version=1,events=[],selections=[]),snap,list(reversed(choices)),snap['generated_at_utc'])
 
