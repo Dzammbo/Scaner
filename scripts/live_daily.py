@@ -250,6 +250,8 @@ def enrich_review(base,review):
                 trend['http']=meta
                 data=dict(stats_trend=trend)
             except Exception as exc:
+                if str(exc)=='Manual LIVE API budget exhausted' or getattr(exc,'code',None)==429:
+                    event['_quota_skipped']=True
                 data=dict(stats_trend=dict(available=False,source='betsapi_event_stats_trend',
                     reason=type(exc).__name__))
         else:
@@ -258,6 +260,8 @@ def enrich_review(base,review):
                 data=base.current_main_total(payload,event,int(time.time()))
                 data.update(lab_odds_payload=payload,odds_http=meta)
             except Exception as exc:
+                if str(exc)=='Manual LIVE API budget exhausted' or getattr(exc,'code',None)==429:
+                    event['_quota_skipped']=True
                 data=dict(events_main_total=None,main_total_status='unavailable',
                           main_total_reason=type(exc).__name__)
         return event,kind,data,round(time.monotonic()-started,3)
@@ -270,14 +274,36 @@ def enrich_review(base,review):
 
 
 class Budget:
-    def __init__(self,get,cap):self.get=get;self.cap=cap;self.calls=0;self.exhausted=False;self.lock=threading.Lock()
+    def __init__(self,get,cap,reserve=0):
+        self.get=get;self.cap=cap;self.reserve=reserve;self.calls=0
+        self.remaining=None;self.exhausted=False;self.lock=threading.Lock()
+    def available_calls(self):
+        with self.lock:
+            available=self.cap-self.calls
+            if self.remaining is not None:
+                available=min(available,self.remaining-self.reserve)
+            return max(0,available)
     def __call__(self,*args,**kwargs):
         with self.lock:
-            if self.calls>=self.cap:
+            if (self.calls>=self.cap or self.remaining is not None
+                    and self.remaining<=self.reserve):
                 self.exhausted=True
                 raise RuntimeError('Manual LIVE API budget exhausted')
             self.calls+=1
-        return self.get(*args,**kwargs)
+            if self.remaining is not None:self.remaining-=1
+        try:
+            payload,meta=self.get(*args,**kwargs)
+            remaining=meta.get('remaining') if isinstance(meta,dict) else None
+            if remaining is not None:
+                try:
+                    value=int(remaining)
+                    with self.lock:self.remaining=value if self.remaining is None else min(self.remaining,value)
+                except (TypeError,ValueError):pass
+            return payload,meta
+        except Exception as exc:
+            if getattr(exc,'code',None)==429:
+                with self.lock:self.remaining=0;self.exhausted=True
+            raise
 
 
 def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
@@ -289,7 +315,9 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
     family('distinct_pockets')
     published,warnings=read_selected_events(selected_file)
     if warnings:raise ValueError('Cannot read published LIVE exclusions')
-    original=base.get;budget=Budget(original,int(policy['api_call_cap']));base.get=budget
+    original=base.get
+    budget=Budget(original,int(policy['api_call_cap']),int(policy.get('provider_hourly_reserve',0)))
+    base.get=budget
     started=time.monotonic()
     try:
         board,http=base.get('/v3/events/inplay',sport_id=1)
@@ -320,8 +348,14 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
             ranks=[g['rank'] for g in daily['groups'] if pre_matches(e,g,root)]
             if ranks:e['daily_candidate_priority']=min(ranks);candidates.append(e)
         candidates.sort(key=lambda e:(e['daily_candidate_priority'],e['preliminary_selection']['rank']))
-        review=candidates[:int(policy['deep_candidate_limit'])]
+        configured_limit=policy.get('deep_candidate_limit')
+        requested_count=len(candidates) if configured_limit is None else min(len(candidates),int(configured_limit))
+        review_count=min(requested_count,budget.available_calls()//2)
+        if review_count<requested_count:budget.exhausted=True
+        review=candidates[:review_count]
         enrich_review(base,review)
+        review=[e for e in review if not e.pop('_quota_skipped',False)]
+        reviewed_ids={e['event_id'] for e in review}
         strong_groups=[]
         for g in daily['groups']:
             cfg,_=catalog(root,g['section']);p=next(p for p in cfg['pockets'] if p['id']==g['pocket_id'])
@@ -346,8 +380,9 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
             raw_live_count=len(board['results']),eligible_in_window_count=len(events),
             previously_selected_skipped_event_ids=skipped,previously_selected_skipped_count=len(skipped),
             candidate_count=len(candidates),reviewed_count=len(review),
-            unreviewed_event_ids=[e['event_id'] for e in candidates[len(review):]],
+            unreviewed_event_ids=[e['event_id'] for e in candidates if e['event_id'] not in reviewed_ids],
             budget_exhausted=budget.exhausted,total_api_calls=budget.calls,api_call_cap=budget.cap,
+            provider_remaining_lower_bound=budget.remaining,
             stats_trend_calls=len(review),detail_calls=len(review),**profile_meta,
             timing_seconds=dict(collection=round(time.monotonic()-started,3)),stage='daily_pockets_ready')
         evaluations=evaluate_pockets(root,snapshot,ordered,history_dir)
@@ -398,7 +433,9 @@ def render(snapshot):
             f"**Группа №{g['rank']}: «{clean(g['name'])}».**",''])
     if not selected:lines.extend(['В проверенной части пула подходящих матчей нет.',''])
     if snapshot.get('unreviewed_event_ids') or snapshot.get('budget_exhausted'):
-        lines.append(f"Покрытие ограничено: проверено {snapshot['reviewed_count']} из {snapshot['candidate_count']} кандидатов; лимит запросов {snapshot['api_call_cap']}.")
+        if snapshot.get('unreviewed_event_ids'):
+            lines.append(f"Покрытие ограничено квотой API: проверено {snapshot['reviewed_count']} из {snapshot['candidate_count']} кандидатов.")
+        else:lines.append('Квота API ограничила дополнительные исторические профили.')
     day=snapshot['daily_pockets']['selection_date_msk']
     if day < str((clock-dt.timedelta(hours=6)).date()):lines.append(f'Используются группы от {day}: новая утренняя фиксация отсутствует.')
     return '\n'.join(lines).strip()

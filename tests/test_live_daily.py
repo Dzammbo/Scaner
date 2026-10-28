@@ -185,10 +185,58 @@ class DailyTests(unittest.TestCase):
                          'Португалия, Примейра-лига')
 
     def test_budget_is_a_hard_api_cap(self):
-        calls=[];budget=d.Budget(lambda *a,**kw:calls.append(a),96)
+        calls=[];budget=d.Budget(lambda *a,**kw:(calls.append(a),{}),96)
         for _ in range(96):budget('test')
         with self.assertRaises(RuntimeError):budget('test')
         self.assertEqual(len(calls),96);self.assertTrue(budget.exhausted)
+
+    def test_budget_respects_provider_hourly_remaining(self):
+        remaining=iter([5,4,3,2])
+        budget=d.Budget(lambda *args,**kw: ({},{'remaining':str(next(remaining))}),
+                        cap=3000,reserve=2)
+        budget('board')
+        self.assertEqual(budget.available_calls(),3)
+        for _ in range(3):budget('detail')
+        with self.assertRaises(RuntimeError):budget('detail')
+        self.assertEqual(budget.calls,4)
+        self.assertTrue(budget.exhausted)
+
+    def test_full_live_reviews_all_400_possible_candidates(self):
+        from types import SimpleNamespace
+        rows=[dict(id=str(i),home=dict(id='11',name='A'),away=dict(id='22',name='B'),
+                   league=dict(id='33',name='Test'),timer=dict(tm=53),ss='2-0',stats={})
+              for i in range(1,401)]
+        calls=[];board_remaining=3500
+        def get(path,**params):
+            calls.append(path)
+            if path.endswith('inplay'):
+                return dict(success=1,results=rows),{'remaining':str(board_remaining)}
+            return dict(success=1),{'remaining':'3500'}
+        base=SimpleNamespace(get=get,MAX_WORKERS=16,EXCLUDE=live.EXCLUDE,
+            integer=live.integer,name=live.name,category=live.category,
+            summarize_stats_trend=lambda payload,**kw:dict(available=False),
+            current_main_total=lambda payload,event,now:dict(events_main_total=dict(line=3.5,
+                over=1.9,under=1.9,source='events_odds_main',quote_score=event['score'],
+                market_checked_at=now)),enrich_profiles=lambda *args: {})
+        def rank(events):
+            for i,e in enumerate(events):e['preliminary_selection']=dict(rank=i)
+            return events
+        with patch('live_ranking.rank_candidates',side_effect=rank),\
+                patch('live_ranking.rank_final_candidates',side_effect=lambda events,limit=5:events[:limit]),\
+                patch('live_ranking.fresh_sports_features',return_value={}),\
+                patch.object(d,'evaluate_pockets',return_value={}),\
+                patch.object(d,'choose',return_value=[]):
+            snapshot=d.collect(base,'full',[],self.history,self.ledger,self.root)
+            board_remaining=210
+            limited=d.collect(base,'full',[],self.history,self.ledger,self.root)
+        self.assertEqual(snapshot['candidate_count'],400)
+        self.assertEqual(snapshot['reviewed_count'],400)
+        self.assertEqual(snapshot['unreviewed_event_ids'],[])
+        self.assertEqual(snapshot['total_api_calls'],801)
+        self.assertFalse(snapshot['budget_exhausted'])
+        self.assertEqual(limited['reviewed_count'],5)
+        self.assertEqual(len(limited['unreviewed_event_ids']),395)
+        self.assertTrue(limited['budget_exhausted'])
 
     def test_exact_odds_and_trends_share_bounded_parallel_stage(self):
         import threading
