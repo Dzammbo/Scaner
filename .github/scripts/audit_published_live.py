@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import urllib.parse
 import urllib.request
+import urllib.error
+import time
 
 MSK = dt.timezone(dt.timedelta(hours=3))
 
@@ -24,11 +26,23 @@ def profit(final, line, price):
 
 def fetch(ids):
     query = urllib.parse.urlencode({"token": os.environ["BETSAPI_KEY"], "event_id": ",".join(ids)})
-    with urllib.request.urlopen("https://api.b365api.com/v1/event/view?" + query, timeout=25) as response:
-        payload = json.load(response)
-    if payload.get("success") not in (1, True) or not isinstance(payload.get("results"), list):
-        raise RuntimeError("Provider did not return valid results")
-    return {str(item.get("id")): item for item in payload["results"] if isinstance(item, dict)}
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen("https://api.b365api.com/v1/event/view?" + query, timeout=12) as response:
+                payload = json.load(response)
+            if payload.get("success") not in (1, True) or not isinstance(payload.get("results"), list):
+                raise ValueError("Invalid provider response")
+            return {str(item.get("id")): item for item in payload["results"] if isinstance(item, dict)}, {}
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as exc:
+            failure = "HTTP " + str(exc.code) if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
+            if attempt == 0:
+                time.sleep(1)
+    if len(ids) > 1:
+        middle = len(ids) // 2
+        left, left_errors = fetch(ids[:middle])
+        right, right_errors = fetch(ids[middle:])
+        return left | right, left_errors | right_errors
+    return {}, {ids[0]: failure}
 
 
 def main():
@@ -45,8 +59,11 @@ def main():
                 choices.append(row)
     ids = list(dict.fromkeys(str(row["event_id"]) for row in choices))
     events = {}
+    errors = {}
     for start in range(0, len(ids), 10):
-        events.update(fetch(ids[start:start + 10]))
+        found, failed = fetch(ids[start:start + 10])
+        events.update(found)
+        errors.update(failed)
     results = []
     for row in choices:
         eid = str(row["event_id"])
@@ -68,7 +85,7 @@ def main():
                         "home": row["home"], "away": row["away"],
                         "line": quote["line"], "price": quote["over"],
                         "entry_score": row["score"], "status": status,
-                        "final": final, "conflict": conflict,
+                        "final": final, "conflict": conflict, "error": errors.get(eid),
                         "profit": profit(final, quote["line"], quote["over"]) if settled else None})
     result = {"date_msk": date, "checked_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
               "source": "BetsAPI /v1/event/view; final scores.2, time_status=3",
