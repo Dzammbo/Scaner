@@ -402,7 +402,20 @@ def main():
                            mode, requested_ids, directory,
                            os.environ.get("LIVE_SELECTED_EVENTS_FILE", ".github/live-selected-events.json"), ROOT)
     print("LIVE_MARKDOWN_JSON=" + json.dumps(result["live_markdown"], ensure_ascii=False), flush=True)
-    print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
+    if result.get('rules_version') == 'live-daily-pockets-20261027-v1':
+        # Keep the hot log proportional to the shown five, even with 400+ candidates.
+        ids=set(result['display_event_ids'])
+        fields=('event_id','home','away','league','country','category','minute','score',
+                'events_main_total','main_total_status','main_total_reason',
+                'final_sports_selection','goal_profile','daily_group')
+        compact={key:result[key] for key in ('snapshot_id','rules_version','ranking_method',
+            'board_observed_at_utc','mode','daily_pockets','response_format','display_event_ids')}
+        compact['events']=[{key:e.get(key) for key in fields} for e in result['events']
+                           if e['event_id'] in ids]
+        print('LIVE_SELECTION_JSON='+json.dumps(compact,ensure_ascii=False,separators=(',',':')),
+              flush=True)
+    else:
+        print("LIVE_SNAPSHOT_JSON=" + json.dumps(result, ensure_ascii=False, separators=(",", ":")), flush=True)
     path = save_snapshot(result, directory, result["snapshot_id"])
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a") as output:

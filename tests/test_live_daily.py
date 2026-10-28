@@ -299,5 +299,26 @@ class DailyTests(unittest.TestCase):
             live.main()
         self.assertTrue(collector.called);self.assertTrue(output.getvalue().startswith('LIVE_MARKDOWN_JSON='))
 
+    def test_daily_log_contains_only_displayed_events(self):
+        shown=self.event(1,'2-0',line=3.5)
+        hidden=self.event(2,'2-0',line=3.5)
+        shown['daily_group']=self.daily['groups'][0]
+        result=self.snapshot([shown,hidden])
+        result.update(rules_version=d.VERSION,mode='full',ranking_method='daily',
+            response_format=d.FORMAT,display_event_ids=['1'],live_markdown='ready')
+        output=io.StringIO()
+        with patch.object(live,'read_request',return_value=('full',[])),\
+                patch('live_daily.collect',return_value=result),\
+                patch.object(live,'save_snapshot',return_value='snapshots/live/test.json'),\
+                patch.dict(os.environ,{'GITHUB_OUTPUT':''}),contextlib.redirect_stdout(output):
+            live.main()
+        lines=output.getvalue().splitlines()
+        self.assertTrue(lines[0].startswith('LIVE_MARKDOWN_JSON='))
+        self.assertTrue(lines[1].startswith('LIVE_SELECTION_JSON='))
+        self.assertNotIn('LIVE_SNAPSHOT_JSON=',output.getvalue())
+        selected=json.loads(lines[1].split('=',1)[1])
+        self.assertEqual(selected['display_event_ids'],['1'])
+        self.assertEqual([e['event_id'] for e in selected['events']],['1'])
+
 
 if __name__=='__main__':unittest.main()
