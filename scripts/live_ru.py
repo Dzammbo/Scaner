@@ -3,6 +3,20 @@ import re
 import unicodedata
 
 NAMES = {
+    'AFC Champions League Two': 'Азиатская Лига чемпионов 2',
+    'UEFA Youth League Domestic Path': 'Юношеская лига УЕФА, внутренний путь',
+    "UEFA Women's Europa Cup": 'Женский Кубок Европы УЕФА',
+    'Germany DFB Pokal': 'Германия, Кубок',
+    'Al-Nahda': 'Аль-Нахда',
+    'Al-Rayyan SC': 'Аль-Райян',
+    'NK Krsko': 'Кршко',
+    'ND Dravinja': 'Дравинья',
+    'Benfica U19': 'Бенфика U19',
+    'Pafos FC U19': 'Пафос U19',
+    'SC Freiburg': 'Фрайбург',
+    'Wolfsburg': 'Вольфсбург',
+    'SK Brann (W)': 'Бранн',
+    'Czarni Sosnowiec (W)': 'Чарни Сосновец',
     'Türkiye Cup': 'Кубок Турции',
     'Slovenia 2. SNL': 'Словения, 2-я лига',
     'Bulgaria Second League': 'Болгария, Вторая лига',
