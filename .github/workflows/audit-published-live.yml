@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/audit-published-live.yml'
+      - '.github/scripts/audit_published_live.py'
 permissions:
   contents: read
 jobs:
