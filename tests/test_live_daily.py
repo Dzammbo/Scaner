@@ -190,6 +190,35 @@ class DailyTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):budget('test')
         self.assertEqual(len(calls),96);self.assertTrue(budget.exhausted)
 
+    def test_exact_odds_and_trends_share_bounded_parallel_stage(self):
+        import threading
+        import time
+        from types import SimpleNamespace
+        lock=threading.Lock();active=0;peak=0;calls=[]
+        def get(path,**params):
+            nonlocal active,peak
+            with lock:
+                active+=1;peak=max(peak,active);calls.append((path,params['event_id']))
+            time.sleep(.015)
+            with lock:active-=1
+            return dict(success=1),dict(status=200)
+        base=SimpleNamespace(MAX_WORKERS=3,get=get,
+            summarize_stats_trend=lambda payload,**kw:dict(available=True),
+            current_main_total=lambda payload,event,now:dict(events_main_total=dict(
+                line=3.5,over=1.9,source='events_odds_main')))
+        review=[dict(event_id=str(i)) for i in range(4)]
+        d.enrich_review(base,review)
+        self.assertEqual(len(calls),8)
+        self.assertEqual({path for path,_ in calls},
+                         {'/v1/event/stats_trend','/v2/event/odds'})
+        self.assertGreater(peak,1)
+        self.assertLessEqual(peak,base.MAX_WORKERS)
+        for event in review:
+            self.assertTrue(event['stats_trend']['available'])
+            self.assertEqual(event['events_main_total']['over'],1.9)
+            self.assertIn('trend',event['request_elapsed_seconds'])
+            self.assertIn('odds',event['request_elapsed_seconds'])
+
     def test_complete_collect_keeps_priced_events_and_publication_metadata(self):
         rows=[dict(id=str(i),home=dict(id='11',name='A'),away=dict(id='22',name='B'),
                    league=dict(id='33',name='Test'),timer=dict(tm=53),ss='2-0',stats={}) for i in [1,2]]

@@ -238,6 +238,37 @@ def choose(events,groups,evaluations):
     return selected
 
 
+def enrich_review(base,review):
+    """Fetch the same trends and exact odds in one bounded parallel stage."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    def fetch(event,kind):
+        started=time.monotonic()
+        if kind=='trend':
+            try:
+                payload,meta=base.get('/v1/event/stats_trend',event_id=event['event_id'])
+                trend=base.summarize_stats_trend(payload,event=event,observed_at=time.time())
+                trend['http']=meta
+                data=dict(stats_trend=trend)
+            except Exception as exc:
+                data=dict(stats_trend=dict(available=False,source='betsapi_event_stats_trend',
+                    reason=type(exc).__name__))
+        else:
+            try:
+                payload,meta=base.get('/v2/event/odds',event_id=event['event_id'],source='bet365')
+                data=base.current_main_total(payload,event,int(time.time()))
+                data.update(lab_odds_payload=payload,odds_http=meta)
+            except Exception as exc:
+                data=dict(events_main_total=None,main_total_status='unavailable',
+                          main_total_reason=type(exc).__name__)
+        return event,kind,data,round(time.monotonic()-started,3)
+    with ThreadPoolExecutor(max_workers=base.MAX_WORKERS) as pool:
+        futures=[pool.submit(fetch,event,kind) for event in review for kind in ('trend','odds')]
+        for future in as_completed(futures):
+            event,kind,data,elapsed=future.result()
+            event.update(data)
+            event.setdefault('request_elapsed_seconds',{})[kind]=elapsed
+
+
 class Budget:
     def __init__(self,get,cap):self.get=get;self.cap=cap;self.calls=0;self.exhausted=False;self.lock=threading.Lock()
     def __call__(self,*args,**kwargs):
@@ -252,7 +283,6 @@ class Budget:
 def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
     from live_ranking import rank_candidates,rank_final_candidates,fresh_sports_features
     from live_history import read_selected_events
-    from concurrent.futures import ThreadPoolExecutor
     daily,policy=load_daily(root)
     # Load original shared predicates before resolving market_for_event's imports.
     for section in {g['section'] for g in daily['groups']}:family(section)
@@ -291,15 +321,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
             if ranks:e['daily_candidate_priority']=min(ranks);candidates.append(e)
         candidates.sort(key=lambda e:(e['daily_candidate_priority'],e['preliminary_selection']['rank']))
         review=candidates[:int(policy['deep_candidate_limit'])]
-        base.enrich_events(review)
-        def odds(e):
-            try:
-                payload,meta=base.get('/v2/event/odds',event_id=e['event_id'],source='bet365')
-                e.update(base.current_main_total(payload,e,int(time.time())))
-                e['lab_odds_payload']=payload;e['odds_http']=meta
-            except Exception as exc:
-                e.update(events_main_total=None,main_total_status='unavailable',main_total_reason=type(exc).__name__)
-        with ThreadPoolExecutor(max_workers=base.MAX_WORKERS) as pool:list(pool.map(odds,review))
+        enrich_review(base,review)
         strong_groups=[]
         for g in daily['groups']:
             cfg,_=catalog(root,g['section']);p=next(p for p in cfg['pockets'] if p['id']==g['pocket_id'])
