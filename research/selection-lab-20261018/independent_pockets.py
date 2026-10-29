@@ -1,6 +1,7 @@
 """Ten independent first-qualified-priced pocket ledgers, separate from parent Top5."""
 import collections,copy,datetime as dt,gzip,hashlib,json,math,re
 from pathlib import Path
+from pocket_pauses import ids as paused_ids
 VERSION='independent-pockets-v3-20261026'
 CONFIG='.github/live-independent-pockets.json'
 MSK=dt.timezone(dt.timedelta(hours=3))
@@ -72,6 +73,7 @@ def evaluate(root,snapshot,ordered,market_for_event,outcomes,settle):
  cfg,digest=config(root)
  if cfg is None:return None
  rows,started,errors,captures=history(root,digest,cfg)
+ paused=paused_ids(root,'independent_pockets')
  clock=snapshot['board_observed_at_utc'];started=started or clock
  choices={p['id']:[] for p in cfg['pockets']};checks=collections.Counter();pool=[]
  # Order is the full enriched strong-v8 ordering, never the parent choices or parent seen IDs.
@@ -86,6 +88,7 @@ def evaluate(root,snapshot,ordered,market_for_event,outcomes,settle):
   f=features(e,q);eid=str(e['event_id']);pool.append(eid)
   for p in cfg['pockets']:
    key=p['id']
+   if key in paused:continue
    if eid in rows[key]:continue
    if not p['minute_window'][0]<=minute<=p['minute_window'][1]:continue
    if not all(match(c,f) for c in p['conditions']):continue

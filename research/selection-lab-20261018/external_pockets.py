@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from pocket_pauses import ids as paused_ids
 
 from distinct_pockets import number, pair, quote, read, stamp, summary
 
@@ -141,6 +142,7 @@ def evaluate(root, snapshot, outcomes):
     if cfg is None:
         return None
     entries, started, errors, captures = history(root, cfg, digest)
+    paused = paused_ids(root, 'external_pockets')
     clock = snapshot['board_observed_at_utc']
     choices = {p['id']: [] for p in cfg['pockets']}
     for event in snapshot['events']:
@@ -158,6 +160,8 @@ def evaluate(root, snapshot, outcomes):
                       checked_at=raw['checked_at'], market_basis=raw['market_basis'])
         for p in cfg['pockets']:
             key = p['id']
+            if key in paused:
+                continue
             if eid in entries[key] or not matches(key, f):
                 continue
             entry = dict(event_id=eid, score=event['score'].replace(':','-'), minute=minute, side='over',

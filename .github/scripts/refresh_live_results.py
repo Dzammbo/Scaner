@@ -249,6 +249,7 @@ def main():
     sys.path.insert(0, str(root / "research/selection-lab-20261018"))
     import capture as c
     import statistics_epoch as epoch
+    import pocket_pauses
     c.configure_background("experimental")
     config = json.loads(Path(os.environ["EPOCH_CONFIG"]).read_text())
     assert config.get("enabled") and config.get("rules_version") in getattr(epoch, "SUPPORTED_VERSIONS", (epoch.VERSION,))
@@ -303,6 +304,7 @@ def main():
     run_id = os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
     day = generated.astimezone(MSK).date().isoformat()
     report = dict(generated_at_utc=generated.isoformat(),
+                  paused_pockets=pocket_pauses.load(root),
                   source_revision=source_revision, rules_revision=os.environ["GITHUB_SHA"],
                   statistics_epoch=dict(id=config["id"], started_at_utc=started,
                                         rules_version=config["rules_version"],

@@ -11,6 +11,7 @@ import json
 import math
 import re
 from pathlib import Path
+from pocket_pauses import ids as paused_ids
 
 from distinct_pockets import number, pair, quote, read, stamp, settle, summary
 
@@ -186,6 +187,7 @@ def evaluate(root, snapshot, outcomes):
     if cfg is None:
         return None
     entries, triggers, prior, started, errors, captures = history(root, cfg, digest)
+    paused = paused_ids(root, 'seven_direction_pockets')
     clock = snapshot['board_observed_at_utc']; now = stamp(clock)
     choices = {p['id']: [] for p in cfg['pockets']}
     new_triggers = {p['id']: [] for p in cfg['pockets']}
@@ -212,6 +214,8 @@ def evaluate(root, snapshot, outcomes):
         observations[eid].update(goal_age=f['goal_age'],recent_equalizer=f['equalizer'],leader_scored=f['leader_scored'])
         for pocket in cfg['pockets']:
             key = pocket['id']; side = pocket['market']
+            if key in paused:
+                continue
             if side not in ACTIVE_MARKETS:
                 continue
             if eid in entries[key] or current[side] is None or current[side] <= 1:

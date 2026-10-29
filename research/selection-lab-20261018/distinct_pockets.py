@@ -7,6 +7,7 @@ import json
 import math
 import re
 from pathlib import Path
+from pocket_pauses import ids as paused_ids
 
 VERSION = 'distinct-pockets-v2-20261026'
 CONFIG = '.github/live-distinct-pockets.json'
@@ -183,6 +184,7 @@ def evaluate(root, snapshot, outcomes):
     if cfg is None:
         return None
     entries, triggers, started, errors, captures = history(root, cfg, digest)
+    paused = paused_ids(root, 'distinct_pockets')
     clock = snapshot['board_observed_at_utc']
     now = stamp(clock)
     choices = {p['id']: [] for p in cfg['pockets']}
@@ -203,6 +205,8 @@ def evaluate(root, snapshot, outcomes):
             continue
         for pocket in cfg['pockets']:
             key = pocket['id']
+            if key in paused:
+                continue
             if eid in entries[key]:
                 continue
             price = current[pocket['market']]

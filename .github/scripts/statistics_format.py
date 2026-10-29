@@ -93,6 +93,8 @@ def build_tables(report, previous=None):
                       section.get('predecessor_id') == prior.get('id') and
                       section.get('predecessor_catalog_sha256') == prior.get('catalog_sha256'))
         for pocket_id, row in section['pockets'].items():
+            if pocket_id in (report.get('paused_pockets') or {}).get(key, []):
+                continue
             side = market or row.get('market')
             if side not in ('over', 'under'):
                 result['errors'].append(title + ': неизвестный рынок ' + pocket_id)

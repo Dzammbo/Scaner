@@ -20,6 +20,18 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_paused_pocket_disappears_only_from_active_table(self):
+        data = report()
+        data['independent_pockets']['pockets'] = {
+            'old': row('Исторический минус', n=80, roi=-.1, robust=-.2),
+            'live': row('Действующий', n=50, roi=.2, robust=.1)}
+        original = copy.deepcopy(data['independent_pockets'])
+        data['paused_pockets'] = {'independent_pockets': ['old']}
+        rows = build_tables(data)['over']
+        self.assertEqual([r['key'] for r in rows], ['independent_pockets/live', 'standard_v8'])
+        self.assertEqual(data['independent_pockets'], original)
+        self.assertNotIn('Исторический минус', render_statistics(data))
+
     def test_eight_atomic_hypotheses_get_separate_rows_without_backfill(self):
         old=report();new=copy.deepcopy(old)
         new['hypothesis_pockets']=dict(id='eight',version=1,catalog_sha256='frozen',
