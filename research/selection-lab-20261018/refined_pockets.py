@@ -6,6 +6,7 @@ import json
 import math
 import re
 from pathlib import Path
+from pocket_pauses import ids as paused_ids
 
 from distinct_pockets import number, quote, read, stamp, settle, summary
 
@@ -118,6 +119,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
     if cfg is None:
         return None
     entries, triggers, started, errors, captures = history(root, cfg, digest)
+    paused = paused_ids(root, 'refined_pockets')
     clock = snapshot['board_observed_at_utc']
     now = stamp(clock)
     strong = {str(e['event_id']) for e in ordered
@@ -142,6 +144,8 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
                         if raw is not None and raw['over'] is not None and raw['over'] > 1 else None)
         for pocket in cfg['pockets']:
             key = pocket['id']
+            if key in paused:
+                continue
             if eid in entries[key] or not pocket['minute_window'][0] <= minute <= pocket['minute_window'][1]:
                 continue
             market = strong_market if pocket['pool'] == 'strong' else broad_market
