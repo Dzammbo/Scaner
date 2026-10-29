@@ -4,6 +4,8 @@ from pathlib import Path
 from pocket_pauses import ids as paused_ids
 VERSION='independent-pockets-v3-20261026'
 CONFIG='.github/live-independent-pockets.json'
+PREDECESSOR_ID='independent-20-pockets-forward-20261024-v1'
+PREDECESSOR_SHA='4db6bd9b995a93933a8e0840c337f97be55beb03d1707018469d3671ae962b14'
 MSK=dt.timezone(dt.timedelta(hours=3))
 def number(x):
  try:
@@ -49,16 +51,21 @@ def history(root,digest,cfg):
  rows={p['id']:{} for p in cfg['pockets']};started=None;errors=0;captures=0
  for p in sorted((Path(root)/'research/live-background/experimental/pocket-receipts').rglob('*.json*')):
   r=read(p);s=r.get('independent_pockets')or{}
-  if s.get('id')!=cfg['id']:continue
-  if s.get('catalog_sha256')!=digest:raise ValueError('Catalog changed within independent series')
+  old=s.get('id')==PREDECESSOR_ID
+  if not old and s.get('id')!=cfg['id']:continue
+  if s.get('catalog_sha256')!=(PREDECESSOR_SHA if old else digest):raise ValueError('Catalog changed within independent series')
   if s.get('status')=='error':errors+=1;continue
   if r.get('failed') or s.get('status')!='active':continue
   captures+=1;started=min(started or s['started_at_utc'],s['started_at_utc'])
   for key,entries in s['choices'].items():
-   if key not in rows:raise ValueError('Unknown pocket ledger')
+   if key not in rows:
+    if old:continue
+    raise ValueError('Unknown pocket ledger')
    for e in entries:
     eid=str(e['event_id'])
-    if eid in rows[key]:raise ValueError('Duplicate pocket/event entry')
+    if eid in rows[key]:
+     if not old and rows[key][eid].get('catalog_sha256')==PREDECESSOR_SHA:continue
+     raise ValueError('Duplicate pocket/event entry')
     rows[key][eid]=e
  return rows,started,errors,captures
 def summary(rows,outcomes,settle):
@@ -72,8 +79,8 @@ def summary(rows,outcomes,settle):
 def evaluate(root,snapshot,ordered,market_for_event,outcomes,settle):
  cfg,digest=config(root)
  if cfg is None:return None
- rows,started,errors,captures=history(root,digest,cfg)
  paused=paused_ids(root,'independent_pockets')
+ rows,started,errors,captures=history(root,digest,cfg)
  clock=snapshot['board_observed_at_utc'];started=started or clock
  choices={p['id']:[] for p in cfg['pockets']};checks=collections.Counter();pool=[]
  # Order is the full enriched strong-v8 ordering, never the parent choices or parent seen IDs.
@@ -110,5 +117,6 @@ def report(root,outcomes,settle):
  rows,started,errors,captures=history(root,digest,cfg)
  return dict(id=cfg['id'],version=VERSION,status='active' if started else 'awaiting_first_successful_capture',
   started_at_utc=started,catalog_sha256=digest,capture_errors=errors,successful_captures=captures,
+  continuity_backfilled=True,predecessor_id=PREDECESSOR_ID,predecessor_catalog_sha256=PREDECESSOR_SHA,
   pockets={p['id']:dict(name=p['name'],minute_window=p['minute_window'],conditions=p['conditions'],**summary({p['id']:rows[p['id']]},outcomes,settle)[p['id']]) for p in cfg['pockets']},
   overlapping_groups=True,not_a_combined_portfolio=True,parent_selection_changed=False)

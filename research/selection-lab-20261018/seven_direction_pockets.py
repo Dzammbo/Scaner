@@ -186,8 +186,8 @@ def evaluate(root, snapshot, outcomes):
     cfg, digest = config(root)
     if cfg is None:
         return None
-    entries, triggers, prior, started, errors, captures = history(root, cfg, digest)
     paused = paused_ids(root, 'seven_direction_pockets')
+    entries, triggers, prior, started, errors, captures = history(root, cfg, digest)
     clock = snapshot['board_observed_at_utc']; now = stamp(clock)
     choices = {p['id']: [] for p in cfg['pockets']}
     new_triggers = {p['id']: [] for p in cfg['pockets']}
