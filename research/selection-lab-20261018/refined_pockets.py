@@ -118,8 +118,8 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
     cfg, digest = config(root)
     if cfg is None:
         return None
-    entries, triggers, started, errors, captures = history(root, cfg, digest)
     paused = paused_ids(root, 'refined_pockets')
+    entries, triggers, started, errors, captures = history(root, cfg, digest)
     clock = snapshot['board_observed_at_utc']
     now = stamp(clock)
     strong = {str(e['event_id']) for e in ordered

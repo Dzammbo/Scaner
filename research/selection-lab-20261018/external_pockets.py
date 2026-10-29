@@ -141,8 +141,8 @@ def evaluate(root, snapshot, outcomes):
     cfg, digest = config(root)
     if cfg is None:
         return None
-    entries, started, errors, captures = history(root, cfg, digest)
     paused = paused_ids(root, 'external_pockets')
+    entries, started, errors, captures = history(root, cfg, digest)
     clock = snapshot['board_observed_at_utc']
     choices = {p['id']: [] for p in cfg['pockets']}
     for event in snapshot['events']:
