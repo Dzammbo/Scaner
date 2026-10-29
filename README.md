@@ -199,7 +199,7 @@
 
 ## Четыре внешние гипотезы ТБ, 27.10.2026
 
-В сбор и единую статистику добавлены четыре экспериментальных правила из внешнего исследования. Каталог `.github/live-external-pockets.json`, модуль `research/selection-lab-20261018/external_pockets.py`, собственный журнал `research/live-background/experimental/external-pocket-receipts`. После подключения отдельного усиления всего 44 активных кармана ТБ и 46 строк с контролем и широким пулом.
+В сбор и единую статистику добавлены четыре экспериментальных правила из внешнего исследования. Каталог `.github/live-external-pockets.json`, модуль `research/selection-lab-20261018/external_pockets.py`, собственный журнал `research/live-background/experimental/external-pocket-receipts`. После подключения отдельного усиления и восьми атомарных гипотез всего 52 активных кармана ТБ и 54 строки с контролем и широким пулом. Новые правила в `.github/live-hypothesis-pockets.json`, их входы в `research/live-background/experimental/hypothesis-pocket-receipts`. Старые входы не переносятся.
 
 - Ничья на 60-65-й минуте.
 - 35-75 минут: xG каждой команды ≥0,25 за последние полные 15 минут, у обеих есть удары в этом окне.

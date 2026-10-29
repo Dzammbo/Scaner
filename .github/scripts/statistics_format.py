@@ -79,10 +79,11 @@ def build_tables(report, previous=None):
         ('refined_pockets', 'Двадцать уточнений ТБ', None, 'Уточнение: '),
         ('external_pockets', 'Внешние гипотезы ТБ', None, 'Гипотеза: '),
         ('strengthened_pockets', 'Усиление кармана ТБ', None, 'Усиление: '),
+        ('hypothesis_pockets', 'Атомарные гипотезы ТБ', None, 'Гипотеза: '),
     )
     for key, title, market, prefix in sections:
         section, prior = report.get(key) or {}, previous.get(key) or {}
-        if key in ('refined_pockets', 'external_pockets', 'strengthened_pockets') and key not in report:
+        if key in ('refined_pockets', 'external_pockets', 'strengthened_pockets', 'hypothesis_pockets') and key not in report:
             continue
         if section.get('status') == 'error' or not isinstance(section.get('pockets'), dict):
             result['errors'].append(title + ': ' + section.get('error_type', 'данные отсутствуют'))

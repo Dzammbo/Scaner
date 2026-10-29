@@ -91,6 +91,16 @@ class DailyTests(unittest.TestCase):
         event['events_main_total']['over']=2.0
         self.assertEqual(d.evaluate_pockets(self.root,snap,[event],self.history)['strengthened_pockets']['choices'][group['pocket_id']],[])
 
+    def test_new_hypothesis_can_join_future_daily_set_without_rewriting_today(self):
+        key='hypothesis_pockets/integer_need4'
+        self.setrow(key,31,.19)
+        tomorrow=copy.deepcopy(self.report)
+        tomorrow['generated_at_utc']='2026-10-28T03:05:00+00:00'
+        future=d.freeze(tomorrow,self.root,'2026-10-28','new-report.json')
+        self.assertTrue(any(g['section']=='hypothesis_pockets' and g['pocket_id']=='integer_need4'
+                            for g in future['groups']))
+        self.assertFalse(any(g['section']=='hypothesis_pockets' for g in self.daily['groups']))
+
     def test_old_five_group_archive_keeps_its_hashes_but_live_uses_first_four(self):
         old=copy.deepcopy(self.daily)
         old['groups'].append(dict(rank=5,section='independent_pockets',

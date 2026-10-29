@@ -20,6 +20,15 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_eight_atomic_hypotheses_get_separate_rows_without_backfill(self):
+        old=report();new=copy.deepcopy(old)
+        new['hypothesis_pockets']=dict(id='eight',version=1,catalog_sha256='frozen',
+            pockets={str(i):row('Атом '+str(i),n=0,roi=None) for i in range(8)})
+        rows=build_tables(new,old)
+        self.assertFalse(rows['errors'])
+        self.assertEqual(len([r for r in rows['over'] if r['key'].startswith('hypothesis_pockets/')]),8)
+        self.assertTrue(all(r['new_closed'] is None for r in rows['over'] if r['key'].startswith('hypothesis_pockets/')))
+
     def test_strengthened_series_starts_at_zero_and_keeps_its_own_baseline(self):
         old=report();new=copy.deepcopy(old)
         new['strengthened_pockets']=dict(id='strengthened',version=1,catalog_sha256='sha',

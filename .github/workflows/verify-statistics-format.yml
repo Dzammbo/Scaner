@@ -17,6 +17,9 @@ on:
       - '.github/live-strengthened-pockets.json'
       - 'research/selection-lab-20261018/strengthened_pockets.py'
       - 'research/selection-lab-20261018/test_strengthened_pockets.py'
+      - '.github/live-hypothesis-pockets.json'
+      - 'research/selection-lab-20261018/hypothesis_pockets.py'
+      - 'research/selection-lab-20261018/test_hypothesis_pockets.py'
       - 'research/selection-lab-20261018/seven_direction_pockets.py'
       - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
       - '.github/live-under-pockets.json'
@@ -49,3 +52,5 @@ jobs:
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_external_pockets.py' -v
       - name: Verify independent strengthened pocket and persistence
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_strengthened_pockets.py' -v
+      - name: Verify atomic hypotheses and delayed first entry
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_hypothesis_pockets.py' -v

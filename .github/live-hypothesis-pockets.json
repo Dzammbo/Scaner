@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "id": "eight-atomic-hypotheses-forward-20261029-v1",
+  "version": "hypothesis-pockets-v1-20261029",
+  "activation": "first_successful_capture_after_deployment",
+  "entry_policy": "first_qualified_exact_priced_point_per_pocket_event",
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {"id":"integer_need4","name":"Целая основная линия + нужно минимум четыре гола","market":"over","pool":"strong","minute_window":[8,60],"delay_seconds":0,"conditions":["integer","need_ge4"]},
+    {"id":"early_score1_sot","name":"8–29 минут, один гол + створы 0,10–0,20 в минуту","market":"over","pool":"strong","minute_window":[8,29],"delay_seconds":0,"conditions":["score_one","sot_medium"]},
+    {"id":"lead2_45_49","name":"45–49 минут, счёт 2:0 или 0:2","market":"over","pool":"observed","minute_window":[45,49],"delay_seconds":0,"conditions":["exact_lead2"]},
+    {"id":"early_sot","name":"8–29 минут, створы 0,10–0,20 в минуту","market":"over","pool":"strong","minute_window":[8,29],"delay_seconds":0,"conditions":["sot_medium"]},
+    {"id":"wait5_quarter","name":"45–49 минут, один гол, запас 1,25–1,50, ожидание 5 минут + четвертная линия","market":"over","pool":"observed","minute_window":[45,49],"delay_seconds":300,"trigger_conditions":["score_one","gap125_150"],"conditions":["score_one","gap125_150","quarter"]},
+    {"id":"early_score1_profile110","name":"8–29 минут, один гол + голевой профиль <1,10","market":"over","pool":"strong","minute_window":[8,29],"delay_seconds":0,"conditions":["score_one","profile_lt110"]},
+    {"id":"need2_lowsot_price_profile110","name":"Нужно ровно два гола, створы <0,10, цена 1,80–1,99, профиль <1,10","market":"over","pool":"strong","minute_window":[8,60],"delay_seconds":0,"conditions":["need_two","sot_low","price180_199","profile_lt110"]},
+    {"id":"lead2_needle2_price","name":"45–59 минут, 2:0 или 0:2, нужно ≤2 голов, цена 1,80–1,99","market":"over","pool":"observed","minute_window":[45,59],"delay_seconds":0,"conditions":["exact_lead2","need_le2","price180_199"]}
+  ]
+}
