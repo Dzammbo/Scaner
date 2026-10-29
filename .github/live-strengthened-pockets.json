@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "id": "strengthened-danger-need3-price-forward-20261029-v1",
+  "version": "strengthened-pockets-v1-20261029",
+  "activation": "first_successful_capture_after_deployment",
+  "entry_policy": "first_strong_qualified_exact_priced_point_per_pocket_event",
+  "historical_results_in_new_series": false,
+  "automatic_rule_changes": false,
+  "pockets": [
+    {
+      "id": "danger_lt1_need_ge3_price180_199",
+      "name": "Опасные атаки <1 в минуту + нужно ≥3 голов + коэффициент 1,80–1,99",
+      "market": "over",
+      "pool": "strong",
+      "minute_window": [8, 60],
+      "conditions": ["danger_low", "need_ge3", "price180_199"],
+      "discovery_report": "research/live-results-refresh/2026-10-29/40906956199-1.json",
+      "discovery_n": 227,
+      "discovery_roi": 0.1907,
+      "discovery_roi_without_top3": 0.1802,
+      "evidence_status": "exploratory_historical_intersection_not_forward_results"
+    }
+  ]
+}

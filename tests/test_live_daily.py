@@ -75,6 +75,22 @@ class DailyTests(unittest.TestCase):
         self.report['statistics_tables']['errors']=['missing']
         with self.assertRaises(ValueError):d.freeze(self.report,self.root,'2026-10-29','bad.json')
 
+    def test_strengthened_group_enters_only_after_forward_threshold_and_uses_exact_rules(self):
+        key='strengthened_pockets/danger_lt1_need_ge3_price180_199'
+        self.setrow(key,31,.18)
+        self.report['generated_at_utc']='2026-10-28T03:05:00+00:00'
+        future=d.freeze(self.report,self.root,'2026-10-28','report.json')
+        self.assertEqual(future['groups'][1]['pocket_id'],'danger_lt1_need_ge3_price180_199')
+        group=dict(rank=1,section='strengthened_pockets',pocket_id='danger_lt1_need_ge3_price180_199',name='strengthened')
+        event=self.event(201,score='0-0',minute=20,line=2.25)
+        event['board_stats']['dangerous_attacks']=[8,8]
+        event['selection_confidence']={'eligible':True}
+        snap=self.snapshot([event],groups=[group])
+        result=d.evaluate_pockets(self.root,snap,[event],self.history)
+        self.assertEqual(len(result['strengthened_pockets']['choices'][group['pocket_id']]),1)
+        event['events_main_total']['over']=2.0
+        self.assertEqual(d.evaluate_pockets(self.root,snap,[event],self.history)['strengthened_pockets']['choices'][group['pocket_id']],[])
+
     def test_old_five_group_archive_keeps_its_hashes_but_live_uses_first_four(self):
         old=copy.deepcopy(self.daily)
         old['groups'].append(dict(rank=5,section='independent_pockets',

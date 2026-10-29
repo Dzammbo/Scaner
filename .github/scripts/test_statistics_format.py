@@ -20,6 +20,22 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_strengthened_series_starts_at_zero_and_keeps_its_own_baseline(self):
+        old=report();new=copy.deepcopy(old)
+        new['strengthened_pockets']=dict(id='strengthened',version=1,catalog_sha256='sha',
+            pockets={'danger_lt1_need_ge3_price180_199':row('Опасные атаки <1 + нужно ≥3 + цена 1,80–1,99',n=0,roi=None)})
+        result=build_tables(new,old)
+        self.assertFalse(result['errors'])
+        candidate=next(r for r in result['over'] if r['key'].startswith('strengthened_pockets/'))
+        self.assertEqual(candidate['n'],0)
+        self.assertIsNone(candidate['new_closed'])
+        later=copy.deepcopy(new)
+        later['strengthened_pockets']['pockets']['danger_lt1_need_ge3_price180_199']=row('test',n=31,roi=.2,robust=.12)
+        candidate=next(r for r in build_tables(later,new)['over'] if r['key'].startswith('strengthened_pockets/'))
+        self.assertEqual(candidate['new_closed'],31)
+        self.assertTrue(candidate['first_result'])
+        self.assertIsNone(candidate['delta_pp'])
+
     def test_twenty_refinements_start_at_zero_then_compare_only_their_own_series(self):
         old = report()
         new = copy.deepcopy(old)

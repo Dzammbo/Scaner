@@ -26,6 +26,7 @@ FAMILIES = {
     'seven_direction_pockets': '.github/live-seven-direction-pockets.json',
     'refined_pockets': '.github/live-refined-pockets.json',
     'external_pockets': '.github/live-external-pockets.json',
+    'strengthened_pockets': '.github/live-strengthened-pockets.json',
 }
 FORMAT = dict(version='live-four-lines-20261028-v2',
     header='Live · {time_msk} МСК · {n}/5',
@@ -225,7 +226,7 @@ def evaluate_pockets(root,snapshot,ordered,history_dir):
                 dest.write_text(json.dumps({section:item}))
             if section=='independent_pockets':
                 result=mod.evaluate(work,snapshot,ordered,market_for_event,{},lambda e,o:None)
-            elif section=='refined_pockets':
+            elif section in ('refined_pockets','strengthened_pockets'):
                 result=mod.evaluate(work,snapshot,ordered,market_for_event,{})
             else:result=mod.evaluate(work,snapshot,{})
             if result is None or result.get('status')!='active':

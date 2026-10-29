@@ -14,6 +14,9 @@ on:
       - 'research/selection-lab-20261018/external_pockets.py'
       - 'research/selection-lab-20261018/test_external_pockets.py'
       - 'research/selection-lab-20261018/test_refined_pockets.py'
+      - '.github/live-strengthened-pockets.json'
+      - 'research/selection-lab-20261018/strengthened_pockets.py'
+      - 'research/selection-lab-20261018/test_strengthened_pockets.py'
       - 'research/selection-lab-20261018/seven_direction_pockets.py'
       - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
       - '.github/live-under-pockets.json'
@@ -44,3 +47,5 @@ jobs:
 
       - name: Verify prospective external TB hypotheses and persistence
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_external_pockets.py' -v
+      - name: Verify independent strengthened pocket and persistence
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_strengthened_pockets.py' -v
