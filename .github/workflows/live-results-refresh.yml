@@ -51,6 +51,7 @@ jobs:
           COLLECTOR_ROOT: ${{ github.workspace }}/collector
           EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
           STATISTICS_CACHE_DIR: ${{ runner.temp }}/scaner-statistics-cache
+          STATISTICS_INPUT_MANIFEST: ${{ runner.temp }}/scaner-statistics-cache/history-index.json
         run: python3 control/.github/scripts/refresh_live_results.py
       - name: Update verified history index
         if: steps.refresh.outcome == 'success'

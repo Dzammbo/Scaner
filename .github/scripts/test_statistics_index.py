@@ -5,8 +5,10 @@ import sqlite3
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from statistics_index import build, hydrate
+from statistics_inputs import RefreshInputs
 
 
 class HistoryIndexTest(unittest.TestCase):
@@ -31,6 +33,12 @@ class HistoryIndexTest(unittest.TestCase):
             hydrate(root, cache)
             self.assertEqual(json.loads(gzip.decompress(journal.read_bytes()))['snapshot_id'], 'a')
             self.assertNotIn('model_entries', json.loads(gzip.decompress(journal.read_bytes())))
+            with patch.dict('os.environ', {'STATISTICS_INPUT_MANIFEST':str(cache/'history-index.json')}):
+                inputs = RefreshInputs(root, cache)
+                self.assertEqual(inputs.load(journal)['snapshot_id'], 'a')
+                self.assertEqual(inputs.counts['persistent_hits'], 1)
+                self.assertEqual(inputs.counts['source_decodes'], 0)
+                inputs.close()
             # A valid new Git blob is fetched and indexed without a prior manifest row.
             subprocess.run(['git', 'sparse-checkout', 'add', 'research/live-background'], cwd=root, check=True)
             journal.write_bytes(gzip.compress(b'{"snapshot_id":"b","choices":{}}'))

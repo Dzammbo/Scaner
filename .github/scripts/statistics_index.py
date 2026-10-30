@@ -74,13 +74,15 @@ def hydrate(root, directory):
         # Open read-only in spirit: no projection is accepted without a validated source.
         db.execute('SELECT 1 FROM objects LIMIT 1').fetchone()
         reused = changed = 0
+        objects = {}
         for name, sha in current.items():
             item = manifest['objects'].get(name)
             value = None
             if item and item['sha'] == sha:
                 row = db.execute('SELECT value FROM objects WHERE key=?', (cache_key(name, sha),)).fetchone()
                 if row and hashlib.sha256(row[0]).hexdigest() == item['projection_sha256']:
-                    value = gzip.decompress(row[0])
+                    encoded = row[0]
+                    value = gzip.decompress(encoded)
                     decode(value)  # Detect corrupted or incompatible cached JSON.
                     reused += 1
             if value is None:
@@ -97,8 +99,12 @@ def hydrate(root, directory):
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(gzip.compress(value, compresslevel=1, mtime=0)
                                     if name.endswith('.gz') else value)
+            objects[name] = dict(sha=sha, projection_sha256=hashlib.sha256(encoded).hexdigest())
         db.commit(); db.close()
-        # Entries obtained from Git are added to the durable index only after refresh.
+        temporary = directory / 'history-index.json.tmp'
+        temporary.write_text(json.dumps(dict(version=INDEX_VERSION, objects=objects),
+                                        ensure_ascii=False, separators=(',', ':')))
+        os.replace(temporary, manifest_path)
         print('HISTORY_INDEX=' + json.dumps(dict(mode='incremental', reused=reused,
               changed=changed, seconds=round(time.monotonic()-started, 3))), flush=True)
         return

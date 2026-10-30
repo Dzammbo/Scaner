@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import importlib
 import json
+import os
 from pathlib import Path
 import sqlite3
 import subprocess
@@ -67,15 +68,24 @@ class RefreshInputs:
         self.db = None
         self.tracked = {}
         self.initial_stats = {}
-        clean = subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', 'research'],
-                               cwd=self.root, capture_output=True).returncode == 0
+        indexed = False
+        manifest_path = os.environ.get('STATISTICS_INPUT_MANIFEST')
+        if manifest_path and Path(manifest_path).is_file():
+            manifest = json.loads(Path(manifest_path).read_text())
+            if manifest.get('version') != 'statistics-history-index-v1':
+                raise ValueError('History index version mismatch')
+            self.tracked = {name: row['sha'] for name, row in manifest['objects'].items()}
+            indexed = True
+        clean = indexed or subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', 'research'],
+                                         cwd=self.root, capture_output=True).returncode == 0
         if clean:
-            listing = subprocess.run(['git', 'ls-files', '-s', '-z', '--', 'research'],
-                                     cwd=self.root, capture_output=True, check=True).stdout
-            for record in listing.split(b'\0'):
-                if record:
-                    meta, path = record.split(b'\t', 1)
-                    self.tracked[path.decode()] = meta.split()[1].decode()
+            if not indexed:
+                listing = subprocess.run(['git', 'ls-files', '-s', '-z', '--', 'research'],
+                                         cwd=self.root, capture_output=True, check=True).stdout
+                for record in listing.split(b'\0'):
+                    if record:
+                        meta, path = record.split(b'\t', 1)
+                        self.tracked[path.decode()] = meta.split()[1].decode()
             for name in self.tracked:
                 path = self.root / name
                 if path.exists():
