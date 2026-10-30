@@ -50,6 +50,11 @@ def cache_key(name, sha):
     return VERSION + ':' + kind + ':' + sha
 
 
+def blob_sha(raw):
+    # Git's SHA-1 object format; all source tree blob IDs are 40 hex characters.
+    return hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
+
+
 def hydrate(root, directory):
     started = time.monotonic()
     current = tree(root)
@@ -79,7 +84,7 @@ def hydrate(root, directory):
             if value is None:
                 raw = git(root, 'cat-file', 'blob', sha)
                 # Git verifies the object hash when reading it from the promisor remote.
-                if git(root, 'hash-object', '--stdin', input=raw).decode().strip() != sha:
+                if blob_sha(raw) != sha:
                     raise ValueError('Git blob verification failed: ' + name)
                 value = encoded_projection(name, raw)
                 encoded = gzip.compress(value, compresslevel=1, mtime=0)
@@ -124,14 +129,23 @@ def build(root, directory):
     path = directory / (VERSION + '.sqlite')
     db = sqlite3.connect(path)
     db.execute('CREATE TABLE IF NOT EXISTS objects (key TEXT PRIMARY KEY, value BLOB NOT NULL)')
+    try:
+        old = json.loads((directory/'history-index.json').read_text())
+        reusable = old['objects'] if old['version'] == INDEX_VERSION else {}
+    except (OSError, KeyError, ValueError, TypeError):
+        reusable = {}
     objects = {}
     for name, sha in current.items():
         source = root/name
         if not source.is_file():
             raise ValueError('Incomplete history: ' + name)
+        if reusable.get(name, {}).get('sha') == sha:
+            # Hydrate validated both this Git blob identity and projected digest.
+            objects[name] = reusable[name]
+            continue
         raw = source.read_bytes()
         # Hydrated entries are projections, so only original Git bytes have the blob SHA.
-        original = git(root, 'hash-object', '--stdin', input=raw).decode().strip() == sha
+        original = blob_sha(raw) == sha
         row = db.execute('SELECT value FROM objects WHERE key=?', (cache_key(name, sha),)).fetchone()
         if original:
             value = encoded_projection(name, raw)
