@@ -31,6 +31,8 @@ def tree(root):
     for entry in git(root, 'ls-tree', '-r', '-z', 'HEAD', '--', *PREFIXES).split(b'\0'):
         if entry:
             metadata, name = entry.split(b'\t', 1)
+            if not name.endswith((b'.json', b'.json.gz')):
+                continue
             mode, kind, sha = metadata.split()
             if kind != b'blob' or mode not in (b'100644', b'100755'):
                 raise ValueError('Unexpected history tree entry')

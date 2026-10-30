@@ -21,6 +21,7 @@ class HistoryIndexTest(unittest.TestCase):
             journal.parent.mkdir(parents=True)
             journal.write_bytes(gzip.compress(json.dumps(dict(snapshot_id='a', choices={'a':[]},
                                                           model_entries={'unused':[1]})).encode()))
+            (journal.parent/'not-a-journal.md').write_text('Report, not JSON')
             subprocess.run(['git', 'add', '.'], cwd=root, check=True)
             subprocess.run(['git', 'commit', '-qm', 'initial'], cwd=root, check=True)
             subprocess.run(['git', 'sparse-checkout', 'init', '--cone'], cwd=root, check=True)
