@@ -42,7 +42,25 @@ def summarize(rows, outcomes, settle):
                 leagues=dict(leagues), profits=values)
 
 
-def audit(root, outcomes, settle):
+def acquisition_days(receipts):
+    days = collections.defaultdict(lambda: dict(captures=0,failed=0,coverage=collections.Counter(),
+                                                revisions=collections.Counter(),missing=collections.Counter()))
+    for receipt in receipts:
+        stamp=(receipt.get('request') or {}).get('requested_at_utc')
+        if not stamp: continue
+        day=dt.datetime.fromisoformat(stamp.replace('Z','+00:00')).astimezone(MSK).date().isoformat()
+        bucket=days[day];bucket['captures']+=1;bucket['failed']+=bool(receipt.get('failed'))
+        bucket['revisions'][receipt.get('code_revision') or 'unknown']+=1
+        coverage=receipt.get('research_detail_coverage') or {}
+        for key in ('eligible','selected','trend_available','profile_available','priced','complete'):
+            value=coverage.get(key)
+            if isinstance(value,(int,float)):bucket['coverage'][key]+=value
+        bucket['missing'].update(coverage.get('missing_reasons') or {})
+    return {day:{key:dict(value) if isinstance(value,collections.Counter) else value
+                 for key,value in bucket.items()} for day,bucket in sorted(days.items())}
+
+
+def audit(root, outcomes, settle, receipts=()):
     result = {}
     for section in FAMILIES:
         module = importlib.import_module(section)
@@ -64,5 +82,5 @@ def audit(root, outcomes, settle):
                     league=row.get('league'), source_snapshot_id=row.get('source_snapshot_id'),
                     profit=settle(row,outcomes.get(eid,{})), features=row.get('features'))
                     for eid,row in rows.items()]
-    return dict(version='pocket-entry-days-v1', groups=result,
+    return dict(version='pocket-entry-days-v1', groups=result, acquisition=acquisition_days(receipts),
                 definition='Original first entry per pocket/event; Moscow entry day; flat one unit; confirmed exact original quote; overlapping groups are not additive')

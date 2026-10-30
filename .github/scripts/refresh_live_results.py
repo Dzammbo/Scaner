@@ -1,5 +1,6 @@
 """Refresh confirmed outcomes and recompute only the frozen shared-Top5 series."""
 import collections
+from concurrent.futures import ThreadPoolExecutor
 import contextlib
 import datetime as dt
 import decimal
@@ -44,6 +45,30 @@ def independent_profit(final, line, price):
         legs = [low, low + D(".5")]
     return float(sum(price - 1 if total > x else D(0) if total == x
                      else D(-1) for x in legs) / len(legs))
+
+
+def refresh_outcomes(capture, targets, previous, budget, now):
+    """Same oldest 200 targets and ten-ID requests, up to four batches in flight."""
+    pending = []
+    for eid, target in targets.items():
+        old = previous.get(eid, {})
+        if old.get('settled'):
+            continue
+        age = now.timestamp() - capture.live.timestamp(target['board_observed_at_utc'])
+        since = (now.timestamp() - capture.live.timestamp(old['checked_at_utc'])
+                 if old.get('checked_at_utc') else math.inf)
+        if age >= capture.OUTCOME_INITIAL_DELAY_SECONDS and since >= capture.OUTCOME_RETRY_SECONDS:
+            pending.append((target['board_observed_at_utc'], eid))
+    pending.sort()
+    selected = pending[:capture.MAX_OUTCOMES * 10]
+    batches = [{eid:targets[eid] for _,eid in selected[start:start+10]}
+               for start in range(0, len(selected), 10)]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        results = list(pool.map(lambda batch: capture.collect_outcomes(batch, previous, budget, now), batches))
+    events = [row for result in results for row in result['events']]
+    return dict(events=events, eligible_pending=len(pending), attempt_cap=capture.MAX_OUTCOMES*10,
+                api_calls=sum(result['api_calls'] for result in results),
+                queued_after_run=max(0,len(pending)-len(events)), workers=4)
 
 
 def order_pockets(report, metric):
@@ -295,7 +320,7 @@ def main():
     c.OUTCOME_INITIAL_DELAY_SECONDS = 0
     forced = {eid: record for eid, record in previous.items() if record.get("settled")}
     budget = c.Budget(c.live.get, cap=40, reserve=200)
-    updates = c.collect_outcomes(targets, forced, budget, now)
+    updates = refresh_outcomes(c, targets, forced, budget, now)
     merged = dict(previous)
     merged.update({str(row["event_id"]): row for row in updates["events"]})
     stages.mark('outcomes')
@@ -437,7 +462,12 @@ def main():
                                        reason='Detailed matched research is separate from the canonical statistics table')
     if request.get('include_daily_audit') is True:
         from statistics_daily import audit
-        report['daily_audit'] = audit(root, merged, c.settle_entry)
+        report['daily_audit'] = audit(root, merged, c.settle_entry, receipts)
+        for key, group in report['daily_audit']['groups'].items():
+            section, pocket = key.split('/', 1)
+            published = report[section]['pockets'][pocket]
+            if group['total']['n'] != published['n'] or abs(group['total']['unit_profit'] - published['unit_profit']) > 1e-8:
+                raise ValueError('Daily audit does not reconcile to pocket totals: ' + key)
     stages.mark('optional_analysis')
     previous_data = previous_report[2] if previous_report else None
     report['statistics_format_version'] = STATISTICS_FORMAT_VERSION

@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from refresh_live_results import add_pocket_dynamics, previous_statistics_report
+from refresh_live_results import add_pocket_dynamics, previous_statistics_report, refresh_outcomes
 
 
 def series(market, n, roi, robust=None):
@@ -16,6 +16,30 @@ def series(market, n, roi, robust=None):
 
 
 class PocketDynamicsTest(unittest.TestCase):
+    def test_parallel_outcomes_preserve_oldest_target_cap_and_skip_confirmed(self):
+        from types import SimpleNamespace
+        import threading
+        import time
+        active=peak=0;lock=threading.Lock();batches=[]
+        def collect(targets, previous, budget, now):
+            nonlocal active,peak
+            with lock:
+                active+=1;peak=max(peak,active);batches.append(list(targets))
+            time.sleep(.01)
+            with lock:active-=1
+            return dict(events=[dict(event_id=eid) for eid in targets],api_calls=1)
+        capture=SimpleNamespace(MAX_OUTCOMES=2,OUTCOME_INITIAL_DELAY_SECONDS=0,
+            OUTCOME_RETRY_SECONDS=900,live=SimpleNamespace(timestamp=lambda value:float(value)),
+            collect_outcomes=collect)
+        targets={str(i):dict(board_observed_at_utc=str(100+i).zfill(4)) for i in range(32)}
+        previous={'0':{'settled':True}}
+        result=refresh_outcomes(capture,targets,previous,None,dt.datetime.fromtimestamp(1000,dt.timezone.utc))
+        self.assertEqual([r['event_id'] for r in result['events']],[str(i) for i in range(1,21)])
+        self.assertEqual((result['eligible_pending'],result['queued_after_run'],result['api_calls']),(31,11,2))
+        self.assertEqual(max(map(len,batches)),10)
+        self.assertGreater(peak,1)
+        self.assertLessEqual(peak,4)
+
     def test_invalid_historical_sample_drop_is_not_a_comparison_baseline(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);base=root/'research/live-results-refresh/2026-10-29'

@@ -43,6 +43,7 @@ class RefreshInputs:
         self.memory_bytes = 0
         self.db = None
         self.tracked = {}
+        self.initial_stats = {}
         clean = subprocess.run(['git', 'diff', '--quiet', 'HEAD', '--', 'research'],
                                cwd=self.root, capture_output=True).returncode == 0
         if clean:
@@ -52,6 +53,11 @@ class RefreshInputs:
                 if record:
                     meta, path = record.split(b'\t', 1)
                     self.tracked[path.decode()] = meta.split()[1].decode()
+            for name in self.tracked:
+                path = self.root / name
+                if path.exists():
+                    stat = path.stat()
+                    self.initial_stats[name] = (stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
         if directory:
             directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
             path = directory / (VERSION + '.sqlite')
@@ -76,6 +82,8 @@ class RefreshInputs:
             return data
         raw = None
         digest = self.tracked.get(relative)
+        if self.initial_stats.get(relative) != local_key[1:]:
+            digest = None
         if digest is None:
             raw = path.read_bytes()
             digest = hashlib.sha256(raw).hexdigest()
