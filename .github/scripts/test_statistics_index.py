@@ -50,10 +50,33 @@ class HistoryIndexTest(unittest.TestCase):
             build(root, cache)
             with sqlite3.connect(cache/'statistics-inputs-v2.sqlite') as db:
                 db.execute('UPDATE objects SET value=?', (b'corrupt',))
-            # A corrupted cache fails closed and restores original Git data.
             journal.unlink()
             hydrate(root, cache)
             self.assertEqual(json.loads(gzip.decompress(journal.read_bytes()))['snapshot_id'], 'b')
+
+    def test_new_collector_files_are_deferred_until_next_hydration(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)/'repo'; root.mkdir()
+            first = root/'research/live-lab/receipts/day/a.json'
+            first.parent.mkdir(parents=True)
+            first.write_text('{"snapshot_id":"a"}')
+            for command in (['init', '-q'], ['add', '.'],
+                            ['-c', 'user.email=test@example.org', '-c', 'user.name=Test',
+                             'commit', '-qm', 'first']):
+                subprocess.run(['git', *command], cwd=root, check=True)
+            cache = Path(tmp)/'cache'
+            build(root, cache)
+            later = first.parent/'b.json'
+            later.write_text('{"snapshot_id":"b"}')
+            subprocess.run(['git', 'add', '.'], cwd=root, check=True)
+            subprocess.run(['git', '-c', 'user.email=test@example.org', '-c', 'user.name=Test',
+                            'commit', '-qm', 'later'], cwd=root, check=True)
+            later.unlink()
+            build(root, cache)
+            self.assertNotIn('research/live-lab/receipts/day/b.json',
+                             json.loads((cache/'history-index.json').read_text())['objects'])
+            hydrate(root, cache)
+            self.assertEqual(json.loads(later.read_text())['snapshot_id'], 'b')
 
     def test_missing_index_falls_back_to_full_sparse_checkout(self):
         with tempfile.TemporaryDirectory() as tmp:

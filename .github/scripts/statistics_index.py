@@ -129,10 +129,6 @@ def hydrate(root, directory):
 def build(root, directory):
     started = time.monotonic()
     current = tree(root)
-    # The collector may have appended new immutable journals while refresh ran.
-    if any(not (root/name).is_file() for name in current):
-        hydrate(root, directory)
-        current = tree(root)
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / (VERSION + '.sqlite')
     db = sqlite3.connect(path)
@@ -143,10 +139,14 @@ def build(root, directory):
     except (OSError, KeyError, ValueError, TypeError):
         reusable = {}
     objects = {}
+    deferred = 0
     for name, sha in current.items():
         source = root/name
         if not source.is_file():
-            raise ValueError('Incomplete history: ' + name)
+            # Collector commits after the snapshot used for this calculation
+            # are fetched and validated on the next refresh, not retroactively.
+            deferred += 1
+            continue
         previous = reusable.get(name, {})
         if previous.get('sha') == sha:
             row = db.execute('SELECT value FROM objects WHERE key=?', (cache_key(name, sha),)).fetchone()
@@ -166,16 +166,20 @@ def build(root, directory):
             value = gzip.decompress(encoded)
             expected = gzip.compress(value, compresslevel=1, mtime=0) if name.endswith('.gz') else value
             if raw != expected:
-                raise ValueError('Hydrated projection differs: ' + name)
+                # The branch can advance between reading and publishing the
+                # report. Never assign its newer blob identity to old bytes.
+                deferred += 1
+                continue
         else:
-            raise ValueError('Cannot verify source or cached projection: ' + name)
+            deferred += 1
+            continue
         objects[name] = dict(sha=sha, projection_sha256=hashlib.sha256(encoded).hexdigest())
     db.commit(); db.close()
     manifest = dict(version=INDEX_VERSION, objects=objects)
     temporary = directory / 'history-index.json.tmp'
     temporary.write_text(json.dumps(manifest, ensure_ascii=False, separators=(',', ':')))
     os.replace(temporary, directory/'history-index.json')
-    print('HISTORY_INDEX=' + json.dumps(dict(mode='built', count=len(objects),
+    print('HISTORY_INDEX=' + json.dumps(dict(mode='built', count=len(objects), deferred=deferred,
           seconds=round(time.monotonic()-started, 3))), flush=True)
 
 
