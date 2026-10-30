@@ -75,6 +75,42 @@ class DailyTests(unittest.TestCase):
         self.report['statistics_tables']['errors']=['missing']
         with self.assertRaises(ValueError):d.freeze(self.report,self.root,'2026-10-29','bad.json')
 
+    def test_freeze_ignores_paused_pockets_with_missing_or_stale_table_rows(self):
+        section='independent_pockets';pocket='need_four_plus'
+        key=section+'/'+pocket
+        (self.root/'.github/live-pocket-pauses.json').write_text(json.dumps(
+            dict(schema_version=1,paused={section:[pocket]})))
+        archive=(self.root/'.github/live-daily-pockets/2026-10-27.json').read_bytes()
+        for day,keep_row,keep_result in [('2026-10-28',False,True),
+                                         ('2026-10-29',False,False),
+                                         ('2026-10-30',True,True)]:
+            with self.subTest(keep_row=keep_row,keep_result=keep_result):
+                report=copy.deepcopy(self.report)
+                report['generated_at_utc']=day+'T03:05:00+00:00'
+                if not keep_row:
+                    report['statistics_tables']['over']=[r for r in report['statistics_tables']['over']
+                                                        if r['key']!=key]
+                if not keep_result:
+                    del report[section]['pockets'][pocket]
+                result=d.freeze(report,self.root,day,'new.json')
+                self.assertEqual(len(result['groups']),4)
+                self.assertNotIn(pocket,[g['pocket_id'] for g in result['groups']])
+                self.assertIn('combo_minute_integer',[g['pocket_id'] for g in result['groups']])
+        self.assertEqual(d.freeze(self.report,self.root,'2026-10-27','ignored.json'),self.daily)
+        self.assertEqual((self.root/'.github/live-daily-pockets/2026-10-27.json').read_bytes(),archive)
+        self.assertEqual(json.loads((self.root/d.POINTER).read_text()),self.daily)
+
+    def test_freeze_still_rejects_missing_active_rows_with_pauses(self):
+        (self.root/'.github/live-pocket-pauses.json').write_text(json.dumps(
+            dict(schema_version=1,paused={'external_pockets':['draw_60_65']})))
+        self.report['generated_at_utc']='2026-10-28T03:05:00+00:00'
+        key='independent_pockets/need_four_plus'
+        self.report['statistics_tables']['over']=[r for r in self.report['statistics_tables']['over']
+                                                if r['key']!=key]
+        with self.assertRaisesRegex(ValueError,'Missing active pocket table row'):
+            d.freeze(self.report,self.root,'2026-10-28','bad.json')
+        self.assertFalse((self.root/'.github/live-daily-pockets/2026-10-28.json').exists())
+
     def test_strengthened_group_enters_only_after_forward_threshold_and_uses_exact_rules(self):
         key='strengthened_pockets/danger_lt1_need_ge3_price180_199'
         self.setrow(key,31,.18)

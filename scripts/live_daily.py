@@ -68,6 +68,10 @@ def freeze(report, root, date_msk, report_path, now=None):
     tables = report['statistics_tables']
     if tables.get('errors'):
         raise ValueError('Cannot freeze groups from an incomplete report')
+    if str(LAB) not in sys.path:
+        sys.path.append(str(LAB))
+    from pocket_pauses import load as load_pauses
+    paused = load_pauses(root)
     observed = {}
     for section in FAMILIES:
         cfgpath = root/FAMILIES[section]
@@ -80,7 +84,7 @@ def freeze(report, root, date_msk, report_path, now=None):
         if data.get('catalog_sha256') != digest:
             raise ValueError('Report/catalog mismatch: '+section)
         for p in cfg['pockets']:
-            if p.get('market','over') != 'over':
+            if p.get('market','over') != 'over' or p['id'] in paused.get(section, []):
                 continue
             if p['id'] not in data['pockets']:
                 raise ValueError('Missing active pocket result')
