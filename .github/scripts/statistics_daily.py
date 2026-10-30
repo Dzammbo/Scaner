@@ -81,7 +81,8 @@ def audit(root, outcomes, settle, receipts=()):
                     observed_at_utc=row.get('observed_at_utc') or row.get('entry_observed_at_utc'),
                     minute=row.get('minute'), score=row.get('score'), market=row.get('market'),
                     league=row.get('league'), source_snapshot_id=row.get('source_snapshot_id'),
-                    profit=settle(row,outcomes.get(eid,{})), features=row.get('features'))
+                    profit=settle(row,outcomes.get(eid,{})), final_score=outcomes.get(eid,{}).get('final'),
+                    features=row.get('features'))
                     for eid,row in rows.items()]
     return dict(version='pocket-entry-days-v1', groups=result, acquisition=acquisition_days(receipts),
                 definition='Original first entry per pocket/event; Moscow entry day; flat one unit; confirmed exact original quote; overlapping groups are not additive')
