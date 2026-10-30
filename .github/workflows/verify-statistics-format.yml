@@ -5,6 +5,11 @@ on:
     paths:
       - '.github/scripts/statistics_format.py'
       - '.github/scripts/statistics_inputs.py'
+      - '.github/scripts/acquisition_health.py'
+      - '.github/scripts/run_live_capture.py'
+      - '.github/scripts/test_acquisition_health.py'
+      - '.github/scripts/test_collector_inputs.py'
+      - '.github/scripts/live_runtime.py'
       - '.github/scripts/statistics_index.py'
       - '.github/scripts/test_statistics_index.py'
       - '.github/scripts/statistics_daily.py'
@@ -50,6 +55,13 @@ jobs:
         env:
           PYTHONPATH: .github/scripts
         run: python3 -m unittest discover -s .github/scripts -p test_refresh_live_results.py -v
+      - name: Verify acquisition freshness and cached collector inputs
+        env:
+          PYTHONPATH: .github/scripts
+        run: |
+          python3 -m unittest discover -s .github/scripts -p test_acquisition_health.py -v
+          python3 -m unittest discover -s .github/scripts -p test_collector_inputs.py -v
+          python3 -m unittest discover -s .github/scripts -p test_live_runtime.py -v
       - name: Verify paused TM and continuous TB history
         env:
           PYTHONPATH: research/selection-lab-20261018

@@ -16,6 +16,7 @@ import sys
 import time
 from statistics_format import VERSION as STATISTICS_FORMAT_VERSION, build_tables, render_statistics
 from statistics_inputs import RefreshInputs, Stages
+from acquisition_health import acquisition_health
 
 INPUTS = None
 
@@ -350,6 +351,7 @@ def main():
     run_id = os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
     day = generated.astimezone(MSK).date().isoformat()
     report = dict(generated_at_utc=generated.isoformat(),
+                  acquisition_health=acquisition_health(receipts, generated),
                   paused_pockets=pocket_pauses.load(root),
                   source_revision=source_revision, rules_revision=os.environ["GITHUB_SHA"],
                   statistics_epoch=dict(id=config["id"], started_at_utc=started,
@@ -500,7 +502,8 @@ def main():
     stages.mark('save')
     print("RESULTS_REFRESH_PATH=" + summary_path)
     print("RESULTS_REFRESH_COMMIT=" + commit)
-    print("RESULTS_REFRESH_STATUS=complete")
+    print("RESULTS_REFRESH_STATUS=" + ('complete' if report['acquisition_health']['status'] == 'fresh'
+                                      else 'complete_with_stale_acquisition'))
     print(report['statistics_markdown'])
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:

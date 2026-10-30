@@ -4,7 +4,7 @@ BRANCH='research/selection-lab-20261018'
 PREFIX='research/live-background/runtime/'
 WORKER='live-background.yml';SUPERVISOR='live-background-supervisor.yml';RECOVERY='live-background-recovery.yml'
 ACTIVE={'queued','in_progress','waiting','pending','requested'}
-GENERATION='resident-v3-configurable-20261020'
+GENERATION='resident-v4-cached-inputs-20261031'
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def epoch(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()
@@ -147,15 +147,21 @@ def worker(api):
   request=pathlib.Path(os.environ['RUNNER_TEMP'])/'resident-live-request.json'
   request.write_text(json.dumps(dict(mode='full',event_ids=[],requested_at_utc=stamp(),source='background',cycle_id=sid)))
   revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
+  performance_path=pathlib.Path(os.environ['RUNNER_TEMP'])/'collector-performance.json'
+  performance_path.unlink(missing_ok=True)
+  env['COLLECTOR_PERFORMANCE_FILE']=str(performance_path)
   env.update(LAB_API_CALL_CAP=str(api_cap),LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_REQUEST_FILE=str(request),LAB_CODE_REVISION=revision,LAB_TRIGGER_MAIN_SHA=os.environ['GITHUB_SHA'],GITHUB_RUN_ATTEMPT=str(cycle_number),LAB_CAPTURE_ID=sid,LAB_CAPTURE_DAY=day)
   captured=False;error=None
   try:
-   invoke(['python3','research/selection-lab-20261018/capture.py'],root,env,360)
+   # First cache bootstrap may read the full archive; later cycles reuse only
+   # immutable input projections and retain the original acquisition rules.
+   invoke(['python3',str(pathlib.Path(__file__).with_name('run_live_capture.py'))],root,env,900)
    captured=True
   except Exception as exc:error=type(exc).__name__
   # Persist even a failed acquisition receipt, but never count that as success.
   invoke(['python3','research/selection-lab-20261018/save_capture.py'],root,env,180)
   state.update(updated_at=stamp(),state='sleeping'if captured else 'capture_failed',last_capture_id=sid,last_error=error,cycle=cycles)
+  if performance_path.exists():state['last_capture_performance']=json.loads(performance_path.read_text())
   if captured:state['last_success_at']=stamp();failures=0
   else:failures+=1
   state['consecutive_failures']=failures;api.put(PREFIX+'worker.json',state)

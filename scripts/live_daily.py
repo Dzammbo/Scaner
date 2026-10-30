@@ -66,6 +66,8 @@ def freeze(report, root, date_msk, report_path, now=None):
     if report_time.tzinfo is None or str(report_time.astimezone(MSK).date()) != date_msk:
         raise ValueError('Daily freeze requires a report from the selected Moscow date')
     tables = report['statistics_tables']
+    if (report.get('acquisition_health') or {}).get('status') == 'stale':
+        raise ValueError('Cannot freeze groups from stale acquisition')
     if tables.get('errors'):
         raise ValueError('Cannot freeze groups from an incomplete report')
     if str(LAB) not in sys.path:

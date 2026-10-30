@@ -27,14 +27,27 @@ jobs:
         with:
           ref: research/selection-lab-20261018
           path: collector
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/scaner-collector-cache
+          key: collector-inputs-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: collector-inputs-v1-
+      - name: Install fast JSON decoder
+        run: python3 -m pip install orjson==3.11.3
       - name: Run resident collector
         id: worker
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
           GH_TOKEN: ${{ github.token }}
           COLLECTOR_ROOT: ${{ github.workspace }}/collector
+          COLLECTOR_CACHE_DIR: ${{ runner.temp }}/scaner-collector-cache
           VERIFY_RECOVERY: ${{ inputs.verify_recovery }}
         run: python3 control/.github/scripts/live_runtime.py worker
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: ${{ runner.temp }}/scaner-collector-cache
+          key: collector-inputs-v1-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Preserve latest cycle backup
         if: always() && steps.worker.outputs.capture_id != ''
         uses: actions/upload-artifact@v4

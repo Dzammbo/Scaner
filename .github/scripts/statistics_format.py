@@ -163,6 +163,11 @@ def render_statistics(report, previous=None, tables=None):
     tables = tables if tables is not None else build_tables(report, previous)
     lines = ['**Срез: ' + clock(report['generated_at_utc']) + '.** Сравнение с ' +
              clock(tables['reference_at_utc']) + '.', '']
+    health = report.get('acquisition_health') or {}
+    if health.get('status') == 'stale':
+        last = clock(health.get('last_successful_request_at_utc'))
+        lines.extend(['**Внимание: сбор матчей устарел. Последний успешный запрос: ' + last +
+                      '. Таблица обновляет исходы ранее собранных матчей; свежий отбор не подтверждён.**', ''])
     population = tables.get('population') or {}
     def population_count(key):
         row = population[key]

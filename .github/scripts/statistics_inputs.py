@@ -60,8 +60,10 @@ def project(path, data):
 
 
 class RefreshInputs:
-    def __init__(self, root, directory=None):
+    def __init__(self, root, directory=None, *, projector=project, version=VERSION):
         self.root = Path(root).resolve()
+        self.projector = projector
+        self.version = version
         self.counts = collections.Counter()
         self.memory = collections.OrderedDict()
         self.memory_bytes = 0
@@ -93,7 +95,7 @@ class RefreshInputs:
                     self.initial_stats[name] = (stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
         if directory:
             directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
-            path = directory / (VERSION + '.sqlite')
+            path = directory / (self.version + '.sqlite')
             try:
                 self.db = sqlite3.connect(path)
                 self.db.execute('CREATE TABLE IF NOT EXISTS objects (key TEXT PRIMARY KEY, value BLOB NOT NULL)')
@@ -121,7 +123,7 @@ class RefreshInputs:
             raw = path.read_bytes()
             digest = hashlib.sha256(raw).hexdigest()
         kind = 'snapshot' if 'snapshots' in path.parts else 'report' if 'live-results-refresh' in path.parts else 'journal'
-        key = VERSION + ':' + kind + ':' + digest
+        key = self.version + ':' + kind + ':' + digest
         encoded = None
         if self.db:
             try:
@@ -135,7 +137,7 @@ class RefreshInputs:
                 self.counts['cache_errors'] += 1
         if encoded is None:
             raw = raw if raw is not None else path.read_bytes()
-            data = project(path, decode(gzip.decompress(raw) if path.suffix == '.gz' else raw))
+            data = self.projector(path, decode(gzip.decompress(raw) if path.suffix == '.gz' else raw))
             self.counts['source_decodes'] += 1
             encoded = gzip.compress(json.dumps(data, ensure_ascii=False, separators=(',', ':')).encode(), compresslevel=1, mtime=0)
             if self.db:
