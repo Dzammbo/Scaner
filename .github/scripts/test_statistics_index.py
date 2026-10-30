@@ -39,6 +39,10 @@ class HistoryIndexTest(unittest.TestCase):
                 self.assertEqual(inputs.counts['persistent_hits'], 1)
                 self.assertEqual(inputs.counts['source_decodes'], 0)
                 inputs.close()
+            journal.unlink()
+            build(root, cache)
+            self.assertEqual(len(json.loads((cache/'history-index.json').read_text())['objects']), 1)
+            hydrate(root, cache)
             # A valid new Git blob is fetched and indexed without a prior manifest row.
             subprocess.run(['git', 'sparse-checkout', 'add', 'research/live-background'], cwd=root, check=True)
             journal.write_bytes(gzip.compress(b'{"snapshot_id":"b","choices":{}}'))

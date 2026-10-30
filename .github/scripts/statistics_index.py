@@ -141,18 +141,18 @@ def build(root, directory):
     objects = {}
     deferred = 0
     for name, sha in current.items():
-        source = root/name
-        if not source.is_file():
-            # Collector commits after the snapshot used for this calculation
-            # are fetched and validated on the next refresh, not retroactively.
-            deferred += 1
-            continue
         previous = reusable.get(name, {})
         if previous.get('sha') == sha:
             row = db.execute('SELECT value FROM objects WHERE key=?', (cache_key(name, sha),)).fetchone()
             if row and hashlib.sha256(row[0]).hexdigest() == previous.get('projection_sha256'):
                 objects[name] = previous
                 continue
+        source = root/name
+        if not source.is_file():
+            # Reset after publication can remove hydrated files outside the
+            # sparse cone; the verified DB entry above remains authoritative.
+            deferred += 1
+            continue
         raw = source.read_bytes()
         # Hydrated entries are projections, so only original Git bytes have the blob SHA.
         original = blob_sha(raw) == sha

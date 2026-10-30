@@ -39,7 +39,11 @@ jobs:
         with:
           path: ${{ runner.temp }}/scaner-statistics-cache
           key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: statistics-inputs-v2-
+          # The last complete prepublication manifest is retained for this
+          # recovery run; subsequent saves use the normal per-run key.
+          restore-keys: |
+            statistics-inputs-v2-41008089412-1
+            statistics-inputs-v2-
       - name: Install fast JSON decoder
         run: python3 -m pip install orjson==3.11.3
       - name: Restore verified history, fetching only changed blobs
