@@ -267,7 +267,8 @@ def save_files(root, files):
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(data)
             paths.append(relative)
-        git(root, "add", "--", *paths)
+        # Data journals are hydrated outside the sparse checkout cone.
+        git(root, "add", "--sparse", "--", *paths)
         if git(root, "diff", "--cached", "--quiet", check=False).returncode == 0:
             return git(root, "rev-parse", "HEAD").stdout.strip()
         git(root, "-c", "user.name=github-actions[bot]", "-c",
