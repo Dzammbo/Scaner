@@ -78,6 +78,7 @@ def audit(root, outcomes, settle, receipts=()):
                 days={day:summarize(items, outcomes, settle) for day,items in sorted(by_day.items())})
             if key in KEYS:
                 result[key]['entries'] = [dict(event_id=eid, day=day_of(row),
+                    observed_at_utc=row.get('observed_at_utc') or row.get('entry_observed_at_utc'),
                     minute=row.get('minute'), score=row.get('score'), market=row.get('market'),
                     league=row.get('league'), source_snapshot_id=row.get('source_snapshot_id'),
                     profit=settle(row,outcomes.get(eid,{})), features=row.get('features'))
