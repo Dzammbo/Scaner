@@ -141,10 +141,12 @@ def build(root, directory):
         source = root/name
         if not source.is_file():
             raise ValueError('Incomplete history: ' + name)
-        if reusable.get(name, {}).get('sha') == sha:
-            # Hydrate validated both this Git blob identity and projected digest.
-            objects[name] = reusable[name]
-            continue
+        previous = reusable.get(name, {})
+        if previous.get('sha') == sha:
+            row = db.execute('SELECT value FROM objects WHERE key=?', (cache_key(name, sha),)).fetchone()
+            if row and hashlib.sha256(row[0]).hexdigest() == previous.get('projection_sha256'):
+                objects[name] = previous
+                continue
         raw = source.read_bytes()
         # Hydrated entries are projections, so only original Git bytes have the blob SHA.
         original = blob_sha(raw) == sha
