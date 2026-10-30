@@ -1,0 +1,20 @@
+name: Diagnose Live provider acquisition
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/scripts/probe_live_provider.py']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+      - name: Probe football board without exposing credentials
+        env:
+          BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
+        run: python3 .github/scripts/probe_live_provider.py
