@@ -13,6 +13,16 @@ import subprocess
 import sys
 import time
 from statistics_format import VERSION as STATISTICS_FORMAT_VERSION, build_tables, render_statistics
+from statistics_inputs import RefreshInputs, Stages
+
+INPUTS = None
+
+
+def read_report(path):
+    if INPUTS is not None:
+        return INPUTS.load(path)
+    with path.open() as source:
+        return json.load(source)
 
 BRANCH = "research/selection-lab-20261018"
 UTC = dt.timezone.utc
@@ -55,8 +65,10 @@ def previous_statistics_report(root):
     previous = None
     for path in reports.glob('*/*.json'):
         try:
-            with path.open() as source:
-                candidate = json.load(source)
+            candidate = read_report(path)
+            tables = candidate.get('statistics_tables') or {}
+            if tables.get('errors') or any((r.get('new_closed') or 0) < 0 for r in tables.get('over', [])):
+                continue
             generated = dt.datetime.fromisoformat(candidate['generated_at_utc'])
             if generated.tzinfo is None:
                 continue
@@ -94,8 +106,7 @@ def add_pocket_dynamics(report, previous, root=None):
             candidates = []
             for path in (root / 'research/live-results-refresh').glob('*/*.json'):
                 try:
-                    with path.open() as source:
-                        candidate = json.load(source)
+                    candidate = read_report(path)
                     prior = candidate.get(series) or {}
                     generated = dt.datetime.fromisoformat(candidate['generated_at_utc'])
                     if (generated < dt.datetime.fromisoformat(report['generated_at_utc']) and
@@ -245,12 +256,16 @@ def save_files(root, files):
 
 
 def main():
+    global INPUTS
+    stages = Stages()
     root = Path(os.environ["COLLECTOR_ROOT"]).resolve()
     sys.path.insert(0, str(root / "research/selection-lab-20261018"))
     import capture as c
     import statistics_epoch as epoch
     import pocket_pauses
     c.configure_background("experimental")
+    INPUTS = RefreshInputs(root, os.environ.get('STATISTICS_CACHE_DIR'))
+    INPUTS.install(c)
     config = json.loads(Path(os.environ["EPOCH_CONFIG"]).read_text())
     assert config.get("enabled") and config.get("rules_version") in getattr(epoch, "SUPPORTED_VERSIONS", (epoch.VERSION,))
     source_revision = git(root, "rev-parse", "HEAD").stdout.strip()
@@ -262,6 +277,7 @@ def main():
     for eid, outcome in control_outcomes.items():
         if eid not in previous or outcome["checked_at_utc"] > previous[eid]["checked_at_utc"]:
             previous[eid] = outcome
+    stages.mark('journals')
     receipts = [c.load_json(path)
                 for base in (root/"research/live-lab",
                              root/"research/live-background/experimental")
@@ -273,6 +289,7 @@ def main():
     fresh = epoch.new_universe(state, targets)
     before = {model: model_stats(rows, previous, c.settle_entry)[0]
               for model, rows in groups.items()}
+    stages.mark('epoch')
     # An explicit user refresh checks unresolved records immediately.
     # It does not change the recurring collector's one-hour/15-minute schedule.
     c.OUTCOME_INITIAL_DELAY_SECONDS = 0
@@ -281,6 +298,7 @@ def main():
     updates = c.collect_outcomes(targets, forced, budget, now)
     merged = dict(previous)
     merged.update({str(row["event_id"]): row for row in updates["events"]})
+    stages.mark('outcomes')
     models, ledger = {}, {}
     for model, rows in groups.items():
         models[model], ledger[model] = model_stats(rows, merged, c.settle_entry)
@@ -371,6 +389,7 @@ def main():
         report['hypothesis_pockets'] = dict(status='error', error_type=type(exc).__name__)
     previous_report = previous_statistics_report(root)
     add_pocket_dynamics(report, previous_report, root)
+    stages.mark('pockets_and_dynamics')
     try:
         import shadow_universe
         shadow = shadow_universe.report(root, merged, c.settle_entry)
@@ -402,15 +421,34 @@ def main():
         report['shadow_universe'] = shadow
     except Exception as exc:
         report['shadow_universe'] = dict(status='error', error_type=type(exc).__name__)
-    try:
-        import shadow_analysis
-        report['shadow_analysis'] = shadow_analysis.analyze(root, merged, c.settle_entry)
-    except Exception as exc:
-        report['shadow_analysis'] = dict(status='error', error_type=type(exc).__name__, no_rule_changes=True)
+    stages.mark('board_population')
+    # Matched-pair research is independent of the canonical statistics table.
+    # Keep it explicitly available without repeating it on every statistics call.
+    request_path = Path(__file__).resolve().parents[1] / 'live-results-refresh.json'
+    request = json.loads(request_path.read_text()) if request_path.exists() else {}
+    if request.get('include_shadow_analysis') is True:
+        try:
+            import shadow_analysis
+            report['shadow_analysis'] = shadow_analysis.analyze(root, merged, c.settle_entry)
+        except Exception as exc:
+            report['shadow_analysis'] = dict(status='error', error_type=type(exc).__name__, no_rule_changes=True)
+    else:
+        report['shadow_analysis'] = dict(status='not_requested', no_rule_changes=True,
+                                       reason='Detailed matched research is separate from the canonical statistics table')
+    if request.get('include_daily_audit') is True:
+        from statistics_daily import audit
+        report['daily_audit'] = audit(root, merged, c.settle_entry)
+    stages.mark('optional_analysis')
     previous_data = previous_report[2] if previous_report else None
     report['statistics_format_version'] = STATISTICS_FORMAT_VERSION
     report['statistics_tables'] = build_tables(report, previous_data)
+    if report['statistics_tables']['errors']:
+        raise ValueError('Incomplete statistics report: ' + '; '.join(report['statistics_tables']['errors']))
+    if any((row.get('new_closed') or 0) < 0 for row in report['statistics_tables']['over']):
+        raise ValueError('Historical priced sample shrank; statistics require reconciliation before publication')
     report['statistics_markdown'] = render_statistics(report, previous_data, report['statistics_tables'])
+    report['performance'] = dict(stage_seconds=stages.seconds, input_cache=dict(INPUTS.counts))
+    INPUTS.close()
     outcome_record = dict(contour="background_experimental",
                           source="explicit_results_refresh", data_scope="experimental",
                           generated_at_utc=generated.isoformat(),
@@ -426,6 +464,7 @@ def main():
              shadow_path: payload(report['shadow_analysis']),
              outcome_path: gzip.compress(payload(outcome_record), mtime=0)}
     commit = save_files(root, files)
+    stages.mark('save')
     print("RESULTS_REFRESH_PATH=" + summary_path)
     print("RESULTS_REFRESH_COMMIT=" + commit)
     print("RESULTS_REFRESH_STATUS=complete")
@@ -434,8 +473,7 @@ def main():
         with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
             output.write(report['statistics_markdown'])
     print(json.dumps({key: report[key] for key in
-                      ("generated_at_utc", "statistics_epoch", "population",
-                       "outcomes_refresh", "current", "unresolved_records")},
+                      ("generated_at_utc", "population", "outcomes_refresh", "performance")},
                      ensure_ascii=False))
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a") as output:

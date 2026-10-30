@@ -16,6 +16,16 @@ def series(market, n, roi, robust=None):
 
 
 class PocketDynamicsTest(unittest.TestCase):
+    def test_invalid_historical_sample_drop_is_not_a_comparison_baseline(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);base=root/'research/live-results-refresh/2026-10-29'
+            base.mkdir(parents=True)
+            for run,stamp,delta in [('1','20:00',1),('2','21:00',-90)]:
+                (base/(run+'.json')).write_text(json.dumps(dict(
+                    generated_at_utc='2026-10-29T'+stamp+':00+00:00',
+                    statistics_tables=dict(over=[dict(new_closed=delta)],errors=[]))))
+            self.assertEqual(previous_statistics_report(root)[1].name,'1.json')
+
     def test_uses_previous_request_across_day_boundary(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

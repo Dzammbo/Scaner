@@ -4,15 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/live-results-refresh.yml'
       - '.github/live-results-refresh.json'
-      - '.github/scripts/shadow_analysis.py'
-      - '.github/scripts/independent_pockets.py'
-      - '.github/scripts/refresh_live_results.py'
-      - '.github/scripts/statistics_format.py'
-      - '.github/live-strengthened-pockets.json'
-      - '.github/live-hypothesis-pockets.json'
-      - '.github/live-pocket-pauses.json'
 permissions:
   contents: write
 concurrency:
@@ -28,15 +20,34 @@ jobs:
           ref: ${{ github.sha }}
           path: control
           persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/scripts/
+            /.github/live-results-refresh.json
+            /.github/live-statistics-epoch.json
       - uses: actions/checkout@v4
         with:
           ref: research/selection-lab-20261018
           path: collector
           fetch-depth: 1
+          sparse-checkout: |
+            .github
+            scripts
+            research/selection-lab-20261018
+            research/live-lab
+            research/live-background
+            research/live-results-refresh
+            research/shadow-analysis
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/scaner-statistics-cache
+          key: statistics-inputs-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: statistics-inputs-v1-
       - name: Refresh unresolved outcomes and rebuild frozen-series statistics
         id: refresh
         env:
           BETSAPI_KEY: ${{ secrets.BETSAPI_KEY }}
           COLLECTOR_ROOT: ${{ github.workspace }}/collector
           EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
+          STATISTICS_CACHE_DIR: ${{ runner.temp }}/scaner-statistics-cache
         run: python3 control/.github/scripts/refresh_live_results.py
