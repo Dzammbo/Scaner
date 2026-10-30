@@ -8,8 +8,20 @@ from pathlib import Path
 import sqlite3
 import subprocess
 import time
+try:
+    from orjson import loads as fast_loads
+except ImportError:
+    fast_loads = json.loads
 
-VERSION = 'statistics-inputs-v1'
+
+def decode(raw):
+    try:
+        return fast_loads(raw)
+    except ValueError:
+        # Preserve compatibility with historical JSON containing non-finite diagnostics.
+        return json.loads(raw)
+
+VERSION = 'statistics-inputs-v2'
 FAMILIES = ('independent_pockets', 'distinct_pockets', 'seven_direction_pockets',
             'refined_pockets', 'external_pockets', 'strengthened_pockets', 'hypothesis_pockets')
 SNAPSHOT_FIELDS = ('snapshot_id', 'board_observed_at_utc', 'code_revision', 'rules_version',
@@ -19,6 +31,17 @@ EVENT_FIELDS = ('event_id', 'minute', 'score', 'home_id', 'away_id', 'league', '
 
 
 def project(path, data):
+    if 'receipts' in Path(path).parts:
+        keys = ('contour', 'snapshot_id', 'failed', 'request', 'code_revision',
+                'statistics_epoch', 'epoch_base_choices', 'epoch_admission', 'choices',
+                'outcome_targets', 'deep_entry_event_ids', 'control_evaluation',
+                'quality_experiment', 'research_detail_coverage')
+        return {key:data[key] for key in keys if key in data}
+    if 'outcomes' in Path(path).parts:
+        keys = ('event_id', 'checked_at_utc', 'settled', 'result_conflict', 'final',
+                'time_status', 'error_type', 'goal_delta_valid')
+        return dict(events=[{key:row[key] for key in keys if key in row}
+                            for row in data.get('events', [])])
     # Only refresh consumers use this loader, never Live or research admission.
     if 'snapshots' in Path(path).parts:
         result = {key: data[key] for key in SNAPSHOT_FIELDS if key in data}
@@ -95,14 +118,14 @@ class RefreshInputs:
                 row = self.db.execute('SELECT value FROM objects WHERE key=?', (key,)).fetchone()
                 if row:
                     encoded = row[0]
-                    data = json.loads(gzip.decompress(encoded))
+                    data = decode(gzip.decompress(encoded))
                     self.counts['persistent_hits'] += 1
             except (sqlite3.DatabaseError, ValueError, OSError, EOFError):
                 encoded = None
                 self.counts['cache_errors'] += 1
         if encoded is None:
             raw = raw if raw is not None else path.read_bytes()
-            data = project(path, json.loads(gzip.decompress(raw) if path.suffix == '.gz' else raw))
+            data = project(path, decode(gzip.decompress(raw) if path.suffix == '.gz' else raw))
             self.counts['source_decodes'] += 1
             encoded = gzip.compress(json.dumps(data, ensure_ascii=False, separators=(',', ':')).encode(), compresslevel=1, mtime=0)
             if self.db:

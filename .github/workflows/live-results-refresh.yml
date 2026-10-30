@@ -38,11 +38,13 @@ jobs:
             research/live-background
             research/live-results-refresh
             research/shadow-analysis
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         with:
           path: ${{ runner.temp }}/scaner-statistics-cache
-          key: statistics-inputs-v1-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: statistics-inputs-v1-
+          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: statistics-inputs-v2-
+      - name: Install fast JSON decoder
+        run: python3 -m pip install orjson==3.11.3
       - name: Refresh unresolved outcomes and rebuild frozen-series statistics
         id: refresh
         env:
@@ -51,3 +53,8 @@ jobs:
           EPOCH_CONFIG: ${{ github.workspace }}/control/.github/live-statistics-epoch.json
           STATISTICS_CACHE_DIR: ${{ runner.temp }}/scaner-statistics-cache
         run: python3 control/.github/scripts/refresh_live_results.py
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: ${{ runner.temp }}/scaner-statistics-cache
+          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}

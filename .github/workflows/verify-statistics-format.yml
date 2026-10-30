@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install pinned fast JSON decoder
+        run: python3 -m pip install orjson==3.11.3
       - name: Verify sorting, thresholds, comparison and canonical renderer
         env:
           PYTHONPATH: .github/scripts

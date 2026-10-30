@@ -8,6 +8,23 @@ from statistics_inputs import RefreshInputs, project
 
 
 class InputsTest(unittest.TestCase):
+    def test_receipt_projection_keeps_original_choices_targets_and_failed_status(self):
+        data=dict(contour='background_experimental',snapshot_id='1',failed=False,
+                  choices={'x':[{'event_id':'a'}]},outcome_targets=[{'event_id':'a'}],
+                  deep_entry_event_ids=[],epoch_admission={'a':1},control_evaluation={'choices':[]},
+                  model_entries={'huge':[1]*1000},shadow_universe={'huge':[2]*1000})
+        result=project('research/live-background/experimental/receipts/a.json.gz',data)
+        for key in data.keys()-{'model_entries','shadow_universe'}:self.assertEqual(result[key],data[key])
+        self.assertNotIn('model_entries',result)
+        self.assertNotIn('shadow_universe',result)
+
+    def test_outcomes_projection_preserves_confirmation_and_conflict_fields(self):
+        row=dict(event_id='1',checked_at_utc='x',settled=True,result_conflict=False,
+                 final=[2,1],time_status='3',event_view_payload={'huge':[1]*1000})
+        result=project('research/outcomes/a.json.gz',{'events':[row]})['events'][0]
+        for key in row.keys()-{'event_view_payload'}:self.assertEqual(result[key],row[key])
+        self.assertNotIn('event_view_payload',result)
+
     def test_immutable_gzip_is_reused_across_refreshes_and_changes_are_not_stale(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp); path=root/'receipts/one.json.gz';path.parent.mkdir()

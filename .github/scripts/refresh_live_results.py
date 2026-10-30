@@ -1,5 +1,6 @@
 """Refresh confirmed outcomes and recompute only the frozen shared-Top5 series."""
 import collections
+import atexit
 from concurrent.futures import ThreadPoolExecutor
 import contextlib
 import datetime as dt
@@ -290,6 +291,7 @@ def main():
     import pocket_pauses
     c.configure_background("experimental")
     INPUTS = RefreshInputs(root, os.environ.get('STATISTICS_CACHE_DIR'))
+    atexit.register(INPUTS.close)
     INPUTS.install(c)
     config = json.loads(Path(os.environ["EPOCH_CONFIG"]).read_text())
     assert config.get("enabled") and config.get("rules_version") in getattr(epoch, "SUPPORTED_VERSIONS", (epoch.VERSION,))
