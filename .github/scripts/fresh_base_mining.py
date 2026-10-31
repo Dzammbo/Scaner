@@ -128,15 +128,27 @@ def raw_snapshots(root,cache):
             mode,kind,sha=meta.split()
             if kind==b'blob':entries.append((name.decode(),sha.decode()))
     if not entries:raise ValueError('No raw snapshots')
+    batching=True
     for start in range(0,len(entries),96):
         batch=entries[start:start+96]
         missing=[(name,sha) for name,sha in batch if not cache.execute('SELECT 1 FROM features WHERE sha=?',(sha,)).fetchone()]
-        if missing:
+        if missing and batching:
             # One remote pack per batch replaces hundreds of serial lazy fetches.
             env=dict(os.environ,GIT_NO_LAZY_FETCH='1')
             check=git(root,'cat-file','--batch-check',input=''.join(sha+'\n' for _,sha in missing).encode(),env=env)
             absent=[line.split()[0].decode() for line in check.splitlines() if line.endswith(b' missing')]
-            if absent:git(root,'fetch','--no-tags','--no-write-fetch-head','--filter=blob:none','--stdin','origin',input=''.join(s+'\n' for s in absent).encode())
+            if absent:
+                try:
+                    git(root,'-c','fetch.negotiationAlgorithm=noop','fetch','--no-tags','--no-write-fetch-head',
+                        '--recurse-submodules=no','--filter=blob:none','--stdin','origin',
+                        input=''.join(s+'\n' for s in sorted(set(absent))).encode())
+                except subprocess.CalledProcessError as exc:
+                    # Git's authenticated lazy object reader is the authoritative
+                    # fallback; do not lose the whole read-only audit on a remote
+                    # that rejects a batched blob request.
+                    message=re.sub(r'https?://\S+','[remote]',(exc.stderr or b'').decode(errors='replace'))
+                    print('RAW_BATCH_FALLBACK='+message[:1000],flush=True)
+                    batching=False
         for name,sha in batch:
             cached=cache.execute('SELECT value FROM features WHERE sha=?',(sha,)).fetchone()
             if cached:
