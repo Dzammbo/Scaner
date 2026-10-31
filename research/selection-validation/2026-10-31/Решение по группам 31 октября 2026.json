@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "decision_at_utc": "2026-10-31T15:09:25.591Z",
+  "status": "no_confirmed_positive_groups",
+  "source_report": "research/live-results-refresh/2026-10-31/41212599741-1.json",
+  "source_commit": "c692743fa7309dee78bd4b465e3a1a8b5d714ee4",
+  "analysis_code_commit": "1c7e037e6e4394d2b9c2be0c1c2e0a338a632754",
+  "protocol": {
+    "version": "selection-validation-20261031-v1",
+    "scope": "All existing over hypotheses, compatible original pocket entries, archived policies and historical seed; no newly optimized thresholds. Paused histories retained for survivorship audit, not reactivated.",
+    "confirmation": "Previously inspected history is exploratory. No retrospective temporal split is an untouched confirmatory holdout.",
+    "mature_day_rule": "Exclude latest Moscow calendar day from primary selection screen; retain partial day and pending entries visibly.",
+    "temporal_blocks": [
+      [
+        "start",
+        "2026-10-25"
+      ],
+      [
+        "2026-10-26",
+        "2026-10-27"
+      ],
+      [
+        "2026-10-28",
+        "2026-10-30"
+      ]
+    ],
+    "research_candidate_requires": [
+      "active canonical pocket, not paused",
+      "positive mature ROI and positive full available ROI",
+      "positive ROI excluding three best results",
+      "positive ROI excluding best profit day",
+      "positive ROI excluding best profit league",
+      "positive early and late chronological halves of mature entry days",
+      "at least two nonempty fixed temporal blocks and positive ROI in every nonempty block",
+      "positive mature profit even under a minus-one-unit sensitivity bound for unresolved mature entries"
+    ],
+    "uncertainty": "Student t mean interval with maximum of iid, day-cluster, league-cluster, and two-way day/league variance. Few-day results remain exploratory. Holm adjustment across all evaluated cohorts is descriptive; the complete adaptive historical search count is unknown, with a documented lower bound of 37099.",
+    "multiplicity": "Retain all tested groups including losses and duplicate/overlapping hypotheses. Do not add Ns across groups.",
+    "future_validation_start_msk": "2026-11-01T00:00:00+03:00",
+    "future_validation": "Freeze the resulting research list; no rule or threshold tuning within its next prospective cohort. No automatic task is created.",
+    "production_promotion": "Requires an untouched prospective test, predeclared review or valid sequential test, multiplicity control and validation of the actual executable manual LIVE portfolio. Historical research priority does not qualify for betting."
+  },
+  "quality": {
+    "canonical_groups_reconciled": 52,
+    "total_cohorts": 144,
+    "unique_matches_in_evaluated_entries": 4094,
+    "unique_observed_lifetime": 5650,
+    "unique_confirmed_lifetime": 5342,
+    "duplicate_original_references_removed": 0,
+    "omissions": {},
+    "historical_seed": {
+      "source_commit": "139aa2295747ab6948f426d8ff573c360e780ef7",
+      "workbook_rows": 315,
+      "added_ledger_records": 157,
+      "confirmed_report_added": 5,
+      "all_rows": 477,
+      "unique_all": 434,
+      "primary_ft": 428,
+      "ht_rows": 18,
+      "issues": [
+        {
+          "kind": "score_conflict_excluded",
+          "id": "13261627",
+          "initial": [
+            0,
+            3
+          ],
+          "final": [
+            4,
+            0
+          ],
+          "source": "book:117"
+        },
+        {
+          "kind": "score_conflict_excluded",
+          "id": "13261627",
+          "initial": [
+            0,
+            4
+          ],
+          "final": [
+            4,
+            0
+          ],
+          "source": "book:123"
+        }
+      ]
+    },
+    "original_historical_groups_tested": 154,
+    "independent_decimal_settlement_checked": true,
+    "ledger_sha256": "246a7d97b96134c94d123e7a90349cea3b28d164ff6808646acb9b6d964cf0d7"
+  },
+  "independent_javascript_check": {
+    "cohorts": 144,
+    "max_profit_error": 1.4210854715202004e-13,
+    "settled_references": 23966,
+    "unique_closed_priced_entries": 3875
+  },
+  "production_groups": [],
+  "research_watchlist": [
+    {
+      "key": "refined_pockets/early2_quarter_need3",
+      "name": "5-29 минут, два гола, четвертная линия + нужно три гола",
+      "priority": 1,
+      "status": "tentative_paper_validation_only",
+      "catalog_sha256": "7fbf5dd74b7a062d724bba20b0516cf6ae848b9c6c08d6e116372be57bfa4c34",
+      "conditions": {
+        "minute_window_inclusive": [
+          5,
+          29
+        ],
+        "current_goals": 2,
+        "line_type": "quarter",
+        "additional_goals_for_full_win": 3,
+        "pool": "observed",
+        "market": "exact_original_provider_primary_FT_over"
+      },
+      "mature": {
+        "selected": 20,
+        "n": 20,
+        "unresolved": 0,
+        "unit_profit": 3.675,
+        "roi": 0.18375,
+        "days": 4,
+        "leagues": 16,
+        "positive": 12,
+        "negative": 8,
+        "push": 0,
+        "daily": {
+          "2026-10-27": {
+            "n": 6,
+            "unit_profit": 3.475,
+            "roi": 0.5791666666666667
+          },
+          "2026-10-28": {
+            "n": 7,
+            "unit_profit": -2.325,
+            "roi": -0.3321428571428572
+          },
+          "2026-10-29": {
+            "n": 3,
+            "unit_profit": 0.825,
+            "roi": 0.27499999999999997
+          },
+          "2026-10-30": {
+            "n": 4,
+            "unit_profit": 1.7,
+            "roi": 0.425
+          }
+        },
+        "worst_unresolved_profit_bound": 3.675,
+        "without_top3": 0.039705882352941174,
+        "best_day": "2026-10-27",
+        "best_league": "Portugal U23 League",
+        "without_best_day": 0.014285714285714266,
+        "without_best_league": 0.09444444444444443,
+        "iid_ci95": [
+          -0.21830096726629875,
+          0.5858009672662987
+        ],
+        "conservative_cluster_ci95": [
+          -0.6478478442309942,
+          1.0153478442309942
+        ],
+        "cluster_df": 3,
+        "conservative_cluster_se": 0.26130773765143356,
+        "p_positive": 0.26629719212093345,
+        "holm_p_positive": 1
+      },
+      "current_day": {
+        "selected": 21,
+        "n": 18,
+        "unresolved": 3,
+        "unit_profit": -0.475,
+        "roi": -0.02638888888888889,
+        "days": 1,
+        "leagues": 17,
+        "positive": 9,
+        "negative": 9,
+        "push": 0,
+        "daily": {
+          "2026-10-31": {
+            "n": 18,
+            "unit_profit": -0.475,
+            "roi": -0.02638888888888889
+          }
+        },
+        "worst_unresolved_profit_bound": -3.475,
+        "without_top3": -0.225,
+        "best_day": "2026-10-31",
+        "best_league": "England League 2",
+        "without_best_day": null,
+        "without_best_league": -0.14375000000000002,
+        "iid_ci95": [
+          -0.4538263661207481,
+          0.4010485883429703
+        ]
+      },
+      "total": {
+        "selected": 41,
+        "n": 38,
+        "unresolved": 3,
+        "unit_profit": 3.2,
+        "roi": 0.08421052631578947,
+        "days": 5,
+        "leagues": 33,
+        "positive": 21,
+        "negative": 17,
+        "push": 0,
+        "daily": {
+          "2026-10-27": {
+            "n": 6,
+            "unit_profit": 3.475,
+            "roi": 0.5791666666666667
+          },
+          "2026-10-28": {
+            "n": 7,
+            "unit_profit": -2.325,
+            "roi": -0.3321428571428572
+          },
+          "2026-10-29": {
+            "n": 3,
+            "unit_profit": 0.825,
+            "roi": 0.27499999999999997
+          },
+          "2026-10-30": {
+            "n": 4,
+            "unit_profit": 1.7,
+            "roi": 0.425
+          },
+          "2026-10-31": {
+            "n": 18,
+            "unit_profit": -0.475,
+            "roi": -0.02638888888888889
+          }
+        },
+        "worst_unresolved_profit_bound": 0.20000000000000018,
+        "without_top3": 0.005000000000000001,
+        "best_day": "2026-10-27",
+        "best_league": "Portugal U23 League",
+        "without_best_day": -0.008593749999999997,
+        "without_best_league": 0.03402777777777778,
+        "iid_ci95": [
+          -0.19656975854933367,
+          0.3649908111809126
+        ],
+        "conservative_cluster_ci95": [
+          -0.3325742997334002,
+          0.5009953523649792
+        ],
+        "cluster_df": 4,
+        "conservative_cluster_se": 0.15011455665697276,
+        "p_positive": 0.30237541751423236
+      },
+      "cautions": [
+        "Only20 mature settled entries across4 entry days; exploratory selection after previous inspection.",
+        "94.56 percent of mature net profit came from27October.",
+        "Full available sample excluding its best day is negative.",
+        "All41 entries are shared with the broader parent pocket,at identical original entry times and prices; this is a subset,not independent corroboration.",
+        "No positive expectation is established by an untouched future sample."
+      ],
+      "parent_overlap_check": {
+        "candidate_parent_shared": 41,
+        "child_entries": 41,
+        "paired_closed": 38,
+        "child_profit": 3.1999999999999984,
+        "parent_profit_on_same_matches": 3.1999999999999984,
+        "later_child_entries": 0,
+        "best_day_profit_share": 0.9455782312925171
+      },
+      "future_cohort": {
+        "start_msk": "2026-11-01T00:00:00+03:00",
+        "first_fixed_review_msk": "2026-11-30T23:59:59+03:00",
+        "mode": "existing_paper_observations_only",
+        "early_promotion": false,
+        "entry_rule": "Only original first qualified exact-priced entries at or after the start; never transfer earlier results.",
+        "unchanged_rule_within_cohort": true,
+        "decision_rule": "A single fixed-candidate prospective test at predeclared review; positive conservative day/league uncertainty lower bound plus concentration and execution checks. Otherwise inconclusive or rejected. If candidate count expands,multiplicity must be prespecified again.",
+        "note": "This records a research protocol,not a scheduled task or a request to place bets."
+      }
+    }
+  ],
+  "retained_inactive_histories": 12,
+  "conclusion": "Zero groups can be called confirmed stable-positive. One small-sample retrospective candidate is retained solely for fixed future paper validation. The other39 active pockets failed the predeclared descriptive screen or have insufficient evidence;12 paused histories remain inactive."
+}
