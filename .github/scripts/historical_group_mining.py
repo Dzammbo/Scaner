@@ -173,7 +173,7 @@ def search(rows):
    mean_price=float(np.mean(entry_prices)),median_price=float(np.median(entry_prices)),max_drawdown_units=drawdown,
    legacy_first_entries=len(legacy),first_entry_time=min(r['t'] for r in selected),last_entry_time=max(r['t'] for r in selected))
   output.append(record)
-  for r in selected:entries.append(dict(group_id=gid,event_id=r['event_id'],day=r['day'],t=r['t'],source=r['source'],minute=r['features']['minute'],score=r['score'],market=r['market'],profit=r['profit'],legacy_recorded=r.get('legacy_recorded',False),features={a['field']:r['features'].get(a['field']) for a in item['rule']}))
+  for r in selected:entries.append(dict(group_id=gid,event_id=r['event_id'],league=r['league'],day=r['day'],t=r['t'],source=r['source'],minute=r['features']['minute'],score=r['score'],market=r['market'],profit=r['profit'],legacy_recorded=r.get('legacy_recorded',False),features={a['field']:r['features'].get(a['field']) for a in item['rule']}))
  overlaps=[]
  for i,a in enumerate(chosen):
   for j in range(i+1,len(chosen)):
