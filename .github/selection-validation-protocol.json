@@ -1,0 +1,35 @@
+{
+  "version": "selection-validation-20261031-v1",
+  "scope": "All existing over hypotheses, compatible original pocket entries, archived policies and historical seed; no newly optimized thresholds. Paused histories retained for survivorship audit, not reactivated.",
+  "confirmation": "Previously inspected history is exploratory. No retrospective temporal split is an untouched confirmatory holdout.",
+  "mature_day_rule": "Exclude latest Moscow calendar day from primary selection screen; retain partial day and pending entries visibly.",
+  "temporal_blocks": [
+    [
+      "start",
+      "2026-10-25"
+    ],
+    [
+      "2026-10-26",
+      "2026-10-27"
+    ],
+    [
+      "2026-10-28",
+      "2026-10-30"
+    ]
+  ],
+  "research_candidate_requires": [
+    "active canonical pocket, not paused",
+    "positive mature ROI and positive full available ROI",
+    "positive ROI excluding three best results",
+    "positive ROI excluding best profit day",
+    "positive ROI excluding best profit league",
+    "positive early and late chronological halves of mature entry days",
+    "at least two nonempty fixed temporal blocks and positive ROI in every nonempty block",
+    "positive mature profit even under a minus-one-unit sensitivity bound for unresolved mature entries"
+  ],
+  "uncertainty": "Student t mean interval with maximum of iid, day-cluster, league-cluster, and two-way day/league variance. Few-day results remain exploratory. Holm adjustment across all evaluated cohorts is descriptive; the complete adaptive historical search count is unknown, with a documented lower bound of 37099.",
+  "multiplicity": "Retain all tested groups including losses and duplicate/overlapping hypotheses. Do not add Ns across groups.",
+  "future_validation_start_msk": "2026-11-01T00:00:00+03:00",
+  "future_validation": "Freeze the resulting research list; no rule or threshold tuning within its next prospective cohort. No automatic task is created.",
+  "production_promotion": "Requires an untouched prospective test, predeclared review or valid sequential test, multiplicity control and validation of the actual executable manual LIVE portfolio. Historical research priority does not qualify for betting."
+}

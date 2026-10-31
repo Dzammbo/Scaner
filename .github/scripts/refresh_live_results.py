@@ -473,6 +473,11 @@ def main():
             published = report[section]['pockets'][pocket]
             if group['total']['n'] != published['n'] or abs(group['total']['unit_profit'] - published['unit_profit']) > 1e-8:
                 raise ValueError('Daily audit does not reconcile to pocket totals: ' + key)
+    if request.get('include_selection_validation') is True:
+        from selection_validation import analyze
+        protocol_path = Path(__file__).resolve().parents[1] / 'selection-validation-protocol.json'
+        report['selection_validation'] = analyze(root, merged, c.settle_entry, receipts, targets,
+                                               report, json.loads(protocol_path.read_text()))
     stages.mark('optional_analysis')
     previous_data = previous_report[2] if previous_report else None
     report['statistics_format_version'] = STATISTICS_FORMAT_VERSION
