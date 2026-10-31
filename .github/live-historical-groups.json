@@ -1,0 +1,705 @@
+{
+  "schema_version": 1,
+  "id": "historical-thirty-forward-20261101-v1",
+  "version": "historical-thirty-prospective-v1",
+  "enabled": true,
+  "activation_msk": "2026-11-01T00:00:00+03:00",
+  "source_revision": "cb97f4db6980148fd6b0f9fc7b6152b466d71faf",
+  "source_path": "research/all-history-groups/2026-10-31/41226981551-1/Выбранные группы.json",
+  "historically_fitted": true,
+  "production_active": false,
+  "prior_results_in_new_series": false,
+  "first_entry_rule": "First qualifying exact provider FT over quote per group/event after activation; all matching priced board events; no sporting admission",
+  "pockets": [
+    {
+      "id": "H01",
+      "name": "время МСК до 22:59; угловые/мин > 0.1; разница владения, п.п. > 24",
+      "rule": [
+        {
+          "field": "hour",
+          "op": "<=",
+          "value": 22
+        },
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        }
+      ],
+      "rule_sha256": "724cd8d3f539e8188e193cf70fe97855cdac8b0f601958e4cc898a881a0b6416",
+      "market": "over"
+    },
+    {
+      "id": "H02",
+      "name": "угловые/мин > 0.1; разница владения, п.п. > 24; средний тотал лиги <= 3.7782",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        },
+        {
+          "field": "league_goals",
+          "op": "<=",
+          "value": 3.7782222222222224
+        }
+      ],
+      "rule_sha256": "eee1c126c8bd8df39e852975884a76ce59ce9cf0bc1062085f8ba707db6ea7ed",
+      "market": "over"
+    },
+    {
+      "id": "H03",
+      "name": "время МСК с 19:00; сумма обратных цен рынка минус 1 <= 0.055556; суммарные удары/мин > 0.22222",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 18
+        },
+        {
+          "field": "overround",
+          "op": "<=",
+          "value": 0.05555555555555558
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.2222222222222222
+        }
+      ],
+      "rule_sha256": "e1a411f11f4223ed733e553c6bf33caf376ee78d3bd9b524ec9b79015782443f",
+      "market": "over"
+    },
+    {
+      "id": "H04",
+      "name": "минута > 60; суммарные все удары за полные 5 мин <= 6; суммарные xG за полные 5 мин > 0.01",
+      "rule": [
+        {
+          "field": "minute",
+          "op": ">",
+          "value": 60
+        },
+        {
+          "field": "fresh_shots_5",
+          "op": "<=",
+          "value": 6
+        },
+        {
+          "field": "fresh_xg_5",
+          "op": ">",
+          "value": 0.01
+        }
+      ],
+      "rule_sha256": "474ea4daa0caa3f6b5a83d3cd00239fa466d6d17d0f51ef16239f6ba7c2b21e8",
+      "market": "over"
+    },
+    {
+      "id": "H05",
+      "name": "угловые/мин > 0.1; разница владения, п.п. > 24; средний тотал домашних игр хозяев > 2.2857",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        },
+        {
+          "field": "home_venue_goals",
+          "op": ">",
+          "value": 2.2857142857142856
+        }
+      ],
+      "rule_sha256": "8c60ef31043172ada2c665640f6f372fa176936aa58a980a7d6f80700391f568",
+      "market": "over"
+    },
+    {
+      "id": "H06",
+      "name": "угловые/мин > 0.16667; разница ударов в створ > 0; выездных матчей в истории гостей <= 9",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.16666666666666666
+        },
+        {
+          "field": "sot_balance",
+          "op": ">",
+          "value": 0.0
+        },
+        {
+          "field": "away_venue_n",
+          "op": "<=",
+          "value": 9.0
+        }
+      ],
+      "rule_sha256": "51d01b654bd4f351e3e4bc7e6d96b45962ff625443503e86733ccd409db2a242",
+      "market": "over"
+    },
+    {
+      "id": "H07",
+      "name": "время МСК с 21:00; линия минус голы на табло <= 3.5; суммарные удары/мин > 0.26667",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 20
+        },
+        {
+          "field": "gap",
+          "op": "<=",
+          "value": 3.5
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.26666666666666666
+        }
+      ],
+      "rule_sha256": "6f97f981b0e5c9112b994564dfa0dfa883812b7209f8e01dcd76b634d85a0a00",
+      "market": "over"
+    },
+    {
+      "id": "H08",
+      "name": "размер истории лиги <= 50; суммарные опасные атаки за полные 5 мин > 5; суммарные все удары за полные 10 мин > 4",
+      "rule": [
+        {
+          "field": "league_n",
+          "op": "<=",
+          "value": 50.0
+        },
+        {
+          "field": "fresh_danger_5",
+          "op": ">",
+          "value": 5
+        },
+        {
+          "field": "fresh_shots_10",
+          "op": ">",
+          "value": 4
+        }
+      ],
+      "rule_sha256": "a9195f9a82d195dcaca5c9438dfccc99413956c9a4d35f2f1d7dfa391929cf86",
+      "market": "over"
+    },
+    {
+      "id": "H09",
+      "name": "время МСК с 17:00; рассчитанный голевой профиль > 0.88327; средний тотал домашних игр хозяев > 3.4",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 16
+        },
+        {
+          "field": "gp_ratio",
+          "op": ">",
+          "value": 0.8832688174674824
+        },
+        {
+          "field": "home_venue_goals",
+          "op": ">",
+          "value": 3.4
+        }
+      ],
+      "rule_sha256": "929160a36efec7ba304a8591c8d003229f194fdb06735caf6b676fcf6c1f74eb",
+      "market": "over"
+    },
+    {
+      "id": "H10",
+      "name": "угловые/мин > 0.1; разница владения, п.п. > 24; средний тотал выездных игр гостей <= 3.4",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        },
+        {
+          "field": "away_venue_goals",
+          "op": "<=",
+          "value": 3.4
+        }
+      ],
+      "rule_sha256": "f2b2e6b52bc54183cc2d7c581d87744189d2f1c82a9ebc759be0226709e5a477",
+      "market": "over"
+    },
+    {
+      "id": "H11",
+      "name": "суммарные удары/мин > 0.3; рассчитанный голевой профиль <= 1.1846; домашних матчей в истории хозяев <= 11",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.3
+        },
+        {
+          "field": "gp_ratio",
+          "op": "<=",
+          "value": 1.1846305698085886
+        },
+        {
+          "field": "home_venue_n",
+          "op": "<=",
+          "value": 11.0
+        }
+      ],
+      "rule_sha256": "b382690e21b15ced3e1a4e1f62a84f10228f4b683dcc5e5fec6a67d36b7621cf",
+      "market": "over"
+    },
+    {
+      "id": "H12",
+      "name": "время МСК с 19:00; суммарные удары/мин > 0.22222; средний тотал выездных игр гостей <= 3.7",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 18
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.2222222222222222
+        },
+        {
+          "field": "away_venue_goals",
+          "op": "<=",
+          "value": 3.7
+        }
+      ],
+      "rule_sha256": "ca07c8d2d7ea18a98c31985baedaa0ec59355c38659c7afaa7c5d43cd800070d",
+      "market": "over"
+    },
+    {
+      "id": "H13",
+      "name": "время МСК с 19:00; суммарные удары/мин > 0.22222; разница владения, п.п. <= 54",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 18
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.2222222222222222
+        },
+        {
+          "field": "possession_gap",
+          "op": "<=",
+          "value": 54.0
+        }
+      ],
+      "rule_sha256": "d451801515912dc0f2a7245b196fdbfdbaac05d695b4b5dc4ff1832b15406307",
+      "market": "over"
+    },
+    {
+      "id": "H14",
+      "name": "время МСК с 22:00; линия минус голы на табло > 1.5; выездных матчей в истории гостей > 8",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 21.0
+        },
+        {
+          "field": "gap",
+          "op": ">",
+          "value": 1.5
+        },
+        {
+          "field": "away_venue_n",
+          "op": ">",
+          "value": 8.0
+        }
+      ],
+      "rule_sha256": "3531b0de5b362552271329828e433ec0f26cbec3d4e8d377e08ae5ce945332e5",
+      "market": "over"
+    },
+    {
+      "id": "H15",
+      "name": "коэффициент <= 1.925; опасные атаки/мин <= 0.75; размер истории лиги > 45",
+      "rule": [
+        {
+          "field": "price",
+          "op": "<=",
+          "value": 1.925
+        },
+        {
+          "field": "danger_rate",
+          "op": "<=",
+          "value": 0.75
+        },
+        {
+          "field": "league_n",
+          "op": ">",
+          "value": 45.0
+        }
+      ],
+      "rule_sha256": "6633feafea2ba711efff912a40d3f147ee3ecaeb133b043b5085a253c9a1561e",
+      "market": "over"
+    },
+    {
+      "id": "H16",
+      "name": "суммарные удары/мин > 0.3; рассчитанный голевой профиль <= 1.1846; выездных матчей в истории гостей <= 9",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.3
+        },
+        {
+          "field": "gp_ratio",
+          "op": "<=",
+          "value": 1.1846305698085886
+        },
+        {
+          "field": "away_venue_n",
+          "op": "<=",
+          "value": 9.0
+        }
+      ],
+      "rule_sha256": "4c3ff309d28637cf6e3054eb2caf08beaec152d152b2fa9ec4387ac35d0330ec",
+      "market": "over"
+    },
+    {
+      "id": "H17",
+      "name": "время МСК до 15:59; угловые/мин > 0.1; разница владения, п.п. > 24",
+      "rule": [
+        {
+          "field": "hour",
+          "op": "<=",
+          "value": 15.0
+        },
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        }
+      ],
+      "rule_sha256": "79ef04ed483ae9fc66c07a0d3a6ce084a21bfce35122bd723037e9d275c32ce5",
+      "market": "over"
+    },
+    {
+      "id": "H18",
+      "name": "разница счёта > 0; суммарные удары/мин > 0.3; средний тотал лиги > 2.66",
+      "rule": [
+        {
+          "field": "margin",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.3
+        },
+        {
+          "field": "league_goals",
+          "op": ">",
+          "value": 2.66
+        }
+      ],
+      "rule_sha256": "d1e8909077d622d0c706a76ab546e0a1458649abf093208ebc6cc6abaf5df44a",
+      "market": "over"
+    },
+    {
+      "id": "H19",
+      "name": "суммарные удары/мин > 0; угловые/мин > 0.16667; выездных матчей в истории гостей <= 8",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.0
+        },
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.16666666666666666
+        },
+        {
+          "field": "away_venue_n",
+          "op": "<=",
+          "value": 8.0
+        }
+      ],
+      "rule_sha256": "b50231d5ab9f1ef412bde8b040194c7fa09f8ddf6c31a3f9450f4b939362300b",
+      "market": "over"
+    },
+    {
+      "id": "H20",
+      "name": "угловые/мин > 0.1; разница владения, п.п. > 24; суммарные опасные атаки за полные 5 мин > 2",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        },
+        {
+          "field": "fresh_danger_5",
+          "op": ">",
+          "value": 2.0
+        }
+      ],
+      "rule_sha256": "b1527a1f4be4a6aadc7e2fa5154efb4b4117c807a6566bdef91e74c1eab30faa",
+      "market": "over"
+    },
+    {
+      "id": "H21",
+      "name": "время МСК до 18:59; угловые/мин > 0.2; тип линии = целая",
+      "rule": [
+        {
+          "field": "hour",
+          "op": "<=",
+          "value": 18
+        },
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.2
+        },
+        {
+          "field": "line_type",
+          "op": "=",
+          "value": "integer"
+        }
+      ],
+      "rule_sha256": "3bc35ef01e290d4cdefc19c4167b05e8944412e8603145257b07e8958a2c2072",
+      "market": "over"
+    },
+    {
+      "id": "H22",
+      "name": "коэффициент <= 1.95; суммарные удары в створ/мин > 0.1; выездных матчей в истории гостей <= 8",
+      "rule": [
+        {
+          "field": "price",
+          "op": "<=",
+          "value": 1.95
+        },
+        {
+          "field": "sot_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "away_venue_n",
+          "op": "<=",
+          "value": 8.0
+        }
+      ],
+      "rule_sha256": "c56ea4f06416d4746730be0e3ab354dd8c9575410f1e8771783044d8526e3aa0",
+      "market": "over"
+    },
+    {
+      "id": "H23",
+      "name": "основная линия ТБ > 2.25; средний тотал домашних игр хозяев > 3.4; ведущая сторона = хозяева",
+      "rule": [
+        {
+          "field": "line",
+          "op": ">",
+          "value": 2.25
+        },
+        {
+          "field": "home_venue_goals",
+          "op": ">",
+          "value": 3.4
+        },
+        {
+          "field": "leading_side",
+          "op": "=",
+          "value": "home"
+        }
+      ],
+      "rule_sha256": "f0e7f284242a0ff20b3ab0f9fd09b1fc34798217ba241ff4ffeb878d8b028a0e",
+      "market": "over"
+    },
+    {
+      "id": "H24",
+      "name": "угловые/мин > 0.16667; средний тотал выездных игр гостей <= 4.1484; выездных матчей в истории гостей <= 9",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.16666666666666666
+        },
+        {
+          "field": "away_venue_goals",
+          "op": "<=",
+          "value": 4.148351648351649
+        },
+        {
+          "field": "away_venue_n",
+          "op": "<=",
+          "value": 9.0
+        }
+      ],
+      "rule_sha256": "0a27f7915d43ae981f65e09a292d1019c7888608fdaf1e28468d438dcbd14e06",
+      "market": "over"
+    },
+    {
+      "id": "H25",
+      "name": "суммарные удары/мин > 0.3; рассчитанный голевой профиль <= 1.1846; размер истории лиги > 45",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.3
+        },
+        {
+          "field": "gp_ratio",
+          "op": "<=",
+          "value": 1.1846305698085886
+        },
+        {
+          "field": "league_n",
+          "op": ">",
+          "value": 45.0
+        }
+      ],
+      "rule_sha256": "6996f1ca4756773e83fe5588d1e2603d378e42d8f4fc2ac29eb7a5cbd2fbc89e",
+      "market": "over"
+    },
+    {
+      "id": "H26",
+      "name": "минута > 60; средний тотал лиги > 2.66; суммарные xG за полные 5 мин > 0",
+      "rule": [
+        {
+          "field": "minute",
+          "op": ">",
+          "value": 60
+        },
+        {
+          "field": "league_goals",
+          "op": ">",
+          "value": 2.66
+        },
+        {
+          "field": "fresh_xg_5",
+          "op": ">",
+          "value": 0.0
+        }
+      ],
+      "rule_sha256": "21d443b28fd39ecfda783fe390c4b117cb09070679f0fd54c5d0184b47ecad65",
+      "market": "over"
+    },
+    {
+      "id": "H27",
+      "name": "средний тотал лиги <= 3.0612; суммарные все удары за полные 5 мин > 2; створ у обеих команд = да",
+      "rule": [
+        {
+          "field": "league_goals",
+          "op": "<=",
+          "value": 3.061224489795918
+        },
+        {
+          "field": "fresh_shots_5",
+          "op": ">",
+          "value": 2
+        },
+        {
+          "field": "both_sot",
+          "op": "=",
+          "value": "yes"
+        }
+      ],
+      "rule_sha256": "0e07240afd375f309cd9cb2013bdde3b9b71477f360f31d9b0beeda0988e3bf2",
+      "market": "over"
+    },
+    {
+      "id": "H28",
+      "name": "время МСК с 19:00; суммарные удары/мин > 0.22222; опасные атаки/мин <= 1.375",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 18
+        },
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.2222222222222222
+        },
+        {
+          "field": "danger_rate",
+          "op": "<=",
+          "value": 1.375
+        }
+      ],
+      "rule_sha256": "e671ae43787b67de67acee959bdaa27272245a438e9b48efae092290841b65a3",
+      "market": "over"
+    },
+    {
+      "id": "H29",
+      "name": "суммарные удары/мин <= 0.4; суммарные опасные атаки за полные 5 мин > 5; суммарные все удары за полные 10 мин > 4",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": "<=",
+          "value": 0.4
+        },
+        {
+          "field": "fresh_danger_5",
+          "op": ">",
+          "value": 5
+        },
+        {
+          "field": "fresh_shots_10",
+          "op": ">",
+          "value": 4
+        }
+      ],
+      "rule_sha256": "6187ffa704306d1e0b130acbd2f64665b2af0203866b8c60b99b0c90072bc444",
+      "market": "over"
+    },
+    {
+      "id": "H30",
+      "name": "угловые/мин > 0.1; разница владения, п.п. > 24; средний тотал лиги > 2.52",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        },
+        {
+          "field": "league_goals",
+          "op": ">",
+          "value": 2.52
+        }
+      ],
+      "rule_sha256": "b7a0c37a8fe61392e40e175ba4913a1320b11dba763041ec72a37c6dd48477d2",
+      "market": "over"
+    }
+  ]
+}

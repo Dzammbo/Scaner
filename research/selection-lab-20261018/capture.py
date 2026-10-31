@@ -401,6 +401,9 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if receipt.get('hypothesis_pockets') is not None and not receipt.get('failed'):
   records.append(('hypothesis-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    hypothesis_pockets=receipt['hypothesis_pockets'])))
+ if receipt.get('historical_groups') is not None and not receipt.get('failed'):
+  records.append(('historical-group-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
+   historical_groups=receipt['historical_groups'])))
  if receipt.get('distinct_pockets') is not None and not receipt.get('failed'):
   records.append(('distinct-pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    distinct_pockets=receipt['distinct_pockets'])))
@@ -641,6 +644,19 @@ def main():
       catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if hypothesis_result is not None:snapshot['hypothesis_pockets']=hypothesis_result
+   historical_result=None
+   if unified:
+    import historical_groups
+    try:
+     historical_result=historical_groups.evaluate(ROOT,snapshot,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     cfg_path=ROOT/historical_groups.CONFIG
+     cfg=json.loads(cfg_path.read_text()) if cfg_path.exists() else {}
+     historical_result=dict(id=cfg.get('id'),version=historical_groups.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,
+      production_selection_changed=False)
+    snapshot['historical_groups']=historical_result
    snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
    if epoch_state:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
@@ -676,6 +692,7 @@ def main():
    if external_result is not None:receipt['external_pockets']=external_result
    if strengthened_result is not None:receipt['strengthened_pockets']=strengthened_result
    if hypothesis_result is not None:receipt['hypothesis_pockets']=hypothesis_result
+   if historical_result is not None:receipt['historical_groups']=historical_result
    if shadow_result is not None:receipt['shadow_universe']=shadow_result
    if unified or epoch_state:receipt['control_evaluation']=control
    if outcomes is None:outcomes=collect_outcomes(old_targets,old_outcomes,budget,now)

@@ -1,13 +1,78 @@
 {
   "schema_version": 1,
-  "id": "pause-strong-negative-over-pockets-20261029-v1",
-  "source_report": "research/live-results-refresh/2026-10-29/40948960960-1.json",
-  "reason": "Сокращение действующего контура после N>30 и устойчивого отрицательного ROI без трёх; архивные входы и каталоги неизменны",
+  "id": "active-ten-old-groups-20261031-v1",
+  "source_report": "research/live-results-refresh/2026-10-31/41212599741-1.json",
+  "reason": "Десять прежних групп с наибольшим ROI без трёх лучших в последнем сохранённом срезе; статистический плюс не подтверждён. Остальные остановлены для новых входов, история сохранена.",
   "paused": {
-    "independent_pockets": ["need_two_low_sot", "combo_score1_need2"],
-    "seven_direction_pockets": ["lead2_shift_up_over", "two_goals_shift_up_over", "same_total_one_goal_over"],
-    "refined_pockets": ["dangerlow_price", "early_integer", "lead2_dangerlow", "integer_sot", "need2_lowsot_price", "lead2_need2"],
-    "external_pockets": ["draw_60_65"]
+    "independent_pockets": [
+      "provider_main_sot_rate_010_020",
+      "provider_main_score_one",
+      "need_two_low_sot",
+      "combo_score1_need2"
+    ],
+    "distinct_pockets": [],
+    "seven_direction_pockets": [
+      "same_total_one_goal_over",
+      "leader_goal_quarter_over",
+      "lead2_shift_up_over",
+      "two_goals_shift_up_over",
+      "shift_down_low_danger_over",
+      "home_favorite_need4_over"
+    ],
+    "refined_pockets": [
+      "need4_margin1",
+      "lead2_line35",
+      "need4_dangerlow",
+      "lead2_need2",
+      "need2_lowsot_half_price",
+      "lead2_dangerlow",
+      "score1_sot_profilelow",
+      "score1_profilelow",
+      "dangerlow_profilelow",
+      "sot_score01",
+      "dangerlow_price",
+      "integer_sot",
+      "minute_integer_price",
+      "score1_need2_profilelow",
+      "wait5_score1_notboth",
+      "early_integer",
+      "integer_need2_dangermed",
+      "need2_lowsot_price",
+      "score1_bothsot"
+    ],
+    "external_pockets": [
+      "draw_60_65",
+      "two_sided_xg15",
+      "favorite_behind_sot15",
+      "late_draw_shots10"
+    ],
+    "strengthened_pockets": [
+      "danger_lt1_need_ge3_price180_199"
+    ],
+    "hypothesis_pockets": [
+      "integer_need4",
+      "early_score1_sot",
+      "lead2_45_49",
+      "early_sot",
+      "wait5_quarter",
+      "early_score1_profile110",
+      "need2_lowsot_price_profile110",
+      "lead2_needle2_price"
+    ]
   },
-  "current_daily_groups_exempt": true
+  "current_daily_groups_exempt": false,
+  "retained_old_groups": [
+    "distinct_pockets/tb_5_29_goals2_quarter",
+    "independent_pockets/need_four_plus",
+    "distinct_pockets/tb_45_59_lead2_exact2",
+    "independent_pockets/combo_sot_score1",
+    "refined_pockets/early2_quarter_need3",
+    "independent_pockets/combo_minute_integer",
+    "distinct_pockets/tb_45_49_goal1_gap125_150_wait5",
+    "independent_pockets/provider_main_danger_rate_lt1",
+    "independent_pockets/provider_main_integer_line",
+    "independent_pockets/combo_integer_need2"
+  ],
+  "new_group_count": 30,
+  "selection_metric": "ROI без трёх лучших; сортировка сохранённого статистического отчёта"
 }
