@@ -352,7 +352,20 @@ def quick(rows,idx):
         rank=total/n-1.645*sd/math.sqrt(n),iid_p=float(norm.sf(total/n/(sd/math.sqrt(n)))) if sd else 1.)
 
 
+def training_candidates(tested,p):
+    eligible=[r for r in tested if r['n']>=p['minimum_discovery_matches'] and r['roi']>0 and r['days']>=3
+              and all(r.get(k) is not None and r[k]>0 for k in ('without_top3','without_best_day','without_best_league'))]
+    return sorted(eligible,key=lambda r:(-r['rank'],-r['n'],json.dumps(r['rule'],sort_keys=True)))
+
+
 def discover(rows,mask,label_mask,p):
+    # Restrict the numeric search arrays to the discovery interval itself.
+    # Validation/test/current-day points cannot affect the cuts or candidates
+    # and need not be scanned for every conjunction in every walk-forward fit.
+    positions=np.flatnonzero(mask)
+    rows=[rows[int(i)] for i in positions]
+    label_mask=label_mask[positions]
+    mask=np.ones(len(rows),dtype=bool)
     events=arrays(rows);atoms,coverage=atoms_for(rows,mask,events,p)
     tested=[];seen=set();count=0
     for depth in (1,2):
@@ -370,9 +383,7 @@ def discover(rows,mask,label_mask,p):
             rule=[atoms[i][0] for i in ids]
             record=dict(rule=rule,selected=len(selected),unavailable_labels=len(selected)-len(closed),**stats)
             tested.append(record)
-    eligible=[r for r in tested if r['n']>=p['minimum_discovery_matches'] and r['roi']>0 and r['days']>=3
-              and all(r.get(k) is not None and r[k]>0 for k in ('without_top3','without_best_day','without_best_league'))]
-    eligible.sort(key=lambda r:(-r['rank'],-r['n'],json.dumps(r['rule'],sort_keys=True)))
+    eligible=training_candidates(tested,p)
     shortlist=[];sets=[]
     for rule in eligible:
         chosen=first_indices(mask&rule_mask(rows,rule['rule']),events);identities=set(events[chosen])
@@ -400,6 +411,22 @@ def evaluate(rows,rule,mask,label_mask):
     return summary(values),selected
 
 
+def prepare_phase(rows,mask,label_mask):
+    positions=np.flatnonzero(mask);subset=[rows[int(i)] for i in positions]
+    return dict(rows=subset,events=arrays(subset),labels=label_mask[positions],atoms={})
+
+
+def evaluate_phase(rule,state):
+    rows=state['rows'];mask=np.ones(len(rows),dtype=bool)
+    for atom in rule:
+        key=(atom['field'],atom['op'],atom['value'])
+        if key not in state['atoms']:state['atoms'][key]=rule_mask(rows,[atom])
+        mask&=state['atoms'][key]
+    selected=first_indices(mask,state['events'])
+    values=[dict(rows[int(i)],profit=rows[int(i)]['profit'] if state['labels'][i] else None) for i in selected]
+    return summary(values),selected
+
+
 def stress(s,min_n):
     return s.get('n',0)>=min_n and all(s.get(k) is not None and s[k]>0 for k in ('roi','without_top3','without_best_day','without_best_league'))
 
@@ -409,14 +436,26 @@ def search(data,p,with_walk=True,include_legacy=False):
     if not rows:raise ValueError('No quality-eligible raw points')
     masks={phase:np.array([r['phase']==phase for r in rows]) for phase in ('discovery','validation','test','partial')}
     labels={phase:eligible_labels(rows,boundary(p['validation_start_msk']) if phase=='discovery' else boundary(p['test_start_msk']) if phase=='validation' else None) for phase in masks}
+    phases={phase:prepare_phase(rows,masks[phase],labels[phase]) for phase in masks}
     short,search_quality,all_rules=discover(rows,masks['discovery'],labels['discovery'],p)
+    if p.get('validate_all_discovery_screen_survivors'):
+        short=training_candidates(all_rules,p)
+        search_quality['validation_family']='every_discovery_screen_survivor_without_rank_cap'
     candidates=[];events=arrays(rows)
     for index,item in enumerate(short):
         record=dict(id=('L' if include_legacy else 'P')+str(index+1),rule=item['rule'],discovery_screen=item)
-        for phase in masks:record[phase]=evaluate(rows,item['rule'],masks[phase],labels[phase])[0]
+        test_indices=None
+        for phase in masks:
+            record[phase],indices=evaluate_phase(item['rule'],phases[phase])
+            if phase=='test':test_indices=indices
         record['validation_stress_pass']=stress(record['validation'],p['minimum_validation_matches'])
         record['test_stress_pass']=stress(record['test'],p['minimum_test_matches'])
+        if record['validation_stress_pass'] and record['test_stress_pass']:
+            record['test_event_ids']=[phases['test']['rows'][int(i)]['event_id'] for i in test_indices]
+        if p.get('compact_candidate_details'):
+            for phase in masks:record[phase].pop('daily',None)
         candidates.append(record)
+        if index and index%100==0:print('RAW_CANDIDATE_VALIDATION_PROGRESS='+json.dumps(dict(pool='mixed' if include_legacy else 'exact',done=index,total=len(short))),flush=True)
     adjusted=holm({r['id']:r['test'].get('p_positive',1.) for r in candidates})
     for r in candidates:
         r['test']['holm_p_positive']=adjusted[r['id']]
@@ -444,7 +483,7 @@ def search(data,p,with_walk=True,include_legacy=False):
             known_training_labels=int((train&available).sum()),search=info,selected_rules=[r['rule'] for r in selected_rules],
             result=summary(picked)))
         print('RAW_WALK_FORWARD_DAY='+json.dumps(dict(day=test_day,n=walk[-1]['result']['n'],roi=walk[-1]['result']['roi'])),flush=True)
-    baseline={phase:evaluate(rows,[],mask,labels[phase])[0] for phase,mask in masks.items()}
+    baseline={phase:evaluate_phase([],state)[0] for phase,state in phases.items()}
     return dict(version=p['version'],generated_at_utc=dt.datetime.now(UTC).isoformat(),protocol=p,
         source_revision=data['source_revision'],extraction_quality=data['quality'],analysis_quality=quality,
         search_quality=search_quality,original_point_count=len(data['points']),baseline_first_quote=baseline,
@@ -468,10 +507,28 @@ def main():
     root=Path(args.root).resolve();cache=Path(args.cache).resolve();cache.mkdir(parents=True,exist_ok=True)
     work=Path(args.work).resolve();work.mkdir(parents=True,exist_ok=True)
     protocol=json.loads(Path(args.protocol).read_text())
+    request_path=Path(__file__).resolve().parents[1]/'fresh-base-mining-request.json'
+    request=json.loads(request_path.read_text()) if request_path.exists() else {}
     dataset=work/'raw-points.json.gz';result_path=work/'results.json'
-    if args.mode=='extract':extract(root,cache,dataset,protocol)
+    if args.mode=='extract':
+        reuse=request.get('reuse_dataset_path')
+        if reuse:
+            if not reuse.startswith('research/raw-base-discovery/') or '..' in Path(reuse).parts:raise ValueError('Invalid immutable source path')
+            raw=git(root,'show','HEAD:'+reuse);dataset.write_bytes(raw)
+            print('RAW_EXTRACTION_REUSED='+reuse,flush=True)
+        else:extract(root,cache,dataset,protocol)
     elif args.mode=='search':
-        data=json.loads(gzip.decompress(dataset.read_bytes()));result,rules=search(data,protocol)
+        data=json.loads(gzip.decompress(dataset.read_bytes()))
+        previous_path=request.get('reuse_results_path');previous=None
+        if previous_path:
+            if not previous_path.startswith('research/raw-base-discovery/') or '..' in Path(previous_path).parts:raise ValueError('Invalid prior result path')
+            previous=json.loads(git(root,'show','HEAD:'+previous_path))
+            if previous['source_revision']!=data['source_revision']:raise ValueError('Prior replay belongs to a different data snapshot')
+            for field in ('numeric_quantiles','minimum_discovery_matches','discovery_shortlist_limit','maximum_training_jaccard','walk_forward_days','game_minute_window','price_alignment_seconds'):
+                if previous['protocol'][field]!=protocol[field]:raise ValueError('Prior replay protocol differs: '+field)
+        result,rules=search(data,protocol,with_walk=previous is None)
+        if previous:
+            result['walk_forward']=previous['walk_forward'];result['walk_forward_reused_from']=previous_path
         secondary,secondary_rules=search(data,protocol,with_walk=False,include_legacy=True)
         combined=result['frozen_shortlist']+secondary['frozen_shortlist']
         adjusted=holm({r['id']:r['test'].get('p_positive',1.) for r in combined})
@@ -481,6 +538,8 @@ def main():
         for scope in (result,secondary):scope['reconstructed_statistical_survivors']=[r['id'] for r in scope['frozen_shortlist'] if r['statistically_positive_reconstructed_test']]
         result['secondary_mixed_recorded_price_pool']=secondary
         result['test_multiplicity_family_size']=len(combined)
+        result['analysis_code_revision']=os.environ.get('GITHUB_SHA')
+        result['dataset_sha256']=hashlib.sha256(dataset.read_bytes()).hexdigest()
         rules=dict(primary=rules,secondary_mixed=secondary_rules)
         result_path.write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n')
         (work/'all-discovery-rules.json.gz').write_bytes(gzip.compress(json.dumps(rules,ensure_ascii=False,separators=(',',':')).encode(),mtime=0))

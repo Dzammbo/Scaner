@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from fresh_base_mining import first_indices,eligible_labels,atoms_for,prepare
+from fresh_base_mining import first_indices,eligible_labels,atoms_for,prepare,discover,evaluate,prepare_phase,evaluate_phase
 
 
 class RawDiscoveryChecks(unittest.TestCase):
@@ -33,6 +33,25 @@ class RawDiscoveryChecks(unittest.TestCase):
         self.assertEqual([r['event_id'] for r in result],['c'])
         self.assertEqual(quality['boundary_crossing_events'],1)
         self.assertEqual(quality['unknown_or_misaligned_quote'],1)
+
+    def test_discovery_matches_explicit_temporal_slice(self):
+        rows=[dict(event_id=str(i//2),day='2026-10-'+str(20+i%3),league=str(i%4),profit=.9 if i%5 else -1,
+                   features=dict(price=1.5+i/100,minute=float(i%15+8))) for i in range(40)]
+        p=dict(minimum_discovery_matches=3,numeric_quantiles=[.2,.5,.8],maximum_training_jaccard=.8,discovery_shortlist_limit=4)
+        mask=np.array([i%3!=0 for i in range(40)]);labels=np.ones(40,dtype=bool)
+        a=discover(rows,mask,labels,p)
+        b=discover([r for i,r in enumerate(rows) if mask[i]],np.ones(int(mask.sum()),dtype=bool),labels[mask],p)
+        self.assertEqual(a,b)
+
+    def test_cached_phase_evaluation_preserves_first_entries_and_missing_labels(self):
+        rows=[dict(event_id=str(i//2),day='2026-10-'+str(20+i%3),league=str(i%4),profit=.9 if i%5 else -1,
+                   features=dict(price=1.5+i/100,minute=float(i%15+8))) for i in range(40)]
+        mask=np.array([i%3!=0 for i in range(40)]);labels=np.array([i%7!=0 for i in range(40)])
+        rule=[dict(field='minute',op='>',value=10),dict(field='price',op='<=',value=1.8)]
+        old,old_indices=evaluate(rows,rule,mask,labels)
+        state=prepare_phase(rows,mask,labels);new,new_indices=evaluate_phase(rule,state)
+        self.assertEqual(old,new)
+        self.assertEqual([rows[int(i)]['event_id'] for i in old_indices],[state['rows'][int(i)]['event_id'] for i in new_indices])
 
 
 if __name__=='__main__':unittest.main()
