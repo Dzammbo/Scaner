@@ -1,0 +1,68 @@
+name: Discover groups from complete raw Live snapshots
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/fresh-base-mining-request.json']
+permissions:
+  contents: write
+concurrency:
+  group: explicit-raw-base-mining
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+          sparse-checkout: .github
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            .github
+            scripts
+            research/selection-lab-20261018
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/scaner-statistics-cache
+          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: statistics-inputs-v2-
+      - name: Install analysis dependencies
+        run: |
+          python3 -m pip install orjson==3.11.3 numpy==2.2.6 scipy==1.15.3
+          python3 control/.github/scripts/test_fresh_base_mining.py
+      - name: Restore verified journals
+        run: python3 control/.github/scripts/statistics_index.py hydrate collector '${{ runner.temp }}/scaner-statistics-cache'
+      - name: Read every original snapshot and extract all valid priced observations
+        env:
+          STATISTICS_INPUT_MANIFEST: ${{ runner.temp }}/scaner-statistics-cache/history-index.json
+        run: >-
+          python3 control/.github/scripts/fresh_base_mining.py extract
+          --root collector --cache '${{ runner.temp }}/scaner-statistics-cache'
+          --work '${{ runner.temp }}/scaner-raw-mining'
+          --protocol control/.github/fresh-base-mining-protocol.json
+      - name: Discover rules and evaluate fixed temporal cohorts and walk forward
+        run: >-
+          python3 control/.github/scripts/fresh_base_mining.py search
+          --root collector --cache '${{ runner.temp }}/scaner-statistics-cache'
+          --work '${{ runner.temp }}/scaner-raw-mining'
+          --protocol control/.github/fresh-base-mining-protocol.json
+      - name: Save source-backed results
+        run: >-
+          python3 control/.github/scripts/fresh_base_mining.py publish
+          --root collector --cache '${{ runner.temp }}/scaner-statistics-cache'
+          --work '${{ runner.temp }}/scaner-raw-mining'
+          --protocol control/.github/fresh-base-mining-protocol.json
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: ${{ runner.temp }}/scaner-statistics-cache
+          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
