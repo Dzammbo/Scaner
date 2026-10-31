@@ -169,7 +169,23 @@ def extract(root,cache_dir,dest,protocol):
     targets.update({k:v for k,v in ct.items() if k not in targets})
     for k,v in co.items():
         if k not in outcomes or v['checked_at_utc']>outcomes[k]['checked_at_utc']:outcomes[k]=v
-    first_confirm={}
+    first_confirm={};archived_outcome_sources=[]
+    for relative in ('research/full-history-20261018/outcomes.json','research/live-results-20261018/outcomes.json'):
+        raw=git(root,'show','HEAD:'+relative);archive=json.loads(raw)
+        archived_outcome_sources.append(dict(path=relative,sha256=hashlib.sha256(raw).hexdigest()))
+        records=archive.get('results',archive)
+        for eid,o in records.items():
+            if not isinstance(o,dict) or str(o.get('time_status'))!='3':continue
+            final=pair(o.get('final'))
+            if final is None:
+                ft=(o.get('scores') or {}).get('2') or {}
+                final=pair([ft.get('home'),ft.get('away')])
+            when=stamp(o.get('checked_at',archive.get('checked_at_utc')))
+            if final is None or when is None:continue
+            key=(str(eid),tuple(final));first_confirm[key]=min(first_confirm.get(key,when),when)
+            if str(eid) not in outcomes or (stamp(outcomes[str(eid)].get('checked_at_utc')) or 0)<when:
+                outcomes[str(eid)]=dict(event_id=str(eid),settled=True,final=[int(x) for x in final],
+                    checked_at_utc=dt.datetime.fromtimestamp(when,UTC).isoformat(),result_conflict=False)
     for base in ('research/live-lab','research/live-background/primary','research/live-background/experimental'):
         for path in (root/base/'outcomes').rglob('*.json*'):
             for row in c.load_json(path).get('events',[]):
@@ -219,6 +235,14 @@ def extract(root,cache_dir,dest,protocol):
         r['legacy_recorded']=True
         for old_key,new_key in (('on_target_rate','sot_rate'),('dangerous_attacks_rate','danger_rate')):
             r['features'][new_key]=finite(old.get(old_key))
+        minute=finite(old.get('minute'))
+        for old_key,new_key in (('corners','corners_rate'),('xg','xg_rate')):
+            value=finite(old.get(old_key))
+            r['features'][new_key]=value/minute if value is not None and minute else None
+        on=finite(old.get('on_target'));off=finite(old.get('off_target'))
+        if on is not None and off is not None and minute:r['features']['shots_rate']=(on+off)/minute
+        r['features']['redcards']=finite(old.get('redcards'))
+        r['features']['league_goals']=finite(old.get('league_goals'))
         if old.get('both_on_target') is not None:r['features']['both_sot']='yes' if old['both_on_target'] else 'no'
         r['features']['source_family']='legacy_recorded'
         key=(r['event_id'],r['t'],r['market']['line'],r['market']['price'],r['score'])
@@ -240,9 +264,11 @@ def extract(root,cache_dir,dest,protocol):
             settlements+=1;r['confirmed_at']=first_confirm.get((r['event_id'],tuple(pair(o['final']))))
             if r.get('legacy_recorded') and r['confirmed_at'] is None and r['t']<=legacy_confirmed:
                 r['confirmed_at']=legacy_confirmed
+            if r['confirmed_at'] is not None and r['confirmed_at']<=r['t']:
+                r['known_finished_before_point']=True;quality['points_after_recorded_finish']+=1
     result=dict(version=CACHE_VERSION,source_revision=git(root,'rev-parse','HEAD').decode().strip(),
         generated_at_utc=dt.datetime.now(UTC).isoformat(),points=values,legacy_records=legacy,
-        manifest=manifest,quality=dict(quality,source_snapshots=len(manifest),
+        manifest=manifest,archived_outcome_sources=archived_outcome_sources,quality=dict(quality,source_snapshots=len(manifest),
             unique_observed_snapshot_matches=len(observed),unique_observed_journal_matches=len(targets),
             unique_priced_matches=len({r['event_id'] for r in values}),unique_priced_points=len(values),
             independently_checked_settlements=settlements,conflicting_event_ids=sorted(conflicts),
@@ -262,6 +288,7 @@ def prepare(data,p,include_legacy=False):
     usable=[];q=collections.Counter();event_phases=collections.defaultdict(set)
     for r in data['points']:
         f=r['features'];lag=r.get('quote_lag')
+        if r.get('known_finished_before_point'):q['known_finished_points_excluded']+=1;continue
         if r.get('legacy_recorded') and not include_legacy:q['legacy_recorded_separate']+=1;continue
         if not p['game_minute_window'][0]<=f['minute']<=p['game_minute_window'][1]:q['outside_minute_window']+=1;continue
         if not r.get('legacy_recorded') and (lag is None or abs(lag)>p['price_alignment_seconds']):q['unknown_or_misaligned_quote']+=1;continue
