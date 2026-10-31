@@ -73,6 +73,18 @@ class StrengthenedPocketTest(unittest.TestCase):
         self.assertEqual(row['pockets'][p.POCKET_ID]['n'],0)
         self.assertEqual(row['status'],'awaiting_first_successful_capture')
 
+    def test_pause_preserves_old_entries_and_stops_future_ones(self):
+        original=self.evaluate()
+        self.save(original)
+        (self.root/'.github/live-pocket-pauses.json').write_text(json.dumps({
+            'schema_version':1,'paused':{'strengthened_pockets':[p.POCKET_ID]}}))
+        snap,event=self.snapshot(sid='1-2')
+        event['event_id']='124'
+        self.assertEqual(p.evaluate(self.root,snap,[event],self.quote(),{})
+                         ['choices'][p.POCKET_ID],[])
+        self.assertEqual(p.report(self.root,{'123':dict(settled=True,final=[2,1])})
+                         ['pockets'][p.POCKET_ID]['n'],1)
+
     def test_immutable_catalog_and_missing_journal(self):
         self.save(self.evaluate())
         cfg=json.loads((self.root/p.CONFIG).read_text());cfg['pockets'][0]['name']='changed'

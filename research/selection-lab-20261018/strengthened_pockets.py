@@ -7,6 +7,7 @@ from pathlib import Path
 
 from independent_pockets import features, read
 from distinct_pockets import summary
+from pocket_pauses import ids as paused_ids
 
 VERSION = 'strengthened-pockets-v1-20261029'
 CONFIG = '.github/live-strengthened-pockets.json'
@@ -68,9 +69,10 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
     if cfg is None:
         return None
     entries, started, errors, captures = history(root, cfg, digest)
+    paused = POCKET_ID in paused_ids(root, 'strengthened_pockets')
     clock = snapshot['board_observed_at_utc']
     choices = []
-    for event in ordered:
+    for event in ([] if paused else ordered):
         confidence = (event.get('selection_confidence') or
                       (event.get('final_sports_selection') or {}).get('confidence') or {})
         if not confidence.get('eligible'):

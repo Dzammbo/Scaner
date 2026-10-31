@@ -8,6 +8,7 @@ from pathlib import Path
 
 from distinct_pockets import number, quote, read, stamp, summary
 from refined_pockets import features, matches as refined_matches
+from pocket_pauses import ids as paused_ids
 
 VERSION = 'hypothesis-pockets-v1-20261029'
 CONFIG = '.github/live-hypothesis-pockets.json'
@@ -100,6 +101,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
     if cfg is None:
         return None
     entries, triggers, started, errors, captures = history(root, cfg, digest)
+    paused = paused_ids(root, 'hypothesis_pockets')
     clock = snapshot['board_observed_at_utc']
     now = stamp(clock)
     strong = {str(e['event_id']) for e in ordered
@@ -117,7 +119,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes):
             continue
         for pocket in cfg['pockets']:
             key = pocket['id']
-            if (eid in entries[key] or (pocket['pool'] == 'strong' and eid not in strong)
+            if (key in paused or eid in entries[key] or (pocket['pool'] == 'strong' and eid not in strong)
                     or not pocket['minute_window'][0] <= minute <= pocket['minute_window'][1]):
                 continue
             if pocket['pool'] == 'observed':

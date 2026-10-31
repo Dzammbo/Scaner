@@ -91,6 +91,19 @@ class HypothesisPocketTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'catalog changed'):
             p.report(self.root,{})
 
+    def test_paused_rules_keep_history_but_create_no_new_entries_or_triggers(self):
+        previous=self.evaluate()
+        self.save(previous)
+        pause=self.root/'.github/live-pocket-pauses.json'
+        pause.write_text(json.dumps({'schema_version':1,'paused':{
+            'hypothesis_pockets':list(previous['choices'])}}))
+        snap,event,market=self.snapshot(sid='1-2')
+        event['event_id']='124'
+        later=p.evaluate(self.root,snap,[event],market,{})
+        self.assertTrue(all(not rows for rows in later['choices'].values()))
+        self.assertTrue(all(not rows for rows in later['triggers'].values()))
+        self.assertEqual(p.report(self.root,{})['pockets']['integer_need4']['selected'],1)
+
 
 if __name__=='__main__':
     unittest.main()
