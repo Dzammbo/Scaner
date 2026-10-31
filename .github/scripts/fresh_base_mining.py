@@ -21,12 +21,13 @@ from selection_validation import exact_profit,summary,holm
 from statistics_inputs import RefreshInputs,decode
 
 UTC=dt.timezone.utc;MSK=dt.timezone(dt.timedelta(hours=3))
-CACHE_VERSION='raw-point-features-v1'
+CACHE_VERSION='raw-point-features-v2'
 PREFIXES=('snapshots/live','research/live-lab/snapshots',
           'research/live-background/primary/snapshots','research/live-background/experimental/snapshots')
 NUMERIC=('minute','hour','goals','margin','line','price','gap','need','overround',
          'sot_rate','shots_rate','danger_rate','corners_rate','xg_rate','sot_balance','possession_gap',
-         'redcards','gp_ratio','league_goals','fresh_sot_5','fresh_shots_5','fresh_danger_5',
+         'redcards','gp_ratio','league_goals','league_n','home_venue_goals','away_venue_goals',
+         'home_venue_n','away_venue_n','fresh_sot_5','fresh_shots_5','fresh_danger_5',
          'fresh_sot_10','fresh_shots_10','fresh_danger_10','fresh_sot_15','fresh_shots_15',
          'fresh_danger_15','fresh_xg_5','fresh_xg_10','fresh_xg_15')
 CATEGORICAL=('score_state','line_type','leading_side','both_sot','category')
@@ -80,6 +81,7 @@ def point(event,quote,snapshot,path,fresh_fn):
     goals=sum(score);need=math.floor(line+(.25 if round(line*4)%2 else 0))+1-goals
     if need<=0:return None
     stats=event.get('board_stats') or {};gp=event.get('goal_profile') or {}
+    league=gp.get('league') or {};home=(gp.get('home') or {}).get('venue') or {};away=(gp.get('away') or {}).get('venue') or {}
     get=lambda key:pair(stats.get(key))
     sot,off,danger,corners,xg,red,pos=[get(k) for k in ('on_target','off_target','dangerous_attacks','corners','xg','redcards','possession_rt')]
     if pos is None:pos=get('possession')
@@ -93,8 +95,12 @@ def point(event,quote,snapshot,path,fresh_fn):
         sot_balance=abs(sot[0]-sot[1]) if sot is not None else None,
         possession_gap=abs(pos[0]-pos[1]) if pos is not None else None,
         redcards=sum(red) if red is not None else None,
-        gp_ratio=finite(gp.get('ranking_ratio')),
-        league_goals=finite(gp.get('league_mean_total') or gp.get('league_goals')),
+        gp_ratio=finite(gp.get('ranking_ratio')) if gp.get('ranking_used') is True else None,
+        league_goals=finite(league.get('mean_total')) if (finite(league.get('n')) or 0)>0 else None,
+        league_n=finite(league.get('n')),
+        home_venue_goals=finite(home.get('mean_total')) if (finite(home.get('n')) or 0)>0 else None,
+        away_venue_goals=finite(away.get('mean_total')) if (finite(away.get('n')) or 0)>0 else None,
+        home_venue_n=finite(home.get('n')),away_venue_n=finite(away.get('n')),
         score_state='0-0' if goals==0 else 'one_goal' if goals==1 else 'two_goals' if goals==2 else 'three_plus',
         line_type='quarter' if round(line*4)%2 else 'integer' if line.is_integer() else 'half',
         leading_side='draw' if score[0]==score[1] else 'home' if score[0]>score[1] else 'away',
@@ -226,7 +232,7 @@ def extract(root,cache_dir,dest,protocol):
         initial=pair(old.get('score'));clock=stamp(old.get('time'))
         if initial is None or clock is None:quality['historical_missing_identity']+=1;continue
         e=dict(event_id=str(old['id']),score='-'.join(str(int(x)) for x in initial),
-               minute=old.get('minute'),league=old.get('league'),goal_profile=dict(ranking_ratio=old.get('gp_ratio')))
+               minute=old.get('minute'),league=old.get('league'),goal_profile=dict(ranking_ratio=old.get('gp_ratio'),ranking_used=old.get('gp_used') is True))
         quote=dict(line=old.get('line'),price=old.get('odds'),checked_at=None,score=e['score'])
         if finite(quote['line']) is None:quality['historical_missing_original_quote']+=1;continue
         snap=dict(board_observed_at_utc=old['time'],snapshot_id=old.get('sid'))
@@ -500,6 +506,28 @@ def search(data,p,with_walk=True,include_legacy=False):
           'Three validation/test days give few independent clusters; lack of evidence is not proof of negative true expectation.']),all_rules
 
 
+def compact_result(result):
+    fields=('selected','n','unresolved','unit_profit','roi','without_top3','without_best_day','without_best_league',
+            'conservative_cluster_ci95','holm_p_positive','days','leagues','worst_unresolved_profit_bound')
+    def candidate(r):
+        return dict(id=r['id'],rule=r['rule'],research_survivor=r['research_survivor'],
+                    statistically_positive_reconstructed_test=r['statistically_positive_reconstructed_test'],
+                    test_event_ids=r.get('test_event_ids',[]),
+                    **{phase:{k:v for k,v in r[phase].items() if k in fields} for phase in ('discovery','validation','test','partial')})
+    def scope(s):
+        return dict(search_quality=s['search_quality'],analysis_quality=s['analysis_quality'],
+                    frozen_candidate_count=len(s['frozen_shortlist']),research_survivors=s['research_survivors'],
+                    statistical_survivors=s['reconstructed_statistical_survivors'],
+                    candidates=[candidate(r) for r in s['frozen_shortlist'] if r['research_survivor']],
+                    first_discovery_ranked_examples=[candidate(r) for r in s['frozen_shortlist'][:10]])
+    return dict(version=result['version'],generated_at_utc=result['generated_at_utc'],protocol=result['protocol'],
+        source_revision=result['source_revision'],analysis_code_revision=result.get('analysis_code_revision'),
+        dataset_sha256=result.get('dataset_sha256'),extraction_quality=result['extraction_quality'],
+        primary=scope(result),secondary=scope(result['secondary_mixed_recorded_price_pool']),
+        test_multiplicity_family_size=result['test_multiplicity_family_size'],walk_forward=result['walk_forward'],
+        confirmed_for_production=result['confirmed_for_production'],limitations=result['limitations'])
+
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('mode',choices=('extract','search','publish'))
     parser.add_argument('--root',required=True);parser.add_argument('--cache',required=True);parser.add_argument('--work',required=True)
@@ -542,13 +570,14 @@ def main():
         result['dataset_sha256']=hashlib.sha256(dataset.read_bytes()).hexdigest()
         rules=dict(primary=rules,secondary_mixed=secondary_rules)
         result_path.write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n')
+        (work/'summary.json').write_text(json.dumps(compact_result(result),ensure_ascii=False,separators=(',',':'))+'\n')
         (work/'all-discovery-rules.json.gz').write_bytes(gzip.compress(json.dumps(rules,ensure_ascii=False,separators=(',',':')).encode(),mtime=0))
         print('RAW_SEARCH_COMPLETE='+json.dumps(dict(search=result['search_quality'],survivors=result['research_survivors'],statistical=result['reconstructed_statistical_survivors'],walk=result['walk_forward']['total']),ensure_ascii=False),flush=True)
     else:
         from refresh_live_results import save_files
         run=os.environ['GITHUB_RUN_ID']+'-'+os.environ['GITHUB_RUN_ATTEMPT'];date=dt.datetime.now(MSK).date().isoformat()
         dest='research/raw-base-discovery/'+date+'/'+run+'/'
-        files={dest+'results.json':result_path.read_bytes(),dest+'Исходные точки.json.gz':dataset.read_bytes(),
+        files={dest+'results.json':result_path.read_bytes(),dest+'summary.json':(work/'summary.json').read_bytes(),dest+'Исходные точки.json.gz':dataset.read_bytes(),
                dest+'Все проверенные правила.json.gz':(work/'all-discovery-rules.json.gz').read_bytes()}
         commit=save_files(root,files);print('RAW_MINING_COMMIT='+commit);print('RAW_MINING_PATH='+dest+'results.json')
 

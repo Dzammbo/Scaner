@@ -1,9 +1,24 @@
 import unittest
 import numpy as np
-from fresh_base_mining import first_indices,eligible_labels,atoms_for,prepare,discover,evaluate,prepare_phase,evaluate_phase
+from fresh_base_mining import first_indices,eligible_labels,atoms_for,prepare,discover,evaluate,prepare_phase,evaluate_phase,point
 
 
 class RawDiscoveryChecks(unittest.TestCase):
+    def test_original_nested_league_profile_and_neutral_fallback(self):
+        event=dict(event_id='1',score='0-0',minute=10,league='Example',goal_profile=dict(
+            ranking_ratio=1,ranking_used=False,league=dict(mean_total=3.2,n=10),
+            home=dict(venue=dict(mean_total=3.5,n=6)),away=dict(venue=dict(mean_total=2.8,n=7))))
+        r=point(event,dict(price=1.9,line=2.5,checked_at=1000),dict(board_observed_at_utc='1970-01-01T00:16:40+00:00'),
+                'snapshots/live/example.json',lambda e:{})
+        self.assertEqual(r['features']['league_goals'],3.2)
+        self.assertEqual(r['features']['home_venue_goals'],3.5)
+        self.assertEqual(r['features']['away_venue_n'],7)
+        self.assertIsNone(r['features']['gp_ratio'])
+        event['goal_profile']['ranking_used']=True
+        r=point(event,dict(price=1.9,line=2.5,checked_at=1000),dict(board_observed_at_utc='1970-01-01T00:16:40+00:00'),
+                'snapshots/live/example.json',lambda e:{})
+        self.assertEqual(r['features']['gp_ratio'],1)
+
     def test_first_qualifying_point_not_best_return(self):
         events=np.array([0,1,0,2,1])
         np.testing.assert_array_equal(first_indices(np.array([1,0,1,1,1],dtype=bool),events),[0,3,4])

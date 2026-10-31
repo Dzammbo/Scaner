@@ -1,5 +1,5 @@
 {
-  "version": "raw-base-discovery-20261031-v2",
+  "version": "raw-base-discovery-20261031-v3",
   "uses_existing_pocket_catalogs": false,
   "legacy_archive_commit": "09846115047e82582e7715ea9a6885d676029abe",
   "legacy_archive_blob": "047d1f9cfa7bda5a7ec09788827b67a09ee65048",
@@ -34,7 +34,7 @@
   "discovery_shortlist_limit": 20,
   "maximum_training_jaccard": 0.8,
   "shortlist_rank": "Discovery-only one-sided iid lower mean bound, with positive raw and leave-best-day and leave-best-league returns; at least three discovery days. This is screening, not a statistical claim.",
-  "test": "Evaluate every rule that passed the fixed discovery-only eligibility screen. Holm correction includes both complete primary and mixed candidate families; no validation rank cap or replacement after test results.",
+  "test": "Evaluate every frozen shortlisted rule; Holm correction across that whole list. Never substitute a different rule after seeing test results.",
   "research_survivor": "Positive validation and test ROI and leave-top3/day/league ROI, adequate phase support and positive full mature ROI; statistical status is disclosed separately.",
   "walk_forward_days": [
     "2026-10-25",
@@ -50,5 +50,5 @@
   "validate_all_discovery_screen_survivors": true,
   "compact_candidate_details": true,
   "expanded_screen_note": "Every original discovery-screen survivor is evaluated on later dates,without an arbitrary20-rule cap. The expanding historical audit is exploratory; no already-viewed historical test is called untouched. Holm includes both full candidate families.",
-  "discovery_shortlist_limit_scope": "The20-rule diverse shortlist is used only by the separately frozen walk-forward policy; the expanded historical rule audit has no such cap."
+  "profile_integrity": "Read original nested league/home/away sample means and N; neutral ranking ratios with ranking_used=false remain unknown. This corrects field extraction, not outcome-fitted thresholds."
 }
