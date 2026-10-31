@@ -137,6 +137,22 @@ class DailyTests(unittest.TestCase):
                             for g in future['groups']))
         self.assertFalse(any(g['section']=='hypothesis_pockets' for g in self.daily['groups']))
 
+    def test_new_historical_group_can_join_only_after_future_results(self):
+        source=d.ROOT/d.FAMILIES['historical_groups']
+        target=self.root/d.FAMILIES['historical_groups']
+        target.write_bytes(source.read_bytes())
+        catalog,digest=d.catalog(self.root,'historical_groups')
+        tomorrow=copy.deepcopy(self.report)
+        tomorrow['generated_at_utc']='2026-11-01T12:00:00+00:00'
+        tomorrow['historical_groups']=dict(id=catalog['id'],version=catalog['version'],
+            catalog_sha256=digest,pockets={p['id']:dict(n=31 if p['id']=='H01' else 0)
+                for p in catalog['pockets']})
+        self.setrow('historical_groups/H01',31,1.0)
+        tomorrow['statistics_tables']=copy.deepcopy(self.report['statistics_tables'])
+        future=d.freeze(tomorrow,self.root,'2026-11-01','forward-report.json')
+        self.assertEqual(future['groups'][0]['pocket_id'],'H01')
+        self.assertFalse(any(g['section']=='historical_groups' for g in self.daily['groups']))
+
     def test_old_five_group_archive_keeps_its_hashes_but_live_uses_first_four(self):
         old=copy.deepcopy(self.daily)
         old['groups'].append(dict(rank=5,section='independent_pockets',
@@ -170,6 +186,16 @@ class DailyTests(unittest.TestCase):
         self.assertEqual(d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))[0],self.daily)
         cfg=self.root/d.FAMILIES['distinct_pockets'];cfg.write_text(cfg.read_text()+' ')
         with self.assertRaises(ValueError):d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))
+
+    def test_frozen_daily_group_is_skipped_after_archiving(self):
+        original=copy.deepcopy(self.daily)
+        cfg=self.root/'.github/live-pocket-pauses.json'
+        cfg.write_text(json.dumps({'paused':{original['groups'][0]['section']:
+            [original['groups'][0]['pocket_id']]}}))
+        current,policy=d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))
+        shown=d.active_groups(current,policy,self.root)
+        self.assertEqual(len(shown),len(original['groups'])-1)
+        self.assertEqual(current,original)
 
     def test_actual_catalog_priority_and_overlap_without_per_group_quota(self):
         events=[self.event(i,'2-0',line=3.5) for i in (1,2)]

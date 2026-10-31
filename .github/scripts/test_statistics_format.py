@@ -20,6 +20,20 @@ def report():
 
 
 class StatisticsFormatTest(unittest.TestCase):
+    def test_thirty_future_groups_start_at_zero_and_archived_old_are_hidden(self):
+        data=report()
+        data['independent_pockets']['pockets']={'retained':row('Оставлена'),
+                                               'archived':row('Архив')}
+        data['paused_pockets']={'independent_pockets':['archived']}
+        data['historical_groups']=dict(id='future30',version=1,catalog_sha256='frozen',
+            pockets={f'H{i:02}':row(f'Группа {i}',n=0,roi=None) for i in range(1,31)})
+        table=build_tables(data)
+        group_rows=[r for r in table['over'] if r['key'].startswith(('independent_pockets/', 'historical_groups/'))]
+        self.assertEqual(len(group_rows),31)
+        self.assertNotIn('independent_pockets/archived',[r['key'] for r in group_rows])
+        self.assertEqual(len([r for r in group_rows if r['key'].startswith('historical_groups/')]),30)
+        self.assertFalse(table['errors'])
+
     def test_paused_pocket_disappears_only_from_active_table(self):
         data = report()
         data['independent_pockets']['pockets'] = {

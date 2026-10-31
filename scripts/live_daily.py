@@ -28,6 +28,7 @@ FAMILIES = {
     'external_pockets': '.github/live-external-pockets.json',
     'strengthened_pockets': '.github/live-strengthened-pockets.json',
     'hypothesis_pockets': '.github/live-hypothesis-pockets.json',
+    'historical_groups': '.github/live-historical-groups.json',
 }
 FORMAT = dict(version='live-four-lines-20261028-v2',
     header='Live · {time_msk} МСК · {n}/5',
@@ -145,9 +146,12 @@ def load_daily(root=ROOT, now=None):
     return daily,policy
 
 
-def active_groups(daily,policy):
-    """Apply the current cap without rewriting an immutable older daily archive."""
-    return daily['groups'][:int(policy['max_groups'])]
+def active_groups(daily,policy,root=ROOT):
+    """Keep the frozen order, but never publish an archived daily group."""
+    pause_path=Path(root)/'.github/live-pocket-pauses.json'
+    paused=json.loads(pause_path.read_text()).get('paused',{}) if pause_path.exists() else {}
+    return [g for g in daily['groups'][:int(policy['max_groups'])]
+            if g['pocket_id'] not in paused.get(g['section'],[])]
 
 
 def pre_matches(event, group, root=ROOT):
@@ -231,7 +235,9 @@ def evaluate_pockets(root,snapshot,ordered,history_dir):
                 item['choices']={k:[] for k in item.get('choices',{})}
                 dest=work/journal/path.name;dest.parent.mkdir(parents=True,exist_ok=True)
                 dest.write_text(json.dumps({section:item}))
-            if section=='independent_pockets':
+            if section=='historical_groups':
+                result=mod.evaluate(work,snapshot,market_for_event,{},lambda e,o:None)
+            elif section=='independent_pockets':
                 result=mod.evaluate(work,snapshot,ordered,market_for_event,{},lambda e,o:None)
             elif section in ('refined_pockets','strengthened_pockets','hypothesis_pockets'):
                 result=mod.evaluate(work,snapshot,ordered,market_for_event,{})
@@ -326,7 +332,7 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
     from live_ranking import rank_candidates,rank_final_candidates,fresh_sports_features
     from live_history import read_selected_events
     daily,policy=load_daily(root)
-    groups=active_groups(daily,policy)
+    groups=active_groups(daily,policy,root)
     # Load original shared predicates before resolving market_for_event's imports.
     for section in {g['section'] for g in groups}:family(section)
     family('distinct_pockets')

@@ -24,7 +24,7 @@ def decode(raw):
 
 VERSION = 'statistics-inputs-v2'
 FAMILIES = ('independent_pockets', 'distinct_pockets', 'seven_direction_pockets',
-            'refined_pockets', 'external_pockets', 'strengthened_pockets', 'hypothesis_pockets')
+            'refined_pockets', 'external_pockets', 'strengthened_pockets', 'hypothesis_pockets', 'historical_groups')
 SNAPSHOT_FIELDS = ('snapshot_id', 'board_observed_at_utc', 'code_revision', 'rules_version',
                    'research_version', 'trigger_main_sha')
 EVENT_FIELDS = ('event_id', 'minute', 'score', 'home_id', 'away_id', 'league', 'country',
@@ -36,7 +36,7 @@ def project(path, data):
         keys = ('contour', 'snapshot_id', 'failed', 'request', 'code_revision',
                 'statistics_epoch', 'epoch_base_choices', 'epoch_admission', 'choices',
                 'outcome_targets', 'deep_entry_event_ids', 'control_evaluation',
-                'quality_experiment', 'research_detail_coverage')
+                'quality_experiment', 'research_detail_coverage', 'historical_groups')
         return {key:data[key] for key in keys if key in data}
     if 'outcomes' in Path(path).parts:
         keys = ('event_id', 'checked_at_utc', 'settled', 'result_conflict', 'final',
