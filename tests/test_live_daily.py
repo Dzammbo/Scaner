@@ -45,6 +45,14 @@ class DailyTests(unittest.TestCase):
 
     def tearDown(self):self.tmp.cleanup()
 
+    def test_unassigned_manual_groups_fail_closed_without_reusing_archive(self):
+        pointer=dict(schema_version=1,selection_date_msk='2026-11-03',
+                     state='awaiting_manual_assignment',groups=[])
+        (self.root/d.POINTER).write_text(json.dumps(pointer))
+        with self.assertRaisesRegex(ValueError,'direct request is required'):
+            d.load_daily(self.root,dt.datetime(2026,11,3,12,tzinfo=d.MSK))
+        self.assertTrue((self.root/'.github/live-daily-pockets/2026-10-27.json').exists())
+
     def setrow(self,key,n,robust):
         row=next(r for r in self.report['statistics_tables']['over'] if r['key']==key)
         row.update(n=n,roi=robust+.01,roi_without_top3=robust)
