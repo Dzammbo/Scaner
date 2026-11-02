@@ -2,15 +2,15 @@
   "run_id": "41539112747",
   "run_attempt": 1,
   "started_at": "2026-11-02T22:41:32.220476+00:00",
-  "updated_at": "2026-11-02T23:28:00.130450+00:00",
-  "state": "collecting",
+  "updated_at": "2026-11-02T23:43:37.509692+00:00",
+  "state": "capture_failed",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-v4-cached-inputs-20261031",
   "cycle": 5,
   "api_call_cap": 160,
-  "last_capture_id": "41539112747-100004",
-  "last_error": null,
+  "last_capture_id": "41539112747-100005",
+  "last_error": "TimeoutExpired",
   "last_capture_performance": {
     "seconds": 779.543,
     "cache": {
@@ -20,5 +20,5 @@
     "succeeded": true
   },
   "last_success_at": "2026-11-02T23:27:55.013885+00:00",
-  "consecutive_failures": 0
+  "consecutive_failures": 1
 }
