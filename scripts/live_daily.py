@@ -124,6 +124,8 @@ def load_daily(root=ROOT, now=None):
     if not policy.get('enabled'):
         raise ValueError('Daily LIVE policy is disabled')
     daily=json.loads((root/POINTER).read_text())
+    if daily.get('state') == 'awaiting_manual_assignment' and daily.get('groups') == []:
+        raise ValueError('Manual LIVE groups are unassigned; a direct request is required')
     day=dt.date.fromisoformat(daily['selection_date_msk'])
     today=(now or dt.datetime.now(MSK)).astimezone(MSK).date()
     if day > today or daily.get('schema_version') != 1:
