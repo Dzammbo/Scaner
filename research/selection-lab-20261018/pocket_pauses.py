@@ -5,7 +5,7 @@ from pathlib import Path
 CONFIG = '.github/live-pocket-pauses.json'
 FAMILIES = {'independent_pockets', 'distinct_pockets', 'seven_direction_pockets',
             'refined_pockets', 'external_pockets', 'strengthened_pockets',
-            'hypothesis_pockets'}
+            'hypothesis_pockets', 'historical_groups'}
 
 
 def load(root):

@@ -40,10 +40,25 @@ class DailyTests(unittest.TestCase):
             self.setrow('independent_pockets/'+key,n,robust)
         self.report['statistics_tables']['over'].append(dict(key='current/control',n=1000,roi=2,roi_without_top3=1))
         self.setrow('refined_pockets/lead2_line35',3,1.025)
+        # These fixtures exercise the archived October catalogs.
+        tracked=self.root/d.FAMILIES['tracked_groups']
+        cfg=json.loads(tracked.read_text());cfg['enabled']=False
+        tracked.write_text(json.dumps(cfg))
         self.daily=d.freeze(self.report,self.root,'2026-10-27','report.json',now='2026-10-27T10:00:00+00:00')
         (self.root/d.POINTER).write_text(json.dumps(self.daily))
 
     def tearDown(self):self.tmp.cleanup()
+
+    def test_new_series_freeze_cannot_select_profitable_archived_groups(self):
+        cfgpath=self.root/d.FAMILIES['tracked_groups']
+        cfgpath.write_bytes((ROOT/d.FAMILIES['tracked_groups']).read_bytes())
+        cfg,digest=d.catalog(self.root,'tracked_groups')
+        self.report['tracked_groups']['catalog_sha256']=digest
+        self.report['generated_at_utc']='2026-11-03T12:00:00+00:00'
+        self.setrow('tracked_groups/R02',50,.20)
+        result=d.freeze(self.report,self.root,'2026-11-03','new-series.json')
+        self.assertEqual([(g['section'],g['pocket_id']) for g in result['groups']],
+                         [('tracked_groups','R02')])
 
     def test_unassigned_manual_groups_fail_closed_without_reusing_archive(self):
         pointer=dict(schema_version=1,selection_date_msk='2026-11-03',
@@ -171,7 +186,7 @@ class DailyTests(unittest.TestCase):
         (self.root/d.POINTER).write_text(json.dumps(old))
         daily,policy=d.load_daily(self.root,dt.datetime(2026,10,27,12,tzinfo=d.MSK))
         self.assertEqual(len(daily['groups']),5)
-        self.assertEqual([g['rank'] for g in d.active_groups(daily,policy)],[1,2,3,4])
+        self.assertEqual([g['rank'] for g in d.active_groups(daily,policy,self.root)],[1,2,3,4])
         from types import SimpleNamespace
         board=[dict(id='last',home=dict(id='11',name='A'),away=dict(id='22',name='B'),
                     league=dict(id='33',name='Test'),timer=dict(tm=53),ss='0-0',stats={})]

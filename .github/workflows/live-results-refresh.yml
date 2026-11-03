@@ -39,8 +39,8 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: ${{ runner.temp }}/scaner-statistics-cache
-          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: statistics-inputs-v2-
+          key: statistics-inputs-v3-tracked-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: statistics-inputs-v3-tracked-
       - name: Install fast JSON decoder
         run: |
           python3 -m pip install orjson==3.11.3
@@ -66,4 +66,4 @@ jobs:
         if: always()
         with:
           path: ${{ runner.temp }}/scaner-statistics-cache
-          key: statistics-inputs-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          key: statistics-inputs-v3-tracked-${{ github.run_id }}-${{ github.run_attempt }}

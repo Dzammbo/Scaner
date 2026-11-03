@@ -21,6 +21,14 @@ PREFIXES = ('research/live-lab', 'research/live-background',
 INDEX_VERSION = 'statistics-history-index-v1'
 
 
+def tracked_scope(root):
+    path = root / '.github/live-tracked-groups.json'
+    if not path.exists():
+        return None
+    cfg = json.loads(path.read_text())
+    return cfg['activation_msk'][:10] if cfg.get('enabled') else None
+
+
 def git(root, *args, input=None):
     return subprocess.run(['git', *args], cwd=root, input=input,
                           stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
@@ -28,6 +36,7 @@ def git(root, *args, input=None):
 
 def tree(root):
     result = {}
+    since = tracked_scope(root)
     for entry in git(root, 'ls-tree', '-r', '-z', 'HEAD', '--', *PREFIXES).split(b'\0'):
         if entry:
             metadata, name = entry.split(b'\t', 1)
@@ -36,8 +45,15 @@ def tree(root):
             mode, kind, sha = metadata.split()
             if kind != b'blob' or mode not in (b'100644', b'100755'):
                 raise ValueError('Unexpected history tree entry')
-            result[name.decode()] = sha.decode()
-    if not result or not any('/receipts/' in name for name in result):
+            path = name.decode()
+            if since:
+                parts = Path(path).parts
+                allowed = ('tracked-group-receipts' in parts or 'outcomes' in parts
+                           or 'live-results-refresh' in parts)
+                if not allowed or len(parts) < 3 or parts[-2] < since:
+                    continue
+            result[path] = sha.decode()
+    if not since and (not result or not any('/receipts/' in name for name in result)):
         raise ValueError('Empty history tree')
     return result
 
@@ -118,7 +134,18 @@ def hydrate(root, directory):
     # A partial hydration must never be mixed with a full fallback checkout.
     for prefix in PREFIXES:
         shutil.rmtree(root/prefix, ignore_errors=True)
-    git(root, 'sparse-checkout', 'add', *PREFIXES)
+    if tracked_scope(root):
+        # A new ten-group series needs only its compact journals and new outcomes.
+        # Never hydrate the entire fitted historical snapshot archive for a reset.
+        for name, sha in current.items():
+            raw = git(root, 'cat-file', 'blob', sha)
+            if blob_sha(raw) != sha:
+                raise ValueError('Git blob verification failed: ' + name)
+            destination = root / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(raw)
+    else:
+        git(root, 'sparse-checkout', 'add', *PREFIXES)
     for name in current:
         if not (root/name).is_file():
             raise ValueError('Full checkout did not provide ' + name)

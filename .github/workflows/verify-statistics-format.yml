@@ -37,6 +37,9 @@ on:
       - 'research/selection-lab-20261018/seven_direction_pockets.py'
       - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
       - '.github/live-under-pockets.json'
+      - '.github/live-tracked-groups.json'
+      - '.github/scripts/refresh_tracked_results.py'
+      - 'research/selection-lab-20261018/*tracked*.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -79,3 +82,8 @@ jobs:
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_hypothesis_pockets.py' -v
       - name: Verify prospective pocket pauses and preserved history
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p 'test_pocket_pauses.py' -v
+
+      - name: Verify frozen ten-group series and clean reset
+        env:
+          PYTHONPATH: research/selection-lab-20261018:scripts:.github/scripts
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p test_tracked_groups.py -v

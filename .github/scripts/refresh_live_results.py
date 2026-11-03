@@ -258,7 +258,7 @@ def model_stats(rows, outcomes, settle_entry):
 def save_files(root, files):
     # Only these new immutable result files are restored after each fetch.
     for attempt in range(6):
-        git(root, "fetch", "origin", BRANCH, "--quiet")
+        git(root, "fetch", "origin", "refs/heads/" + BRANCH + ":refs/remotes/origin/" + BRANCH, "--quiet")
         git(root, "reset", "--hard", "origin/" + BRANCH, "--quiet")
         paths = []
         for relative, data in files.items():
@@ -274,7 +274,7 @@ def save_files(root, files):
             return git(root, "rev-parse", "HEAD").stdout.strip()
         git(root, "-c", "user.name=github-actions[bot]", "-c",
             "user.email=41898282+github-actions[bot]@users.noreply.github.com",
-            "commit", "-m", "Refresh confirmed results and frozen Top5 statistics")
+            "commit", "-m", "Refresh confirmed results and active frozen statistics")
         pushed = git(root, "push", "origin", "HEAD:" + BRANCH, check=False)
         if pushed.returncode == 0:
             return git(root, "rev-parse", "HEAD").stdout.strip()
@@ -289,6 +289,11 @@ def main():
     root = Path(os.environ["COLLECTOR_ROOT"]).resolve()
     sys.path.insert(0, str(root / "research/selection-lab-20261018"))
     import capture as c
+    import tracked_groups
+    if tracked_groups.enabled(root):
+        from refresh_tracked_results import run
+        run(root, c)
+        return
     import statistics_epoch as epoch
     import pocket_pauses
     c.configure_background("experimental")

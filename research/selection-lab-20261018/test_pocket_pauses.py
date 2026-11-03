@@ -7,13 +7,20 @@ import pocket_pauses
 
 
 class PocketPausesTest(unittest.TestCase):
-    def test_repository_policy_keeps_frozen_daily_four_active(self):
+    def test_repository_policy_archives_previous_groups_and_keeps_manual_empty(self):
         root = Path(__file__).resolve().parents[2]
         paused = pocket_pauses.load(root)
-        self.assertEqual(sum(map(len, paused.values())), 12)
-        daily = json.loads((root / '.github/live-daily-pockets/2026-10-29.json').read_text())
-        self.assertFalse({(g['section'], g['pocket_id']) for g in daily['groups']} &
-                         {(section, pocket) for section, ids in paused.items() for pocket in ids})
+        files={'independent_pockets':'independent-pockets','distinct_pockets':'distinct-pockets',
+               'seven_direction_pockets':'seven-direction-pockets','refined_pockets':'refined-pockets',
+               'external_pockets':'external-pockets','strengthened_pockets':'strengthened-pockets',
+               'hypothesis_pockets':'hypothesis-pockets','historical_groups':'historical-groups'}
+        for family,name in files.items():
+            cfg=json.loads((root/('.github/live-'+name+'.json')).read_text())
+            self.assertTrue({g['id'] for g in cfg['pockets']} <= set(paused[family]))
+        self.assertNotIn('tracked_groups',paused)
+        daily=json.loads((root/'.github/live-daily-pockets.json').read_text())
+        self.assertEqual(daily['groups'],[])
+        self.assertEqual(daily['state'],'awaiting_manual_assignment')
 
     def test_invalid_policy_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:

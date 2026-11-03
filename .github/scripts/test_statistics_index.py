@@ -7,8 +7,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from statistics_index import build, hydrate
-from statistics_inputs import RefreshInputs
+from statistics_index import build, hydrate, tree
+from statistics_inputs import RefreshInputs, VERSION
 
 
 class HistoryIndexTest(unittest.TestCase):
@@ -52,7 +52,7 @@ class HistoryIndexTest(unittest.TestCase):
             hydrate(root, cache)
             self.assertEqual(json.loads(gzip.decompress(journal.read_bytes()))['snapshot_id'], 'b')
             build(root, cache)
-            with sqlite3.connect(cache/'statistics-inputs-v2.sqlite') as db:
+            with sqlite3.connect(cache/(VERSION + '.sqlite')) as db:
                 db.execute('UPDATE objects SET value=?', (b'corrupt',))
             journal.unlink()
             hydrate(root, cache)
@@ -81,6 +81,28 @@ class HistoryIndexTest(unittest.TestCase):
                              json.loads((cache/'history-index.json').read_text())['objects'])
             hydrate(root, cache)
             self.assertEqual(json.loads(later.read_text())['snapshot_id'], 'b')
+
+    def test_new_series_scope_hydrates_only_current_journal_and_outcomes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'repo';root.mkdir()
+            config=root/'.github/live-tracked-groups.json';config.parent.mkdir()
+            config.write_text('{"enabled":true,"activation_msk":"2026-11-03T10:00:00+03:00"}')
+            keep=['research/live-background/experimental/tracked-group-receipts/2026-11-03/a.json',
+                  'research/live-background/experimental/outcomes/2026-11-03/a.json']
+            skip=['research/live-background/experimental/receipts/2026-11-03/old.json',
+                  'research/live-background/experimental/outcomes/2026-11-02/old.json']
+            for name in keep+skip:
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('{}')
+            for args in (['init','-q'],['add','.'],['-c','user.name=Test','-c',
+                         'user.email=test@example.org','commit','-qm','test']):
+                subprocess.run(['git',*args],cwd=root,check=True)
+            self.assertEqual(set(tree(root)),set(keep))
+            hydrate(root,Path(tmp)/'cache')
+            self.assertTrue(all((root/p).exists() for p in keep))
+            self.assertFalse(any((root/p).exists() for p in skip))
+            build(root,Path(tmp)/'cache')
+            hydrate(root,Path(tmp)/'cache')
+            self.assertEqual(len(json.loads((Path(tmp)/'cache/history-index.json').read_text())['objects']),2)
 
     def test_missing_index_falls_back_to_full_sparse_checkout(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -380,6 +380,8 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid run id')
  paths=[]
  records=[('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]
+ if receipt.get('tracked_groups') is not None and not receipt.get('failed'):
+  records.append(('tracked-group-receipts',dict(contour=CONTOUR,snapshot_id=sid,tracked_groups=receipt['tracked_groups'])))
  if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
   records.append(('pocket-receipts',dict(contour=receipt['contour'],snapshot_id=sid,
    independent_pockets=receipt['independent_pockets'])))
@@ -422,6 +424,8 @@ def main():
  global CAPTURE_DAY,MAX_CALLS,WORKERS
  if os.environ.get('LAB_RUN_SOURCE')=='background':configure_background(os.environ['LAB_DATA_SCOPE'])
  unified=SOURCE=='background'and SCOPE=='experimental'and os.environ.get('LAB_BACKGROUND_UNIFIED')=='1'
+ import tracked_groups
+ tracking = unified and tracked_groups.enabled(ROOT)
  if unified:
   MAX_CALLS=min(360,int(os.environ.get('LAB_API_CALL_CAP','360')));WORKERS=8
   if MAX_CALLS<=0:raise ValueError('Invalid background API cap')
@@ -493,8 +497,10 @@ def main():
     import adaptive
     snapshot['research_detail_coverage']=adaptive.coverage(snapshot,market_for_event)
    day=now.astimezone(datetime.timezone(datetime.timedelta(hours=3))).date().isoformat()
-   beta,model=(None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day)
-   if epoch_state:
+   beta,model=(None,dict(source='not_used_by_tracked_ten')) if tracking else ((None,dict(source='not_used_by_primary')) if SOURCE=='background'and SCOPE=='primary'else training_model(day))
+   if tracking:
+    choices={key:[] for key in POLICIES};choices['standard_v8']=[];reasons={};base_choices=[]
+   elif epoch_state:
     common_order=sports_order([e for e in snapshot['events']if e.get('control_shortlisted')])
     choices,reasons,base_choices=epoch.choose_common(sys.modules[__name__],snapshot,common_order,epoch_state,beta)
     metadata['epoch_base_choices']=base_choices
@@ -503,12 +509,12 @@ def main():
    else:choices,reasons=choose_narrow(snapshot,ordered,seen,beta)
    metadata['narrow_selection_window']=dict(version=epoch_state['rules_version'] if epoch_state else NARROW_WINDOW_VERSION,min_minute=8,max_minute=60,inclusive=True)
    snapshot['narrow_selection_window']=metadata['narrow_selection_window']
-   control=evaluate_control(snapshot,control_seen)if unified else None
+   control=evaluate_control(snapshot,control_seen)if unified and not tracking else None
    if epoch_state:
     control=dict(control or{},choices=choices['standard_v8'],statistics_epoch=epoch.metadata(epoch_state),independent_decision_ledger=False,common_base=True)
    if unified or epoch_state:snapshot['control_evaluation']=control
    snapshot['experimental_choices']=choices;snapshot['experimental_rejections']=reasons;snapshot['experimental_model']=model
-   model_entries=repeated_entries(snapshot,ordered,beta,control)if is_broad else {}
+   model_entries=repeated_entries(snapshot,ordered,beta,control)if is_broad and not tracking else {}
    if epoch_state:
     for rows in model_entries.values():
      for row in rows:
@@ -517,7 +523,7 @@ def main():
    entry_outcomes=dict(old_outcomes)
    if outcomes:entry_outcomes.update({r['event_id']:r for r in outcomes['events']})
    quality_result=None
-   if unified and epoch_state:
+   if unified and epoch_state and not tracking:
     import quality_forward
     try:
      quality_result=quality_forward.capture_evaluation(ROOT,DATA,snapshot,base_choices,old_targets,entry_outcomes)
@@ -527,7 +533,7 @@ def main():
       missed_base_event_ids=[r['event_id']for r in base_choices],primary_selection_changed=False)
     if quality_result is not None:snapshot['quality_experiment']=quality_result
    independent_result=None
-   if unified:
+   if unified and not tracking:
     import independent_pockets
     try:
      independent_result=independent_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
@@ -538,7 +544,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
    under_result=None
-   if unified:
+   if unified and not tracking:
     sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tm'))
     import under_pockets
     try:
@@ -553,7 +559,7 @@ def main():
       parent_selection_changed=False)
     if under_result is not None:snapshot['under_pockets']=under_result
    distinct_result=None
-   if unified:
+   if unified and not tracking:
     import distinct_pockets
     try:
      distinct_result=distinct_pockets.evaluate(ROOT,snapshot,entry_outcomes)
@@ -576,7 +582,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,production_selection_changed=False)
     snapshot['shadow_universe']=shadow_result
    seven_result=None
-   if unified:
+   if unified and not tracking:
     import seven_direction_pockets
     try:
      seven_result=seven_direction_pockets.evaluate(ROOT,snapshot,entry_outcomes)
@@ -590,7 +596,7 @@ def main():
       parent_selection_changed=False)
     if seven_result is not None:snapshot['seven_direction_pockets']=seven_result
    refined_result=None
-   if unified:
+   if unified and not tracking:
     import refined_pockets
     try:
      refined_result=refined_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes)
@@ -603,7 +609,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if refined_result is not None:snapshot['refined_pockets']=refined_result
    external_result=None
-   if unified:
+   if unified and not tracking:
     import external_pockets
     try:
      external_result=external_pockets.evaluate(ROOT,snapshot,entry_outcomes)
@@ -616,7 +622,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if external_result is not None:snapshot['external_pockets']=external_result
    strengthened_result=None
-   if unified:
+   if unified and not tracking:
     import strengthened_pockets
     try:
      strengthened_result=strengthened_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes)
@@ -629,7 +635,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if strengthened_result is not None:snapshot['strengthened_pockets']=strengthened_result
    hypothesis_result=None
-   if unified:
+   if unified and not tracking:
     import hypothesis_pockets
     try:
      hypothesis_result=hypothesis_pockets.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes)
@@ -641,8 +647,22 @@ def main():
       catalog_sha256=hashlib.sha256(cfg_path.read_bytes()).hexdigest()if cfg_path.exists()else None,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if hypothesis_result is not None:snapshot['hypothesis_pockets']=hypothesis_result
-   snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad else None
-   if epoch_state:
+   tracked_result=None
+   if tracking:
+    try:
+     tracked_result=tracked_groups.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     cfg,digest=tracked_groups.config(ROOT)
+     tracked_result=dict(id=cfg['id'],version=tracked_groups.VERSION,status='error',catalog_sha256=digest,
+      observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__)
+    snapshot['tracked_groups']=tracked_result
+    choices={key:[] for key in choices};model_entries={key:[] for key in model_entries}
+    snapshot['experimental_choices']=choices;snapshot['model_entries']=model_entries
+    metadata['epoch_base_choices']=[];snapshot['epoch_base_choices']=[]
+    control=dict(choices=[],status='archived',reason='replaced_by_tracked_ten')
+    snapshot['control_evaluation']=control
+   snapshot['entry_progress']=entry_progress(entry_journal(),model_entries,entry_outcomes)if is_broad and not tracking else None
+   if epoch_state and not tracking:
     snapshot['entry_progress_lifetime']=snapshot['entry_progress']
     previous={key:r for key,r in entry_journal().items()if r.get('statistics_epoch_id')==epoch_state['id']}
     snapshot['entry_progress']=entry_progress(previous,epoch.epoch_entries(epoch_state,model_entries),entry_outcomes)
@@ -667,6 +687,7 @@ def main():
       closed_with_trend=sum(eid in fresh_closed and bool(r.get('trend_available_any'))for eid,r in fresh.items()),
       closed_with_provider_main_price=sum(eid in fresh_closed and bool(r.get('provider_main_price_any'))for eid,r in fresh.items()),not_independent_snapshot_count=True)
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
+   if tracked_result is not None:receipt['tracked_groups']=tracked_result
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
    if under_result is not None:receipt['under_pockets']=under_result

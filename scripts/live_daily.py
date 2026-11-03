@@ -29,6 +29,7 @@ FAMILIES = {
     'strengthened_pockets': '.github/live-strengthened-pockets.json',
     'hypothesis_pockets': '.github/live-hypothesis-pockets.json',
     'historical_groups': '.github/live-historical-groups.json',
+    'tracked_groups': '.github/live-tracked-groups.json',
 }
 FORMAT = dict(version='live-four-lines-20261028-v2',
     header='Live · {time_msk} МСК · {n}/5',
@@ -76,7 +77,9 @@ def freeze(report, root, date_msk, report_path, now=None):
     from pocket_pauses import load as load_pauses
     paused = load_pauses(root)
     observed = {}
-    for section in FAMILIES:
+    active_catalog = root/FAMILIES['tracked_groups']
+    sections = ('tracked_groups',) if active_catalog.exists() and json.loads(active_catalog.read_text()).get('enabled') else FAMILIES
+    for section in sections:
         cfgpath = root/FAMILIES[section]
         if not cfgpath.exists() or not json.loads(cfgpath.read_text()).get('enabled'):
             continue
@@ -237,7 +240,9 @@ def evaluate_pockets(root,snapshot,ordered,history_dir):
                 item['choices']={k:[] for k in item.get('choices',{})}
                 dest=work/journal/path.name;dest.parent.mkdir(parents=True,exist_ok=True)
                 dest.write_text(json.dumps({section:item}))
-            if section=='historical_groups':
+            if section=='tracked_groups':
+                result=mod.evaluate(work,snapshot,ordered,market_for_event,{},lambda e,o:None)
+            elif section=='historical_groups':
                 result=mod.evaluate(work,snapshot,market_for_event,{},lambda e,o:None)
             elif section=='independent_pockets':
                 result=mod.evaluate(work,snapshot,ordered,market_for_event,{},lambda e,o:None)
@@ -384,7 +389,9 @@ def collect(base,mode,requested_ids,history_dir,selected_file,root=ROOT):
         strong_groups=[]
         for g in groups:
             cfg,_=catalog(root,g['section']);p=next(p for p in cfg['pockets'] if p['id']==g['pocket_id'])
-            if g['section']=='independent_pockets' or p.get('pool')=='strong':strong_groups.append(g)
+            needs_profile = any(a.get('field','').startswith(('league_', 'away_venue_', 'home_venue_', 'gp_'))
+                                for a in p.get('rule', []))
+            if g['section']=='independent_pockets' or p.get('pool')=='strong' or needs_profile:strong_groups.append(g)
         need_profiles=[e for e in review if e.get('events_main_total') and any(pre_matches(e,g,root) for g in strong_groups)]
         before_profiles=budget.calls
         profile_meta=base.enrich_profiles(need_profiles,history_dir) if need_profiles else {}

@@ -63,6 +63,26 @@ def build_tables(report, previous=None):
             new_closed=n-old['n'] if old else None, delta_pp=delta,
             first_result=bool(old and old['n'] == 0 and n > 0 and roi is not None)))
 
+    # An explicit replacement series must never fall back to historical totals.
+    if report.get('active_group_series') == 'tracked_groups' or 'tracked_groups' in report:
+        section = report.get('tracked_groups') or {}
+        prior = previous.get('tracked_groups') or {}
+        same = compatible(section, prior, ('id', 'version', 'catalog_sha256'))
+        result['reference_at_utc'] = previous.get('generated_at_utc') if same else None
+        result['tracking_series'] = section.get('id')
+        result['series_started_at_utc'] = section.get('started_at_utc')
+        if section.get('status') == 'error' or len(section.get('pockets') or {}) != 10:
+            result['errors'].append('Новая десятка: неполный или ошибочный журнал')
+            return result
+        for key, row in section['pockets'].items():
+            old = (prior.get('pockets') or {}).get(key) if same else None
+            add('tracked_groups/' + key, row['name'], 'over', row, old)
+            result['over'][-1]['priority'] = row.get('priority', 99)
+        result['over'].sort(key=lambda r: (
+            r['roi_without_top3'] is None, -(r['roi_without_top3'] or 0),
+            r['roi'] is None, -(r['roi'] or 0), r['priority']))
+        return result
+
     current, old_current = report.get('current') or {}, previous.get('current') or {}
     if 'standard_v8' in current:
         old = old_current.get('standard_v8') if compatible(
@@ -164,6 +184,9 @@ def render_statistics(report, previous=None, tables=None):
     tables = tables if tables is not None else build_tables(report, previous)
     lines = ['**Срез: ' + clock(report['generated_at_utc']) + '.** Сравнение с ' +
              clock(tables['reference_at_utc']) + '.', '']
+    if tables.get('tracking_series'):
+        lines.extend(['Новая серия десяти групп с ' + clock(tables.get('series_started_at_utc')) +
+                      '. Прежние входы и результаты в неё не переносятся.', ''])
     health = report.get('acquisition_health') or {}
     if health.get('status') == 'stale':
         last = clock(health.get('last_successful_request_at_utc'))
@@ -194,9 +217,10 @@ def render_statistics(report, previous=None, tables=None):
         lines.append('')
     lines.extend(['Δ - изменение ROI без трёх лучших, в процентных пунктах. '
                   'При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, '
-                  'их N и ROI не складываются. Контроль и широкий пул '
+                  'их N и ROI не складываются. ' + ('Прежние группы сохранены в архиве. '
+                  if tables.get('tracking_series') else 'Контроль и широкий пул '
                   'имеют собственные условия и периоды: сортировка не доказывает превосходство метода. '
-                  'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
+                  ) + 'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
     quality = report.get('quality_comparison') or {}
     progress = quality.get('progress') or {}
     if progress:
