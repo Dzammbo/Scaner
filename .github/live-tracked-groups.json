@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "enabled": true,
+  "id": "tracked-ten-forward-20261103-v1",
+  "version": "tracked-ten-prospective-v1",
+  "activation_msk": "2026-11-03T10:20:31+03:00",
+  "replace_legacy_groups": true,
+  "entry_policy": "first_new_qualified_exact_quote_per_group_and_event",
+  "historical_results_in_new_series": false,
+  "inherit_old_seen": false,
+  "stake_units": 1,
+  "automatic_rule_changes": false,
+  "source_report": "Scaner top10 3 November 2026",
+  "pockets": [
+    {
+      "id": "R02",
+      "name": "R02",
+      "description": "Удары >0,4/мин; средний тотал выездов гостей ≤2,5; в профиле гостей ≥5 выездных матчей.",
+      "priority": 1,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "enhancement/R02",
+      "rule": [
+        {
+          "field": "shots_rate",
+          "op": ">",
+          "value": 0.4
+        },
+        {
+          "field": "away_venue_goals",
+          "op": "<=",
+          "value": 2.5
+        },
+        {
+          "field": "away_venue_n",
+          "op": ">",
+          "value": 4
+        }
+      ],
+      "rule_sha256": "534876ae3264dd738ac7ea164e6ceba42ff7865cb6f97b74b0f10f9509eab9c8"
+    },
+    {
+      "id": "R01",
+      "name": "R01",
+      "description": "Гости ведут; средний тотал лиги ≤3,5 при ≥10 матчах в её профиле; темп ударов за полные 5 минут превышает средний темп матча более чем на 0,3 удара/мин.",
+      "priority": 2,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "enhancement/R01",
+      "rule": [
+        {
+          "field": "league_goals",
+          "op": "<=",
+          "value": 3.5
+        },
+        {
+          "field": "shot_surge",
+          "op": ">",
+          "value": 0.3
+        },
+        {
+          "field": "leading_side",
+          "op": "=",
+          "value": "away"
+        },
+        {
+          "field": "league_n",
+          "op": ">",
+          "value": 9
+        }
+      ],
+      "rule_sha256": "1d31836199cb8dc2017a1f8605c85321872217fcc0dc815f52724fa8196e70f7"
+    },
+    {
+      "id": "R03",
+      "name": "R03",
+      "description": "Угловые >0,15/мин; опасные атаки за полные 15 минут ≤15; доля ударов в створ среди всех ударов >25%.",
+      "priority": 3,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "enhancement/R03",
+      "rule": [
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.15
+        },
+        {
+          "field": "fresh_danger_15",
+          "op": "<=",
+          "value": 15
+        },
+        {
+          "field": "shot_accuracy",
+          "op": ">",
+          "value": 0.25
+        }
+      ],
+      "rule_sha256": "d8ac8d349fc5440ef5eeb8fe5105f857009941e6de5a0605d2f1c07daca07b3c"
+    },
+    {
+      "id": "need_four_plus",
+      "name": "Нужно ≥4 голов",
+      "description": "Только сильный допуск v8; 8–60-я минута; для полного выигрыша основной линии нужно ещё минимум четыре гола.",
+      "priority": 4,
+      "market": "over",
+      "pool": "strong",
+      "minute_window": [
+        8,
+        60
+      ],
+      "source_key": "independent_pockets/need_four_plus",
+      "rule": [
+        {
+          "field": "need",
+          "op": ">",
+          "value": 3
+        }
+      ],
+      "rule_sha256": "677e166f9e89e31c2e4b4164a1ffc551381a727b2222300e4104794d01d607ef"
+    },
+    {
+      "id": "tb_5_29_goals2_quarter",
+      "name": "Ранние 2 гола + четверть",
+      "description": "5–29-я минута; на табло ровно два гола; исходная четвертная FT-линия ТБ. Сильный допуск v8 не требуется.",
+      "priority": 5,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        29
+      ],
+      "source_key": "distinct_pockets/tb_5_29_goals2_quarter",
+      "rule": [
+        {
+          "field": "goals",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "field": "line_type",
+          "op": "=",
+          "value": "quarter"
+        }
+      ],
+      "rule_sha256": "cc3cfaa7e9b577c0bfa6c0c0b40f2339e0acabfbafab16081e9d45eecf124a72"
+    },
+    {
+      "id": "H17",
+      "name": "H17",
+      "description": "Время входа по Москве до 15:59 включительно; угловые >0,1/мин; абсолютная разница владения >24 п.п.",
+      "priority": 6,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "historical_groups/H17",
+      "rule": [
+        {
+          "field": "hour",
+          "op": "<=",
+          "value": 15.0
+        },
+        {
+          "field": "corners_rate",
+          "op": ">",
+          "value": 0.1
+        },
+        {
+          "field": "possession_gap",
+          "op": ">",
+          "value": 24.0
+        }
+      ],
+      "rule_sha256": "79ef04ed483ae9fc66c07a0d3a6ce084a21bfce35122bd723037e9d275c32ce5"
+    },
+    {
+      "id": "H14",
+      "name": "H14",
+      "description": "Время входа по Москве с 22:00 до 23:59; линия минус голы на табло >1,5; в профиле гостей ≥9 выездных матчей.",
+      "priority": 7,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "historical_groups/H14",
+      "rule": [
+        {
+          "field": "hour",
+          "op": ">",
+          "value": 21.0
+        },
+        {
+          "field": "gap",
+          "op": ">",
+          "value": 1.5
+        },
+        {
+          "field": "away_venue_n",
+          "op": ">",
+          "value": 8.0
+        }
+      ],
+      "rule_sha256": "3531b0de5b362552271329828e433ec0f26cbec3d4e8d377e08ae5ce945332e5"
+    },
+    {
+      "id": "P400",
+      "name": "P400",
+      "description": "5–8-я минута включительно; в профиле гостей больше девяти выездных матчей. Остальные базовые требования к цене и счёту сохранены.",
+      "priority": 8,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "raw_discovery/P400",
+      "rule": [
+        {
+          "field": "minute",
+          "op": "<=",
+          "value": 8.0
+        },
+        {
+          "field": "away_venue_n",
+          "op": ">",
+          "value": 9.0
+        }
+      ],
+      "rule_sha256": "0bf5f373da4cd30abbd5f2bbb441245d121397c5e761b86cb2b0b19c160c7f63"
+    },
+    {
+      "id": "H15",
+      "name": "H15",
+      "description": "Точная цена ТБ ≤1,925; опасные атаки ≤0,75/мин; в профиле лиги >45 матчей.",
+      "priority": 9,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "historical_groups/H15",
+      "rule": [
+        {
+          "field": "price",
+          "op": "<=",
+          "value": 1.925
+        },
+        {
+          "field": "danger_rate",
+          "op": "<=",
+          "value": 0.75
+        },
+        {
+          "field": "league_n",
+          "op": ">",
+          "value": 45.0
+        }
+      ],
+      "rule_sha256": "6633feafea2ba711efff912a40d3f147ee3ecaeb133b043b5085a253c9a1561e"
+    },
+    {
+      "id": "E2",
+      "name": "E2: резерв №2",
+      "description": "За полные 10 минут >1 удара в створ; xG за полные 5 минут ≤0,25; темп ударов за эти 5 минут выше среднего темпа матча.",
+      "priority": 10,
+      "market": "over",
+      "pool": "observed",
+      "minute_window": [
+        5,
+        89
+      ],
+      "source_key": "enhancement_reserve/E2",
+      "rule": [
+        {
+          "field": "fresh_sot_10",
+          "op": ">",
+          "value": 1
+        },
+        {
+          "field": "fresh_xg_5",
+          "op": "<=",
+          "value": 0.25
+        },
+        {
+          "field": "shot_surge",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "rule_sha256": "b1951f68b6f538c432756c06eb893e840e03f1a9ed6c42dc19cba215543f4ed6"
+    }
+  ]
+}

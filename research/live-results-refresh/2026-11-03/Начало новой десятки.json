@@ -1,0 +1,476 @@
+{
+  "generated_at_utc": "2026-11-03T07:20:31+00:00",
+  "active_group_series": "tracked_groups",
+  "statistics_epoch": {
+    "id": "tracked-ten-forward-20261103-v1",
+    "rules_version": "tracked-ten-prospective-v1",
+    "started_at_utc": "2026-11-03T07:20:31+00:00"
+  },
+  "tracked_groups": {
+    "id": "tracked-ten-forward-20261103-v1",
+    "version": "tracked-ten-prospective-v1",
+    "status": "awaiting_first_successful_capture",
+    "catalog_sha256": "ef71c80fb0ebacc4bde29841b75dc281fad1c7b7f8a41c061c36d48853749846",
+    "started_at_utc": "2026-11-03T07:20:31+00:00",
+    "successful_captures": 0,
+    "capture_errors": 0,
+    "historically_fitted": true,
+    "prior_results_in_new_series": false,
+    "pockets": {
+      "R02": {
+        "name": "R02",
+        "priority": 1,
+        "rule": [
+          {
+            "field": "shots_rate",
+            "op": ">",
+            "value": 0.4
+          },
+          {
+            "field": "away_venue_goals",
+            "op": "<=",
+            "value": 2.5
+          },
+          {
+            "field": "away_venue_n",
+            "op": ">",
+            "value": 4
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "R01": {
+        "name": "R01",
+        "priority": 2,
+        "rule": [
+          {
+            "field": "league_goals",
+            "op": "<=",
+            "value": 3.5
+          },
+          {
+            "field": "shot_surge",
+            "op": ">",
+            "value": 0.3
+          },
+          {
+            "field": "leading_side",
+            "op": "=",
+            "value": "away"
+          },
+          {
+            "field": "league_n",
+            "op": ">",
+            "value": 9
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "R03": {
+        "name": "R03",
+        "priority": 3,
+        "rule": [
+          {
+            "field": "corners_rate",
+            "op": ">",
+            "value": 0.15
+          },
+          {
+            "field": "fresh_danger_15",
+            "op": "<=",
+            "value": 15
+          },
+          {
+            "field": "shot_accuracy",
+            "op": ">",
+            "value": 0.25
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "need_four_plus": {
+        "name": "Нужно ≥4 голов",
+        "priority": 4,
+        "rule": [
+          {
+            "field": "need",
+            "op": ">",
+            "value": 3
+          }
+        ],
+        "pool": "strong",
+        "minute_window": [
+          8,
+          60
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "tb_5_29_goals2_quarter": {
+        "name": "Ранние 2 гола + четверть",
+        "priority": 5,
+        "rule": [
+          {
+            "field": "goals",
+            "op": "=",
+            "value": 2
+          },
+          {
+            "field": "line_type",
+            "op": "=",
+            "value": "quarter"
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          29
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "H17": {
+        "name": "H17",
+        "priority": 6,
+        "rule": [
+          {
+            "field": "hour",
+            "op": "<=",
+            "value": 15.0
+          },
+          {
+            "field": "corners_rate",
+            "op": ">",
+            "value": 0.1
+          },
+          {
+            "field": "possession_gap",
+            "op": ">",
+            "value": 24.0
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "H14": {
+        "name": "H14",
+        "priority": 7,
+        "rule": [
+          {
+            "field": "hour",
+            "op": ">",
+            "value": 21.0
+          },
+          {
+            "field": "gap",
+            "op": ">",
+            "value": 1.5
+          },
+          {
+            "field": "away_venue_n",
+            "op": ">",
+            "value": 8.0
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "P400": {
+        "name": "P400",
+        "priority": 8,
+        "rule": [
+          {
+            "field": "minute",
+            "op": "<=",
+            "value": 8.0
+          },
+          {
+            "field": "away_venue_n",
+            "op": ">",
+            "value": 9.0
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "H15": {
+        "name": "H15",
+        "priority": 9,
+        "rule": [
+          {
+            "field": "price",
+            "op": "<=",
+            "value": 1.925
+          },
+          {
+            "field": "danger_rate",
+            "op": "<=",
+            "value": 0.75
+          },
+          {
+            "field": "league_n",
+            "op": ">",
+            "value": 45.0
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      },
+      "E2": {
+        "name": "E2: резерв №2",
+        "priority": 10,
+        "rule": [
+          {
+            "field": "fresh_sot_10",
+            "op": ">",
+            "value": 1
+          },
+          {
+            "field": "fresh_xg_5",
+            "op": "<=",
+            "value": 0.25
+          },
+          {
+            "field": "shot_surge",
+            "op": ">",
+            "value": 0
+          }
+        ],
+        "pool": "observed",
+        "minute_window": [
+          5,
+          89
+        ],
+        "market": "over",
+        "selected": 0,
+        "n": 0,
+        "unresolved": 0,
+        "unit_profit": 0.0,
+        "roi": null
+      }
+    }
+  },
+  "acquisition_health": {
+    "status": "awaiting_first_capture"
+  },
+  "statistics_format_version": "statistics-over-only-20261027-v6",
+  "definition": "New first qualified exact-priced paper entries; flat 1 unit; no historical backfill",
+  "statistics_tables": {
+    "format_version": "statistics-over-only-20261027-v6",
+    "over": [
+      {
+        "key": "tracked_groups/R02",
+        "name": "R02",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 1
+      },
+      {
+        "key": "tracked_groups/R01",
+        "name": "R01",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 2
+      },
+      {
+        "key": "tracked_groups/R03",
+        "name": "R03",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 3
+      },
+      {
+        "key": "tracked_groups/need_four_plus",
+        "name": "Нужно ≥4 голов",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 4
+      },
+      {
+        "key": "tracked_groups/tb_5_29_goals2_quarter",
+        "name": "Ранние 2 гола + четверть",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 5
+      },
+      {
+        "key": "tracked_groups/H17",
+        "name": "H17",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 6
+      },
+      {
+        "key": "tracked_groups/H14",
+        "name": "H14",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 7
+      },
+      {
+        "key": "tracked_groups/P400",
+        "name": "P400",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 8
+      },
+      {
+        "key": "tracked_groups/H15",
+        "name": "H15",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 9
+      },
+      {
+        "key": "tracked_groups/E2",
+        "name": "E2: резерв №2",
+        "n": 0,
+        "selected": 0,
+        "roi": null,
+        "roi_without_top3": null,
+        "without_top3_n": null,
+        "new_closed": null,
+        "delta_pp": null,
+        "first_result": false,
+        "priority": 10
+      }
+    ],
+    "under": [],
+    "errors": [],
+    "reference_at_utc": null,
+    "population": {},
+    "tracking_series": "tracked-ten-forward-20261103-v1",
+    "series_started_at_utc": "2026-11-03T07:20:31+00:00"
+  },
+  "statistics_markdown": "**Срез: 03.11, 10:20 МСК.** Сравнение с н/д.\n\nНовая серия десяти групп с 03.11, 10:20 МСК. Прежние входы и результаты в неё не переносятся.\n\nN - рассчитанные матчи; в скобках прирост к предыдущему отчёту. Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: такие группы стоят внизу по убыванию обычного ROI.\n\n**Все ТБ - по убыванию ROI без трёх**\n\n| Группа | N (+новые) | ROI | ROI без 3 | Δ без 3, п.п. |\n|---|---:|---:|---:|---:|\n| R02 | 0 | н/д | н/д | н/д |\n| R01 | 0 | н/д | н/д | н/д |\n| R03 | 0 | н/д | н/д | н/д |\n| Нужно ≥4 голов | 0 | н/д | н/д | н/д |\n| Ранние 2 гола + четверть | 0 | н/д | н/д | н/д |\n| H17 | 0 | н/д | н/д | н/д |\n| H14 | 0 | н/д | н/д | н/д |\n| P400 | 0 | н/д | н/д | н/д |\n| H15 | 0 | н/д | н/д | н/д |\n| E2: резерв №2 | 0 | н/д | н/д | н/д |\n\nΔ - изменение ROI без трёх лучших, в процентных пунктах. При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, их N и ROI не складываются. Прежние группы сохранены в архиве. ТМ приостановлен и исключён из этого контура; история сохранена.\n",
+  "initialization": true,
+  "source_revision": "c5916a54f322761d7fb5d8c373c0d9b5875ffa55"
+}
