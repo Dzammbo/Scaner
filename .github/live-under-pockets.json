@@ -1,7 +1,7 @@
 {
-  "enabled": false,
-  "id": "independent-2-under-forward-20261026-v3",
-  "version": "independent-under-pockets-v3-20261026",
+  "enabled": true,
+  "id": "ten-under-forward-20261104-v1",
+  "version": "ten-under-forward-20261104-v1",
   "activation": "first_successful_capture_after_pruning",
   "entry_policy": "first_qualifying_exact_under_quote_per_pocket_event",
   "pool": "all_observed_nonvirtual_football_with_known_score_and_original_exact_under_quote",
@@ -17,17 +17,54 @@
   "automatic_rule_changes": false,
   "pockets": [
     {
-      "id": "tm_zero_70_79",
-      "name": "0:0 на 70–79 минуте",
-      "condition": "score_zero_minute_70_79",
-      "evidence_status": "retrospective_exploratory_not_proven"
+      "id": "TM01",
+      "name": "Запас линии от 0 до 0,75 и кэф от 2,05 до 2,40",
+      "evidence_status": "prospective_candidate"
     },
     {
-      "id": "tm_red_price_ge2",
-      "name": "Удаление + коэффициент ТМ не ниже 2",
-      "condition": "red_cards_any_under_price_ge2",
-      "evidence_status": "retrospective_exploratory_not_proven"
+      "id": "TM02",
+      "name": "Створ меньше 0,08 в минуту и опасные атаки от 2 в минуту",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM03",
+      "name": "Четыре гола или больше и удаление",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM04",
+      "name": "Створ меньше 0,08 в минуту и xG от 0,03 до 0,05 в минуту",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM05",
+      "name": "Створ от 0,14 до 0,22 в минуту и удаление",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM06",
+      "name": "70–79 минута и кэф от 2,05 до 2,40",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM07",
+      "name": "0:0 и линия от 0,75 до 1,25",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM08",
+      "name": "Опасные атаки меньше 0,6 в минуту и кэф меньше 1,65",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM09",
+      "name": "Удаление и запас линии от 1,75 до 2,25",
+      "evidence_status": "prospective_candidate"
+    },
+    {
+      "id": "TM10",
+      "name": "80–89 минута и опасные атаки меньше 0,6 в минуту",
+      "evidence_status": "experimental_reverse"
     }
-  ],
-  "pause_reason": "ТМ исключён из общего контура 26.10.2026; возврат только после отдельной проработки механики."
+  ]
 }
