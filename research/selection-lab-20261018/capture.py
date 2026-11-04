@@ -544,7 +544,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if independent_result is not None:snapshot['independent_pockets']=independent_result
    under_result=None
-   if unified and not tracking:
+   if unified:
     sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tm'))
     import under_pockets
     try:
