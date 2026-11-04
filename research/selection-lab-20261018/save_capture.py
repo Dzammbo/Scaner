@@ -138,7 +138,7 @@ def prepare_files(prefix,sid,suffix,day,contour):
  cfg=Path('.github/live-tracked-groups.json')
  if source_shadow_enabled(prefix) and cfg.exists() and json.loads(cfg.read_text()).get('enabled'):
   raw=cfg.read_bytes();data=json.loads(raw)
-  legacy={'pocket-receipts','under-pocket-receipts','distinct-pocket-receipts',
+  legacy={'pocket-receipts','distinct-pocket-receipts',
    'seven-direction-pocket-receipts','refined-pocket-receipts','external-pocket-receipts',
    'strengthened-pocket-receipts','hypothesis-pocket-receipts','historical-group-receipts'}
   files={p:v for p,v in files.items() if not set(p.parts)&legacy}
