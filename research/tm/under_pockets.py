@@ -1,4 +1,4 @@
-"""Two frozen, independent, prospective under-total observation ledgers."""
+"""Ten frozen, independent, prospective under-total observation ledgers."""
 import collections
 import datetime as dt
 import gzip
@@ -8,7 +8,7 @@ import math
 import re
 from pathlib import Path
 
-VERSION = 'independent-under-pockets-v3-20261026'
+VERSION = 'ten-under-forward-20261104-v1'
 CONFIG = '.github/live-under-pockets.json'
 JOURNAL = 'research/live-background/experimental/under-pocket-receipts'
 MSK = dt.timezone(dt.timedelta(hours=3))
@@ -42,8 +42,8 @@ def config(root):
     cfg = json.loads(raw)
     if not cfg.get('enabled'):
         return None, None
-    if (cfg.get('version') != VERSION or len(cfg.get('pockets', [])) != 2
-            or len({p['id'] for p in cfg['pockets']}) != 2):
+    if (cfg.get('version') != VERSION or {p['id'] for p in cfg.get('pockets', [])} != {f'TM{i:02}' for i in range(1, 11)}
+            or len(cfg['pockets']) != 10):
         raise ValueError('Invalid frozen under pocket catalog')
     return cfg, hashlib.sha256(raw).hexdigest()
 
@@ -52,6 +52,29 @@ def match(key, event, line, price):
     minute = number(event.get('minute'))
     score = [int(n) for n in re.split('[-:]', event['score'])]
     goals = sum(score)
+    stats = event.get('board_stats') or {}
+
+    def rate(field):
+        values = pair(stats.get(field))
+        return sum(values) / minute if values is not None and minute else -1
+
+    gap = line - goals
+    sot, danger, xg = (rate(field) for field in ('on_target', 'dangerous_attacks', 'xg'))
+    red = pair(stats.get('redcards'))
+    sent_off = red is not None and sum(red) >= 1
+    if key.startswith('TM'):
+        return {
+            'TM01': 0 <= gap < .75 and 2.05 <= price < 2.4,
+            'TM02': 0 <= sot < .08 and danger >= 2,
+            'TM03': goals >= 4 and sent_off,
+            'TM04': 0 <= sot < .08 and .03 <= xg < .05,
+            'TM05': .14 <= sot < .22 and sent_off,
+            'TM06': 70 <= minute < 80 and 2.05 <= price < 2.4,
+            'TM07': goals == 0 and .75 <= line < 1.25,
+            'TM08': 0 <= danger < .6 and 1 < price < 1.65,
+            'TM09': sent_off and 1.75 <= gap < 2.25,
+            'TM10': 80 <= minute < 90 and 0 <= danger < .6,
+        }[key]
     if key == 'tm_draw_half_goal':
         return score[0] == score[1] and abs(line - goals - .5) < 1e-8
     if key == 'tm_zero_70_79':
@@ -201,6 +224,7 @@ def report(root, outcomes):
         return None
     rows, started, errors, captures = history(root, cfg, digest)
     return dict(id=cfg['id'], version=VERSION,
+                unique_matches=len(set().union(*(set(entries) for entries in rows.values()))),
                 status='active' if started else 'awaiting_first_successful_capture',
                 started_at_utc=started, catalog_sha256=digest,
                 successful_captures=captures, capture_errors=errors,
