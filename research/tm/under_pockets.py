@@ -124,7 +124,16 @@ def history(root, cfg, digest):
     rows = {p['id']: {} for p in cfg['pockets']}
     started = None
     errors = captures = 0
-    for path in sorted((Path(root) / JOURNAL).rglob('*.json*')):
+    journal = Path(root) / JOURNAL
+    # Early cycles persisted their TM choices only in the general receipts.
+    # Prefer the dedicated copy when both files describe the same cycle.
+    paths = {
+        path.relative_to(journal.parent / 'receipts'): path
+        for day in (journal.parent / 'receipts').glob('2026-11-04')
+        for path in day.glob('*.json*')
+    }
+    paths.update({path.relative_to(journal): path for path in journal.rglob('*.json*')})
+    for path in paths.values():
         item = (read(path).get('under_pockets') or {})
         if item.get('id') != cfg['id']:
             continue
@@ -142,9 +151,9 @@ def history(root, cfg, digest):
                 raise ValueError('Unknown under ledger')
             for entry in entries:
                 eid = str(entry['event_id'])
-                if eid in rows[key]:
-                    raise ValueError('Duplicate under pocket/event entry')
-                rows[key][eid] = entry
+                previous = rows[key].get(eid)
+                if previous is None or entry['observed_at_utc'] < previous['observed_at_utc']:
+                    rows[key][eid] = entry
     return rows, started, errors, captures
 
 
