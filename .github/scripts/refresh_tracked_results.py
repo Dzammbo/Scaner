@@ -13,6 +13,13 @@ from statistics_format import VERSION, build_tables, render_statistics
 def inputs(root, tracked):
     cfg, digest = tracked.config(root)
     rows, _, _ = tracked.history(root, cfg, digest)
+    import tracked_sot
+    comparison, comparison_digest = tracked_sot.config(root)
+    if comparison is not None:
+        paired, _, _ = tracked_sot.history(root, comparison, comparison_digest)
+        rows = dict(rows)
+        for arm, groups in paired.items():
+            rows.update({arm + '/' + key: entries for key, entries in groups.items()})
     targets = {}
     for entries in rows.values():
         for eid, e in entries.items():
@@ -74,6 +81,12 @@ def make_report(root, tracked, outcomes, settle, now, previous=None, health=None
                               started_at_utc=series['started_at_utc']),
         tracked_groups=series, acquisition_health=health or dict(status='awaiting_first_capture'),
         statistics_format_version=VERSION, definition='New first qualified exact-priced paper entries; flat 1 unit; no historical backfill')
+    import tracked_sot
+    comparison = tracked_sot.report(root, outcomes, settle)
+    if comparison is not None:
+        value['tracked_sot'] = comparison
+        for key, row in series['pockets'].items():
+            row['name'] = comparison['arms']['baseline']['pockets'][key]['name']
     value['statistics_tables'] = build_tables(value, previous)
     if value['statistics_tables']['errors']:
         raise ValueError('Incomplete tracked statistics')
@@ -102,6 +115,12 @@ def run(root, capture):
                         acquisition_health(receipts, now))
     # Decimal quarter-line arithmetic independently verifies every priced result.
     rows, _, _ = tracked.history(root, cfg, digest)
+    import tracked_sot
+    comparison, comparison_digest = tracked_sot.config(root)
+    if comparison is not None:
+        paired, _, _ = tracked_sot.history(root, comparison, comparison_digest)
+        for arm, groups in paired.items():
+            rows.update({arm + '/' + key: entries for key, entries in groups.items()})
     for entries in rows.values():
         for eid, e in entries.items():
             result = capture.settle_entry(e, merged.get(eid, {}))

@@ -380,6 +380,8 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid run id')
  paths=[]
  records=[('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]
+ if receipt.get('tracked_sot') is not None and not receipt.get('failed'):
+  records.append(('tracked-sot-receipts',dict(contour=CONTOUR,snapshot_id=sid,tracked_sot=receipt['tracked_sot'])))
  if receipt.get('tracked_groups') is not None and not receipt.get('failed'):
   records.append(('tracked-group-receipts',dict(contour=CONTOUR,snapshot_id=sid,tracked_groups=receipt['tracked_groups'])))
  if receipt.get('independent_pockets') is not None and not receipt.get('failed'):
@@ -648,6 +650,7 @@ def main():
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__,parent_selection_changed=False)
     if hypothesis_result is not None:snapshot['hypothesis_pockets']=hypothesis_result
    tracked_result=None
+   tracked_sot_result=None
    if tracking:
     try:
      tracked_result=tracked_groups.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
@@ -656,6 +659,17 @@ def main():
      tracked_result=dict(id=cfg['id'],version=tracked_groups.VERSION,status='error',catalog_sha256=digest,
       observed_at_utc=snapshot['board_observed_at_utc'],error_type=type(exc).__name__)
     snapshot['tracked_groups']=tracked_result
+    import tracked_sot
+    try:
+     tracked_sot_result=tracked_sot.evaluate(ROOT,snapshot,ordered,market_for_event,entry_outcomes,settle_entry)
+    except Exception as exc:
+     cfg_path=ROOT/tracked_sot.CONFIG
+     raw=cfg_path.read_bytes() if cfg_path.exists() else b'{}'
+     cfg=json.loads(raw)
+     tracked_sot_result=dict(id=cfg.get('id'),version=tracked_sot.VERSION,status='error',
+      catalog_sha256=hashlib.sha256(raw).hexdigest(),observed_at_utc=snapshot['board_observed_at_utc'],
+      error_type=type(exc).__name__,parent_selection_changed=False)
+    if tracked_sot_result is not None:snapshot['tracked_sot']=tracked_sot_result
     choices={key:[] for key in choices};model_entries={key:[] for key in model_entries}
     snapshot['experimental_choices']=choices;snapshot['model_entries']=model_entries
     metadata['epoch_base_choices']=[];snapshot['epoch_base_choices']=[]
@@ -688,6 +702,7 @@ def main():
       closed_with_provider_main_price=sum(eid in fresh_closed and bool(r.get('provider_main_price_any'))for eid,r in fresh.items()),not_independent_snapshot_count=True)
    receipt=dict(metadata,research_detail_coverage=snapshot.get('research_detail_coverage'),adaptive_deep_plan=snapshot.get('adaptive_deep_plan'),choices=choices,model_entries=model_entries,entry_progress=snapshot['entry_progress'],outcome_targets=targets,deep_entry_event_ids=[str(e['event_id'])for e in snapshot['events']if e.get('stats_trend_shortlisted')],not_user_publications=True)
    if tracked_result is not None:receipt['tracked_groups']=tracked_result
+   if tracked_sot_result is not None:receipt['tracked_sot']=tracked_sot_result
    if quality_result is not None:receipt['quality_experiment']=quality_result
    if independent_result is not None:receipt['independent_pockets']=independent_result
    if under_result is not None:receipt['under_pockets']=under_result

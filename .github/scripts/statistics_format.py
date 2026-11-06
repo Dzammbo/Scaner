@@ -81,6 +81,32 @@ def build_tables(report, previous=None):
         result['over'].sort(key=lambda r: (
             r['roi_without_top3'] is None, -(r['roi_without_top3'] or 0),
             r['roi'] is None, -(r['roi'] or 0), r['priority']))
+        comparison = report.get('tracked_sot')
+        if comparison is not None:
+            prior_comparison = previous.get('tracked_sot') or {}
+            same_comparison = compatible(comparison, prior_comparison, ('id', 'version', 'catalog_sha256'))
+            try:
+                if comparison.get('status') == 'error':
+                    raise ValueError('Comparison error')
+                arms = comparison['arms']
+                if set(arms) != {'baseline', 'enhanced'} or any(len(a['pockets']) != 10 for a in arms.values()):
+                    raise ValueError('Incomplete comparison')
+                paired = []
+                for key, baseline in sorted(arms['baseline']['pockets'].items(), key=lambda item:item[1]['priority']):
+                    pair = dict(name=baseline['name'])
+                    for arm in ('baseline', 'enhanced'):
+                        row = dict(arms[arm]['pockets'][key])
+                        old = ((prior_comparison.get('arms') or {}).get(arm, {}).get('pockets') or {}).get(key) if same_comparison else None
+                        row['new_closed'] = row['n'] - old['n'] if old else None
+                        if row['new_closed'] is not None and row['new_closed'] < 0:
+                            raise ValueError('Comparison sample shrank')
+                        pair[arm] = row
+                    paired.append(pair)
+                result['sot_comparison'] = dict(started_at_utc=comparison['started_at_utc'],
+                    status=comparison['status'], capture_errors=comparison.get('capture_errors', 0),
+                    rows=paired, portfolios={arm: arms[arm]['portfolio'] for arm in arms})
+            except (KeyError, TypeError, ValueError):
+                result['errors'].append('Сравнение отбора по створам: неполный или ошибочный журнал')
         return result
 
     current, old_current = report.get('current') or {}, previous.get('current') or {}
@@ -221,6 +247,27 @@ def render_statistics(report, previous=None, tables=None):
                   if tables.get('tracking_series') else 'Контроль и широкий пул '
                   'имеют собственные условия и периоды: сортировка не доказывает превосходство метода. '
                   ) + 'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
+    comparison = tables.get('sot_comparison')
+    if comparison:
+        lines.extend(['**ТБ: обычный отбор и достаточный темп ударов в створ**', '',
+            'Обе версии учитывают только новые входы с ' + clock(comparison['started_at_utc']) +
+            '. Усиление: суммарные створы / минута ≥0,10. У каждой версии свой первый вход и своя цена.', ''])
+        if comparison['status'] == 'awaiting_first_successful_capture':
+            lines.extend(['Первый успешный снимок для сравнения пока не сохранён.', ''])
+        if comparison['capture_errors']:
+            lines.extend([f"Ошибочных проходов сравнения: {comparison['capture_errors']}. Они не считаются проходами без сигналов.", ''])
+        lines.extend(['| Карман | Обычный N (+новые) | Прибыль | ROI | Со створами N (+новые) | Прибыль | ROI | Не рассчитано обычный / со створами |',
+                      '|---|---:|---:|---:|---:|---:|---:|---:|'])
+        for pair in comparison['rows'] + [dict(name='Итого: уникальные матчи', **comparison['portfolios'])]:
+            cells = []
+            for arm in ('baseline', 'enhanced'):
+                row = pair[arm]
+                growth = f" ({row['new_closed']:+d})" if row.get('new_closed') is not None else ''
+                cells.extend([count(row['n']) + growth, signed(row['unit_profit']), percent(row['roi'])])
+            pending = f"{pair['baseline']['unresolved']} / {pair['enhanced']['unresolved']}"
+            lines.append('| ' + cell(pair['name']) + ' | ' + ' | '.join(cells) + ' | ' + pending + ' |')
+        lines.extend(['', 'Прибыль в единицах фиксированной ставки. Итог каждой версии считает один первый вход на матч '
+                      'по всем карманам; строки не складываются. Это бумажное сравнение, преимущество фильтра пока не доказано.', ''])
     quality = report.get('quality_comparison') or {}
     progress = quality.get('progress') or {}
     if progress:

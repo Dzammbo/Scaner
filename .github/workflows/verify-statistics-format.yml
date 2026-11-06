@@ -38,6 +38,7 @@ on:
       - 'research/selection-lab-20261018/test_seven_direction_pockets.py'
       - '.github/live-under-pockets.json'
       - '.github/live-tracked-groups.json'
+      - '.github/live-tracked-sot.json'
       - '.github/scripts/refresh_tracked_results.py'
       - 'research/selection-lab-20261018/*tracked*.py'
   workflow_dispatch:
@@ -87,3 +88,8 @@ jobs:
         env:
           PYTHONPATH: research/selection-lab-20261018:scripts:.github/scripts
         run: python3 -m unittest discover -s research/selection-lab-20261018 -p test_tracked_groups.py -v
+
+      - name: Verify independent prospective shots-on-target comparison
+        env:
+          PYTHONPATH: research/selection-lab-20261018:scripts:.github/scripts
+        run: python3 -m unittest discover -s research/selection-lab-20261018 -p test_tracked_sot.py -v

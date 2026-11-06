@@ -88,6 +88,7 @@ class HistoryIndexTest(unittest.TestCase):
             config=root/'.github/live-tracked-groups.json';config.parent.mkdir()
             config.write_text('{"enabled":true,"activation_msk":"2026-11-03T10:00:00+03:00"}')
             keep=['research/live-background/experimental/tracked-group-receipts/2026-11-03/a.json',
+                  'research/live-background/experimental/tracked-sot-receipts/2026-11-06/a.json',
                   'research/live-background/experimental/outcomes/2026-11-03/a.json']
             skip=['research/live-background/experimental/receipts/2026-11-03/old.json',
                   'research/live-background/experimental/outcomes/2026-11-02/old.json']
@@ -102,7 +103,7 @@ class HistoryIndexTest(unittest.TestCase):
             self.assertFalse(any((root/p).exists() for p in skip))
             build(root,Path(tmp)/'cache')
             hydrate(root,Path(tmp)/'cache')
-            self.assertEqual(len(json.loads((Path(tmp)/'cache/history-index.json').read_text())['objects']),2)
+            self.assertEqual(len(json.loads((Path(tmp)/'cache/history-index.json').read_text())['objects']),3)
 
     def test_missing_index_falls_back_to_full_sparse_checkout(self):
         with tempfile.TemporaryDirectory() as tmp:

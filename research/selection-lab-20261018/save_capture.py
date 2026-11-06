@@ -138,6 +138,16 @@ def prepare_files(prefix,sid,suffix,day,contour):
     id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
     status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingTrackedJournal',
     observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat())))
+ cfg=Path('.github/live-tracked-sot.json')
+ if source_shadow_enabled(prefix) and cfg.exists() and json.loads(cfg.read_text()).get('enabled'):
+  raw=cfg.read_bytes();data=json.loads(raw)
+  target=prefix/'tracked-sot-receipts'/(day or '')/(sid+suffix)
+  if not receipt.get('failed') and target.exists():files[target]=target.read_bytes()
+  else:
+   files[target]=encode(dict(contour=contour,snapshot_id=sid,tracked_sot=dict(
+    id=data['id'],version=data['version'],catalog_sha256=hashlib.sha256(raw).hexdigest(),
+    status='error',error_type='CaptureFailed' if receipt.get('failed') else 'MissingComparisonJournal',
+    observed_at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),parent_selection_changed=False)))
  return files
 
 def source_shadow_enabled(prefix):
