@@ -7,11 +7,22 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from statistics_index import build, hydrate, tree
+from statistics_index import build, hydrate, tree, prefetch
 from statistics_inputs import RefreshInputs, VERSION
 
 
 class HistoryIndexTest(unittest.TestCase):
+    def test_missing_objects_are_fetched_in_one_batch_without_lazy_reads(self):
+        shas = ['a' * 40, 'b' * 40, 'c' * 40]
+        listing = (shas[0] + ' blob\n' + shas[1] + ' missing\n' + shas[2] + ' missing\n').encode()
+        with patch('statistics_index.git', side_effect=[listing, b'']) as call:
+            prefetch(Path('/repo'), shas + shas)
+        self.assertEqual(call.call_count, 2)
+        self.assertEqual(call.call_args_list[0].kwargs['env']['GIT_NO_LAZY_FETCH'], '1')
+        self.assertEqual(call.call_args_list[1].kwargs['input'], (shas[1] + '\n' + shas[2] + '\n').encode())
+        self.assertIn('--stdin', call.call_args_list[1].args)
+
+
     def test_verified_bootstrap_incremental_change_and_corrupt_cache(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)/'repository'; root.mkdir()

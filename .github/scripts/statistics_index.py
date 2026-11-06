@@ -29,9 +29,26 @@ def tracked_scope(root):
     return cfg['activation_msk'][:10] if cfg.get('enabled') else None
 
 
-def git(root, *args, input=None):
+def git(root, *args, input=None, env=None):
     return subprocess.run(['git', *args], cwd=root, input=input,
-                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, env=env).stdout
+
+
+def prefetch(root, shas):
+    """Fetch missing immutable blobs together, avoiding one network roundtrip per file."""
+    shas = sorted(set(shas))
+    if not shas:
+        return
+    listing = git(root, 'cat-file', '--batch-check=%(objectname) %(objecttype)',
+                  input=('\n'.join(shas) + '\n').encode(),
+                  env=dict(os.environ, GIT_NO_LAZY_FETCH='1'))
+    missing = [line.split()[0].decode() for line in listing.splitlines()
+               if line.endswith(b' missing')]
+    if missing:
+        git(root, '-c', 'fetch.negotiationAlgorithm=noop', 'fetch', '--no-tags',
+            '--no-write-fetch-head', '--filter=blob:none', 'origin', '--stdin',
+            input=('\n'.join(missing) + '\n').encode())
+        print('HISTORY_PREFETCH=' + json.dumps(dict(missing_blobs=len(missing))), flush=True)
 
 
 def tree(root):
@@ -89,6 +106,8 @@ def hydrate(root, directory):
         db = sqlite3.connect(db_path)
         # Open read-only in spirit: no projection is accepted without a validated source.
         db.execute('SELECT 1 FROM objects LIMIT 1').fetchone()
+        prefetch(root, [sha for name, sha in current.items()
+                        if manifest['objects'].get(name, {}).get('sha') != sha])
         reused = changed = 0
         objects = {}
         for name, sha in current.items():
@@ -135,6 +154,7 @@ def hydrate(root, directory):
     for prefix in PREFIXES:
         shutil.rmtree(root/prefix, ignore_errors=True)
     if tracked_scope(root):
+        prefetch(root, current.values())
         # A new ten-group series needs only its compact journals and new outcomes.
         # Never hydrate the entire fitted historical snapshot archive for a reset.
         for name, sha in current.items():
