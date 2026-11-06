@@ -2,23 +2,23 @@
   "run_id": "42245202275",
   "run_attempt": 1,
   "started_at": "2026-11-06T15:42:04.045465+00:00",
-  "updated_at": "2026-11-06T19:57:29.953650+00:00",
-  "state": "collecting",
+  "updated_at": "2026-11-06T20:02:41.146589+00:00",
+  "state": "capture_failed",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-v4-cached-inputs-20261031",
   "cycle": 46,
   "api_call_cap": 160,
-  "last_capture_id": "42245202275-100045",
-  "last_error": null,
+  "last_capture_id": "42245202275-100046",
+  "last_error": "RuntimeError",
   "last_capture_performance": {
-    "seconds": 378.894,
+    "seconds": 272.471,
     "cache": {
-      "persistent_hits": 21692,
-      "source_decodes": 5
+      "persistent_hits": 17756,
+      "source_decodes": 2
     },
-    "succeeded": true
+    "succeeded": false
   },
   "last_success_at": "2026-11-06T19:57:25.644445+00:00",
-  "consecutive_failures": 0
+  "consecutive_failures": 1
 }
