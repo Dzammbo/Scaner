@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "id": "tracked-sot-forward-20261106-v1",
+  "version": "tracked-sot-comparison-v1",
+  "activation_msk": "2026-11-06T18:38:55+03:00",
+  "parent_series_id": "tracked-ten-forward-20261103-v1",
+  "parent_catalog_sha256": "ef71c80fb0ebacc4bde29841b75dc281fad1c7b7f8a41c061c36d48853749846",
+  "minimum_sot_per_minute": 0.1,
+  "stake_units": 1,
+  "names": {
+    "R02": "Частые удары против низового выездного профиля",
+    "R01": "Гости ведут, темп ударов ускоряется",
+    "R03": "Угловые и точные удары при умеренном давлении",
+    "need_four_plus": "Для выигрыша нужно ещё минимум четыре гола",
+    "tb_5_29_goals2_quarter": "Два ранних гола и четвертная линия",
+    "H17": "Дневное преимущество во владении и угловые",
+    "H14": "Поздний вечер и высокий запас линии",
+    "P400": "Самое начало матча с известным выездным профилем",
+    "H15": "Умеренная цена и невысокий темп опасных атак",
+    "E2": "Свежие створы и ускорение без всплеска xG"
+  },
+  "entry_policy": "independent_first_qualified_entry_per_arm_group_match",
+  "prior_results_in_new_series": false,
+  "parent_selection_changed": false
+}

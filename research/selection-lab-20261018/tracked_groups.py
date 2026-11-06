@@ -169,7 +169,14 @@ def history(root, cfg, digest):
 
 def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
     cfg, digest = config(root)
-    rows, captures, errors = history(root, cfg, digest)
+    return evaluate_catalog(snapshot, ordered, market_for_event, outcomes, settle,
+                            cfg, digest, history(root, cfg, digest))
+
+
+def evaluate_catalog(snapshot, ordered, market_for_event, outcomes, settle,
+                     cfg, digest, prior, accept=None):
+    """Shared entry engine; each prospective arm owns its catalog and seen state."""
+    rows, captures, errors = prior
     clock = dt.datetime.fromisoformat(snapshot['board_observed_at_utc'].replace('Z', '+00:00'))
     activation = dt.datetime.fromisoformat(cfg['activation_msk'])
     choices = {g['id']: [] for g in cfg['pockets']}
@@ -200,6 +207,8 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
             value = features(event, quote, snapshot)
             if value is None or value['gap'] <= 0:
                 continue
+            if accept is not None and not accept(event, quote, value):
+                continue
             decision = dt.datetime.fromtimestamp(max(checked, clock.timestamp()), dt.timezone.utc)
             for group in cfg['pockets']:
                 key = group['id']
@@ -209,7 +218,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
                     continue
                 entry = dict(event_id=eid, score=score, minute=minute,
                     market=copy.deepcopy(quote), side='over', pocket_id=key,
-                    series_id=cfg['id'], version=VERSION, catalog_sha256=digest,
+                    series_id=cfg['id'], version=cfg['version'], catalog_sha256=digest,
                     observed_at_utc=snapshot['board_observed_at_utc'],
                     decision_at_utc=decision.isoformat(),
                     entry_day_msk=decision.astimezone(MSK).date().isoformat(),
@@ -221,7 +230,7 @@ def evaluate(root, snapshot, ordered, market_for_event, outcomes, settle):
                 rows[key][eid] = entry
                 choices[key].append(entry)
                 diagnostics['new_entries'] += 1
-    return dict(id=cfg['id'], version=VERSION, status='active', catalog_sha256=digest,
+    return dict(id=cfg['id'], version=cfg['version'], status='active', catalog_sha256=digest,
         started_at_utc=activation.astimezone(dt.timezone.utc).isoformat(),
         observed_at_utc=snapshot['board_observed_at_utc'], choices=choices,
         progress=summary(rows, outcomes, settle), diagnostics=dict(diagnostics),
