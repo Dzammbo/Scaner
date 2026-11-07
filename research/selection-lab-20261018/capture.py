@@ -172,8 +172,16 @@ def enrich_markets(events,budget):
   observed=datetime.datetime.now(datetime.timezone.utc).isoformat()
   try:
    payload,meta=budget('/v2/event/odds',event_id=e['event_id'],source='bet365',odds_market='1,2,3,6,8' if SCOPE=='experimental' else '3')
-   return e,dict(live.current_main_total(payload,e,int(time.time())),lab_odds_payload=sanitize(payload),odds_http=meta,lab_odds_observed_at_utc=observed)
-  except Exception as exc:return e,dict(events_main_total=None,main_total_status='unavailable',main_total_reason=type(exc).__name__,lab_odds_observed_at_utc=observed)
+   received=datetime.datetime.now(datetime.timezone.utc).isoformat()
+   parsed=live.current_main_total(payload,e,int(time.time()))
+   from research_foundation import quote_record
+   return e,dict(parsed,lab_odds_payload=sanitize(payload),odds_http=meta,lab_odds_observed_at_utc=observed,
+    lab_odds_received_at_utc=received,research_primary_quote=quote_record(e,parsed,'bet365',observed,received))
+  except Exception as exc:
+   from research_foundation import quote_record
+   received=datetime.datetime.now(datetime.timezone.utc).isoformat()
+   return e,dict(events_main_total=None,main_total_status='unavailable',main_total_reason=type(exc).__name__,lab_odds_observed_at_utc=observed,
+    lab_odds_received_at_utc=received,research_primary_quote=quote_record(e,{},'bet365',observed,received,error=type(exc).__name__))
  with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
   for e,data in pool.map(fetch,events):e.update(data)
 
@@ -380,6 +388,8 @@ def write_run(snapshot,receipt,outcomes,directory=None):
  if not re.fullmatch(r'\d+-\d+',sid):raise ValueError('Invalid run id')
  paths=[]
  records=[('snapshots',snapshot),('receipts',receipt),('outcomes',outcomes)]
+ if receipt.get('research_foundation') is not None and not receipt.get('failed'):
+  records.append(('research-foundation-receipts',dict(contour=CONTOUR,snapshot_id=sid,research_foundation=receipt['research_foundation'])))
  if receipt.get('tracked_sot') is not None and not receipt.get('failed'):
   records.append(('tracked-sot-receipts',dict(contour=CONTOUR,snapshot_id=sid,tracked_sot=receipt['tracked_sot'])))
  if receipt.get('tracked_groups') is not None and not receipt.get('failed'):
@@ -429,6 +439,8 @@ def main():
  global CAPTURE_DAY,MAX_CALLS,WORKERS
  if os.environ.get('LAB_RUN_SOURCE')=='background':configure_background(os.environ['LAB_DATA_SCOPE'])
  unified=SOURCE=='background'and SCOPE=='experimental'and os.environ.get('LAB_BACKGROUND_UNIFIED')=='1'
+ import research_foundation
+ foundation_config=research_foundation.config(ROOT)if unified else None
  import tracked_groups
  tracking = unified and tracked_groups.enabled(ROOT)
  if unified:
@@ -490,7 +502,12 @@ def main():
     import adaptive
     price_probes=adaptive.market_probes(snapshot['events'],probes)
     snapshot['market_probe_policy']='all_known_score_5_89_deep_first_no_outside_window_odds'
-   enrich_markets(price_probes,budget)
+   extra_calls=(snapshot.get('adaptive_deep_plan')or{}).get('comparison_reserved_calls',0)if foundation_config else 0
+   with budget.reserve_calls(extra_calls):
+    enrich_markets(price_probes,budget)
+   if foundation_config:
+    research_foundation.collect_comparisons(sys.modules[__name__],snapshot,budget,foundation_config)
+    snapshot['market_probe_policy']='independent_sample_then_control_then_seeded_board'
    by_id={e['event_id']:e for e in snapshot['events']}
    for e in price_probes:by_id[e['event_id']].update(e)
    for e in ordered:
@@ -747,6 +764,11 @@ def main():
     full_collection_window_5_89=price_coverage(full_collection_price_rows)if is_broad else dict(requested=0,exact=0,ratio=None,provider_unavailable=0),
     denominator_note='Target applies to known-score 5-89 market probes; the legacy 8-60 row remains a comparison. All raw board rows remain visible, but outside-window and unknown-score rows are not quoted.')
    snapshot['production_api_call_fields_are_base_stage_only']=True
+   if foundation_config:
+    foundation_result=research_foundation.evaluate(snapshot,foundation_config)
+    receipt['research_foundation']=foundation_result
+    snapshot['research_foundation_summary']={k:v for k,v in foundation_result.items()if k!='observations'}
+    print('RESEARCH_FOUNDATION='+json.dumps(snapshot['research_foundation_summary'],ensure_ascii=False),flush=True)
    write_run(snapshot,receipt,dict(metadata,**outcomes))
   print('LAB_CAPTURE_STATUS='+snapshot['lab_status'])
   print('LAB_CAPTURE_ID='+sid)

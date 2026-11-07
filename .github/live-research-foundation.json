@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "version": "independent-research-20261107-v1",
+  "name": "Независимый сбор и проверка цены",
+  "enabled": true,
+  "mode": "observation_only",
+  "research_share_of_deep_slots": 0.5,
+  "broad_quote_budget_share": 0.35,
+  "comparison_matches_per_cycle": 2,
+  "reference_source": "betfair",
+  "execution_source": null,
+  "approved_models": [],
+  "max_board_age_seconds": 120,
+  "max_quote_check_age_seconds": 120,
+  "max_comparison_skew_seconds": 30,
+  "post_goal_minutes": 3,
+  "max_positions_per_match": 1,
+  "history_policy": "preserve_existing_series_and_raw_observations"
+}

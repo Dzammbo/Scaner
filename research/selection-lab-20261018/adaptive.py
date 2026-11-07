@@ -6,6 +6,10 @@ def eligible(event):
  return event.get('minute')is not None and 5<=event['minute']<=89 and bool(re.fullmatch(r'\d+-\d+',str(event.get('score',''))))
 
 def plan(c,budget,events,controls,history,seed,previous_deep):
+ import research_foundation
+ cfg=research_foundation.config(getattr(c,'ROOT',None))
+ if cfg:
+  return research_foundation.plan(events,controls,budget.available_calls(),seed,previous_deep,cfg)
  from broad import sample,stratum
  cached,leagues=c.live.read_cache(history,time.time());previous_deep=set(previous_deep)
  available=budget.available_calls();used=0;history_tasks=set();league_tasks=set();selected=[];ids=set()
@@ -56,6 +60,9 @@ def plan(c,budget,events,controls,history,seed,previous_deep):
 
 def market_probes(events,priority):
  """Quote all eligible matches, deep/control first, once per event."""
+ if any((e.get('research_sampling')or{}).get('version')=='independent-research-20261107-v1'for e in events):
+  from research_foundation import market_order
+  return market_order(events,priority)
  seen=set();ordered=[]
  for e in list(priority)+list(events):
   eid=str(e['event_id'])
