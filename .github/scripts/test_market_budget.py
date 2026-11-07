@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 path = Path(os.environ.get('ADAPTIVE_MODULE', 'adaptive_budget.py'))
+sys.path.insert(0, str(path.resolve().parent))
 spec = importlib.util.spec_from_file_location('adaptive_budget_under_test', path)
 adaptive = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(adaptive)
