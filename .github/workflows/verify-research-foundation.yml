@@ -1,0 +1,48 @@
+name: Verify independent research collection
+on:
+  pull_request:
+    paths:
+      - 'research/selection-lab-20261018/**'
+      - '.github/live-research-foundation.json'
+      - '.github/scripts/**'
+      - '.github/workflows/verify-research-foundation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/selection-lab-20261018/research_foundation.py'
+      - 'research/selection-lab-20261018/test_research_foundation.py'
+      - 'research/selection-lab-20261018/adaptive.py'
+      - '.github/live-research-foundation.json'
+      - '.github/workflows/verify-research-foundation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 -m unittest discover -s research/selection-lab-20261018 -p test_research_foundation.py -v
+          PYTHONPATH=research/selection-lab-20261018 ADAPTIVE_MODULE=research/selection-lab-20261018/adaptive.py python3 -m unittest discover -s .github/scripts -p test_market_budget.py -v
+          python3 -m unittest discover -s .github/scripts -p test_statistics_format.py -v
+          python3 -m unittest discover -s .github/scripts -p test_statistics_inputs.py -v
+      - uses: actions/checkout@v4
+        with:
+          ref: research/selection-lab-20261018
+          path: collector
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/*.json
+            /scripts/
+            /research/selection-lab-20261018/*.py
+            /research/tm/*.py
+      - name: Verify full capture with fake provider and temporary journals
+        env:
+          COLLECTOR_ROOT: ${{ github.workspace }}/collector
+        run: |
+          cp .github/live-research-foundation.json collector/.github/
+          for file in adaptive.py broad.py capture.py save_capture.py research_foundation.py; do
+            cp "research/selection-lab-20261018/$file" collector/research/selection-lab-20261018/
+          done
+          python3 .github/scripts/verify_research_foundation_capture.py

@@ -489,6 +489,8 @@ def main():
         report['selection_validation'] = analyze(root, merged, c.settle_entry, receipts, targets,
                                                report, json.loads(protocol_path.read_text()))
     stages.mark('optional_analysis')
+    import research_foundation
+    report['research_foundation'] = research_foundation.latest_status(root, c.load_json)
     previous_data = previous_report[2] if previous_report else None
     report['statistics_format_version'] = STATISTICS_FORMAT_VERSION
     report['statistics_tables'] = build_tables(report, previous_data)

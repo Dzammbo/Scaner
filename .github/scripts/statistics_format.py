@@ -280,6 +280,19 @@ def render_statistics(report, previous=None, tables=None):
                       f"факт {progress.get('observed_remaining', 'н/д')}.", ''])
     if tables['errors']:
         lines.extend(['Ошибки разделов: ' + '; '.join(map(cell, tables['errors'])) + '.', ''])
+    foundation = report.get('research_foundation')
+    if foundation:
+        lines.extend(['**Независимый сбор и проверка цены**', ''])
+        if foundation.get('status') == 'active':
+            lines.extend([f"Последний проход: {clock(foundation.get('observed_at_utc'))}. "
+                          f"Наблюдений {foundation['points']}, независимая подробная выборка {foundation['independent_sample']}. "
+                          f"Сравнение источников: {foundation['comparable_prices']} сопоставимых из {foundation['comparison_requested']} проверенных матчей.",
+                          'Допуска к ставкам нет: модель не утверждена, цена исполнения пользователя не подключена. '
+                          'Сохраняются данные и причины отказов; это не новая прибыльная стратегия.', ''])
+        elif foundation.get('status') == 'error':
+            lines.extend(['Последний проход новой схемы завершился ошибкой. Это не отсутствие подходящих сигналов.', ''])
+        else:
+            lines.extend(['Новая схема включена; первый сохранённый проход пока не подтверждён.', ''])
     return '\n'.join(lines).rstrip() + '\n'
 
 

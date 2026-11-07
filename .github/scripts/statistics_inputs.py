@@ -32,6 +32,9 @@ EVENT_FIELDS = ('event_id', 'minute', 'score', 'home_id', 'away_id', 'league', '
 
 
 def project(path, data):
+    if 'research-foundation-receipts' in Path(path).parts:
+        return dict(data, research_foundation={k:v for k,v in data.get('research_foundation', {}).items()
+                                               if k not in ('observations', 'entries')})
     if 'receipts' in Path(path).parts:
         keys = ('contour', 'snapshot_id', 'failed', 'request', 'code_revision',
                 'statistics_epoch', 'epoch_base_choices', 'epoch_admission', 'choices',
@@ -54,7 +57,7 @@ def project(path, data):
         return result
     if 'live-results-refresh' in Path(path).parts:
         keys = ('generated_at_utc', 'statistics_epoch', 'active_group_series', 'population', 'current',
-                'quality_comparison', 'shadow_universe', 'statistics_tables') + FAMILIES
+                'quality_comparison', 'shadow_universe', 'statistics_tables', 'research_foundation') + FAMILIES
         return {key: data[key] for key in keys if key in data}
     return data
 
