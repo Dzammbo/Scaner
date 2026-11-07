@@ -87,6 +87,8 @@ def make_report(root, tracked, outcomes, settle, now, previous=None, health=None
         value['tracked_sot'] = comparison
         for key, row in series['pockets'].items():
             row['name'] = comparison['arms']['baseline']['pockets'][key]['name']
+    import research_foundation
+    value['research_foundation'] = research_foundation.latest_status(root)
     value['statistics_tables'] = build_tables(value, previous)
     if value['statistics_tables']['errors']:
         raise ValueError('Incomplete tracked statistics')
