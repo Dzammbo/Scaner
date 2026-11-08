@@ -22,7 +22,7 @@ def decode(raw):
         # Preserve compatibility with historical JSON containing non-finite diagnostics.
         return json.loads(raw)
 
-VERSION = 'statistics-inputs-v6-under-history'
+VERSION = 'statistics-inputs-v7-independent-candidates'
 FAMILIES = ('under_pockets', 'independent_pockets', 'distinct_pockets', 'seven_direction_pockets',
             'refined_pockets', 'external_pockets', 'strengthened_pockets', 'hypothesis_pockets', 'historical_groups', 'tracked_groups', 'tracked_sot')
 SNAPSHOT_FIELDS = ('snapshot_id', 'board_observed_at_utc', 'code_revision', 'rules_version',
@@ -35,9 +35,9 @@ def project(path, data):
     if 'research-foundation-receipts' in Path(path).parts:
         foundation = data.get('research_foundation', {})
         compact = {key: value for key, value in foundation.items() if key not in ('observations', 'entries')}
-        compact['observations'] = [dict(event_id=row['event_id'],
-            sampling=dict(independent_research_selected=bool((row.get('sampling') or {}).get('independent_research_selected'))),
-            checks=dict(primary_quote=bool(row['checks']['primary_quote'])))
+        compact['observations'] = [{key: value for key, value in row.items()
+            if key in ('event_id', 'sampling', 'checks', 'board_stats', 'primary_quote',
+                       'observed_at_utc', 'score', 'minute', 'league', 'home', 'away')}
             for row in foundation.get('observations', [])]
         return dict(data, research_foundation=compact)
     if 'receipts' in Path(path).parts:

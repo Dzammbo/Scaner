@@ -1,0 +1,4517 @@
+{
+  "manifest": {
+    "source_revision": "a6467c807dbc4dbc1cb348f6658d3380de4513bb",
+    "cutoff_utc": "2026-11-08T09:20:56.228946+00:00"
+  },
+  "diagnostics": {
+    "successful_captures": 211,
+    "failed_captures": 5
+  },
+  "all_points": 18675,
+  "all_matches": 1173,
+  "independent_points": 2498,
+  "independent_matches": 726,
+  "quoted_points": 2233,
+  "clean_points": 1675,
+  "clean_matches": 559,
+  "conflicts": 12,
+  "coverage": [
+    {
+      "day": "2026-11-07",
+      "points": 897,
+      "matches": 541,
+      "priced": 723,
+      "safe_points": 526,
+      "safe_matches": 372,
+      "settled_safe_matches": 371,
+      "sot": 763,
+      "xg": 125,
+      "trend": 792,
+      "full_five_minute": 379
+    },
+    {
+      "day": "2026-11-08",
+      "points": 1601,
+      "matches": 218,
+      "priced": 1510,
+      "safe_points": 1149,
+      "safe_matches": 214,
+      "settled_safe_matches": 173,
+      "sot": 1497,
+      "xg": 399,
+      "trend": 1597,
+      "full_five_minute": 978
+    }
+  ],
+  "baseline": {
+    "ТБ": {
+      "selected": 559,
+      "n": 517,
+      "pending": 42,
+      "profit": -65.275,
+      "roi": -0.12625725338491298,
+      "worse_roi": -0.14482591876208897,
+      "without_three": -0.14722762645914397,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.13280038759689924,
+      "max_drawdown": 70.13749999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 371,
+          "profit": -48.0875,
+          "roi": -0.12961590296495956,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": -17.1875,
+          "roi": -0.11772260273972603,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.03991362849908022,
+      "without_pause_check": {
+        "selected": 662,
+        "n": 620,
+        "pending": 42,
+        "profit": -65.2125,
+        "roi": -0.10518145161290324,
+        "worse_roi": -0.12449596774193551,
+        "without_three": -0.12254862236628848,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.11060177705977384,
+        "max_drawdown": 69.79999999999997,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 476,
+            "profit": -47.6,
+            "roi": -0.1,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": -17.6125,
+            "roi": -0.12230902777777779,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.0367186326272144
+      }
+    },
+    "ТМ": {
+      "selected": 559,
+      "n": 517,
+      "pending": 42,
+      "profit": 17.7625,
+      "roi": 0.0343568665377176,
+      "worse_roi": 0.010275628626692434,
+      "without_three": 0.028137159533073927,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": 0.027880859374999997,
+      "max_drawdown": 17.6875,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 371,
+          "profit": 14.287499999999998,
+          "roi": 0.038510781671159025,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": 3.4749999999999996,
+          "roi": 0.023801369863013695,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.036665451823402986,
+      "without_pause_check": {
+        "selected": 662,
+        "n": 620,
+        "pending": 42,
+        "profit": 6.742499999999998,
+        "roi": 0.010874999999999998,
+        "worse_roi": -0.012915322580645185,
+        "without_three": 0.005457860615883303,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.005292682926829264,
+        "max_drawdown": 27.412500000000005,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 476,
+            "profit": 2.5674999999999977,
+            "roi": 0.005393907563025205,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": 4.175000000000001,
+            "roi": 0.02899305555555556,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03367439463041304
+      }
+    }
+  },
+  "gates": [
+    {
+      "side": "ТБ",
+      "name": "Достаточно спортивных данных",
+      "accepted": {
+        "selected": 243,
+        "n": 211,
+        "pending": 32,
+        "profit": -26.1,
+        "roi": -0.12369668246445498,
+        "worse_roi": -0.14218009478672988,
+        "without_three": -0.1622596153846154,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.13976190476190478,
+        "max_drawdown": 30.662500000000005,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 108,
+            "profit": -13.725,
+            "roi": -0.12708333333333333,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 103,
+            "profit": -12.375,
+            "roi": -0.12014563106796117,
+            "pending": 32
+          }
+        ],
+        "standard_error": 0.06250608484713768
+      },
+      "rejected": {
+        "selected": 316,
+        "n": 306,
+        "pending": 10,
+        "profit": -39.175,
+        "roi": -0.12802287581699345,
+        "worse_roi": -0.14665032679738566,
+        "without_three": -0.15866336633663367,
+        "best_league": "France Ligue 3",
+        "without_best_league": -0.14456521739130432,
+        "max_drawdown": 44.27499999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 263,
+            "profit": -34.3625,
+            "roi": -0.13065589353612167,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 43,
+            "profit": -4.8125,
+            "roi": -0.1119186046511628,
+            "pending": 9
+          }
+        ],
+        "standard_error": 0.05194924244111162
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Прежний сильный спортивный допуск",
+      "accepted": {
+        "selected": 76,
+        "n": 70,
+        "pending": 6,
+        "profit": -9.275,
+        "roi": -0.1325,
+        "worse_roi": -0.15035714285714286,
+        "without_three": -0.2376865671641791,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.1815217391304348,
+        "max_drawdown": 11.424999999999999,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 36,
+            "profit": -3.0125,
+            "roi": -0.08368055555555556,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 34,
+            "profit": -6.2625,
+            "roi": -0.18419117647058825,
+            "pending": 6
+          }
+        ],
+        "standard_error": 0.11819532383123012
+      },
+      "rejected": {
+        "selected": 483,
+        "n": 447,
+        "pending": 36,
+        "profit": -56.0,
+        "roi": -0.12527964205816555,
+        "worse_roi": -0.14395973154362418,
+        "without_three": -0.14695945945945946,
+        "best_league": "France Ligue 3",
+        "without_best_league": -0.13564920273348519,
+        "max_drawdown": 58.71249999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 335,
+            "profit": -45.075,
+            "roi": -0.13455223880597017,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 112,
+            "profit": -10.925,
+            "roi": -0.09754464285714286,
+            "pending": 35
+          }
+        ],
+        "standard_error": 0.04234731913202866
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Створы от 0,10 в минуту",
+      "accepted": {
+        "selected": 195,
+        "n": 183,
+        "pending": 12,
+        "profit": -30.2,
+        "roi": -0.16502732240437157,
+        "worse_roi": -0.1830601092896175,
+        "without_three": -0.20791666666666664,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.1837912087912088,
+        "max_drawdown": 32.849999999999994,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 125,
+            "profit": -20.1125,
+            "roi": -0.16090000000000002,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 58,
+            "profit": -10.0875,
+            "roi": -0.17392241379310344,
+            "pending": 12
+          }
+        ],
+        "standard_error": 0.06798037207393937
+      },
+      "rejected": {
+        "selected": 358,
+        "n": 328,
+        "pending": 30,
+        "profit": -36.175,
+        "roi": -0.11028963414634145,
+        "worse_roi": -0.12896341463414634,
+        "without_three": -0.13792307692307693,
+        "best_league": "Belgium First Division B",
+        "without_best_league": -0.11766055045871558,
+        "max_drawdown": 38.38750000000001,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 242,
+            "profit": -27.775,
+            "roi": -0.11477272727272726,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 86,
+            "profit": -8.4,
+            "roi": -0.09767441860465116,
+            "pending": 29
+          }
+        ],
+        "standard_error": 0.049780763290965827
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Достаточно спортивных данных",
+      "accepted": {
+        "selected": 243,
+        "n": 211,
+        "pending": 32,
+        "profit": 6.857499999999999,
+        "roi": 0.032499999999999994,
+        "worse_roi": 0.008566350710900452,
+        "without_three": 0.01758413461538461,
+        "best_league": "Japan Football League",
+        "without_best_league": 0.020108173076923072,
+        "max_drawdown": 13.265,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 108,
+            "profit": 4.1575,
+            "roi": 0.03849537037037037,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 103,
+            "profit": 2.6999999999999993,
+            "roi": 0.026213592233009703,
+            "pending": 32
+          }
+        ],
+        "standard_error": 0.05752686468281328
+      },
+      "rejected": {
+        "selected": 316,
+        "n": 306,
+        "pending": 10,
+        "profit": 10.905,
+        "roi": 0.035637254901960784,
+        "worse_roi": 0.011454248366013052,
+        "without_three": 0.025099009900990094,
+        "best_league": "Belgium First Amateur Division",
+        "without_best_league": 0.0265016501650165,
+        "max_drawdown": 10.7825,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 263,
+            "profit": 10.129999999999999,
+            "roi": 0.03851711026615969,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 43,
+            "profit": 0.7750000000000004,
+            "roi": 0.018023255813953497,
+            "pending": 9
+          }
+        ],
+        "standard_error": 0.047660163888202906
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Прежний сильный спортивный допуск",
+      "accepted": {
+        "selected": 76,
+        "n": 70,
+        "pending": 6,
+        "profit": 4.16,
+        "roi": 0.05942857142857143,
+        "worse_roi": 0.03407142857142855,
+        "without_three": 0.015447761194029847,
+        "best_league": "USA MLS",
+        "without_best_league": 0.004523809523809533,
+        "max_drawdown": 6.99,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 36,
+            "profit": 1.085,
+            "roi": 0.03013888888888889,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 34,
+            "profit": 3.0749999999999997,
+            "roi": 0.09044117647058823,
+            "pending": 6
+          }
+        ],
+        "standard_error": 0.1002730507597434
+      },
+      "rejected": {
+        "selected": 483,
+        "n": 447,
+        "pending": 36,
+        "profit": 13.6025,
+        "roi": 0.030430648769574943,
+        "worse_roi": 0.006549217002237115,
+        "without_three": 0.023203828828828824,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.02288461538461538,
+        "max_drawdown": 16.410000000000004,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 335,
+            "profit": 13.202499999999999,
+            "roi": 0.039410447761194026,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 112,
+            "profit": 0.40000000000000024,
+            "roi": 0.0035714285714285735,
+            "pending": 35
+          }
+        ],
+        "standard_error": 0.03943434298651597
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Створы от 0,10 в минуту",
+      "accepted": {
+        "selected": 195,
+        "n": 183,
+        "pending": 12,
+        "profit": 11.504999999999999,
+        "roi": 0.06286885245901638,
+        "worse_roi": 0.037322404371584676,
+        "without_three": 0.04613888888888889,
+        "best_league": "Honduras Liga Nacional",
+        "without_best_league": 0.04961111111111111,
+        "max_drawdown": 9.844999999999999,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 125,
+            "profit": 6.967499999999999,
+            "roi": 0.05574,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 58,
+            "profit": 4.5375,
+            "roi": 0.07823275862068965,
+            "pending": 12
+          }
+        ],
+        "standard_error": 0.06197729998038244
+      },
+      "rejected": {
+        "selected": 358,
+        "n": 328,
+        "pending": 30,
+        "profit": 8.0825,
+        "roi": 0.024641768292682924,
+        "worse_roi": 0.0012423780487804664,
+        "without_three": 0.014715384615384611,
+        "best_league": "Japan Football League",
+        "without_best_league": 0.016638461538461536,
+        "max_drawdown": 11.912499999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 242,
+            "profit": 7.645,
+            "roi": 0.031590909090909086,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 86,
+            "profit": 0.4374999999999998,
+            "roi": 0.005087209302325579,
+            "pending": 29
+          }
+        ],
+        "standard_error": 0.045876480940508946
+      }
+    }
+  ],
+  "current": [
+    {
+      "side": "ТБ",
+      "name": "Частые удары против низового выездного профиля",
+      "available_points": 1494,
+      "candidate_points": 18,
+      "selected": 9,
+      "n": 7,
+      "pending": 2,
+      "profit": -1.0,
+      "roi": -0.14285714285714285,
+      "worse_roi": -0.1642857142857143,
+      "without_three": -1.0,
+      "best_league": "Honduras Liga de Ascenso",
+      "without_best_league": -0.3333333333333333,
+      "max_drawdown": 2.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 2,
+          "profit": -2.0,
+          "roi": -1.0,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 5,
+          "profit": 1.0,
+          "roi": 0.2,
+          "pending": 2
+        }
+      ],
+      "standard_error": 0.40406101782088427,
+      "first_state_accepted": {
+        "selected": 7,
+        "n": 5,
+        "pending": 2,
+        "profit": -1.0,
+        "roi": -0.2,
+        "worse_roi": -0.22000000000000003,
+        "without_three": -1.0,
+        "best_league": "Honduras Liga de Ascenso",
+        "without_best_league": -0.5,
+        "max_drawdown": 2.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 2,
+            "profit": -2.0,
+            "roi": -1.0,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 3,
+            "profit": 1.0,
+            "roi": 0.3333333333333333,
+            "pending": 2
+          }
+        ],
+        "standard_error": 0.48989794855663565
+      },
+      "first_state_rejected": {
+        "selected": 459,
+        "n": 422,
+        "pending": 37,
+        "profit": -45.4625,
+        "roi": -0.10773104265402843,
+        "worse_roi": -0.12651066350710902,
+        "without_three": -0.1318914081145585,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.11570665083135391,
+        "max_drawdown": 49.47499999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 283,
+            "profit": -28.2875,
+            "roi": -0.09995583038869259,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 139,
+            "profit": -17.175,
+            "roi": -0.12356115107913669,
+            "pending": 37
+          }
+        ],
+        "standard_error": 0.04399616541465044
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Гости ведут, темп ударов ускоряется",
+      "available_points": 1166,
+      "candidate_points": 15,
+      "selected": 12,
+      "n": 12,
+      "pending": 0,
+      "profit": 0.22499999999999976,
+      "roi": 0.01874999999999998,
+      "worse_roi": -1.850371707708594e-17,
+      "without_three": -0.3472222222222222,
+      "best_league": "Mexico Liga MX",
+      "without_best_league": -0.18250000000000002,
+      "max_drawdown": 2.1,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 4,
+          "profit": -1.6,
+          "roi": -0.4,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 8,
+          "profit": 1.8249999999999997,
+          "roi": 0.22812499999999997,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.26326772653201025,
+      "first_state_accepted": {
+        "selected": 4,
+        "n": 4,
+        "pending": 0,
+        "profit": -2.1,
+        "roi": -0.525,
+        "worse_roi": -0.53125,
+        "without_three": -1.0,
+        "best_league": "Portugal Primeira Liga",
+        "without_best_league": -0.8333333333333334,
+        "max_drawdown": 2.1,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 3,
+            "profit": -1.6,
+            "roi": -0.5333333333333333,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 1,
+            "profit": -0.5,
+            "roi": -0.5,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.33008837200563934
+      },
+      "first_state_rejected": {
+        "selected": 361,
+        "n": 321,
+        "pending": 40,
+        "profit": -19.15,
+        "roi": -0.05965732087227414,
+        "worse_roi": -0.07873831775700935,
+        "without_three": -0.10267295597484276,
+        "best_league": "Italy Eccellenza",
+        "without_best_league": -0.07554858934169278,
+        "max_drawdown": 23.012500000000006,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 175,
+            "profit": -2.0124999999999997,
+            "roi": -0.011499999999999998,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 146,
+            "profit": -17.1375,
+            "roi": -0.11738013698630137,
+            "pending": 40
+          }
+        ],
+        "standard_error": 0.055173290160113304
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Угловые и точные удары при умеренном давлении",
+      "available_points": 647,
+      "candidate_points": 30,
+      "selected": 25,
+      "n": 24,
+      "pending": 1,
+      "profit": -4.375,
+      "roi": -0.18229166666666666,
+      "worse_roi": -0.19791666666666666,
+      "without_three": -0.3619047619047619,
+      "best_league": "France National 2",
+      "without_best_league": -0.2423913043478261,
+      "max_drawdown": 5.275,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 8,
+          "profit": -3.4,
+          "roi": -0.425,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 16,
+          "profit": -0.975,
+          "roi": -0.0609375,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.17209499535000117,
+      "first_state_accepted": {
+        "selected": 16,
+        "n": 15,
+        "pending": 1,
+        "profit": -3.3625000000000003,
+        "roi": -0.22416666666666668,
+        "worse_roi": -0.2391666666666667,
+        "without_three": -0.5239583333333333,
+        "best_league": "Peru Liga 1",
+        "without_best_league": -0.3151785714285714,
+        "max_drawdown": 5.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 6,
+            "profit": -4.1,
+            "roi": -0.6833333333333332,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 9,
+            "profit": 0.7374999999999999,
+            "roi": 0.08194444444444443,
+            "pending": 1
+          }
+        ],
+        "standard_error": 0.22005974116711963
+      },
+      "first_state_rejected": {
+        "selected": 313,
+        "n": 286,
+        "pending": 27,
+        "profit": -33.675,
+        "roi": -0.11774475524475524,
+        "worse_roi": -0.13715034965034967,
+        "without_three": -0.15167844522968196,
+        "best_league": "Italy Eccellenza",
+        "without_best_league": -0.13600352112676056,
+        "max_drawdown": 34.8375,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 158,
+            "profit": -17.5875,
+            "roi": -0.1113132911392405,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 128,
+            "profit": -16.0875,
+            "roi": -0.12568359375,
+            "pending": 27
+          }
+        ],
+        "standard_error": 0.055226986453377494
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Для выигрыша нужно ещё минимум четыре гола",
+      "available_points": 1675,
+      "candidate_points": 41,
+      "selected": 36,
+      "n": 29,
+      "pending": 7,
+      "profit": 2.5,
+      "roi": 0.08620689655172414,
+      "worse_roi": 0.06293103448275861,
+      "without_three": -0.015384615384615385,
+      "best_league": "Bolivia Primera Division",
+      "without_best_league": 0.023148148148148147,
+      "max_drawdown": 4.1125,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 4,
+          "profit": -1.525,
+          "roi": -0.38125,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 25,
+          "profit": 4.025,
+          "roi": 0.161,
+          "pending": 7
+        }
+      ],
+      "standard_error": 0.1521744901146414,
+      "first_state_accepted": {
+        "selected": 17,
+        "n": 13,
+        "pending": 4,
+        "profit": -0.06250000000000011,
+        "roi": -0.004807692307692317,
+        "worse_roi": -0.024038461538461564,
+        "without_three": -0.28125,
+        "best_league": "New Zealand National League Women",
+        "without_best_league": -0.08229166666666668,
+        "max_drawdown": 2.5,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 4,
+            "profit": -1.525,
+            "roi": -0.38125,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 9,
+            "profit": 1.4625,
+            "roi": 0.16249999999999998,
+            "pending": 4
+          }
+        ],
+        "standard_error": 0.22347927353604238
+      },
+      "first_state_rejected": {
+        "selected": 542,
+        "n": 504,
+        "pending": 38,
+        "profit": -65.2125,
+        "roi": -0.12938988095238096,
+        "worse_roi": -0.14794146825396826,
+        "without_three": -0.15092315369261478,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.13610834990059642,
+        "max_drawdown": 69.59999999999995,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 367,
+            "profit": -46.5625,
+            "roi": -0.1268732970027248,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 137,
+            "profit": -18.65,
+            "roi": -0.13613138686131385,
+            "pending": 37
+          }
+        ],
+        "standard_error": 0.040557570042273075
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Два ранних гола и четвертная линия",
+      "available_points": 1675,
+      "candidate_points": 12,
+      "selected": 12,
+      "n": 11,
+      "pending": 1,
+      "profit": 4.025,
+      "roi": 0.36590909090909096,
+      "worse_roi": 0.33409090909090905,
+      "without_three": 0.13437499999999997,
+      "best_league": "China Division 2",
+      "without_best_league": 0.30250000000000005,
+      "max_drawdown": 2.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 3,
+          "profit": 1.3499999999999999,
+          "roi": 0.44999999999999996,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 8,
+          "profit": 2.675,
+          "roi": 0.334375,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.24086191647895971,
+      "first_state_accepted": {
+        "selected": 5,
+        "n": 5,
+        "pending": 0,
+        "profit": 3.25,
+        "roi": 0.65,
+        "worse_roi": 0.61,
+        "without_three": 0.19999999999999996,
+        "best_league": "China Division 2",
+        "without_best_league": 0.5625,
+        "max_drawdown": 0.5,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 3,
+            "profit": 1.3499999999999999,
+            "roi": 0.44999999999999996,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 2,
+            "profit": 1.9,
+            "roi": 0.95,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.2880972058177586
+      },
+      "first_state_rejected": {
+        "selected": 554,
+        "n": 512,
+        "pending": 42,
+        "profit": -68.525,
+        "roi": -0.133837890625,
+        "worse_roi": -0.15219726562500002,
+        "without_three": -0.1550589390962672,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.14045988258317027,
+        "max_drawdown": 72.38749999999996,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 368,
+            "profit": -49.4375,
+            "roi": -0.13434103260869565,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": -19.0875,
+            "roi": -0.13255208333333332,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.04008020273240483
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Дневное преимущество во владении и угловые",
+      "available_points": 1382,
+      "candidate_points": 111,
+      "selected": 55,
+      "n": 42,
+      "pending": 13,
+      "profit": -3.8499999999999996,
+      "roi": -0.09166666666666666,
+      "worse_roi": -0.11130952380952383,
+      "without_three": -0.17500000000000002,
+      "best_league": "Japan Women Empowerment League",
+      "without_best_league": -0.13125,
+      "max_drawdown": 7.937500000000001,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 7,
+          "profit": -2.55,
+          "roi": -0.36428571428571427,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 35,
+          "profit": -1.2999999999999998,
+          "roi": -0.03714285714285714,
+          "pending": 13
+        }
+      ],
+      "standard_error": 0.13319238884698828,
+      "first_state_accepted": {
+        "selected": 34,
+        "n": 25,
+        "pending": 9,
+        "profit": -1.9874999999999998,
+        "roi": -0.07949999999999999,
+        "worse_roi": -0.1005,
+        "without_three": -0.22556818181818183,
+        "best_league": "Japan Women Empowerment League",
+        "without_best_league": -0.12447916666666665,
+        "max_drawdown": 5.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 7,
+            "profit": -2.55,
+            "roi": -0.36428571428571427,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 18,
+            "profit": 0.5625,
+            "roi": 0.03125,
+            "pending": 9
+          }
+        ],
+        "standard_error": 0.18067708303305466
+      },
+      "first_state_rejected": {
+        "selected": 412,
+        "n": 383,
+        "pending": 29,
+        "profit": -40.9,
+        "roi": -0.10678851174934725,
+        "worse_roi": -0.12526109660574414,
+        "without_three": -0.135,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.11557591623036649,
+        "max_drawdown": 45.61249999999997,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 278,
+            "profit": -24.85,
+            "roi": -0.0893884892086331,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 105,
+            "profit": -16.05,
+            "roi": -0.15285714285714286,
+            "pending": 28
+          }
+        ],
+        "standard_error": 0.046462480714302264
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Поздний вечер и высокий запас линии",
+      "available_points": 1550,
+      "candidate_points": 31,
+      "selected": 19,
+      "n": 19,
+      "pending": 0,
+      "profit": -3.175,
+      "roi": -0.16710526315789473,
+      "worse_roi": -0.1855263157894737,
+      "without_three": -0.38125,
+      "best_league": "Brazil Copa Fares Lopes",
+      "without_best_league": -0.23194444444444443,
+      "max_drawdown": 5.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 19,
+          "profit": -3.175,
+          "roi": -0.16710526315789473,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 0,
+          "profit": 0.0,
+          "roi": null,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.20570315714181484,
+      "first_state_accepted": {
+        "selected": 19,
+        "n": 19,
+        "pending": 0,
+        "profit": -3.175,
+        "roi": -0.16710526315789473,
+        "worse_roi": -0.1855263157894737,
+        "without_three": -0.38125,
+        "best_league": "Brazil Copa Fares Lopes",
+        "without_best_league": -0.23194444444444443,
+        "max_drawdown": 5.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 19,
+            "profit": -3.175,
+            "roi": -0.16710526315789473,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.20570315714181484
+      },
+      "first_state_rejected": {
+        "selected": 462,
+        "n": 421,
+        "pending": 41,
+        "profit": -41.5625,
+        "roi": -0.09872327790973871,
+        "worse_roi": -0.11784441805225654,
+        "without_three": -0.1228767942583732,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.10669642857142857,
+        "max_drawdown": 46.424999999999976,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 274,
+            "profit": -25.6125,
+            "roi": -0.09347627737226277,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 147,
+            "profit": -15.950000000000001,
+            "roi": -0.10850340136054422,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.04420539573080907
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Самое начало матча с известным выездным профилем",
+      "available_points": 1550,
+      "candidate_points": 20,
+      "selected": 20,
+      "n": 16,
+      "pending": 4,
+      "profit": -2.9000000000000004,
+      "roi": -0.18125000000000002,
+      "worse_roi": -0.20312500000000003,
+      "without_three": -0.4346153846153846,
+      "best_league": "USA MLS",
+      "without_best_league": -0.25333333333333335,
+      "max_drawdown": 4.1,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 2,
+          "profit": -2.0,
+          "roi": -1.0,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 14,
+          "profit": -0.9000000000000001,
+          "roi": -0.0642857142857143,
+          "pending": 4
+        }
+      ],
+      "standard_error": 0.23984044175242838,
+      "first_state_accepted": {
+        "selected": 20,
+        "n": 16,
+        "pending": 4,
+        "profit": -2.9000000000000004,
+        "roi": -0.18125000000000002,
+        "worse_roi": -0.20312500000000003,
+        "without_three": -0.4346153846153846,
+        "best_league": "USA MLS",
+        "without_best_league": -0.25333333333333335,
+        "max_drawdown": 4.1,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 2,
+            "profit": -2.0,
+            "roi": -1.0,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 14,
+            "profit": -0.9000000000000001,
+            "roi": -0.0642857142857143,
+            "pending": 4
+          }
+        ],
+        "standard_error": 0.23984044175242838
+      },
+      "first_state_rejected": {
+        "selected": 461,
+        "n": 424,
+        "pending": 37,
+        "profit": -41.8375,
+        "roi": -0.09867334905660377,
+        "worse_roi": -0.11765919811320755,
+        "without_three": -0.12265439429928741,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.10658983451536642,
+        "max_drawdown": 46.74999999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 291,
+            "profit": -26.7875,
+            "roi": -0.092053264604811,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 133,
+            "profit": -15.05,
+            "roi": -0.11315789473684211,
+            "pending": 37
+          }
+        ],
+        "standard_error": 0.043933235883826506
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Умеренная цена и невысокий темп опасных атак",
+      "available_points": 1533,
+      "candidate_points": 185,
+      "selected": 85,
+      "n": 69,
+      "pending": 16,
+      "profit": -4.050000000000001,
+      "roi": -0.05869565217391305,
+      "worse_roi": -0.07898550724637683,
+      "without_three": -0.10340909090909091,
+      "best_league": "Austria Landesliga",
+      "without_best_league": -0.08656716417910448,
+      "max_drawdown": 10.375,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 34,
+          "profit": -3.2875,
+          "roi": -0.09669117647058824,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 35,
+          "profit": -0.7625000000000002,
+          "roi": -0.02178571428571429,
+          "pending": 16
+        }
+      ],
+      "standard_error": 0.09866850680227132,
+      "first_state_accepted": {
+        "selected": 58,
+        "n": 49,
+        "pending": 9,
+        "profit": -0.10000000000000053,
+        "roi": -0.0020408163265306233,
+        "worse_roi": -0.024489795918367377,
+        "without_three": -0.06250000000000001,
+        "best_league": "Austria Landesliga",
+        "without_best_league": -0.03936170212765958,
+        "max_drawdown": 8.1875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 30,
+            "profit": -1.1625,
+            "roi": -0.03875,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 19,
+            "profit": 1.0624999999999996,
+            "roi": 0.05592105263157893,
+            "pending": 9
+          }
+        ],
+        "standard_error": 0.11982060076778726
+      },
+      "first_state_rejected": {
+        "selected": 418,
+        "n": 386,
+        "pending": 32,
+        "profit": -46.7375,
+        "roi": -0.12108160621761657,
+        "worse_roi": -0.1395401554404145,
+        "without_three": -0.14761749347258485,
+        "best_league": "Spain Tercera Group 12",
+        "without_best_league": -0.12983766233766234,
+        "max_drawdown": 49.04999999999997,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 260,
+            "profit": -28.425,
+            "roi": -0.10932692307692309,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 126,
+            "profit": -18.3125,
+            "roi": -0.1453373015873016,
+            "pending": 32
+          }
+        ],
+        "standard_error": 0.04652337889917548
+      }
+    },
+    {
+      "side": "ТБ",
+      "name": "Свежие створы и ускорение без всплеска xG",
+      "available_points": 205,
+      "candidate_points": 13,
+      "selected": 12,
+      "n": 12,
+      "pending": 0,
+      "profit": -1.2624999999999997,
+      "roi": -0.1052083333333333,
+      "worse_roi": -0.121875,
+      "without_three": -0.4541666666666667,
+      "best_league": "Colombia Primera A",
+      "without_best_league": -0.20568181818181816,
+      "max_drawdown": 3.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 3,
+          "profit": -0.1499999999999999,
+          "roi": -0.04999999999999997,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 9,
+          "profit": -1.1124999999999998,
+          "roi": -0.12361111111111109,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.24552557617138981,
+      "first_state_accepted": {
+        "selected": 8,
+        "n": 8,
+        "pending": 0,
+        "profit": -0.23749999999999993,
+        "roi": -0.02968749999999999,
+        "worse_roi": -0.04843750000000001,
+        "without_three": -0.5125,
+        "best_league": "Colombia Primera A",
+        "without_best_league": -0.17678571428571427,
+        "max_drawdown": 3.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 3,
+            "profit": -0.1499999999999999,
+            "roi": -0.04999999999999997,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 5,
+            "profit": -0.08750000000000002,
+            "roi": -0.017500000000000005,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.3027398833024223
+      },
+      "first_state_rejected": {
+        "selected": 82,
+        "n": 75,
+        "pending": 7,
+        "profit": -1.6124999999999996,
+        "roi": -0.021499999999999995,
+        "worse_roi": -0.04416666666666667,
+        "without_three": -0.09184027777777777,
+        "best_league": "Belgium First Division B",
+        "without_best_league": -0.052871621621621616,
+        "max_drawdown": 6.987500000000001,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 33,
+            "profit": -0.5,
+            "roi": -0.015151515151515152,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 42,
+            "profit": -1.1124999999999996,
+            "roi": -0.026488095238095227,
+            "pending": 7
+          }
+        ],
+        "standard_error": 0.11062643087077884
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Запас линии от 0 до 0,75 и кэф от 2,05 до 2,40",
+      "available_points": 1675,
+      "candidate_points": 17,
+      "selected": 17,
+      "n": 16,
+      "pending": 1,
+      "profit": -9.8,
+      "roi": -0.6125,
+      "worse_roi": -0.621875,
+      "without_three": -1.0,
+      "best_league": "Aruba Division Di Honor",
+      "without_best_league": -0.725,
+      "max_drawdown": 10.95,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 5,
+          "profit": -2.95,
+          "roi": -0.5900000000000001,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 11,
+          "profit": -6.85,
+          "roi": -0.6227272727272727,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.2082791596231686,
+      "first_state_accepted": {
+        "selected": 3,
+        "n": 3,
+        "pending": 0,
+        "profit": -0.9500000000000002,
+        "roi": -0.3166666666666667,
+        "worse_roi": -0.3333333333333334,
+        "without_three": null,
+        "best_league": "France Ligue 3",
+        "without_best_league": -1.0,
+        "max_drawdown": 1.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 3,
+            "profit": -0.9500000000000002,
+            "roi": -0.3166666666666667,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.6833333333333333
+      },
+      "first_state_rejected": {
+        "selected": 556,
+        "n": 514,
+        "pending": 42,
+        "profit": 18.7125,
+        "roi": 0.0364056420233463,
+        "worse_roi": 0.01228112840466924,
+        "without_three": 0.03016144814090019,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.02991159135559921,
+        "max_drawdown": 17.6875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 368,
+            "profit": 15.237499999999999,
+            "roi": 0.04140625,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 146,
+            "profit": 3.4749999999999996,
+            "roi": 0.023801369863013695,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03671612942648835
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Створ меньше 0,08 в минуту и опасные атаки от 2 в минуту",
+      "available_points": 1657,
+      "candidate_points": 13,
+      "selected": 10,
+      "n": 9,
+      "pending": 1,
+      "profit": -0.6499999999999999,
+      "roi": -0.07222222222222222,
+      "worse_roi": -0.09166666666666665,
+      "without_three": -0.5958333333333333,
+      "best_league": "Senegal Ligue 2",
+      "without_best_league": -0.215625,
+      "max_drawdown": 2.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 6,
+          "profit": 1.35,
+          "roi": 0.225,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 3,
+          "profit": -2.0,
+          "roi": -0.6666666666666666,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.3122622552429011,
+      "first_state_accepted": {
+        "selected": 5,
+        "n": 4,
+        "pending": 1,
+        "profit": 1.275,
+        "roi": 0.31875,
+        "worse_roi": 0.2875,
+        "without_three": -1.0,
+        "best_league": "Thailand Division 2",
+        "without_best_league": 0.08333333333333333,
+        "max_drawdown": 1.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 4,
+            "profit": 1.275,
+            "roi": 0.31875,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 1
+          }
+        ],
+        "standard_error": 0.45693441816085595
+      },
+      "first_state_rejected": {
+        "selected": 548,
+        "n": 507,
+        "pending": 41,
+        "profit": 18.3125,
+        "roi": 0.036119329388560155,
+        "worse_roi": 0.012006903353057177,
+        "without_three": 0.029786706349206344,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.029531872509960158,
+        "max_drawdown": 16.985,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 363,
+            "profit": 13.337499999999999,
+            "roi": 0.036742424242424236,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": 4.975,
+            "roi": 0.034548611111111106,
+            "pending": 40
+          }
+        ],
+        "standard_error": 0.03699021146792401
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Четыре гола или больше и удаление",
+      "available_points": 1675,
+      "candidate_points": 3,
+      "selected": 2,
+      "n": 2,
+      "pending": 0,
+      "profit": 1.25,
+      "roi": 0.625,
+      "worse_roi": 0.5874999999999999,
+      "without_three": null,
+      "best_league": "Algeria U20 League",
+      "without_best_league": 0.375,
+      "max_drawdown": 0.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 1,
+          "profit": 0.875,
+          "roi": 0.875,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 1,
+          "profit": 0.375,
+          "roi": 0.375,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.25,
+      "first_state_accepted": {
+        "selected": 1,
+        "n": 1,
+        "pending": 0,
+        "profit": 0.875,
+        "roi": 0.875,
+        "worse_roi": 0.825,
+        "without_three": null,
+        "best_league": "Algeria U20 League",
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 1,
+            "profit": 0.875,
+            "roi": 0.875,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      },
+      "first_state_rejected": {
+        "selected": 558,
+        "n": 516,
+        "pending": 42,
+        "profit": 16.8875,
+        "roi": 0.03272771317829457,
+        "worse_roi": 0.008696705426356567,
+        "without_three": 0.026486354775828457,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.026223091976516632,
+        "max_drawdown": 17.6875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 370,
+            "profit": 13.412499999999998,
+            "roi": 0.03625,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 146,
+            "profit": 3.4749999999999996,
+            "roi": 0.023801369863013695,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03670029573324834
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Створ меньше 0,08 в минуту и xG от 0,03 до 0,05 в минуту",
+      "available_points": 386,
+      "candidate_points": 29,
+      "selected": 15,
+      "n": 11,
+      "pending": 4,
+      "profit": 2.675,
+      "roi": 0.24318181818181817,
+      "worse_roi": 0.20909090909090908,
+      "without_three": -0.04062500000000002,
+      "best_league": "USA MLS",
+      "without_best_league": 0.1611111111111111,
+      "max_drawdown": 1.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 3,
+          "profit": 0.3999999999999999,
+          "roi": 0.1333333333333333,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 8,
+          "profit": 2.275,
+          "roi": 0.284375,
+          "pending": 4
+        }
+      ],
+      "standard_error": 0.25170082595240717,
+      "first_state_accepted": {
+        "selected": 4,
+        "n": 3,
+        "pending": 1,
+        "profit": 0.3999999999999999,
+        "roi": 0.1333333333333333,
+        "worse_roi": 0.09999999999999994,
+        "without_three": null,
+        "best_league": "Portugal Primeira Liga",
+        "without_best_league": -0.23750000000000004,
+        "max_drawdown": 1.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 3,
+            "profit": 0.3999999999999999,
+            "roi": 0.1333333333333333,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 1
+          }
+        ],
+        "standard_error": 0.5756035479776375
+      },
+      "first_state_rejected": {
+        "selected": 114,
+        "n": 106,
+        "pending": 8,
+        "profit": -10.275,
+        "roi": -0.09693396226415095,
+        "worse_roi": -0.1172169811320755,
+        "without_three": -0.13033980582524274,
+        "best_league": "Denmark Division 1",
+        "without_best_league": -0.115625,
+        "max_drawdown": 12.124999999999998,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 61,
+            "profit": -2.25,
+            "roi": -0.036885245901639344,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 45,
+            "profit": -8.025,
+            "roi": -0.17833333333333334,
+            "pending": 8
+          }
+        ],
+        "standard_error": 0.08160490965145141
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Створ от 0,14 до 0,22 в минуту и удаление",
+      "available_points": 1657,
+      "candidate_points": 15,
+      "selected": 7,
+      "n": 7,
+      "pending": 0,
+      "profit": 2.625,
+      "roi": 0.375,
+      "worse_roi": 0.3464285714285714,
+      "without_three": -0.006249999999999978,
+      "best_league": "Panama First Division Women",
+      "without_best_league": 0.27499999999999997,
+      "max_drawdown": 0.5,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 0,
+          "profit": 0.0,
+          "roi": null,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 7,
+          "profit": 2.625,
+          "roi": 0.375,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.21100665753432882,
+      "first_state_accepted": {
+        "selected": 1,
+        "n": 1,
+        "pending": 0,
+        "profit": 0.9750000000000001,
+        "roi": 0.9750000000000001,
+        "worse_roi": 0.925,
+        "without_three": null,
+        "best_league": "Panama First Division Women",
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 1,
+            "profit": 0.9750000000000001,
+            "roi": 0.9750000000000001,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      },
+      "first_state_rejected": {
+        "selected": 552,
+        "n": 510,
+        "pending": 42,
+        "profit": 18.612499999999997,
+        "roi": 0.03649509803921568,
+        "worse_roi": 0.012377450980392134,
+        "without_three": 0.030202169625246546,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.029950495049504942,
+        "max_drawdown": 17.5375,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 367,
+            "profit": 14.612499999999999,
+            "roi": 0.03981607629427793,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 143,
+            "profit": 4.0,
+            "roi": 0.027972027972027972,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.036874062794118395
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "70–79 минута и кэф от 2,05 до 2,40",
+      "available_points": 1675,
+      "candidate_points": 22,
+      "selected": 22,
+      "n": 21,
+      "pending": 1,
+      "profit": -9.7,
+      "roi": -0.4619047619047619,
+      "worse_roi": -0.47142857142857136,
+      "without_three": -0.7180555555555556,
+      "best_league": "Poland IV Liga",
+      "without_best_league": -0.53875,
+      "max_drawdown": 10.925,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 6,
+          "profit": -2.925,
+          "roi": -0.4875,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 15,
+          "profit": -6.7749999999999995,
+          "roi": -0.4516666666666666,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.17689130244254125,
+      "first_state_accepted": {
+        "selected": 4,
+        "n": 4,
+        "pending": 0,
+        "profit": -0.9249999999999998,
+        "roi": -0.23124999999999996,
+        "worse_roi": -0.2437499999999999,
+        "without_three": -1.0,
+        "best_league": "Poland IV Liga",
+        "without_best_league": -0.6666666666666666,
+        "max_drawdown": 1.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 4,
+            "profit": -0.9249999999999998,
+            "roi": -0.23124999999999996,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.4951194089981392
+      },
+      "first_state_rejected": {
+        "selected": 555,
+        "n": 513,
+        "pending": 42,
+        "profit": 18.6875,
+        "roi": 0.03642787524366472,
+        "worse_roi": 0.012256335282651049,
+        "without_three": 0.030171568627450976,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.029921259842519685,
+        "max_drawdown": 17.6875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 367,
+            "profit": 15.212499999999999,
+            "roi": 0.04145095367847411,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 146,
+            "profit": 3.4749999999999996,
+            "roi": 0.023801369863013695,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03678504719705998
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "0:0 и линия от 0,75 до 1,25",
+      "available_points": 1675,
+      "candidate_points": 56,
+      "selected": 41,
+      "n": 41,
+      "pending": 0,
+      "profit": -11.4,
+      "roi": -0.2780487804878049,
+      "worse_roi": -0.2902439024390244,
+      "without_three": -0.38421052631578945,
+      "best_league": "Senegal Ligue 2",
+      "without_best_league": -0.311875,
+      "max_drawdown": 12.600000000000001,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 15,
+          "profit": -3.25,
+          "roi": -0.21666666666666667,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 26,
+          "profit": -8.15,
+          "roi": -0.31346153846153846,
+          "pending": 0
+        }
+      ],
+      "standard_error": 0.12127434103787223,
+      "first_state_accepted": {
+        "selected": 12,
+        "n": 12,
+        "pending": 0,
+        "profit": -5.125,
+        "roi": -0.4270833333333333,
+        "worse_roi": -0.4354166666666666,
+        "without_three": -0.7222222222222222,
+        "best_league": "Brazil Campeonato Goiano Women",
+        "without_best_league": -0.5295454545454545,
+        "max_drawdown": 5.3,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 11,
+            "profit": -5.125,
+            "roi": -0.4659090909090909,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 1,
+            "profit": 0.0,
+            "roi": 0.0,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.18477715728286154
+      },
+      "first_state_rejected": {
+        "selected": 547,
+        "n": 505,
+        "pending": 42,
+        "profit": 22.8875,
+        "roi": 0.04532178217821782,
+        "worse_roi": 0.020866336633663343,
+        "without_three": 0.03901892430278884,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.038799999999999994,
+        "max_drawdown": 17.6875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 360,
+            "profit": 19.412499999999998,
+            "roi": 0.0539236111111111,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 145,
+            "profit": 3.4749999999999996,
+            "roi": 0.023965517241379308,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.037162949326047696
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Опасные атаки меньше 0,6 в минуту и кэф меньше 1,65",
+      "available_points": 1657,
+      "candidate_points": 18,
+      "selected": 13,
+      "n": 9,
+      "pending": 4,
+      "profit": 1.0299999999999998,
+      "roi": 0.11444444444444442,
+      "worse_roi": 0.0755555555555555,
+      "without_three": -0.11583333333333334,
+      "best_league": "Colombia Primera A",
+      "without_best_league": 0.050624999999999976,
+      "max_drawdown": 2.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 0,
+          "profit": 0.0,
+          "roi": null,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 9,
+          "profit": 1.0299999999999998,
+          "roi": 0.11444444444444442,
+          "pending": 4
+        }
+      ],
+      "standard_error": 0.21572301628033672,
+      "first_state_accepted": {
+        "selected": 0,
+        "n": 0,
+        "pending": 0,
+        "profit": 0.0,
+        "roi": null,
+        "worse_roi": null,
+        "without_three": null,
+        "best_league": null,
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      },
+      "first_state_rejected": {
+        "selected": 553,
+        "n": 511,
+        "pending": 42,
+        "profit": 19.5875,
+        "roi": 0.03833170254403131,
+        "worse_roi": 0.0141634050880626,
+        "without_three": 0.032062007874015745,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.031818181818181815,
+        "max_drawdown": 17.5375,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 367,
+            "profit": 14.612499999999999,
+            "roi": 0.03981607629427793,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": 4.975,
+            "roi": 0.034548611111111106,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03684763105831421
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "Удаление и запас линии от 1,75 до 2,25",
+      "available_points": 1675,
+      "candidate_points": 9,
+      "selected": 7,
+      "n": 6,
+      "pending": 1,
+      "profit": -0.22499999999999987,
+      "roi": -0.03749999999999998,
+      "worse_roi": -0.05416666666666666,
+      "without_three": -0.6666666666666666,
+      "best_league": "Panama First Division Women",
+      "without_best_league": -0.24,
+      "max_drawdown": 1.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 2,
+          "profit": 0.0,
+          "roi": 0.0,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 4,
+          "profit": -0.22499999999999987,
+          "roi": -0.05624999999999997,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.34555209448070207,
+      "first_state_accepted": {
+        "selected": 2,
+        "n": 2,
+        "pending": 0,
+        "profit": 0.9750000000000001,
+        "roi": 0.48750000000000004,
+        "worse_roi": 0.4625,
+        "without_three": null,
+        "best_league": "Panama First Division Women",
+        "without_best_league": 0.0,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 1,
+            "profit": 0.0,
+            "roi": 0.0,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 1,
+            "profit": 0.9750000000000001,
+            "roi": 0.9750000000000001,
+            "pending": 0
+          }
+        ],
+        "standard_error": 0.48750000000000004
+      },
+      "first_state_rejected": {
+        "selected": 557,
+        "n": 515,
+        "pending": 42,
+        "profit": 16.787499999999998,
+        "roi": 0.032597087378640775,
+        "worse_roi": 0.008519417475728134,
+        "without_three": 0.026342773437499994,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.026078431372549015,
+        "max_drawdown": 17.6875,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 370,
+            "profit": 14.287499999999998,
+            "roi": 0.03861486486486486,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 145,
+            "profit": 2.5,
+            "roi": 0.017241379310344827,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03676240441226534
+      }
+    },
+    {
+      "side": "ТМ",
+      "name": "80–89 минута и опасные атаки меньше 0,6 в минуту",
+      "available_points": 1657,
+      "candidate_points": 21,
+      "selected": 18,
+      "n": 13,
+      "pending": 5,
+      "profit": -3.3200000000000003,
+      "roi": -0.25538461538461543,
+      "worse_roi": -0.28230769230769237,
+      "without_three": -0.4795,
+      "best_league": "Mexico Liga MX",
+      "without_best_league": -0.3204166666666667,
+      "max_drawdown": 4.04,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 0,
+          "profit": 0.0,
+          "roi": null,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 13,
+          "profit": -3.3200000000000003,
+          "roi": -0.25538461538461543,
+          "pending": 5
+        }
+      ],
+      "standard_error": 0.2003502234377546,
+      "first_state_accepted": {
+        "selected": 0,
+        "n": 0,
+        "pending": 0,
+        "profit": 0.0,
+        "roi": null,
+        "worse_roi": null,
+        "without_three": null,
+        "best_league": null,
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      },
+      "first_state_rejected": {
+        "selected": 553,
+        "n": 511,
+        "pending": 42,
+        "profit": 19.5875,
+        "roi": 0.03833170254403131,
+        "worse_roi": 0.0141634050880626,
+        "without_three": 0.032062007874015745,
+        "best_league": "Mexico Primera Premier",
+        "without_best_league": 0.031818181818181815,
+        "max_drawdown": 17.5375,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 367,
+            "profit": 14.612499999999999,
+            "roi": 0.03981607629427793,
+            "pending": 1
+          },
+          {
+            "day": "2026-11-08",
+            "n": 144,
+            "profit": 4.975,
+            "roi": 0.034548611111111106,
+            "pending": 41
+          }
+        ],
+        "standard_error": 0.03684763105831421
+      }
+    }
+  ],
+  "search": [
+    {
+      "selected": 559,
+      "n": 517,
+      "pending": 42,
+      "profit": -65.275,
+      "roi": -0.12625725338491298,
+      "worse_roi": -0.14482591876208897,
+      "without_three": -0.14722762645914397,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.13280038759689924,
+      "max_drawdown": 70.13749999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 371,
+          "profit": -48.0875,
+          "roi": -0.12961590296495956,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": -17.1875,
+          "roi": -0.11772260273972603,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.03991362849908022,
+      "side": "ТБ",
+      "name": "Первый пригодный вход",
+      "candidate_points": 1675,
+      "historical_candidate": false
+    },
+    {
+      "selected": 327,
+      "n": 288,
+      "pending": 39,
+      "profit": -26.837500000000002,
+      "roi": -0.0931857638888889,
+      "worse_roi": -0.11306423611111113,
+      "without_three": -0.10486842105263158,
+      "best_league": "USA USL Championship",
+      "without_best_league": -0.10347711267605635,
+      "max_drawdown": 31.925000000000008,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 157,
+          "profit": -12.7,
+          "roi": -0.08089171974522293,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 131,
+          "profit": -14.137500000000001,
+          "roi": -0.10791984732824428,
+          "pending": 38
+        }
+      ],
+      "standard_error": 0.05026266461611674,
+      "side": "ТБ",
+      "name": "5–29 минута",
+      "candidate_points": 622,
+      "historical_candidate": false
+    },
+    {
+      "selected": 288,
+      "n": 261,
+      "pending": 27,
+      "profit": -21.462500000000002,
+      "roi": -0.08223180076628353,
+      "worse_roi": -0.10205938697318011,
+      "without_three": -0.09520348837209303,
+      "best_league": "El Salvador Apertura",
+      "without_best_league": -0.09152131782945737,
+      "max_drawdown": 27.687499999999996,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 136,
+          "profit": -14.5625,
+          "roi": -0.10707720588235294,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 125,
+          "profit": -6.9,
+          "roi": -0.055200000000000006,
+          "pending": 27
+        }
+      ],
+      "standard_error": 0.051866539073093874,
+      "side": "ТБ",
+      "name": "30–59 минута",
+      "candidate_points": 489,
+      "historical_candidate": false
+    },
+    {
+      "selected": 312,
+      "n": 299,
+      "pending": 13,
+      "profit": -21.95,
+      "roi": -0.0734113712374582,
+      "worse_roi": -0.09180602006688963,
+      "without_three": -0.11469594594594593,
+      "best_league": "Italy Eccellenza",
+      "without_best_league": -0.09053030303030303,
+      "max_drawdown": 29.424999999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 150,
+          "profit": -14.975,
+          "roi": -0.09983333333333333,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 149,
+          "profit": -6.975,
+          "roi": -0.04681208053691275,
+          "pending": 13
+        }
+      ],
+      "standard_error": 0.05713296260330455,
+      "side": "ТБ",
+      "name": "60–89 минута",
+      "candidate_points": 564,
+      "historical_candidate": false
+    },
+    {
+      "selected": 315,
+      "n": 287,
+      "pending": 28,
+      "profit": -25.5,
+      "roi": -0.08885017421602788,
+      "worse_roi": -0.1089721254355401,
+      "without_three": -0.10730633802816902,
+      "best_league": "South Korea K League 4",
+      "without_best_league": -0.0977112676056338,
+      "max_drawdown": 28.350000000000005,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 178,
+          "profit": -14.3625,
+          "roi": -0.08068820224719102,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 109,
+          "profit": -11.137500000000001,
+          "roi": -0.10217889908256882,
+          "pending": 28
+        }
+      ],
+      "standard_error": 0.05155805341057943,
+      "side": "ТБ",
+      "name": "Нулевой счёт",
+      "candidate_points": 768,
+      "historical_candidate": false
+    },
+    {
+      "selected": 389,
+      "n": 361,
+      "pending": 28,
+      "profit": -45.675000000000004,
+      "roi": -0.1265235457063712,
+      "worse_roi": -0.14445983379501387,
+      "without_three": -0.1556564245810056,
+      "best_league": "South Korea K League 4",
+      "without_best_league": -0.13827247191011235,
+      "max_drawdown": 55.212499999999984,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 222,
+          "profit": -40.625,
+          "roi": -0.18299549549549549,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 139,
+          "profit": -5.050000000000001,
+          "roi": -0.03633093525179856,
+          "pending": 27
+        }
+      ],
+      "standard_error": 0.049300160499260635,
+      "side": "ТБ",
+      "name": "Уже есть голы",
+      "candidate_points": 907,
+      "historical_candidate": false
+    },
+    {
+      "selected": 274,
+      "n": 263,
+      "pending": 11,
+      "profit": -22.825,
+      "roi": -0.086787072243346,
+      "worse_roi": -0.10684410646387832,
+      "without_three": -0.13394230769230767,
+      "best_league": "South Korea K League 4",
+      "without_best_league": -0.10830115830115829,
+      "max_drawdown": 27.912500000000005,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 126,
+          "profit": -14.5375,
+          "roi": -0.11537698412698412,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 137,
+          "profit": -8.2875,
+          "roi": -0.060492700729927004,
+          "pending": 11
+        }
+      ],
+      "standard_error": 0.06550080938130622,
+      "side": "ТБ",
+      "name": "Запас линии больше 0 и до 0.75",
+      "candidate_points": 440,
+      "historical_candidate": false
+    },
+    {
+      "selected": 275,
+      "n": 258,
+      "pending": 17,
+      "profit": -7.450000000000002,
+      "roi": -0.02887596899224807,
+      "worse_roi": -0.04941860465116281,
+      "without_three": -0.04186274509803922,
+      "best_league": "South Korea K League 4",
+      "without_best_league": -0.04045275590551182,
+      "max_drawdown": 17.375000000000004,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 123,
+          "profit": -1.3250000000000008,
+          "roi": -0.010772357723577243,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 135,
+          "profit": -6.125000000000001,
+          "roi": -0.04537037037037038,
+          "pending": 17
+        }
+      ],
+      "standard_error": 0.0514226722953773,
+      "side": "ТБ",
+      "name": "Запас линии больше 0.75 и до 1.5",
+      "candidate_points": 450,
+      "historical_candidate": false
+    },
+    {
+      "selected": 359,
+      "n": 320,
+      "pending": 39,
+      "profit": -38.7125,
+      "roi": -0.1209765625,
+      "worse_roi": -0.1398828125,
+      "without_three": -0.1318217665615142,
+      "best_league": "USA USL Championship",
+      "without_best_league": -0.1305775316455696,
+      "max_drawdown": 44.64999999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 186,
+          "profit": -26.55,
+          "roi": -0.14274193548387099,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 134,
+          "profit": -12.1625,
+          "roi": -0.09076492537313433,
+          "pending": 38
+        }
+      ],
+      "standard_error": 0.047507904759499994,
+      "side": "ТБ",
+      "name": "Запас линии больше 1.5 и до 10",
+      "candidate_points": 785,
+      "historical_candidate": false
+    },
+    {
+      "selected": 527,
+      "n": 485,
+      "pending": 42,
+      "profit": -58.325,
+      "roi": -0.1202577319587629,
+      "worse_roi": -0.1393298969072165,
+      "without_three": -0.1279045643153527,
+      "best_league": "USA USL Championship",
+      "without_best_league": -0.12655925155925155,
+      "max_drawdown": 63.18749999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 339,
+          "profit": -41.1375,
+          "roi": -0.1213495575221239,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": -17.1875,
+          "roi": -0.11772260273972603,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.03856801276892498,
+      "side": "ТБ",
+      "name": "Коэффициент от 1,60 до 2,20",
+      "candidate_points": 1500,
+      "historical_candidate": false
+    },
+    {
+      "selected": 303,
+      "n": 277,
+      "pending": 26,
+      "profit": -23.812500000000004,
+      "roi": -0.08596570397111915,
+      "worse_roi": -0.10347472924187726,
+      "without_three": -0.13617700729927007,
+      "best_league": "France Ligue 3",
+      "without_best_league": -0.10608974358974362,
+      "max_drawdown": 32.01250000000002,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 140,
+          "profit": -9.8,
+          "roi": -0.07,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 137,
+          "profit": -14.012500000000003,
+          "roi": -0.10228102189781024,
+          "pending": 25
+        }
+      ],
+      "standard_error": 0.06694831316268689,
+      "side": "ТБ",
+      "name": "Коэффициент от двух",
+      "candidate_points": 483,
+      "historical_candidate": false
+    },
+    {
+      "selected": 340,
+      "n": 309,
+      "pending": 31,
+      "profit": -20.325,
+      "roi": -0.06577669902912621,
+      "worse_roi": -0.0859223300970874,
+      "without_three": -0.0909313725490196,
+      "best_league": "South Korea K League 4",
+      "without_best_league": -0.07401315789473684,
+      "max_drawdown": 23.675,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 204,
+          "profit": -18.0875,
+          "roi": -0.0886642156862745,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 105,
+          "profit": -2.2375000000000007,
+          "roi": -0.021309523809523816,
+          "pending": 30
+        }
+      ],
+      "standard_error": 0.051067856079534915,
+      "side": "ТБ",
+      "name": "Редкие створы",
+      "candidate_points": 844,
+      "historical_candidate": false
+    },
+    {
+      "selected": 340,
+      "n": 318,
+      "pending": 22,
+      "profit": -37.4,
+      "roi": -0.11761006289308176,
+      "worse_roi": -0.13624213836477989,
+      "without_three": -0.14634920634920634,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.1282334384858044,
+      "max_drawdown": 42.92499999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 196,
+          "profit": -26.325,
+          "roi": -0.1343112244897959,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 122,
+          "profit": -11.075,
+          "roi": -0.09077868852459016,
+          "pending": 22
+        }
+      ],
+      "standard_error": 0.05114027808348127,
+      "side": "ТБ",
+      "name": "Створы от 0.08 в минуту",
+      "candidate_points": 813,
+      "historical_candidate": false
+    },
+    {
+      "selected": 260,
+      "n": 244,
+      "pending": 16,
+      "profit": -26.5,
+      "roi": -0.10860655737704918,
+      "worse_roi": -0.12776639344262297,
+      "without_three": -0.14605809128630706,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.12242798353909465,
+      "max_drawdown": 31.874999999999993,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 139,
+          "profit": -21.587500000000002,
+          "roi": -0.15530575539568348,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 105,
+          "profit": -4.9125,
+          "roi": -0.046785714285714285,
+          "pending": 16
+        }
+      ],
+      "standard_error": 0.05925803619850695,
+      "side": "ТБ",
+      "name": "Створы от 0.10 в минуту",
+      "candidate_points": 585,
+      "historical_candidate": false
+    },
+    {
+      "selected": 180,
+      "n": 169,
+      "pending": 11,
+      "profit": -7.050000000000001,
+      "roi": -0.041715976331360954,
+      "worse_roi": -0.062426035502958596,
+      "without_three": -0.10602409638554218,
+      "best_league": "Brazil Campeonato Goiano 3",
+      "without_best_league": -0.07023809523809524,
+      "max_drawdown": 13.375000000000007,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 91,
+          "profit": -6.0625,
+          "roi": -0.06662087912087912,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 78,
+          "profit": -0.9874999999999998,
+          "roi": -0.012660256410256409,
+          "pending": 11
+        }
+      ],
+      "standard_error": 0.07634086615113155,
+      "side": "ТБ",
+      "name": "Створы от 0.12 в минуту",
+      "candidate_points": 388,
+      "historical_candidate": false
+    },
+    {
+      "selected": 149,
+      "n": 139,
+      "pending": 10,
+      "profit": -26.575,
+      "roi": -0.19118705035971223,
+      "worse_roi": -0.20755395683453237,
+      "without_three": -0.23529411764705882,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.21612318840579708,
+      "max_drawdown": 29.687500000000007,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 70,
+          "profit": -12.7375,
+          "roi": -0.18196428571428572,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 69,
+          "profit": -13.8375,
+          "roi": -0.20054347826086957,
+          "pending": 10
+        }
+      ],
+      "standard_error": 0.07528677115809426,
+      "side": "ТБ",
+      "name": "Удары от 0.3 в минуту",
+      "candidate_points": 328,
+      "historical_candidate": false
+    },
+    {
+      "selected": 41,
+      "n": 35,
+      "pending": 6,
+      "profit": -12.05,
+      "roi": -0.3442857142857143,
+      "worse_roi": -0.35714285714285715,
+      "without_three": -0.47109375,
+      "best_league": "Bolivia Primera Division",
+      "without_best_league": -0.4234848484848485,
+      "max_drawdown": 14.325,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 12,
+          "profit": -5.7,
+          "roi": -0.47500000000000003,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 23,
+          "profit": -6.3500000000000005,
+          "roi": -0.27608695652173915,
+          "pending": 6
+        }
+      ],
+      "standard_error": 0.14108703774935652,
+      "side": "ТБ",
+      "name": "Удары от 0.4 в минуту",
+      "candidate_points": 70,
+      "historical_candidate": false
+    },
+    {
+      "selected": 12,
+      "n": 10,
+      "pending": 2,
+      "profit": -3.4,
+      "roi": -0.33999999999999997,
+      "worse_roi": -0.355,
+      "without_three": -0.8571428571428571,
+      "best_league": "Japan Women Empowerment League",
+      "without_best_league": -0.48888888888888893,
+      "max_drawdown": 4.4,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 3,
+          "profit": -1.2,
+          "roi": -0.39999999999999997,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 7,
+          "profit": -2.2,
+          "roi": -0.31428571428571433,
+          "pending": 2
+        }
+      ],
+      "standard_error": 0.28134597128012256,
+      "side": "ТБ",
+      "name": "Удары от 0.5 в минуту",
+      "candidate_points": 19,
+      "historical_candidate": false
+    },
+    {
+      "selected": 95,
+      "n": 81,
+      "pending": 14,
+      "profit": -2.8375000000000004,
+      "roi": -0.03503086419753087,
+      "worse_roi": -0.056944444444444464,
+      "without_three": -0.07580128205128206,
+      "best_league": "Spain Primera Division RFEF Group 2",
+      "without_best_league": -0.05870253164556962,
+      "max_drawdown": 8.775,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 46,
+          "profit": 1.8624999999999998,
+          "roi": 0.040489130434782604,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 35,
+          "profit": -4.7,
+          "roi": -0.13428571428571429,
+          "pending": 14
+        }
+      ],
+      "standard_error": 0.09740593252083268,
+      "side": "ТБ",
+      "name": "Низкий темп опасных атак",
+      "candidate_points": 250,
+      "historical_candidate": false
+    },
+    {
+      "selected": 89,
+      "n": 82,
+      "pending": 7,
+      "profit": -3.6375,
+      "roi": -0.04435975609756098,
+      "worse_roi": -0.06600609756097563,
+      "without_three": -0.09984177215189874,
+      "best_league": "England Southern Premier League Central",
+      "without_best_league": -0.07083333333333335,
+      "max_drawdown": 10.4125,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 50,
+          "profit": -1.9375000000000004,
+          "roi": -0.03875000000000001,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 32,
+          "profit": -1.7000000000000002,
+          "roi": -0.053125000000000006,
+          "pending": 7
+        }
+      ],
+      "standard_error": 0.09895027184846508,
+      "side": "ТБ",
+      "name": "Высокий темп опасных атак",
+      "candidate_points": 220,
+      "historical_candidate": false
+    },
+    {
+      "selected": 542,
+      "n": 500,
+      "pending": 42,
+      "profit": -60.2,
+      "roi": -0.12040000000000001,
+      "worse_roi": -0.13915,
+      "without_three": -0.14205231388329978,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.12715430861723448,
+      "max_drawdown": 65.06249999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 356,
+          "profit": -45.0125,
+          "roi": -0.12643960674157304,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 144,
+          "profit": -15.1875,
+          "roi": -0.10546875,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.040746496585202706,
+      "side": "ТБ",
+      "name": "Без удалений",
+      "candidate_points": 1587,
+      "historical_candidate": false
+    },
+    {
+      "selected": 41,
+      "n": 40,
+      "pending": 1,
+      "profit": -2.4499999999999997,
+      "roi": -0.06124999999999999,
+      "worse_roi": -0.08,
+      "without_three": -0.19932432432432431,
+      "best_league": "Germany Bundesliga I",
+      "without_best_league": -0.12307692307692307,
+      "max_drawdown": 6.775,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 21,
+          "profit": -1.025,
+          "roi": -0.0488095238095238,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 19,
+          "profit": -1.4249999999999998,
+          "roi": -0.075,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.15084417902641734,
+      "side": "ТБ",
+      "name": "С удалением",
+      "candidate_points": 88,
+      "historical_candidate": false
+    },
+    {
+      "selected": 69,
+      "n": 62,
+      "pending": 7,
+      "profit": 3.4750000000000005,
+      "roi": 0.056048387096774205,
+      "worse_roi": 0.031854838709677404,
+      "without_three": 0.007627118644067803,
+      "best_league": "Australia A-League",
+      "without_best_league": 0.025416666666666674,
+      "max_drawdown": 4.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 31,
+          "profit": -1.0124999999999997,
+          "roi": -0.03266129032258064,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 31,
+          "profit": 4.4875,
+          "roi": 0.14475806451612902,
+          "pending": 7
+        }
+      ],
+      "standard_error": 0.11002354725472459,
+      "side": "ТБ",
+      "name": "Низкий темп xG",
+      "candidate_points": 174,
+      "historical_candidate": false
+    },
+    {
+      "selected": 45,
+      "n": 40,
+      "pending": 5,
+      "profit": -6.8875,
+      "roi": -0.1721875,
+      "worse_roi": -0.1909375,
+      "without_three": -0.2706081081081081,
+      "best_league": "Germany Bundesliga I",
+      "without_best_league": -0.2293918918918919,
+      "max_drawdown": 10.3375,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 19,
+          "profit": -3.7874999999999996,
+          "roi": -0.19934210526315788,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 21,
+          "profit": -3.1,
+          "roi": -0.14761904761904762,
+          "pending": 5
+        }
+      ],
+      "standard_error": 0.13799843190243882,
+      "side": "ТБ",
+      "name": "Высокий темп xG",
+      "candidate_points": 91,
+      "historical_candidate": false
+    },
+    {
+      "selected": 232,
+      "n": 215,
+      "pending": 17,
+      "profit": -4.675,
+      "roi": -0.021744186046511627,
+      "worse_roi": -0.0422093023255814,
+      "without_three": -0.06945754716981131,
+      "best_league": "Italy Eccellenza",
+      "without_best_league": -0.04518779342723005,
+      "max_drawdown": 9.524999999999999,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 102,
+          "profit": 4.6875,
+          "roi": 0.04595588235294118,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 113,
+          "profit": -9.3625,
+          "roi": -0.08285398230088496,
+          "pending": 17
+        }
+      ],
+      "standard_error": 0.06492396384122771,
+      "side": "ТБ",
+      "name": "Створ за полные последние пять минут",
+      "candidate_points": 371,
+      "historical_candidate": false
+    },
+    {
+      "selected": 159,
+      "n": 154,
+      "pending": 5,
+      "profit": -18.2125,
+      "roi": -0.118262987012987,
+      "worse_roi": -0.1364448051948052,
+      "without_three": -0.17822847682119206,
+      "best_league": "Spain Tercera Group 12",
+      "without_best_league": -0.14027777777777778,
+      "max_drawdown": 23.087500000000002,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 76,
+          "profit": -16.7625,
+          "roi": -0.22055921052631577,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 78,
+          "profit": -1.45,
+          "roi": -0.01858974358974359,
+          "pending": 5
+        }
+      ],
+      "standard_error": 0.07792942548799722,
+      "side": "ТБ",
+      "name": "После перерыва и частые створы",
+      "candidate_points": 280,
+      "historical_candidate": false
+    },
+    {
+      "selected": 134,
+      "n": 125,
+      "pending": 9,
+      "profit": -4.3374999999999995,
+      "roi": -0.034699999999999995,
+      "worse_roi": -0.0555,
+      "without_three": -0.10563524590163934,
+      "best_league": "France Ligue 3",
+      "without_best_league": -0.061686991869918696,
+      "max_drawdown": 7.674999999999999,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 57,
+          "profit": -5.675,
+          "roi": -0.09956140350877192,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 68,
+          "profit": 1.3375000000000004,
+          "roi": 0.01966911764705883,
+          "pending": 9
+        }
+      ],
+      "standard_error": 0.09001342462601467,
+      "side": "ТБ",
+      "name": "После часа и редкие створы",
+      "candidate_points": 240,
+      "historical_candidate": false
+    },
+    {
+      "selected": 559,
+      "n": 517,
+      "pending": 42,
+      "profit": 17.7625,
+      "roi": 0.0343568665377176,
+      "worse_roi": 0.010275628626692434,
+      "without_three": 0.028137159533073927,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": 0.027880859374999997,
+      "max_drawdown": 17.6875,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 371,
+          "profit": 14.287499999999998,
+          "roi": 0.038510781671159025,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": 3.4749999999999996,
+          "roi": 0.023801369863013695,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.036665451823402986,
+      "side": "ТМ",
+      "name": "Первый пригодный вход",
+      "candidate_points": 1675,
+      "historical_candidate": true
+    },
+    {
+      "selected": 327,
+      "n": 288,
+      "pending": 39,
+      "profit": 0.23749999999999905,
+      "roi": 0.0008246527777777744,
+      "worse_roi": -0.02157118055555558,
+      "without_three": -0.010131578947368424,
+      "best_league": "USA MLS",
+      "without_best_league": -0.011687725631768956,
+      "max_drawdown": 10.975000000000001,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 157,
+          "profit": -1.262500000000001,
+          "roi": -0.008041401273885357,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 131,
+          "profit": 1.5,
+          "roi": 0.011450381679389313,
+          "pending": 38
+        }
+      ],
+      "standard_error": 0.0500800070537258,
+      "side": "ТМ",
+      "name": "5–29 минута",
+      "candidate_points": 622,
+      "historical_candidate": false
+    },
+    {
+      "selected": 288,
+      "n": 261,
+      "pending": 27,
+      "profit": -1.1500000000000012,
+      "roi": -0.004406130268199238,
+      "worse_roi": -0.026149425287356347,
+      "without_three": -0.016860465116279075,
+      "best_league": "Japan Football League",
+      "without_best_league": -0.014688715953307398,
+      "max_drawdown": 10.600000000000001,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 136,
+          "profit": 2.6499999999999995,
+          "roi": 0.019485294117647056,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 125,
+          "profit": -3.8000000000000007,
+          "roi": -0.030400000000000007,
+          "pending": 27
+        }
+      ],
+      "standard_error": 0.052386398776295605,
+      "side": "ТМ",
+      "name": "30–59 минута",
+      "candidate_points": 489,
+      "historical_candidate": false
+    },
+    {
+      "selected": 312,
+      "n": 299,
+      "pending": 13,
+      "profit": -9.4025,
+      "roi": -0.03144648829431438,
+      "worse_roi": -0.054523411371237465,
+      "without_three": -0.04291385135135135,
+      "best_league": "Brazil Campeonato Carioca B",
+      "without_best_league": -0.04038006756756757,
+      "max_drawdown": 21.015,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 150,
+          "profit": 2.6375,
+          "roi": 0.017583333333333336,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 149,
+          "profit": -12.04,
+          "roi": -0.08080536912751678,
+          "pending": 13
+        }
+      ],
+      "standard_error": 0.045201425280970695,
+      "side": "ТМ",
+      "name": "60–89 минута",
+      "candidate_points": 564,
+      "historical_candidate": false
+    },
+    {
+      "selected": 315,
+      "n": 287,
+      "pending": 28,
+      "profit": -2.3525000000000014,
+      "roi": -0.008196864111498262,
+      "worse_roi": -0.030932055749128943,
+      "without_three": -0.01928697183098592,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": -0.01763250883392227,
+      "max_drawdown": 12.1625,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 178,
+          "profit": -2.552500000000001,
+          "roi": -0.014339887640449444,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 109,
+          "profit": 0.19999999999999996,
+          "roi": 0.0018348623853211006,
+          "pending": 28
+        }
+      ],
+      "standard_error": 0.04991316356599706,
+      "side": "ТМ",
+      "name": "Нулевой счёт",
+      "candidate_points": 768,
+      "historical_candidate": false
+    },
+    {
+      "selected": 389,
+      "n": 361,
+      "pending": 28,
+      "profit": 12.6275,
+      "roi": 0.0349792243767313,
+      "worse_roi": 0.010602493074792224,
+      "without_three": 0.026054469273743015,
+      "best_league": "Japan Football League",
+      "without_best_league": 0.027177871148459386,
+      "max_drawdown": 18.525,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 222,
+          "profit": 19.6775,
+          "roi": 0.08863738738738738,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 139,
+          "profit": -7.050000000000001,
+          "roi": -0.05071942446043166,
+          "pending": 27
+        }
+      ],
+      "standard_error": 0.043192109181940434,
+      "side": "ТМ",
+      "name": "Уже есть голы",
+      "candidate_points": 907,
+      "historical_candidate": false
+    },
+    {
+      "selected": 274,
+      "n": 263,
+      "pending": 11,
+      "profit": -8.745,
+      "roi": -0.033250950570342205,
+      "worse_roi": -0.05929657794676807,
+      "without_three": -0.04642307692307692,
+      "best_league": "Brazil Campeonato Carioca B",
+      "without_best_league": -0.04344230769230768,
+      "max_drawdown": 25.834999999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 126,
+          "profit": 4.275,
+          "roi": 0.03392857142857143,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 137,
+          "profit": -13.02,
+          "roi": -0.09503649635036496,
+          "pending": 11
+        }
+      ],
+      "standard_error": 0.050086882897109886,
+      "side": "ТМ",
+      "name": "Запас линии больше 0 и до 0.75",
+      "candidate_points": 440,
+      "historical_candidate": false
+    },
+    {
+      "selected": 275,
+      "n": 258,
+      "pending": 17,
+      "profit": -15.725,
+      "roi": -0.060949612403100775,
+      "worse_roi": -0.0806201550387597,
+      "without_three": -0.0742156862745098,
+      "best_league": "Spain Youth League",
+      "without_best_league": -0.07391732283464567,
+      "max_drawdown": 17.900000000000006,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 123,
+          "profit": -10.112499999999999,
+          "roi": -0.08221544715447153,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 135,
+          "profit": -5.612500000000001,
+          "roi": -0.04157407407407408,
+          "pending": 17
+        }
+      ],
+      "standard_error": 0.05188687643870401,
+      "side": "ТМ",
+      "name": "Запас линии больше 0.75 и до 1.5",
+      "candidate_points": 450,
+      "historical_candidate": false
+    },
+    {
+      "selected": 359,
+      "n": 320,
+      "pending": 39,
+      "profit": 10.3875,
+      "roi": 0.032460937499999995,
+      "worse_roi": 0.009414062499999975,
+      "without_three": 0.022910094637223974,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": 0.0245253164556962,
+      "max_drawdown": 9.225000000000003,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 186,
+          "profit": 10.812499999999998,
+          "roi": 0.05813172043010752,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 134,
+          "profit": -0.42500000000000004,
+          "roi": -0.0031716417910447763,
+          "pending": 38
+        }
+      ],
+      "standard_error": 0.04717879282033318,
+      "side": "ТМ",
+      "name": "Запас линии больше 1.5 и до 10",
+      "candidate_points": 785,
+      "historical_candidate": false
+    },
+    {
+      "selected": 530,
+      "n": 488,
+      "pending": 42,
+      "profit": 16.8125,
+      "roi": 0.034451844262295084,
+      "worse_roi": 0.011193647540983585,
+      "without_three": 0.027860824742268035,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": 0.027587991718426498,
+      "max_drawdown": 17.7125,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 342,
+          "profit": 13.337499999999999,
+          "roi": 0.0389985380116959,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 146,
+          "profit": 3.4749999999999996,
+          "roi": 0.023801369863013695,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.03828681962305439,
+      "side": "ТМ",
+      "name": "Коэффициент от 1,60 до 2,20",
+      "candidate_points": 1520,
+      "historical_candidate": true
+    },
+    {
+      "selected": 206,
+      "n": 187,
+      "pending": 19,
+      "profit": -7.750000000000002,
+      "roi": -0.041443850267379685,
+      "worse_roi": -0.06056149732620322,
+      "without_three": -0.06005434782608697,
+      "best_league": "France Ligue 3",
+      "without_best_league": -0.05297297297297298,
+      "max_drawdown": 18.612499999999997,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 85,
+          "profit": 8.7625,
+          "roi": 0.10308823529411763,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 102,
+          "profit": -16.5125,
+          "roi": -0.16188725490196076,
+          "pending": 19
+        }
+      ],
+      "standard_error": 0.06533629552009178,
+      "side": "ТМ",
+      "name": "Коэффициент от двух",
+      "candidate_points": 272,
+      "historical_candidate": false
+    },
+    {
+      "selected": 340,
+      "n": 309,
+      "pending": 31,
+      "profit": -9.305000000000001,
+      "roi": -0.030113268608414245,
+      "worse_roi": -0.05228155339805827,
+      "without_three": -0.04119281045751634,
+      "best_league": "Japan Football League",
+      "without_best_league": -0.040754098360655744,
+      "max_drawdown": 20.167500000000004,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 204,
+          "profit": 0.05749999999999922,
+          "roi": 0.0002818627450980354,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 105,
+          "profit": -9.3625,
+          "roi": -0.08916666666666667,
+          "pending": 30
+        }
+      ],
+      "standard_error": 0.047665104309851054,
+      "side": "ТМ",
+      "name": "Редкие створы",
+      "candidate_points": 844,
+      "historical_candidate": false
+    },
+    {
+      "selected": 340,
+      "n": 318,
+      "pending": 22,
+      "profit": 6.599999999999999,
+      "roi": 0.02075471698113207,
+      "worse_roi": -0.003144654088050338,
+      "without_three": 0.01079365079365079,
+      "best_league": "USA MLS",
+      "without_best_league": 0.011598360655737702,
+      "max_drawdown": 12.57,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 196,
+          "profit": 7.479999999999999,
+          "roi": 0.03816326530612244,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 122,
+          "profit": -0.8800000000000002,
+          "roi": -0.007213114754098362,
+          "pending": 22
+        }
+      ],
+      "standard_error": 0.04628060629310355,
+      "side": "ТМ",
+      "name": "Створы от 0.08 в минуту",
+      "candidate_points": 813,
+      "historical_candidate": false
+    },
+    {
+      "selected": 260,
+      "n": 244,
+      "pending": 16,
+      "profit": 3.675,
+      "roi": 0.015061475409836066,
+      "worse_roi": -0.00891393442622953,
+      "without_three": 0.001970954356846471,
+      "best_league": "USA MLS",
+      "without_best_league": -0.0014547413793103425,
+      "max_drawdown": 11.254999999999999,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 139,
+          "profit": 6.579999999999999,
+          "roi": 0.04733812949640287,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 105,
+          "profit": -2.905,
+          "roi": -0.027666666666666666,
+          "pending": 16
+        }
+      ],
+      "standard_error": 0.0537812364154159,
+      "side": "ТМ",
+      "name": "Створы от 0.10 в минуту",
+      "candidate_points": 585,
+      "historical_candidate": false
+    },
+    {
+      "selected": 180,
+      "n": 169,
+      "pending": 11,
+      "profit": -3.6550000000000002,
+      "roi": -0.021627218934911246,
+      "worse_roi": -0.04440828402366866,
+      "without_three": -0.04129518072289157,
+      "best_league": "Honduras Liga Nacional",
+      "without_best_league": -0.03753012048192771,
+      "max_drawdown": 11.075000000000001,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 91,
+          "profit": 1.17,
+          "roi": 0.012857142857142857,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 78,
+          "profit": -4.825,
+          "roi": -0.06185897435897436,
+          "pending": 11
+        }
+      ],
+      "standard_error": 0.06609258760080731,
+      "side": "ТМ",
+      "name": "Створы от 0.12 в минуту",
+      "candidate_points": 388,
+      "historical_candidate": false
+    },
+    {
+      "selected": 149,
+      "n": 139,
+      "pending": 10,
+      "profit": 13.2575,
+      "roi": 0.09537769784172662,
+      "worse_roi": 0.07001798561151078,
+      "without_three": 0.07450367647058824,
+      "best_league": "USA MLS",
+      "without_best_league": 0.07159615384615385,
+      "max_drawdown": 5.7500000000000036,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 70,
+          "profit": 6.825,
+          "roi": 0.0975,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 69,
+          "profit": 6.4325,
+          "roi": 0.09322463768115942,
+          "pending": 10
+        }
+      ],
+      "standard_error": 0.06863465866893152,
+      "side": "ТМ",
+      "name": "Удары от 0.3 в минуту",
+      "candidate_points": 328,
+      "historical_candidate": true
+    },
+    {
+      "selected": 41,
+      "n": 35,
+      "pending": 6,
+      "profit": 7.775,
+      "roi": 0.22214285714285714,
+      "worse_roi": 0.19285714285714284,
+      "without_three": 0.15390625,
+      "best_league": "Belgium Super League Women",
+      "without_best_league": 0.18257575757575759,
+      "max_drawdown": 2.5,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 12,
+          "profit": 3.95,
+          "roi": 0.32916666666666666,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 23,
+          "profit": 3.825,
+          "roi": 0.16630434782608697,
+          "pending": 6
+        }
+      ],
+      "standard_error": 0.13260785775200135,
+      "side": "ТМ",
+      "name": "Удары от 0.4 в минуту",
+      "candidate_points": 70,
+      "historical_candidate": false
+    },
+    {
+      "selected": 12,
+      "n": 10,
+      "pending": 2,
+      "profit": 2.375,
+      "roi": 0.2375,
+      "worse_roi": 0.20749999999999996,
+      "without_three": -0.06785714285714284,
+      "best_league": "Solomon Islands S League",
+      "without_best_league": 0.1527777777777778,
+      "max_drawdown": 2.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 3,
+          "profit": 0.825,
+          "roi": 0.27499999999999997,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 7,
+          "profit": 1.55,
+          "roi": 0.22142857142857145,
+          "pending": 2
+        }
+      ],
+      "standard_error": 0.2843425653053802,
+      "side": "ТМ",
+      "name": "Удары от 0.5 в минуту",
+      "candidate_points": 19,
+      "historical_candidate": false
+    },
+    {
+      "selected": 95,
+      "n": 81,
+      "pending": 14,
+      "profit": -4.2625,
+      "roi": -0.05262345679012346,
+      "worse_roi": -0.07422839506172842,
+      "without_three": -0.09439102564102564,
+      "best_league": "Colombia Primera A",
+      "without_best_league": -0.07832278481012658,
+      "max_drawdown": 7.699999999999998,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 46,
+          "profit": -4.825,
+          "roi": -0.10489130434782609,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 35,
+          "profit": 0.5624999999999999,
+          "roi": 0.01607142857142857,
+          "pending": 14
+        }
+      ],
+      "standard_error": 0.09660236827528527,
+      "side": "ТМ",
+      "name": "Низкий темп опасных атак",
+      "candidate_points": 250,
+      "historical_candidate": false
+    },
+    {
+      "selected": 89,
+      "n": 82,
+      "pending": 7,
+      "profit": -5.9625,
+      "roi": -0.07271341463414635,
+      "worse_roi": -0.09466463414634149,
+      "without_three": -0.11439873417721519,
+      "best_league": "Spain Youth League",
+      "without_best_league": -0.10015822784810127,
+      "max_drawdown": 9.687500000000004,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 50,
+          "profit": -4.3875,
+          "roi": -0.08775000000000001,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 32,
+          "profit": -1.5749999999999995,
+          "roi": -0.049218749999999985,
+          "pending": 7
+        }
+      ],
+      "standard_error": 0.09377280111382455,
+      "side": "ТМ",
+      "name": "Высокий темп опасных атак",
+      "candidate_points": 220,
+      "historical_candidate": false
+    },
+    {
+      "selected": 542,
+      "n": 500,
+      "pending": 42,
+      "profit": 15.647499999999999,
+      "roi": 0.031294999999999996,
+      "worse_roi": 0.007294999999999979,
+      "without_three": 0.024844064386317904,
+      "best_league": "Mexico Primera Premier",
+      "without_best_league": 0.02456565656565656,
+      "max_drawdown": 17.2375,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 356,
+          "profit": 13.972499999999998,
+          "roi": 0.039248595505617975,
+          "pending": 1
+        },
+        {
+          "day": "2026-11-08",
+          "n": 144,
+          "profit": 1.6749999999999998,
+          "roi": 0.011631944444444443,
+          "pending": 41
+        }
+      ],
+      "standard_error": 0.03742140890772658,
+      "side": "ТМ",
+      "name": "Без удалений",
+      "candidate_points": 1587,
+      "historical_candidate": true
+    },
+    {
+      "selected": 41,
+      "n": 40,
+      "pending": 1,
+      "profit": -1.3599999999999999,
+      "roi": -0.033999999999999996,
+      "worse_roi": -0.056500000000000015,
+      "without_three": -0.11918918918918919,
+      "best_league": "France Ligue 2",
+      "without_best_league": -0.06179487179487179,
+      "max_drawdown": 4.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 21,
+          "profit": -0.8850000000000002,
+          "roi": -0.042142857142857156,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 19,
+          "profit": -0.47499999999999964,
+          "roi": -0.02499999999999998,
+          "pending": 1
+        }
+      ],
+      "standard_error": 0.12727052627758856,
+      "side": "ТМ",
+      "name": "С удалением",
+      "candidate_points": 88,
+      "historical_candidate": false
+    },
+    {
+      "selected": 69,
+      "n": 62,
+      "pending": 7,
+      "profit": -10.0,
+      "roi": -0.16129032258064516,
+      "worse_roi": -0.18024193548387102,
+      "without_three": -0.22203389830508474,
+      "best_league": "Argentina Liga Profesional",
+      "without_best_league": -0.20211864406779662,
+      "max_drawdown": 11.45,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 31,
+          "profit": -2.6375,
+          "roi": -0.08508064516129032,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 31,
+          "profit": -7.362500000000001,
+          "roi": -0.23750000000000002,
+          "pending": 7
+        }
+      ],
+      "standard_error": 0.10789180842527353,
+      "side": "ТМ",
+      "name": "Низкий темп xG",
+      "candidate_points": 174,
+      "historical_candidate": false
+    },
+    {
+      "selected": 45,
+      "n": 40,
+      "pending": 5,
+      "profit": 2.225,
+      "roi": 0.055625,
+      "worse_roi": 0.02999999999999998,
+      "without_three": -0.02364864864864865,
+      "best_league": "USA USL Championship",
+      "without_best_league": 0.02171052631578948,
+      "max_drawdown": 4.0,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 19,
+          "profit": 0.9375000000000002,
+          "roi": 0.04934210526315791,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 21,
+          "profit": 1.2874999999999996,
+          "roi": 0.06130952380952379,
+          "pending": 5
+        }
+      ],
+      "standard_error": 0.13428641982001355,
+      "side": "ТМ",
+      "name": "Высокий темп xG",
+      "candidate_points": 91,
+      "historical_candidate": false
+    },
+    {
+      "selected": 232,
+      "n": 215,
+      "pending": 17,
+      "profit": -11.59,
+      "roi": -0.05390697674418605,
+      "worse_roi": -0.0754186046511628,
+      "without_three": -0.06976415094339623,
+      "best_league": "USA MLS",
+      "without_best_league": -0.06779126213592233,
+      "max_drawdown": 15.802500000000004,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 102,
+          "profit": -9.19,
+          "roi": -0.09009803921568627,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 113,
+          "profit": -2.4,
+          "roi": -0.021238938053097345,
+          "pending": 17
+        }
+      ],
+      "standard_error": 0.0564148654995028,
+      "side": "ТМ",
+      "name": "Створ за полные последние пять минут",
+      "candidate_points": 371,
+      "historical_candidate": false
+    },
+    {
+      "selected": 159,
+      "n": 154,
+      "pending": 5,
+      "profit": 3.9499999999999993,
+      "roi": 0.025649350649350644,
+      "worse_roi": 0.0008116883116882865,
+      "without_three": 0.0049668874172185355,
+      "best_league": "Brazil Copa Sul U20",
+      "without_best_league": 0.013980263157894733,
+      "max_drawdown": 10.549999999999999,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 76,
+          "profit": 8.23,
+          "roi": 0.10828947368421053,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 78,
+          "profit": -4.280000000000001,
+          "roi": -0.05487179487179489,
+          "pending": 5
+        }
+      ],
+      "standard_error": 0.06588790599103783,
+      "side": "ТМ",
+      "name": "После перерыва и частые створы",
+      "candidate_points": 280,
+      "historical_candidate": false
+    },
+    {
+      "selected": 134,
+      "n": 125,
+      "pending": 9,
+      "profit": -12.8675,
+      "roi": -0.10294,
+      "worse_roi": -0.12614,
+      "without_three": -0.13252049180327868,
+      "best_league": "Hungary NB III",
+      "without_best_league": -0.12084016393442623,
+      "max_drawdown": 19.6325,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 57,
+          "profit": -1.3675000000000002,
+          "roi": -0.02399122807017544,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 68,
+          "profit": -11.5,
+          "roi": -0.16911764705882354,
+          "pending": 9
+        }
+      ],
+      "standard_error": 0.07104194617357432,
+      "side": "ТМ",
+      "name": "После часа и редкие створы",
+      "candidate_points": 240,
+      "historical_candidate": false
+    }
+  ],
+  "validation": [
+    {
+      "side": "ТБ",
+      "fold": 0,
+      "chosen": null,
+      "test": {
+        "selected": 0,
+        "n": 0,
+        "pending": 0,
+        "profit": 0.0,
+        "roi": null,
+        "worse_roi": null,
+        "without_three": null,
+        "best_league": null,
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      }
+    },
+    {
+      "side": "ТБ",
+      "fold": 1,
+      "chosen": null,
+      "test": {
+        "selected": 0,
+        "n": 0,
+        "pending": 0,
+        "profit": 0.0,
+        "roi": null,
+        "worse_roi": null,
+        "without_three": null,
+        "best_league": null,
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      }
+    },
+    {
+      "side": "ТБ",
+      "fold": 2,
+      "chosen": "Низкий темп xG",
+      "train": {
+        "selected": 49,
+        "n": 46,
+        "pending": 3,
+        "profit": 6.0,
+        "roi": 0.13043478260869565,
+        "worse_roi": 0.10543478260869564,
+        "without_three": 0.06918604651162792,
+        "best_league": "Australia A-League",
+        "without_best_league": 0.09204545454545454,
+        "max_drawdown": 3.0625,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 24,
+            "profit": 0.012500000000000067,
+            "roi": 0.0005208333333333361,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 22,
+            "profit": 5.9875,
+            "roi": 0.2721590909090909,
+            "pending": 3
+          }
+        ],
+        "standard_error": 0.12399514717858733
+      },
+      "test": {
+        "selected": 20,
+        "n": 16,
+        "pending": 4,
+        "profit": -2.525,
+        "roi": -0.1578125,
+        "worse_roi": -0.1796875,
+        "without_three": -0.4019230769230769,
+        "best_league": "Mexico Liga MX",
+        "without_best_league": -0.3053571428571429,
+        "max_drawdown": 3.675,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 7,
+            "profit": -1.025,
+            "roi": -0.1464285714285714,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 9,
+            "profit": -1.5,
+            "roi": -0.16666666666666666,
+            "pending": 4
+          }
+        ],
+        "standard_error": 0.23246548522934898
+      }
+    },
+    {
+      "side": "ТМ",
+      "fold": 0,
+      "chosen": "Удары от 0.3 в минуту",
+      "train": {
+        "selected": 102,
+        "n": 94,
+        "pending": 8,
+        "profit": 9.7575,
+        "roi": 0.1038031914893617,
+        "worse_roi": 0.07800531914893614,
+        "without_three": 0.07480769230769231,
+        "best_league": "USA MLS",
+        "without_best_league": 0.07915697674418605,
+        "max_drawdown": 3.4875000000000007,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 44,
+            "profit": 5.3999999999999995,
+            "roi": 0.12272727272727271,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 50,
+            "profit": 4.3575,
+            "roi": 0.08715,
+            "pending": 8
+          }
+        ],
+        "standard_error": 0.08207938165193251
+      },
+      "test": {
+        "selected": 47,
+        "n": 45,
+        "pending": 2,
+        "profit": 3.5,
+        "roi": 0.07777777777777778,
+        "worse_roi": 0.05333333333333332,
+        "without_three": 0.008928571428571433,
+        "best_league": "Mexico Liga TDP",
+        "without_best_league": 0.03273809523809524,
+        "max_drawdown": 4.725,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 26,
+            "profit": 1.425,
+            "roi": 0.05480769230769231,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 19,
+            "profit": 2.075,
+            "roi": 0.10921052631578948,
+            "pending": 2
+          }
+        ],
+        "standard_error": 0.12602163870986635
+      }
+    },
+    {
+      "side": "ТМ",
+      "fold": 1,
+      "chosen": null,
+      "test": {
+        "selected": 0,
+        "n": 0,
+        "pending": 0,
+        "profit": 0.0,
+        "roi": null,
+        "worse_roi": null,
+        "without_three": null,
+        "best_league": null,
+        "without_best_league": null,
+        "max_drawdown": 0.0,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 0,
+            "profit": 0.0,
+            "roi": null,
+            "pending": 0
+          }
+        ],
+        "standard_error": null
+      }
+    },
+    {
+      "side": "ТМ",
+      "fold": 2,
+      "chosen": "Удары от 0.3 в минуту",
+      "train": {
+        "selected": 98,
+        "n": 92,
+        "pending": 6,
+        "profit": 12.175,
+        "roi": 0.13233695652173913,
+        "worse_roi": 0.10624999999999998,
+        "without_three": 0.10168539325842697,
+        "best_league": "USA MLS",
+        "without_best_league": 0.08601190476190476,
+        "max_drawdown": 4.75,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 45,
+            "profit": 6.2875,
+            "roi": 0.13972222222222222,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 47,
+            "profit": 5.8875,
+            "roi": 0.12526595744680852,
+            "pending": 6
+          }
+        ],
+        "standard_error": 0.08633903898545627
+      },
+      "test": {
+        "selected": 51,
+        "n": 47,
+        "pending": 4,
+        "profit": 1.0825,
+        "roi": 0.02303191489361702,
+        "worse_roi": -0.0009042553191489594,
+        "without_three": -0.040170454545454544,
+        "best_league": "Argentina Torneo Regional Amateur",
+        "without_best_league": -0.0059444444444444414,
+        "max_drawdown": 3.9124999999999996,
+        "daily": [
+          {
+            "day": "2026-11-07",
+            "n": 25,
+            "profit": 0.5375,
+            "roi": 0.0215,
+            "pending": 0
+          },
+          {
+            "day": "2026-11-08",
+            "n": 22,
+            "profit": 0.5449999999999999,
+            "roi": 0.02477272727272727,
+            "pending": 4
+          }
+        ],
+        "standard_error": 0.11294725403213018
+      }
+    }
+  ],
+  "validation_total": {
+    "ТБ": {
+      "selected": 20,
+      "n": 16,
+      "pending": 4,
+      "profit": -2.525,
+      "roi": -0.1578125,
+      "worse_roi": -0.1796875,
+      "without_three": -0.4019230769230769,
+      "best_league": "Mexico Liga MX",
+      "without_best_league": -0.3053571428571429,
+      "max_drawdown": 3.675,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 7,
+          "profit": -1.025,
+          "roi": -0.1464285714285714,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 9,
+          "profit": -1.5,
+          "roi": -0.16666666666666666,
+          "pending": 4
+        }
+      ],
+      "standard_error": 0.23246548522934898
+    },
+    "ТМ": {
+      "selected": 98,
+      "n": 92,
+      "pending": 6,
+      "profit": 4.5825000000000005,
+      "roi": 0.04980978260869566,
+      "worse_roi": 0.02562499999999998,
+      "without_three": 0.016376404494382022,
+      "best_league": "Mexico Liga TDP",
+      "without_best_league": 0.029971264367816098,
+      "max_drawdown": 5.025,
+      "daily": [
+        {
+          "day": "2026-11-07",
+          "n": 51,
+          "profit": 1.9625,
+          "roi": 0.03848039215686274,
+          "pending": 0
+        },
+        {
+          "day": "2026-11-08",
+          "n": 41,
+          "profit": 2.62,
+          "roi": 0.06390243902439025,
+          "pending": 6
+        }
+      ],
+      "standard_error": 0.08401575286645706
+    }
+  },
+  "hypotheses_tested": 54,
+  "fixed_rules_tested": 20,
+  "historical_candidates": [
+    {
+      "side": "ТМ",
+      "name": "Первый пригодный вход"
+    },
+    {
+      "side": "ТМ",
+      "name": "Коэффициент от 1,60 до 2,20"
+    },
+    {
+      "side": "ТМ",
+      "name": "Удары от 0.3 в минуту"
+    },
+    {
+      "side": "ТМ",
+      "name": "Без удалений"
+    }
+  ]
+}
