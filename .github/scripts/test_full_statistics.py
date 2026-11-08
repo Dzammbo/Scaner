@@ -66,3 +66,17 @@ class FullStatisticsTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class EarlyUnderHistoryTest(unittest.TestCase):
+    def test_early_general_receipts_and_previous_under_report_survive(self):
+        from statistics_index import tree
+        early = 'research/live-background/experimental/receipts/2026-11-04/first.json.gz'
+        later = 'research/live-background/experimental/receipts/2026-11-05/later.json.gz'
+        listing = b''.join(('100644 blob ' + 'a' * 40 + '\t' + path + '\0').encode() for path in (early, later))
+        with patch('statistics_index.tracked_scope', return_value='2026-11-03'), patch('statistics_index.git', return_value=listing):
+            self.assertEqual(set(tree(Path('/unused'))), {early})
+        under = {'id': 'ten-under-forward-20261104-v1', 'choices': {'pocket': [{'event_id': 'early'}]}}
+        receipt = project(early, {'under_pockets': under})
+        previous = project('research/live-results-refresh/2026-11-08/one.json', {'under_pockets': under})
+        self.assertEqual(receipt['under_pockets'], under)
+        self.assertEqual(previous['under_pockets'], under)
