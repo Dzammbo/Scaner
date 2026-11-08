@@ -3,9 +3,10 @@ import os,sys,tempfile,pathlib,json,time,shutil,gzip,collections
 sys.path.insert(0,str(pathlib.Path(os.environ['COLLECTOR_ROOT'])/'research/selection-lab-20261018'))
 import capture as c
 from save_capture import prepare_files
-source=c.ROOT;calls=collections.Counter()
+source=c.ROOT;calls=collections.Counter();reference_requests=[]
 def api(path,**params):
  calls[path]+=1;now=int(time.time())
+ if params.get('source')=='betfair':reference_requests.append(params)
  if path=='/v3/events/inplay':
   payload={'success':1,'results':[{'id':str(900000+i),'league':{'id':'123','name':'Test League'},'home':{'id':str(i*2+1),'name':'Home'},'away':{'id':str(i*2+2),'name':'Away'},'time':now-2400,'timer':{'tm':40},'ss':'0-0','time_status':'1','stats':{'on_target':['2','1'],'off_target':['3','3'],'redcards':['0','0']}} for i in range(20)]}
  elif path=='/v1/event/stats_trend':payload={'success':1,'results':{}}
@@ -27,7 +28,9 @@ with tempfile.TemporaryDirectory() as temp:
  assert len(files)==1
  report=json.load(gzip.open(files[0]))['research_foundation']
  assert report['points']==20 and report['independent_sample']>0
- assert report['comparison_requested']==2 and report['comparable_prices']==2
+ expected_comparisons=json.loads((root/'.github/live-research-foundation.json').read_text())['comparison_matches_per_cycle']
+ assert report['comparison_requested']==expected_comparisons and report['comparable_prices']==expected_comparisons
+ assert len(reference_requests)==expected_comparisons
  assert report['admitted']==0 and report['status']=='active'
  assert sum(calls.values())<=160
  snapshot=json.load(gzip.open(next((root/'research/live-background/experimental/snapshots').rglob('*.json.gz'))))
