@@ -36,6 +36,7 @@ jobs:
             .github
             scripts
             research/selection-lab-20261018
+            research/tm
       - uses: actions/cache/restore@v4
         with:
           path: ${{ runner.temp }}/scaner-statistics-cache

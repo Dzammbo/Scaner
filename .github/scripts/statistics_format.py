@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 'statistics-over-only-20261027-v6'
+VERSION = 'statistics-all-active-20261108-v7'
 MSK = dt.timezone(dt.timedelta(hours=3))
 
 
@@ -49,7 +49,7 @@ def build_tables(report, previous=None):
 
     def add(key, label, market, row, old=None):
         # Archived under entries never enter the active report, including old JSON.
-        if market != 'over':
+        if market != 'over' and not (market == 'under' and report.get('active_group_series') == 'tracked_groups' and (report.get('under_pockets') or {}).get('version') == 'ten-under-forward-20261104-v1'):
             return
         n = row['n']
         roi, without = number(row.get('roi')), robust(row)
@@ -61,6 +61,7 @@ def build_tables(report, previous=None):
             key=key, name=label, n=n, selected=row.get('selected'), roi=roi,
             roi_without_top3=without, without_top3_n=n-3 if without is not None else None,
             new_closed=n-old['n'] if old else None, delta_pp=delta,
+            unresolved=row.get('unresolved'), unit_profit=row.get('unit_profit'),
             first_result=bool(old and old['n'] == 0 and n > 0 and roi is not None)))
 
     # An explicit replacement series must never fall back to historical totals.
@@ -81,6 +82,22 @@ def build_tables(report, previous=None):
         result['over'].sort(key=lambda r: (
             r['roi_without_top3'] is None, -(r['roi_without_top3'] or 0),
             r['roi'] is None, -(r['roi'] or 0), r['priority']))
+        under = report.get('under_pockets')
+        if under is not None:
+            prior_under = previous.get('under_pockets') or {}
+            same_under = compatible(under, prior_under, ('id', 'version', 'catalog_sha256'))
+            if under.get('status') == 'error' or len(under.get('pockets') or {}) != 10:
+                result['errors'].append('ТМ: неполный или ошибочный журнал')
+            else:
+                result['under_started_at_utc'] = under.get('started_at_utc')
+                result['under_capture_errors'] = under.get('capture_errors', 0)
+                for key, row in under['pockets'].items():
+                    old = prior_under.get('pockets', {}).get(key) if same_under else None
+                    if old and row['n'] < old['n']:
+                        result['errors'].append('ТМ: уменьшилось число рассчитанных матчей')
+                    add('under_pockets/' + key, row['name'], 'under', row, old)
+                result['under'].sort(key=lambda row: (row['roi_without_top3'] is None,
+                    -(row['roi_without_top3'] or 0), row['roi'] is None, -(row['roi'] or 0), row['name']))
         comparison = report.get('tracked_sot')
         if comparison is not None:
             prior_comparison = previous.get('tracked_sot') or {}
@@ -230,23 +247,27 @@ def render_statistics(report, previous=None, tables=None):
     lines.extend(['N - рассчитанные матчи; в скобках прирост к предыдущему отчёту. '
                   'Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: '
                   'такие группы стоят внизу по убыванию обычного ROI.', ''])
-    for market, title, metric in (('over', 'ТБ', 'без 3'),):
+    for market, title, metric in [('over', 'ТБ', 'без 3')] + ([('under', 'ТМ', 'без 3')] if tables['under'] else []):
+        if market == 'under':
+            lines.extend(['Серия ТМ с ' + clock(tables.get('under_started_at_utc')) + '.', ''])
         lines.extend([f'**Все {title} - по убыванию ROI без трёх**', '',
-                      f'| Группа | N (+новые) | ROI | ROI без 3 | Δ {metric}, п.п. |',
-                      '|---|---:|---:|---:|---:|'])
+                      f'| Группа | N (+новые) | ROI | ROI без 3 | Δ {metric}, п.п. | Не рассчитано |',
+                      '|---|---:|---:|---:|---:|---:|'])
         for row in tables[market]:
             growth = f" ({row['new_closed']:+d})" if row['new_closed'] is not None else ''
             change = (signed(row['delta_pp']) if row['delta_pp'] is not None else
                       'первый результат' if row['first_result'] else 'н/д')
             lines.append(f"| {cell(row['name'])} | {count(row['n'])}{growth} | {percent(row['roi'])} | "
-                         f"{percent(row['roi_without_top3'])} | {change} |")
+                         f"{percent(row['roi_without_top3'])} | {change} | {row.get('unresolved') if row.get('unresolved') is not None else 'н/д'} |")
         lines.append('')
     lines.extend(['Δ - изменение ROI без трёх лучших, в процентных пунктах. '
                   'При отсутствии сопоставимой предыдущей базы - н/д. Группы пересекаются, '
                   'их N и ROI не складываются. ' + ('Прежние группы сохранены в архиве. '
                   if tables.get('tracking_series') else 'Контроль и широкий пул '
                   'имеют собственные условия и периоды: сортировка не доказывает превосходство метода. '
-                  ) + 'ТМ приостановлен и исключён из этого контура; история сохранена.', ''])
+                  ) + 'ROI без трёх исключает три лучших результата по прибыли.', ''])
+    if tables.get('under_capture_errors'):
+        lines.extend([f"Ошибочных проходов ТМ за период: {tables['under_capture_errors']}. Пропуски сохраняются в учёте.", ''])
     comparison = tables.get('sot_comparison')
     if comparison:
         lines.extend(['**ТБ: обычный отбор и достаточный темп ударов в створ**', '',
@@ -283,6 +304,15 @@ def render_statistics(report, previous=None, tables=None):
     foundation = report.get('research_foundation')
     if foundation:
         lines.extend(['**Независимый сбор и проверка цены**', ''])
+        cumulative = foundation.get('cumulative')
+        if cumulative:
+            lines.extend([f"С начала новой схемы {clock(cumulative.get('started_at_utc'))}: "
+                f"{count(cumulative['points'])} наблюдений в {count(cumulative['unique_matches'])} матчах. "
+                f"Независимая выборка: {count(cumulative['independent_sample'])} точек в {count(cumulative['independent_matches'])} матчах. "
+                f"Согласованная свежая цена ТБ/ТМ: {count(cumulative['fresh_quote_points'])} точек. "
+                f"Сопоставление источников: {count(cumulative['comparable_prices'])} из {count(cumulative['comparison_requested'])} проверок. "
+                f"Успешных проходов {cumulative['successful_captures']}, ошибочных {cumulative['capture_errors']}. "
+                f"Допущенных входов {cumulative['admitted']}.", ''])
         if foundation.get('status') == 'active':
             lines.extend([f"Последний проход: {clock(foundation.get('observed_at_utc'))}. "
                           f"Наблюдений {foundation['points']}, независимая подробная выборка {foundation['independent_sample']}. "
