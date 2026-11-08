@@ -65,7 +65,7 @@ def tree(root):
             path = name.decode()
             if since:
                 parts = Path(path).parts
-                allowed = ('under-pocket-receipts' in parts or 'tracked-group-receipts' in parts or 'tracked-sot-receipts' in parts or 'research-foundation-receipts' in parts or 'outcomes' in parts
+                allowed = (('receipts' in parts and parts[-2] == '2026-11-04') or 'under-pocket-receipts' in parts or 'tracked-group-receipts' in parts or 'tracked-sot-receipts' in parts or 'research-foundation-receipts' in parts or 'outcomes' in parts
                            or 'live-results-refresh' in parts)
                 if not allowed or len(parts) < 3 or parts[-2] < since:
                     continue
