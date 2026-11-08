@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import time
 
+import independent_candidates
 from full_statistics import under_module, foundation_report
 from acquisition_health import acquisition_health
 from statistics_format import VERSION, build_tables, render_statistics
@@ -27,6 +28,9 @@ def inputs(root, tracked):
         under_rows, _, _, _ = under.history(root, under_config, under_digest)
         rows = dict(rows)
         rows.update({'under/' + key: entries for key, entries in under_rows.items()})
+    candidate_config, candidate_arms = independent_candidates.entries(root)
+    for arm, candidate_rows in candidate_arms.items():
+        rows['independent/' + arm] = candidate_rows
     targets = {}
     for entries in rows.values():
         for eid, e in entries.items():
@@ -115,6 +119,7 @@ def make_report(root, tracked, outcomes, settle, now, previous=None, health=None
                 verified = sum(price - 1 if total < leg else Decimal(0) if total == leg else Decimal(-1) for leg in legs) / len(legs)
                 if abs(profit - float(verified)) > 1e-9:
                     raise ValueError('Under settlement arithmetic mismatch')
+    value['independent_candidates'] = independent_candidates.report(root, outcomes)
     value['statistics_tables'] = build_tables(value, previous)
     if value['statistics_tables']['errors']:
         raise ValueError('Incomplete tracked statistics')

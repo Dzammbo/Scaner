@@ -323,6 +323,17 @@ def render_statistics(report, previous=None, tables=None):
             lines.extend(['Последний проход новой схемы завершился ошибкой. Это не отсутствие подходящих сигналов.', ''])
         else:
             lines.extend(['Новая схема включена; первый сохранённый проход пока не подтверждён.', ''])
+    independent = report.get('independent_candidates')
+    if independent:
+        lines.extend(['**Новое сравнение независимого ТМ**', '',
+            'Начало новых входов ' + clock(independent['activation_utc']) + '. Фиксированный порог ударов 0,3 в минуту. '
+            'Первый подходящий случайно выбранный снимок, свежая цена и подтверждённая пауза после гола. '
+            'Исторический кандидат с ограниченной устойчивостью к задержке входа, бумажное наблюдение.', '',
+            '| Правило | Рассчитано | Прибыль | ROI | Не рассчитано |',
+            '|---|---:|---:|---:|---:|'])
+        for row in independent['arms'].values():
+            lines.append(f"| {cell(row['name'])} | {row['n']} | {signed(row['unit_profit'])} | {percent(row['roi'])} | {row['pending']} |")
+        lines.append('')
     return '\n'.join(lines).rstrip() + '\n'
 
 

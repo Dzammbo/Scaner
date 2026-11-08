@@ -24,6 +24,7 @@ jobs:
           sparse-checkout: |
             /.github/scripts/
             /.github/live-results-refresh.json
+            /.github/live-independent-candidates.json
             /.github/live-statistics-epoch.json
             /.github/selection-validation-protocol.json
       - uses: actions/checkout@v4

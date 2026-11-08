@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Независимый ТМ при частых ударах",
+  "activation_utc": "2026-11-08T09:29:53.291903+00:00",
+  "minimum_shots_per_minute": 0.3,
+  "arm_names": {
+    "baseline": "Независимый ТМ без спортивного фильтра",
+    "shots": "Независимый ТМ при ударах от 0,3 в минуту"
+  },
+  "entry_policy": "first_qualifying_independently_selected_fresh_full_match_under_quote_after_activation",
+  "mode": "paper_observation",
+  "historical_backfill": false,
+  "source_report": "research/independent-audit-20261108/Выводы.md"
+}
