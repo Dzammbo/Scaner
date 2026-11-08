@@ -247,7 +247,7 @@ def render_statistics(report, previous=None, tables=None):
     lines.extend(['N - рассчитанные матчи; в скобках прирост к предыдущему отчёту. '
                   'Открытые исключены из ROI. При N≤30 ROI без трёх не выводится: '
                   'такие группы стоят внизу по убыванию обычного ROI.', ''])
-    for market, title, metric in [('over', 'ТБ', 'без 3')] + ([('under', 'ТМ', 'без 3')] if tables['under'] else []):
+    for market, title, metric in [('over', 'ТБ', 'без 3')] + ([('under', 'ТМ', 'без 3')] if tables.get('under') else []):
         if market == 'under':
             lines.extend(['Серия ТМ с ' + clock(tables.get('under_started_at_utc')) + '.', ''])
         lines.extend([f'**Все {title} - по убыванию ROI без трёх**', '',
