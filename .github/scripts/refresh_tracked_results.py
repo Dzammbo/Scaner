@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import time
 
+from full_statistics import under_module, foundation_report
 from acquisition_health import acquisition_health
 from statistics_format import VERSION, build_tables, render_statistics
 
@@ -20,6 +21,12 @@ def inputs(root, tracked):
         rows = dict(rows)
         for arm, groups in paired.items():
             rows.update({arm + '/' + key: entries for key, entries in groups.items()})
+    under = under_module(root)
+    if under is not None:
+        under_config, under_digest = under.config(root)
+        under_rows, _, _, _ = under.history(root, under_config, under_digest)
+        rows = dict(rows)
+        rows.update({'under/' + key: entries for key, entries in under_rows.items()})
     targets = {}
     for entries in rows.values():
         for eid, e in entries.items():
@@ -88,7 +95,26 @@ def make_report(root, tracked, outcomes, settle, now, previous=None, health=None
         for key, row in series['pockets'].items():
             row['name'] = comparison['arms']['baseline']['pockets'][key]['name']
     import research_foundation
-    value['research_foundation'] = research_foundation.latest_status(root)
+    value['research_foundation'] = foundation_report(root, research_foundation)
+    under = under_module(root)
+    if under is not None:
+        value['under_pockets'] = under.report(root, outcomes)
+        under_config, under_digest = under.config(root)
+        under_rows, _, _, _ = under.history(root, under_config, under_digest)
+        from decimal import Decimal
+        for entries in under_rows.values():
+            for event_id, entry in entries.items():
+                outcome = outcomes.get(event_id, {})
+                profit = under.settle(entry, outcome)
+                if profit is None:
+                    continue
+                line = Decimal(str(entry['market']['line']))
+                price = Decimal(str(entry['market']['price']))
+                total = sum(Decimal(str(x)) for x in outcome['final'])
+                legs = [line - Decimal('.25'), line + Decimal('.25')] if line * 2 != int(line * 2) else [line]
+                verified = sum(price - 1 if total < leg else Decimal(0) if total == leg else Decimal(-1) for leg in legs) / len(legs)
+                if abs(profit - float(verified)) > 1e-9:
+                    raise ValueError('Under settlement arithmetic mismatch')
     value['statistics_tables'] = build_tables(value, previous)
     if value['statistics_tables']['errors']:
         raise ValueError('Incomplete tracked statistics')
