@@ -2,11 +2,14 @@
   "run_id": "42647002806",
   "run_attempt": 1,
   "started_at": "2026-11-09T15:43:46.612324+00:00",
-  "updated_at": "2026-11-09T15:43:51.783394+00:00",
-  "state": "collecting",
+  "updated_at": "2026-11-09T15:45:10.720062+00:00",
+  "state": "capture_failed",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-v4-cached-inputs-20261031",
   "cycle": 1,
-  "api_call_cap": 160
+  "api_call_cap": 160,
+  "last_capture_id": "42647002806-100001",
+  "last_error": "RuntimeError",
+  "consecutive_failures": 1
 }
