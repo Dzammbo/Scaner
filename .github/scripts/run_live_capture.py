@@ -27,7 +27,11 @@ def collector_project(path, data):
 
 def main():
     root = Path(os.environ['COLLECTOR_ROOT']).resolve()
-    sys.path[:0] = [str(root/'research/selection-lab-20261018'), str(root/'scripts')]
+    sys.path[:0] = [
+        str(root/'research/selection-lab-20261018'),
+        str(root/'research/tm'),
+        str(root/'scripts'),
+    ]
     import capture
     cache = RefreshInputs(root, os.environ.get('COLLECTOR_CACHE_DIR'),
                           projector=collector_project, version='collector-inputs-v1')
