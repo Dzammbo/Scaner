@@ -3,6 +3,7 @@ import os,sys,tempfile,pathlib,json,time,shutil,gzip,collections
 sys.path.insert(0,str(pathlib.Path(os.environ['COLLECTOR_ROOT'])/'research/selection-lab-20261018'))
 import capture as c
 from save_capture import prepare_files
+import run_live_capture
 source=c.ROOT;calls=collections.Counter();reference_requests=[]
 def api(path,**params):
  calls[path]+=1;now=int(time.time())
@@ -21,7 +22,7 @@ with tempfile.TemporaryDirectory() as temp:
  c.ROOT=root;c.epoch.load_config=lambda:None;c.live.get=api
  request=root/'request.json';request.write_text(json.dumps({'mode':'full','event_ids':[],'requested_at_utc':c.datetime.datetime.now(c.datetime.timezone.utc).isoformat()}))
  os.environ.update(BETSAPI_KEY='offline-test-placeholder',LAB_RUN_SOURCE='background',LAB_DATA_SCOPE='experimental',LAB_BACKGROUND_UNIFIED='1',LAB_API_CALL_CAP='160',LAB_REQUEST_FILE=str(request),GITHUB_RUN_ID='12345',GITHUB_RUN_ATTEMPT='1',LAB_TRIGGER_MAIN_SHA='test',LAB_CODE_REVISION='test')
- try:c.main()
+ try:run_live_capture.main()
  except Exception as exc:
   import traceback;traceback.print_exception(exc.__context__);raise
  files=list((root/'research/live-background/experimental/research-foundation-receipts').rglob('*.json.gz'))
