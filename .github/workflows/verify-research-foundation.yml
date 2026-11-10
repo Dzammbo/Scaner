@@ -9,6 +9,9 @@ on:
   push:
     branches: [main]
     paths:
+      - '.github/scripts/run_live_capture.py'
+      - '.github/scripts/statistics_inputs.py'
+      - '.github/scripts/verify_research_foundation_capture.py'
       - 'research/selection-lab-20261018/research_foundation.py'
       - 'research/selection-lab-20261018/test_research_foundation.py'
       - 'research/selection-lab-20261018/adaptive.py'
