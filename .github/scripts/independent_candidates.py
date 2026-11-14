@@ -4,6 +4,8 @@ from decimal import Decimal
 import gzip
 import json
 from pathlib import Path
+import subprocess
+import math
 
 NEW_ACTIVATION = '2026-11-13T21:39:23.721Z'
 NEW_NAMES = {
@@ -12,6 +14,50 @@ NEW_NAMES = {
     'under_gap': 'ТМ: запас линии от 1,75 и коэффициент от 2,05 до 2,50',
     'over_xg': 'ТБ: створы от 0,14 до 0,22 и высокий xG',
 }
+
+AUDIT_ACTIVATION = '2026-11-14T08:30:47.015Z'
+AUDIT_RULES = [["over","ТБ: Запас линии от 1,75 и xG за 15 мин 0,15–0,3",[["Запас линии",1.75,100],["xG за 15 мин",0.15,0.3]]],["over","ТБ: Минута 30–60 и xG за 15 мин 0,15–0,3",[["Минута",30,60],["xG за 15 мин",0.15,0.3]]],["over","ТБ: Створы за 10 мин от 2 и xG за 15 мин 0,15–0,3",[["Створы за 10 мин",2,100],["xG за 15 мин",0.15,0.3]]],["over","ТБ: xG за 5 мин 0,15–0,3 и Удары за 15 мин 0–4",[["xG за 5 мин",0.15,0.3],["Удары за 15 мин",0,4]]],["over","ТБ: Удары/мин 0–0,2 и xG за 10 мин 0,15–0,3",[["Удары/мин",0,0.2],["xG за 10 мин",0.15,0.3]]],["over","ТБ: xG за 10 мин от 0,15 и Удары за 15 мин 0–4",[["xG за 10 мин",0.15,100],["Удары за 15 мин",0,4]]],["over","ТБ: Минута 30–60 и xG за 15 мин 0–0,3",[["Минута",30,60],["xG за 15 мин",0,0.3]]],["over","ТБ: Голы 1–2 и xG/мин 0–0,02",[["Голы",1,2],["xG/мин",0,0.02]]],["over","ТБ: Минута 30–60 и xG за 15 мин от 0,15",[["Минута",30,60],["xG за 15 мин",0.15,100]]],["over","ТБ: xG за 5 мин от 0,15 и Удары за 15 мин 0–4",[["xG за 5 мин",0.15,100],["Удары за 15 мин",0,4]]],["under","ТМ: xG за 10 мин 0,15–0,3 и Опасные атаки за 15 мин 5–10",[["xG за 10 мин",0.15,0.3],["Опасные атаки за 15 мин",5,10]]],["under","ТМ: Удары/мин от 0,3 и Опасные атаки за 15 мин 0–10",[["Удары/мин",0.3,100],["Опасные атаки за 15 мин",0,10]]],["under","ТМ: xG за 10 мин от 0,15 и Опасные атаки за 15 мин 5–10",[["xG за 10 мин",0.15,100],["Опасные атаки за 15 мин",5,10]]],["under","ТМ: Створы/мин 0,14–0,22 и Опасные атаки за 15 мин 0–10",[["Створы/мин",0.14,0.22],["Опасные атаки за 15 мин",0,10]]],["under","ТМ: Минута 5–30 и xG за 5 мин от 0,3",[["Минута",5,30],["xG за 5 мин",0.3,100]]],["under","ТМ: Опасные атаки за 15 мин 5–10 и Коэффициент 1–1,65",[["Опасные атаки за 15 мин",5,10],["Коэффициент",1,1.65]]],["under","ТМ: Удары/мин от 0,2 и Опасные атаки за 10 мин 0–5",[["Удары/мин",0.2,100],["Опасные атаки за 10 мин",0,5]]],["under","ТМ: Запас линии 0–0,75 и Опасные атаки за 10 мин 0–5",[["Запас линии",0,0.75],["Опасные атаки за 10 мин",0,5]]],["under","ТМ: xG за 5 мин от 0,15 и Опасные атаки за 15 мин 5–10",[["xG за 5 мин",0.15,100],["Опасные атаки за 15 мин",5,10]]],["under","ТМ: Запас линии 0,75–1,25 и Средний тотал выездного профиля 0–2",[["Запас линии",0.75,1.25],["Средний тотал выездного профиля",0,2]]]]
+AUDIT_NAMES = {f'audit_{i}': name for i, (_, name, _) in enumerate(AUDIT_RULES)}
+
+
+def snapshot_events(root, receipt):
+    path = str(receipt.relative_to(root)).replace('/research-foundation-receipts/', '/snapshots/')
+    local = root / path
+    raw = local.read_bytes() if local.exists() else subprocess.check_output(
+        ['git', 'show', f'HEAD:{path}'], cwd=root)
+    return {str(event['event_id']): event for event in json.loads(gzip.decompress(raw))['events']}
+
+
+def audit_features(event, minute, goals, gap, shots, sot, xg):
+    features = {'Минута': minute, 'Голы': goals, 'Запас линии': gap,
+                'Удары/мин': shots, 'Створы/мин': sot, 'xG/мин': xg}
+    away = ((event.get('goal_profile') or {}).get('away') or {}).get('venue') or {}
+    def number(value):
+        try:
+            value = float(value)
+            return value if math.isfinite(value) else None
+        except (TypeError, ValueError):
+            return None
+    if (number(away.get('n')) or 0) >= 10:
+        features['Средний тотал выездного профиля'] = number(away.get('mean_total'))
+    trend = event.get('stats_trend') or {}
+    lag = number((trend.get('time_context') or {}).get('board_minus_trend_minutes'))
+    if trend.get('available') and lag is not None and 0 <= lag <= 2:
+        windows = trend.get('current_windows', trend.get('windows', {}))
+        for duration in (5, 10, 15):
+            window = windows.get(str(duration)) or {}
+            if number(window.get('actual_duration_minutes')) != duration:
+                continue
+            stats = window.get('stats') or {}
+            def total(key):
+                pair = stats.get(key) or {}
+                return stat_rate({key: [pair.get('home'), pair.get('away')]}, key, 1)
+            on, off = total('on_target'), total('off_target')
+            features[f'Створы за {duration} мин'] = on
+            features[f'Удары за {duration} мин'] = on + off if on is not None and off is not None else None
+            features[f'Опасные атаки за {duration} мин'] = total('dangerous_attacks')
+            features[f'xG за {duration} мин'] = total('xg')
+    return features
 
 
 def stat_rate(stats, key, minute):
@@ -40,6 +86,9 @@ def entries(root):
     arms = {'baseline': {}, 'shots': {}}
     arms.update({key: {} for key in NEW_NAMES})
     cfg['arm_names'].update(NEW_NAMES)
+    cfg['arm_names'].update(AUDIT_NAMES)
+    arms.update({key: {} for key in AUDIT_NAMES})
+    audit_start = dt.datetime.fromisoformat(AUDIT_ACTIVATION)
     activation = dt.datetime.fromisoformat(NEW_ACTIVATION)
     candidates = []
     directory = Path(root)/'research/live-background/experimental/research-foundation-receipts'
@@ -51,6 +100,7 @@ def entries(root):
         foundation = record['research_foundation']
         if foundation.get('status') != 'active':
             continue
+        events = None
         for row in foundation.get('observations', []):
             clock = row.get('observed_at_utc', foundation.get('observed_at_utc', ''))
             if dt.datetime.fromisoformat(clock) < dt.datetime.fromisoformat(cfg['activation_utc']):
@@ -101,6 +151,19 @@ def entries(root):
                         price = quote['over'] if key == 'over_xg' else under
                         if price > 1:
                             candidates.append(dict(entry, arm=key, market=dict(entry['market'], price=price)))
+                if dt.datetime.fromisoformat(clock) >= audit_start and 5 <= minute <= 89:
+                    if events is None:
+                        events = snapshot_events(root, path)
+                    event = events[str(row['event_id'])]
+                    features = audit_features(event, minute, sum(int(v) for v in score.split('-')), gap, rate, sot, xg)
+                    for i, (side, _, rule) in enumerate(AUDIT_RULES):
+                        price = quote.get(side)
+                        features['Коэффициент'] = price
+                        if price is not None and price > 1 and all(
+                            features.get(key) is not None and low <= features[key] < high
+                            for key, low, high in rule
+                        ):
+                            candidates.append(dict(entry, arm=f'audit_{i}', market=dict(entry['market'], price=price)))
     for row in sorted(candidates, key=lambda entry:(entry['observed_at_utc'],entry['source_snapshot_id'],entry['event_id'])):
         if 'arm' in row:
             arms[row['arm']].setdefault(row['event_id'], row)
@@ -130,8 +193,8 @@ def report(root, outcomes):
             price = Decimal(str(row['market']['price']))
             goals = sum(Decimal(str(value)) for value in final)
             legs = [line-Decimal('.25'),line+Decimal('.25')] if line*2 != int(line*2) else [line]
-            profit = sum(price-1 if (goals > leg if arm == 'over_xg' else goals < leg) else Decimal(0) if goals==leg else Decimal(-1) for leg in legs)/len(legs)
+            profit = sum(price-1 if (goals > leg if (arm == 'over_xg' or arm.startswith('audit_') and AUDIT_RULES[int(arm[6:])][0] == 'over') else goals < leg) else Decimal(0) if goals==leg else Decimal(-1) for leg in legs)/len(legs)
             values.append(float(profit))
         result['arms'][arm] = dict(name=cfg['arm_names'][arm], selected=len(selected), n=len(values),
-            pending=len(selected)-len(values), unit_profit=sum(values), roi=sum(values)/len(values) if values else None, activation_utc=NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
+            pending=len(selected)-len(values), unit_profit=sum(values), roi=sum(values)/len(values) if values else None, activation_utc=AUDIT_ACTIVATION if arm in AUDIT_NAMES else NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
     return result
