@@ -92,7 +92,20 @@ def entries(root):
     activation = dt.datetime.fromisoformat(NEW_ACTIVATION)
     candidates = []
     directory = Path(root)/'research/live-background/experimental/research-foundation-receipts'
-    for path in directory.glob('*/*.json.gz'):
+    paths = list(directory.glob('*/*.json.gz'))
+    if (root / '.git').exists():
+        from statistics_index import git, prefetch
+        base = 'research/live-background/experimental/snapshots'
+        needed = {str(p.relative_to(root)).replace('/research-foundation-receipts/', '/snapshots/')
+                  for p in paths if p.parent.name >= AUDIT_ACTIVATION[:10]}
+        blobs = []
+        for item in git(root, 'ls-tree', '-r', '-z', 'HEAD', '--', base).split(b'\0'):
+            if item:
+                meta, name = item.split(b'\t', 1)
+                if name.decode() in needed:
+                    blobs.append(meta.split()[-1].decode())
+        prefetch(root, blobs)
+    for path in paths:
         if path.parent.name < cfg['activation_utc'][:10]:
             continue
         with gzip.open(path, 'rt') as stream:
