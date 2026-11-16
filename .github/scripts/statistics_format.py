@@ -28,6 +28,12 @@ def robust(row):
     return number(value.get('roi') if isinstance(value, dict) else value)
 
 
+def profitability_order(row):
+    adjusted = robust(row)
+    roi = number(row.get('roi'))
+    return (adjusted is None, -(adjusted or 0), roi is None, -(roi or 0), row.get('name', ''))
+
+
 def compatible(current, previous, keys):
     return bool(previous) and all(current.get(key) == previous.get(key) for key in keys)
 
@@ -121,7 +127,7 @@ def build_tables(report, previous=None):
                     paired.append(pair)
                 result['sot_comparison'] = dict(started_at_utc=comparison['started_at_utc'],
                     status=comparison['status'], capture_errors=comparison.get('capture_errors', 0),
-                    rows=paired, portfolios={arm: arms[arm]['portfolio'] for arm in arms})
+                    rows=sorted(paired, key=lambda pair: profitability_order(pair['baseline'])), portfolios={arm: arms[arm]['portfolio'] for arm in arms})
             except (KeyError, TypeError, ValueError):
                 result['errors'].append('Сравнение отбора по створам: неполный или ошибочный журнал')
         return result
@@ -272,19 +278,19 @@ def render_statistics(report, previous=None, tables=None):
     if comparison:
         lines.extend(['**ТБ: обычный отбор и достаточный темп ударов в створ**', '',
             'Обе версии учитывают только новые входы с ' + clock(comparison['started_at_utc']) +
-            '. Усиление: суммарные створы / минута ≥0,10. У каждой версии свой первый вход и своя цена.', ''])
+            '. Порядок строк по обычному отбору. Усиление: суммарные створы / минута ≥0,10. У каждой версии свой первый вход и своя цена.', ''])
         if comparison['status'] == 'awaiting_first_successful_capture':
             lines.extend(['Первый успешный снимок для сравнения пока не сохранён.', ''])
         if comparison['capture_errors']:
             lines.extend([f"Ошибочных проходов сравнения: {comparison['capture_errors']}. Они не считаются проходами без сигналов.", ''])
-        lines.extend(['| Карман | Обычный N (+новые) | Прибыль | ROI | Со створами N (+новые) | Прибыль | ROI | Не рассчитано обычный / со створами |',
-                      '|---|---:|---:|---:|---:|---:|---:|---:|'])
+        lines.extend(['| Карман | Обычный N (+новые) | Прибыль | ROI | Без 3 | Со створами N (+новые) | Прибыль | ROI | Без 3 | Не рассчитано обычный / со створами |',
+                      '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|'])
         for pair in comparison['rows'] + [dict(name='Итого: уникальные матчи', **comparison['portfolios'])]:
             cells = []
             for arm in ('baseline', 'enhanced'):
                 row = pair[arm]
                 growth = f" ({row['new_closed']:+d})" if row.get('new_closed') is not None else ''
-                cells.extend([count(row['n']) + growth, signed(row['unit_profit']), percent(row['roi'])])
+                cells.extend([count(row['n']) + growth, signed(row['unit_profit']), percent(row['roi']), percent(robust(row))])
             pending = f"{pair['baseline']['unresolved']} / {pair['enhanced']['unresolved']}"
             lines.append('| ' + cell(pair['name']) + ' | ' + ' | '.join(cells) + ' | ' + pending + ' |')
         lines.extend(['', 'Прибыль в единицах фиксированной ставки. Итог каждой версии считает один первый вход на матч '
@@ -329,10 +335,10 @@ def render_statistics(report, previous=None, tables=None):
             'Начало новых входов ' + clock(independent['activation_utc']) + '. Фиксированный порог ударов 0,3 в минуту. '
             'Первые две строки используют случайную выборку. Четыре новых кармана используют все пригодные наблюдения. '
             'Для каждого правила берётся первый подходящий снимок матча со свежей ценой и подтверждённой паузой после гола.', '',
-            '| Правило | Начало, МСК | Рассчитано | Прибыль | ROI | Не рассчитано |',
-            '|---|---|---:|---:|---:|---:|'])
-        for row in independent['arms'].values():
-            lines.append(f"| {cell(row['name'])} | {clock(row.get('activation_utc', independent['activation_utc']))} | {row['n']} | {signed(row['unit_profit'])} | {percent(row['roi'])} | {row['pending']} |")
+            '| Правило | Начало, МСК | Рассчитано | Прибыль | ROI | Без 3 | Не рассчитано |',
+            '|---|---|---:|---:|---:|---:|---:|'])
+        for row in sorted(independent['arms'].values(), key=profitability_order):
+            lines.append(f"| {cell(row['name'])} | {clock(row.get('activation_utc', independent['activation_utc']))} | {row['n']} | {signed(row['unit_profit'])} | {percent(row['roi'])} | {percent(robust(row))} | {row['pending']} |")
         lines.append('')
     return '\n'.join(lines).rstrip() + '\n'
 
