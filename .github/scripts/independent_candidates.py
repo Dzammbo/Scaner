@@ -209,5 +209,6 @@ def report(root, outcomes):
             profit = sum(price-1 if (goals > leg if (arm == 'over_xg' or arm.startswith('audit_') and AUDIT_RULES[int(arm[6:])][0] == 'over') else goals < leg) else Decimal(0) if goals==leg else Decimal(-1) for leg in legs)/len(legs)
             values.append(float(profit))
         result['arms'][arm] = dict(name=cfg['arm_names'][arm], selected=len(selected), n=len(values),
-            pending=len(selected)-len(values), unit_profit=sum(values), roi=sum(values)/len(values) if values else None, activation_utc=AUDIT_ACTIVATION if arm in AUDIT_NAMES else NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
+            pending=len(selected)-len(values), unit_profit=sum(values), roi=sum(values)/len(values) if values else None,
+            without_top3_roi=sum(sorted(values)[:-3])/(len(values)-3) if len(values)>30 else None, activation_utc=AUDIT_ACTIVATION if arm in AUDIT_NAMES else NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
     return result
