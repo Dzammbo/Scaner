@@ -7,6 +7,14 @@ from pathlib import Path
 import subprocess
 import math
 
+PRUNE_ACTIVATION = '2026-11-16T12:53:15.575Z'
+PAUSED = frozenset(["tracked_groups/H15","tracked_groups/H17","tracked_groups/tb_5_29_goals2_quarter","tracked_groups/E2","tracked_groups/R03","under_pockets/TM02","under_pockets/TM01","under_pockets/TM10","under_pockets/TM04","under_pockets/TM09","under_xg","audit_5","audit_14","audit_2","audit_7","audit_6","audit_9","audit_8","audit_3","audit_15","audit_4","audit_0","audit_19","audit_12","shots"])
+REVERSE_NAMES = {
+    'reverse_corners': 'ТМ: угловые и точные удары при умеренном давлении',
+    'reverse_early': 'ТМ: два ранних гола и четвертная линия',
+}
+REVERSE_RULES = {'reverse_corners': 'R03', 'reverse_early': 'tb_5_29_goals2_quarter'}
+
 NEW_ACTIVATION = '2026-11-13T21:39:23.721Z'
 NEW_NAMES = {
     'quiet_attacks': 'ТМ: частые удары и редкие опасные атаки',
@@ -20,12 +28,16 @@ AUDIT_RULES = [["over","ТБ: Запас линии от 1,75 и xG за 15 ми
 AUDIT_NAMES = {f'audit_{i}': name for i, (_, name, _) in enumerate(AUDIT_RULES)}
 
 
-def snapshot_events(root, receipt):
+def read_snapshot(root, receipt):
     path = str(receipt.relative_to(root)).replace('/research-foundation-receipts/', '/snapshots/')
     local = root / path
     raw = local.read_bytes() if local.exists() else subprocess.check_output(
         ['git', 'show', f'HEAD:{path}'], cwd=root)
-    return {str(event['event_id']): event for event in json.loads(gzip.decompress(raw))['events']}
+    return json.loads(gzip.decompress(raw))
+
+
+def snapshot_events(root, receipt):
+    return {str(event['event_id']): event for event in read_snapshot(root, receipt)['events']}
 
 
 def audit_features(event, minute, goals, gap, shots, sot, xg):
@@ -90,6 +102,9 @@ def entries(root):
     arms.update({key: {} for key in AUDIT_NAMES})
     audit_start = dt.datetime.fromisoformat(AUDIT_ACTIVATION)
     activation = dt.datetime.fromisoformat(NEW_ACTIVATION)
+    cfg['arm_names'].update(REVERSE_NAMES)
+    arms.update({key: {} for key in REVERSE_NAMES})
+    prune_at = dt.datetime.fromisoformat(PRUNE_ACTIVATION)
     candidates = []
     directory = Path(root)/'research/live-background/experimental/research-foundation-receipts'
     paths = list(directory.glob('*/*.json.gz'))
@@ -114,6 +129,41 @@ def entries(root):
         if foundation.get('status') != 'active':
             continue
         events = None
+        if dt.datetime.fromisoformat(foundation['observed_at_utc']) >= prune_at:
+            from lab import market_for_event
+            import tracked_groups
+            snapshot = read_snapshot(root, path)
+            catalog, _ = tracked_groups.config(root)
+            groups = {group['id']: group for group in catalog['pockets']}
+            for event in snapshot['events']:
+                minute = tracked_groups.number(event.get('minute'))
+                if minute is None or not 5 <= minute <= 89:
+                    continue
+                original, _ = market_for_event(event, snapshot)
+                if not original:
+                    continue
+                clock = snapshot['board_observed_at_utc']
+                observed = dt.datetime.fromisoformat(clock)
+                checked = original['checked_at']
+                if observed < prune_at or abs(checked - observed.timestamp()) > 120:
+                    continue
+                quote = event.get('events_main_total') or {}
+                price = tracked_groups.number(quote.get('under'))
+                if price is None or price <= 1:
+                    continue
+                features = tracked_groups.features(event, original, snapshot)
+                if not features or features['gap'] <= 0:
+                    continue
+                for key, group_id in REVERSE_RULES.items():
+                    group = groups[group_id]
+                    lo, hi = group['minute_window']
+                    if lo <= minute <= hi and tracked_groups.matches(group['rule'], features):
+                        candidates.append(dict(event_id=str(event['event_id']),
+                            score=original['score'], minute=minute, arm=key,
+                            observed_at_utc=clock, source_snapshot_id=record['snapshot_id'],
+                            market=dict(original, price=price), league=event.get('league'),
+                            home=event.get('home'), away=event.get('away')))
+            events = {str(e['event_id']): e for e in snapshot['events']}
         for row in foundation.get('observations', []):
             clock = row.get('observed_at_utc', foundation.get('observed_at_utc', ''))
             if dt.datetime.fromisoformat(clock) < dt.datetime.fromisoformat(cfg['activation_utc']):
@@ -178,11 +228,14 @@ def entries(root):
                         ):
                             candidates.append(dict(entry, arm=f'audit_{i}', market=dict(entry['market'], price=price)))
     for row in sorted(candidates, key=lambda entry:(entry['observed_at_utc'],entry['source_snapshot_id'],entry['event_id'])):
+        after_prune = dt.datetime.fromisoformat(row['observed_at_utc']) >= prune_at
         if 'arm' in row:
+            if after_prune and row['arm'] in PAUSED:
+                continue
             arms[row['arm']].setdefault(row['event_id'], row)
             continue
         arms['baseline'].setdefault(row['event_id'],row)
-        if row['shots_rate'] is not None and row['shots_rate'] >= cfg['minimum_shots_per_minute']:
+        if not after_prune and row['shots_rate'] is not None and row['shots_rate'] >= cfg['minimum_shots_per_minute']:
             arms['shots'].setdefault(row['event_id'],row)
     return cfg, arms
 
@@ -210,5 +263,5 @@ def report(root, outcomes):
             values.append(float(profit))
         result['arms'][arm] = dict(name=cfg['arm_names'][arm], selected=len(selected), n=len(values),
             pending=len(selected)-len(values), unit_profit=sum(values), roi=sum(values)/len(values) if values else None,
-            without_top3_roi=sum(sorted(values)[:-3])/(len(values)-3) if len(values)>30 else None, activation_utc=AUDIT_ACTIVATION if arm in AUDIT_NAMES else NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
+            without_top3_roi=sum(sorted(values)[:-3])/(len(values)-3) if len(values)>30 else None, activation_utc=PRUNE_ACTIVATION if arm in REVERSE_NAMES else AUDIT_ACTIVATION if arm in AUDIT_NAMES else NEW_ACTIVATION if arm in NEW_NAMES else cfg['activation_utc'])
     return result
