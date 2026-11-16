@@ -4,7 +4,7 @@ BRANCH='research/selection-lab-20261018'
 PREFIX='research/live-background/runtime/'
 WORKER='live-background.yml';SUPERVISOR='live-background-supervisor.yml';RECOVERY='live-background-recovery.yml'
 ACTIVE={'queued','in_progress','waiting','pending','requested'}
-GENERATION='resident-v4-cached-inputs-20261031'
+GENERATION='resident-pocket-review-20261116'
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def epoch(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()
