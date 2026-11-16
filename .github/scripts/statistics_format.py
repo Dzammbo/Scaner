@@ -39,6 +39,7 @@ def compatible(current, previous, keys):
 
 
 def build_tables(report, previous=None):
+    from independent_candidates import PAUSED
     previous = previous or {}
     result = dict(format_version=VERSION, over=[], under=[], errors=[],
                   reference_at_utc=previous.get('generated_at_utc'))
@@ -56,6 +57,8 @@ def build_tables(report, previous=None):
     def add(key, label, market, row, old=None):
         # Archived under entries never enter the active report, including old JSON.
         if market != 'over' and not (market == 'under' and report.get('active_group_series') == 'tracked_groups' and (report.get('under_pockets') or {}).get('version') == 'ten-under-forward-20261104-v1'):
+            return
+        if key in PAUSED:
             return
         n = row['n']
         roi, without = number(row.get('roi')), robust(row)
@@ -104,7 +107,7 @@ def build_tables(report, previous=None):
                     add('under_pockets/' + key, row['name'], 'under', row, old)
                 result['under'].sort(key=lambda row: (row['roi_without_top3'] is None,
                     -(row['roi_without_top3'] or 0), row['roi'] is None, -(row['roi'] or 0), row['name']))
-        comparison = report.get('tracked_sot')
+        comparison = None  # Archived after the November 16 review.
         if comparison is not None:
             prior_comparison = previous.get('tracked_sot') or {}
             same_comparison = compatible(comparison, prior_comparison, ('id', 'version', 'catalog_sha256'))
@@ -329,15 +332,16 @@ def render_statistics(report, previous=None, tables=None):
             lines.extend(['Последний проход новой схемы завершился ошибкой. Это не отсутствие подходящих сигналов.', ''])
         else:
             lines.extend(['Новая схема включена; первый сохранённый проход пока не подтверждён.', ''])
+    from independent_candidates import PAUSED
     independent = report.get('independent_candidates')
     if independent:
         lines.extend(['**Бумажное наблюдение ТБ и ТМ**', '',
             'Начало новых входов ' + clock(independent['activation_utc']) + '. Фиксированный порог ударов 0,3 в минуту. '
-            'Первые две строки используют случайную выборку. Четыре новых кармана используют все пригодные наблюдения. '
+            'Независимый контроль использует случайную выборку. '
             'Для каждого правила берётся первый подходящий снимок матча со свежей ценой и подтверждённой паузой после гола.', '',
             '| Правило | Начало, МСК | Рассчитано | Прибыль | ROI | Без 3 | Не рассчитано |',
             '|---|---|---:|---:|---:|---:|---:|'])
-        for row in sorted(independent['arms'].values(), key=profitability_order):
+        for row in sorted((row for key, row in independent['arms'].items() if key not in PAUSED), key=profitability_order):
             lines.append(f"| {cell(row['name'])} | {clock(row.get('activation_utc', independent['activation_utc']))} | {row['n']} | {signed(row['unit_profit'])} | {percent(row['roi'])} | {percent(robust(row))} | {row['pending']} |")
         lines.append('')
     return '\n'.join(lines).rstrip() + '\n'
