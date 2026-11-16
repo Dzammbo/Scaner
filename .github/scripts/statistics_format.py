@@ -39,7 +39,8 @@ def compatible(current, previous, keys):
 
 
 def build_tables(report, previous=None):
-    from independent_candidates import PAUSED
+    from independent_candidates import PAUSED, PRUNE_ACTIVATION
+    pruned = (report.get('generated_at_utc') or '') >= PRUNE_ACTIVATION[:19]
     previous = previous or {}
     result = dict(format_version=VERSION, over=[], under=[], errors=[],
                   reference_at_utc=previous.get('generated_at_utc'))
@@ -58,7 +59,7 @@ def build_tables(report, previous=None):
         # Archived under entries never enter the active report, including old JSON.
         if market != 'over' and not (market == 'under' and report.get('active_group_series') == 'tracked_groups' and (report.get('under_pockets') or {}).get('version') == 'ten-under-forward-20261104-v1'):
             return
-        if key in PAUSED:
+        if pruned and key in PAUSED:
             return
         n = row['n']
         roi, without = number(row.get('roi')), robust(row)
@@ -107,7 +108,7 @@ def build_tables(report, previous=None):
                     add('under_pockets/' + key, row['name'], 'under', row, old)
                 result['under'].sort(key=lambda row: (row['roi_without_top3'] is None,
                     -(row['roi_without_top3'] or 0), row['roi'] is None, -(row['roi'] or 0), row['name']))
-        comparison = None  # Archived after the November 16 review.
+        comparison = None if pruned else report.get('tracked_sot')
         if comparison is not None:
             prior_comparison = previous.get('tracked_sot') or {}
             same_comparison = compatible(comparison, prior_comparison, ('id', 'version', 'catalog_sha256'))
