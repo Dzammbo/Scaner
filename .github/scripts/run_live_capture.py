@@ -38,6 +38,26 @@ def main():
     atexit.register(cache.close)
     original_load = capture.load_json
     cache.install(capture)
+    import independent_candidates
+    import tracked_groups
+    import tracked_sot
+    import under_pockets
+
+    paused = independent_candidates.PAUSED
+    original_evaluate = tracked_groups.evaluate_catalog
+
+    def evaluate_active(snapshot, ordered, market_for_event, outcomes, settle,
+                        cfg, digest, prior, accept=None):
+        active = dict(cfg, pockets=[p for p in cfg['pockets']
+                                   if 'tracked_groups/' + p['id'] not in paused])
+        return original_evaluate(snapshot, ordered, market_for_event, outcomes,
+                                 settle, active, digest, prior, accept)
+
+    tracked_groups.evaluate_catalog = evaluate_active
+    original_match = under_pockets.match
+    under_pockets.match = lambda key, *args: (
+        'under_pockets/' + key not in paused and original_match(key, *args))
+    tracked_sot.evaluate = lambda *args, **kwargs: None
     def load(path):
         # Dynamics use full original snapshots, never a projected board.
         return original_load(path) if 'snapshots' in Path(path).parts else cache.load(path)
