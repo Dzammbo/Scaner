@@ -2,23 +2,23 @@
   "run_id": "44911252716",
   "run_attempt": 1,
   "started_at": "2026-11-21T13:57:32.896518+00:00",
-  "updated_at": "2026-11-21T18:03:31.257789+00:00",
-  "state": "collecting",
+  "updated_at": "2026-11-21T18:13:52.520854+00:00",
+  "state": "capture_failed",
   "duration_seconds": 19200,
   "interval_seconds": 300,
   "generation": "resident-pocket-review-20261116",
   "cycle": 21,
   "api_call_cap": 160,
-  "last_capture_id": "44911252716-100020",
-  "last_error": null,
+  "last_capture_id": "44911252716-100021",
+  "last_error": "RuntimeError",
   "last_capture_performance": {
-    "seconds": 732.367,
+    "seconds": 545.655,
     "cache": {
-      "persistent_hits": 49693,
-      "source_decodes": 5
+      "persistent_hits": 33167,
+      "source_decodes": 2
     },
-    "succeeded": true
+    "succeeded": false
   },
-  "consecutive_failures": 0,
+  "consecutive_failures": 1,
   "last_success_at": "2026-11-21T18:03:27.265216+00:00"
 }
